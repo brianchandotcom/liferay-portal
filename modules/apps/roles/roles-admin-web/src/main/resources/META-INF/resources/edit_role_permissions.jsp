@@ -40,6 +40,16 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+
+request.setAttribute("edit_role_permissions.jsp-role", role);
+request.setAttribute("edit_role_permissions.jsp-portletResource", portletResource);
+
+if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle(role.getTitle(locale));
+}
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
@@ -58,32 +68,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 </liferay-portlet:renderURL>
-
-<c:choose>
-	<c:when test="<%= !portletName.equals(PortletKeys.SERVER_ADMIN) %>">
-
-		<%
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL);
-
-		renderResponse.setTitle(role.getTitle(locale));
-		%>
-
-		<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="tabs1" value="define-permissions" />
-			<liferay-util:param name="backURL" value="<%= backURL %>" />
-		</liferay-util:include>
-	</c:when>
-	<c:otherwise>
-
-		<%
-		request.setAttribute("edit_role_permissions.jsp-role", role);
-
-		request.setAttribute("edit_role_permissions.jsp-portletResource", portletResource);
-		%>
-
-	</c:otherwise>
-</c:choose>
 
 <liferay-ui:success key="permissionDeleted" message="the-permission-was-deleted" />
 <liferay-ui:success key="permissionsUpdated" message="the-role-permissions-were-updated" />

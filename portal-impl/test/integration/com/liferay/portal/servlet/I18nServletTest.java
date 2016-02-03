@@ -121,9 +121,7 @@ public class I18nServletTest {
 
 		Locale expectedLocale = LocaleUtil.CHINA;
 
-		I18nServlet.I18nData expectedI18nData = getI18nData(expectedLocale);
-
-		testGetI18nData(expectedLocale, expectedI18nData);
+		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
 	}
 
 	protected I18nServlet.I18nData getI18nData(Locale locale) {

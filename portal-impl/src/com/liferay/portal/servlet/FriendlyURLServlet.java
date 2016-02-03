@@ -351,7 +351,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				String i18nLanguageId = (String)request.getAttribute(
 					WebKeys.I18N_LANGUAGE_ID);
 
-				if (((i18nLanguageId != null) &&
+				if ((Validator.isNotNull(i18nLanguageId) &&
 					 !LanguageUtil.isAvailableLocale(
 						 group.getGroupId(), i18nLanguageId)) ||
 					!StringUtil.equalsIgnoreCase(

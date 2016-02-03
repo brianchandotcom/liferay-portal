@@ -315,8 +315,6 @@
 				<classpath mode="compile">lib/development/saxpath.jar</classpath>
 				<classpath mode="compile">lib/development/script-10.jar</classpath>
 				<classpath mode="compile">lib/development/sdk-addon-api-0.2.jar</classpath>
-				<classpath mode="compile">lib/development/selenium-java.jar</classpath>
-				<classpath mode="compile">lib/development/selenium-server.jar</classpath>
 				<classpath mode="compile">lib/development/servlet-api.jar</classpath>
 				<classpath mode="compile">lib/development/sikuli-api.jar</classpath>
 				<classpath mode="compile">lib/development/sikuli-core.jar</classpath>

@@ -46,19 +46,22 @@ public class AutoDeployDir {
 		List<String> duplicateApplicableAutoDeployListenerClassNames =
 			new ArrayList<>();
 
+		List<AutoDeployListener> deployableAutoDeployListeners =
+			new ArrayList<>();
+
 		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
 			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-				autoDeployListener.deploy(autoDeploymentContext);
-
 				Class<?> autoDeployListenerClass =
 					autoDeployListener.getClass();
 
 				duplicateApplicableAutoDeployListenerClassNames.add(
 					autoDeployListenerClass.getName());
+
+				deployableAutoDeployListeners.add(autoDeployListener);
 			}
 		}
 
-		if (duplicateApplicableAutoDeployListenerClassNames.size() > 1) {
+		if (deployableAutoDeployListeners.size() > 1) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("The auto deploy listeners ");
@@ -70,6 +73,12 @@ public class AutoDeployDir {
 			sb.append(", but only one should have.");
 
 			throw new AutoDeployException(sb.toString());
+		}
+
+		for (AutoDeployListener deployableAutoDeployListener :
+				deployableAutoDeployListeners) {
+
+			deployableAutoDeployListener.deploy(autoDeploymentContext);
 		}
 	}
 

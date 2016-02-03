@@ -603,26 +603,6 @@ public class WabProcessor {
 		}
 	}
 
-	protected void processPluginPackagePropertiesExportImportPackages(
-		Properties pluginPackageProperties) {
-
-		String exportPackages = pluginPackageProperties.getProperty(
-			Constants.EXPORT_PACKAGE);
-
-		if (Validator.isNotNull(exportPackages)) {
-			Collections.addAll(
-				_exportPackageNames, StringUtil.split(exportPackages));
-		}
-
-		String importPackages = pluginPackageProperties.getProperty(
-			Constants.IMPORT_PACKAGE);
-
-		if (Validator.isNotNull(importPackages)) {
-			Collections.addAll(
-				_importPackageNames, StringUtil.split(importPackages));
-		}
-	}
-
 	protected void processFiles(
 			File dir, URI uri, Map<String, File> classPath,
 			String[] portalDependencyJars)
@@ -801,6 +781,26 @@ public class WabProcessor {
 	protected void processPackageNames(Analyzer analyzer) {
 		processExportPackageNames(analyzer);
 		processImportPackageNames(analyzer);
+	}
+
+	protected void processPluginPackagePropertiesExportImportPackages(
+		Properties pluginPackageProperties) {
+
+		String exportPackages = pluginPackageProperties.getProperty(
+			Constants.EXPORT_PACKAGE);
+
+		if (Validator.isNotNull(exportPackages)) {
+			Collections.addAll(
+				_exportPackageNames, StringUtil.split(exportPackages));
+		}
+
+		String importPackages = pluginPackageProperties.getProperty(
+			Constants.IMPORT_PACKAGE);
+
+		if (Validator.isNotNull(importPackages)) {
+			Collections.addAll(
+				_importPackageNames, StringUtil.split(importPackages));
+		}
 	}
 
 	protected Set<String> processReferencedDependencies(

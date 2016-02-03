@@ -323,6 +323,8 @@ AUI.add(
 												var message = this.get('responseData');
 
 												if (message) {
+													instance.one('#coverImageFileEntryId').val(message.coverImageFileEntryId);
+
 													instance.one('#entryId').val(message.entryId);
 
 													if (message.updateRedirect) {

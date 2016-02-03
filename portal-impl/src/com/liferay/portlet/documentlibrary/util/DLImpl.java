@@ -133,6 +133,10 @@ public class DLImpl implements DL {
 		return 0;
 	}
 
+	public void destroy() {
+		_serviceTrackerList.close();
+	}
+
 	@Override
 	public String getAbsolutePath(PortletRequest portletRequest, long folderId)
 		throws PortalException {
@@ -1199,10 +1203,6 @@ public class DLImpl implements DL {
 		new TreeSet<>();
 	private static final Set<String> _fileIcons = new HashSet<>();
 	private static final Map<String, String> _genericNames = new HashMap<>();
-	private final ServiceTrackerList<PortletLayoutFinder>
-		_serviceTrackerList = ServiceTrackerCollections.openList(
-			PortletLayoutFinder.class,
-			"(model.class.name=" + FileEntry.class.getName() + ")");
 
 	static {
 		_allMediaGalleryMimeTypes.addAll(
@@ -1257,8 +1257,9 @@ public class DLImpl implements DL {
 		}
 	}
 
-	public void destroy() {
-		_serviceTrackerList.close();
-	}
+	private final ServiceTrackerList<PortletLayoutFinder>
+		_serviceTrackerList = ServiceTrackerCollections.openList(
+			PortletLayoutFinder.class,
+			"(model.class.name=" + FileEntry.class.getName() + ")");
 
 }

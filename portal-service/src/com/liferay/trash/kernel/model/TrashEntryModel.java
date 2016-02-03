@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.model;
+package com.liferay.trash.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -288,19 +288,19 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portlet.trash.model.TrashEntry trashEntry);
+	public int compareTo(com.liferay.trash.kernel.model.TrashEntry trashEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.trash.model.TrashEntry> toCacheModel();
+	public CacheModel<com.liferay.trash.kernel.model.TrashEntry> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry toEscapedModel();
+	public com.liferay.trash.kernel.model.TrashEntry toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry toUnescapedModel();
+	public com.liferay.trash.kernel.model.TrashEntry toUnescapedModel();
 
 	@Override
 	public String toString();

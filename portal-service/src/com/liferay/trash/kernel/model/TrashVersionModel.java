@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.model;
+package com.liferay.trash.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -216,19 +216,19 @@ public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion);
+		com.liferay.trash.kernel.model.TrashVersion trashVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.trash.model.TrashVersion> toCacheModel();
+	public CacheModel<com.liferay.trash.kernel.model.TrashVersion> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashVersion toEscapedModel();
+	public com.liferay.trash.kernel.model.TrashVersion toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashVersion toUnescapedModel();
+	public com.liferay.trash.kernel.model.TrashVersion toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.model;
+package com.liferay.trash.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -120,7 +120,7 @@ public class TrashVersionWrapper implements TrashVersion,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion) {
+		com.liferay.trash.kernel.model.TrashVersion trashVersion) {
 		return _trashVersion.compareTo(trashVersion);
 	}
 
@@ -388,12 +388,12 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.trash.model.TrashVersion> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.trash.kernel.model.TrashVersion> toCacheModel() {
 		return _trashVersion.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashVersion toEscapedModel() {
+	public com.liferay.trash.kernel.model.TrashVersion toEscapedModel() {
 		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
 	}
 
@@ -403,7 +403,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashVersion toUnescapedModel() {
+	public com.liferay.trash.kernel.model.TrashVersion toUnescapedModel() {
 		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.model;
+package com.liferay.trash.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -147,7 +147,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.portlet.trash.model.TrashEntry trashEntry) {
+	public int compareTo(com.liferay.trash.kernel.model.TrashEntry trashEntry) {
 		return _trashEntry.compareTo(trashEntry);
 	}
 
@@ -242,7 +242,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getRootEntry() {
+	public com.liferay.trash.kernel.model.TrashEntry getRootEntry() {
 		return _trashEntry.getRootEntry();
 	}
 
@@ -465,7 +465,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 	@Override
 	public void setRootEntry(
-		com.liferay.portlet.trash.model.TrashEntry rootEntry) {
+		com.liferay.trash.kernel.model.TrashEntry rootEntry) {
 		_trashEntry.setRootEntry(rootEntry);
 	}
 
@@ -536,12 +536,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.trash.model.TrashEntry> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.trash.kernel.model.TrashEntry> toCacheModel() {
 		return _trashEntry.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry toEscapedModel() {
+	public com.liferay.trash.kernel.model.TrashEntry toEscapedModel() {
 		return new TrashEntryWrapper(_trashEntry.toEscapedModel());
 	}
 
@@ -551,7 +551,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry toUnescapedModel() {
+	public com.liferay.trash.kernel.model.TrashEntry toUnescapedModel() {
 		return new TrashEntryWrapper(_trashEntry.toUnescapedModel());
 	}
 

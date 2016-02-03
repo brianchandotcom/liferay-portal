@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service.persistence;
+package com.liferay.trash.kernel.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link TrashVersionLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link TrashEntryLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated
-public abstract class TrashVersionActionableDynamicQuery
+public abstract class TrashEntryActionableDynamicQuery
 	extends DefaultActionableDynamicQuery {
-	public TrashVersionActionableDynamicQuery() {
-		setBaseLocalService(TrashVersionLocalServiceUtil.getService());
+	public TrashEntryActionableDynamicQuery() {
+		setBaseLocalService(TrashEntryLocalServiceUtil.getService());
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
 
-		setModelClass(TrashVersion.class);
+		setModelClass(TrashEntry.class);
 
-		setPrimaryKeyPropertyName("versionId");
+		setPrimaryKeyPropertyName("entryId");
 	}
 }

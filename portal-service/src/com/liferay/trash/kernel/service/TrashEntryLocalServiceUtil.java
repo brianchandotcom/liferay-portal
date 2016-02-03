@@ -12,58 +12,33 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
-
-import com.liferay.portlet.trash.model.TrashEntry;
-
-import java.io.Serializable;
-
-import java.util.List;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * Provides the local service interface for TrashEntry. Methods of this
- * service will not have security checks based on the propagated JAAS
- * credentials because this service can only be accessed from within the same
- * VM.
+ * Provides the local service utility for TrashEntry. This utility wraps
+ * {@link com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Brian Wing Shun Chan
- * @see TrashEntryLocalServiceUtil
+ * @see TrashEntryLocalService
  * @see com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface TrashEntryLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+public class TrashEntryLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TrashEntryLocalServiceUtil} to access the trash entry local service. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -72,8 +47,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param trashEntry the trash entry
 	* @return the trash entry that was added
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public TrashEntry addTrashEntry(TrashEntry trashEntry);
+	public static com.liferay.trash.kernel.model.TrashEntry addTrashEntry(
+		com.liferay.trash.kernel.model.TrashEntry trashEntry) {
+		return getService().addTrashEntry(trashEntry);
+	}
 
 	/**
 	* Moves an entry to trash.
@@ -92,13 +69,23 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
 	*/
-	public TrashEntry addTrashEntry(long userId, long groupId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int status,
-		List<ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
-		UnicodeProperties typeSettingsProperties) throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashEntry addTrashEntry(
+		long userId, long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, java.lang.String referrerClassName,
+		int status,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTrashEntry(userId, groupId, className, classPK,
+			classUuid, referrerClassName, status, statusOVPs,
+			typeSettingsProperties);
+	}
 
-	public void checkEntries() throws PortalException;
+	public static void checkEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkEntries();
+	}
 
 	/**
 	* Creates a new trash entry with the primary key. Does not add the trash entry to the database.
@@ -106,9 +93,14 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new trash entry
 	* @return the new trash entry
 	*/
-	public TrashEntry createTrashEntry(long entryId);
+	public static com.liferay.trash.kernel.model.TrashEntry createTrashEntry(
+		long entryId) {
+		return getService().createTrashEntry(entryId);
+	}
 
-	public void deleteEntries(long groupId);
+	public static void deleteEntries(long groupId) {
+		getService().deleteEntries(groupId);
+	}
 
 	/**
 	* Deletes the trash entry with the entity class name and primary key.
@@ -117,7 +109,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entry
 	* @return the trash entry with the entity class name and primary key
 	*/
-	public TrashEntry deleteEntry(java.lang.String className, long classPK);
+	public static com.liferay.trash.kernel.model.TrashEntry deleteEntry(
+		java.lang.String className, long classPK) {
+		return getService().deleteEntry(className, classPK);
+	}
 
 	/**
 	* Deletes the trash entry with the primary key.
@@ -125,17 +120,24 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
 	*/
-	public TrashEntry deleteEntry(long entryId);
+	public static com.liferay.trash.kernel.model.TrashEntry deleteEntry(
+		long entryId) {
+		return getService().deleteEntry(entryId);
+	}
 
-	@Indexable(type = IndexableType.DELETE)
-	public TrashEntry deleteEntry(TrashEntry trashEntry);
+	public static com.liferay.trash.kernel.model.TrashEntry deleteEntry(
+		com.liferay.trash.kernel.model.TrashEntry trashEntry) {
+		return getService().deleteEntry(trashEntry);
+	}
 
 	/**
 	* @throws PortalException
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
 
 	/**
 	* Deletes the trash entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -144,8 +146,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry that was removed
 	* @throws PortalException if a trash entry with the primary key could not be found
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TrashEntry deleteTrashEntry(long entryId) throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashEntry deleteTrashEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteTrashEntry(entryId);
+	}
 
 	/**
 	* Deletes the trash entry from the database. Also notifies the appropriate model listeners.
@@ -153,10 +158,14 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param trashEntry the trash entry
 	* @return the trash entry that was removed
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TrashEntry deleteTrashEntry(TrashEntry trashEntry);
+	public static com.liferay.trash.kernel.model.TrashEntry deleteTrashEntry(
+		com.liferay.trash.kernel.model.TrashEntry trashEntry) {
+		return getService().deleteTrashEntry(trashEntry);
+	}
 
-	public DynamicQuery dynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -164,7 +173,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -178,8 +190,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -194,8 +209,13 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -203,7 +223,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -212,8 +235,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
 
 	/**
 	* Returns the trash entry with the entity class name and primary key.
@@ -222,8 +248,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entity
 	* @return the trash entry with the entity class name and primary key
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry fetchEntry(java.lang.String className, long classPK);
+	public static com.liferay.trash.kernel.model.TrashEntry fetchEntry(
+		java.lang.String className, long classPK) {
+		return getService().fetchEntry(className, classPK);
+	}
 
 	/**
 	* Returns the trash entry with the primary key.
@@ -231,14 +259,19 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key of the entry
 	* @return the trash entry with the primary key
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry fetchEntry(long entryId);
+	public static com.liferay.trash.kernel.model.TrashEntry fetchEntry(
+		long entryId) {
+		return getService().fetchEntry(entryId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry fetchTrashEntry(long entryId);
+	public static com.liferay.trash.kernel.model.TrashEntry fetchTrashEntry(
+		long entryId) {
+		return getService().fetchTrashEntry(entryId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
 
 	/**
 	* Returns the trash entries with the matching group ID.
@@ -246,11 +279,15 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the trash entries with the group ID
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
+		long groupId) {
+		return getService().getEntries(groupId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, java.lang.String className);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className) {
+		return getService().getEntries(groupId, className);
+	}
 
 	/**
 	* Returns a range of all the trash entries matching the group ID.
@@ -261,8 +298,10 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	inclusive)
 	* @return the range of matching trash entries
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, int start, int end);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
+		long groupId, int start, int end) {
+		return getService().getEntries(groupId, start, end);
+	}
 
 	/**
 	* Returns a range of all the trash entries matching the group ID.
@@ -276,9 +315,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, int start, int end,
-		OrderByComparator<TrashEntry> obc);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc) {
+		return getService().getEntries(groupId, start, end, obc);
+	}
 
 	/**
 	* Returns the number of trash entries with the group ID.
@@ -286,8 +327,9 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the number of matching trash entries
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId);
+	public static int getEntriesCount(long groupId) {
+		return getService().getEntriesCount(groupId);
+	}
 
 	/**
 	* Returns the entry with the entity class name and primary key.
@@ -296,9 +338,11 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entity
 	* @return the trash entry with the entity class name and primary key
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry getEntry(java.lang.String className, long classPK)
-		throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashEntry getEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(className, classPK);
+	}
 
 	/**
 	* Returns the trash entry with the primary key.
@@ -306,23 +350,30 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry getEntry(long entryId) throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashEntry getEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(entryId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Returns a range of all the trash entries.
@@ -335,16 +386,19 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of trash entries
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getTrashEntries(int start, int end);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getTrashEntries(
+		int start, int end) {
+		return getService().getTrashEntries(start, end);
+	}
 
 	/**
 	* Returns the number of trash entries.
 	*
 	* @return the number of trash entries
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTrashEntriesCount();
+	public static int getTrashEntriesCount() {
+		return getService().getTrashEntriesCount();
+	}
 
 	/**
 	* Returns the trash entry with the primary key.
@@ -353,17 +407,27 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry
 	* @throws PortalException if a trash entry with the primary key could not be found
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashEntry getTrashEntry(long entryId) throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashEntry getTrashEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTrashEntry(entryId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long groupId, long userId,
-		java.lang.String keywords, int start, int end, Sort sort);
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .search(companyId, groupId, userId, keywords, start, end,
+			sort);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<TrashEntry> searchTrashEntries(
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.trash.kernel.model.TrashEntry> searchTrashEntries(
 		long companyId, long groupId, long userId, java.lang.String keywords,
-		int start, int end, Sort sort);
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .searchTrashEntries(companyId, groupId, userId, keywords,
+			start, end, sort);
+	}
 
 	/**
 	* Updates the trash entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -371,6 +435,21 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param trashEntry the trash entry
 	* @return the trash entry that was updated
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public TrashEntry updateTrashEntry(TrashEntry trashEntry);
+	public static com.liferay.trash.kernel.model.TrashEntry updateTrashEntry(
+		com.liferay.trash.kernel.model.TrashEntry trashEntry) {
+		return getService().updateTrashEntry(trashEntry);
+	}
+
+	public static TrashEntryLocalService getService() {
+		if (_service == null) {
+			_service = (TrashEntryLocalService)PortalBeanLocatorUtil.locate(TrashEntryLocalService.class.getName());
+
+			ReferenceRegistry.registerReference(TrashEntryLocalServiceUtil.class,
+				"_service");
+		}
+
+		return _service;
+	}
+
+	private static TrashEntryLocalService _service;
 }

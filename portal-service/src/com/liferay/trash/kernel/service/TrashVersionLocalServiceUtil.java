@@ -12,58 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
-
-import com.liferay.portlet.trash.model.TrashVersion;
-
-import java.io.Serializable;
-
-import java.util.List;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * Provides the local service interface for TrashVersion. Methods of this
- * service will not have security checks based on the propagated JAAS
- * credentials because this service can only be accessed from within the same
- * VM.
+ * Provides the local service utility for TrashVersion. This utility wraps
+ * {@link com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Brian Wing Shun Chan
- * @see TrashVersionLocalServiceUtil
+ * @see TrashVersionLocalService
  * @see com.liferay.portlet.trash.service.base.TrashVersionLocalServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface TrashVersionLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+public class TrashVersionLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link TrashVersionLocalServiceUtil} to access the trash version local service. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public TrashVersion addTrashVersion(long trashEntryId,
-		java.lang.String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties);
+	public static com.liferay.trash.kernel.model.TrashVersion addTrashVersion(
+		long trashEntryId, java.lang.String className, long classPK,
+		int status,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		return getService()
+				   .addTrashVersion(trashEntryId, className, classPK, status,
+			typeSettingsProperties);
+	}
 
 	/**
 	* Adds the trash version to the database. Also notifies the appropriate model listeners.
@@ -71,8 +55,10 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param trashVersion the trash version
 	* @return the trash version that was added
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public TrashVersion addTrashVersion(TrashVersion trashVersion);
+	public static com.liferay.trash.kernel.model.TrashVersion addTrashVersion(
+		com.liferay.trash.kernel.model.TrashVersion trashVersion) {
+		return getService().addTrashVersion(trashVersion);
+	}
 
 	/**
 	* Creates a new trash version with the primary key. Does not add the trash version to the database.
@@ -80,17 +66,24 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param versionId the primary key for the new trash version
 	* @return the new trash version
 	*/
-	public TrashVersion createTrashVersion(long versionId);
+	public static com.liferay.trash.kernel.model.TrashVersion createTrashVersion(
+		long versionId) {
+		return getService().createTrashVersion(versionId);
+	}
 
 	/**
 	* @throws PortalException
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
 
-	public TrashVersion deleteTrashVersion(java.lang.String className,
-		long classPK);
+	public static com.liferay.trash.kernel.model.TrashVersion deleteTrashVersion(
+		java.lang.String className, long classPK) {
+		return getService().deleteTrashVersion(className, classPK);
+	}
 
 	/**
 	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
@@ -98,8 +91,10 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param trashVersion the trash version
 	* @return the trash version that was removed
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TrashVersion deleteTrashVersion(TrashVersion trashVersion);
+	public static com.liferay.trash.kernel.model.TrashVersion deleteTrashVersion(
+		com.liferay.trash.kernel.model.TrashVersion trashVersion) {
+		return getService().deleteTrashVersion(trashVersion);
+	}
 
 	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
@@ -108,11 +103,15 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @return the trash version that was removed
 	* @throws PortalException if a trash version with the primary key could not be found
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TrashVersion deleteTrashVersion(long versionId)
-		throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashVersion deleteTrashVersion(
+		long versionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteTrashVersion(versionId);
+	}
 
-	public DynamicQuery dynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -120,7 +119,10 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -134,8 +136,11 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -150,8 +155,13 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -159,7 +169,10 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -168,40 +181,53 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchTrashVersion(long versionId);
+	public static com.liferay.trash.kernel.model.TrashVersion fetchTrashVersion(
+		long versionId) {
+		return getService().fetchTrashVersion(versionId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(java.lang.String className, long classPK);
+	public static com.liferay.trash.kernel.model.TrashVersion fetchVersion(
+		java.lang.String className, long classPK) {
+		return getService().fetchVersion(className, classPK);
+	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #fetchVersion(String, long)}
 	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion fetchVersion(long entryId, java.lang.String className,
-		long classPK);
+	@Deprecated
+	public static com.liferay.trash.kernel.model.TrashVersion fetchVersion(
+		long entryId, java.lang.String className, long classPK) {
+		return getService().fetchVersion(entryId, className, classPK);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Returns the trash version with the primary key.
@@ -210,9 +236,11 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @return the trash version
 	* @throws PortalException if a trash version with the primary key could not be found
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TrashVersion getTrashVersion(long versionId)
-		throws PortalException;
+	public static com.liferay.trash.kernel.model.TrashVersion getTrashVersion(
+		long versionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTrashVersion(versionId);
+	}
 
 	/**
 	* Returns a range of all the trash versions.
@@ -225,23 +253,29 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of trash versions (not inclusive)
 	* @return the range of trash versions
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashVersion> getTrashVersions(int start, int end);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashVersion> getTrashVersions(
+		int start, int end) {
+		return getService().getTrashVersions(start, end);
+	}
 
 	/**
 	* Returns the number of trash versions.
 	*
 	* @return the number of trash versions
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTrashVersionsCount();
+	public static int getTrashVersionsCount() {
+		return getService().getTrashVersionsCount();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashVersion> getVersions(long entryId);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashVersion> getVersions(
+		long entryId) {
+		return getService().getVersions(entryId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashVersion> getVersions(long entryId,
-		java.lang.String className);
+	public static java.util.List<com.liferay.trash.kernel.model.TrashVersion> getVersions(
+		long entryId, java.lang.String className) {
+		return getService().getVersions(entryId, className);
+	}
 
 	/**
 	* Updates the trash version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -249,6 +283,21 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param trashVersion the trash version
 	* @return the trash version that was updated
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public TrashVersion updateTrashVersion(TrashVersion trashVersion);
+	public static com.liferay.trash.kernel.model.TrashVersion updateTrashVersion(
+		com.liferay.trash.kernel.model.TrashVersion trashVersion) {
+		return getService().updateTrashVersion(trashVersion);
+	}
+
+	public static TrashVersionLocalService getService() {
+		if (_service == null) {
+			_service = (TrashVersionLocalService)PortalBeanLocatorUtil.locate(TrashVersionLocalService.class.getName());
+
+			ReferenceRegistry.registerReference(TrashVersionLocalServiceUtil.class,
+				"_service");
+		}
+
+		return _service;
+	}
+
+	private static TrashVersionLocalService _service;
 }

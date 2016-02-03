@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.model;
+package com.liferay.trash.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -54,7 +54,7 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.portlet.trash.model.TrashEntry getRootEntry();
+	public com.liferay.trash.kernel.model.TrashEntry getRootEntry();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
@@ -68,7 +68,7 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 	public boolean isTrashEntry(java.lang.String className, long classPK);
 
 	public void setRootEntry(
-		com.liferay.portlet.trash.model.TrashEntry rootEntry);
+		com.liferay.trash.kernel.model.TrashEntry rootEntry);
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);

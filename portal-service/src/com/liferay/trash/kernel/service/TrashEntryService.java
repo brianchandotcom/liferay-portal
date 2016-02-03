@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
 import com.liferay.portal.service.ServiceContext;
 
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashEntryList;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashEntryList;
 
 import java.util.List;
 

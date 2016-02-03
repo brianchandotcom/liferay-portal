@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.exception;
+package com.liferay.trash.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

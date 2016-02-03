@@ -12,35 +12,43 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * Provides a wrapper for {@link TrashEntryService}.
+ * Provides the remote service utility for TrashEntry. This utility wraps
+ * {@link com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on a remote server. Methods of this service are expected to have security
+ * checks based on the propagated JAAS credentials because this service can be
+ * accessed remotely.
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntryService
+ * @see com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl
+ * @see com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl
  * @generated
  */
 @ProviderType
-public class TrashEntryServiceWrapper implements TrashEntryService,
-	ServiceWrapper<TrashEntryService> {
-	public TrashEntryServiceWrapper(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
+public class TrashEntryServiceUtil {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 */
 
 	/**
 	* Deletes the trash entries with the primary keys.
 	*
 	* @param entryIds the primary keys of the trash entries
 	*/
-	@Override
-	public void deleteEntries(long[] entryIds)
+	public static void deleteEntries(long[] entryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntries(entryIds);
+		getService().deleteEntries(entryIds);
 	}
 
 	/**
@@ -49,10 +57,9 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	*
 	* @param groupId the primary key of the group
 	*/
-	@Override
-	public void deleteEntries(long groupId)
+	public static void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntries(groupId);
+		getService().deleteEntries(groupId);
 	}
 
 	/**
@@ -67,10 +74,9 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	*/
-	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
+	public static void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(className, classPK);
+		getService().deleteEntry(className, classPK);
 	}
 
 	/**
@@ -84,10 +90,9 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	*
 	* @param entryId the primary key of the trash entry
 	*/
-	@Override
-	public void deleteEntry(long entryId)
+	public static void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(entryId);
+		getService().deleteEntry(entryId);
 	}
 
 	/**
@@ -96,18 +101,16 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	* @param groupId the primary key of the group
 	* @return the matching trash entries
 	*/
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
+	public static com.liferay.trash.kernel.model.TrashEntryList getEntries(
 		long groupId)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId);
+		return getService().getEntries(groupId);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+	public static java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
 		long groupId, java.lang.String className)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId, className);
+		return getService().getEntries(groupId, className);
 	}
 
 	/**
@@ -122,12 +125,11 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
 	*/
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
+	public static com.liferay.trash.kernel.model.TrashEntryList getEntries(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId, start, end, obc);
+		return getService().getEntries(groupId, start, end, obc);
 	}
 
 	/**
@@ -135,9 +137,8 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	*
 	* @return the OSGi service identifier
 	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _trashEntryService.getOSGiServiceIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -169,35 +170,33 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>)
 	*/
-	@Override
-	public void moveEntry(java.lang.String className, long classPK,
+	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.moveEntry(className, classPK,
-			destinationContainerModelId, serviceContext);
+		getService()
+			.moveEntry(className, classPK, destinationContainerModelId,
+			serviceContext);
 	}
 
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	public static com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK);
+		return getService().restoreEntry(className, classPK);
 	}
 
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	public static com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK, long overrideClassPK,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK,
-			overrideClassPK, name);
+		return getService()
+				   .restoreEntry(className, classPK, overrideClassPK, name);
 	}
 
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(long entryId)
+	public static com.liferay.trash.kernel.model.TrashEntry restoreEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(entryId);
+		return getService().restoreEntry(entryId);
 	}
 
 	/**
@@ -234,22 +233,22 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	(optionally <code>null</code>)
 	* @return the restored trash entry
 	*/
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	public static com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(entryId, overrideClassPK, name);
+		return getService().restoreEntry(entryId, overrideClassPK, name);
 	}
 
-	@Override
-	public TrashEntryService getWrappedService() {
-		return _trashEntryService;
+	public static TrashEntryService getService() {
+		if (_service == null) {
+			_service = (TrashEntryService)PortalBeanLocatorUtil.locate(TrashEntryService.class.getName());
+
+			ReferenceRegistry.registerReference(TrashEntryServiceUtil.class,
+				"_service");
+		}
+
+		return _service;
 	}
 
-	@Override
-	public void setWrappedService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
-	private TrashEntryService _trashEntryService;
+	private static TrashEntryService _service;
 }

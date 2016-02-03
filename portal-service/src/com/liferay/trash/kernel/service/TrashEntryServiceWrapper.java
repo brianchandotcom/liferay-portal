@@ -12,43 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service;
+package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * Provides the remote service utility for TrashEntry. This utility wraps
- * {@link com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl} and is the
- * primary access point for service operations in application layer code running
- * on a remote server. Methods of this service are expected to have security
- * checks based on the propagated JAAS credentials because this service can be
- * accessed remotely.
+ * Provides a wrapper for {@link TrashEntryService}.
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntryService
- * @see com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl
- * @see com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl
  * @generated
  */
 @ProviderType
-public class TrashEntryServiceUtil {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
-	 */
+public class TrashEntryServiceWrapper implements TrashEntryService,
+	ServiceWrapper<TrashEntryService> {
+	public TrashEntryServiceWrapper(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
 
 	/**
 	* Deletes the trash entries with the primary keys.
 	*
 	* @param entryIds the primary keys of the trash entries
 	*/
-	public static void deleteEntries(long[] entryIds)
+	@Override
+	public void deleteEntries(long[] entryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntries(entryIds);
+		_trashEntryService.deleteEntries(entryIds);
 	}
 
 	/**
@@ -57,9 +49,10 @@ public class TrashEntryServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	*/
-	public static void deleteEntries(long groupId)
+	@Override
+	public void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntries(groupId);
+		_trashEntryService.deleteEntries(groupId);
 	}
 
 	/**
@@ -74,9 +67,10 @@ public class TrashEntryServiceUtil {
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	*/
-	public static void deleteEntry(java.lang.String className, long classPK)
+	@Override
+	public void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(className, classPK);
+		_trashEntryService.deleteEntry(className, classPK);
 	}
 
 	/**
@@ -90,9 +84,10 @@ public class TrashEntryServiceUtil {
 	*
 	* @param entryId the primary key of the trash entry
 	*/
-	public static void deleteEntry(long entryId)
+	@Override
+	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(entryId);
+		_trashEntryService.deleteEntry(entryId);
 	}
 
 	/**
@@ -101,16 +96,18 @@ public class TrashEntryServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching trash entries
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
 		long groupId)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return getService().getEntries(groupId);
+		return _trashEntryService.getEntries(groupId);
 	}
 
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+	@Override
+	public java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
 		long groupId, java.lang.String className)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return getService().getEntries(groupId, className);
+		return _trashEntryService.getEntries(groupId, className);
 	}
 
 	/**
@@ -125,11 +122,12 @@ public class TrashEntryServiceUtil {
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return getService().getEntries(groupId, start, end, obc);
+		return _trashEntryService.getEntries(groupId, start, end, obc);
 	}
 
 	/**
@@ -137,8 +135,9 @@ public class TrashEntryServiceUtil {
 	*
 	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _trashEntryService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -170,33 +169,35 @@ public class TrashEntryServiceUtil {
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>)
 	*/
-	public static void moveEntry(java.lang.String className, long classPK,
+	@Override
+	public void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.moveEntry(className, classPK, destinationContainerModelId,
-			serviceContext);
+		_trashEntryService.moveEntry(className, classPK,
+			destinationContainerModelId, serviceContext);
 	}
 
-	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().restoreEntry(className, classPK);
+		return _trashEntryService.restoreEntry(className, classPK);
 	}
 
-	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK, long overrideClassPK,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .restoreEntry(className, classPK, overrideClassPK, name);
+		return _trashEntryService.restoreEntry(className, classPK,
+			overrideClassPK, name);
 	}
 
-	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		long entryId)
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry restoreEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().restoreEntry(entryId);
+		return _trashEntryService.restoreEntry(entryId);
 	}
 
 	/**
@@ -233,22 +234,22 @@ public class TrashEntryServiceUtil {
 	(optionally <code>null</code>)
 	* @return the restored trash entry
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().restoreEntry(entryId, overrideClassPK, name);
+		return _trashEntryService.restoreEntry(entryId, overrideClassPK, name);
 	}
 
-	public static TrashEntryService getService() {
-		if (_service == null) {
-			_service = (TrashEntryService)PortalBeanLocatorUtil.locate(TrashEntryService.class.getName());
-
-			ReferenceRegistry.registerReference(TrashEntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+	@Override
+	public TrashEntryService getWrappedService() {
+		return _trashEntryService;
 	}
 
-	private static TrashEntryService _service;
+	@Override
+	public void setWrappedService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	private TrashEntryService _trashEntryService;
 }

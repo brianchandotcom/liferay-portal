@@ -278,6 +278,8 @@
 		<if>
 			<isset var="ddlDataDefinitionDescription" />
 			<then>
+				<execute macro="DDLDataDefinition#_showDetails" />
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 			</then>
 		</if>

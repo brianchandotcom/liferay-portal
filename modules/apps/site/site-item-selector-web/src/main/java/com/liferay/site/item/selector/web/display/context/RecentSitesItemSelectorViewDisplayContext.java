@@ -22,6 +22,7 @@ import com.liferay.site.util.RecentGroupManager;
 import java.util.List;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**

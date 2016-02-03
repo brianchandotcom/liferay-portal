@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>COMMENT_BODY</td>
-	<td>//div[(@class='lfr-discussion-message-body')]/p[contains(.,'${key_entryComment}')]</td>
+	<td>//div[(@class='lfr-discussion-message-body')] | //div[(@class='lfr-discussion-message-body')]/p[contains(.,'${key_entryComment}')]</td>
 	<td></td>
 </tr>
 <tr>

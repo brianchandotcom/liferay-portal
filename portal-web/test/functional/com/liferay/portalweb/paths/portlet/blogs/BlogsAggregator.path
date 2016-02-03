@@ -9,12 +9,7 @@
 </thead>
 <tbody>
 <tr>
-	<td>PORTLET_TITLE</td>
-	<td>//h2[contains(@class,'portlet-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLOGS_AGGREGATOR_NO_ENTRY_MESSAGE</td>
+	<td>NO_ENTRY_MESSAGE</td>
 	<td>//div[contains(@class,'portlet-body') and contains(.,'There are no blogs.')]</td>
 	<td></td>
 </tr>
@@ -37,31 +32,6 @@
 <tr>
 	<td>ENTRY_ABSTRACT_DESCRIPTION</td>
 	<td>//div[@class='abstract']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_READ_MORE</td>
-	<td>//div[@class='comments']/a[contains(.,'Read More')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_AUTHOR_DATE</td>
-	<td>//div[@class='user-details']/div[@class='blogger-date']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_AUTHOR_IMAGE</td>
-	<td>//span[@class='user-profile-image']/img[@alt='${key_entryAuthor}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_AUTHOR_POSTS</td>
-	<td>//div[@class='user-details']/div[@class='blogger-post-count']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_AUTHOR_STARS</td>
-	<td>//div[@class='user-details']/div[@class='blogger-stars']</td>
 	<td></td>
 </tr>
 </tbody>

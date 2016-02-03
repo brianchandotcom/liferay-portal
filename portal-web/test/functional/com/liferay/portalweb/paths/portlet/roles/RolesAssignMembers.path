@@ -11,17 +11,17 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[3]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,17 +32,17 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_NAME</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_TYPE</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,17 +53,17 @@
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_GROUP_TABLE_NAME</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_GROUP_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,17 +74,17 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_NAME</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
+	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
 	<td></td>
 </tr>
 </tbody>

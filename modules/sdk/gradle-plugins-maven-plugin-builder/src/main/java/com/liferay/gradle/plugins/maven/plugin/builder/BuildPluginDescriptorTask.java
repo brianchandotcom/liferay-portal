@@ -163,8 +163,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	@Input
-	public String getMavenVersion() {
-		return GradleUtil.toString(_mavenVersion);
+	public String getMavenPluginPluginVersion() {
+		return GradleUtil.toString(_mavenPluginPluginVersion);
 	}
 
 	@OutputDirectory
@@ -227,8 +227,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_mavenEmbedderMainClassName = mavenEmbedderMainClassName;
 	}
 
-	public void setMavenVersion(Object mavenVersion) {
-		_mavenVersion = mavenVersion;
+	public void setMavenPluginPluginVersion(Object mavenPluginPluginVersion) {
+		_mavenPluginPluginVersion = mavenPluginPluginVersion;
 	}
 
 	public void setOutputDir(Object outputDir) {
@@ -411,7 +411,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, pluginElement, "artifactId", "maven-plugin-plugin");
 		XMLUtil.appendElement(
-			document, pluginElement, "version", getMavenVersion());
+			document, pluginElement, "version", getMavenPluginPluginVersion());
 
 		String goalPrefix = getGoalPrefix();
 
@@ -617,7 +617,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private FileCollection _mavenEmbedderClasspath;
 	private Object _mavenEmbedderMainClassName =
 		"org.apache.maven.cli.MavenCli";
-	private Object _mavenVersion = "3.4";
+	private Object _mavenPluginPluginVersion = "3.4";
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;

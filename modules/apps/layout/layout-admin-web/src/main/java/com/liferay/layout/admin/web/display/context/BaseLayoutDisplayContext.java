@@ -242,12 +242,8 @@ public class BaseLayoutDisplayContext {
 			return _selGroup;
 		}
 
-		_selGroup = themeDisplay.getScopeGroup();
-
-		if (_selGroup.isControlPanel()) {
-			_selGroup = groupProvider.getGroup(
-				PortalUtil.getHttpServletRequest(liferayPortletRequest));
-		}
+		_selGroup = groupProvider.getGroup(
+			PortalUtil.getHttpServletRequest(liferayPortletRequest));
 
 		return _selGroup;
 	}

@@ -1760,6 +1760,18 @@ public class ServicePreAction extends Action {
 
 		String mainPath = PortalUtil.getPathMain();
 
+		String pathProxy = PortalUtil.getPathProxy();
+
+		if (!Validator.isBlank(pathProxy)) {
+			if (!requestURI.startsWith(pathProxy)) {
+				requestURI = pathProxy + requestURI;
+			}
+
+			if (!mainPath.startsWith(pathProxy)) {
+				mainPath = pathProxy + mainPath;
+			}
+		}
+
 		if (requestURI.startsWith(mainPath.concat(_PATH_PORTAL_LOGIN))) {
 			return true;
 		}

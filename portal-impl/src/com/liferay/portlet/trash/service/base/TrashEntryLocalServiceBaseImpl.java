@@ -44,10 +44,10 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalService;
-import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
-import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalService;
+import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
+import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 
 import java.io.Serializable;
 
@@ -64,7 +64,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl
- * @see com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil
+ * @see com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -74,7 +74,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil} to access the trash entry local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil} to access the trash entry local service.
 	 */
 
 	/**
@@ -231,7 +231,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TrashEntry.class);
 
@@ -244,7 +244,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(TrashEntry.class);
 
@@ -255,7 +255,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TrashEntry.class);
 
@@ -358,7 +358,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	 *
 	 * @return the trash version local service
 	 */
-	public com.liferay.portlet.trash.service.TrashVersionLocalService getTrashVersionLocalService() {
+	public com.liferay.trash.kernel.service.TrashVersionLocalService getTrashVersionLocalService() {
 		return trashVersionLocalService;
 	}
 
@@ -368,7 +368,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	 * @param trashVersionLocalService the trash version local service
 	 */
 	public void setTrashVersionLocalService(
-		com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService) {
+		com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService) {
 		this.trashVersionLocalService = trashVersionLocalService;
 	}
 
@@ -616,13 +616,13 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.trash.model.TrashEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.trash.kernel.model.TrashEntry",
 			trashEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.trash.model.TrashEntry");
+			"com.liferay.trash.kernel.model.TrashEntry");
 	}
 
 	/**
@@ -667,12 +667,12 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
 	protected TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
-	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashVersionLocalService.class)
+	protected com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

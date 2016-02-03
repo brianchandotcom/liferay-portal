@@ -408,7 +408,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcut.getTrashEntry();
 	}

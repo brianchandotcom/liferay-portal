@@ -93,16 +93,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _group;
 		}
 
-		_group = _themeDisplay.getScopeGroup();
-
-		if (!_group.isControlPanel()) {
-			updateLatentGroup(_group.getGroupId());
-
-			return _group;
-		}
-
 		_group = _groupProvider.getGroup(
 			PortalUtil.getHttpServletRequest(_portletRequest));
+
+		if (_group != null) {
+			updateLatentGroup(_group.getGroupId());
+		}
 
 		return _group;
 	}
@@ -493,17 +489,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
-		_recentGroupManager.addRecentGroup(
-			PortalUtil.getHttpServletRequest(_portletRequest), groupId);
-
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_portletRequest);
 
-		Group latentGroup = _groupProvider.getGroup(request);
+		_recentGroupManager.addRecentGroup(request, groupId);
 
-		if ((latentGroup == null) || (groupId != latentGroup.getGroupId())) {
-			_groupProvider.setGroup(request, _group);
-		}
+		_groupProvider.setGroup(request, _group);
 	}
 
 	private Boolean _collapsedPanel;

@@ -90,7 +90,7 @@
 						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 					</#if>
 
-					<#if (serviceBuilder.getSqlType(apiPackagePath + ".model." + entity.getName(), column.getName(), column.getType()) == "CLOB") && (column.type != "Map")>
+					<#if (serviceBuilder.getSqlType(entity.getName(), column.getName(), column.getType()) == "CLOB") && (column.type != "Map")>
 						type="com.liferay.portal.dao.orm.hibernate.StringClobType"
 					<#elseif column.isPrimitiveType() || (column.type == "Map") || (column.type == "String")>
 						type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${column.type}")}Type"

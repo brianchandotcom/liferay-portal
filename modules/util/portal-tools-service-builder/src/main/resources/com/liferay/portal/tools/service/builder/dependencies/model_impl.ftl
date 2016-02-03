@@ -114,7 +114,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#compress>
 		public static final Object[][] TABLE_COLUMNS = {
 			<#list entity.getRegularColList() as column>
-				<#assign sqlType = serviceBuilder.getSqlType(apiPackagePath + ".model." + entity.getName(), column.getName(), column.getType())>
+				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), column.getName(), column.getType())>
 
 				{"${column.DBName}", Types.${sqlType}}
 
@@ -128,7 +128,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		static {
 			<#list entity.getRegularColList() as column>
-				<#assign sqlType = serviceBuilder.getSqlType(apiPackagePath + ".model." + entity.getName(), column.getName(), column.getType())>
+				<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), column.getName(), column.getType())>
 
 				TABLE_COLUMNS_MAP.put("${column.DBName}", Types.${sqlType});
 			</#list>

@@ -41,14 +41,10 @@ import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Manuel de la Peña
@@ -155,7 +151,5 @@ public class VerifyPermissionTest extends BaseVerifyProcessTestCase {
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyPermission();
 	}
-
-	private final HttpServletRequest _request = new MockHttpServletRequest();
 
 }

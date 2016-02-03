@@ -29,7 +29,7 @@ import java.io.File;
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
+	public final int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
 		File file = autoDeploymentContext.getFile();

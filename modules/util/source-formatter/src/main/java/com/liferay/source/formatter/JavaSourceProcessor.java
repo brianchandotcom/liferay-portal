@@ -435,7 +435,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String checkUnprocessedExceptions(
+	protected String formatExceptions(
 			String content, File file, String packagePath, String fileName)
 		throws IOException {
 
@@ -497,6 +497,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				continue;
 			}
+
+			// LPS-36174
 
 			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
 				insideCatchCode);
@@ -894,10 +896,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
 
-		// LPS-36174
-
-		newContent = checkUnprocessedExceptions(
-			newContent, file, packagePath, fileName);
+		newContent = formatExceptions(newContent, file, packagePath, fileName);
 
 		// LPS-39508
 

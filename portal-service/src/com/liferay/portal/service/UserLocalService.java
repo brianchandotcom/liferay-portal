@@ -2108,10 +2108,10 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the user's OpenID.
+	* Updates the user's GoogleId.
 	*
 	* @param userId the primary key of the user
-	* @param openId the new OpenID
+	* @param googleId the new GoogleId
 	* @return the user
 	*/
 	public User updateGoogleId(long userId, java.lang.String googleId)

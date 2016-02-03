@@ -16,7 +16,7 @@ package com.liferay.wiki.asset;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 

@@ -38,8 +38,8 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -1029,7 +1029,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		StringBundler sb = new StringBundler(${entity.regularColList?size * 3 + 4});
 
 		sb.append("<model><model-name>");
-		sb.append("${packagePath}.model.${entity.name}");
+		sb.append("${apiPackagePath}.model.${entity.name}");
 		sb.append("</model-name>");
 
 		<#list entity.regularColList as column>

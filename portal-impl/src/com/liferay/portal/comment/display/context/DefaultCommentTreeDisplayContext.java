@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
 

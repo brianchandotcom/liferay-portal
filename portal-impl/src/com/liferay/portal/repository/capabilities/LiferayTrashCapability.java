@@ -40,9 +40,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalService;
-import com.liferay.portlet.trash.service.TrashVersionLocalService;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalService;
+import com.liferay.trash.kernel.service.TrashVersionLocalService;
 
 import java.util.List;
 

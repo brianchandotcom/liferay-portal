@@ -65,7 +65,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

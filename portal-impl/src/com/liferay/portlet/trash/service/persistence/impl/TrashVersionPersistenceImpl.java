@@ -36,11 +36,12 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.trash.exception.NoSuchVersionException;
-import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.model.impl.TrashVersionImpl;
 import com.liferay.portlet.trash.model.impl.TrashVersionModelImpl;
-import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
+
+import com.liferay.trash.kernel.exception.NoSuchVersionException;
+import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 
 import java.io.Serializable;
 
@@ -61,7 +62,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see TrashVersionPersistence
- * @see com.liferay.portlet.trash.service.persistence.TrashVersionUtil
+ * @see com.liferay.trash.kernel.service.persistence.TrashVersionUtil
  * @generated
  */
 @ProviderType

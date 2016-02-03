@@ -2005,7 +2005,7 @@
 		<field name="receiverUserId" type="long" />
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.portlet.trash.model.TrashEntry">
+	<model name="com.liferay.trash.kernel.model.TrashEntry">
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -2020,7 +2020,7 @@
 		</field>
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.portlet.trash.model.TrashVersion">
+	<model name="com.liferay.trash.kernel.model.TrashVersion">
 		<field name="versionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="entryId" type="long" />

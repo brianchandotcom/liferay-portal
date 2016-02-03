@@ -46,8 +46,9 @@ import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
-import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
-import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
+
+import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
+import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 
 import javax.sql.DataSource;
 
@@ -655,7 +656,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the trash entry local service
 	 */
-	public com.liferay.portlet.trash.service.TrashEntryLocalService getTrashEntryLocalService() {
+	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
 		return trashEntryLocalService;
 	}
 
@@ -665,7 +666,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 * @param trashEntryLocalService the trash entry local service
 	 */
 	public void setTrashEntryLocalService(
-		com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService) {
+		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
 		this.trashEntryLocalService = trashEntryLocalService;
 	}
 
@@ -674,7 +675,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the trash entry remote service
 	 */
-	public com.liferay.portlet.trash.service.TrashEntryService getTrashEntryService() {
+	public com.liferay.trash.kernel.service.TrashEntryService getTrashEntryService() {
 		return trashEntryService;
 	}
 
@@ -684,7 +685,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 * @param trashEntryService the trash entry remote service
 	 */
 	public void setTrashEntryService(
-		com.liferay.portlet.trash.service.TrashEntryService trashEntryService) {
+		com.liferay.trash.kernel.service.TrashEntryService trashEntryService) {
 		this.trashEntryService = trashEntryService;
 	}
 
@@ -712,7 +713,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the trash version local service
 	 */
-	public com.liferay.portlet.trash.service.TrashVersionLocalService getTrashVersionLocalService() {
+	public com.liferay.trash.kernel.service.TrashVersionLocalService getTrashVersionLocalService() {
 		return trashVersionLocalService;
 	}
 
@@ -722,7 +723,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 * @param trashVersionLocalService the trash version local service
 	 */
 	public void setTrashVersionLocalService(
-		com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService) {
+		com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService) {
 		this.trashVersionLocalService = trashVersionLocalService;
 	}
 
@@ -1042,14 +1043,14 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
-	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)
-	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
+	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryService.class)
+	protected com.liferay.trash.kernel.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
-	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashVersionLocalService.class)
+	protected com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMailingListLocalService.class)

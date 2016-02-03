@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -526,10 +527,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void configureDescription(Project project) {
-		String bundleName = getBundleInstruction(
-			project, Constants.BUNDLE_NAME);
+		String description = getBundleInstruction(
+			project, Constants.BUNDLE_DESCRIPTION);
 
-		project.setDescription(bundleName);
+		if (Validator.isNull(description)) {
+			description = getBundleInstruction(project, Constants.BUNDLE_NAME);
+		}
+
+		project.setDescription(description);
 	}
 
 	protected void configureSourceSetMain(Project project) {

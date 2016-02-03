@@ -353,9 +353,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 				<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
 
-				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="permissions">
-					<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" />
-				</aui:fieldset>
+				<liferay-staging:permissions action="import" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 			</aui:fieldset-group>
 
 			<aui:button-row>

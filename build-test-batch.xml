@@ -184,6 +184,32 @@
 			<var name="database.type" value="@{database.type}" />
 			<var name="database.version" value="@{database.version}" />
 
+			<if>
+				<and>
+					<equals arg1="@{database.type}" arg2="mysql" />
+					<equals arg1="@{database.version}" arg2="5.5" />
+				</and>
+				<then>
+					<var name="database.mysql.service.cmd.start" unset="true" />
+					<var name="database.mysql.service.cmd.stop" unset="true" />
+					<var name="database.mysql.version" unset="true" />
+					<var name="mysql.executable" unset="true" />
+
+					<property name="database.mysql.service.cmd.start" value="mysql55 start" />
+					<property name="database.mysql.service.cmd.stop" value="mysql55 stop" />
+					<property name="database.mysql.version" value="5.5" />
+					<property name="mysql.executable" value="mysql55" />
+
+					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[
+database.mysql.service.cmd.start=${database.mysql.service.cmd.start}
+database.mysql.service.cmd.stop=${database.mysql.service.cmd.stop}
+database.mysql.version=${database.mysql.version}]]></echo>
+
+					<echo append="true" file="sql/sql.${env.HOSTNAME}.properties"><![CDATA[
+mysql.executable=${mysql.executable}]]></echo>
+				</then>
+			</if>
+
 			<database-test-action database.type="@{database.type}">
 				<action>
 					<exec executable="${database.service.executable}">
@@ -340,7 +366,7 @@
 
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
 						<test-action>
 							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 								<property name="database.type" value="@{database.type}" />
@@ -525,6 +551,10 @@
 
 	<target name="functional-tomcat-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-tomcat-mysql55">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
 	</target>
 
 	<target name="integration-db2">

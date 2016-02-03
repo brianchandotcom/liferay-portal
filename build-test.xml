@@ -4363,6 +4363,20 @@ go]]></replacevalue>
 			replace=""
 		/>
 
+		<replaceregexp
+			file="test-results/TESTS-TestSuites.xml"
+			flags="g"
+			match="&lt;system-out&gt;[\s\S]*?&lt;\/system-out&gt;"
+			replace="&lt;system-out&gt;&lt;\/system-out&gt;"
+		/>
+
+		<replaceregexp
+			file="test-results/TESTS-TestSuites.xml"
+			flags="g"
+			match="&lt;system-err&gt;[\s\S]*?&lt;\/system-err&gt;"
+			replace="&lt;system-err&gt;&lt;\/system-err&gt;"
+		/>
+
 		<echo message="A report with all the test results can be found at test-results/html/index.html." />
 	</target>
 

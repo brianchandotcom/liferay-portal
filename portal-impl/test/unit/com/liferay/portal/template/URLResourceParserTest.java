@@ -14,6 +14,15 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.FileImpl;
+
+import java.io.IOException;
+
+import java.net.URL;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,6 +30,91 @@ import org.junit.Test;
  * @author Tina Tian
  */
 public class URLResourceParserTest {
+
+	@Test
+	public void testIsTemplateResourceValid() {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(FileImpl.getInstance());
+
+		URLResourceParser urlResourceParser = new URLResourceParser() {
+
+			@Override
+			public URL getURL(String templateId) throws IOException {
+				return null;
+			}
+
+		};
+
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.css", TemplateConstants.LANG_TYPE_CSS));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.ftl", TemplateConstants.LANG_TYPE_FTL));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.soy", TemplateConstants.LANG_TYPE_SOY));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.vm", TemplateConstants.LANG_TYPE_VM));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.xsl", TemplateConstants.LANG_TYPE_XSL));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.custom", "custom"));
+
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_CSS));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_FTL));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_SOY));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_VM));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_XSL));
+
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"..\\file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"../\\file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"..\\/file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"\\..\\file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"/..\\file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"\\../\\file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"\\..\\/file", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"%2f..%2ffile", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"/file?a=.ftl", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"/file#a=.ftl", StringPool.BLANK));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"/file;a=.ftl", StringPool.BLANK));
+	}
 
 	@Test
 	public void testNormalizePath() {

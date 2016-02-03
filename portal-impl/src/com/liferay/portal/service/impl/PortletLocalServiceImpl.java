@@ -1135,17 +1135,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		Role siteMemberRole = roleLocalService.getRole(
-			companyId, RoleConstants.SITE_MEMBER);
-		List<String> groupActionIds =
-			ResourceActionsUtil.getPortletResourceGroupDefaultActions(
-				rootPortletId);
-
-		resourcePermissionLocalService.setResourcePermissions(
-			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
-			rootPortletId, siteMemberRole.getRoleId(),
-			groupActionIds.toArray(new String[0]));
-
 		Role guestRole = roleLocalService.getRole(
 			companyId, RoleConstants.GUEST);
 		List<String> guestActions =
@@ -1166,6 +1155,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
 			rootPortletId, ownerRole.getRoleId(), 0,
 			ownerActionIds.toArray(new String[0]));
+
+		Role siteMemberRole = roleLocalService.getRole(
+			companyId, RoleConstants.SITE_MEMBER);
+		List<String> groupActionIds =
+			ResourceActionsUtil.getPortletResourceGroupDefaultActions(
+				rootPortletId);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			rootPortletId, siteMemberRole.getRoleId(),
+			groupActionIds.toArray(new String[0]));
 	}
 
 	protected void readLiferayDisplay(

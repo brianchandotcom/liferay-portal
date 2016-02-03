@@ -88,13 +88,13 @@ page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %
 page import="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.staging.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
+page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
+page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 

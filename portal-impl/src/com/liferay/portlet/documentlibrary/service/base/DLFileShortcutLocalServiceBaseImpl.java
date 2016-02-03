@@ -63,8 +63,9 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
-import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
+
+import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
+import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 
 import java.io.Serializable;
 
@@ -738,7 +739,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @return the trash entry local service
 	 */
-	public com.liferay.portlet.trash.service.TrashEntryLocalService getTrashEntryLocalService() {
+	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
 		return trashEntryLocalService;
 	}
 
@@ -748,7 +749,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param trashEntryLocalService the trash entry local service
 	 */
 	public void setTrashEntryLocalService(
-		com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService) {
+		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
 		this.trashEntryLocalService = trashEntryLocalService;
 	}
 
@@ -776,7 +777,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @return the trash version local service
 	 */
-	public com.liferay.portlet.trash.service.TrashVersionLocalService getTrashVersionLocalService() {
+	public com.liferay.trash.kernel.service.TrashVersionLocalService getTrashVersionLocalService() {
 		return trashVersionLocalService;
 	}
 
@@ -786,7 +787,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param trashVersionLocalService the trash version local service
 	 */
 	public void setTrashVersionLocalService(
-		com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService) {
+		com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService) {
 		this.trashVersionLocalService = trashVersionLocalService;
 	}
 
@@ -944,12 +945,12 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	protected AssetTagFinder assetTagFinder;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
-	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
+	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
-	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
+	@BeanReference(type = com.liferay.trash.kernel.service.TrashVersionLocalService.class)
+	protected com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderLocalService.class)

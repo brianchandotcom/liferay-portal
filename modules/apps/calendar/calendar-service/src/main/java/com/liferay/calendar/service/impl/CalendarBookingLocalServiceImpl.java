@@ -70,7 +70,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.Date;

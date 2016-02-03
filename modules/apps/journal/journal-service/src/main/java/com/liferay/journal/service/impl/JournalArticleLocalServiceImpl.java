@@ -160,9 +160,9 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;

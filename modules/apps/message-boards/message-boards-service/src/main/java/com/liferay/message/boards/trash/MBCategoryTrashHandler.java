@@ -37,7 +37,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.List;

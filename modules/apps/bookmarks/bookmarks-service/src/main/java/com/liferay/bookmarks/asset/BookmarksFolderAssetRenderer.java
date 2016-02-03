@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Date;
 import java.util.Locale;

@@ -601,11 +601,7 @@
 	<bean id="com.liferay.portlet.social.util.SocialConfigurationUtil" class="com.liferay.portlet.social.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.portlet.social.util.SocialConfiguration" />
 	</bean>
-	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />
-	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">
-		<property name="trash" ref="com.liferay.portlet.trash.util.Trash" />
-	</bean>
 	<bean id="com.liferay.portlet.usersadmin.util.ContactIndexer" class="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.UserIndexer" class="com.liferay.portlet.usersadmin.util.UserIndexer" />
@@ -616,6 +612,10 @@
 	<bean id="com.liferay.sites.kernel.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.sites.kernel.util.SitesUtil" class="com.liferay.sites.kernel.util.SitesUtil">
 		<property name="sites" ref="com.liferay.sites.kernel.util.Sites" />
+	</bean>
+	<bean id="com.liferay.trash.kernel.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
+	<bean id="com.liferay.trash.kernel.util.TrashUtil" class="com.liferay.trash.kernel.util.TrashUtil">
+		<property name="trash" ref="com.liferay.trash.kernel.util.Trash" />
 	</bean>
 	<bean id="com.liferay.users.admin.kernel.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
 	<bean id="com.liferay.users.admin.kernel.util.UsersAdminUtil" class="com.liferay.users.admin.kernel.util.UsersAdminUtil">

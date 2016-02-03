@@ -165,9 +165,9 @@ page import="com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryExc
 page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %><%@
+page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 
 <%@ page import="java.text.Format" %>

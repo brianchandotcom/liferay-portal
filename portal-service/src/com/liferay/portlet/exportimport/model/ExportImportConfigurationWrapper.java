@@ -363,7 +363,7 @@ public class ExportImportConfigurationWrapper
 	* @return the trash entry created when this export import configuration was moved to the Recycle Bin
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfiguration.getTrashEntry();
 	}

@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
@@ -42,27 +39,8 @@ import javax.servlet.jsp.PageContext;
  */
 public class TagResourceBundleUtil {
 
-	public static ResourceBundle getResourceBundle(PageContext pageContext) {
-		ResourceBundle resourceBundle =
-			(ResourceBundle)pageContext.getAttribute("resourceBundle");
-
-		if (resourceBundle != null) {
-			return resourceBundle;
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		Locale locale = PortalUtil.getLocale(request);
-
-		return getResourceBundle(pageContext, "content.Language", locale);
-	}
-
 	public static ResourceBundle getResourceBundle(
-		PageContext pageContext, String baseName, Locale locale) {
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request, Locale locale) {
 
 		ServletContext servletContext = request.getServletContext();
 
@@ -91,18 +69,20 @@ public class TagResourceBundleUtil {
 			portletResourceBundle, portalResourceBundle);
 	}
 
-	protected static ResourceBundle getPageResourceBundle(
-		PageContext pageContext, String baseName, Locale locale) {
+	public static ResourceBundle getResourceBundle(PageContext pageContext) {
+		ResourceBundle resourceBundle =
+			(ResourceBundle)pageContext.getAttribute("resourceBundle");
 
-		try {
-			Object page = pageContext.getPage();
+		if (resourceBundle != null) {
+			return resourceBundle;
+		}
 
-			return ResourceBundleUtil.getBundle(
-				baseName, locale, page.getClass());
-		}
-		catch (MissingResourceException mre) {
-			return _emptyResourceBundle;
-		}
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		Locale locale = PortalUtil.getLocale(request);
+
+		return getResourceBundle(request, locale);
 	}
 
 	protected static ResourceBundle getPortletResourceBundle(

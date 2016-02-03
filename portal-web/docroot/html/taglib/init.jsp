@@ -48,7 +48,7 @@ else {
 	currentURL = PortalUtil.getCurrentURL(request);
 }
 
-ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(pageContext);
+ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(request, locale);
 
 pageContext.setAttribute("resourceBundle", resourceBundle);
 %>

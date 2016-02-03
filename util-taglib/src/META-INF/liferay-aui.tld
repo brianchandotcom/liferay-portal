@@ -2721,6 +2721,7 @@
 			<type>java.util.Locale[]</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Whether to make the translation manager default language changeable. The default value is <code>true</code>.]]></description>
 			<name>changeableDefaultLanguage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

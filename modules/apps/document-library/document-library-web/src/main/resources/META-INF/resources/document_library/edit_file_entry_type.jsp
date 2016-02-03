@@ -52,12 +52,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 %>
 
 <div class="container-fluid-1280">
-	<c:if test="<%= DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructureId) > 0 %>">
-		<div class="alert alert-warning">
-			<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-		</div>
-	</c:if>
-
 	<liferay-util:buffer var="removeStructureIcon">
 		<liferay-ui:icon
 			iconCssClass="icon-remove"

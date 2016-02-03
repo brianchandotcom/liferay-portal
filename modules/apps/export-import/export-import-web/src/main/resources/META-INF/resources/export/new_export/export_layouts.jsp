@@ -93,10 +93,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
 %>
 
-<liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="processName" value="<%= StringPool.BLANK %>" />
-</liferay-util:include>
-
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />

@@ -3482,10 +3482,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="clean-up-sikuli-temp-files">
-		<delete dir="lib/development/libs" />
-	</target>
-
 	<target name="clean-up-sybase-processes">
 		<if>
 			<os family="unix" />
@@ -3659,39 +3655,6 @@ go]]></replacevalue>
 					/>
 				</then>
 			</elseif>
-		</if>
-	</target>
-
-	<target name="copy-sikuli-temp-files">
-		<if>
-			<os family="unix" />
-			<then>
-				<mirrors-get
-					dest="lib/development/opencv-linux-x86.jar"
-					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
-				/>
-
-				<mirrors-get
-					dest="lib/development/opencv-linux-x86_64.jar"
-					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
-				/>
-			</then>
-			<else>
-				<if>
-					<os family="windows" />
-					<then>
-						<mirrors-get
-							dest="lib/development/opencv-windows-x86.jar"
-							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86.jar"
-						/>
-
-						<mirrors-get
-							dest="lib/development/opencv-windows-x86_64.jar"
-							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86_64.jar"
-						/>
-					</then>
-				</if>
-			</else>
 		</if>
 	</target>
 
@@ -7326,8 +7289,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<antcall target="copy-sikuli-temp-files" />
-
 		<start-app-server />
 
 		<get-testcase-property property.name="app.server.bundles.size" />
@@ -7431,8 +7392,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
-
-		<antcall target="clean-up-sikuli-temp-files" />
 
 		<antcall target="clean-up-web-xml" />
 	</target>

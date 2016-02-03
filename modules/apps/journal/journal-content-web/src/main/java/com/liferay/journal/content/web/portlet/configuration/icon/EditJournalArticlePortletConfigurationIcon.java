@@ -15,26 +15,19 @@
 package com.liferay.journal.content.web.portlet.configuration.icon;
 
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseFactory;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Pavel Savinov
@@ -59,17 +52,10 @@ public class EditJournalArticlePortletConfigurationIcon
 	public String getOnClick() {
 		StringBundler sb = new StringBundler(14);
 
-		JournalArticle article = null;
-
-		try {
-			article = _journalContentDisplayContext.getArticle();
-		}
-		catch (Exception e) {
-			_log.error("Unable to get current article", e);
-		}
+		JournalArticle article = _journalContentDisplayContext.getArticle();
 
 		if (article == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		sb.append("Liferay.Util.openWindow({bodyCssClass: ");
@@ -92,55 +78,13 @@ public class EditJournalArticlePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		AssetRendererFactory<JournalArticle> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"mvcPath", "/update_journal_article_redirect.jsp");
-		redirectURL.setParameter(
-			"referringPortletResource", portletDisplay.getId());
-
-		PortletURL portletURL = null;
-
-		try {
-			JournalArticle article = _journalContentDisplayContext.getArticle();
-
-			AssetRenderer<JournalArticle> latestArticleAssetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					article.getResourcePrimKey());
-
-			portletURL = latestArticleAssetRenderer.getURLEdit(
-				(LiferayPortletRequest)portletRequest, null,
-				LiferayWindowState.POP_UP, redirectURL);
-
-			return portletURL.toString();
-		}
-		catch (Exception e) {
-			_log.error("Unable to create portlet URL", e);
-		}
-
-		return "";
+		return _journalContentDisplayContext.getURLEdit();
 	}
 
 	@Override
 	public boolean isShow() {
-		try {
-			if (!_journalContentDisplayContext.isShowEditArticleIcon()) {
-				return false;
-			}
-
-			JournalArticle article = _journalContentDisplayContext.getArticle();
-
-			if ((article != null) && !article.isNew()) {
-				return true;
-			}
-		}
-		catch (Exception e) {
+		if (_journalContentDisplayContext.isShowEditArticleIcon()) {
+			return true;
 		}
 
 		return false;

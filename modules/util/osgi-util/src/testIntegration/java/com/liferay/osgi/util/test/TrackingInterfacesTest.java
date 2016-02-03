@@ -205,9 +205,9 @@ public class TrackingInterfacesTest {
 
 				Assert.fail();
 			}
-			catch (UnavailableServiceException sue) {
+			catch (UnavailableServiceException use) {
 				Assert.assertEquals(
-					InterfaceOne.class, sue.getUnavailableServiceClass());
+					InterfaceOne.class, use.getUnavailableServiceClass());
 			}
 
 			try {
@@ -217,9 +217,9 @@ public class TrackingInterfacesTest {
 
 				Assert.fail();
 			}
-			catch (UnavailableServiceException sue) {
+			catch (UnavailableServiceException use) {
 				Assert.assertEquals(
-					InterfaceTwo.class, sue.getUnavailableServiceClass());
+					InterfaceTwo.class, use.getUnavailableServiceClass());
 			}
 		}
 	}
@@ -257,9 +257,9 @@ public class TrackingInterfacesTest {
 
 				Assert.fail("Should throw UnavailableServiceException");
 			}
-			catch (UnavailableServiceException sue) {
+			catch (UnavailableServiceException use) {
 				Assert.assertEquals(
-					InterfaceOne.class, sue.getUnavailableServiceClass());
+					InterfaceOne.class, use.getUnavailableServiceClass());
 			}
 
 			try {
@@ -269,9 +269,9 @@ public class TrackingInterfacesTest {
 
 				Assert.fail("Should throw UnavailableServiceException");
 			}
-			catch (UnavailableServiceException sue) {
+			catch (UnavailableServiceException use) {
 				Assert.assertEquals(
-					InterfaceTwo.class, sue.getUnavailableServiceClass());
+					InterfaceTwo.class, use.getUnavailableServiceClass());
 			}
 		}
 	}

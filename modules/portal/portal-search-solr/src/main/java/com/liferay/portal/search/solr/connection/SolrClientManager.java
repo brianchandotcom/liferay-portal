@@ -63,7 +63,7 @@ public class SolrClientManager {
 			try {
 				_solrClient.close();
 			}
-			catch (IOException e) {
+			catch (IOException ioe) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("");
 				}

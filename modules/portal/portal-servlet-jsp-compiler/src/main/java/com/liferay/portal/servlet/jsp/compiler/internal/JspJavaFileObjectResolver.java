@@ -217,8 +217,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				return new VfsJavaFileObject(
 					className, resourceURL, resourceName);
 			}
-			catch (MalformedURLException murie) {
-				_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
+			catch (MalformedURLException murle) {
+				_logger.log(Logger.LOG_ERROR, murle.getMessage(), murle);
 			}
 		}
 

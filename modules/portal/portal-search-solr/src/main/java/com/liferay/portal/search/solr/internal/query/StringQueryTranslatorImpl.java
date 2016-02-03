@@ -37,8 +37,8 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 
 			return queryParser.parse(stringQuery.getQuery());
 		}
-		catch (ParseException e) {
-			throw new IllegalArgumentException("Invalid query", e);
+		catch (ParseException pe) {
+			throw new IllegalArgumentException("Invalid query", pe);
 		}
 	}
 

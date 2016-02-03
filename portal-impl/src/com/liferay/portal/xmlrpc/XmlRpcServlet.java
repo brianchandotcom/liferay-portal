@@ -85,8 +85,8 @@ public class XmlRpcServlet extends HttpServlet {
 				_log.debug(ioe, ioe);
 			}
 		}
-		catch (XmlRpcException xmlrpce) {
-			_log.error(xmlrpce, xmlrpce);
+		catch (XmlRpcException xre) {
+			_log.error(xre, xre);
 		}
 
 		if (xmlRpcResponse == null) {

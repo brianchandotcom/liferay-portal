@@ -597,11 +597,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			return rs.getLong(1);
 		}
-		catch (SQLException e) {
+		catch (SQLException sqle) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get file version for file entry " + fileEntryId,
-					e);
+					sqle);
 			}
 		}
 		finally {

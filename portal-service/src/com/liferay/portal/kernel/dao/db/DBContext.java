@@ -28,8 +28,8 @@ public class DBContext {
 		try {
 			return DataAccess.getUpgradeOptimizedConnection();
 		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
+		catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class DBContext {
 		try {
 			return DataAccess.getUpgradeOptimizedConnection();
 		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
+		catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
 		}
 	}
 

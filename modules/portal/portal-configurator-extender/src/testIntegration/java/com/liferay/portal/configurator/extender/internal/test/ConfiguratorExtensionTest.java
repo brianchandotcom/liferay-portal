@@ -387,8 +387,8 @@ public class ConfiguratorExtensionTest {
 
 								return (Dictionary<String, Object>)properties;
 							}
-							catch (IOException e) {
-								throw new RuntimeException(e);
+							catch (IOException ioe) {
+								throw new RuntimeException(ioe);
 							}
 						}
 
@@ -412,8 +412,8 @@ public class ConfiguratorExtensionTest {
 
 								return (Dictionary<String, Object>)properties;
 							}
-							catch (IOException e) {
-								throw new RuntimeException(e);
+							catch (IOException ioe) {
+								throw new RuntimeException(ioe);
 							}
 						}
 

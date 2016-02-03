@@ -61,11 +61,11 @@ public class SingleDestinationMessageSenderFactoryUtil {
 
 			return _serviceTracker.getService();
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ie) {
 			throw new IllegalStateException(
 				"Unable to initialize " +
 					"SingleDestinationMessageSenderFactoryUtil",
-				e);
+				ie);
 		}
 	}
 

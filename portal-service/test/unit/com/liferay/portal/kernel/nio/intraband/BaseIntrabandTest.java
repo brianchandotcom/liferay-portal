@@ -225,7 +225,7 @@ public class BaseIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (ClosedIntrabandException cibe) {
+		catch (ClosedIntrabandException cie) {
 		}
 
 		// Register after close
@@ -236,7 +236,7 @@ public class BaseIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (ClosedIntrabandException cibe) {
+		catch (ClosedIntrabandException cie) {
 		}
 
 		// Unregister after close
@@ -246,7 +246,7 @@ public class BaseIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (ClosedIntrabandException cibe) {
+		catch (ClosedIntrabandException cie) {
 		}
 	}
 

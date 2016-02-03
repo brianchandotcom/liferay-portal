@@ -1418,7 +1418,7 @@ public class LayoutImportController implements ImportController {
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototypeUuid, companyId);
 			}
-			catch (NoSuchLayoutSetPrototypeException nlspe) {
+			catch (NoSuchLayoutSetPrototypeException nslspe) {
 				String layoutSetPrototypeName = layoutsElement.attributeValue(
 					"layout-set-prototype-name");
 

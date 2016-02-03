@@ -696,7 +696,7 @@ public class SelectorIntrabandTest {
 
 				Assert.fail();
 			}
-			catch (ClosedIntrabandException cibe) {
+			catch (ClosedIntrabandException cie) {
 			}
 		}
 		finally {
@@ -896,7 +896,7 @@ public class SelectorIntrabandTest {
 
 				Assert.fail();
 			}
-			catch (ClosedIntrabandException cibe) {
+			catch (ClosedIntrabandException cie) {
 			}
 		}
 	}

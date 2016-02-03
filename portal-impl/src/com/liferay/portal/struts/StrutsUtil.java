@@ -77,9 +77,9 @@ public class StrutsUtil {
 			try {
 				requestDispatcher.forward(request, response);
 			}
-			catch (IOException ioe1) {
+			catch (IOException ioe) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe1, ioe1);
+					_log.warn(ioe, ioe);
 				}
 			}
 			catch (ServletException se1) {

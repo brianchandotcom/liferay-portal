@@ -238,7 +238,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				addDependencyToClassPath(clazz);
 			}
-			catch (ClassNotFoundException e) {
+			catch (ClassNotFoundException cnfe) {
 				_logger.log(
 					Logger.LOG_ERROR,
 					"Unable to add depedency " + className +

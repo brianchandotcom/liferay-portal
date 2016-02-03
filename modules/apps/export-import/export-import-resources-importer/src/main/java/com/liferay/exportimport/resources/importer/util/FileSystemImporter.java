@@ -483,12 +483,12 @@ public class FileSystemImporter extends BaseImporter {
 					getMap(name), null, ddmForm, ddmFormLayout, serviceContext);
 			}
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to import DDM structure " + fileName, e);
+				_log.warn("Unable to import DDM structure " + fileName, pe);
 			}
 
-			throw e;
+			throw pe;
 		}
 
 		_ddmStructures.add(ddmStructure.getStructureKey());
@@ -554,12 +554,12 @@ public class FileSystemImporter extends BaseImporter {
 					language, script, false, false, null, null, serviceContext);
 			}
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to import DDM template " + fileName, e);
+				_log.warn("Unable to import DDM template " + fileName, pe);
 			}
 
-			throw e;
+			throw pe;
 		}
 	}
 
@@ -650,12 +650,12 @@ public class FileSystemImporter extends BaseImporter {
 					null, serviceContext);
 			}
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to import DDM template " + fileName, e);
+				_log.warn("Unable to import DDM template " + fileName, pe);
 			}
 
-			throw e;
+			throw pe;
 		}
 
 		addJournalArticles(
@@ -741,12 +741,12 @@ public class FileSystemImporter extends BaseImporter {
 					previousVersion);
 			}
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to import DL file entry " + fileName, e);
+				_log.warn("Unable to import DL file entry " + fileName, pe);
 			}
 
-			throw e;
+			throw pe;
 		}
 
 		addPrimaryKey(DLFileEntry.class.getName(), fileEntry.getPrimaryKey());
@@ -912,12 +912,12 @@ public class FileSystemImporter extends BaseImporter {
 				StringPool.BLANK, new HashMap<String, Serializable>(),
 				serviceContext);
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to import journal article " + fileName, e);
+				_log.warn("Unable to import journal article " + fileName, pe);
 			}
 
-			throw e;
+			throw pe;
 		}
 
 		addPrimaryKey(
@@ -1510,12 +1510,12 @@ public class FileSystemImporter extends BaseImporter {
 				try {
 					indexer.reindex(className, primaryKey);
 				}
-				catch (SearchException e) {
+				catch (SearchException se) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Cannot index entry: className=" + className +
 								", primaryKey=" + primaryKey,
-							e);
+							se);
 					}
 				}
 			}
@@ -1549,14 +1549,14 @@ public class FileSystemImporter extends BaseImporter {
 						JournalArticle.class.getName(),
 						journalArticle.getPrimaryKey());
 				}
-				catch (SearchException e) {
+				catch (SearchException se) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Cannot index entry: className=" +
 								JournalArticle.class.getName() +
 								", primaryKey=" +
 								journalArticle.getPrimaryKey(),
-							e);
+							se);
 					}
 				}
 			}

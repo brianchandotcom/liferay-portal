@@ -377,8 +377,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 				closeable.close();
 			}
-			catch (IOException e) {
-				_log.error(e, e);
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
 			}
 		}
 	}

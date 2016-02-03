@@ -148,8 +148,8 @@ public class RecurrenceUtil {
 				count++;
 			}
 		}
-		catch (ParseException e) {
-			_log.error("Unable to parse data ", e);
+		catch (ParseException pe) {
+			_log.error("Unable to parse data ", pe);
 		}
 
 		return count;

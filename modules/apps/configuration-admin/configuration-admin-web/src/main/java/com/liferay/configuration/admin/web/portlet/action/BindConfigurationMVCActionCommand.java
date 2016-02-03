@@ -184,8 +184,8 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 			configuration.update(configuredProperties);
 		}
-		catch (IOException e) {
-			throw new PortletException(e);
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 	}
 

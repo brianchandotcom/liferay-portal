@@ -193,9 +193,9 @@ public class MessageBusUtil {
 				Thread.sleep(500);
 			}
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ie) {
 			throw new IllegalStateException(
-				"Unable to initialize MessageBusUtil", e);
+				"Unable to initialize MessageBusUtil", ie);
 		}
 
 		return _messageBus;

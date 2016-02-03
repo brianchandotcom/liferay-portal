@@ -73,7 +73,7 @@ public class SiteMembershipPolicyFactoryImplTest {
 		try {
 			SiteMembershipPolicyUtil.checkMembership(array, array, array);
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			Assert.fail();
 		}
 
@@ -87,7 +87,7 @@ public class SiteMembershipPolicyFactoryImplTest {
 		try {
 			SiteMembershipPolicyUtil.checkRoles(null, null);
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			Assert.fail();
 		}
 

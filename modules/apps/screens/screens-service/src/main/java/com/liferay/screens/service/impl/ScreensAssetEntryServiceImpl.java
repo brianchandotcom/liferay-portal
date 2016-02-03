@@ -130,8 +130,8 @@ public class ScreensAssetEntryServiceImpl
 
 				return toJSONArray(assetEntries, locale);
 			}
-			catch (PortalException | SystemException pe) {
-				throw pe;
+			catch (PortalException | SystemException e) {
+				throw e;
 			}
 			catch (Exception e) {
 				throw new PortalException(e);

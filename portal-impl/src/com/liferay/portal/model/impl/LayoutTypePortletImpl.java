@@ -1527,7 +1527,7 @@ public class LayoutTypePortletImpl
 		try {
 			group = layout.getGroup();
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			_log.error("Unable to get group " + layout.getGroupId());
 
 			return new String[0];

@@ -272,7 +272,7 @@ public class IconTag extends IncludeTag {
 
 					imageFileName = imageURL.getPath();
 				}
-				catch (MalformedURLException e) {
+				catch (MalformedURLException murle) {
 				}
 			}
 		}

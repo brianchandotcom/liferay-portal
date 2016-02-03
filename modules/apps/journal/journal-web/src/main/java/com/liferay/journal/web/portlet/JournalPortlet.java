@@ -335,9 +335,9 @@ public class JournalPortlet extends MVCPortlet {
 					themeDisplay.getScopeGroupId(),
 					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
-			catch (InvalidDDMStructureException idse) {
+			catch (InvalidDDMStructureException iddmse) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(idse.getMessage());
+					_log.warn(iddmse.getMessage());
 				}
 
 				invalidArticleIds.add(articleId);

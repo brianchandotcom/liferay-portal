@@ -292,7 +292,7 @@ public class JournalFeedStagedModelDataHandler
 				}
 			}
 		}
-		catch (FeedTargetLayoutFriendlyUrlException ftlfurle) {
+		catch (FeedTargetLayoutFriendlyUrlException ftlfue) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(7);
 
@@ -302,7 +302,7 @@ public class JournalFeedStagedModelDataHandler
 				sb.append("URL ");
 				sb.append(feed.getTargetLayoutFriendlyUrl());
 				sb.append(" does not exist: ");
-				sb.append(ftlfurle.getMessage());
+				sb.append(ftlfue.getMessage());
 
 				_log.warn(sb.toString());
 			}

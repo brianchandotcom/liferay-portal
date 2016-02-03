@@ -66,7 +66,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 			userNotificationDeliveryPersistence.removeByU_P_C_N_D(
 				userId, portletId, classNameId, notificationType, deliveryType);
 		}
-		catch (NoSuchUserNotificationDeliveryException nsnde) {
+		catch (NoSuchUserNotificationDeliveryException nsunde) {
 		}
 	}
 

@@ -9,6 +9,14 @@
 		font-size: inherit;
 	}
 
+	.required-warning {
+		margin-bottom: 25px;
+
+		.icon-asterisk {
+			margin-left: 4px;
+		}
+	}
+
 	.lfr-ddm-form-field-container {
 		position: relative;
 
@@ -102,5 +110,9 @@
 	.lfr-ddm-form-page-title {
 		padding-left: $side-spacing;
 		padding-right: $side-spacing;
+	}
+
+	.required-warning {
+		margin: 0 0 25px 35px;
 	}
 }

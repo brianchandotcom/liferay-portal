@@ -34,6 +34,7 @@
  * @param layout
  * @param portletNamespace
  * @param readOnly
+ * @param showRequiredFieldsWarning
  * @param submitLabel
  * @param templateNamespace
  * @param values
@@ -62,6 +63,7 @@
 
 							portletNamespace: '{$portletNamespace}',
 							readOnly: {$readOnly},
+							showRequiredFieldsWarning: {$showRequiredFieldsWarning},
 							submitLabel: '{$submitLabel}',
 							templateNamespace: '{$templateNamespace}',
 							values: {$values|noAutoescape}
@@ -115,11 +117,24 @@
 {/template}
 
 /**
+ * Prints the form fields required message warning.
+ *
+ * @param showRequiredFieldsWarning
+ * @param requiredFieldsWarningMessageHTML
+ */
+{template .required_warning_message}
+	{if $showRequiredFieldsWarning}
+		{$requiredFieldsWarningMessageHTML|noAutoescape}
+	{/if}
+{/template}
+
+/**
  * Prints a form with pagination.
  *
  * @param containerId
  * @param pages
  * @param readOnly
+ * @param requiredFieldsWarningMessageHTML
  * @param submitLabel
  * @param strings
  */
@@ -153,6 +168,11 @@
 							<h4 class="lfr-ddm-form-page-description">{$page.description|noAutoescape}</h4>
 						{/if}
 
+						{call ddm.required_warning_message data="all"}
+							{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
+							{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
+						{/call}
+
 						{call ddm.form_rows data="all"}
 							{param rows: $page.rows /}
 						{/call}
@@ -182,11 +202,17 @@
  *
  * @param containerId
  * @param pages
+ * @param requiredFieldsWarningMessageHTML
  */
 {template .simple_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="lfr-ddm-form-fields">
 			{foreach $page in $pages}
+				{call ddm.required_warning_message data="all"}
+					{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
+					{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
+				{/call}
+
 				{call ddm.form_rows data="all"}
 					{param rows: $page.rows /}
 				{/call}
@@ -200,6 +226,7 @@
  *
  * @param containerId
  * @param pages
+ * @param requiredFieldsWarningMessageHTML
  */
 {template .tabbed_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -214,6 +241,11 @@
 
 			<div class="tab-content">
 				{foreach $page in $pages}
+					{call ddm.required_warning_message data="all"}
+						{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
+						{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
+					{/call}
+
 					<div class="tab-pane {if isFirst($page)}active{/if}">
 						{call ddm.form_rows data="all"}
 							{param rows: $page.rows /}

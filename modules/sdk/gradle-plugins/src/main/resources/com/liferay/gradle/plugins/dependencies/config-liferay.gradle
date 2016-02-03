@@ -59,7 +59,7 @@ liferay {
 			dir = project.properties["app.server.tcserver.dir"] ?: "${->liferay.appServerParentDir}/tcserver-${->liferay.appServers.tcserver.version}"
 			libGlobalDir = project.properties["app.server.tcserver.lib.global.dir"] ?: "${->liferay.appServers.tcserver.dir}/liferay/lib"
 			portalDir = project.properties["app.server.tcserver.portal.dir"] ?: "${->liferay.appServers.tcserver.dir}/liferay/webapps/ROOT"
-			version = project.properties["app.server.tcserver.version"] ?: "2.6.4"
+			version = project.properties["app.server.tcserver.version"] ?: "2.9.11"
 		}
 
 		tomcat {

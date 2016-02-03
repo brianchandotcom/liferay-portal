@@ -34,21 +34,11 @@
 	}
 
 	.drag-handle {
-		background-color: #555;
-
-		border-radius: 50%;
-
-		color: #FFF;
-		cursor: pointer;
-		font-size: 16px;
+		cursor: move;
 		left: 3px;
-		line-height: 1em;
-		margin: 8px;
-		padding: 4px;
+		margin-left: 15px;
 		position: absolute;
-		text-align: center;
-		top: 2px;
-		width: 1em;
+		top: 15px;
 	}
 }
 

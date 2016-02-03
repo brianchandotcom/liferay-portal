@@ -39,6 +39,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 %>
 
 <div class="container-fluid-1280">
+	<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
+
 	<c:if test="<%= liveGroupRemoteStaging %>">
 		<div class="alert alert-info">
 			<liferay-ui:message key="live-group-remote-staging-alert" />

@@ -19,12 +19,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -32,26 +30,21 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Manuel de la Peña
@@ -144,14 +137,12 @@ public class VerifyPermissionTest extends BaseVerifyProcessTestCase {
 
 		Layout layout = layouts.get(0);
 
-		themeDisplay.setLayout(layout);
+		String primKey = PortletPermissionUtil.getPrimaryKey(
+			layout.getPlid(), PortletKeys.TEST);
 
-		_request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			user.getCompanyId(), PortletKeys.TEST);
-
-		PortalUtil.addPortletDefaultResource(_request, portlet);
+		ResourceLocalServiceUtil.addResources(
+			company.getCompanyId(), layout.getGroupId(), 0, PortletKeys.TEST,
+			primKey, true, true, true);
 
 		return layout;
 	}
@@ -160,7 +151,5 @@ public class VerifyPermissionTest extends BaseVerifyProcessTestCase {
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyPermission();
 	}
-
-	private final HttpServletRequest _request = new MockHttpServletRequest();
 
 }

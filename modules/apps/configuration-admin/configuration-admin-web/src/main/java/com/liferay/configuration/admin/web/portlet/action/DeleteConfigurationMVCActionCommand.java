@@ -73,16 +73,10 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteConfigurationMVCActionCommand.class);
 
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

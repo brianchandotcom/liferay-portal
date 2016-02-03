@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -166,7 +166,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 			configurationModel.getFactoryPid());
 
-		IndexWriterHelperUtil.deleteDocument(
+		_indexWriterHelper.deleteDocument(
 			getSearchEngineId(), CompanyConstants.SYSTEM,
 			document.get(Field.UID), isCommitImmediately());
 	}
@@ -242,7 +242,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 		Document document = getDocument(configurationModel);
 
-		IndexWriterHelperUtil.updateDocument(
+		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), CompanyConstants.SYSTEM, document,
 			isCommitImmediately());
 	}
@@ -263,13 +263,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 }

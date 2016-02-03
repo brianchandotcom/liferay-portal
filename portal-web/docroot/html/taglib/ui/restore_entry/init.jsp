@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %>

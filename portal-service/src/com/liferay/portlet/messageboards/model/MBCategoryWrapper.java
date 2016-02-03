@@ -470,7 +470,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	* @return the trash entry created when this message boards category was moved to the Recycle Bin
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getTrashEntry();
 	}

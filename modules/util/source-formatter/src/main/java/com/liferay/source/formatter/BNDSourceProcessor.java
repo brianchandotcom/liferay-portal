@@ -67,70 +67,12 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = sortDefinitions(content);
 
-		if (portalSource && isModulesFile(absolutePath)) {
-			content = formatIncludeResource(content);
-		}
-
 		return trimContent(content, false);
 	}
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
-	}
-
-	protected String formatIncludeResource(String content) {
-		Matcher matcher = _includeResourcePattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String includeResources = matcher.group();
-
-		for (String includeResourceDir : _INCLUDE_RESOURCE_DIRS_BLACKLIST) {
-			Pattern includeResourceDirPattern = Pattern.compile(
-				"(\t|: )" + includeResourceDir + "(,\\\\\n|\n||\\Z)");
-
-			Matcher matcher2 = includeResourceDirPattern.matcher(
-				includeResources);
-
-			if (!matcher2.find()) {
-				continue;
-			}
-
-			String beforeIncludeResourceDir = matcher2.group(1);
-
-			if (!beforeIncludeResourceDir.equals("\t")) {
-				return StringUtil.replace(
-					content, includeResources, StringPool.BLANK);
-			}
-
-			String afterIncludeResourceDir = matcher2.group(2);
-
-			int x = includeResources.lastIndexOf("\\", matcher2.start());
-			int y = matcher2.end();
-
-			String replacement = null;
-
-			if (afterIncludeResourceDir.equals(",\\\n")) {
-				replacement =
-					includeResources.substring(0, x + 1) +
-						includeResources.substring(y - 1);
-			}
-			else {
-				replacement = includeResources.substring(0, x - 1);
-
-				if (afterIncludeResourceDir.equals("\n")) {
-					replacement += "\n";
-				}
-			}
-
-			return StringUtil.replace(
-				content, includeResources, replacement);
-		}
-
-		return content;
 	}
 
 	protected String sortDefinitions(String content) {
@@ -172,18 +114,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST =
-		new String[] {
-			"classes",
-			"META-INF/resources=src/main/resources/META-INF/resources"
-		};
-
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
 	private Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
-	private Pattern _includeResourcePattern = Pattern.compile(
-		"^Include-Resource:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private Pattern _incorrectTabPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(

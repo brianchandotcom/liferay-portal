@@ -16,8 +16,8 @@ package com.liferay.portlet.trash.service.impl;
 
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashVersionLocalServiceBaseImpl;
+import com.liferay.trash.kernel.model.TrashVersion;
 
 import java.util.List;
 

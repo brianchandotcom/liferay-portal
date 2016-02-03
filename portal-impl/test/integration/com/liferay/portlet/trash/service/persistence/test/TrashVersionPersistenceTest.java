@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.trash.exception.NoSuchVersionException;
-import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
-import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
-import com.liferay.portlet.trash.service.persistence.TrashVersionUtil;
+import com.liferay.trash.kernel.exception.NoSuchVersionException;
+import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
+import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
+import com.liferay.trash.kernel.service.persistence.TrashVersionUtil;
 
 import org.junit.After;
 import org.junit.Assert;

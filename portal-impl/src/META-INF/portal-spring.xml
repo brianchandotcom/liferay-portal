@@ -335,9 +335,9 @@
 	<bean id="com.liferay.portlet.social.service.SocialRequestService" class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialRequestPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialRequestInterpreterLocalService" class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" />
-	<bean id="com.liferay.portlet.trash.service.TrashEntryLocalService" class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.trash.service.TrashEntryService" class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" />
-	<bean id="com.liferay.portlet.trash.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.trash.service.TrashVersionLocalService" class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.trash.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.trash.kernel.service.TrashEntryLocalService" class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" />
+	<bean id="com.liferay.trash.kernel.service.TrashEntryService" class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" />
+	<bean id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.trash.kernel.service.TrashVersionLocalService" class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" />
+	<bean id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" parent="basePersistence" />
 </beans>

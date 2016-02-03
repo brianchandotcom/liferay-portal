@@ -3,11 +3,10 @@ Bundle-SymbolicName: com.liferay.portal.ldap
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.ldap,\
-	com.liferay.portal.ldap.authenticator.*,\
-	com.liferay.portal.ldap.configuration.*,\
-	com.liferay.portal.ldap.constants.*,\
-	com.liferay.portal.ldap.exportimport.*
+	com.liferay.portal.ldap.authenticator.configuration,\
+	com.liferay.portal.ldap.configuration,\
+	com.liferay.portal.ldap.constants,\
+	com.liferay.portal.ldap.exportimport.configuration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LDAP
-Web-ContextPath: /portal-ldap
 -include: ../../../marketplace/platform/bnd.bnd

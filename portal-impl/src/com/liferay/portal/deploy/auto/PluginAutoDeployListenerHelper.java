@@ -84,7 +84,7 @@ public class PluginAutoDeployListenerHelper {
 			String checkXmlFile, boolean checkFileExtension)
 		throws AutoDeployException {
 
-		if (checkFileExtension && !isMatchingFileExtension()) {
+		if (checkFileExtension && !isWarOrZip()) {
 			return false;
 		}
 
@@ -117,10 +117,6 @@ public class PluginAutoDeployListenerHelper {
 				}
 			}
 		}
-	}
-
-	public boolean isMatchingFileExtension() {
-		return isMatchingFileExtension(".war", ".zip");
 	}
 
 	public boolean isMatchingFileExtension(String ... extensions) {
@@ -160,6 +156,10 @@ public class PluginAutoDeployListenerHelper {
 		}
 
 		return false;
+	}
+
+	public boolean isWarOrZip() {
+		return isMatchingFileExtension(".war", ".zip");
 	}
 
 	public boolean isWebPlugin() throws AutoDeployException {

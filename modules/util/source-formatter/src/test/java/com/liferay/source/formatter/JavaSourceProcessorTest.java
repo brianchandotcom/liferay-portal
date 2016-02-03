@@ -56,6 +56,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testExceptionVariableName() throws Exception {
+		test("ExceptionVariableName.testjava");
+	}
+
+	@Test
 	public void testFormatAnnotations() throws Exception {
 		test("FormatAnnotations.testjava");
 	}

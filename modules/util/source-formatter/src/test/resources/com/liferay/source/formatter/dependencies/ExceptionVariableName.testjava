@@ -1,0 +1,76 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.configuration.FileConfiguration;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+/**
+ * @author Hugo Huijser
+ */
+public class ExceptionVariableName {
+
+	public FileConfiguration getFileConfiguration(String fileName) {
+		try {
+			return new PropertiesConfiguration(fileName);
+		}
+		catch (org.apache.commons.configuration.ConfigurationException e) {
+		}
+
+		return null;
+	}
+
+	public String readFile(File file) throws Exception {
+		try {
+			return FileUtil.read(file);
+		}
+		catch (IOException | RuntimeException re) {
+			throw new SystemException(re);
+		}
+	}
+
+	public String readFile(String fileName) throws Exception {
+		try {
+			return FileUtil.read(fileName);
+		}
+		catch (IOException oie) {
+			throw new SystemException(oie);
+		}
+	}
+
+	public String readFile(String fileName1, String fileName2) {
+		String s = null;
+
+		try {
+			s = FileUtil.read(fileName1);
+		}
+		catch (IOException ioe1) {
+			try {
+				s = FileUtil.read(fileName2);
+			}
+			catch (IOException ioe2) {
+			}
+		}
+
+		return s;
+	}
+
+}

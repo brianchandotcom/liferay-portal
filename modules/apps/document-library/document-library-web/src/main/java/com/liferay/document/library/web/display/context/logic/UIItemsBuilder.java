@@ -383,20 +383,20 @@ public class UIItemsBuilder {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/move_entry");
 
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
 		long folderId = _fileEntry.getFolderId();
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			portletURL.setParameter(
+			redirectURL.setParameter(
 				"mvcRenderCommandName", "/document_library/view");
 		}
 		else {
-			portletURL.setParameter(
+			redirectURL.setParameter(
 				"mvcRenderCommandName", "/document_library/view_folder");
 		}
 
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+		redirectURL.setParameter("folderId", String.valueOf(folderId));
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 

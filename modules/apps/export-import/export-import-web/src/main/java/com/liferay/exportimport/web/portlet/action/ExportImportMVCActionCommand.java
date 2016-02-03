@@ -122,12 +122,16 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				_importLayoutsMVCActionCommand.deleteTempFileEntry(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.EXPORT)) {
 				hideDefaultSuccessMessage(actionRequest);

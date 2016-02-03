@@ -217,11 +217,15 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				validateFile(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempFileEntry(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
 				hideDefaultSuccessMessage(actionRequest);

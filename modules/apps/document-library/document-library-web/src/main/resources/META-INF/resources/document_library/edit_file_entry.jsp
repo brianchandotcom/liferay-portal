@@ -135,8 +135,6 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-
 <c:if test="<%= portletTitleBasedNavigation && (fileVersion != null) %>">
 
 	<%
@@ -253,6 +251,8 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:asset-categories-error />
 
 		<liferay-ui:asset-tags-error />
+
+		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

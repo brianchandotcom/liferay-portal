@@ -3489,6 +3489,10 @@ else.
 
 - `com.liferay.portlet.sites.util` &rarr; `com.liferay.sites.kernel.util`
 
+- `com.liferay.portlet.social` &rarr; `com.liferay.social.kernel`
+
+- `com.liferay.portlet.trash` &rarr; `com.liferay.trash.kernel`
+
 - `com.liferay.portlet.useradmin.util` &rarr; `com.liferay.users.admin.kernel.util`
 
 #### Why was this change made?

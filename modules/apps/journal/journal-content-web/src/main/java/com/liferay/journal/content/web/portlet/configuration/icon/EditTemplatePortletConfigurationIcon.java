@@ -14,11 +14,10 @@
 
 package com.liferay.journal.content.web.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -26,16 +25,14 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portlet.RenderResponseFactory;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -46,6 +43,8 @@ public class EditTemplatePortletConfigurationIcon
 
 	public EditTemplatePortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
+
+		createJournalContentDisplayContext(portletRequest);
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class EditTemplatePortletConfigurationIcon
 		DDMTemplate ddmTemplate = null;
 
 		try {
-			ddmTemplate = getDDMTemplate();
+			ddmTemplate = _journalContentDisplayContext.getDDMTemplate();
 		}
 		catch (Exception e) {
 			_log.error("Unable to get current DDM template", e);
@@ -99,7 +98,7 @@ public class EditTemplatePortletConfigurationIcon
 		DDMTemplate ddmTemplate = null;
 
 		try {
-			ddmTemplate = getDDMTemplate();
+			ddmTemplate = _journalContentDisplayContext.getDDMTemplate();
 		}
 		catch (Exception e) {
 			_log.error("Unable to get current DDM template", e);
@@ -148,7 +147,12 @@ public class EditTemplatePortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			DDMTemplate ddmTemplate = getDDMTemplate();
+			if (!_journalContentDisplayContext.isShowEditTemplateIcon()) {
+				return false;
+			}
+
+			DDMTemplate ddmTemplate =
+				_journalContentDisplayContext.getDDMTemplate();
 
 			if ((ddmTemplate != null) && !ddmTemplate.isNew()) {
 				return true;
@@ -165,36 +169,31 @@ public class EditTemplatePortletConfigurationIcon
 		return false;
 	}
 
-	protected DDMTemplate getDDMTemplate() throws Exception {
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+	protected void createJournalContentDisplayContext(
+		PortletRequest portletRequest) {
 
-		String articleId = portletPreferences.getValue("articleId", null);
+		try {
+			PortletResponse portletResponse = RenderResponseFactory.create(
+				(RenderRequestImpl)portletRequest, themeDisplay.getResponse(),
+				portletDisplay.getPortletName(), themeDisplay.getCompanyId());
 
-		if (Validator.isNull(articleId)) {
-			return null;
+			JournalContentPortletInstanceConfiguration
+				journalContentPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						JournalContentPortletInstanceConfiguration.class);
+
+			_journalContentDisplayContext = new JournalContentDisplayContext(
+				portletRequest, portletResponse,
+				journalContentPortletInstanceConfiguration);
 		}
-
-		int status = ParamUtil.getInteger(
-			portletRequest, "status", WorkflowConstants.STATUS_ANY);
-
-		long groupId = ParamUtil.getLong(
-			portletRequest, "groupId", themeDisplay.getScopeGroupId());
-
-		JournalArticle article = JournalArticleServiceUtil.getLatestArticle(
-			groupId, articleId, status);
-
-		DDMTemplate ddmTemplate = article.getDDMTemplate();
-
-		if (ddmTemplate == null) {
-			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-				groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				article.getDDMTemplateKey(), true);
+		catch (Exception e) {
+			_log.error("Unable to create display context", e);
 		}
-
-		return ddmTemplate;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditTemplatePortletConfigurationIcon.class);
+
+	private JournalContentDisplayContext _journalContentDisplayContext;
 
 }

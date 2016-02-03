@@ -492,6 +492,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					matcher.start() - 1);
 			}
 
+			if (!_checkUnprocessedExceptions || fileName.contains("/test/") ||
+				fileName.contains("/testIntegration/")) {
+
+				continue;
+			}
+
 			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
 				insideCatchCode);
 
@@ -890,12 +896,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-36174
 
-		if (_checkUnprocessedExceptions && !fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/")) {
-
-			newContent = checkUnprocessedExceptions(
-				newContent, file, packagePath, fileName);
-		}
+		newContent = checkUnprocessedExceptions(
+			newContent, file, packagePath, fileName);
 
 		// LPS-39508
 

@@ -254,11 +254,11 @@ public class LangBuilder {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content));
-					UnsyncBufferedWriter unsyncBufferedWriter =
-						new UnsyncBufferedWriter(
-							new OutputStreamWriter(
-								new FileOutputStream(propertiesFile),
-								StringPool.UTF8))) {
+			UnsyncBufferedWriter unsyncBufferedWriter =
+				new UnsyncBufferedWriter(
+					new OutputStreamWriter(
+						new FileOutputStream(propertiesFile),
+						StringPool.UTF8))) {
 
 			boolean firstLine = true;
 			int state = 0;
@@ -607,9 +607,8 @@ public class LangBuilder {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content));
-					UnsyncBufferedWriter unsyncBufferedWriter =
-						new UnsyncBufferedWriter(
-							new FileWriter(propertiesFile))) {
+			UnsyncBufferedWriter unsyncBufferedWriter =
+				new UnsyncBufferedWriter(new FileWriter(propertiesFile))) {
 
 			Map<String, String> messages = new TreeMap<>(
 				new NaturalOrderStringComparator(true, true));

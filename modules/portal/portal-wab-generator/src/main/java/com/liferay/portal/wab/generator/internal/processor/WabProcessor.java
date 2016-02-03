@@ -254,7 +254,7 @@ public class WabProcessor {
 
 			for (ZipEntry zipEntry;
 					(zipEntry = zipInputStream.getNextEntry()) != null;
-						zipInputStream.closeEntry()) {
+					zipInputStream.closeEntry()) {
 
 				if (zipEntry.isDirectory()) {
 					File dir = new File(

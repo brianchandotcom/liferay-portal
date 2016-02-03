@@ -64,7 +64,7 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 		for (int index;
 				(index = path.indexOf(CharPool.SLASH, previousIndex + 1)) != -1;
-					previousIndex = index) {
+				previousIndex = index) {
 
 			if ((previousIndex + 1) == index) {
 

@@ -60,18 +60,15 @@ public class StreamUtilTest {
 		try (FileChannel fromFileChannel = new FileChannelWrapper(
 				FileChannel.open(_fromFilePath, StandardOpenOption.READ)) {
 
-					@Override
-					public long transferTo(
-							long position, long count,
-							WritableByteChannel target)
-						throws IOException {
+				@Override
+				public long transferTo(
+						long position, long count, WritableByteChannel target)
+					throws IOException {
 
-						return super.transferTo(
-							position, _data.length / 4, target);
-					}
+					return super.transferTo(position, _data.length / 4, target);
+				}
 
-				};
-
+			};
 			FileChannel toFileChannel = FileChannel.open(
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {

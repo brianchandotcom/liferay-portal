@@ -90,8 +90,8 @@ public class SQLDateTest {
 	protected long readTimeJDBC() throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
 				Statement statement = connection.createStatement();
-					ResultSet resultSet = statement.executeQuery(
-						_READ_RELEASE_MODIFIED_DATE)) {
+				ResultSet resultSet = statement.executeQuery(
+					_READ_RELEASE_MODIFIED_DATE)) {
 
 			Assert.assertTrue(resultSet.next());
 

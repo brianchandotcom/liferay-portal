@@ -9,7 +9,6 @@
 	<bean id="com.liferay.calendar.service.CalendarBookingService" class="com.liferay.calendar.service.impl.CalendarBookingServiceImpl" />
 	<bean id="com.liferay.calendar.service.persistence.CalendarBookingPersistence" class="com.liferay.calendar.service.persistence.impl.CalendarBookingPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.calendar.service.persistence.CalendarBookingFinder" class="com.liferay.calendar.service.persistence.impl.CalendarBookingFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.calendar.service.CalendarImporterLocalService" class="com.liferay.calendar.service.impl.CalendarImporterLocalServiceImpl" />
 	<bean id="com.liferay.calendar.service.CalendarNotificationTemplateLocalService" class="com.liferay.calendar.service.impl.CalendarNotificationTemplateLocalServiceImpl" />
 	<bean id="com.liferay.calendar.service.CalendarNotificationTemplateService" class="com.liferay.calendar.service.impl.CalendarNotificationTemplateServiceImpl" />
 	<bean id="com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence" class="com.liferay.calendar.service.persistence.impl.CalendarNotificationTemplatePersistenceImpl" parent="basePersistence" />

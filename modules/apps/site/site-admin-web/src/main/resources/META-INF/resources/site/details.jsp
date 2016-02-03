@@ -521,9 +521,9 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
-	<aui:button-row>
+	<div class="button-holder">
 		<aui:button cssClass="btn-lg modify-link" id="selectParentSiteLink" value="select" />
-	</aui:button-row>
+	</div>
 
 	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
 

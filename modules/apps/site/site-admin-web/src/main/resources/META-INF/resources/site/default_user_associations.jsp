@@ -96,9 +96,9 @@ for (long defaultTeamId : defaultTeamIds) {
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<aui:button-row>
+<div class="button-holder">
 	<aui:button cssClass="btn-lg modify-link" id="selectSiteRoleLink" value="select" />
-</aui:button-row>
+</div>
 
 <h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
 

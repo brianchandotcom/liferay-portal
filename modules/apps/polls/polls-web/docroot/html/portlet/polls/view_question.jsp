@@ -117,13 +117,13 @@ portletDisplay.setURLBack(redirect);
 					<portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 				</portlet:renderURL>
 
-				<aui:button-row>
+				<div class="button-holder">
 					<c:choose>
 						<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 							<aui:button href="<%= viewQuestionURL %>" value="back-to-vote" />
 						</c:when>
 					</c:choose>
-				</aui:button-row>
+				</div>
 
 				<%
 				PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(question.getTitle(locale)), viewQuestionURL.toString());

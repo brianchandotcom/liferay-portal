@@ -82,7 +82,7 @@ liferay {
 			dir = project.properties["app.server.weblogic.dir"] ?: "${->liferay.appServerParentDir}/weblogic-${->liferay.appServers.weblogic.version}"
 			libGlobalDir = project.properties["app.server.weblogic.lib.global.dir"] ?: "${->liferay.appServers.weblogic.dir}/domains/liferay/lib"
 			portalDir = project.properties["app.server.weblogic.portal.dir"] ?: "${->liferay.appServers.weblogic.dir}/domains/liferay/autodeploy/ROOT"
-			version = project.properties["app.server.weblogic.version"] ?: "12.1.2"
+			version = project.properties["app.server.weblogic.version"] ?: "12.1.3"
 		}
 
 		websphere {

@@ -55,6 +55,11 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 	public abstract URL getURL(String templateId) throws IOException;
 
+	@Override
+	public boolean isTemplateResourceValid(String templateId, String langType) {
+		return true;
+	}
+
 	protected static String normalizePath(String path) {
 		List<String> elements = new ArrayList<>();
 

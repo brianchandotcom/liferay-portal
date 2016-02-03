@@ -89,6 +89,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "facebookId", Types.BIGINT },
 			{ "ldapServerId", Types.BIGINT },
 			{ "openId", Types.VARCHAR },
+			{ "googleId", Types.VARCHAR },
 			{ "portraitId", Types.BIGINT },
 			{ "languageId", Types.VARCHAR },
 			{ "timeZoneId", Types.VARCHAR },
@@ -134,6 +135,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("facebookId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ldapServerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("googleId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("portraitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("timeZoneId", Types.VARCHAR);
@@ -156,7 +158,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,googleId VARCHAR(75) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY User_.userId ASC";
@@ -178,13 +180,14 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final long DEFAULTUSER_COLUMN_BITMASK = 8L;
 	public static final long EMAILADDRESS_COLUMN_BITMASK = 16L;
 	public static final long FACEBOOKID_COLUMN_BITMASK = 32L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 64L;
-	public static final long OPENID_COLUMN_BITMASK = 128L;
-	public static final long PORTRAITID_COLUMN_BITMASK = 256L;
-	public static final long SCREENNAME_COLUMN_BITMASK = 512L;
-	public static final long STATUS_COLUMN_BITMASK = 1024L;
-	public static final long USERID_COLUMN_BITMASK = 2048L;
-	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long GOOGLEID_COLUMN_BITMASK = 64L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
+	public static final long OPENID_COLUMN_BITMASK = 256L;
+	public static final long PORTRAITID_COLUMN_BITMASK = 512L;
+	public static final long SCREENNAME_COLUMN_BITMASK = 1024L;
+	public static final long STATUS_COLUMN_BITMASK = 2048L;
+	public static final long USERID_COLUMN_BITMASK = 4096L;
+	public static final long UUID_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -220,6 +223,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setFacebookId(soapModel.getFacebookId());
 		model.setLdapServerId(soapModel.getLdapServerId());
 		model.setOpenId(soapModel.getOpenId());
+		model.setGoogleId(soapModel.getGoogleId());
 		model.setPortraitId(soapModel.getPortraitId());
 		model.setLanguageId(soapModel.getLanguageId());
 		model.setTimeZoneId(soapModel.getTimeZoneId());
@@ -370,6 +374,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		attributes.put("facebookId", getFacebookId());
 		attributes.put("ldapServerId", getLdapServerId());
 		attributes.put("openId", getOpenId());
+		attributes.put("googleId", getGoogleId());
 		attributes.put("portraitId", getPortraitId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("timeZoneId", getTimeZoneId());
@@ -525,6 +530,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (openId != null) {
 			setOpenId(openId);
+		}
+
+		String googleId = (String)attributes.get("googleId");
+
+		if (googleId != null) {
+			setGoogleId(googleId);
 		}
 
 		Long portraitId = (Long)attributes.get("portraitId");
@@ -1079,6 +1090,32 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@JSON
 	@Override
+	public String getGoogleId() {
+		if (_googleId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _googleId;
+		}
+	}
+
+	@Override
+	public void setGoogleId(String googleId) {
+		_columnBitmask |= GOOGLEID_COLUMN_BITMASK;
+
+		if (_originalGoogleId == null) {
+			_originalGoogleId = _googleId;
+		}
+
+		_googleId = googleId;
+	}
+
+	public String getOriginalGoogleId() {
+		return GetterUtil.getString(_originalGoogleId);
+	}
+
+	@JSON
+	@Override
 	public long getPortraitId() {
 		return _portraitId;
 	}
@@ -1444,6 +1481,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setFacebookId(getFacebookId());
 		userImpl.setLdapServerId(getLdapServerId());
 		userImpl.setOpenId(getOpenId());
+		userImpl.setGoogleId(getGoogleId());
 		userImpl.setPortraitId(getPortraitId());
 		userImpl.setLanguageId(getLanguageId());
 		userImpl.setTimeZoneId(getTimeZoneId());
@@ -1559,6 +1597,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userModelImpl._setOriginalFacebookId = false;
 
 		userModelImpl._originalOpenId = userModelImpl._openId;
+
+		userModelImpl._originalGoogleId = userModelImpl._googleId;
 
 		userModelImpl._originalPortraitId = userModelImpl._portraitId;
 
@@ -1686,6 +1726,14 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if ((openId != null) && (openId.length() == 0)) {
 			userCacheModel.openId = null;
+		}
+
+		userCacheModel.googleId = getGoogleId();
+
+		String googleId = userCacheModel.googleId;
+
+		if ((googleId != null) && (googleId.length() == 0)) {
+			userCacheModel.googleId = null;
 		}
 
 		userCacheModel.portraitId = getPortraitId();
@@ -1821,7 +1869,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1865,6 +1913,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(getLdapServerId());
 		sb.append(", openId=");
 		sb.append(getOpenId());
+		sb.append(", googleId=");
+		sb.append(getGoogleId());
 		sb.append(", portraitId=");
 		sb.append(getPortraitId());
 		sb.append(", languageId=");
@@ -1912,7 +1962,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(127);
+		StringBundler sb = new StringBundler(130);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.User");
@@ -2001,6 +2051,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(
 			"<column><column-name>openId</column-name><column-value><![CDATA[");
 		sb.append(getOpenId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>googleId</column-name><column-value><![CDATA[");
+		sb.append(getGoogleId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>portraitId</column-name><column-value><![CDATA[");
@@ -2130,6 +2184,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private long _ldapServerId;
 	private String _openId;
 	private String _originalOpenId;
+	private String _googleId;
+	private String _originalGoogleId;
 	private long _portraitId;
 	private long _originalPortraitId;
 	private boolean _setOriginalPortraitId;

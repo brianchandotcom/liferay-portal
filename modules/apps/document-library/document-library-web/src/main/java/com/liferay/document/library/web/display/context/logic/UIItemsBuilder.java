@@ -56,8 +56,8 @@ import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.List;
 

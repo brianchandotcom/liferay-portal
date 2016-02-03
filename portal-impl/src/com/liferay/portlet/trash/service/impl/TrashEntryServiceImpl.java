@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashEntryConstants;
-import com.liferay.portlet.trash.model.TrashEntryList;
-import com.liferay.portlet.trash.model.TrashEntrySoap;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashEntryConstants;
+import com.liferay.trash.kernel.model.TrashEntryList;
+import com.liferay.trash.kernel.model.TrashEntrySoap;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -57,8 +57,6 @@ AUI.add(
 
 				instance._portletItem = portletItem;
 
-				Liferay.fire('dockbarAddContentDD:init');
-
 				Liferay.fire('initLayout');
 			},
 

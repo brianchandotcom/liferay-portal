@@ -17,43 +17,13 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-Map<String, Object> data = new HashMap<String, Object>();
-
 PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION, plid, PortletRequest.RENDER_PHASE);
 
 simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-data.put("panelURL", simulationPanelURL);
-
-data.put("qa-id", "simulation");
 %>
 
 <li class="control-menu-nav-item">
-	<liferay-ui:icon
-		cssClass="hidden-xs"
-		data="<%= data %>"
-		icon="simulation-menu-closed"
-		id="simulationPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		markupView="lexicon"
-		message="simulation"
-		url="javascript:;"
-	/>
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="lfr-has-simulation-panel open-admin-panel" data-qa-id="simulation" data-target="#simulationPanelId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "simulation")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= simulationPanelURL.toString() %>" href="javascript:;" id="simulationToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "simulation")) %>')">
+		<aui:icon image="simulation-menu-closed" markupView="lexicon" />
+	</a>
 </li>
-
-<aui:script position="auto" use="liferay-control-menu">
-	var ControlMenu = Liferay.ControlMenu;
-
-	ControlMenu.registerPanel(
-		{
-			css: 'lfr-has-simulation-panel',
-			id: 'simulationPanel',
-			layoutControl: '.page-preview-controls > a',
-			node: null,
-			showFn: A.bind('showPanel', ControlMenu),
-			tpl: '<div class="lfr-admin-panel lfr-simulation-panel product-menu sidebar-inverse" id="{0}" />',
-			trigger: A.one('#<portlet:namespace />simulationPanel')
-		}
-	);
-</aui:script>

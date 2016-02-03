@@ -10,62 +10,62 @@
 <tbody>
 <tr>
 	<td>ASSET_TITLE_IMAGE</td>
-	<td>//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a[span[contains(.,'${key_assetTitle}')]]/i</td>
+	<td>//ul[contains(@class,'list-unstyled')]/li/span/a[span[contains(.,'${key_assetTitle}')]]/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_IMAGE_1</td>
-	<td>xpath=(//div[contains(.,'Related Assets')]//ul[contains(@class,'title-list')]/li/a)[1]</td>
+	<td>xpath=(//div[contains(.,'Related Assets')]//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_IMAGE_2</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/i)[2]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/span/a/i)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_IMAGE_3</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/i)[3]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/span/a/i)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a[contains(.,'${key_assetTitle}')]</td>
+	<td>//ul[contains(@class,'list-unstyled')]/li/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[1]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_2</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[2]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_3</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[3]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_EDIT</td>
-	<td>//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/div/span/a</td>
+	<td>//ul[contains(@class,'list-unstyled')]/li/div/span/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_EDIT_1</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/div/span/a)[1]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/div/span/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_EDIT_2</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/div/span/a)[2]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/div/span/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_EDIT_3</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/div/span/a)[3]</td>
+	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/div/span/a)[3]</td>
 	<td></td>
 </tr>
 </tbody>

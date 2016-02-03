@@ -406,7 +406,7 @@
 
 				<var name="key_assetTitle" value="${assetTitle}" />
 
-				<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_LINK" value1="${assetTitle}" />
 
 				<execute function="SelectFrameTop" />
 

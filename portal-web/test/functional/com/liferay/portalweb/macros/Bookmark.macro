@@ -552,15 +552,15 @@
 	</command>
 
 	<command name="viewNoCategoryCP">
-		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Categorization" />
 		</execute>
 
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Categories#VOCABULARY_CATEGORY" />
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#VOCABULARY" />
 	</command>
 
 	<command name="viewNoPG">

@@ -148,10 +148,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Private Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

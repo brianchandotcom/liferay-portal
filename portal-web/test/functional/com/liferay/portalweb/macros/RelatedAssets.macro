@@ -20,6 +20,10 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Filter" />
+		</execute>
+
 		<execute function="Select" locator1="RelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
 		<execute function="Click" locator1="Button#SELECT_CATEGORIES" />
 
@@ -28,7 +32,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="RelatedassetsConfiguration#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
-		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -189,7 +193,13 @@
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertElementPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
+		<if>
+			<condition function="IsElementPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
+			<then>
+				<execute function="AssertVisible" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="Relatedassets#ASSET_TITLE_1" value1="${assetTitle}" />
 		<execute function="AssertElementPresent" locator1="Relatedassets#ASSET_EDIT_1" />
 	</command>

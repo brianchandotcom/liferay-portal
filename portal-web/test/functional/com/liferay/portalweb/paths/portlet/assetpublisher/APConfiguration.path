@@ -238,7 +238,7 @@
 <!--ASSET_SELECTION_MANUAL_ASSET_ENTRIES-->
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON</td>
-	<td>//legend[contains(.,'Asset Entries')]/following-sibling::*//a[@title='Select']</td>
+	<td>//div[contains(@id,'assetContent')]//a[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,8 +247,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON</td>
-	<td>//td/button[@data-assettitle='${key_assetTitle}']</td>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_LINK</td>
+	<td>//a[@data-assettitle='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 </tbody>

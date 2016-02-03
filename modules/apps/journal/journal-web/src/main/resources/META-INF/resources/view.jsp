@@ -33,8 +33,10 @@ data.put("qa-id", "navigation");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="web-content" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="web-content" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= journalDisplayContext.isShowSearch() %>">

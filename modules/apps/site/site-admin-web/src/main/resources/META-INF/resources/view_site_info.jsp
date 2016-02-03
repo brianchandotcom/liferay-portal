@@ -36,7 +36,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="details" selected="<%= true %>" />
+		<portlet:renderURL var="mainURL" />
+
+		<aui:nav-item href="<%= mainURL.toString() %>" label="details" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 

@@ -20,7 +20,12 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+
+PortletURL exportProcessesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE);
+
+exportProcessesURL.setParameter("mvcPath", "/export/view.jsp");
+
+portletDisplay.setURLBack(exportProcessesURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "export-templates"));
 %>

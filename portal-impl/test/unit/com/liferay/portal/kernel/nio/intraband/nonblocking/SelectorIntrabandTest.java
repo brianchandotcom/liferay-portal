@@ -1350,8 +1350,8 @@ public class SelectorIntrabandTest {
 
 		try (SelectableChannel readSelectableChannel =
 				readSelectionKey.channel();
-					SelectableChannel writeSelectableChannel =
-						writeSelectionKey.channel()) {
+			SelectableChannel writeSelectableChannel =
+				writeSelectionKey.channel()) {
 
 			while (readSelectableChannel.keyFor(selector) != null);
 			while (writeSelectableChannel.keyFor(selector) != null);

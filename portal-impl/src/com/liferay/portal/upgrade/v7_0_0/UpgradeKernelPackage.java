@@ -79,9 +79,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
 				ResultSet rs = ps1.executeQuery();
-					PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(updateSQL))) {
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(updateSQL))) {
 
 			while (rs.next()) {
 				String oldValue = rs.getString(columnName);

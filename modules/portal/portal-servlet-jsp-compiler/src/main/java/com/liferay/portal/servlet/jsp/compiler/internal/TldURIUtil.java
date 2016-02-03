@@ -32,8 +32,8 @@ public class TldURIUtil {
 		try (InputStream inputStream = url.openStream();
 				InputStreamReader inputStreamReader = new InputStreamReader(
 					inputStream);
-						UnsyncBufferedReader unsyncBufferedReader =
-							new UnsyncBufferedReader(inputStreamReader)) {
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(inputStreamReader)) {
 
 			StringBundler sb = null;
 

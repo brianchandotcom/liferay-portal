@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE</td>
-	<td>//div[@class='upload-list']//li[contains(@data-title,'${key_documentName}')]/span[contains(@title,'${key_documentName}')]</td>
+	<td>//span[contains(@title,'${key_documentName}')]</td>
 	<td></td>
 </tr>
 <tr>

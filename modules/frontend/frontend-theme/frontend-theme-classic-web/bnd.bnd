@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Theme Classic Web
 Bundle-SymbolicName: com.liferay.frontend.theme.classic.web
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Themes
 Web-ContextPath: /frontend-theme-classic-web

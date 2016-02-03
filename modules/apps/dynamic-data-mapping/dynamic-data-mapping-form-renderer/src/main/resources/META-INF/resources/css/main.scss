@@ -9,6 +9,10 @@
 		font-size: inherit;
 	}
 
+	.input-group-addon .form-control-feedback {
+		left: -18px;
+	}
+
 	.lfr-ddm-form-field-container {
 		position: relative;
 
@@ -24,10 +28,6 @@
 
 		.icon-asterisk {
 			margin-left: 4px;
-		}
-
-		.icon-spinner {
-			@include animation(spin 1000ms infinite linear);
 		}
 
 		.lfr-ddm-form-field-repeatable-add-button {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet.action;
+package com.liferay.message.boards.web.portlet;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;

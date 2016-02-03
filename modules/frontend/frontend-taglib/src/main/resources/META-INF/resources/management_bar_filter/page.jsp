@@ -34,7 +34,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 				<liferay-ui:message key="<%= value %>" />
 			</span>
 
-			<span class="icon-sort"></span>
+			<aui:icon image="caret-double-l" markupView="lexicon" />
 		</a>
 
 		<ul class="dropdown-menu" data-qa-id="filter<%= Validator.isNotNull(label) ? label : StringPool.BLANK %>Values">

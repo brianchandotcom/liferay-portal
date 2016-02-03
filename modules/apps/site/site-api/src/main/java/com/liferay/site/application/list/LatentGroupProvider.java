@@ -64,7 +64,7 @@ public class LatentGroupProvider implements GroupProvider {
 	}
 
 	private static final String _KEY_LATENT_GROUP =
-		"com.liferay.product.navigation.site.administration.util_latentGroup";
+		"com.liferay.site.application.list_latentGroup";
 
 	private GroupLocalService _groupLocalService;
 

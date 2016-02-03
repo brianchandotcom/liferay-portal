@@ -126,7 +126,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<div class="export-dialog-tree">
 		<div id="<portlet:namespace />importConfiguration">
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset cssClass="options-group" label="file">
+				<aui:fieldset cssClass="options-group" label="file-summary">
 					<dl class="import-file-details options">
 						<dt>
 							<liferay-ui:message key="name" />

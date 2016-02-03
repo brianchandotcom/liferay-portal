@@ -187,7 +187,8 @@
 	</command>
 
 	<command name="definePermissionPG">
-		<var name="key_roleName" value="${roleName}" />
+		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<if>
 			<condition function="IsElementPresent#isElementPresentAfterWait" locator1="IFrame#DIALOG" />

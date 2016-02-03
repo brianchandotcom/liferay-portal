@@ -36,7 +36,7 @@
 <!--FEEDS-->
 <tr>
 	<td>FEEDS_TITLE</td>
-	<td>//div[@class='feed-title']/a[contains(.,'${key_feedTitle}')]</td>
+	<td>//h3[@class='feed-title']/a[contains(.,'${key_feedTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

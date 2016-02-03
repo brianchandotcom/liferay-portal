@@ -7,7 +7,9 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
@@ -33,6 +35,7 @@
 			<isset var="globalSite" />
 			<then>
 				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+
 				<execute function="Click" locator1="MenuItem#GLOBAL" />
 			</then>
 		</if>
@@ -41,9 +44,11 @@
 			<isset var="otherSite" />
 			<then>
 				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+
 				<execute function="Click" locator1="MenuItem#OTHER_SITE" />
 
 				<execute function="SelectFrame" value1="relative=top" />
+
 				<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 
 				<var name="key_siteName" value="${otherSite}" />
@@ -62,9 +67,11 @@
 		</if>
 
 		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -76,6 +83,7 @@
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
+
 		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_SELECT_BUTTON" />
 
 		<execute function="SelectFrameTop" />
@@ -88,7 +96,8 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -101,7 +110,9 @@
 
 		<execute function="Type" locator1="APConfiguration#FILTER_TAGS_FIELD" value1="${tagNames}" />
 		<execute function="Type" locator1="Button#ADD_TAGS" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -135,7 +146,8 @@
 			</if>
 		</for>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -147,9 +159,10 @@
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
+
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTION_SELECT" value1="${sortOrder}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -161,7 +174,8 @@
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -173,8 +187,11 @@
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
+
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -200,7 +217,8 @@
 			</if>
 		</for>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -211,7 +229,8 @@
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
 	</command>
@@ -224,16 +243,21 @@
 		</execute>
 
 		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureDisplayTemplatePG">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -247,9 +271,13 @@
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
+
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
+
 		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
+
 		<execute function="SelectFrame" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_STRUCTURE_FIELD" />
@@ -273,6 +301,7 @@
 		<execute function="AssertClick" locator1="Button#FIELD_FILTER_APPLY" value1="Apply" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<if>
@@ -282,7 +311,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -316,8 +345,11 @@
 		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
 		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
@@ -340,7 +372,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -381,8 +414,10 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+
 		<execute function="SelectFrameTop" />
 	</command>
 
@@ -394,7 +429,8 @@
 		<execute function="Type" locator1="APConfigurationDisplaysettings#NUMBER_OF_ITEMS_TO_DISPLAY_FIELD" value1="${paginationNumber}" />
 		<execute function="Select" locator1="APConfigurationDisplaysettings#PAGINATION_TYPE_SELECT" value1="${paginationType}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -407,7 +443,8 @@
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -424,7 +461,9 @@
 			<equals arg1="${addMetadata}" arg2="true" />
 			<then>
 				<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
+
 				<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+
 				<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 			</then>
 		</if>
@@ -433,12 +472,14 @@
 			<equals arg1="${removeMetadata}" arg2="true" />
 			<then>
 				<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
+
 				<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
+
 				<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -478,7 +519,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Source" />
@@ -514,8 +555,11 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 
@@ -530,9 +574,13 @@
 		<var name="key_archiveName" value="${archiveName}" />
 
 		<execute function="AssertTextEquals" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
+
 		<execute function="Click" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_DROPDOWN" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no archived setups." />
@@ -540,11 +588,12 @@
 
 	<command name="enableRSSSubscription">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="NavTab#SUBSCRIPTIONS" value1="Subscriptions" />
-		<execute function="AssertTextEquals" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL" value1="Enable RSS Subscription" />
-		<execute function="Check" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION" />
 
-		<execute function="SelectFrameTop" />
+		<execute function="AssertClick" locator1="NavTab#SUBSCRIPTIONS" value1="Subscriptions" />
+
+		<execute function="AssertTextEquals" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL" value1="Enable RSS Subscription" />
+
+		<execute function="Check" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
 	<command name="gotoConfigurationPG">
@@ -577,7 +626,7 @@
 			<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
 		</for>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -588,12 +637,15 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Button#clickSave" />
+
 		<execute function="AssertClick" locator1="Configuration#ARCHIVE_RESTORE" value1="Archive/Restore Setup" />
 
 		<var name="key_archiveName" value="${archiveName}" />
 
 		<execute function="Click" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_DROPDOWN" />
+
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 	</command>
 
@@ -602,14 +654,15 @@
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
 		<execute function="AssertClick" locator1="Configuration#ARCHIVE_RESTORE" value1="Archive/Restore Setup" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no archived setups." />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${archiveName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_archiveName" value="${archiveName}" />
 
@@ -624,7 +677,9 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_DETAIL_TITLE" value1="${assetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DETAIL_CONTENT" value1="${assetContent}" />
 	</command>
@@ -670,6 +725,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+
 		<execute function="AssertElementNotPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
 		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
@@ -725,7 +781,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -740,9 +796,11 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 
 		<if>
@@ -853,7 +911,9 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
+
 		<execute function="AssertElementPresent" locator1="APConfiguration#SOURCE_DROPDOWN" />
 		<execute function="AssertElementPresent" locator1="APConfiguration#FILTER_DROPDOWN" />
 		<execute function="AssertElementPresent" locator1="APConfiguration#CUSTOM_USER_DROPDOWN" />
@@ -878,6 +938,7 @@
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
+
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
 
 		<if>
@@ -888,7 +949,9 @@
 			</then>
 			<else>
 				<execute function="Check#checkToggleSwitch" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
+
 				<execute function="SelectFrame" />
 
 				<execute function="SelectFrame" locator1="IFrame#SELECT_STRUCTURE_FIELD" />
@@ -911,7 +974,9 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
+
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#SOURCE_DROPDOWN" />
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#SOURCE_DROPDOWN_COLLAPSED" />
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#FILTER_DROPDOWN" />
@@ -940,11 +1005,13 @@
 		<var name="key_siteScope" value="${siteName1}" />
 
 		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName1}" />
+
 		<execute function="AssertElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<var name="key_siteScope" value="${siteName2}" />
 
 		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName2}" />
+
 		<execute function="AssertElementPresent" locator1="AP#ADD_NEW_2_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 	</command>
 
@@ -987,6 +1054,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${assetContent}" />
+
 		<execute function="AssertClick" locator1="APAsset#ASSET_TITLE" value1="${assetTitle}" />
 
 		<if>

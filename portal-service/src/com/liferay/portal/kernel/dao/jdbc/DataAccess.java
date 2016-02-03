@@ -17,13 +17,14 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionHandler;
+import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProvider;
+import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -138,13 +139,19 @@ public class DataAccess {
 
 		Connection connection = getConnection();
 
-		Thread currentThread = Thread.currentThread();
+		DatabaseMetaData metaData = connection.getMetaData();
 
-		ClassLoader classLoader = currentThread.getContextClassLoader();
+		String productName = metaData.getDatabaseProductName();
 
-		return (Connection)ProxyUtil.newProxyInstance(
-			classLoader, new Class[] {Connection.class},
-			new UpgradeOptimizedConnectionHandler(connection));
+		UpgradeOptimizedConnectionProvider connectionProvider =
+			UpgradeOptimizedConnectionProviderRegistryUtil.
+				getConnectionProvider(productName);
+
+		if (connectionProvider != null) {
+			return connectionProvider.getConnection();
+		}
+
+		return connection;
 	}
 
 	public interface PACL {

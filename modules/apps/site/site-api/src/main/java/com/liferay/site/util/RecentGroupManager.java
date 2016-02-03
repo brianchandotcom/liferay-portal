@@ -88,16 +88,17 @@ public class RecentGroupManager {
 	}
 
 	private String _getRecentGroupsValue(HttpServletRequest request) {
-		return SessionClicks.get(
-			request, "com.liferay.site.admin.web.util_recentGroups", null);
+		return SessionClicks.get(request, _KEY_RECENT_GROUPS, null);
 	}
 
 	private void _setRecentGroupsValue(
 		HttpServletRequest request, String value) {
 
-		SessionClicks.put(
-			request, "com.liferay.site.admin.web.util_recentGroups", value);
+		SessionClicks.put(request, _KEY_RECENT_GROUPS, value);
 	}
+
+	private static final String _KEY_RECENT_GROUPS =
+		"com.liferay.site.util_recentGroups";
 
 	private GroupLocalService _groupLocalService;
 

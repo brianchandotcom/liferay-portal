@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String action = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:action"));
+String descriptionCSSClass = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:descriptionCSSClass"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:disableInputs"));
 boolean global = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:global"));
+String labelCSSClass = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:labelCSSClass"));
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:permissions:parameterMap"), Collections.emptyMap());
 %>

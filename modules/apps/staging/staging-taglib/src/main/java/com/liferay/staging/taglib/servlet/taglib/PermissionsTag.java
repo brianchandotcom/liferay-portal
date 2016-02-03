@@ -14,9 +14,11 @@
 
 package com.liferay.staging.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.staging.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +29,39 @@ import javax.servlet.jsp.PageContext;
  */
 public class PermissionsTag extends IncludeTag {
 
+	public void setAction(String action) {
+		if (action == null) {
+			_action = StringPool.BLANK;
+		}
+		else {
+			_action = action;
+		}
+	}
+
+	public void setDescriptionCSSClass(String descriptionCSSClass) {
+		if (descriptionCSSClass == null) {
+			_descriptionCSSClass = StringPool.BLANK;
+		}
+		else {
+			_descriptionCSSClass = descriptionCSSClass;
+		}
+	}
+
 	public void setDisableInputs(boolean disableInputs) {
 		_disableInputs = disableInputs;
 	}
 
 	public void setGlobal(boolean global) {
 		_global = global;
+	}
+
+	public void setLabelCSSClass(String labelCSSClass) {
+		if (labelCSSClass == null) {
+			_labelCSSClass = StringPool.BLANK;
+		}
+		else {
+			_labelCSSClass = labelCSSClass;
+		}
 	}
 
 	@Override
@@ -43,14 +72,22 @@ public class PermissionsTag extends IncludeTag {
 	}
 
 	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
+		if (parameterMap != null) {
+			_parameterMap = parameterMap;
+		}
+		else {
+			_parameterMap = Collections.emptyMap();
+		}
 	}
 
 	@Override
 	protected void cleanUp() {
+		_action = StringPool.BLANK;
+		_descriptionCSSClass = StringPool.BLANK;
 		_disableInputs = false;
 		_global = false;
-		_parameterMap = null;
+		_labelCSSClass = StringPool.BLANK;
+		_parameterMap = Collections.emptyMap();
 	}
 
 	@Override
@@ -60,17 +97,26 @@ public class PermissionsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-staging:permissions:action", _action);
+		request.setAttribute(
+			"liferay-staging:permissions:descriptionCSSClass",
+			_descriptionCSSClass);
 		request.setAttribute(
 			"liferay-staging:permissions:disableInputs", _disableInputs);
 		request.setAttribute("liferay-staging:deletions:global", _global);
+		request.setAttribute(
+			"liferay-staging:permissions:labelCSSClass", _labelCSSClass);
 		request.setAttribute(
 			"liferay-staging:permissions:parameterMap", _parameterMap);
 	}
 
 	private static final String _PAGE = "/permissions/page.jsp";
 
+	private String _action = StringPool.BLANK;
+	private String _descriptionCSSClass = StringPool.BLANK;
 	private boolean _disableInputs;
 	private boolean _global;
-	private Map<String, String[]> _parameterMap;
+	private String _labelCSSClass = StringPool.BLANK;
+	private Map<String, String[]> _parameterMap = Collections.emptyMap();
 
 }

@@ -20,6 +20,8 @@
 DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, ddlFormAdminDisplayContext.getRecordSet());
 
 DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
+
+renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
 
 <portlet:renderURL var="searchURL">

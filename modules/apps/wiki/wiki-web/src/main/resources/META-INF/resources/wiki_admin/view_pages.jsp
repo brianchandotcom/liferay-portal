@@ -226,7 +226,6 @@ else {
 						/>
 
 						<liferay-ui:search-container-column-status
-							href="<%= rowURL %>"
 							name="status"
 							status="<%= curPage.getStatus() %>"
 						/>
@@ -240,19 +239,16 @@ else {
 						%>
 
 						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
 							name="revision"
 							value="<%= revision %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
 							name="user"
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
-							href="<%= rowURL %>"
 							name="modified-date"
 							value="<%= curPage.getModifiedDate() %>"
 						/>

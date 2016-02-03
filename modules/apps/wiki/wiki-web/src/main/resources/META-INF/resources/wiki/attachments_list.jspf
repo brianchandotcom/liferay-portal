@@ -45,7 +45,6 @@
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
 			name="size"
 			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 		/>

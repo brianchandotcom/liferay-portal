@@ -188,13 +188,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 							/>
 
 							<liferay-ui:search-container-column-text
-								href="<%= rowURL %>"
 								name="num-of-pages"
 								value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								href="<%= rowURL %>"
 								name="last-post-date"
 								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
 							/>

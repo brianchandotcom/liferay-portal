@@ -616,7 +616,7 @@
 </tr>
 <tr>
 	<td>NODE_TABLE_NUMBER_OF_PAGES</td>
-	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>

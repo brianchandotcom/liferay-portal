@@ -29,24 +29,20 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 %>
 
-<div class="container-fluid-1280">
-	<aui:nav-bar markupView="lexicon">
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
-				</liferay-portlet:renderURL>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<liferay-portlet:renderURL varImpl="searchURL">
+		<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
+	</liferay-portlet:renderURL>
 
-				<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
-					<liferay-ui:input-search markupView="lexicon" />
-				</aui:form>
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
+<div class="container-fluid-1280 main-content-body">
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
-
-	<div class="separator"></div>
 
 	<liferay-ui:search-container
 		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), new DisplayTerms(request), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.get(request, "there-are-no-results")) %>'

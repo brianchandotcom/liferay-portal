@@ -145,7 +145,7 @@
 <!--PAGE_VARIATION_MENULIST-->
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
-	<td>xpath=(//ul//li//a[contains(.,'${key_pageVariationName}')])[4]</td>
+	<td>xpath=(//ul//li//a[contains(.,'${key_pageVariationName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

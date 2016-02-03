@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.maven.plugin.builder;
 
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -53,14 +52,16 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.process.ExecSpec;
+import org.gradle.process.JavaExecSpec;
 import org.gradle.util.GUtil;
 
 import org.w3c.dom.Document;
@@ -77,13 +78,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			Conf2ScopeMappingContainer.COMPILE);
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
-
-		if (OSDetector.isWindows()) {
-			_mavenExecutable = "mvn.cmd";
-		}
-		else {
-			_mavenExecutable = "mvn";
-		}
 	}
 
 	@TaskAction
@@ -158,14 +152,19 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_goalPrefix);
 	}
 
-	@Input
-	public String getMavenExecutable() {
-		return GradleUtil.toString(_mavenExecutable);
+	@InputFiles
+	public FileCollection getMavenEmbedderClasspath() {
+		return _mavenEmbedderClasspath;
 	}
 
 	@Input
-	public String getMavenVersion() {
-		return GradleUtil.toString(_mavenVersion);
+	public String getMavenEmbedderMainClassName() {
+		return GradleUtil.toString(_mavenEmbedderMainClassName);
+	}
+
+	@Input
+	public String getMavenPluginPluginVersion() {
+		return GradleUtil.toString(_mavenPluginPluginVersion);
 	}
 
 	@OutputDirectory
@@ -216,12 +215,20 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_goalPrefix = goalPrefix;
 	}
 
-	public void setMavenExecutable(Object mavenExecutable) {
-		_mavenExecutable = mavenExecutable;
+	public void setMavenEmbedderClasspath(
+		FileCollection mavenEmbedderClasspath) {
+
+		_mavenEmbedderClasspath = mavenEmbedderClasspath;
 	}
 
-	public void setMavenVersion(Object mavenVersion) {
-		_mavenVersion = mavenVersion;
+	public void setMavenEmbedderMainClassName(
+		Object mavenEmbedderMainClassName) {
+
+		_mavenEmbedderMainClassName = mavenEmbedderMainClassName;
+	}
+
+	public void setMavenPluginPluginVersion(Object mavenPluginPluginVersion) {
+		_mavenPluginPluginVersion = mavenPluginPluginVersion;
 	}
 
 	public void setOutputDir(Object outputDir) {
@@ -321,24 +328,28 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
 		final Project project = getProject();
 
-		project.exec(
-			new Action<ExecSpec>() {
+		project.javaexec(
+			new Action<JavaExecSpec>() {
 
 				@Override
-				public void execute(ExecSpec execSpec) {
-					execSpec.args("-B");
+				public void execute(JavaExecSpec javaExecSpec) {
+					javaExecSpec.args("-B");
 
-					execSpec.args("-e");
+					javaExecSpec.args("-e");
 
-					execSpec.args("-f");
-					execSpec.args(project.relativePath(pomFile));
+					javaExecSpec.args("-f");
+					javaExecSpec.args(project.relativePath(pomFile));
 
-					execSpec.args("-Dencoding=UTF-8");
+					javaExecSpec.args("-Dencoding=UTF-8");
 
-					execSpec.args("plugin:descriptor");
+					javaExecSpec.args("plugin:descriptor");
 
-					execSpec.setExecutable(getMavenExecutable());
-					execSpec.setWorkingDir(project.getProjectDir());
+					javaExecSpec.setClasspath(getMavenEmbedderClasspath());
+					javaExecSpec.setMain(getMavenEmbedderMainClassName());
+
+					javaExecSpec.systemProperty(
+						"maven.multiModuleProjectDirectory",
+						project.getProjectDir());
 				}
 
 			});
@@ -400,7 +411,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, pluginElement, "artifactId", "maven-plugin-plugin");
 		XMLUtil.appendElement(
-			document, pluginElement, "version", getMavenVersion());
+			document, pluginElement, "version", getMavenPluginPluginVersion());
 
 		String goalPrefix = getGoalPrefix();
 
@@ -603,8 +614,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		new HashMap<>();
 	private final Set<String> _forcedExclusions = new HashSet<>();
 	private Object _goalPrefix;
-	private Object _mavenExecutable;
-	private Object _mavenVersion = "3.4";
+	private FileCollection _mavenEmbedderClasspath;
+	private Object _mavenEmbedderMainClassName =
+		"org.apache.maven.cli.MavenCli";
+	private Object _mavenPluginPluginVersion = "3.4";
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;

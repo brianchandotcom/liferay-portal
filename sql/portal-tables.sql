@@ -257,32 +257,6 @@ create table BrowserTracker (
 	browserKey LONG
 );
 
-create table CalEvent (
-	uuid_ VARCHAR(75) null,
-	eventId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	title VARCHAR(75) null,
-	description TEXT null,
-	location STRING null,
-	startDate DATE null,
-	endDate DATE null,
-	durationHour INTEGER,
-	durationMinute INTEGER,
-	allDay BOOLEAN,
-	timeZoneSensitive BOOLEAN,
-	type_ VARCHAR(75) null,
-	repeating BOOLEAN,
-	recurrence TEXT null,
-	remindBy INTEGER,
-	firstReminder INTEGER,
-	secondReminder INTEGER
-);
-
 create table ClassName_ (
 	mvccVersion LONG default 0 not null,
 	classNameId LONG not null primary key,

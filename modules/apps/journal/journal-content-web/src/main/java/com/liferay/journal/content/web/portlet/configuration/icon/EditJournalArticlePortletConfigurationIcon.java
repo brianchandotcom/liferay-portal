@@ -14,34 +14,27 @@
 
 package com.liferay.journal.content.web.portlet.configuration.icon;
 
+import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Pavel Savinov
@@ -53,6 +46,8 @@ public class EditJournalArticlePortletConfigurationIcon
 		PortletRequest portletRequest) {
 
 		super(portletRequest);
+
+		createJournalContentDisplayContext(portletRequest);
 	}
 
 	@Override
@@ -67,7 +62,7 @@ public class EditJournalArticlePortletConfigurationIcon
 		JournalArticle article = null;
 
 		try {
-			article = getArticle();
+			article = _journalContentDisplayContext.getArticle();
 		}
 		catch (Exception e) {
 			_log.error("Unable to get current article", e);
@@ -111,10 +106,9 @@ public class EditJournalArticlePortletConfigurationIcon
 			"referringPortletResource", portletDisplay.getId());
 
 		PortletURL portletURL = null;
-		JournalArticle article = null;
 
 		try {
-			article = getArticle();
+			JournalArticle article = _journalContentDisplayContext.getArticle();
 
 			AssetRenderer<JournalArticle> latestArticleAssetRenderer =
 				assetRendererFactory.getAssetRenderer(
@@ -123,47 +117,24 @@ public class EditJournalArticlePortletConfigurationIcon
 			portletURL = latestArticleAssetRenderer.getURLEdit(
 				(LiferayPortletRequest)portletRequest, null,
 				LiferayWindowState.POP_UP, redirectURL);
+
+			return portletURL.toString();
 		}
 		catch (Exception e) {
-			_log.error("Unable to generate URL to edit article", e);
-
-			return StringPool.BLANK;
+			_log.error("Unable to create portlet URL", e);
 		}
 
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-			redirectURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException e) {
-			_log.error("Unable to set window state", e);
-		}
-
-		portletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		portletURL.setParameter("showBackURL", Boolean.FALSE.toString());
-		portletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-		portletURL.setParameter("mvcPath", "/edit_article.jsp");
-		portletURL.setParameter("redirect", redirectURL.toString());
-		portletURL.setParameter(
-			"groupId", String.valueOf(article.getGroupId()));
-		portletURL.setParameter("articleId", article.getArticleId());
-		portletURL.setParameter(
-			"refererPortletName", JournalContentPortletKeys.JOURNAL_CONTENT);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDisplay.getId());
-
-		portletURL.setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-
-		return portletURL.toString();
+		return "";
 	}
 
 	@Override
 	public boolean isShow() {
 		try {
-			JournalArticle article = getArticle();
+			if (!_journalContentDisplayContext.isShowEditArticleIcon()) {
+				return false;
+			}
+
+			JournalArticle article = _journalContentDisplayContext.getArticle();
 
 			if ((article != null) && !article.isNew()) {
 				return true;
@@ -180,25 +151,31 @@ public class EditJournalArticlePortletConfigurationIcon
 		return false;
 	}
 
-	protected JournalArticle getArticle() throws Exception {
-		long groupId = ParamUtil.getLong(
-			portletRequest, "groupId", themeDisplay.getScopeGroupId());
-		String articleId = portletRequest.getPreferences().getValue(
-			"articleId", null);
-		int status = ParamUtil.getInteger(
-			portletRequest, "status", WorkflowConstants.STATUS_ANY);
+	protected void createJournalContentDisplayContext(
+		PortletRequest portletRequest) {
 
-		JournalArticle article = null;
+		try {
+			PortletResponse portletResponse = RenderResponseFactory.create(
+				(RenderRequestImpl)portletRequest, themeDisplay.getResponse(),
+				portletDisplay.getPortletName(), themeDisplay.getCompanyId());
 
-		if (Validator.isNotNull(articleId)) {
-			article = JournalArticleServiceUtil.getLatestArticle(
-				groupId, articleId, status);
+			JournalContentPortletInstanceConfiguration
+				journalContentPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						JournalContentPortletInstanceConfiguration.class);
+
+			_journalContentDisplayContext = new JournalContentDisplayContext(
+				portletRequest, portletResponse,
+				journalContentPortletInstanceConfiguration);
 		}
-
-		return article;
+		catch (Exception e) {
+			_log.error("Unable to create display context", e);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditJournalArticlePortletConfigurationIcon.class);
+
+	private JournalContentDisplayContext _journalContentDisplayContext;
 
 }

@@ -36,11 +36,12 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.trash.exception.NoSuchEntryException;
-import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.model.impl.TrashEntryModelImpl;
-import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
+
+import com.liferay.trash.kernel.exception.NoSuchEntryException;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
 
@@ -64,7 +65,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntryPersistence
- * @see com.liferay.portlet.trash.service.persistence.TrashEntryUtil
+ * @see com.liferay.trash.kernel.service.persistence.TrashEntryUtil
  * @generated
  */
 @ProviderType

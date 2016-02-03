@@ -52,14 +52,16 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
-import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
-import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
-import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
+import com.liferay.trash.kernel.util.Trash;
+import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator;
+import com.liferay.trash.kernel.util.comparator.EntryTypeComparator;
+import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
 
 import java.text.Format;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
 

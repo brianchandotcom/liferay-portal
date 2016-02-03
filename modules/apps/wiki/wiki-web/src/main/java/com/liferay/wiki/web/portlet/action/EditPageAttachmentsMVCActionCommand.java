@@ -54,8 +54,8 @@ import com.liferay.portlet.documentlibrary.exception.InvalidFileVersionException
 import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.exception.SourceFileNameException;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.WikiAttachmentsHelper;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;

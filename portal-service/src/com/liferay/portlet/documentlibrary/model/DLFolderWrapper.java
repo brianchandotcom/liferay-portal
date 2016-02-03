@@ -530,7 +530,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* @return the trash entry created when this document library folder was moved to the Recycle Bin
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.getTrashEntry();
 	}

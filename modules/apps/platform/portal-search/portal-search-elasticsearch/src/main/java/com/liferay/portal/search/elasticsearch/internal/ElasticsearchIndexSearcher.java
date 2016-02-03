@@ -51,6 +51,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
@@ -533,7 +534,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return selectedIndexNames;
 		}
 
-		return new String[] {String.valueOf(searchContext.getCompanyId())};
+		String indexName = indexNameBuilder.getIndexName(
+			searchContext.getCompanyId());
+
+		return new String[] {indexName};
 	}
 
 	protected String[] getSelectedTypes(QueryConfig queryConfig) {
@@ -753,6 +757,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			hits.addStatsResults(statsResults);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected IndexNameBuilder indexNameBuilder;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);

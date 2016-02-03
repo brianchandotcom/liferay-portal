@@ -41,6 +41,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Implements the OAuth protocol for Facebook Connect.
+ * 
+ * <p>
+ * This class is utilized by many of the other Facebook Connect classes via
+ * {@link com.liferay.portal.facebook.FacebookConnectUtil} which exposes all of
+ * its methods statically.
+ * </p>
+ * 
  * @author Wilson Man
  * @author Mika Koivisto
  */

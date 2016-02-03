@@ -34,6 +34,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ * 
+ * <p>
+ * This class looks for one of two HTTP session attributes:
+ * <code>FACEBOOK_USER_ID</code> or </code>FACEBOOK_USER_EMAIL_ADDRESS</code>.
+ * If either is found and can be matched with a Liferay Portal user on the
+ * corresponding field, then this user is logged in without any further
+ * challenge.
+ * <p>
+ * 
  * @author Wilson Man
  */
 @Component(immediate = true, service = AutoLogin.class)

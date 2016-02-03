@@ -1901,6 +1901,24 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getUsers(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getUsersByKeywords(
+		long companyId, java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
+		return _userLocalService.getUsersByKeywords(companyId, keywords,
+			status, params, start, end, obc);
+	}
+
+	@Override
+	public int getUsersByKeywordsCount(long companyId,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return _userLocalService.getUsersByKeywordsCount(companyId, keywords,
+			status, params);
+	}
+
 	/**
 	* Returns the number of users.
 	*

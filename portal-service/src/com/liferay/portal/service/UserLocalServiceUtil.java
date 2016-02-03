@@ -1777,6 +1777,23 @@ public class UserLocalServiceUtil {
 		return getService().getUsers(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.User> getUsersByKeywords(
+		long companyId, java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
+		return getService()
+				   .getUsersByKeywords(companyId, keywords, status, params,
+			start, end, obc);
+	}
+
+	public static int getUsersByKeywordsCount(long companyId,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return getService()
+				   .getUsersByKeywordsCount(companyId, keywords, status, params);
+	}
+
 	/**
 	* Returns the number of users.
 	*

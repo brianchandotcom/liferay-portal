@@ -54,6 +54,10 @@ if (filterManageableOrganizations) {
 
 userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
 
+userSearchContainer.setResults(UserLocalServiceUtil.getUsersByKeywords(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator()));
+
+userSearchContainer.setTotal(UserLocalServiceUtil.getUsersByKeywordsCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams));
+
 RowChecker rowChecker = new UnsetUserUserGroupChecker(renderResponse, userGroup);
 
 portletDisplay.setShowBackIcon(true);
@@ -116,7 +120,6 @@ renderResponse.setTitle(userGroup.getName());
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"

@@ -35,11 +35,6 @@ public class BlogsPortletLayoutFinder extends BasePortletLayoutFinder {
 		return _PORTLET_IDS;
 	}
 
-	// Order is important. See LPS-23770.
-
-	private static final String[] _PORTLET_IDS = {
-		BlogsPortletKeys.BLOGS_ADMIN, BlogsPortletKeys.BLOGS,
-		BlogsPortletKeys.BLOGS_AGGREGATOR
-	};
+	private static final String[] _PORTLET_IDS = {BlogsPortletKeys.BLOGS};
 
 }

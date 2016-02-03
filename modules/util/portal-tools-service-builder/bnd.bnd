@@ -35,7 +35,6 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/announcements/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/asset/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/blogs/service.xml,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/calendar/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/documentlibrary/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/expando/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/exportimport/service.xml,\

@@ -85,7 +85,6 @@
 	<import class="com.liferay.portlet.asset.model.AssetVocabulary" />
 	<import class="com.liferay.portlet.blogs.model.BlogsEntry" />
 	<import class="com.liferay.portlet.blogs.model.BlogsStatsUser" />
-	<import class="com.liferay.portlet.calendar.model.CalEvent" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLApp" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLAppHelper" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLContent" />
@@ -1379,33 +1378,6 @@
 		<property name="ratingsTotalEntries" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="ratingsTotalScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-	</class>
-	<class name="com.liferay.portlet.calendar.model.impl.CalEventImpl" table="CalEvent">
-		<id name="eventId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="startDate" type="org.hibernate.type.TimestampType" />
-		<property name="endDate" type="org.hibernate.type.TimestampType" />
-		<property name="durationHour" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="durationMinute" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="allDay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="timeZoneSensitive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="repeating" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="recurrence" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="remindBy" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="firstReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
 		<id name="contentId" type="long">

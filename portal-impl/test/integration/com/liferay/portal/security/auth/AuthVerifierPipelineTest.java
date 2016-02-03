@@ -67,31 +67,18 @@ public class AuthVerifierPipelineTest {
 	}
 
 	protected MockHttpServletRequest createHttpRequest(String pathInfo) {
+		MockServletContext mockServletContext = new MockServletContext();
+
+		mockServletContext.setContextPath(StringPool.BLANK);
+		mockServletContext.setServletContextName(StringPool.BLANK);
+
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequestTest();
+			new MockHttpServletRequest(mockServletContext);
 
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 		mockHttpServletRequest.setPathInfo(pathInfo);
 
 		return mockHttpServletRequest;
-	}
-
-	private class MockHttpServletRequestTest extends MockHttpServletRequest {
-
-		public MockHttpServletRequestTest() {
-			_mockServletContext = new MockServletContext() {};
-
-			_mockServletContext.setContextPath(StringPool.BLANK);
-			_mockServletContext.setServletContextName(StringPool.BLANK);
-		}
-
-		@Override
-		public MockServletContext getServletContext() {
-			return _mockServletContext;
-		}
-
-		private final MockServletContext _mockServletContext;
-
 	}
 
 }

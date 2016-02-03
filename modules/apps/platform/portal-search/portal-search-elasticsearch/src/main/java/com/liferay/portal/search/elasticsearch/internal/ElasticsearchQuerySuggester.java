@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,7 +116,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 			suggester, searchContext);
 
 		SuggestRequestBuilder suggestRequestBuilder = client.prepareSuggest(
-			String.valueOf(searchContext.getCompanyId()));
+			indexNameBuilder.getIndexName(searchContext.getCompanyId()));
 
 		for (SuggestBuilder.SuggestionBuilder<?> suggestionBuilder :
 				suggestBuilder.getSuggestion()) {
@@ -276,6 +277,9 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		return suggesterResultEntry;
 	}
+
+	@Reference(unbind = "-")
+	protected IndexNameBuilder indexNameBuilder;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQuerySuggester.class);

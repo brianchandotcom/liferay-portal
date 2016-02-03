@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.suggest.BaseGenericSpellCheckIndexWriter
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 
 import java.util.Collection;
@@ -132,7 +133,7 @@ public class ElasticsearchSpellCheckIndexWriter
 				QueryBuilders.matchAllQuery();
 
 			searchResponseScroller = new SearchResponseScroller(
-				client, searchContext, matchAllQueryBuilder,
+				client, searchContext, indexNameBuilder, matchAllQueryBuilder,
 				TimeValue.timeValueSeconds(30), indexType);
 
 			searchResponseScroller.prepare();
@@ -175,6 +176,9 @@ public class ElasticsearchSpellCheckIndexWriter
 	protected void unsetIndexWriter(IndexWriter indexWriter) {
 		_searchHitsProcessor = null;
 	}
+
+	@Reference(unbind = "-")
+	protected IndexNameBuilder indexNameBuilder;
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchUpdateDocumentCommand

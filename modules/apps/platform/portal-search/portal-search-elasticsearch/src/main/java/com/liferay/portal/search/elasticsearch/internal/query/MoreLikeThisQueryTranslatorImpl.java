@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.query;
 
 import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.query.MoreLikeThisQueryTranslator;
 
@@ -26,6 +27,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -56,8 +58,9 @@ public class MoreLikeThisQueryTranslatorImpl
 			for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
 				MoreLikeThisQueryBuilder.Item moreLikeThisQueryBuilderItem =
 					new MoreLikeThisQueryBuilder.Item(
-						String.valueOf(moreLikeThisQuery.getCompanyId()), type,
-						documentUID);
+						indexNameBuilder.getIndexName(
+							moreLikeThisQuery.getCompanyId()),
+						type, documentUID);
 
 				moreLikeThisQueryBuilder.like(moreLikeThisQueryBuilderItem);
 			}
@@ -126,5 +129,8 @@ public class MoreLikeThisQueryTranslatorImpl
 
 		return moreLikeThisQueryBuilder;
 	}
+
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
 
 }

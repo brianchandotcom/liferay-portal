@@ -2721,7 +2721,6 @@
 			<type>java.util.Locale[]</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the default language can be changed. The default value is <code>true</code>.]]></description>
 			<name>changeableDefaultLanguage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -42,7 +42,7 @@ public class RecentGroupManager {
 	}
 
 	public void addRecentGroup(HttpServletRequest request, long groupId) {
-		String value = getRecentGroupsValue(request);
+		String value = _getRecentGroupsValue(request);
 
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
@@ -55,7 +55,7 @@ public class RecentGroupManager {
 	}
 
 	public List<Group> getRecentGroups(HttpServletRequest request) {
-		String value = getRecentGroupsValue(request);
+		String value = _getRecentGroupsValue(request);
 
 		return getRecentGroups(value);
 	}
@@ -94,7 +94,7 @@ public class RecentGroupManager {
 			request, "com.liferay.site.admin.web.util_recentGroups", value);
 	}
 
-	private String getRecentGroupsValue(HttpServletRequest request) {
+	private String _getRecentGroupsValue(HttpServletRequest request) {
 		return SessionClicks.get(
 			request, "com.liferay.site.admin.web.util_recentGroups", null);
 	}

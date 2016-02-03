@@ -8,8 +8,8 @@ configurations {
 
 task buildMetalComponents(type: Copy)
 
-String defineRegex = "define(['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyTemplates'], function (exports, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
-String defineReplace = "define(['exports', 'soyutils', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
+String defineRegex = "define(['exports', '../core', '../dom/dom', '../object/object', '../component/Component', '../component/ComponentRegistry', '../component/ComponentRenderer', './SoyAop', './SoyTemplates'], function (exports, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
+String defineReplace = "define(['exports', 'soyutils', '../core', '../dom/dom', '../object/object', '../component/Component', '../component/ComponentRegistry', '../component/ComponentRenderer', './SoyAop', './SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
 
 String metalComponentsVersion = "1.0.0-rc.8"
 

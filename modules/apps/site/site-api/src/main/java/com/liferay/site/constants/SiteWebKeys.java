@@ -20,6 +20,8 @@ package com.liferay.site.constants;
  */
 public class SiteWebKeys {
 
+	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
+
 	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
 
 }

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,7 +31,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.MembershipRequestConstants;
-import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -47,11 +45,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
+import com.liferay.site.constants.SiteWebKeys;
+import com.liferay.site.util.GroupSearchProvider;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -73,6 +70,9 @@ public class SiteAdminDisplayContext {
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
+			SiteWebKeys.GROUP_SEARCH_PROVIDER);
 	}
 
 	public int getChildSitesCount(Group group) {
@@ -160,20 +160,6 @@ public class SiteAdminDisplayContext {
 			null, organizationParams);
 	}
 
-	public long getParentGroupId() throws PortalException {
-		Group group = getGroup();
-
-		if (group != null) {
-			return group.getGroupId();
-		}
-
-		if (isFilterManageableGroups()) {
-			return GroupConstants.ANY_PARENT_GROUP_ID;
-		}
-
-		return GroupConstants.DEFAULT_PARENT_GROUP_ID;
-	}
-
 	public int getPendingRequestsCount() throws PortalException {
 		int pendingRequests = 0;
 
@@ -216,65 +202,8 @@ public class SiteAdminDisplayContext {
 	}
 
 	public GroupSearch getSearchContainer() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		GroupSearch groupSearch = new GroupSearch(
+		return _groupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, getPortletURL());
-
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
-		long parentGroupId = getParentGroupId();
-
-		Company company = themeDisplay.getCompany();
-
-		List results = null;
-
-		if (!searchTerms.hasSearchTerms() && isFilterManageableGroups() &&
-			(parentGroupId <= 0)) {
-
-			int total = getAllGroups().size();
-
-			groupSearch.setTotal(total);
-
-			results = ListUtil.subList(
-				getAllGroups(), groupSearch.getStart(), groupSearch.getEnd());
-		}
-		else if (searchTerms.hasSearchTerms()) {
-			int total = GroupLocalServiceUtil.searchCount(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId));
-
-			groupSearch.setTotal(total);
-
-			results = GroupLocalServiceUtil.search(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId),
-				groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator());
-		}
-		else {
-			int total = GroupLocalServiceUtil.searchCount(
-				company.getCompanyId(), _classNameIds, getGroupId(),
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId));
-
-			groupSearch.setTotal(total);
-
-			results = GroupLocalServiceUtil.search(
-				company.getCompanyId(), _classNameIds, getGroupId(),
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId),
-				groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator());
-		}
-
-		groupSearch.setResults(results);
-
-		return groupSearch;
 	}
 
 	public PortletURL getSearchURL() throws PortalException {
@@ -424,92 +353,10 @@ public class SiteAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isFilterManageableGroups() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return false;
-		}
-
-		if (GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected List<Group> getAllGroups() throws PortalException {
-		List<Group> groups = new ArrayList<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (isFilterManageableGroups()) {
-			groups = themeDisplay.getUser().getSiteGroups(true);
-		}
-
-		if (getGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			groups.clear();
-
-			groups.add(GroupLocalServiceUtil.getGroup(getGroupId()));
-		}
-
-		return groups;
-	}
-
-	protected LinkedHashMap<String, Object> getGroupParams(
-			ThemeDisplay themeDisplay, GroupSearchTerms searchTerms,
-			long parentGroupId)
-		throws PortalException {
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		User user = themeDisplay.getUser();
-
-		if (searchTerms.hasSearchTerms()) {
-			if (isFilterManageableGroups()) {
-				groupParams.put("groupsTree", getAllGroups());
-			}
-			else if (parentGroupId > 0) {
-				List<Group> groupsTree = new ArrayList<>();
-
-				Group parentGroup = GroupLocalServiceUtil.getGroup(
-					parentGroupId);
-
-				groupsTree.add(parentGroup);
-
-				groupParams.put("groupsTree", groupsTree);
-			}
-
-			if (!permissionChecker.isCompanyAdmin() &&
-				!GroupPermissionUtil.contains(
-					permissionChecker, ActionKeys.VIEW)) {
-
-				groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
-			}
-		}
-
-		return groupParams;
-	}
-
-	private static final long[] _classNameIds = new long[] {
-		PortalUtil.getClassNameId(Company.class),
-		PortalUtil.getClassNameId(Group.class),
-		PortalUtil.getClassNameId(Organization.class)
-	};
-
 	private String _displayStyle;
 	private Group _group;
 	private long _groupId;
+	private final GroupSearchProvider _groupSearchProvider;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Message Boards Parser BBCode
 Bundle-SymbolicName: com.liferay.message.boards.parser.bbcode
 Bundle-Version: 1.0.0
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
 -include: ../../../../marketplace/collaboration/bnd.bnd

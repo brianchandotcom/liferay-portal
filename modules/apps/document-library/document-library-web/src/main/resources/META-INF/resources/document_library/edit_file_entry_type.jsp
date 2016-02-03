@@ -48,9 +48,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-String headerTitle = (fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale);
-
-renderResponse.setTitle(headerTitle);
+renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale));
 %>
 
 <div class="container-fluid-1280">

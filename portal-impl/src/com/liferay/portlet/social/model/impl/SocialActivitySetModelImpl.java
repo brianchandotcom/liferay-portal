@@ -32,8 +32,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.social.model.SocialActivitySet;
-import com.liferay.portlet.social.model.SocialActivitySetModel;
+
+import com.liferay.social.kernel.model.SocialActivitySet;
+import com.liferay.social.kernel.model.SocialActivitySetModel;
 
 import java.io.Serializable;
 
@@ -101,13 +102,13 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.social.model.SocialActivitySet"),
+				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivitySet"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialActivitySet"),
+				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivitySet"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivitySet"),
+				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivitySet"),
 			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
@@ -116,7 +117,7 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	public static final long USERID_COLUMN_BITMASK = 16L;
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivitySet"));
+				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivitySet"));
 
 	public SocialActivitySetModelImpl() {
 	}
@@ -661,7 +662,7 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.social.model.SocialActivitySet");
+		sb.append("com.liferay.social.kernel.model.SocialActivitySet");
 		sb.append("</model-name>");
 
 		sb.append(

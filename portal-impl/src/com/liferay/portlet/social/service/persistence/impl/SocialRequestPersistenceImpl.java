@@ -39,11 +39,12 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.social.exception.NoSuchRequestException;
-import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.impl.SocialRequestImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestModelImpl;
-import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
+
+import com.liferay.social.kernel.exception.NoSuchRequestException;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
 
@@ -64,7 +65,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see SocialRequestPersistence
- * @see com.liferay.portlet.social.service.persistence.SocialRequestUtil
+ * @see com.liferay.social.kernel.service.persistence.SocialRequestUtil
  * @generated
  */
 @ProviderType

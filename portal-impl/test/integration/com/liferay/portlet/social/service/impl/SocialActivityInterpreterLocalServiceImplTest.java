@@ -17,9 +17,9 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.impl.bundle.socialactivityinterpreterlocalserviceimpl.TestSocialActivityInterpreter;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
+import com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil;
 
 import java.util.List;
 import java.util.Map;

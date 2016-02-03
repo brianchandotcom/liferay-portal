@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
-import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.model.SocialRequest;
-import com.liferay.portlet.social.model.SocialRequestFeedEntry;
-import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.portlet.social.service.SocialRelationLocalService;
+import com.liferay.social.kernel.model.BaseSocialRequestInterpreter;
+import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.model.SocialRequestFeedEntry;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
+import com.liferay.social.kernel.service.SocialRelationLocalService;
 import com.liferay.social.networking.friends.social.FriendsActivityKeys;
 import com.liferay.social.networking.friends.social.FriendsRequestKeys;
 

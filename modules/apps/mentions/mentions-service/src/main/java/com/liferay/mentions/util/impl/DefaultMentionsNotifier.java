@@ -32,8 +32,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
-import com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil;
+import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
+import com.liferay.social.kernel.util.SocialInteractionsConfigurationUtil;
 
 import java.util.HashSet;
 import java.util.List;

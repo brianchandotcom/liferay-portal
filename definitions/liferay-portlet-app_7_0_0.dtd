@@ -291,26 +291,26 @@ http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portal/kernel/pop/Me
 
 <!--
 The social-activity-interpreter-class value must be a class that implements
-com.liferay.portlet.social.model.SocialActivityInterpreter and is called to
+com.liferay.social.kernel.model.SocialActivityInterpreter and is called to
 interpret activities into friendly messages that are easily understandable by a
 human being.
 
 See:
 
 http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portlet/messageboards/social/MBMessageActivityInterpreter.html
-http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portlet/social/model/SocialActivityInterpreter.html
+http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/social/kernel/model/SocialActivityInterpreter.html
 -->
 <!ELEMENT social-activity-interpreter-class (#PCDATA)>
 
 <!--
 The social-request-interpreter-class value must be a class that implements
-com.liferay.portlet.social.model.SocialRequestInterpreter and is called to
+com.liferay.social.kernel.model.SocialRequestInterpreter and is called to
 interpret requests into friendly messages that are easily understandable by a
 human being.
 
 See:
 
-http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portlet/social/model/SocialRequestInterpreter.html
+http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/social/kernel/model/SocialRequestInterpreter.html
 -->
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
 

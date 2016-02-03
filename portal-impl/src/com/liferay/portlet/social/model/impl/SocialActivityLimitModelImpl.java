@@ -32,8 +32,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.model.SocialActivityLimitModel;
+
+import com.liferay.social.kernel.model.SocialActivityLimit;
+import com.liferay.social.kernel.model.SocialActivityLimitModel;
 
 import java.io.Serializable;
 
@@ -97,13 +98,13 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.social.model.SocialActivityLimit"),
+				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialActivityLimit"),
+				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivityLimit"),
+				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
 			true);
 	public static final long ACTIVITYCOUNTERNAME_COLUMN_BITMASK = 1L;
 	public static final long ACTIVITYTYPE_COLUMN_BITMASK = 2L;
@@ -113,7 +114,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static final long USERID_COLUMN_BITMASK = 32L;
 	public static final long ACTIVITYLIMITID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityLimit"));
+				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityLimit"));
 
 	public SocialActivityLimitModelImpl() {
 	}
@@ -629,7 +630,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.social.model.SocialActivityLimit");
+		sb.append("com.liferay.social.kernel.model.SocialActivityLimit");
 		sb.append("</model-name>");
 
 		sb.append(

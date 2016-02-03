@@ -16,6 +16,7 @@ package com.liferay.portlet.social.util;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.social.kernel.util.SocialCounterPeriodUtil;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

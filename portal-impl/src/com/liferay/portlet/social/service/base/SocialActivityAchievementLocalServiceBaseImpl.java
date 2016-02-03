@@ -42,11 +42,11 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.social.model.SocialActivityAchievement;
-import com.liferay.portlet.social.service.SocialActivityAchievementLocalService;
-import com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistence;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
+import com.liferay.social.kernel.model.SocialActivityAchievement;
+import com.liferay.social.kernel.service.SocialActivityAchievementLocalService;
+import com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
 
 import java.io.Serializable;
 
@@ -63,7 +63,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl
- * @see com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil
+ * @see com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -73,7 +73,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil} to access the social activity achievement local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil} to access the social activity achievement local service.
 	 */
 
 	/**
@@ -236,7 +236,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 
@@ -250,7 +250,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 
@@ -262,7 +262,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 
@@ -497,7 +497,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @return the social activity counter local service
 	 */
-	public com.liferay.portlet.social.service.SocialActivityCounterLocalService getSocialActivityCounterLocalService() {
+	public com.liferay.social.kernel.service.SocialActivityCounterLocalService getSocialActivityCounterLocalService() {
 		return socialActivityCounterLocalService;
 	}
 
@@ -507,7 +507,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param socialActivityCounterLocalService the social activity counter local service
 	 */
 	public void setSocialActivityCounterLocalService(
-		com.liferay.portlet.social.service.SocialActivityCounterLocalService socialActivityCounterLocalService) {
+		com.liferay.social.kernel.service.SocialActivityCounterLocalService socialActivityCounterLocalService) {
 		this.socialActivityCounterLocalService = socialActivityCounterLocalService;
 	}
 
@@ -550,13 +550,13 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.social.model.SocialActivityAchievement",
+		persistedModelLocalServiceRegistry.register("com.liferay.social.kernel.model.SocialActivityAchievement",
 			socialActivityAchievementLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.social.model.SocialActivityAchievement");
+			"com.liferay.social.kernel.model.SocialActivityAchievement");
 	}
 
 	/**
@@ -601,7 +601,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityAchievementLocalService.class)
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityAchievementLocalService.class)
 	protected SocialActivityAchievementLocalService socialActivityAchievementLocalService;
 	@BeanReference(type = SocialActivityAchievementPersistence.class)
 	protected SocialActivityAchievementPersistence socialActivityAchievementPersistence;
@@ -619,8 +619,8 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityCounterLocalService.class)
-	protected com.liferay.portlet.social.service.SocialActivityCounterLocalService socialActivityCounterLocalService;
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityCounterLocalService.class)
+	protected com.liferay.social.kernel.service.SocialActivityCounterLocalService socialActivityCounterLocalService;
 	@BeanReference(type = SocialActivityCounterPersistence.class)
 	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
 	@BeanReference(type = SocialActivityCounterFinder.class)

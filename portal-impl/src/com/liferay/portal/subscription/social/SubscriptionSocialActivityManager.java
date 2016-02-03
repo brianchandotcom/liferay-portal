@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Subscription;
-import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez

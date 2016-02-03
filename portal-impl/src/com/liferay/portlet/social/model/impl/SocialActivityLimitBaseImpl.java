@@ -16,8 +16,8 @@ package com.liferay.portlet.social.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
+import com.liferay.social.kernel.model.SocialActivityLimit;
+import com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil;
 
 /**
  * The extended model base implementation for the SocialActivityLimit service. Represents a row in the &quot;SocialActivityLimit&quot; database table, with each column mapped to a property of this class.

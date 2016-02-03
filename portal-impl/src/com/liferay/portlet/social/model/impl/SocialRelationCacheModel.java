@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import com.liferay.portlet.social.model.SocialRelation;
+import com.liferay.social.kernel.model.SocialRelation;
 
 import java.io.Externalizable;
 import java.io.IOException;

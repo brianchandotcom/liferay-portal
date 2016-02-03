@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.social.exception.NoSuchRequestException;
-import com.liferay.portlet.social.model.SocialRequest;
-import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
-import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
-import com.liferay.portlet.social.service.persistence.SocialRequestUtil;
+import com.liferay.social.kernel.exception.NoSuchRequestException;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
+import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
+import com.liferay.social.kernel.service.persistence.SocialRequestUtil;
 
 import org.junit.After;
 import org.junit.Assert;

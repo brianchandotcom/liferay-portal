@@ -16,8 +16,8 @@ package com.liferay.portlet.social.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.social.model.SocialRelation;
-import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
+import com.liferay.social.kernel.model.SocialRelation;
+import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
 
 /**
  * The extended model base implementation for the SocialRelation service. Represents a row in the &quot;SocialRelation&quot; database table, with each column mapped to a property of this class.

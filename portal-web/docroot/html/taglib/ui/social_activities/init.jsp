@@ -16,10 +16,10 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivity" %><%@
-page import="com.liferay.portlet.social.model.SocialActivityFeedEntry" %><%@
-page import="com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil" %><%@
-page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>
+<%@ page import="com.liferay.social.kernel.model.SocialActivity" %><%@
+page import="com.liferay.social.kernel.model.SocialActivityFeedEntry" %><%@
+page import="com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil" %><%@
+page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %>
 
 <%
 List<SocialActivity> activities = (List<SocialActivity>)request.getAttribute("liferay-ui:social-activities:activities");

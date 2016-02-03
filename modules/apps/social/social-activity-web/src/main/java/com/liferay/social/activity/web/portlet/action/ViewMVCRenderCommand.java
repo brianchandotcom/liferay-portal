@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.social.model.SocialActivityDefinition;
-import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.service.SocialActivitySettingService;
-import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
 import com.liferay.social.activity.web.constants.SocialActivityWebKeys;
+import com.liferay.social.kernel.model.SocialActivityDefinition;
+import com.liferay.social.kernel.model.SocialActivitySetting;
+import com.liferay.social.kernel.service.SocialActivitySettingService;
+import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -30,8 +30,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.social.model.SocialActivityAchievement;
-import com.liferay.portlet.social.model.SocialActivityAchievementModel;
+
+import com.liferay.social.kernel.model.SocialActivityAchievement;
+import com.liferay.social.kernel.model.SocialActivityAchievementModel;
 
 import java.io.Serializable;
 
@@ -91,13 +92,13 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.social.model.SocialActivityAchievement"),
+				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialActivityAchievement"),
+				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivityAchievement"),
+				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
 			true);
 	public static final long FIRSTINGROUP_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
@@ -105,7 +106,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long ACTIVITYACHIEVEMENTID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityAchievement"));
+				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityAchievement"));
 
 	public SocialActivityAchievementModelImpl() {
 	}
@@ -518,7 +519,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.social.model.SocialActivityAchievement");
+		sb.append("com.liferay.social.kernel.model.SocialActivityAchievement");
 		sb.append("</model-name>");
 
 		sb.append(

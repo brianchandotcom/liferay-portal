@@ -24,7 +24,7 @@ import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.social.kernel.model.SocialActivityConstants;
 
 import java.util.List;
 

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.service.base.SocialActivityLimitLocalServiceBaseImpl;
+import com.liferay.social.kernel.model.SocialActivityLimit;
 
 /**
  * @author Zsolt Berentey

@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
-import com.liferay.portlet.social.model.SocialActivityDefinition;
-import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.base.SocialActivitySettingServiceBaseImpl;
-import com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil;
-import com.liferay.portlet.social.util.comparator.SocialActivityDefinitionNameComparator;
+import com.liferay.social.kernel.model.SocialActivityCounterDefinition;
+import com.liferay.social.kernel.model.SocialActivityDefinition;
+import com.liferay.social.kernel.model.SocialActivitySetting;
+import com.liferay.social.kernel.service.permission.SocialActivityPermissionUtil;
+import com.liferay.social.kernel.util.comparator.SocialActivityDefinitionNameComparator;
 
 import java.util.Collections;
 import java.util.List;

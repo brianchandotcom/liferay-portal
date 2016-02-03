@@ -17,9 +17,9 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.base.SocialRequestServiceBaseImpl;
-import com.liferay.portlet.social.service.permission.SocialRequestPermissionUtil;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.service.permission.SocialRequestPermissionUtil;
 
 /**
  * Provides the remote service for updating social requests. Its methods include

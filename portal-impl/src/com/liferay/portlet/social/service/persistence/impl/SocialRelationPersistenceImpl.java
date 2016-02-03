@@ -39,11 +39,12 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.social.exception.NoSuchRelationException;
-import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.model.impl.SocialRelationImpl;
 import com.liferay.portlet.social.model.impl.SocialRelationModelImpl;
-import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
+
+import com.liferay.social.kernel.exception.NoSuchRelationException;
+import com.liferay.social.kernel.model.SocialRelation;
+import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 
 import java.io.Serializable;
 
@@ -64,7 +65,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see SocialRelationPersistence
- * @see com.liferay.portlet.social.service.persistence.SocialRelationUtil
+ * @see com.liferay.social.kernel.service.persistence.SocialRelationUtil
  * @generated
  */
 @ProviderType

@@ -17,8 +17,8 @@ package com.liferay.portlet.social.service.persistence.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
 import java.util.Set;
 

@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
-import com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil;
+import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
+import com.liferay.social.kernel.util.SocialInteractionsConfigurationUtil;
 
 import java.util.List;
 

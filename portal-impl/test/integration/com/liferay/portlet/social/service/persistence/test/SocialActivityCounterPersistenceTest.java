@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.social.exception.NoSuchActivityCounterException;
-import com.liferay.portlet.social.model.SocialActivityCounter;
-import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterUtil;
+import com.liferay.social.kernel.exception.NoSuchActivityCounterException;
+import com.liferay.social.kernel.model.SocialActivityCounter;
+import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterUtil;
 
 import org.junit.After;
 import org.junit.Assert;

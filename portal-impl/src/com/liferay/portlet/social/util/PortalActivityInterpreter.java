@@ -17,9 +17,9 @@ package com.liferay.portlet.social.util;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
-import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
+import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 
 /**
  * @author Brian Wing Shun Chan

@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.social.exception.NoSuchActivityLimitException;
-import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
-import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
-import com.liferay.portlet.social.service.persistence.SocialActivityLimitUtil;
+import com.liferay.social.kernel.exception.NoSuchActivityLimitException;
+import com.liferay.social.kernel.model.SocialActivityLimit;
+import com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil;
+import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityLimitUtil;
 
 import org.junit.After;
 import org.junit.Assert;

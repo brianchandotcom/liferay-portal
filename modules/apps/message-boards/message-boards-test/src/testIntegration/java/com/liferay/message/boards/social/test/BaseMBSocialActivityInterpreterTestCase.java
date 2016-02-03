@@ -15,8 +15,8 @@
 package com.liferay.message.boards.social.test;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
 /**
  * @author Adolfo Pérez

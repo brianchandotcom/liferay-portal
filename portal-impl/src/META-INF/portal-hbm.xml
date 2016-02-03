@@ -116,16 +116,16 @@
 	<import class="com.liferay.portlet.messageboards.model.MBThreadFlag" />
 	<import class="com.liferay.portlet.ratings.model.RatingsEntry" />
 	<import class="com.liferay.portlet.ratings.model.RatingsStats" />
-	<import class="com.liferay.portlet.social.model.SocialActivity" />
-	<import class="com.liferay.portlet.social.model.SocialActivityAchievement" />
-	<import class="com.liferay.portlet.social.model.SocialActivityCounter" />
-	<import class="com.liferay.portlet.social.model.SocialActivityInterpreter" />
-	<import class="com.liferay.portlet.social.model.SocialActivityLimit" />
-	<import class="com.liferay.portlet.social.model.SocialActivitySet" />
-	<import class="com.liferay.portlet.social.model.SocialActivitySetting" />
-	<import class="com.liferay.portlet.social.model.SocialRelation" />
-	<import class="com.liferay.portlet.social.model.SocialRequest" />
-	<import class="com.liferay.portlet.social.model.SocialRequestInterpreter" />
+	<import class="com.liferay.social.kernel.model.SocialActivity" />
+	<import class="com.liferay.social.kernel.model.SocialActivityAchievement" />
+	<import class="com.liferay.social.kernel.model.SocialActivityCounter" />
+	<import class="com.liferay.social.kernel.model.SocialActivityInterpreter" />
+	<import class="com.liferay.social.kernel.model.SocialActivityLimit" />
+	<import class="com.liferay.social.kernel.model.SocialActivitySet" />
+	<import class="com.liferay.social.kernel.model.SocialActivitySetting" />
+	<import class="com.liferay.social.kernel.model.SocialRelation" />
+	<import class="com.liferay.social.kernel.model.SocialRequest" />
+	<import class="com.liferay.social.kernel.model.SocialRequestInterpreter" />
 	<import class="com.liferay.trash.kernel.model.TrashEntry" />
 	<import class="com.liferay.trash.kernel.model.TrashVersion" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">

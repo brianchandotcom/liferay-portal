@@ -27,11 +27,11 @@ page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" 
 page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
-page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration" %><%@
-page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %>
+page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %><%@
+page import="com.liferay.social.kernel.model.SocialActivityDefinition" %><%@
+page import="com.liferay.social.kernel.service.permission.SocialActivityPermissionUtil" %><%@
+page import="com.liferay.social.kernel.util.SocialConfigurationUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

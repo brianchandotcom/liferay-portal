@@ -38,11 +38,12 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.social.exception.NoSuchActivityCounterException;
-import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
+
+import com.liferay.social.kernel.exception.NoSuchActivityCounterException;
+import com.liferay.social.kernel.model.SocialActivityCounter;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
 
 import java.io.Serializable;
 
@@ -63,7 +64,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivityCounterPersistence
- * @see com.liferay.portlet.social.service.persistence.SocialActivityCounterUtil
+ * @see com.liferay.social.kernel.service.persistence.SocialActivityCounterUtil
  * @generated
  */
 @ProviderType

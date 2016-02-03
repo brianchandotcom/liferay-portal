@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.countU_ByG_C_N_S_E">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.countU_ByG_C_N_S_E">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT classPK) AS COUNT_VALUE
@@ -21,7 +21,7 @@
 				(SocialActivityCounter.active_ = [$TRUE$])
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_1">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_1">
 		<![CDATA[
 			SELECT
 				name, SUM(currentValue) currentValue, startPeriod, endPeriod
@@ -40,7 +40,7 @@
 				startPeriod
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_2">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_2">
 		<![CDATA[
 			SELECT
 				classNameId, name, SUM(currentValue) currentValue
@@ -59,7 +59,7 @@
 				currentValue DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
 		<![CDATA[
 			SELECT
 				{SocialActivityCounter.*}
@@ -76,7 +76,7 @@
 				classPK
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findU_ByG_C_N_S_E">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findU_ByG_C_N_S_E">
 		<![CDATA[
 			SELECT
 				classPK
@@ -100,7 +100,7 @@
 				SUM(currentValue) DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByGroupId">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByGroupId">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -111,7 +111,7 @@
 				(mirrorActivityId = 0)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByGroupUsers">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByGroupUsers">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -125,7 +125,7 @@
 				(Users_Groups.groupId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByOrganizationId">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByOrganizationId">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -142,7 +142,7 @@
 				(Organization_.organizationId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByOrganizationUsers">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByOrganizationUsers">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -156,7 +156,7 @@
 				(Users_Orgs.organizationId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByRelation">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByRelation">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SocialActivity.activityId) AS COUNT_VALUE
@@ -169,7 +169,7 @@
 				(SocialRelation.userId1 = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByRelationType">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByRelationType">
 		<![CDATA[
 			SELECT
 				COUNT(SocialActivity.activityId) AS COUNT_VALUE
@@ -184,7 +184,7 @@
 				(SocialRelation.type_ = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByUserGroups">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByUserGroups">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -226,7 +226,7 @@
 				(mirrorActivityId = 0)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByUserGroupsAndOrganizations">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByUserGroupsAndOrganizations">
 		<![CDATA[
 			(
 				SELECT
@@ -273,7 +273,7 @@
 			)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByUserOrganizations">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByUserOrganizations">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -299,7 +299,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByGroupId">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByGroupId">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -312,7 +312,7 @@
 				createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByGroupUsers">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByGroupUsers">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -328,7 +328,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByOrganizationId">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByOrganizationId">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -347,7 +347,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByOrganizationUsers">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByOrganizationUsers">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -363,7 +363,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByRelation">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByRelation">
 		<![CDATA[
 			SELECT
 				DISTINCT {SocialActivity.*}
@@ -378,7 +378,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByRelationType">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByRelationType">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -395,7 +395,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByUserGroups">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByUserGroups">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -439,7 +439,7 @@
 				createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByUserGroupsAndOrganizations">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByUserGroupsAndOrganizations">
 		<![CDATA[
 			SELECT
 				TEMP_TABLE.*
@@ -491,7 +491,7 @@
 				createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByUserOrganizations">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.findByUserOrganizations">
 		<![CDATA[
 			SELECT
 				{SocialActivity.*}
@@ -519,7 +519,7 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.countByRelation">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByRelation">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SocialActivitySet.activitySetId) AS COUNT_VALUE
@@ -532,7 +532,7 @@
 				(SocialRelation.userId1 = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.countByRelationType">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByRelationType">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SocialActivitySet.activitySetId) AS COUNT_VALUE
@@ -546,7 +546,7 @@
 				(SocialRelation.type_ = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.countByUser">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByUser">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SocialActivitySet.activitySetId) AS COUNT_VALUE
@@ -600,7 +600,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.countByUserGroups">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByUserGroups">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT SocialActivitySet.activitySetId) AS COUNT_VALUE
@@ -641,7 +641,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByRelation">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByRelation">
 		<![CDATA[
 			SELECT
 				DISTINCT {SocialActivitySet.*}
@@ -656,7 +656,7 @@
 				SocialActivitySet.modifiedDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByRelationType">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByRelationType">
 		<![CDATA[
 			SELECT
 				DISTINCT {SocialActivitySet.*}
@@ -672,7 +672,7 @@
 				SocialActivitySet.modifiedDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByUser">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByUser">
 		<![CDATA[
 			SELECT
 				DISTINCT {SocialActivitySet.*}
@@ -728,7 +728,7 @@
 				modifiedDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByUserGroups">
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByUserGroups">
 		<![CDATA[
 			SELECT
 				DISTINCT {SocialActivitySet.*}

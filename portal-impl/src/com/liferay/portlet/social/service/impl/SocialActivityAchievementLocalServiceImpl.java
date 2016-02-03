@@ -16,9 +16,9 @@ package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.social.model.SocialAchievement;
-import com.liferay.portlet.social.model.SocialActivityAchievement;
 import com.liferay.portlet.social.service.base.SocialActivityAchievementLocalServiceBaseImpl;
+import com.liferay.social.kernel.model.SocialAchievement;
+import com.liferay.social.kernel.model.SocialActivityAchievement;
 
 import java.util.List;
 

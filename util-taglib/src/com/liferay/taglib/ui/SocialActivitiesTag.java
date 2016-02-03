@@ -15,7 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

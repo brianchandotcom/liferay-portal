@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"model.class.name=" +
-			"com.liferay.portlet.social.model.SocialActivitySetting"
+			"com.liferay.social.kernel.model.SocialActivitySetting"
 	},
 	service = {EditPortletProvider.class}
 )

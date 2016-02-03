@@ -17,10 +17,10 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.social.exception.RequestUserIdException;
-import com.liferay.portlet.social.model.SocialRequest;
-import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.service.base.SocialRequestLocalServiceBaseImpl;
+import com.liferay.social.kernel.exception.RequestUserIdException;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.model.SocialRequestConstants;
 
 import java.util.List;
 
@@ -385,10 +385,10 @@ public class SocialRequestLocalServiceImpl
 	 * <p>
 	 * If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
 	 * then {@link
-	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processConfirmation(
+	 * com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
 	 * SocialRequest, ThemeDisplay)} is called. If the status is updated to
 	 * {@link SocialRequestConstants#STATUS_IGNORE} then {@link
-	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processRejection(
+	 * com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
 	 * SocialRequest, ThemeDisplay)} is called.
 	 * </p>
 	 *

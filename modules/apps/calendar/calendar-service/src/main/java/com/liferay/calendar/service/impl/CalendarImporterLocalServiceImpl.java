@@ -57,7 +57,7 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;

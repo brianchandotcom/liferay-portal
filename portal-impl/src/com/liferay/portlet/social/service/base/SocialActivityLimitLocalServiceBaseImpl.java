@@ -42,9 +42,9 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.service.SocialActivityLimitLocalService;
-import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
+import com.liferay.social.kernel.model.SocialActivityLimit;
+import com.liferay.social.kernel.service.SocialActivityLimitLocalService;
+import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence;
 
 import java.io.Serializable;
 
@@ -61,7 +61,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl
- * @see com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil
+ * @see com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -71,7 +71,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil} to access the social activity limit local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil} to access the social activity limit local service.
 	 */
 
 	/**
@@ -232,7 +232,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityLimit.class);
 
@@ -245,7 +245,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SocialActivityLimit.class);
 
@@ -257,7 +257,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityLimitLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityLimit.class);
 
@@ -486,13 +486,13 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.social.model.SocialActivityLimit",
+		persistedModelLocalServiceRegistry.register("com.liferay.social.kernel.model.SocialActivityLimit",
 			socialActivityLimitLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.social.model.SocialActivityLimit");
+			"com.liferay.social.kernel.model.SocialActivityLimit");
 	}
 
 	/**
@@ -537,7 +537,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLimitLocalService.class)
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityLimitLocalService.class)
 	protected SocialActivityLimitLocalService socialActivityLimitLocalService;
 	@BeanReference(type = SocialActivityLimitPersistence.class)
 	protected SocialActivityLimitPersistence socialActivityLimitPersistence;

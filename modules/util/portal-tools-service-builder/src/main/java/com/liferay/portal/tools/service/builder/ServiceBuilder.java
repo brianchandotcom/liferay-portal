@@ -1674,7 +1674,7 @@ public class ServiceBuilder {
 				"com.liferay.portal.kernel.search.") ||
 			returnTypeGenericsName.contains("com.liferay.portal.model.Theme") ||
 			returnTypeGenericsName.contains(
-				"com.liferay.portlet.social.model.SocialActivityDefinition") ||
+				"com.liferay.social.kernel.model.SocialActivityDefinition") ||
 			returnTypeGenericsName.equals("java.util.List<java.lang.Object>") ||
 			returnValueName.equals("com.liferay.portal.model.Lock") ||
 			returnValueName.equals(

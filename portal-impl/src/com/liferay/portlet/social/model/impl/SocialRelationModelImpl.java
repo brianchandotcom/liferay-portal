@@ -27,8 +27,9 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.social.model.SocialRelation;
-import com.liferay.portlet.social.model.SocialRelationModel;
+
+import com.liferay.social.kernel.model.SocialRelation;
+import com.liferay.social.kernel.model.SocialRelationModel;
 
 import java.io.Serializable;
 
@@ -88,13 +89,13 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.social.model.SocialRelation"),
+				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialRelation"),
+				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialRelation"),
+				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialRelation"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long TYPE_COLUMN_BITMASK = 2L;
@@ -103,7 +104,7 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long RELATIONID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.social.model.SocialRelation"));
+				"lock.expiration.time.com.liferay.social.kernel.model.SocialRelation"));
 
 	public SocialRelationModelImpl() {
 	}
@@ -508,7 +509,7 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.social.model.SocialRelation");
+		sb.append("com.liferay.social.kernel.model.SocialRelation");
 		sb.append("</model-name>");
 
 		sb.append(

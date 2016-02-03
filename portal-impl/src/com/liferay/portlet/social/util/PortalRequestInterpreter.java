@@ -15,9 +15,9 @@
 package com.liferay.portlet.social.util;
 
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.social.model.BaseSocialRequestInterpreter;
-import com.liferay.portlet.social.model.SocialRequest;
-import com.liferay.portlet.social.model.SocialRequestFeedEntry;
+import com.liferay.social.kernel.model.BaseSocialRequestInterpreter;
+import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.model.SocialRequestFeedEntry;
 
 /**
  * @author Brian Wing Shun Chan

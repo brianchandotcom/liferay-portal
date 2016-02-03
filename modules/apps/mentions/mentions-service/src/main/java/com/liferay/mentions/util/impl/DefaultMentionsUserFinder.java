@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
-import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.social.util.SocialInteractionsConfiguration;
+import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -15,7 +15,8 @@
 package com.liferay.portlet.social.util;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.social.model.SocialRelationConstants;
+import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.kernel.util.SocialRelationTypes;
 
 import java.util.Arrays;
 import java.util.List;

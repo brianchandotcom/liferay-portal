@@ -23,8 +23,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
-import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.portlet.social.util.test.SocialActivityTestUtil;
+import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import org.junit.After;
 import org.junit.Before;

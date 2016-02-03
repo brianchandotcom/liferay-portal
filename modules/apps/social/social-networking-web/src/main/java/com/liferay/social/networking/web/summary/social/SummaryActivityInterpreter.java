@@ -14,7 +14,7 @@
 
 package com.liferay.social.networking.web.summary.social;
 
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.web.social.BaseSocialNetworkingActivityInterpreter;
 

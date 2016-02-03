@@ -27,9 +27,9 @@ import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.service.SocialActivitySettingService;
-import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
+import com.liferay.social.kernel.model.SocialActivitySetting;
+import com.liferay.social.kernel.service.SocialActivitySettingService;
+import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
 
 import javax.sql.DataSource;
 
@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl
- * @see com.liferay.portlet.social.service.SocialActivitySettingServiceUtil
+ * @see com.liferay.social.kernel.service.SocialActivitySettingServiceUtil
  * @generated
  */
 public abstract class SocialActivitySettingServiceBaseImpl
@@ -51,7 +51,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.social.service.SocialActivitySettingServiceUtil} to access the social activity setting remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.social.kernel.service.SocialActivitySettingServiceUtil} to access the social activity setting remote service.
 	 */
 
 	/**
@@ -59,7 +59,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the social activity setting local service
 	 */
-	public com.liferay.portlet.social.service.SocialActivitySettingLocalService getSocialActivitySettingLocalService() {
+	public com.liferay.social.kernel.service.SocialActivitySettingLocalService getSocialActivitySettingLocalService() {
 		return socialActivitySettingLocalService;
 	}
 
@@ -69,7 +69,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 * @param socialActivitySettingLocalService the social activity setting local service
 	 */
 	public void setSocialActivitySettingLocalService(
-		com.liferay.portlet.social.service.SocialActivitySettingLocalService socialActivitySettingLocalService) {
+		com.liferay.social.kernel.service.SocialActivitySettingLocalService socialActivitySettingLocalService) {
 		this.socialActivitySettingLocalService = socialActivitySettingLocalService;
 	}
 
@@ -309,9 +309,9 @@ public abstract class SocialActivitySettingServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySettingLocalService.class)
-	protected com.liferay.portlet.social.service.SocialActivitySettingLocalService socialActivitySettingLocalService;
-	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySettingService.class)
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivitySettingLocalService.class)
+	protected com.liferay.social.kernel.service.SocialActivitySettingLocalService socialActivitySettingLocalService;
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivitySettingService.class)
 	protected SocialActivitySettingService socialActivitySettingService;
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;

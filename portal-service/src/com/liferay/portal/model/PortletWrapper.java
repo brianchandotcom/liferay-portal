@@ -1361,7 +1361,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* @return the social activity interpreter instances of the portlet
 	*/
 	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
 		return _portlet.getSocialActivityInterpreterInstances();
 	}
 
@@ -1383,7 +1383,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	portlet
 	*/
 	@Override
-	public com.liferay.portlet.social.model.SocialRequestInterpreter getSocialRequestInterpreterInstance() {
+	public com.liferay.social.kernel.model.SocialRequestInterpreter getSocialRequestInterpreterInstance() {
 		return _portlet.getSocialRequestInterpreterInstance();
 	}
 

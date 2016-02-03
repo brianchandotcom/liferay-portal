@@ -2,11 +2,11 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Social_SocialActivitySettingService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.social.portlet.liferay.com" xmlns:cmp-ns="http://model.social.portlet.liferay.com" qname="ns:ArrayOf_tns2_SocialActivitySettingSoap" type="java:com.liferay.portlet.social.model.SocialActivitySettingSoap[]" innerType="cmp-ns:SocialActivitySettingSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.social.portlet.liferay.com" xmlns:cmp-ns="http://model.kernel.social.liferay.com" qname="ns:ArrayOf_tns2_SocialActivitySettingSoap" type="java:com.liferay.social.kernel.model.SocialActivitySettingSoap[]" innerType="cmp-ns:SocialActivitySettingSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.social.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<typeMapping xmlns:ns="http://model.social.portlet.liferay.com" qname="ns:SocialActivityCounterDefinition" type="java:com.liferay.portlet.social.model.SocialActivityCounterDefinition" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<typeMapping xmlns:ns="http://model.social.portlet.liferay.com" qname="ns:SocialActivitySettingSoap" type="java:com.liferay.portlet.social.model.SocialActivitySettingSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<operation xmlns:operNS="urn:http.service.social.portlet.liferay.com" xmlns:rtns="urn:http.service.social.portlet.liferay.com" xmlns:tns2="http://model.social.portlet.liferay.com" name="getActivitySettings" qname="operNS:getActivitySettings" returnQName="getActivitySettingsReturn" returnType="rtns:ArrayOf_tns2_SocialActivitySettingSoap" returnItemType="tns2:SocialActivitySettingSoap" soapAction="">
+		<typeMapping xmlns:ns="http://model.kernel.social.liferay.com" qname="ns:SocialActivityCounterDefinition" type="java:com.liferay.social.kernel.model.SocialActivityCounterDefinition" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.kernel.social.liferay.com" qname="ns:SocialActivitySettingSoap" type="java:com.liferay.social.kernel.model.SocialActivitySettingSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.social.portlet.liferay.com" xmlns:rtns="urn:http.service.social.portlet.liferay.com" xmlns:tns2="http://model.kernel.social.liferay.com" name="getActivitySettings" qname="operNS:getActivitySettings" returnQName="getActivitySettingsReturn" returnType="rtns:ArrayOf_tns2_SocialActivitySettingSoap" returnItemType="tns2:SocialActivitySettingSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.social.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getJSONActivityDefinitions" qname="operNS:getJSONActivityDefinitions" returnQName="getJSONActivityDefinitionsReturn" returnType="rtns:string" soapAction="">
@@ -22,7 +22,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="activityType" type="tns:int"></parameter>
-			<parameter xmlns:tns="http://model.social.portlet.liferay.com" qname="activityCounterDefinition" type="tns:SocialActivityCounterDefinition"></parameter>
+			<parameter xmlns:tns="http://model.kernel.social.liferay.com" qname="activityCounterDefinition" type="tns:SocialActivityCounterDefinition"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.social.portlet.liferay.com" name="updateActivitySettings" qname="operNS:updateActivitySettings" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -32,7 +32,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="getActivitySettings getJSONActivityDefinitions updateActivitySetting updateActivitySettings" />
 		<parameter name="className" value="com.liferay.portlet.social.service.http.SocialActivitySettingServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.social.portlet.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.social.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.kernel.social.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.social.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="SocialActivitySettingServiceSoap" />
 		<parameter name="wsdlServiceElement" value="SocialActivitySettingServiceSoapService" />

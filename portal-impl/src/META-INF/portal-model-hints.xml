@@ -1898,7 +1898,7 @@
 		<field name="totalScore" type="double" />
 		<field name="averageScore" type="double" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivity">
+	<model name="com.liferay.social.kernel.model.SocialActivity">
 		<field name="activityId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1917,7 +1917,7 @@
 		</field>
 		<field name="receiverUserId" type="long" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivityAchievement">
+	<model name="com.liferay.social.kernel.model.SocialActivityAchievement">
 		<field name="activityAchievementId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1926,7 +1926,7 @@
 		<field name="name" type="String" />
 		<field name="firstInGroup" type="boolean" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivityCounter">
+	<model name="com.liferay.social.kernel.model.SocialActivityCounter">
 		<field name="activityCounterId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1941,7 +1941,7 @@
 		<field name="endPeriod" type="int" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivityLimit">
+	<model name="com.liferay.social.kernel.model.SocialActivityLimit">
 		<field name="activityLimitId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1952,7 +1952,7 @@
 		<field name="activityCounterName" type="String" />
 		<field name="value" type="String" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivitySet">
+	<model name="com.liferay.social.kernel.model.SocialActivitySet">
 		<field name="activitySetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1968,7 +1968,7 @@
 		</field>
 		<field name="activityCount" type="int" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialActivitySetting">
+	<model name="com.liferay.social.kernel.model.SocialActivitySetting">
 		<field name="activitySettingId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1979,7 +1979,7 @@
 			<hint name="max-length">1024</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialRelation">
+	<model name="com.liferay.social.kernel.model.SocialRelation">
 		<field name="uuid" type="String" />
 		<field name="relationId" type="long" />
 		<field name="companyId" type="long" />
@@ -1988,7 +1988,7 @@
 		<field name="userId2" type="long" />
 		<field name="type" type="int" />
 	</model>
-	<model name="com.liferay.portlet.social.model.SocialRequest">
+	<model name="com.liferay.social.kernel.model.SocialRequest">
 		<field name="uuid" type="String" />
 		<field name="requestId" type="long" />
 		<field name="groupId" type="long" />

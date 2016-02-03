@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.service.http.TunnelUtil;
 
-import com.liferay.portlet.social.service.SocialRequestServiceUtil;
+import com.liferay.social.kernel.service.SocialRequestServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.social.service.SocialRequestServiceUtil;
  */
 @ProviderType
 public class SocialRequestServiceHttp {
-	public static com.liferay.portlet.social.model.SocialRequest updateRequest(
+	public static com.liferay.social.kernel.model.SocialRequest updateRequest(
 		HttpPrincipal httpPrincipal, long requestId, int status,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,7 +79,7 @@ public class SocialRequestServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.social.model.SocialRequest)returnObj;
+			return (com.liferay.social.kernel.model.SocialRequest)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

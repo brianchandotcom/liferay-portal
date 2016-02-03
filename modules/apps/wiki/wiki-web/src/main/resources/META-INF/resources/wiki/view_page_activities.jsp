@@ -60,7 +60,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.social.model.SocialActivity"
+			className="com.liferay.social.kernel.model.SocialActivity"
 			escapedModel="<%= true %>"
 			keyProperty="activityId"
 			modelVar="socialActivity"

@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.social.service.SocialRequestServiceUtil} service utility. The
+ * {@link com.liferay.social.kernel.service.SocialRequestServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -26,10 +26,10 @@ import aQute.bnd.annotation.ProviderType;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.social.model.SocialRequestSoap}.
+ * is translated to an array of {@link com.liferay.social.kernel.model.SocialRequestSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.social.model.SocialRequest}, that is translated to a
- * {@link com.liferay.portlet.social.model.SocialRequestSoap}. Methods that SOAP cannot
+ * {@link com.liferay.social.kernel.model.SocialRequest}, that is translated to a
+ * {@link com.liferay.social.kernel.model.SocialRequestSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -52,8 +52,8 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see SocialRequestServiceHttp
- * @see com.liferay.portlet.social.model.SocialRequestSoap
- * @see com.liferay.portlet.social.service.SocialRequestServiceUtil
+ * @see com.liferay.social.kernel.model.SocialRequestSoap
+ * @see com.liferay.social.kernel.service.SocialRequestServiceUtil
  * @generated
  */
 @ProviderType

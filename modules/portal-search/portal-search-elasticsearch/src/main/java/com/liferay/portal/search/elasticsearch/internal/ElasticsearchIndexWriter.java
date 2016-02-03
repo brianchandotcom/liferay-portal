@@ -41,6 +41,7 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -119,6 +120,13 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 			LogUtil.logActionResponse(_log, deleteResponse);
 		}
+		catch (IndexNotFoundException infe) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No index found while attempting to delete " + uid +
+						" in index " + searchContext.getCompanyId());
+			}
+		}
 		catch (Exception e) {
 			throw new SearchException("Unable to delete document " + uid, e);
 		}
@@ -186,6 +194,14 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			searchResponseScroller.prepare();
 
 			searchResponseScroller.scroll(_searchHitsProcessor);
+		}
+		catch (IndexNotFoundException infe) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No index found while attempting to delete documents for " +
+						className + " in index: " +
+						searchContext.getCompanyId());
+			}
 		}
 		catch (Exception e) {
 			throw new SearchException(

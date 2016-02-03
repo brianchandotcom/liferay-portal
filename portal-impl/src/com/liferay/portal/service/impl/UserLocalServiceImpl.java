@@ -5852,9 +5852,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		Boolean forceDatabase = (Boolean)params.get("forceDatabase");
 		Boolean inherit = (Boolean)params.get("inherit");
 
-		if ((inherit != null) && inherit) {
+		if (((forceDatabase != null) && forceDatabase) ||
+			((inherit != null) && inherit)) {
+
 			return true;
 		}
 

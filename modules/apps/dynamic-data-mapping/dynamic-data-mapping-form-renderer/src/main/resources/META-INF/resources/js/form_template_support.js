@@ -5,9 +5,9 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var TPL_DIV = '<div></div>';
-
 		var TPL_ASTERISK = '<i class="icon-asterisk text-warning"></i>';
+
+		var TPL_DIV = '<div></div>';
 
 		var TPL_REQUIRED_FIELDS_WARNING_MESSAGE = '<label class="required-warning">{message}</label>';
 

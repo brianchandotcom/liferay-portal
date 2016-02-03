@@ -44,8 +44,10 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="device-families" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="device-families" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">

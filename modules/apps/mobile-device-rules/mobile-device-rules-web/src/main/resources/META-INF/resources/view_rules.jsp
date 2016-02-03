@@ -75,8 +75,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x
 %>
 
 <aui:nav-bar markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="classification-rules" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="classification-rules" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 

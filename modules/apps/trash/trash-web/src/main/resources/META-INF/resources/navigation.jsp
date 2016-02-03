@@ -21,8 +21,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="entries" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="entries" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>

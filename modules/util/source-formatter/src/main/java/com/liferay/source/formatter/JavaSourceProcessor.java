@@ -442,29 +442,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		List<String> importedExceptionClassNames = null;
 		JavaDocBuilder javaDocBuilder = null;
 
-		for (int lineCount = 1;;) {
-			Matcher catchExceptionMatcher = _catchExceptionPattern.matcher(
-				content);
+		Matcher matcher = _catchExceptionPattern.matcher(content);
 
-			if (!catchExceptionMatcher.find()) {
-				return;
-			}
-
-			String beforeCatchCode = content.substring(
-				0, catchExceptionMatcher.start());
-
-			lineCount = lineCount + StringUtil.count(beforeCatchCode, "\n") + 1;
-
-			String exceptionClassName = catchExceptionMatcher.group(2);
-			String exceptionVariableName = catchExceptionMatcher.group(3);
-			String tabs = catchExceptionMatcher.group(1);
+		while (matcher.find()) {
+			String exceptionClassName = matcher.group(2);
+			String exceptionVariableName = matcher.group(3);
+			String tabs = matcher.group(1);
 
 			int pos = content.indexOf(
-				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE,
-				catchExceptionMatcher.end() - 1);
+				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE, matcher.end() - 1);
 
-			String insideCatchCode = content.substring(
-				catchExceptionMatcher.end(), pos + 1);
+			String insideCatchCode = content.substring(matcher.end(), pos + 1);
 
 			Pattern exceptionVariablePattern = Pattern.compile(
 				"\\W" + exceptionVariableName + "\\W");
@@ -473,8 +461,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				insideCatchCode);
 
 			if (exceptionVariableMatcher.find()) {
-				content = content.substring(catchExceptionMatcher.start() + 1);
-
 				continue;
 			}
 
@@ -523,6 +509,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (exceptionClassName.equals("PortalException") ||
 					exceptionClassName.equals("SystemException")) {
 
+					int lineCount = getLineCount(content, matcher.start(2));
+
 					processErrorMessage(
 						fileName,
 						"Unprocessed " + originalExceptionClassName + ": " +
@@ -540,8 +528,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				exceptionClass = exceptionSuperClass;
 			}
-
-			content = content.substring(catchExceptionMatcher.start() + 1);
 		}
 	}
 

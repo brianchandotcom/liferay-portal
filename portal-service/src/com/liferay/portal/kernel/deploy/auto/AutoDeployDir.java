@@ -64,12 +64,12 @@ public class AutoDeployDir {
 		if (deployableAutoDeployListeners.size() > 1) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("The auto deploy listeners ");
+			sb.append("The following auto deploy listeners are available for ");
+			sb.append(autoDeploymentContext.getFile());
+			sb.append(": ");
 			sb.append(
 				StringUtil.merge(
 					duplicateApplicableAutoDeployListenerClassNames, ", "));
-			sb.append(" all deployed ");
-			sb.append(autoDeploymentContext.getFile());
 			sb.append(", but only one should have.");
 
 			throw new AutoDeployException(sb.toString());

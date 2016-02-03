@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
@@ -7,6 +9,7 @@ dependencies {
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-20150611.165350-3"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:staging:staging-lang")
 }
 
 liferay {

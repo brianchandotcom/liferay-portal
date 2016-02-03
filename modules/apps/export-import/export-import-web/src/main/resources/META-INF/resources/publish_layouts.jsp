@@ -359,11 +359,9 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 							<c:if test="<%= !quickPublish %>">
 								<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
-							</c:if>
 
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
-								<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
-							</aui:fieldset>
+								<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
+							</c:if>
 
 							<c:if test="<%= !localPublishing %>">
 								<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

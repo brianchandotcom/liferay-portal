@@ -141,6 +141,18 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PermissionsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>descriptionCSSClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -153,8 +165,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>labelCSSClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>parameterMap</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

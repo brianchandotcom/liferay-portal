@@ -120,6 +120,10 @@
 	padding-bottom: 95px;
 	padding-top: 95px;
 
+	p a {
+		color: $color-2;
+	}
+
 	@include sm {
 		min-height: 560px;
 		padding-bottom: 190px;

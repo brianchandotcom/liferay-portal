@@ -23,7 +23,7 @@
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.DLUtil" class="com.liferay.portlet.documentlibrary.util.DLUtil">
 		<property name="DL">
-			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" />
+			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" destroy-method="destroy" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.DLValidatorUtil" class="com.liferay.portlet.documentlibrary.util.DLValidatorUtil">

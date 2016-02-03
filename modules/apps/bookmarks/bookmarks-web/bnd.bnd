@@ -46,7 +46,7 @@ Import-Package:\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.social.model,\
-	com.liferay.portlet.trash.model,\
+	com.liferay.trash.kernel.model,\
 	\
 	org.apache.commons.chain,\
 	org.apache.commons.chain.*,\

@@ -101,7 +101,9 @@
 			<then>
 				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
-				<execute function="ClickNoError" locator1="SitePages#TOOLBAR_DELETE" />
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+				<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
@@ -119,10 +121,14 @@
 		<var name="key_page" value="${sitePageName}" />
 
 		<if>
-			<condition function="IsVisible" locator1="ProductMenu#EDIT_PAGE" />
+			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
 				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
-				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
+
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
@@ -147,7 +153,10 @@
 			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
 				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
-				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
+
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 

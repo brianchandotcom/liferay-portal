@@ -51,6 +51,10 @@
 
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
 		<execute macro="ProductMenuHelper#expandPageTree" />
 
 		<var name="key_page" value="${page}" />

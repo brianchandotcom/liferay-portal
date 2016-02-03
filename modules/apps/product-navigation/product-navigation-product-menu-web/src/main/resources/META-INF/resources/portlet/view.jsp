@@ -68,9 +68,12 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 		}
 	);
 
-	sidenavToggle.data('url-loaded').then(function(){
-		sidenavSlider.find('.loading-animation').remove();
-	});
+	sidenavSlider.on(
+		'urlLoaded.lexicon.sidenav',
+		function(){
+			sidenavSlider.find('.loading-animation').remove();
+		}
+	);
 
 	<c:if test="<%= productMenuDisplayContext.hasUserPanelCategory() %>">
 		Liferay.on(

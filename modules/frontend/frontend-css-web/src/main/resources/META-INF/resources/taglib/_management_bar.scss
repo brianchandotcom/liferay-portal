@@ -24,6 +24,17 @@
 			}
 		}
 
+		.management-bar-center {
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%);
+			margin-top: 12px;
+
+			@include sm() {
+				margin-top: 16px;
+			}
+		}
+
 		.form-group {
 			margin-bottom: 0;
 		}

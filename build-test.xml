@@ -6863,15 +6863,11 @@ if (ppstate.equals("normal")) {
 	<target name="run-selenium-smoke-test">
 		<antcall target="compile" />
 
-		<antcall target="start-selenium" />
-
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
 		<ant dir="portal-web" target="test-class" inheritAll="false">
 			<property name="test.class" value="SeleniumSmokeTestSuite" />
 		</ant>
-
-		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-selenium-test" depends="prepare-selenium">
@@ -7447,36 +7443,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</exec>
 	</target>
 
-	<target name="start-selenium">
-		<if>
-			<not>
-				<resourcecontains
-					resource="portal-impl/classes/system-ext.properties"
-					substring="java.awt.headless=false"
-				/>
-			</not>
-			<then>
-				<echo append="true" file="portal-impl/classes/system-ext.properties">
-					java.awt.headless=false
-				</echo>
-			</then>
-		</if>
-
-		<!--<java
-			jar="lib/development/selenium-server.jar"
-			fork="true"
-			spawn="true"
-		>-->
-		<java
-			classname="org.openqa.grid.selenium.GridLauncher"
-			classpathref="project.classpath"
-			fork="true"
-			spawn="true"
-		>
-			<arg line="-port 14444 -singleWindow" />
-		</java>
-	</target>
-
 	<target name="start-test-smtp-server">
 		<start-test-smtp-server />
 	</target>
@@ -7553,31 +7519,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 			</sequential>
 		</for>
-	</target>
-
-	<target name="stop-selenium">
-		<if>
-			<available file="portal-impl/src/system-ext.properties" />
-			<then>
-				<if>
-					<not>
-						<filesmatch
-							file1="portal-impl/src/system-ext.properties"
-							file2="portal-impl/classes/system-ext.properties"
-						/>
-					</not>
-					<then>
-						<copy
-							file="portal-impl/src/system-ext.properties"
-							overwrite="true"
-							tofile="portal-impl/classes/system-ext.properties"
-						/>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
 	</target>
 
 	<target name="test-integration">

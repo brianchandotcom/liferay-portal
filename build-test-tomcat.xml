@@ -36,8 +36,6 @@
 
 		<antcall target="prepare-virtual-host-name-properties" />
 
-		<antcall target="start-selenium" />
-
 		<if>
 			<isset property="test.base.dir.name" />
 			<then>
@@ -52,8 +50,6 @@
 				</antcall>
 			</else>
 		</if>
-
-		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-tomcat">

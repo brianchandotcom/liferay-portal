@@ -340,12 +340,14 @@ public class PortletPermissionImpl implements PortletPermission {
 		resourcePermissionPrimKey = getPrimaryKey(layout.getPlid(), portletId);
 
 		boolean useDefaultPortletPermissions = false;
-
-		if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+		
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
 				permissionChecker.getCompanyId(), rootPortletId,
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				resourcePermissionPrimKey) == 0) {
+				resourcePermissionPrimKey);
 
+		if (count == 0) {
 			useDefaultPortletPermissions = true;
 		}
 

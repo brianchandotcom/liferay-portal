@@ -26,7 +26,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.List;
 

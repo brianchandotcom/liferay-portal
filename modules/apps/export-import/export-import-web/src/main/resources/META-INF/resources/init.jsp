@@ -140,9 +140,9 @@ page import="com.liferay.portlet.exportimport.service.ExportImportConfigurationL
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
 page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
+page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
+page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 

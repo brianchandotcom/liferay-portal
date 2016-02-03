@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.trash.exception.RestoreEntryException;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryService;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.taglib.util.TrashUndoUtil;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import java.io.IOException;

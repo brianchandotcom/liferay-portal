@@ -77,9 +77,9 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;

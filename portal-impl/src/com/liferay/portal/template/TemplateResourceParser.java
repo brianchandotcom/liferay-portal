@@ -25,4 +25,6 @@ public interface TemplateResourceParser {
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException;
 
+	public boolean isTemplateResourceValid(String templateId, String langType);
+
 }

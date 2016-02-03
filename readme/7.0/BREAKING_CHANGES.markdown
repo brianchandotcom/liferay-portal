@@ -3229,13 +3229,11 @@ Portal by means of an OSGi container.
 #### What changed?
 
 The `${theme}` variable previously injected in the FreeMarker context providing
-access to various tags and utilities no longer provides them. Only the
-`${theme.include}` method is preserved for performance reasons.
+access to various tags and utilities is no longer available.
 
 #### Who is affected?
 
-This affects FreeMarker templates that are using the `${theme}` variable to
-access tags.
+This affects FreeMarker templates that are using the `${theme}` variable.
 
 #### How should I update my code?
 

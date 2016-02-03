@@ -206,7 +206,7 @@ public class JournalArticleServiceTest {
 
 			Assert.fail();
 		}
-		catch (RequiredTemplateException rse) {
+		catch (RequiredTemplateException rte) {
 		}
 	}
 

@@ -61,7 +61,7 @@ public class AuthVerifierPipelineTest {
 
 			AuthVerifierPipeline.verifyRequest(accessControlContext);
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 			Assert.fail();
 		}
 	}

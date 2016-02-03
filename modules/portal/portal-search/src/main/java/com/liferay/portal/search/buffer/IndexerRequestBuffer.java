@@ -142,9 +142,9 @@ public class IndexerRequestBuffer {
 			try {
 				IndexWriterHelperUtil.commit(searchEngineId);
 			}
-			catch (SearchException e) {
+			catch (SearchException se) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to commit search engine", e);
+					_log.warn("Unable to commit search engine", se);
 				}
 			}
 		}

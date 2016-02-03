@@ -66,9 +66,9 @@ public class ReadWriteSolrClient extends SolrClient {
 		try {
 			close();
 		}
-		catch (IOException e) {
+		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to close client", e);
+				_log.warn("Unable to close client", ioe);
 			}
 		}
 	}

@@ -108,17 +108,17 @@ public class PingbackMethodImpl implements Method {
 				PINGBACK_ALREADY_REGISTERED,
 				"Pingback is already registered: " + dce.getMessage());
 		}
-		catch (InvalidSourceURIException isue) {
+		catch (InvalidSourceURIException isurie) {
 			return XmlRpcUtil.createFault(
-				SOURCE_URI_INVALID, isue.getMessage());
+				SOURCE_URI_INVALID, isurie.getMessage());
 		}
-		catch (DisabledPingbackException pde) {
+		catch (DisabledPingbackException dpe) {
 			return XmlRpcUtil.createFault(
-				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND, pde.getMessage());
+				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND, dpe.getMessage());
 		}
-		catch (UnavailableSourceURIException usue) {
+		catch (UnavailableSourceURIException usurie) {
 			return XmlRpcUtil.createFault(
-				SOURCE_URI_DOES_NOT_EXIST, usue.getMessage());
+				SOURCE_URI_DOES_NOT_EXIST, usurie.getMessage());
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

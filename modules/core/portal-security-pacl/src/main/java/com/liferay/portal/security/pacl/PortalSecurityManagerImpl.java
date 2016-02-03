@@ -809,8 +809,8 @@ public class PortalSecurityManagerImpl
 					}
 				);
 			}
-			catch (PrivilegedActionException pe) {
-				throw (NamingException)pe.getException();
+			catch (PrivilegedActionException pae) {
+				throw (NamingException)pae.getException();
 			}
 		}
 

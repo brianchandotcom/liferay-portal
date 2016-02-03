@@ -121,9 +121,9 @@ public class MessageBusManager
 			_mbeanServiceRegistrations.put(
 				destination.getName(), serviceRegistration);
 		}
-		catch (NotCompliantMBeanException e) {
+		catch (NotCompliantMBeanException ncmbe) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to register destination mbean", e);
+				_log.info("Unable to register destination mbean", ncmbe);
 			}
 		}
 	}

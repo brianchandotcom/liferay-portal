@@ -73,7 +73,7 @@ public class PrintPagePortletConfigurationIcon
 
 			return sb.toString();
 		}
-		catch (WindowStateException wes) {
+		catch (WindowStateException wse) {
 		}
 
 		return StringPool.BLANK;

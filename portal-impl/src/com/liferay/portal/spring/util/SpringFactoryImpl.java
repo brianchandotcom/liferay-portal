@@ -46,8 +46,8 @@ public class SpringFactoryImpl implements SpringFactory {
 		try {
 			return doNewBean(className, properties);
 		}
-		catch (SpringFactoryException se) {
-			throw se;
+		catch (SpringFactoryException sfe) {
+			throw sfe;
 		}
 		catch (Exception e) {
 			throw new SpringFactoryException(e);

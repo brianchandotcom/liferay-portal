@@ -870,9 +870,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		try {
 			shutdown();
 		}
-		catch (SchedulerException e) {
+		catch (SchedulerException se) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to shutdown scheduler", e);
+				_log.warn("Unable to shutdown scheduler", se);
 			}
 		}
 

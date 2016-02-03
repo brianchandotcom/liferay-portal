@@ -44,9 +44,9 @@ public class DestinationFactoryUtil {
 
 			return _serviceTracker.getService();
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ie) {
 			throw new IllegalStateException(
-				"Unable to obtain reference for destination factory", e);
+				"Unable to obtain reference for destination factory", ie);
 		}
 	}
 

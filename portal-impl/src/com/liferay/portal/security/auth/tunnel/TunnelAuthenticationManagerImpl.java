@@ -183,9 +183,9 @@ public class TunnelAuthenticationManagerImpl
 			try {
 				key = Hex.decodeHex(sharedSecret.toCharArray());
 			}
-			catch (DecoderException e) {
+			catch (DecoderException de) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(de, de);
 				}
 
 				AuthException authException = new AuthException();

@@ -780,7 +780,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				folder.getGroupId(), folder.getFolderId(),
 				getAssembledFileName(stagingRequestId));
 		}
-		catch (NoSuchFileEntryException nsfe) {
+		catch (NoSuchFileEntryException nsfee) {
 			return null;
 		}
 	}

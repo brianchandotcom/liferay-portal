@@ -56,7 +56,7 @@ public class PortalExecutorManagerUtil {
 				Thread.sleep(500);
 			}
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ie) {
 		}
 
 		return _instance._serviceTracker.getService();

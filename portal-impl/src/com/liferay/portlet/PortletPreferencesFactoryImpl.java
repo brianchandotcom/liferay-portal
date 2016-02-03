@@ -115,17 +115,17 @@ public class PortletPreferencesFactoryImpl
 				}
 			}
 		}
-		catch (XMLStreamException xse) {
-			throw new SystemException(xse);
+		catch (XMLStreamException xmlse) {
+			throw new SystemException(xmlse);
 		}
 		finally {
 			if (xmlEventReader != null) {
 				try {
 					xmlEventReader.close();
 				}
-				catch (XMLStreamException xse) {
+				catch (XMLStreamException xmlse) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(xse, xse);
+						_log.debug(xmlse, xmlse);
 					}
 				}
 			}

@@ -37,8 +37,8 @@ public class ServletContextURLContainer implements URLContainer {
 		try {
 			return _servletContext.getResource(name);
 		}
-		catch (MalformedURLException mue) {
-			return ReflectionUtil.throwException(mue);
+		catch (MalformedURLException murle) {
+			return ReflectionUtil.throwException(murle);
 		}
 	}
 

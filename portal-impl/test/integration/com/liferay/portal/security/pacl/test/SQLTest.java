@@ -491,7 +491,7 @@ public class SQLTest {
 
 			preparedStatement.execute();
 		}
-		catch (SQLException se) {
+		catch (SQLException sqle) {
 		}
 		finally {
 			DataAccess.cleanUp(connection, preparedStatement);
@@ -509,7 +509,7 @@ public class SQLTest {
 
 			statement.execute(sql);
 		}
-		catch (SQLException se) {
+		catch (SQLException sqle) {
 		}
 		finally {
 			DataAccess.cleanUp(connection, statement);

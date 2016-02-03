@@ -126,8 +126,8 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 
 			return settings;
 		}
-		catch (SettingsException e) {
-			throw new IllegalStateException(e);
+		catch (SettingsException se) {
+			throw new IllegalStateException(se);
 		}
 	}
 

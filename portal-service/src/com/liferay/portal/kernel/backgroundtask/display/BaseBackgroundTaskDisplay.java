@@ -143,9 +143,9 @@ public abstract class BaseBackgroundTaskDisplay
 			jsonObject = JSONFactoryUtil.createJSONObject(
 				backgroundTask.getStatusMessage());
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(jsone, jsone);
 			}
 		}
 

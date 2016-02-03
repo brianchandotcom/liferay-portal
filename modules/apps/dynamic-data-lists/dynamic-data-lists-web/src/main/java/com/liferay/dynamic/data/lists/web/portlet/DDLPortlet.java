@@ -99,13 +99,13 @@ public class DDLPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DDLWebConfiguration.class.getName(), _ddlWebConfiguration);
 		}
-		catch (NoSuchRecordException | NoSuchRecordSetException nsre) {
+		catch (NoSuchRecordException | NoSuchRecordSetException e) {
 
 			// Let this slide because the user can manually input an record set
 			// key for a new record set that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(e, e);
 			}
 		}
 		catch (PortalException pe) {

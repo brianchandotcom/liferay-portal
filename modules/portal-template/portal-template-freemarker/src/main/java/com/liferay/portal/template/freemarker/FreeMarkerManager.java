@@ -123,9 +123,10 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 			contextObjects.put(variableName, templateModel);
 		}
-		catch (TemplateModelException e) {
+		catch (TemplateModelException tme) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Variable " + variableName + " registration fail", e);
+				_log.warn(
+					"Variable " + variableName + " registration fail", tme);
 			}
 		}
 	}

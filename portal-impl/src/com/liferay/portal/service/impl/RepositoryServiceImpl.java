@@ -110,8 +110,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			return getSupportedParameters(
 				repositoryImplClassName, configuration);
 		}
-		catch (PortalException e) {
-			throw new SystemException(e);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
 	}
 

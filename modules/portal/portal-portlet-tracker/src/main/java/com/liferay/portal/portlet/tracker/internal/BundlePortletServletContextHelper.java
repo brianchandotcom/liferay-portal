@@ -92,7 +92,7 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 			try {
 				response.sendError(HttpServletResponse.SC_FORBIDDEN, pathInfo);
 			}
-			catch (IOException e) {
+			catch (IOException ioe) {
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			}
 

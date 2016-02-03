@@ -317,7 +317,7 @@ public class WikiSocialActivityHelper {
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 		}
-		catch (NoSuchFileEntryException nsme) {
+		catch (NoSuchFileEntryException nsfee) {
 		}
 
 		return null;

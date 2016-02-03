@@ -274,8 +274,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				xmlReader.parse(new InputSource(inputStream));
 			}
-			catch (SAXParseException e) {
-				String message = e.getMessage();
+			catch (SAXParseException saxpe) {
+				String message = saxpe.getMessage();
 
 				if (message.contains("DOCTYPE is disallowed")) {
 					throw new Exception(
@@ -283,7 +283,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 							"specification");
 				}
 
-				throw e;
+				throw saxpe;
 			}
 		}
 

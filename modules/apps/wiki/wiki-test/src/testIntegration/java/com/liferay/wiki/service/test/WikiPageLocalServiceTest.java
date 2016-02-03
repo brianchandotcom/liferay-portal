@@ -204,7 +204,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nsrpe) {
+		catch (NoSuchPageResourceException nspre) {
 			WikiPageLocalServiceUtil.getPage(redirectPage.getResourcePrimKey());
 		}
 	}

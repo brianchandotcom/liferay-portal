@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -46,6 +47,20 @@ public class RegistryImpl implements Registry {
 
 	public RegistryImpl(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	public void closeTrackers() {
+		for (org.osgi.util.tracker.ServiceTracker<?, ?> serviceTracker :
+				_serviceTrackers.keySet()) {
+
+			try {
+				serviceTracker.close();
+			}
+			catch (Throwable t) {
+			}
+		}
+
+		_serviceTrackers.clear();
 	}
 
 	@Override
@@ -332,6 +347,8 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, clazz, null);
 
+		_serviceTrackers.put(serviceTracker, null);
+
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
@@ -345,6 +362,8 @@ public class RegistryImpl implements Registry {
 				_bundleContext, clazz,
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
+
+		_serviceTrackers.put(serviceTracker, null);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -360,6 +379,8 @@ public class RegistryImpl implements Registry {
 		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, filterWrapper.getFilter(), null);
+
+		_serviceTrackers.put(serviceTracker, null);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -381,6 +402,8 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
+		_serviceTrackers.put(serviceTracker, null);
+
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
@@ -389,6 +412,8 @@ public class RegistryImpl implements Registry {
 		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, className, null);
+
+		_serviceTrackers.put(serviceTracker, null);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -403,6 +428,8 @@ public class RegistryImpl implements Registry {
 				_bundleContext, className,
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
+
+		_serviceTrackers.put(serviceTracker, null);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -446,5 +473,7 @@ public class RegistryImpl implements Registry {
 	private final BundleContext _bundleContext;
 	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
 		new HashSet<>();
+	private final Map<org.osgi.util.tracker.ServiceTracker<?, ?>, Void>
+		_serviceTrackers = new WeakHashMap<>();
 
 }

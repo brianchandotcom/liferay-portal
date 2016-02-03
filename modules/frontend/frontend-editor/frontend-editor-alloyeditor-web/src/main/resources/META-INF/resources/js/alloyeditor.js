@@ -46,6 +46,11 @@ AUI.add(
 					textMode: {
 						validator: Lang.isBoolean,
 						value: {}
+					},
+
+					title: {
+						validator: Lang.isString,
+						value: ''
 					}
 				},
 

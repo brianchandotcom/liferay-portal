@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -93,6 +94,14 @@ public class IncorrectWhitespace {
     }
 
 	public void method3() throws Exception ;
+
+	public String method4( String s ) {
+		if ( s.equals("Hello World") ) {
+			return StringUtil.toLowerCase( s );
+		}
+
+		return s;
+	}
 
 	protected class SubClass1 {
 

@@ -314,6 +314,11 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>PLUS</td>
+	<td>//div[contains(@class,'container-fluid-1280')]//a[contains(@class,'btn') and span[contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
 <!-- VALIDATION -->
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE_HEADER</td>

@@ -443,7 +443,9 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#viewPublishTemplate">
 			<var name="publishTemplateDescription" value="Publish Template Description" />

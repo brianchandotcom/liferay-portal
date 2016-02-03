@@ -437,7 +437,9 @@
 	</command>
 
 	<command name="editPublishTemplate">
-		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PUBLISH_TEPMLATES" value1="Publish Templates" />
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />
 
@@ -607,9 +609,9 @@
 	</command>
 
 	<command name="publishToLive">
-		<execute function="AssertClick" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
+		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="There is currently 1 process in progress." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="There is currently 1 process in progress" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -918,7 +920,9 @@
 	</command>
 
 	<command name="viewPublishTemplate">
-		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PUBLISH_TEPMLATES" value1="Publish Templates" />
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />
 

@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_DOWNLOAD</td>
-	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[5]/span/a</td>
+	<td>//table//tr/td[6]/span/a</td>
 	<td></td>
 </tr>
 <tr>

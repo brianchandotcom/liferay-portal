@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_BUTTON</td>
-	<td>//a[contains(@title,'Publish Templates')]</td>
+	<td>xpath=(//a[contains(.,'Publish Templates')])[1]</td>
 	<td></td>
 </tr>
 <tr>

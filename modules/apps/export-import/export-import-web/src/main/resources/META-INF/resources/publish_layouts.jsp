@@ -177,12 +177,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						data-value="custom"
 						iconCssClass="icon-puzzle"
 						label="custom"
+						selected='<%= publishConfigurationButtons.equals("custom") %>'
 					/>
 
 					<aui:nav-item
 						data-value="saved"
 						iconCssClass="icon-archive"
 						label="publish-templates"
+						selected='<%= publishConfigurationButtons.equals("saved") %>'
 					/>
 
 					<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

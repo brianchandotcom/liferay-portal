@@ -38,8 +38,8 @@ import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationS
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationService;
 import com.liferay.portlet.exportimport.service.ExportImportService;
-import com.liferay.portlet.trash.service.TrashEntryService;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.Serializable;
 

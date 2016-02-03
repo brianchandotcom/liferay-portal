@@ -171,7 +171,7 @@ if (Validator.isNotNull(keywords)) {
 			searchContainer="<%= entrySearch %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.portlet.trash.model.TrashEntry"
+				className="com.liferay.trash.kernel.model.TrashEntry"
 				keyProperty="entryId"
 				modelVar="entry"
 			>

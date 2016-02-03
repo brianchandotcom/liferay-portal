@@ -435,7 +435,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkUnprocessedExceptions(
+	protected String checkUnprocessedExceptions(
 			String content, File file, String packagePath, String fileName)
 		throws IOException {
 
@@ -444,18 +444,53 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = _catchExceptionPattern.matcher(content);
 
+		int skipVariableNameCheckEndPos = -1;
+
 		while (matcher.find()) {
 			String exceptionClassName = matcher.group(2);
 			String exceptionVariableName = matcher.group(3);
 			String tabs = matcher.group(1);
+
+			String expectedExceptionVariableName = "e";
+
+			if (!exceptionClassName.contains(" |")) {
+				Matcher lowerCaseNumberOrPeriodMatcher =
+					_lowerCaseNumberOrPeriodPattern.matcher(exceptionClassName);
+
+				expectedExceptionVariableName = StringUtil.toLowerCase(
+					lowerCaseNumberOrPeriodMatcher.replaceAll(
+						StringPool.BLANK));
+			}
+
+			Pattern exceptionVariablePattern = Pattern.compile(
+				"(\\W)" + exceptionVariableName + "(\\W)");
 
 			int pos = content.indexOf(
 				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE, matcher.end() - 1);
 
 			String insideCatchCode = content.substring(matcher.end(), pos + 1);
 
-			Pattern exceptionVariablePattern = Pattern.compile(
-				"\\W" + exceptionVariableName + "\\W");
+			if (insideCatchCode.contains("catch (" + exceptionClassName)) {
+				skipVariableNameCheckEndPos = pos;
+			}
+
+			if ((skipVariableNameCheckEndPos < matcher.start()) &&
+				!expectedExceptionVariableName.equals(exceptionVariableName)) {
+
+				String catchExceptionCodeBlock = content.substring(
+					matcher.start(), pos + 1);
+
+				Matcher exceptionVariableMatcher =
+					exceptionVariablePattern.matcher(catchExceptionCodeBlock);
+
+				String catchExceptionReplacement =
+					exceptionVariableMatcher.replaceAll(
+						"$1" + expectedExceptionVariableName + "$2");
+
+				return StringUtil.replaceFirst(
+					content, catchExceptionCodeBlock, catchExceptionReplacement,
+					matcher.start() - 1);
+			}
 
 			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
 				insideCatchCode);
@@ -529,6 +564,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				exceptionClass = exceptionSuperClass;
 			}
 		}
+
+		return content;
 	}
 
 	protected void checkXMLSecurity(
@@ -856,7 +893,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (_checkUnprocessedExceptions && !fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/")) {
 
-			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
+			newContent = checkUnprocessedExceptions(
+				newContent, file, packagePath, fileName);
 		}
 
 		// LPS-39508
@@ -3989,6 +4027,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
+		"[a-z0-9.]");
 	private Pattern _missingEmptyLinePattern1 = Pattern.compile(
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private Pattern _missingEmptyLinePattern2 = Pattern.compile(

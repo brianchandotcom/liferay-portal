@@ -1,0 +1,37 @@
+@import "mixins";
+@import "bourbon";
+
+@mixin default-label {
+	color: #869CAD;
+	font-size: 14px;
+}
+
+.staging-configuration-control-label {
+	@include default-label;
+
+	font-weight: 500;
+	margin-right: auto;
+}
+
+.staging-configuration-control-label-bold {
+	color: #000;
+	font-weight: bold;
+}
+
+.staging-configuration-control-toggle{
+	div {
+		margin-bottom: 0px;
+
+		label {
+			margin-bottom: 0px;
+		}
+	}
+}
+
+.staging-configuration-help-label {
+	@include default-label;
+}
+
+.staging-configuration-list {
+	box-shadow: none;
+}

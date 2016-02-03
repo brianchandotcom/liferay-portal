@@ -199,54 +199,111 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 
 							<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 
-							<aui:input label="use-a-secure-network-connection" name="secureConnection" type="toggle-switch" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+							<div class="flex-container">
+
+								<%
+								boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
+								%>
+
+								<span class='flex-item-center staging-configuration-control-label <%= secureConnection ? "staging-configuration-control-label-bold" : StringPool.BLANK %>'>
+									<liferay-ui:message key="use-a-secure-network-connection" />
+								</span>
+
+								<span class="staging-configuration-control-toggle">
+									<aui:input label="<%= StringPool.BLANK %>" name="secureConnection" type="toggle-switch" value="<%= secureConnection %>" />
+								</span>
+							</div>
 						</aui:fieldset>
 					</div>
 
 					<div class="<%= ((liveGroup.isStaged() || (stagingType != StagingConstants.TYPE_NOT_STAGED)) ? StringPool.BLANK : "hide") %>" id="<portlet:namespace />stagedPortlets">
 						<c:if test="<%= !liveGroup.isCompany() && !liveGroupRemoteStaging %>">
-							<aui:fieldset collapsible="<%= true %>" helpMessage="page-versioning-help" label="page-versioning">
-								<aui:input label="enabled-on-public-pages" name="branchingPublic" type="toggle-switch" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
+							<aui:fieldset collapsible="<%= true %>" label="page-versioning">
+								<p class="staging-configuration-help-label">
+									<liferay-ui:message key="page-versioning-help" />
+								</p>
 
-								<aui:input label="enabled-on-private-pages" name="branchingPrivate" type="toggle-switch" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
+								<ul class="list-group staging-configuration-list">
+
+									<%
+									boolean branchingPublic = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic"));
+									%>
+
+									<li class="flex-container list-group-item">
+										<span class='flex-item-center staging-configuration-control-label <%= branchingPublic ? "staging-configuration-control-label-bold" : StringPool.BLANK %>'>
+											<liferay-ui:message key="enabled-on-public-pages" />
+										</span>
+
+										<span class="staging-configuration-control-toggle">
+											<aui:input label="<%= StringPool.BLANK %>" name="branchingPublic" type="toggle-switch" value="<%= branchingPublic %>" />
+										</span>
+									</li>
+
+									<%
+									boolean branchingPrivate = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate"));
+									%>
+
+									<li class="flex-container list-group-item">
+										<span class='flex-item-center staging-configuration-control-label <%= branchingPrivate ? "staging-configuration-control-label-bold" : StringPool.BLANK %>'>
+											<liferay-ui:message key="enabled-on-private-pages" />
+										</span>
+
+										<span class="staging-configuration-control-toggle">
+											<aui:input label="<%= StringPool.BLANK %>" name="branchingPrivate" type="toggle-switch" value="<%= branchingPrivate %>" />
+										</span>
+									</li>
+								</ul>
 							</aui:fieldset>
 						</c:if>
 
 						<aui:fieldset collapsible="<%= true %>" helpMessage="staged-portlets-help" label="staged-content">
-							<div class="alert alert-warning">
+							<p class="staging-configuration-help-label">
 								<liferay-ui:message key="staged-portlets-alert" />
-							</div>
+							</p>
 
-							<%
-							Set<String> portletDataHandlerClassNames = new HashSet<String>();
+							<aui:input disabled="<%= liveGroupRemoteStaging || liveGroup.isStaged() %>" id="selectAllCheckbox" label="select-all" name="selectAll" type="checkbox" />
 
-							List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), true);
+							<ul class="list-group staging-configuration-list" id="stagingConfigurationControls">
 
-							dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
+								<%
+								Set<String> portletDataHandlerClassNames = new HashSet<String>();
 
-							for (Portlet curPortlet : dataSiteLevelPortlets) {
-								PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
+								List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), true);
 
-								Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+								dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
 
-								String portletDataHandlerClassName = portletDataHandlerClass.getName();
+								for (Portlet curPortlet : dataSiteLevelPortlets) {
+									PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
-								if (!portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
-									portletDataHandlerClassNames.add(portletDataHandlerClassName);
+									Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+
+									String portletDataHandlerClassName = portletDataHandlerClass.getName();
+
+									if (!portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
+										portletDataHandlerClassNames.add(portletDataHandlerClassName);
+									}
+									else {
+										continue;
+									}
+
+									boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
+								%>
+
+									<li class="flex-container list-group-item">
+										<span class='flex-item-center staging-configuration-control-label <%= staged ? "staging-configuration-control-label-bold" : StringPool.BLANK %>'>
+											<liferay-ui:message key="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" />
+										</span>
+
+										<span class="staging-configuration-control-toggle">
+											<aui:input disabled="<%= liveGroupRemoteStaging || liveGroup.isStaged() %>" label="<%= StringPool.BLANK %>" name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>" type="toggle-switch" value="<%= staged %>" />
+										</span>
+									</li>
+
+								<%
 								}
-								else {
-									continue;
-								}
+								%>
 
-								boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
-							%>
-
-								<aui:input disabled="<%= liveGroupRemoteStaging || liveGroup.isStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>" type="toggle-switch" value="<%= staged %>" />
-
-							<%
-							}
-							%>
-
+							</ul>
 						</aui:fieldset>
 					</div>
 				</aui:fieldset-group>
@@ -339,4 +396,16 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 			submitForm(form);
 		}
 	}
+</aui:script>
+
+<aui:script sandbox="<%= true %>">
+	var stagingConfigurationControls = $('#stagingConfigurationControls');
+	var allCheckboxes = stagingConfigurationControls.find('input[type=checkbox]');
+
+	$('#<portlet:namespace />selectAllCheckbox').on(
+		'change',
+		function() {
+			allCheckboxes.prop("checked", this.checked);
+		}
+	);
 </aui:script>

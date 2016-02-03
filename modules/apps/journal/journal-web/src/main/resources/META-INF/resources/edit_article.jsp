@@ -164,9 +164,9 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
 <c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-	<div class="panel text-center">
+	<liferay-frontend:info-bar>
 		<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
-	</div>
+	</liferay-frontend:info-bar>
 </c:if>
 
 <portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

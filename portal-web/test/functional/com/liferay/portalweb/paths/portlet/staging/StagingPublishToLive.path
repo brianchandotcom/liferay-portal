@@ -282,7 +282,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_ARROW_BUTTON</td>
-	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]/td/span/a[contains(.,'Publish to Live')]</td>
+	<td>//ul[contains(@id,'ConfigurationsSearchContainer')]/li/a[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -435,147 +435,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatExceptions(
-			String content, File file, String packagePath, String fileName)
-		throws IOException {
-
-		List<String> importedExceptionClassNames = null;
-		JavaDocBuilder javaDocBuilder = null;
-
-		Matcher matcher = _catchExceptionPattern.matcher(content);
-
-		int skipVariableNameCheckEndPos = -1;
-
-		while (matcher.find()) {
-			String exceptionClassName = matcher.group(2);
-			String exceptionVariableName = matcher.group(3);
-			String tabs = matcher.group(1);
-
-			String expectedExceptionVariableName = "e";
-
-			if (!exceptionClassName.contains(" |")) {
-				Matcher lowerCaseNumberOrPeriodMatcher =
-					_lowerCaseNumberOrPeriodPattern.matcher(exceptionClassName);
-
-				expectedExceptionVariableName = StringUtil.toLowerCase(
-					lowerCaseNumberOrPeriodMatcher.replaceAll(
-						StringPool.BLANK));
-			}
-
-			Pattern exceptionVariablePattern = Pattern.compile(
-				"(\\W)" + exceptionVariableName + "(\\W)");
-
-			int pos = content.indexOf(
-				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE, matcher.end() - 1);
-
-			String insideCatchCode = content.substring(matcher.end(), pos + 1);
-
-			if (insideCatchCode.contains("catch (" + exceptionClassName)) {
-				skipVariableNameCheckEndPos = pos;
-			}
-
-			if ((skipVariableNameCheckEndPos < matcher.start()) &&
-				!expectedExceptionVariableName.equals(exceptionVariableName)) {
-
-				String catchExceptionCodeBlock = content.substring(
-					matcher.start(), pos + 1);
-
-				Matcher exceptionVariableMatcher =
-					exceptionVariablePattern.matcher(catchExceptionCodeBlock);
-
-				String catchExceptionReplacement =
-					exceptionVariableMatcher.replaceAll(
-						"$1" + expectedExceptionVariableName + "$2");
-
-				return StringUtil.replaceFirst(
-					content, catchExceptionCodeBlock, catchExceptionReplacement,
-					matcher.start() - 1);
-			}
-
-			if (!_checkUnprocessedExceptions || fileName.contains("/test/") ||
-				fileName.contains("/testIntegration/")) {
-
-				continue;
-			}
-
-			// LPS-36174
-
-			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
-				insideCatchCode);
-
-			if (exceptionVariableMatcher.find()) {
-				continue;
-			}
-
-			if (javaDocBuilder == null) {
-				javaDocBuilder = new JavaDocBuilder();
-
-				javaDocBuilder.addSource(file);
-			}
-
-			if (importedExceptionClassNames == null) {
-				importedExceptionClassNames = getImportedExceptionClassNames(
-					javaDocBuilder);
-			}
-
-			String originalExceptionClassName = exceptionClassName;
-
-			if (!exceptionClassName.contains(StringPool.PERIOD)) {
-				for (String exceptionClass : importedExceptionClassNames) {
-					if (exceptionClass.endsWith(
-							StringPool.PERIOD + exceptionClassName)) {
-
-						exceptionClassName = exceptionClass;
-
-						break;
-					}
-				}
-			}
-
-			if (!exceptionClassName.contains(StringPool.PERIOD)) {
-				exceptionClassName =
-					packagePath + StringPool.PERIOD + exceptionClassName;
-			}
-
-			com.thoughtworks.qdox.model.JavaClass exceptionClass =
-				javaDocBuilder.getClassByName(exceptionClassName);
-
-			while (true) {
-				String packageName = exceptionClass.getPackageName();
-
-				if (!packageName.contains("com.liferay")) {
-					break;
-				}
-
-				exceptionClassName = exceptionClass.getName();
-
-				if (exceptionClassName.equals("PortalException") ||
-					exceptionClassName.equals("SystemException")) {
-
-					int lineCount = getLineCount(content, matcher.start(2));
-
-					processErrorMessage(
-						fileName,
-						"Unprocessed " + originalExceptionClassName + ": " +
-							fileName + " " + lineCount);
-
-					break;
-				}
-
-				com.thoughtworks.qdox.model.JavaClass exceptionSuperClass =
-					exceptionClass.getSuperJavaClass();
-
-				if (exceptionSuperClass == null) {
-					break;
-				}
-
-				exceptionClass = exceptionSuperClass;
-			}
-		}
-
-		return content;
-	}
-
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -1550,6 +1409,147 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		setBNDInheritRequiredValue(fileName, bndInheritRequired);
+
+		return content;
+	}
+
+	protected String formatExceptions(
+			String content, File file, String packagePath, String fileName)
+		throws IOException {
+
+		List<String> importedExceptionClassNames = null;
+		JavaDocBuilder javaDocBuilder = null;
+
+		Matcher matcher = _catchExceptionPattern.matcher(content);
+
+		int skipVariableNameCheckEndPos = -1;
+
+		while (matcher.find()) {
+			String exceptionClassName = matcher.group(2);
+			String exceptionVariableName = matcher.group(3);
+			String tabs = matcher.group(1);
+
+			String expectedExceptionVariableName = "e";
+
+			if (!exceptionClassName.contains(" |")) {
+				Matcher lowerCaseNumberOrPeriodMatcher =
+					_lowerCaseNumberOrPeriodPattern.matcher(exceptionClassName);
+
+				expectedExceptionVariableName = StringUtil.toLowerCase(
+					lowerCaseNumberOrPeriodMatcher.replaceAll(
+						StringPool.BLANK));
+			}
+
+			Pattern exceptionVariablePattern = Pattern.compile(
+				"(\\W)" + exceptionVariableName + "(\\W)");
+
+			int pos = content.indexOf(
+				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE, matcher.end() - 1);
+
+			String insideCatchCode = content.substring(matcher.end(), pos + 1);
+
+			if (insideCatchCode.contains("catch (" + exceptionClassName)) {
+				skipVariableNameCheckEndPos = pos;
+			}
+
+			if ((skipVariableNameCheckEndPos < matcher.start()) &&
+				!expectedExceptionVariableName.equals(exceptionVariableName)) {
+
+				String catchExceptionCodeBlock = content.substring(
+					matcher.start(), pos + 1);
+
+				Matcher exceptionVariableMatcher =
+					exceptionVariablePattern.matcher(catchExceptionCodeBlock);
+
+				String catchExceptionReplacement =
+					exceptionVariableMatcher.replaceAll(
+						"$1" + expectedExceptionVariableName + "$2");
+
+				return StringUtil.replaceFirst(
+					content, catchExceptionCodeBlock, catchExceptionReplacement,
+					matcher.start() - 1);
+			}
+
+			if (!_checkUnprocessedExceptions || fileName.contains("/test/") ||
+				fileName.contains("/testIntegration/")) {
+
+				continue;
+			}
+
+			// LPS-36174
+
+			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
+				insideCatchCode);
+
+			if (exceptionVariableMatcher.find()) {
+				continue;
+			}
+
+			if (javaDocBuilder == null) {
+				javaDocBuilder = new JavaDocBuilder();
+
+				javaDocBuilder.addSource(file);
+			}
+
+			if (importedExceptionClassNames == null) {
+				importedExceptionClassNames = getImportedExceptionClassNames(
+					javaDocBuilder);
+			}
+
+			String originalExceptionClassName = exceptionClassName;
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				for (String exceptionClass : importedExceptionClassNames) {
+					if (exceptionClass.endsWith(
+							StringPool.PERIOD + exceptionClassName)) {
+
+						exceptionClassName = exceptionClass;
+
+						break;
+					}
+				}
+			}
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				exceptionClassName =
+					packagePath + StringPool.PERIOD + exceptionClassName;
+			}
+
+			com.thoughtworks.qdox.model.JavaClass exceptionClass =
+				javaDocBuilder.getClassByName(exceptionClassName);
+
+			while (true) {
+				String packageName = exceptionClass.getPackageName();
+
+				if (!packageName.contains("com.liferay")) {
+					break;
+				}
+
+				exceptionClassName = exceptionClass.getName();
+
+				if (exceptionClassName.equals("PortalException") ||
+					exceptionClassName.equals("SystemException")) {
+
+					int lineCount = getLineCount(content, matcher.start(2));
+
+					processErrorMessage(
+						fileName,
+						"Unprocessed " + originalExceptionClassName + ": " +
+							fileName + " " + lineCount);
+
+					break;
+				}
+
+				com.thoughtworks.qdox.model.JavaClass exceptionSuperClass =
+					exceptionClass.getSuperJavaClass();
+
+				if (exceptionSuperClass == null) {
+					break;
+				}
+
+				exceptionClass = exceptionSuperClass;
+			}
+		}
 
 		return content;
 	}

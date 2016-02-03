@@ -637,22 +637,19 @@ $horizontal-spacing: 35px;
 		}
 	}
 
-	.form-builder-controls-trigger  {
+	.form-builder-controls-trigger {
+		color: #B0BEC9;
 		display: block;
 		font-size: 20px;
-		height: 48px;
-		padding: 12px;
+		line-height: 0;
+		padding: 32px;
 		position: absolute;
 		right: 0;
 		text-decoration: none;
-		top: 13px;
+		top: 0;
 
-		&:hover .icon-monospaced {
-			color: inherit;
-		}
-
-		.icon-monospaced {
-			color: #B0BEC9;
+		&:hover {
+			color: #4A90E2;
 		}
 	}
 
@@ -785,7 +782,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-page-header {
-		padding-right: 34px;
+		padding-right: 62px;
 		position: relative;
 	}
 
@@ -793,6 +790,7 @@ $horizontal-spacing: 35px;
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-left: 34px;
+		padding-right: 0;
 		width: auto;
 
 		.form-builder-page-header-description,
@@ -825,13 +823,18 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.form-builder-page-manager-content {
+		border-top: 1px solid #DCE0E3;
+
+		.form-builder-controls-trigger {
+			margin: 0;
+			padding: 29px;
+		}
+	}
+
 	.form-builder-pages-lexicon {
 		position: relative;
 		text-align: center;
-
-		.form-builder-page-manager-content {
-			border-top: 1px solid #DCE0E3;
-		}
 
 		.form-builder-pagination {
 			margin: 0;
@@ -847,7 +850,8 @@ $horizontal-spacing: 35px;
 		padding-right: 70px;
 
 		.form-builder-controls-trigger {
-			top: 34px;
+			margin: 0;
+			top: 18px;
 		}
 	}
 

@@ -33,6 +33,13 @@ OrderByComparator<DDLRecordSet> orderByComparator = DDLFormAdminPortletUtil.getD
 recordSetSearch.setOrderByCol(orderByCol);
 recordSetSearch.setOrderByComparator(orderByComparator);
 recordSetSearch.setOrderByType(orderByType);
+
+if (recordSetSearch.isSearch()) {
+	recordSetSearch.setEmptyResultsMessage("no-forms-were-found");
+}
+else {
+	recordSetSearch.setEmptyResultsMessage("there-are-no-forms");
+}
 %>
 
 <liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
@@ -44,7 +51,6 @@ recordSetSearch.setOrderByType(orderByType);
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-forms-were-found"
 			id="searchContainer"
 			searchContainer="<%= recordSetSearch %>"
 		>

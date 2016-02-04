@@ -1024,7 +1024,14 @@ AUI.add(
 							var localeString = instance.get('locale');
 							var timeZoneString = instance.get('timeZone');
 
-							var today = new Date(new Date().toLocaleString(localeString, {timeZone: timeZoneString}));
+							var today = new Date(
+								new Date().toLocaleString(
+									localeString,
+									{
+										timeZone: timeZoneString
+									}
+								)
+							);
 
 							endsInPast = ADate.isGreaterOrEqual(today, endDate);
 							startsInPast = ADate.isGreaterOrEqual(today, startDate);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package main.java.com.liferay.portlet.css.web.portlet;
+package com.liferay.portlet.configuration.css.web.portlet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

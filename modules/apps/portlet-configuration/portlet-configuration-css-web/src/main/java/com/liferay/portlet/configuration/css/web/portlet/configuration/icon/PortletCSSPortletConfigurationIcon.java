@@ -12,12 +12,12 @@
  * details.
  */
 
-package main.java.com.liferay.portlet.css.web.portlet.configuration.icon;
+package com.liferay.portlet.configuration.css.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.css.web.constants.PortletCSSPortletKeys;
+import com.liferay.portlet.configuration.css.web.constants.PortletCSSPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package main.java.com.liferay.portlet.css.web.constants;
+package com.liferay.portlet.configuration.css.web.constants;
 
 /**
  * @author Eudaldo Alonso

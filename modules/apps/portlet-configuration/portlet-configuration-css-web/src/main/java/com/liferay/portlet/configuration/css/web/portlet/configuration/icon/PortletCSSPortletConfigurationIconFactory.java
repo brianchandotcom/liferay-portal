@@ -12,7 +12,7 @@
  * details.
  */
 
-package main.java.com.liferay.portlet.css.web.portlet.configuration.icon;
+package com.liferay.portlet.configuration.css.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;

@@ -404,6 +404,41 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void updateImageElement(Element element) {
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateImageElement(dynamicElementElement);
+		}
+
+		String type = element.attributeValue("type");
+
+		if (type.equals("image")) {
+			String index = element.attributeValue("index");
+
+			String name = element.attributeValue("name");
+
+			Element dynamicContentElement = element.element("dynamic-content");
+
+			long articleImageId = GetterUtil.getLong(
+				dynamicContentElement.attributeValue("id"));
+
+			JournalArticleImage articleImage =
+				_journalArticleImageLocalService.fetchJournalArticleImage(
+					articleImageId);
+
+			if (articleImage == null) {
+				return;
+			}
+
+			articleImage.setElName(name + StringPool.UNDERLINE + index);
+
+			_journalArticleImageLocalService.updateJournalArticleImage(
+				articleImage);
+		}
+	}
+
 	protected void updateImageElement(Element element, String name, int index) {
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -721,6 +756,49 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 				updateExpirationDate(
 					groupId, articleId, expirationDate, status);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyArticleImages() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select id_ from JournalArticle where (content like " +
+					"'%type=\"image\"%') and DDMStructureKey != ''");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+
+				JournalArticle article = _journalArticleLocalService.getArticle(
+					id);
+
+				try {
+					Document document = SAXReaderUtil.read(
+						article.getContent());
+
+					Element rootElement = document.getRootElement();
+
+					for (Element element : rootElement.elements()) {
+						updateImageElement(element);
+					}
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to update images for article " +
+							article.getId(),
+						e);
+				}
 			}
 		}
 		finally {

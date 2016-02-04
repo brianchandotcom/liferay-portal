@@ -705,12 +705,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-calendar">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/calendar/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-service-portlet-documentlibrary">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml" />
@@ -757,7 +751,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portlet-announcements" />
 		<antcall target="build-service-portlet-asset" />
 		<antcall target="build-service-portlet-blogs" />
-		<antcall target="build-service-portlet-calendar" />
 		<antcall target="build-service-portlet-documentlibrary" />
 		<antcall target="build-service-portlet-expando" />
 		<antcall target="build-service-portlet-exportimport" />

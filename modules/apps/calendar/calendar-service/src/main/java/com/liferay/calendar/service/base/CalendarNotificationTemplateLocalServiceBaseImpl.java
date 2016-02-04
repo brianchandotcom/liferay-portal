@@ -565,25 +565,6 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the calendar importer local service.
-	 *
-	 * @return the calendar importer local service
-	 */
-	public com.liferay.calendar.service.CalendarImporterLocalService getCalendarImporterLocalService() {
-		return calendarImporterLocalService;
-	}
-
-	/**
-	 * Sets the calendar importer local service.
-	 *
-	 * @param calendarImporterLocalService the calendar importer local service
-	 */
-	public void setCalendarImporterLocalService(
-		com.liferay.calendar.service.CalendarImporterLocalService calendarImporterLocalService) {
-		this.calendarImporterLocalService = calendarImporterLocalService;
-	}
-
-	/**
 	 * Returns the calendar notification template local service.
 	 *
 	 * @return the calendar notification template local service
@@ -855,8 +836,6 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	protected CalendarBookingPersistence calendarBookingPersistence;
 	@BeanReference(type = CalendarBookingFinder.class)
 	protected CalendarBookingFinder calendarBookingFinder;
-	@BeanReference(type = com.liferay.calendar.service.CalendarImporterLocalService.class)
-	protected com.liferay.calendar.service.CalendarImporterLocalService calendarImporterLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarNotificationTemplateLocalService.class)
 	protected CalendarNotificationTemplateLocalService calendarNotificationTemplateLocalService;
 	@BeanReference(type = CalendarNotificationTemplatePersistence.class)

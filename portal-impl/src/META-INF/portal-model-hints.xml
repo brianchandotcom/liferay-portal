@@ -1420,41 +1420,6 @@
 		<field name="ratingsTotalScore" type="double" />
 		<field name="ratingsAverageScore" type="double" />
 	</model>
-	<model name="com.liferay.portlet.calendar.model.CalEvent">
-		<field name="uuid" type="String" />
-		<field name="eventId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="title" type="String">
-			<sanitize content-type="text/plain" modes="ALL" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="CLOB" />
-			<sanitize content-type="text/html" modes="ALL" />
-		</field>
-		<field name="location" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="startDate" type="Date" />
-		<field name="endDate" type="Date" />
-		<field name="durationHour" type="int" />
-		<field name="durationMinute" type="int" />
-		<field name="allDay" type="boolean" />
-		<field name="timeZoneSensitive" type="boolean" />
-		<field name="type" type="String" />
-		<field name="repeating" type="boolean" />
-		<field name="recurrence" type="String">
-			<hint-collection name="CLOB" />
-			<hint name="auto-escape">false</hint>
-		</field>
-		<field name="remindBy" type="int" />
-		<field name="firstReminder" type="int" />
-		<field name="secondReminder" type="int" />
-	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLContent">
 		<field name="contentId" type="long" />
 		<field name="groupId" type="long" />

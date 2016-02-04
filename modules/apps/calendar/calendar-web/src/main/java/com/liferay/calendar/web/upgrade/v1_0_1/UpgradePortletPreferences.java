@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.calendar.model.CalEvent;
 
 import javax.portlet.PortletPreferences;
 
@@ -35,9 +34,13 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("(preferences like '%classNameIds%");
-		sb.append(PortalUtil.getClassNameId(CalEvent.class));
+		sb.append(
+			PortalUtil.getClassNameId(
+				"com.liferay.portlet.calendar.model.CalEvent"));
 		sb.append("%') or (preferences like '%anyAssetType%");
-		sb.append(PortalUtil.getClassNameId(CalEvent.class));
+		sb.append(
+			PortalUtil.getClassNameId(
+				"com.liferay.portlet.calendar.model.CalEvent"));
 		sb.append("%')");
 
 		return sb.toString();
@@ -67,7 +70,8 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValues(name, null));
 
 		ArrayUtil.replace(
-			values, String.valueOf(PortalUtil.getClassNameId(CalEvent.class)),
+			values,
+			String.valueOf("com.liferay.portlet.calendar.model.CalEvent"),
 			String.valueOf(PortalUtil.getClassNameId(CalendarBooking.class)));
 
 		portletPreferences.setValues(name, values);

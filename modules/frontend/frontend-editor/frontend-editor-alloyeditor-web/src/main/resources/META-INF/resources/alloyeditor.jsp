@@ -221,6 +221,13 @@ if (showSource) {
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
+		editorConfig = A.merge(
+			{
+				title: '<%= LanguageUtil.get(request, "rich-text-format") %>'
+			},
+			editorConfig
+		);
+
 		var plugins = [];
 
 		<c:if test="<%= Validator.isNotNull(data) && Validator.isNotNull(uploadURL) %>">

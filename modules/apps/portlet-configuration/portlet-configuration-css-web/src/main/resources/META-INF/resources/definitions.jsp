@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <script>
-	var PATH_PORTLET_CSS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayconfigurationportletcssweb';
+	var PATH_PORTLET_CONFIGURATION_CSS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayconfigurationportletcssweb';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				portlet_css: {
-					base: PATH_PORTLET_CSS_WEB + '/js/',
+					base: PATH_PORTLET_CONFIGURATION_CSS_WEB + '/js/',
 					modules: {
 						'liferay-look-and-feel': {
 							path: 'look_and_feel.js',
@@ -38,7 +38,7 @@
 							]
 						}
 					},
-					root: PATH_PORTLET_CSS_WEB + '/js/'
+					root: PATH_PORTLET_CONFIGURATION_CSS_WEB + '/js/'
 				}
 			}
 		}

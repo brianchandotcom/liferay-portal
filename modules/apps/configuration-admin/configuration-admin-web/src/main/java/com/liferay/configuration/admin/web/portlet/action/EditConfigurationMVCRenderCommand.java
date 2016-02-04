@@ -97,19 +97,10 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_configuration.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
-		_ddmFormRenderer = ddmFormRenderer;
-	}
-
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
 
 }

@@ -156,10 +156,10 @@ public class EditExportConfigurationMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		setLayoutIdMap(actionRequest);
-
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				setLayoutIdMap(actionRequest);
+
 				updateExportConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {

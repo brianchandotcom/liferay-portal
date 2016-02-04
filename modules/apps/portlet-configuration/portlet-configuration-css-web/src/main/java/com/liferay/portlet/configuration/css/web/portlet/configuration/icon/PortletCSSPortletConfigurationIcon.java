@@ -17,7 +17,7 @@ package com.liferay.portlet.configuration.css.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.configuration.css.web.constants.PortletCSSPortletKeys;
+import com.liferay.portlet.configuration.css.web.constants.PortletConfigurationCSSPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -45,15 +45,15 @@ public class PortletCSSPortletConfigurationIcon
 	@Override
 	public String getOnClick() {
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
 		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);

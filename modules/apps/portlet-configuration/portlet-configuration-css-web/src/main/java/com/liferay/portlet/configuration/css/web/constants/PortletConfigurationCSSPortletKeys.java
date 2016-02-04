@@ -17,9 +17,9 @@ package com.liferay.portlet.configuration.css.web.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class PortletCSSPortletKeys {
+public class PortletConfigurationCSSPortletKeys {
 
-	public static final String PORTLET_CSS =
-		"com_liferay_portlet_configuration_css_web_portlet_PortletCSSPortlet";
+	public static final String PORTLET_CONFIGURATION_CSS =
+		"com_liferay_portlet_configuration_css_web_portlet_PortletConfigurationCSSPortlet";
 
 }

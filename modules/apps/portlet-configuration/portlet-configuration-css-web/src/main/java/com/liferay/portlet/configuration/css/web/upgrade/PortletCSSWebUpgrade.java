@@ -17,7 +17,7 @@ package com.liferay.portlet.configuration.css.web.upgrade;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.portlet.configuration.css.web.constants.PortletCSSPortletKeys;
+import com.liferay.portlet.configuration.css.web.constants.PortletConfigurationCSSPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,7 +40,7 @@ public class PortletCSSWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"113", PortletCSSPortletKeys.PORTLET_CSS}
+						new String[] {"113", PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS}
 					};
 				}
 

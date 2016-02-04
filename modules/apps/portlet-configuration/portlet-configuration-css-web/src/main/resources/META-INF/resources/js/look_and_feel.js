@@ -65,7 +65,7 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
-		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_configuration_css_web_portlet_PortletCSSPortlet_';
+		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_configuration_css_web_portlet_PortletConfigurationCSSPortlet_';
 
 		var NORMAL = 'normal';
 

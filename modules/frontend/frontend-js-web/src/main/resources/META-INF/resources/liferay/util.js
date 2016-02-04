@@ -148,7 +148,7 @@
 				var allBoxNodes = $(allBox);
 
 				if (!allBoxNodes.length) {
-					allBoxNodes = $('input[name="' + allBox + '"]');
+					allBoxNodes = form.find('input[name="' + allBox + '"]');
 				}
 
 				var totalBoxes = 0;

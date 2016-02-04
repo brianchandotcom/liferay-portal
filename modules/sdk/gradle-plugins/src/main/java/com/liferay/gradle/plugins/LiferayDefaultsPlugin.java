@@ -915,15 +915,19 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskJavadoc(Project project) {
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		configureTaskJavadocFilter(javadoc);
+	}
+
+	protected void configureTaskJavadocFilter(Javadoc javadoc) {
 		String exportPackage = getBundleInstruction(
-			project, Constants.EXPORT_PACKAGE);
+			javadoc.getProject(), Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
 			return;
 		}
-
-		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
-			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		String[] exportPackageArray = exportPackage.split(",");
 

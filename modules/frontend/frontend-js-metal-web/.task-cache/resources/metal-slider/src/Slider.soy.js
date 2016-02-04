@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-slider/src/Slider.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+  'use strict';
+
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
@@ -57,12 +57,12 @@ define("frontend-js-metal-web@1.0.0/metal-slider/src/Slider.soy", ['exports', 'm
     Templates.Slider = {};
   }
 
-  Templates.Slider.content = function (opt_data, opt_ignored, opt_ijData) {
+  Templates.Slider.render = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="slider component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '">' + Templates.Slider.input(opt_data, null, opt_ijData) + Templates.Slider.label(opt_data, null, opt_ijData) + Templates.Slider.rail(opt_data, null, opt_ijData) + '</div>');
   };
 
   if (goog.DEBUG) {
-    Templates.Slider.content.soyTemplateName = 'Templates.Slider.content';
+    Templates.Slider.render.soyTemplateName = 'Templates.Slider.render';
   }
 
   Templates.Slider.input = function (opt_data, opt_ignored, opt_ijData) {
@@ -89,12 +89,12 @@ define("frontend-js-metal-web@1.0.0/metal-slider/src/Slider.soy", ['exports', 'm
     Templates.Slider.rail.soyTemplateName = 'Templates.Slider.rail';
   }
 
-  Templates.Slider.content.params = ["id"];
+  Templates.Slider.render.params = ["id"];
   Templates.Slider.input.params = ["id", "inputName", "value"];
   Templates.Slider.label.params = ["id", "value"];
   Templates.Slider.rail.params = ["id"];
 
-  var Slider = (function (_Component) {
+  var Slider = function (_Component) {
     _inherits(Slider, _Component);
 
     function Slider() {
@@ -104,7 +104,7 @@ define("frontend-js-metal-web@1.0.0/metal-slider/src/Slider.soy", ['exports', 'm
     }
 
     return Slider;
-  })(_Component3.default);
+  }(_Component3.default);
 
   Slider.prototype.registerMetalComponent && Slider.prototype.registerMetalComponent(Slider, 'Slider')
   Slider.RENDERER = _SoyRenderer2.default;

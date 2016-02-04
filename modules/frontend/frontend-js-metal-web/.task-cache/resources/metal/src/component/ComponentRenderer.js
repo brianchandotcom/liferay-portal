@@ -1,11 +1,6 @@
-'use strict'
-
-/**
- * Base class that component renderers should extend from. It defines the
- * required methods all renderers should have.
- */
-;
 define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRenderer", ['exports'], function (exports) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -16,7 +11,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRenderer", ['ex
 		}
 	}
 
-	var ComponentRenderer = (function () {
+	var ComponentRenderer = function () {
 		function ComponentRenderer() {
 			_classCallCheck(this, ComponentRenderer);
 		}
@@ -24,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRenderer", ['ex
 		ComponentRenderer.getSurfaceContent = function getSurfaceContent() {};
 
 		return ComponentRenderer;
-	})();
+	}();
 
 	exports.default = ComponentRenderer;
 });

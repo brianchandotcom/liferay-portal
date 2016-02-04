@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover", ['exports', 'metal/src/core', 'metal-tooltip/src/TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', './Popover.soy'], function (exports, _core, _TooltipBase2, _JQueryAdapter) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover", ['exports', 'metal/src/core', 'metal-tooltip/src/TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-popover/src/Popover.soy'], function (exports, _core, _TooltipBase2, _JQueryAdapter) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -49,7 +49,7 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover", ['exports', 'met
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Popover = (function (_TooltipBase) {
+	var Popover = function (_TooltipBase) {
 		_inherits(Popover, _TooltipBase);
 
 		function Popover() {
@@ -77,7 +77,7 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover", ['exports', 'met
 		};
 
 		return Popover;
-	})(_TooltipBase3.default);
+	}(_TooltipBase3.default);
 
 	Popover.prototype.registerMetalComponent && Popover.prototype.registerMetalComponent(Popover, 'Popover')
 	Popover.ATTRS = {

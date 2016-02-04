@@ -6,7 +6,7 @@
  * @param? elementClasses
  * @skipUpdates elementClasses
  */
-{template .content}
+{template .render}
 	<div id="{$id}" class="treeview component{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
 		{call .nodes data="all" /}
 	</div>

@@ -1,0 +1,40 @@
+{namespace Templates.Select}
+
+/**
+ * This renders the main element.
+ * @param? arrowClass
+ * @param buttonClass
+ * @param? elementClasses
+ * @param? hiddenInputName
+ * @param id
+ * @param items
+ * @param label
+ * @param? selectedIndex
+ * @skipUpdates elementClasses
+ */
+{template .render}
+	<div id="{$id}" class="select component{$elementClasses ? ' ' + $elementClasses : ''}" data-onkeydown="handleKeyDown_">
+		{let $currSelectedIndex: isNonnull($selectedIndex) ? $selectedIndex : ($label or (length($items) == 0) ? -1 : 0) /}
+		<input
+			type="hidden"
+			name="{$hiddenInputName ? $hiddenInputName : ''}"
+			value="{$currSelectedIndex == -1 ? '' : $items[$currSelectedIndex]}"
+		/>
+		{call Templates.Dropdown.render}
+			{param body kind="html"}
+				{foreach $item in $items}
+					<li data-onclick="{$id}:handleItemClick_" class="select-option{$currSelectedIndex == index($item) ? ' selected' : ''}">
+						<a href="javascript:;">{$item}</a>
+					</li>
+				{/foreach}
+			{/param}
+			{param events: ['attrsSynced': $id + ':handleDropdownAttrsSynced_'] /}
+			{param header kind="html"}
+				<button class="{$buttonClass} dropdown-select" type="button" data-onclick="toggle">
+					{$currSelectedIndex == -1 ? $label : $items[$currSelectedIndex]} <span class="{$arrowClass ? $arrowClass : 'caret'}"></span>
+				</button>
+			{/param}
+			{param id: $id + '-dropdown' /}
+		{/call}
+	</div>
+{/template}

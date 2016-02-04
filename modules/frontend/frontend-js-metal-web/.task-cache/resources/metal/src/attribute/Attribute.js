@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute", ['exports', '../array/array', '../core', '../object/object', '../events/EventEmitter', '../async/async'], function (exports, _array, _core, _object, _EventEmitter2, _async) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute", ['exports', 'metal/src/array/array', 'metal/src/core', 'metal/src/object/object', 'metal/src/events/EventEmitter', 'metal/src/async/async'], function (exports, _array, _core, _object, _EventEmitter2, _async) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -53,7 +53,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute", ['exports', 
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Attribute = (function (_EventEmitter) {
+	var Attribute = function (_EventEmitter) {
 		_inherits(Attribute, _EventEmitter);
 
 		function Attribute(opt_config) {
@@ -344,7 +344,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute", ['exports', 
 		};
 
 		return Attribute;
-	})(_EventEmitter3.default);
+	}(_EventEmitter3.default);
 
 	Attribute.prototype.registerMetalComponent && Attribute.prototype.registerMetalComponent(Attribute, 'Attribute')
 	Attribute.INVALID_ATTRS = ['attrs'];

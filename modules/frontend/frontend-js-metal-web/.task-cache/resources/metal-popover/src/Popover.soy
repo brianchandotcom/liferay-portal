@@ -7,7 +7,7 @@
  * @param? position
  * @skipUpdates elementClasses position
  */
-{template .content}
+{template .render}
 	{let $positionClasses: ['top', 'right', 'bottom', 'left'] /}
 	{let $positionClass: isNonnull($position) ? $positionClasses[$position] : 'bottom' /}
 	<div id="{$id}" class="popover component {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">

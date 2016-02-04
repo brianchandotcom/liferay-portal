@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', '../array/array', '../core', '../dom/dom', '../dom/features', '../eval/globalEval', '../html/html', '../object/object', '../string/string', '../attribute/Attribute', '../component/ComponentCollector', '../component/ComponentRegistry', '../component/ComponentRenderer', '../events/EventEmitterProxy', '../events/EventHandler', './EventsCollector', './SurfaceCollector'], function (exports, _array, _core, _dom, _features, _globalEval, _html, _object, _string, _Attribute2, _ComponentCollector, _ComponentRegistry, _ComponentRenderer, _EventEmitterProxy, _EventHandler, _EventsCollector, _SurfaceCollector) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 'metal/src/array/array', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/dom/features', 'metal/src/eval/globalEval', 'metal/src/html/html', 'metal/src/object/object', 'metal/src/string/string', 'metal/src/attribute/Attribute', 'metal/src/component/ComponentCollector', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/events/EventEmitterProxy', 'metal/src/events/EventHandler', 'metal/src/component/EventsCollector', 'metal/src/component/SurfaceCollector'], function (exports, _array, _core, _dom, _features, _globalEval, _html, _object, _string, _Attribute2, _ComponentCollector, _ComponentRegistry, _ComponentRenderer, _EventEmitterProxy, _EventHandler, _EventsCollector, _SurfaceCollector) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -75,7 +75,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Component = (function (_Attribute) {
+	var Component = function (_Attribute) {
 		_inherits(Component, _Attribute);
 
 		function Component(opt_config) {
@@ -224,18 +224,8 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 		Component.prototype.buildFragment_ = function buildFragment_(content) {
 			var frag = _dom2.default.buildFragment(content);
 
-			if (content.indexOf('<script') === -1) {
-				return frag;
-			}
-
-			var scripts = frag.querySelectorAll('script');
-
-			for (var i = 0; i < scripts.length; i++) {
-				var script = scripts.item(i);
-
-				if (!script.type || script.type === 'text/javascript') {
-					_globalEval2.default.runScript(script);
-				}
+			if (content.indexOf('<script') !== -1) {
+				_globalEval2.default.runScriptsInElement(frag);
 			}
 
 			return frag;
@@ -327,12 +317,6 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 			var el = document.createElement(this.constructor.SURFACE_TAG_NAME_MERGED);
 			el.id = surfaceElementId;
 			return el;
-		};
-
-		Component.prototype.decorateAsSubComponent = function decorateAsSubComponent(opt_content) {
-			this.decorating_ = true;
-			this.renderAsSubComponent(opt_content);
-			this.decorating_ = false;
 		};
 
 		Component.prototype.delegate = function delegate(eventName, selector, callback) {
@@ -651,10 +635,10 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 
 		Component.prototype.getSurfaces = function getSurfaces() {
 			var surfaces = {};
-			Object.keys(this.surfaceIds_).forEach((function (surfaceElementId) {
+			Object.keys(this.surfaceIds_).forEach(function (surfaceElementId) {
 				var surface = this.getSurfaceFromElementId(surfaceElementId);
 				surfaces[this.getSurfaceId(surface)] = surface;
-			}).bind(this));
+			}.bind(this));
 			return surfaces;
 		};
 
@@ -750,8 +734,6 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 		};
 
 		Component.prototype.renderAsSubComponent = function renderAsSubComponent(opt_content) {
-			this.addElementSurface_();
-
 			if (opt_content && _dom2.default.isEmpty(this.element)) {
 				this.replaceElementContent_(opt_content);
 			}
@@ -767,8 +749,6 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 			if (component.wasRendered) {
 				var surface = this.getSurfaceFromElementId(surfaceElementId);
 				Component.componentsCollector.updateComponent(surfaceElementId, surface.componentData);
-			} else if (this.decorating_) {
-				component.decorateAsSubComponent(opt_content);
 			} else {
 				component.renderAsSubComponent(opt_content);
 			}
@@ -821,7 +801,9 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 			}
 
 			for (var i = 0; i < surfaceElementIds.length; i++) {
-				if (!this.getSurfaceFromElementId(surfaceElementIds[i]).handled) {
+				var surface = this.getSurfaceFromElementId(surfaceElementIds[i]);
+
+				if (!surface.handled && (surface.parent || surfaceElementIds[i] === this.id)) {
 					this.emitRenderSurfaceEvent_(surfaceElementIds[i], null, null, surfaces[surfaceElementIds[i]]);
 				}
 			}
@@ -1008,7 +990,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 		};
 
 		return Component;
-	})(_Attribute3.default);
+	}(_Attribute3.default);
 
 	Component.prototype.registerMetalComponent && Component.prototype.registerMetalComponent(Component, 'Component')
 	Component.componentsCollector = new _ComponentCollector2.default();

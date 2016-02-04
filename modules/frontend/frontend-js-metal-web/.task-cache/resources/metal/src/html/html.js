@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/html/html", ['exports', '../core', '../string/string'], function (exports, _core, _string) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/html/html", ['exports', 'metal/src/core', 'metal/src/string/string'], function (exports, _core, _string) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -21,7 +21,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/html/html", ['exports', 'metal/src
 		}
 	}
 
-	var html = (function () {
+	var html = function () {
 		function html() {
 			_classCallCheck(this, html);
 		}
@@ -147,7 +147,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/html/html", ['exports', 'metal/src
 		};
 
 		return html;
-	})();
+	}();
 
 	html.Patterns = {
 		INTERTAG_CUSTOM_CUSTOM: /~%%%\s+%%%~/g,

@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/attribute/Attribute', 'metal-position/src/Position', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _Attribute2, _Position, _JQueryAdapter) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -53,7 +53,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Scrollspy = (function (_Attribute) {
+	var Scrollspy = function (_Attribute) {
 		_inherits(Scrollspy, _Attribute);
 
 		function Scrollspy(opt_config) {
@@ -200,7 +200,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		};
 
 		return Scrollspy;
-	})(_Attribute3.default);
+	}(_Attribute3.default);
 
 	Scrollspy.prototype.registerMetalComponent && Scrollspy.prototype.registerMetalComponent(Scrollspy, 'Scrollspy')
 	Scrollspy.ATTRS = {

@@ -1,6 +1,6 @@
-'use strict';
-
 define("frontend-js-metal-web@1.0.0/metal-position/src/Geometry", ['exports'], function (exports) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -11,7 +11,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Geometry", ['exports'], f
 		}
 	}
 
-	var Geometry = (function () {
+	var Geometry = function () {
 		function Geometry() {
 			_classCallCheck(this, Geometry);
 		}
@@ -21,7 +21,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Geometry", ['exports'], f
 		};
 
 		return Geometry;
-	})();
+	}();
 
 	exports.default = Geometry;
 });

@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/dom/features", ['exports', '../dom/dom', '../string/string'], function (exports, _dom, _string) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/dom/features", ['exports', 'metal/src/dom/dom', 'metal/src/string/string'], function (exports, _dom, _string) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -21,7 +21,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/dom/features", ['exports', 'metal/
 		}
 	}
 
-	var features = (function () {
+	var features = function () {
 		function features() {
 			_classCallCheck(this, features);
 		}
@@ -67,7 +67,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/dom/features", ['exports', 'metal/
 		};
 
 		return features;
-	})();
+	}();
 
 	features.animationElement_ = document.createElement('div');
 	features.animationEventName_ = undefined;

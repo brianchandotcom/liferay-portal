@@ -1,29 +1,20 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal-jquery-adapter/src/JQueryAdapter", ['exports'], function (exports) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-jquery-adapter/src/JQueryAdapter", ['exports', 'metal/src/core'], function (exports, _core) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	var _core2 = _interopRequireDefault(_core);
-
-	function _interopRequireDefault(obj) {
-		return obj && obj.__esModule ? obj : {
-			default: obj
-		};
-	}
-
 	var JQueryAdapter = {
 		register: function register(name, Ctor) {
 			if (!$) {
 				throw new Error('jQuery needs to be included in the page for JQueryAdapter to work.');
 			}
 
-			if (!_core2.default.isString(name)) {
+			if (typeof name !== 'string') {
 				throw new Error('The name string is required for registering a plugin');
 			}
 
-			if (!_core2.default.isFunction(Ctor)) {
+			if (typeof Ctor !== 'function') {
 				throw new Error('The constructor function is required for registering a plugin');
 			}
 
@@ -70,7 +61,7 @@ define("frontend-js-metal-web@1.0.0/metal-jquery-adapter/src/JQueryAdapter", ['e
 	}
 
 	function handlePluginCall(name, Ctor, collection, configOrMethodName, args) {
-		if (_core2.default.isString(configOrMethodName)) {
+		if (typeof configOrMethodName === 'string') {
 			return callMethod(name, $(collection[0]), configOrMethodName, args);
 		} else {
 			collection.each(function () {
@@ -82,7 +73,7 @@ define("frontend-js-metal-web@1.0.0/metal-jquery-adapter/src/JQueryAdapter", ['e
 	}
 
 	function isValidMethod(instance, methodName) {
-		return _core2.default.isFunction(instance[methodName]) && methodName[0] !== '_' && methodName[methodName.length - 1] !== '_';
+		return typeof instance[methodName] === 'function' && methodName[0] !== '_' && methodName[methodName.length - 1] !== '_';
 	}
 
 	function onMetalEvent(name, element, eventType, eventData) {

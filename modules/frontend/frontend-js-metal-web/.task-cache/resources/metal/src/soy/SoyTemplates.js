@@ -1,6 +1,6 @@
-'use strict';
-
 define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyTemplates", ['exports'], function (exports) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -13,7 +13,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyTemplates", ['exports'], fu
 
 	var templates = {};
 
-	var SoyTemplates = (function () {
+	var SoyTemplates = function () {
 		function SoyTemplates() {
 			_classCallCheck(this, SoyTemplates);
 		}
@@ -33,7 +33,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyTemplates", ['exports'], fu
 		};
 
 		return SoyTemplates;
-	})();
+	}();
 
 	exports.default = SoyTemplates;
 });

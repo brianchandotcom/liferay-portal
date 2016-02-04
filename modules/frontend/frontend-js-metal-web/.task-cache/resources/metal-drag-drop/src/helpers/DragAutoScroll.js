@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll", ['exports', 'metal/src/core', 'metal/src/attribute/Attribute', 'metal-position/src/Position'], function (exports, _core, _Attribute2, _Position) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -49,7 +49,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var DragAutoScroll = (function (_Attribute) {
+	var DragAutoScroll = function (_Attribute) {
 		_inherits(DragAutoScroll, _Attribute);
 
 		function DragAutoScroll(opt_config) {
@@ -131,7 +131,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 		};
 
 		return DragAutoScroll;
-	})(_Attribute3.default);
+	}(_Attribute3.default);
 
 	DragAutoScroll.prototype.registerMetalComponent && DragAutoScroll.prototype.registerMetalComponent(DragAutoScroll, 'DragAutoScroll')
 	DragAutoScroll.ATTRS = {

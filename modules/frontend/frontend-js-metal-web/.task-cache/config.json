@@ -1,12 +1,12 @@
 {
     "frontend-js-metal-web@1.0.0/metal-treeview/src/Treeview": {
-        "dependencies": ["exports", "metal/src/dom/dom", "metal-treeview/src/Treeview.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/dom/dom", "./Treeview.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-treeview/src/Treeview.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip": {
-        "dependencies": ["exports", "metal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "metal-tooltip/src/Tooltip.soy"]
+        "dependencies": ["exports", "./TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "./Tooltip.soy"]
     },
     "frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
@@ -14,53 +14,80 @@
     "frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-position/src/Align", "metal/src/component/Component", "metal/src/events/EventHandler", "metal/src/soy/SoyRenderer", "metal-jquery-adapter/src/JQueryAdapter", "metal/src/dom/events"]
     },
+    "frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./Switcher.soy.js", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
     "frontend-js-metal-web@1.0.0/metal-slider/src/Slider": {
-        "dependencies": ["exports", "metal/src/core", "metal-drag-drop/src/Drag", "metal-position/src/Position", "metal-slider/src/Slider.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/core", "metal-drag-drop/src/Drag", "metal-position/src/Position", "./Slider.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-slider/src/Slider.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-select/src/Select": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./Select.soy", "metal-jquery-adapter/src/JQueryAdapter", "metal-dropdown/src/Dropdown"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-select/src/Select.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/attribute/Attribute", "metal-position/src/Position", "metal-jquery-adapter/src/JQueryAdapter"]
     },
+    "frontend-js-metal-web@1.0.0/metal-promise/src/promise/Promise": {
+        "dependencies": ["exports", "metal/src/index"]
+    },
     "frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-progressbar/src/ProgressBar.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./ProgressBar.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal-position/src/Align": {
-        "dependencies": ["exports", "metal-position/src/Position"]
+        "dependencies": ["exports", "./Position"]
     },
     "frontend-js-metal-web@1.0.0/metal-position/src/Geometry": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal-position/src/Position": {
-        "dependencies": ["exports", "metal/src/core", "metal-position/src/Geometry"]
+        "dependencies": ["exports", "metal/src/core", "./Geometry"]
     },
     "frontend-js-metal-web@1.0.0/metal-popover/src/Popover": {
-        "dependencies": ["exports", "metal/src/core", "metal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "metal-popover/src/Popover.soy"]
+        "dependencies": ["exports", "metal/src/core", "metal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "./Popover.soy"]
     },
     "frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal-modal/src/Modal": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/events/EventHandler", "metal-modal/src/Modal.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/events/EventHandler", "./Modal.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-modal/src/Modal.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
+    "frontend-js-metal-web@1.0.0/metal-list/src/List": {
+        "dependencies": ["exports", "metal/src/dom/dom", "./List.soy.js", "metal-jquery-adapter/src/JQueryAdapter", "./ListItem.js"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-list/src/List.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-list/src/ListItem": {
+        "dependencies": ["exports", "./ListItem.soy.js", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
     "frontend-js-metal-web@1.0.0/metal-jquery-adapter/src/JQueryAdapter": {
-        "dependencies": ["exports", "metal/src/core"]
+        "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-position/src/Align", "metal/src/events/EventHandler", "metal-dropdown/src/Dropdown.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-position/src/Align", "metal/src/events/EventHandler", "./Dropdown.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown.soy": {
         "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/object/object", "metal/src/attribute/Attribute", "metal-drag-drop/src/helpers/DragAutoScroll", "metal-drag-drop/src/helpers/DragScrollDelta", "metal-drag-drop/src/helpers/DragShim", "metal/src/events/EventHandler", "metal-position/src/Position"]
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/object/object", "metal/src/attribute/Attribute", "./helpers/DragAutoScroll", "./helpers/DragScrollDelta", "./helpers/DragShim", "metal/src/events/EventHandler", "metal-position/src/Position"]
     },
     "frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll": {
         "dependencies": ["exports", "metal/src/core", "metal/src/attribute/Attribute", "metal-position/src/Position"]
@@ -71,85 +98,112 @@
     "frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim": {
         "dependencies": ["exports", "metal/src/dom/dom"]
     },
+    "frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard": {
+        "dependencies": ["exports", "metal/src/attribute/Attribute", "metal/src/core", "metal/src/dom/dom", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./ButtonGroup.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-autocomplete/src/Autocomplete": {
+        "dependencies": ["exports", "./AutocompleteBase", "metal-promise/src/promise/Promise", "metal/src/core", "metal/src/dom/dom", "metal-position/src/Align", "metal-list/src/List", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-autocomplete/src/AutocompleteBase": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-promise/src/promise/Promise", "metal/src/component/Component", "metal/src/events/EventHandler", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-anim/src/Anim": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/dom/features", "metal/src/dom/events"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-alert/src/Alert": {
+        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./Alert.soy.js", "metal-anim/src/Anim", "metal/src/events/EventHandler", "metal-jquery-adapter/src/JQueryAdapter", "metal/src/dom/events"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-alert/src/Alert.soy": {
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+    },
     "frontend-js-metal-web@1.0.0/metal-affix/src/Affix": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/attribute/Attribute", "metal/src/events/EventEmitter", "metal/src/events/EventEmitterProxy", "metal-position/src/Position", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/core": {
         "dependencies": ["exports"]
     },
+    "frontend-js-metal-web@1.0.0/metal/src/index": {
+        "dependencies": ["exports", "./core", "./array/array", "./async/async", "./dom/dom", "./eval/globalEval", "./disposable/Disposable", "./events/EventEmitter", "./events/EventEmitterProxy", "./events/EventHandle", "./events/EventHandler", "./object/object", "./string/string"]
+    },
     "frontend-js-metal-web@1.0.0/metal/src/string/string": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyAop": {
-        "dependencies": ["exports", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "../soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer": {
-        "dependencies": ["exports", "soyutils", "metal/src/core", "metal/src/dom/dom", "metal/src/object/object", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/component/ComponentRenderer", "metal/src/soy/SoyAop", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "soyutils", "../core", "../dom/dom", "../object/object", "../component/Component", "../component/ComponentRegistry", "../component/ComponentRenderer", "./SoyAop", "./SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyTemplates": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/object/object": {
-        "dependencies": ["exports", "metal/src/core"]
+        "dependencies": ["exports", "../core"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/html/html": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/string/string"]
+        "dependencies": ["exports", "../core", "../string/string"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle": {
-        "dependencies": ["exports", "metal/src/events/EventHandle"]
+        "dependencies": ["exports", "../events/EventHandle"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/events/EventEmitter": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/array/array", "metal/src/disposable/Disposable", "metal/src/events/EventHandle"]
+        "dependencies": ["exports", "../core", "../array/array", "../disposable/Disposable", "../events/EventHandle"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/events/EventEmitterProxy": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/disposable/Disposable"]
+        "dependencies": ["exports", "../core", "../dom/dom", "../disposable/Disposable"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/events/EventHandle": {
-        "dependencies": ["exports", "metal/src/disposable/Disposable"]
+        "dependencies": ["exports", "../disposable/Disposable"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/events/EventHandler": {
-        "dependencies": ["exports", "metal/src/disposable/Disposable"]
+        "dependencies": ["exports", "../disposable/Disposable"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/eval/globalEval": {
-        "dependencies": ["exports", "metal/src/dom/dom"]
+        "dependencies": ["exports", "../dom/dom"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/dom/dom": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/object/object", "metal/src/events/DomEventHandle"]
+        "dependencies": ["exports", "../core", "../object/object", "../events/DomEventHandle"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/dom/events": {
-        "dependencies": ["metal/src/dom/dom", "metal/src/dom/features"]
+        "dependencies": ["./dom", "./features"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/dom/features": {
-        "dependencies": ["exports", "metal/src/dom/dom", "metal/src/string/string"]
+        "dependencies": ["exports", "../dom/dom", "../string/string"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/disposable/Disposable": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/Component": {
-        "dependencies": ["exports", "metal/src/array/array", "metal/src/core", "metal/src/dom/dom", "metal/src/dom/features", "metal/src/eval/globalEval", "metal/src/html/html", "metal/src/object/object", "metal/src/string/string", "metal/src/attribute/Attribute", "metal/src/component/ComponentCollector", "metal/src/component/ComponentRegistry", "metal/src/component/ComponentRenderer", "metal/src/events/EventEmitterProxy", "metal/src/events/EventHandler", "metal/src/component/EventsCollector", "metal/src/component/SurfaceCollector"]
+        "dependencies": ["exports", "../array/array", "../core", "../dom/dom", "../dom/features", "../eval/globalEval", "../html/html", "../object/object", "../string/string", "../attribute/Attribute", "../component/ComponentCollector", "../component/ComponentRegistry", "../component/ComponentRenderer", "../events/EventEmitterProxy", "../events/EventHandler", "./EventsCollector", "./SurfaceCollector"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/ComponentCollector": {
-        "dependencies": ["exports", "metal/src/component/ComponentRegistry", "metal/src/disposable/Disposable"]
+        "dependencies": ["exports", "../component/ComponentRegistry", "../disposable/Disposable"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry": {
-        "dependencies": ["exports", "metal/src/core"]
+        "dependencies": ["exports", "../core"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/ComponentRenderer": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/EventsCollector": {
-        "dependencies": ["exports", "metal/src/core", "metal/src/component/ComponentCollector", "metal/src/disposable/Disposable", "metal/src/events/EventHandler"]
+        "dependencies": ["exports", "../core", "../component/ComponentCollector", "../disposable/Disposable", "../events/EventHandler"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector": {
-        "dependencies": ["exports", "metal/src/object/object", "metal/src/disposable/Disposable"]
+        "dependencies": ["exports", "../object/object", "../disposable/Disposable"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute": {
-        "dependencies": ["exports", "metal/src/array/array", "metal/src/core", "metal/src/object/object", "metal/src/events/EventEmitter", "metal/src/async/async"]
+        "dependencies": ["exports", "../array/array", "../core", "../object/object", "../events/EventEmitter", "../async/async"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/async/async": {
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/array/array": {
-        "dependencies": ["exports", "metal/src/core"]
+        "dependencies": ["exports", "../core"]
     }
 }

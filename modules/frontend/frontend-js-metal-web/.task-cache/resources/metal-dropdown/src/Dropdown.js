@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal-position/src/Align', 'metal/src/events/EventHandler', './Dropdown.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _Align, _EventHandler, _Dropdown, _JQueryAdapter) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal-position/src/Align', 'metal/src/events/EventHandler', 'metal-dropdown/src/Dropdown.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _Align, _EventHandler, _Dropdown, _JQueryAdapter) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -55,7 +55,7 @@ define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown", ['exports', 'm
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Dropdown = (function (_DropdownBase) {
+	var Dropdown = function (_DropdownBase) {
 		_inherits(Dropdown, _DropdownBase);
 
 		function Dropdown(opt_config) {
@@ -162,7 +162,7 @@ define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown", ['exports', 'm
 		};
 
 		return Dropdown;
-	})(_Dropdown2.default);
+	}(_Dropdown2.default);
 
 	Dropdown.prototype.registerMetalComponent && Dropdown.prototype.registerMetalComponent(Dropdown, 'Dropdown')
 	Dropdown.ATTRS = {

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -149,7 +149,7 @@ public class NetlogonConnectionManagerImpl
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
-				_configurationFactory.getConfiguration(
+				_configurationProvider.getConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						CompanyThreadLocal.getCompanyId(),
@@ -170,15 +170,15 @@ public class NetlogonConnectionManagerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NetlogonConnectionManagerImpl.class);
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 
 }

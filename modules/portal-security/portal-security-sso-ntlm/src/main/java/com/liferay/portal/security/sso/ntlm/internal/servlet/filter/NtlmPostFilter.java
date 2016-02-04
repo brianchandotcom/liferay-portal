@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -71,7 +71,7 @@ public class NtlmPostFilter extends BaseFilter {
 		long companyId = PortalInstances.getCompanyId(request);
 
 		NtlmConfiguration ntlmConfiguration =
-			_configurationFactory.getConfiguration(
+			_configurationProvider.getConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));
@@ -109,14 +109,14 @@ public class NtlmPostFilter extends BaseFilter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 
 }

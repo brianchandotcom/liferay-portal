@@ -17,7 +17,7 @@ package com.liferay.portal.security.auto.login.request.parameter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -140,10 +140,10 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -157,7 +157,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		try {
 			RequestParameterAutoLoginConfiguration
 				requestParameterAutoLoginConfiguration =
-					_configurationFactory.getConfiguration(
+					_configurationProvider.getConfiguration(
 						RequestParameterAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -180,7 +180,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestParameterAutoLogin.class);
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 	private UserLocalService _userLocalService;
 
 }

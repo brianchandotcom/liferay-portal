@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -195,7 +195,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceOverriddenConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
+				ConfigurationProviderUtil.getConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));

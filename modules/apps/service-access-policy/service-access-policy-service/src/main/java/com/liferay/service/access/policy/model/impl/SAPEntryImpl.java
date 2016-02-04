@@ -17,7 +17,7 @@ package com.liferay.service.access.policy.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,7 +45,7 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 	@Override
 	public boolean isSystem() throws ConfigurationException {
 		SAPConfiguration sapConfiguration =
-			ConfigurationFactoryUtil.getConfiguration(
+			ConfigurationProviderUtil.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					getCompanyId(), SAPConstants.SERVICE_NAME));

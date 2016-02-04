@@ -17,7 +17,7 @@ package com.liferay.shopping.web.portlet.action;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -158,7 +158,7 @@ public class PayPalNotificationAction extends Action {
 
 		ShoppingGroupServiceOverriddenConfiguration
 			shoppingGroupServiceOverriddenConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
+				ConfigurationProviderUtil.getConfiguration(
 					ShoppingGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						order.getGroupId(), ShoppingConstants.SERVICE_NAME));

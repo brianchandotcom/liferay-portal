@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyManager;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -90,7 +90,7 @@ public class ServiceAccessPolicyManagerImpl
 
 	protected SAPConfiguration getSAPConfiguration(long companyId) {
 		try {
-			return _configurationFactory.getConfiguration(
+			return _configurationProvider.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
@@ -105,10 +105,10 @@ public class ServiceAccessPolicyManagerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -147,7 +147,7 @@ public class ServiceAccessPolicyManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessPolicyManagerImpl.class);
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 	private SAPEntryService _sapEntryService;
 
 }

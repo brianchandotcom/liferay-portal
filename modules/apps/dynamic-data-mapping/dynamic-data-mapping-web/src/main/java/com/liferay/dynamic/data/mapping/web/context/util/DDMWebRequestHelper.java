@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +42,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 					HttpServletRequest request = getRequest();
 
 					_ddmServiceConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							DDMServiceConfiguration.class,
 							new ParameterMapSettingsLocator(
 								request.getParameterMap(),
@@ -52,7 +52,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 				}
 				else {
 					_ddmServiceConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							DDMServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), DDMConstants.SERVICE_NAME));

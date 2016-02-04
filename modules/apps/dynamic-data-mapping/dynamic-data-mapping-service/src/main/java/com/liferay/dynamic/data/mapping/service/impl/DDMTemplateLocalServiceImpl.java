@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -1526,7 +1526,7 @@ public class DDMTemplateLocalServiceImpl
 	protected DDMServiceConfiguration getDDMServiceConfiguration(long groupId)
 		throws ConfigurationException {
 
-		return configurationFactory.getConfiguration(
+		return configurationProvider.getConfiguration(
 			DDMServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, DDMConstants.SERVICE_NAME));
@@ -1676,8 +1676,8 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = ConfigurationFactory.class)
-	protected ConfigurationFactory configurationFactory;
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateLocalServiceImpl.class);

@@ -22,7 +22,7 @@ import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -88,7 +88,7 @@ public class MentionsBlogsEntryServiceWrapper
 		}
 
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
-			_configurationFactory.getConfiguration(
+			_configurationProvider.getConfiguration(
 				MentionsGroupServiceConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					entry.getCompanyId(), MentionsConstants.SERVICE_NAME));
@@ -111,10 +111,10 @@ public class MentionsBlogsEntryServiceWrapper
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -123,7 +123,7 @@ public class MentionsBlogsEntryServiceWrapper
 	}
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 	private MentionsNotifier _mentionsNotifier;
 
 }

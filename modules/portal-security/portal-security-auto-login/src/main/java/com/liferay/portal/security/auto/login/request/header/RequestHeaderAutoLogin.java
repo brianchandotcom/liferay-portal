@@ -17,7 +17,7 @@ package com.liferay.portal.security.auto.login.request.header;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
@@ -156,10 +156,10 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -173,7 +173,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			RequestHeaderAutoLoginConfiguration
 				requestHeaderAutoLoginConfiguration =
-					_configurationFactory.getConfiguration(
+					_configurationProvider.getConfiguration(
 						RequestHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -192,7 +192,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 	private UserLocalService _userLocalService;
 
 }

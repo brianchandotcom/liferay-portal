@@ -21,12 +21,7 @@ import com.liferay.portal.search.solr.internal.connection.ReplicatedSolrClientFa
 import com.liferay.portal.search.solr.internal.http.BasicAuthPoolingHttpClientFactory;
 
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.Map;
-
-import org.mockito.Mockito;
-
-import org.osgi.service.component.ComponentContext;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -55,16 +50,7 @@ public class TestSolrClientManager extends SolrClientManager {
 			Collections.singletonMap(
 				"type", (Object)solrConfiguration.clientType()));
 
-		ComponentContext componentContext = Mockito.mock(
-			ComponentContext.class);
-
-		Mockito.when(
-			componentContext.getProperties()
-		).thenReturn(
-			new Hashtable<>(configurationProperties)
-		);
-
-		activate(componentContext);
+		activate(configurationProperties);
 	}
 
 }

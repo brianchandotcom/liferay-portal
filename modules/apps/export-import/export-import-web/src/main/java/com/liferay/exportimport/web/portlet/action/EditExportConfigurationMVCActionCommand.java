@@ -156,7 +156,7 @@ public class EditExportConfigurationMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		setLayoutIds(actionRequest);
+		setLayoutIdMap(actionRequest);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -240,7 +240,7 @@ public class EditExportConfigurationMVCActionCommand
 		this.exportImportService = exportImportService;
 	}
 
-	protected void setLayoutIds(ActionRequest actionRequest) {
+	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -257,7 +257,7 @@ public class EditExportConfigurationMVCActionCommand
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
 				groupId, privateLayout, openNodes);
 
-		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
+		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
 
 	@Reference(unbind = "-")

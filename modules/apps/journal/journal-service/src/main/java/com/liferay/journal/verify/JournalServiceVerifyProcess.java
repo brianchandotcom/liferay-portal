@@ -432,10 +432,14 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				return;
 			}
 
-			articleImage.setElName(name + StringPool.UNDERLINE + index);
+			String elName = name + StringPool.UNDERLINE + index;
 
-			_journalArticleImageLocalService.updateJournalArticleImage(
-				articleImage);
+			if (!elName.equals(articleImage.getElName())) {
+				articleImage.setElName(elName);
+
+				_journalArticleImageLocalService.updateJournalArticleImage(
+					articleImage);
+			}
 		}
 	}
 

@@ -554,6 +554,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		try {
 			String mvcPath = renderRequest.getParameter("mvcPath");
 
+			if (mvcPath.equals("/edit_permissions.jsp")) {
+				super.doDispatch(renderRequest, renderResponse);
+
+				return;
+			}
+
 			Portlet portlet = ActionUtil.getPortlet(renderRequest);
 
 			if (mvcPath.endsWith("edit_configuration.jsp")) {

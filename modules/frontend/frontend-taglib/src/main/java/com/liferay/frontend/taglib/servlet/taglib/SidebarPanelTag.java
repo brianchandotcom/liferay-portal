@@ -33,9 +33,7 @@ public class SidebarPanelTag extends IncludeTag {
 			request, "searchContainerId", _searchContainerId);
 		setNamespacedAttribute(request, "resourceURL", _resourceURL);
 
-		super.doEndTag();
-
-		return EVAL_PAGE;
+		return super.doEndTag();
 	}
 
 	@Override

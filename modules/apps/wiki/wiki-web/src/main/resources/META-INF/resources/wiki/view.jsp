@@ -135,6 +135,12 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+	</liferay-frontend:info-bar>
+</c:if>
+
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280 panel main-content-card\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<c:choose>

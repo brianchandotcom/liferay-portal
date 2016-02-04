@@ -145,9 +145,9 @@ if (portletTitleBasedNavigation) {
 	}
 	%>
 
-	<div class="panel text-center">
+	<liferay-frontend:info-bar>
 		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
-	</div>
+	</liferay-frontend:info-bar>
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>

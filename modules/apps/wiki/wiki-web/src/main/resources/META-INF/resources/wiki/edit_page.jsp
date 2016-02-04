@@ -110,10 +110,10 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<c:if test="<%= portletTitleBasedNavigation && (wikiPage != null) && !newPage %>">
-	<div class="panel text-center">
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
-	</div>
+	</liferay-frontend:info-bar>
 </c:if>
 
 <portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />

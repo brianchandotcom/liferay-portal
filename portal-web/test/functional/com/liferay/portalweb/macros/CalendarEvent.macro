@@ -117,7 +117,7 @@
 					<var name="pageStaging" value="${pageStaging}" />
 					<var name="reminders" value="${reminders}" />
 					<var name="resourcesAvailability" value="${resourcesAvailability}" />
-					<var name="siteName" value="${defaultSiteName}" />
+					<var name="siteName" value="${siteName}" />
 					<var name="siteURL" value="${siteURL}" />
 					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 					<var name="workflow" value="${workflow}" />
@@ -141,7 +141,7 @@
 						<var name="pageStaging" value="${pageStaging}" />
 						<var name="reminders" value="${reminders}" />
 						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${defaultSiteName}" />
+						<var name="siteName" value="${siteName}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 						<var name="workflow" value="${workflow}" />
@@ -168,7 +168,7 @@
 						<var name="pageStaging" value="${pageStaging}" />
 						<var name="reminders" value="${reminders}" />
 						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${defaultSiteName}" />
+						<var name="siteName" value="${siteName}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 						<var name="workflow" value="${workflow}" />
@@ -257,7 +257,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -406,7 +406,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -482,7 +482,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -1043,7 +1043,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -1738,7 +1738,7 @@
 		</execute>
 
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
@@ -1757,7 +1757,7 @@
 		</execute>
 
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
@@ -1880,9 +1880,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementNotPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${defaultSiteName}'s Calendars" />
+		<execute function="AssertElementNotPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${siteName}'s Calendars" />
 
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDateTime" value="${startDateTime}" />
@@ -1896,9 +1896,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${defaultSiteName}'s Calendars" />
+		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${siteName}'s Calendars" />
 
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDateTime" value="${startDateTime}" />

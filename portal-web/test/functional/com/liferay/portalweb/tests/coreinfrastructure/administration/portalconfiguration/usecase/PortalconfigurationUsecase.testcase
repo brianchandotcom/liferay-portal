@@ -62,7 +62,7 @@
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="landing" />
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

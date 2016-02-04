@@ -398,7 +398,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListVisible" value="${defaultSiteName},Welcome,Child Page Name" />
+			<var name="breadcrumbListVisible" value="${siteName},Welcome,Child Page Name" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
@@ -406,7 +406,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListVisible" value="${defaultSiteName}" />
+			<var name="breadcrumbListVisible" value="${siteName}" />
 		</execute>
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
@@ -418,7 +418,7 @@
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListNotVisible" value="Welcome,Child Page Name" />
-			<var name="breadcrumbListVisible" value="${defaultSiteName}" />
+			<var name="breadcrumbListVisible" value="${siteName}" />
 			<var name="pathLocator" value="PAGE" />
 		</execute>
 	</command>

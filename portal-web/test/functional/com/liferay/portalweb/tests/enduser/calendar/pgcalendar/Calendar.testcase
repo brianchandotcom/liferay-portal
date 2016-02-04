@@ -3693,12 +3693,12 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="calendarName" value="${defaultSiteName}" />
+		<var name="calendarName" value="${siteName}" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="site" value="${defaultSiteName}" />
+		<var name="site" value="${siteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">

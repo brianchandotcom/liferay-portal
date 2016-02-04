@@ -1161,7 +1161,7 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<for list="${defaultSiteName},Site Name,Global" param="siteName">
+		<for list="${siteName},Site Name,Global" param="siteName">
 			<execute macro="ProductMenu#gotoSite">
 				<var name="site" value="${siteName}" />
 			</execute>
@@ -1204,7 +1204,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="${defaultSiteName}" />
+			<var name="otherSite" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1212,7 +1212,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="${defaultSiteName},Site Name,Global" param="siteName">
+		<for list="${siteName},Site Name,Global" param="siteName">
 			<execute macro="AssetPublisherPortlet#viewAssetPG">
 				<var name="assetContent" value="${siteName} WC Content" />
 				<var name="assetTitle" value="${siteName} WC Title" />

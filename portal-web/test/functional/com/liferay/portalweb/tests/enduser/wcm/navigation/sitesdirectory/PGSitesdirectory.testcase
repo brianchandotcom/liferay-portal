@@ -129,7 +129,7 @@
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">
-			<var name="siteName" value="${defaultSiteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">
@@ -160,7 +160,7 @@
 		</execute>
 
 		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="availableSiteName" value="${defaultSiteName}" />
+			<var name="availableSiteName" value="${siteName}" />
 			<var name="childSiteName1" value="Child SiteName 1" />
 			<var name="childSiteName2" value="Child SiteName 2" />
 			<var name="childSiteName3" value="Child SiteName 3" />

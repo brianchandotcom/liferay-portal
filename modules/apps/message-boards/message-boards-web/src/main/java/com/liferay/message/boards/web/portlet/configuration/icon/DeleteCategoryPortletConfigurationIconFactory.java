@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,7 +41,9 @@ public class DeleteCategoryPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			MBCategory category = ActionUtil.getCategory(portletRequest);
 

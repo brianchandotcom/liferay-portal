@@ -25,6 +25,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +45,9 @@ public class NodeSubscriptionPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

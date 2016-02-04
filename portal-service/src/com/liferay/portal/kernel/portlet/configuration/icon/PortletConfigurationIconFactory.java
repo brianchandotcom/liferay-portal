@@ -15,13 +15,15 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
  */
 public interface PortletConfigurationIconFactory {
 
-	public PortletConfigurationIcon create(PortletRequest portletRequest);
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public double getWeight();
 

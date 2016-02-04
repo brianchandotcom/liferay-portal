@@ -26,6 +26,7 @@ import com.liferay.taglib.ui.IconTag;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +44,7 @@ public class IconOptionsTag extends IconTag {
 
 		_portletConfigurationIcons =
 			PortletConfigurationIconTracker.getPortletConfigurationIcons(
-				getPortletId(), getPortletRequest(),
+				getPortletId(), getPortletRequest(), getPortletResponse(),
 				PortletConfigurationIconFactoryComparator.INSTANCE);
 
 		return _portletConfigurationIcons;
@@ -89,6 +90,11 @@ public class IconOptionsTag extends IconTag {
 	protected PortletRequest getPortletRequest() {
 		return (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
+	}
+
+	protected PortletResponse getPortletResponse() {
+		return (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
 	@Override

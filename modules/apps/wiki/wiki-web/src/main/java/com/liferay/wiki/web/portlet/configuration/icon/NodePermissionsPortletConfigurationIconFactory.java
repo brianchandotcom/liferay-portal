@@ -22,6 +22,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,7 +41,9 @@ public class NodePermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			WikiNode node = ActionUtil.getNode(portletRequest);
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -23,7 +24,9 @@ public class BasePortletConfigurationIconFactory
 	implements PortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return null;
 	}
 

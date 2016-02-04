@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -69,7 +70,7 @@ public class PortletConfigurationIconTracker {
 
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
 		String portletId, PortletRequest portletRequest,
-		Comparator<?> comparator) {
+		PortletResponse portletResponse, Comparator<?> comparator) {
 
 		List<PortletConfigurationIcon> portletConfigurationIcons =
 			new ArrayList<>();
@@ -83,7 +84,8 @@ public class PortletConfigurationIconTracker {
 				portletConfigurationIconFactories) {
 
 			PortletConfigurationIcon portletConfigurationIcon =
-				portletConfigurationIconFactory.create(portletRequest);
+				portletConfigurationIconFactory.create(
+					portletRequest, portletResponse);
 
 			if ((portletConfigurationIcon != null) &&
 				portletConfigurationIcon.isShow()) {

@@ -11,7 +11,7 @@
 		<#assign portlet_configuration_icon_menu = portlet_display.getPortletConfigurationIconMenu()>
 		<#assign portlet_toolbar = portlet_display.getPortletToolbar()>
 
-		<#assign portlet_configuration_icons = portlet_configuration_icon_menu.getPortletConfigurationIcons(portlet_display_root_portlet_id, renderRequest)>
+		<#assign portlet_configuration_icons = portlet_configuration_icon_menu.getPortletConfigurationIcons(portlet_display_root_portlet_id, renderRequest, renderResponse)>
 
 		<#assign portlet_title_menus = portlet_toolbar.getPortletTitleMenus(portlet_display_root_portlet_id, renderRequest, renderResponse)>
 

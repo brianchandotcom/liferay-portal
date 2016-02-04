@@ -68,6 +68,8 @@ public class PortalImplLocaleTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_availableLocales = LanguageUtil.getAvailableLocales();
+
 		PropsValues.LOCALES_ENABLED = new String[] {
 			"ca_ES", "en_US", "fr_FR", "de_DE", "pt_BR", "es_ES", "en_GB"
 		};
@@ -79,8 +81,6 @@ public class PortalImplLocaleTest {
 
 		_group = GroupTestUtil.addGroup();
 		_layout = LayoutTestUtil.addLayout(_group);
-
-		_availableLocales = LanguageUtil.getAvailableLocales();
 
 		List<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.fromLanguageId("ca_ES"), LocaleUtil.US,

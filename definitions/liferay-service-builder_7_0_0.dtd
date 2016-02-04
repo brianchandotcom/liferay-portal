@@ -175,9 +175,6 @@ If the primary value is set to true, then this column is part of the primary key
 of the entity. If multiple columns have the primary value set to true, then a
 compound key will be created.
 
-See com.liferay.portal.service.persistence.LayoutPK for an example of a compound
-primary key.
-
 The mapping-key attribute is no longer supported. See LPS-32250 for more
 information. The value of the mapping-key is now always assumed to be the column
 entity's primary key.
@@ -436,7 +433,7 @@ int end) and more sorting options. The easiest way to understand this is to
 look at a generated PersistenceImpl class. The Service Builder will also
 generate removeByCompanyId and countByCompanyId.
 
-See com.liferay.portal.service.persistence.LayoutPersistenceImpl for a good
+See com.liferay.portal.service.persistence.impl.LayoutPersistenceImpl for a good
 example.
 
 The attribute case-sensitive is a boolean value and is only used if the column

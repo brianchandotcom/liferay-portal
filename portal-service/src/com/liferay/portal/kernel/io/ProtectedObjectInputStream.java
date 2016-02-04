@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -40,7 +41,9 @@ public class ProtectedObjectInputStream extends ObjectInputStream {
 	protected Class<?> doResolveClass(ObjectStreamClass objectStreamClass)
 		throws ClassNotFoundException, IOException {
 
-		return super.resolveClass(objectStreamClass);
+		String name = objectStreamClass.getName();
+
+		return ClassResolverUtil.resolveByContextClassLoader(name);
 	}
 
 	@Override

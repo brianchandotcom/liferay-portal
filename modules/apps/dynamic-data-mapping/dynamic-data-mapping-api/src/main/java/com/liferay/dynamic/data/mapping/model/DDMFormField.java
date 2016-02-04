@@ -115,7 +115,13 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormFieldValidation getDDMFormFieldValidation() {
-		return (DDMFormFieldValidation)_properties.get("validation");
+		Object value = _properties.get("validation");
+
+		if (value instanceof DDMFormFieldValidation) {
+			return (DDMFormFieldValidation)value;
+		}
+
+		return null;
 	}
 
 	public String getFieldNamespace() {

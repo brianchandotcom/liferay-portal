@@ -85,6 +85,13 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"dataSourceType.equals(\"manual\")",
 			optionsDDMFormField.getVisibilityExpression());
+
+		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
+			"validation");
+
+		Assert.assertNotNull(validationDDMFormField);
+		Assert.assertEquals(
+			"false", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

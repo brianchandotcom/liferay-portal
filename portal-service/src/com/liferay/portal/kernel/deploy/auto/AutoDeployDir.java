@@ -17,13 +17,14 @@ package com.liferay.portal.kernel.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,44 +48,25 @@ public class AutoDeployDir {
 			List<AutoDeployListener> autoDeployListeners)
 		throws AutoDeployException {
 
-		List<AutoDeployListener> deployableAutoDeployListeners =
-			new ArrayList<>();
+		String[] moduleFrameworkAutoDeployDirs = PropsUtil.getArray(
+			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 
-		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
-			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-				deployableAutoDeployListeners.add(autoDeployListener);
-			}
+		String destDir = null;
+
+		if (ArrayUtil.isEmpty(moduleFrameworkAutoDeployDirs)) {
+			throw new AutoDeployException(
+				"Empty folders: review the property " +
+					PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS +
+						" in your portal-ext.properties file");
 		}
 
-		if (deployableAutoDeployListeners.size() > 1) {
-			StringBundler sb = new StringBundler(
-				3 + (deployableAutoDeployListeners.size() * 2) - 1);
+		destDir = moduleFrameworkAutoDeployDirs[0];
 
-			sb.append("More than one auto deploy listener is available for ");
-			sb.append(autoDeploymentContext.getFile());
-			sb.append(": ");
+		FileUtil.mkdirs(destDir);
 
-			for (int i = 0; i < deployableAutoDeployListeners.size(); i++) {
-				AutoDeployListener deployableAutoDeployListener =
-					deployableAutoDeployListeners.get(i);
+		File file = autoDeploymentContext.getFile();
 
-				Class<?> clazz = deployableAutoDeployListener.getClass();
-
-				if (i != 0) {
-					sb.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				sb.append(clazz.getName());
-			}
-
-			throw new AutoDeployException(sb.toString());
-		}
-
-		for (AutoDeployListener deployableAutoDeployListener :
-				deployableAutoDeployListeners) {
-
-			deployableAutoDeployListener.deploy(autoDeploymentContext);
-		}
+		FileUtil.move(file, new File(destDir, file.getName()));
 	}
 
 	public AutoDeployDir(
@@ -223,11 +205,7 @@ public class AutoDeployDir {
 
 			deploy(autoDeploymentContext, _autoDeployListeners);
 
-			if (file.delete()) {
-				return;
-			}
-
-			_log.error("Auto deploy failed to remove " + fileName);
+			return;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

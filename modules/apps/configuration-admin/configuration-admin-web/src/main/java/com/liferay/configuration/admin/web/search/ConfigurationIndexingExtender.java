@@ -20,7 +20,7 @@ import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchException;
 
@@ -45,26 +45,15 @@ public class ConfigurationIndexingExtender {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE,
+			bundleContext, Bundle.RESOLVED,
 			new ConfigurationModelsBundleTrackerCustomizer());
 
 		_bundleTracker.open();
-
-		if (!_clusterMasterExecutor.isMaster()) {
-			return;
-		}
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels();
-
-		_configurationModelIndexer.reindex(configurationModels.values());
-
-		commit(_configurationModelIndexer);
 	}
 
 	protected void commit(Indexer<ConfigurationModel> indexer) {
 		try {
-			IndexWriterHelperUtil.commit(indexer.getSearchEngineId());
+			_indexWriterHelper.commit(indexer.getSearchEngineId());
 		}
 		catch (SearchException se) {
 			if (_log.isWarnEnabled()) {
@@ -101,6 +90,11 @@ public class ConfigurationIndexingExtender {
 		_configurationModelRetriever = configurationModelRetriever;
 	}
 
+	@Reference(unbind = "-")
+	protected void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
+		_indexWriterHelper = indexWriterHelper;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationIndexingExtender.class);
 
@@ -108,6 +102,7 @@ public class ConfigurationIndexingExtender {
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private ConfigurationModelIndexer _configurationModelIndexer;
 	private ConfigurationModelRetriever _configurationModelRetriever;
+	private IndexWriterHelper _indexWriterHelper;
 
 	private class ConfigurationModelsBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<ConfigurationModelIterator> {

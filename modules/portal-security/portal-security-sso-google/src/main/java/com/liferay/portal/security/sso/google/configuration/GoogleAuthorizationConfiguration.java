@@ -32,29 +32,18 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 @ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration",
-	localization = "content/Language", name = "%google.authorization.configuration.name"
+	localization = "content/Language",
+	name = "%google.authorization.configuration.name"
 )
 public interface GoogleAuthorizationConfiguration {
 
-	@Meta.AD(
-		deflt = "",
-		description = "Set this to client ID that Google provided for your registered application",
-		required = false
-	)
+	@Meta.AD(deflt = "", description = "%client-id-help", required = false)
 	public String clientId();
 
-	@Meta.AD(
-		deflt = "",
-		description = "Set this to client secret that Google provided for your registered application",
-		required = false
-	)
+	@Meta.AD(deflt = "", description = "%client-secret-help", required = false)
 	public String clientSecret();
 
-	@Meta.AD(
-		deflt = "true",
-		description = "Set this to true to enable Google authentication",
-		required = false
-	)
+	@Meta.AD(deflt = "true", description = "%enabled-help", required = false)
 	public boolean enabled();
 
 }

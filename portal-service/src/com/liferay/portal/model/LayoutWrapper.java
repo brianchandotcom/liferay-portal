@@ -82,8 +82,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("wapThemeId", getWapThemeId());
-		attributes.put("wapColorSchemeId", getWapColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
@@ -240,18 +238,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
-		}
-
-		String wapThemeId = (String)attributes.get("wapThemeId");
-
-		if (wapThemeId != null) {
-			setWapThemeId(wapThemeId);
-		}
-
-		String wapColorSchemeId = (String)attributes.get("wapColorSchemeId");
-
-		if (wapColorSchemeId != null) {
-			setWapColorSchemeId(wapColorSchemeId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -1305,38 +1291,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getUuid();
 	}
 
-	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getWapColorScheme();
-	}
-
-	/**
-	* Returns the wap color scheme ID of this layout.
-	*
-	* @return the wap color scheme ID of this layout
-	*/
-	@Override
-	public java.lang.String getWapColorSchemeId() {
-		return _layout.getWapColorSchemeId();
-	}
-
-	@Override
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getWapTheme();
-	}
-
-	/**
-	* Returns the wap theme ID of this layout.
-	*
-	* @return the wap theme ID of this layout
-	*/
-	@Override
-	public java.lang.String getWapThemeId() {
-		return _layout.getWapThemeId();
-	}
-
 	/**
 	* Returns <code>true</code> if the given layout ID matches one of the
 	* current layout's hierarchical parents.
@@ -1472,11 +1426,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public boolean isInheritLookAndFeel() {
 		return _layout.isInheritLookAndFeel();
-	}
-
-	@Override
-	public boolean isInheritWapLookAndFeel() {
-		return _layout.isInheritWapLookAndFeel();
 	}
 
 	/**
@@ -2258,26 +2207,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_layout.setUuid(uuid);
-	}
-
-	/**
-	* Sets the wap color scheme ID of this layout.
-	*
-	* @param wapColorSchemeId the wap color scheme ID of this layout
-	*/
-	@Override
-	public void setWapColorSchemeId(java.lang.String wapColorSchemeId) {
-		_layout.setWapColorSchemeId(wapColorSchemeId);
-	}
-
-	/**
-	* Sets the wap theme ID of this layout.
-	*
-	* @param wapThemeId the wap theme ID of this layout
-	*/
-	@Override
-	public void setWapThemeId(java.lang.String wapThemeId) {
-		_layout.setWapThemeId(wapThemeId);
 	}
 
 	@Override

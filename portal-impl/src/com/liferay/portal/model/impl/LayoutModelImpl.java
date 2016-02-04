@@ -103,8 +103,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "iconImageId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
 			{ "colorSchemeId", Types.VARCHAR },
-			{ "wapThemeId", Types.VARCHAR },
-			{ "wapColorSchemeId", Types.VARCHAR },
 			{ "css", Types.CLOB },
 			{ "priority", Types.INTEGER },
 			{ "layoutPrototypeUuid", Types.VARCHAR },
@@ -139,8 +137,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("iconImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("wapThemeId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("wapColorSchemeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("layoutPrototypeUuid", Types.VARCHAR);
@@ -149,7 +145,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -215,8 +211,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
-		model.setWapThemeId(soapModel.getWapThemeId());
-		model.setWapColorSchemeId(soapModel.getWapColorSchemeId());
 		model.setCss(soapModel.getCss());
 		model.setPriority(soapModel.getPriority());
 		model.setLayoutPrototypeUuid(soapModel.getLayoutPrototypeUuid());
@@ -311,8 +305,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("wapThemeId", getWapThemeId());
-		attributes.put("wapColorSchemeId", getWapColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
@@ -472,18 +464,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
-		}
-
-		String wapThemeId = (String)attributes.get("wapThemeId");
-
-		if (wapThemeId != null) {
-			setWapThemeId(wapThemeId);
-		}
-
-		String wapColorSchemeId = (String)attributes.get("wapColorSchemeId");
-
-		if (wapColorSchemeId != null) {
-			setWapColorSchemeId(wapColorSchemeId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -1405,38 +1385,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@JSON
 	@Override
-	public String getWapThemeId() {
-		if (_wapThemeId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _wapThemeId;
-		}
-	}
-
-	@Override
-	public void setWapThemeId(String wapThemeId) {
-		_wapThemeId = wapThemeId;
-	}
-
-	@JSON
-	@Override
-	public String getWapColorSchemeId() {
-		if (_wapColorSchemeId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _wapColorSchemeId;
-		}
-	}
-
-	@Override
-	public void setWapColorSchemeId(String wapColorSchemeId) {
-		_wapColorSchemeId = wapColorSchemeId;
-	}
-
-	@JSON
-	@Override
 	public String getCss() {
 		if (_css == null) {
 			return StringPool.BLANK;
@@ -1747,8 +1695,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setIconImageId(getIconImageId());
 		layoutImpl.setThemeId(getThemeId());
 		layoutImpl.setColorSchemeId(getColorSchemeId());
-		layoutImpl.setWapThemeId(getWapThemeId());
-		layoutImpl.setWapColorSchemeId(getWapColorSchemeId());
 		layoutImpl.setCss(getCss());
 		layoutImpl.setPriority(getPriority());
 		layoutImpl.setLayoutPrototypeUuid(getLayoutPrototypeUuid());
@@ -2014,22 +1960,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			layoutCacheModel.colorSchemeId = null;
 		}
 
-		layoutCacheModel.wapThemeId = getWapThemeId();
-
-		String wapThemeId = layoutCacheModel.wapThemeId;
-
-		if ((wapThemeId != null) && (wapThemeId.length() == 0)) {
-			layoutCacheModel.wapThemeId = null;
-		}
-
-		layoutCacheModel.wapColorSchemeId = getWapColorSchemeId();
-
-		String wapColorSchemeId = layoutCacheModel.wapColorSchemeId;
-
-		if ((wapColorSchemeId != null) && (wapColorSchemeId.length() == 0)) {
-			layoutCacheModel.wapColorSchemeId = null;
-		}
-
 		layoutCacheModel.css = getCss();
 
 		String css = layoutCacheModel.css;
@@ -2074,7 +2004,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -2124,10 +2054,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getThemeId());
 		sb.append(", colorSchemeId=");
 		sb.append(getColorSchemeId());
-		sb.append(", wapThemeId=");
-		sb.append(getWapThemeId());
-		sb.append(", wapColorSchemeId=");
-		sb.append(getWapColorSchemeId());
 		sb.append(", css=");
 		sb.append(getCss());
 		sb.append(", priority=");
@@ -2147,7 +2073,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(100);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -2250,14 +2176,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getColorSchemeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>wapThemeId</column-name><column-value><![CDATA[");
-		sb.append(getWapThemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>wapColorSchemeId</column-name><column-value><![CDATA[");
-		sb.append(getWapColorSchemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>css</column-name><column-value><![CDATA[");
 		sb.append(getCss());
 		sb.append("]]></column-value></column>");
@@ -2336,8 +2254,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private boolean _setOriginalIconImageId;
 	private String _themeId;
 	private String _colorSchemeId;
-	private String _wapThemeId;
-	private String _wapColorSchemeId;
 	private String _css;
 	private int _priority;
 	private String _layoutPrototypeUuid;

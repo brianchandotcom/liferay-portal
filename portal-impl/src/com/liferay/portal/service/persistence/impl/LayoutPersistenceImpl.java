@@ -8743,8 +8743,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setIconImageId(layout.getIconImageId());
 		layoutImpl.setThemeId(layout.getThemeId());
 		layoutImpl.setColorSchemeId(layout.getColorSchemeId());
-		layoutImpl.setWapThemeId(layout.getWapThemeId());
-		layoutImpl.setWapColorSchemeId(layout.getWapColorSchemeId());
 		layoutImpl.setCss(layout.getCss());
 		layoutImpl.setPriority(layout.getPriority());
 		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());

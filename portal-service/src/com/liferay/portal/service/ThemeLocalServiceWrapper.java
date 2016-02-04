@@ -52,17 +52,15 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		boolean wapTheme) {
+		java.lang.String themeId, java.lang.String colorSchemeId) {
 		return _themeLocalService.getColorScheme(companyId, themeId,
-			colorSchemeId, wapTheme);
+			colorSchemeId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
-		long companyId, long userId, boolean wapTheme) {
-		return _themeLocalService.getControlPanelThemes(companyId, userId,
-			wapTheme);
+		long companyId, long userId) {
+		return _themeLocalService.getControlPanelThemes(companyId, userId);
 	}
 
 	/**
@@ -77,9 +75,8 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Theme> getPageThemes(
-		long companyId, long groupId, long userId, boolean wapTheme) {
-		return _themeLocalService.getPageThemes(companyId, groupId, userId,
-			wapTheme);
+		long companyId, long groupId, long userId) {
+		return _themeLocalService.getPageThemes(companyId, groupId, userId);
 	}
 
 	@Override
@@ -92,8 +89,8 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 
 	@Override
 	public com.liferay.portal.model.Theme getTheme(long companyId,
-		java.lang.String themeId, boolean wapTheme) {
-		return _themeLocalService.getTheme(companyId, themeId, wapTheme);
+		java.lang.String themeId) {
+		return _themeLocalService.getTheme(companyId, themeId);
 	}
 
 	@Override

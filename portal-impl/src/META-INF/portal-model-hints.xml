@@ -944,8 +944,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1045,8 +1043,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1066,8 +1062,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1099,8 +1093,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>

@@ -164,10 +164,6 @@ public class LayoutPersistenceTest {
 
 		newLayout.setColorSchemeId(RandomTestUtil.randomString());
 
-		newLayout.setWapThemeId(RandomTestUtil.randomString());
-
-		newLayout.setWapColorSchemeId(RandomTestUtil.randomString());
-
 		newLayout.setCss(RandomTestUtil.randomString());
 
 		newLayout.setPriority(RandomTestUtil.nextInt());
@@ -224,10 +220,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getThemeId(), newLayout.getThemeId());
 		Assert.assertEquals(existingLayout.getColorSchemeId(),
 			newLayout.getColorSchemeId());
-		Assert.assertEquals(existingLayout.getWapThemeId(),
-			newLayout.getWapThemeId());
-		Assert.assertEquals(existingLayout.getWapColorSchemeId(),
-			newLayout.getWapColorSchemeId());
 		Assert.assertEquals(existingLayout.getCss(), newLayout.getCss());
 		Assert.assertEquals(existingLayout.getPriority(),
 			newLayout.getPriority());
@@ -408,10 +400,9 @@ public class LayoutPersistenceTest {
 			"parentLayoutId", true, "name", true, "title", true, "description",
 			true, "keywords", true, "robots", true, "type", true, "hidden",
 			true, "friendlyURL", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
-			true, "priority", true, "layoutPrototypeUuid", true,
-			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "lastPublishDate", true);
+			"colorSchemeId", true, "priority", true, "layoutPrototypeUuid",
+			true, "layoutPrototypeLinkEnabled", true,
+			"sourcePrototypeLayoutUuid", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -705,10 +696,6 @@ public class LayoutPersistenceTest {
 		layout.setThemeId(RandomTestUtil.randomString());
 
 		layout.setColorSchemeId(RandomTestUtil.randomString());
-
-		layout.setWapThemeId(RandomTestUtil.randomString());
-
-		layout.setWapColorSchemeId(RandomTestUtil.randomString());
 
 		layout.setCss(RandomTestUtil.randomString());
 

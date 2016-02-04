@@ -3688,8 +3688,9 @@
 	</command>
 
 	<command name="ImportCalendarAndViewEventRegularComment" priority="5">
-		<execute macro="TestCase#getDefaultSiteName">
-			<return from="defaultSiteName" name="defaultSiteName" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<var name="calendarName" value="${defaultSiteName}" />

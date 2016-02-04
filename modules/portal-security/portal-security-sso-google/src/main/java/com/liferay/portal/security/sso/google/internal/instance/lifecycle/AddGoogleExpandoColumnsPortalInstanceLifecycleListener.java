@@ -66,7 +66,6 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 
 			addExpandoColumn(expandoTable, "googleAccessToken", properties);
 			addExpandoColumn(expandoTable, "googleRefreshToken", properties);
-			addExpandoColumn(expandoTable, "googleUserId", properties);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(companyId);

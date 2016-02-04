@@ -272,13 +272,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 					<aui:button-row>
-						<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+						<aui:button cssClass="btn-comment bt-lg btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 						<%
 						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + index + "','" + namespace + randomNamespace + "postReplyForm" + index + "')";
 						%>
 
-						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
+						<aui:button cssClass="btn-comment bt-lg" onClick="<%= taglibCancel %>" type="cancel" />
 					</aui:button-row>
 
 					<aui:script>

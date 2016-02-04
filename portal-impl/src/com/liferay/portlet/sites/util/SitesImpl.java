@@ -161,11 +161,8 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest request,
-			RenderResponse renderResponse)
+			Group group, HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
-
-		PortletURL portletURL = renderResponse.createRenderURL();
 
 		List<Group> ancestorGroups = group.getAncestors();
 
@@ -188,6 +185,17 @@ public class SitesImpl implements Sites {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, unescapedGroup.getDescriptiveName(),
 			portletURL.toString());
+	}
+
+	@Override
+	public void addPortletBreadcrumbEntries(
+			Group group, HttpServletRequest request,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		addPortletBreadcrumbEntries(group, request, portletURL);
 	}
 
 	@Override

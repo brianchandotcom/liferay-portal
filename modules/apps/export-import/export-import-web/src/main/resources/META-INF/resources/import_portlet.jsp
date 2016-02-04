@@ -17,17 +17,46 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs3 = ParamUtil.getString(request, "tabs3", "new-import-process");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "exportImport");
+portletURL.setParameter("tabs2", "import");
+portletURL.setParameter("portletResource", portletResource);
+
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
 String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, ExportImportHelper.TEMP_FOLDER_NAME + portletDisplay.getId());
 %>
 
-<liferay-ui:tabs
-	names="new-import-process,current-and-previous"
-	param="tabs3"
-	refresh="<%= false %>"
->
-	<liferay-ui:section>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		portletURL.setParameter("tabs3", "new-import-process");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="new-import-process"
+			selected='<%= tabs3.equals("new-import-process") %>'
+		/>
+
+		<%
+			portletURL.setParameter("tabs3", "current-and-previous");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="current-and-previous"
+			selected='<%= tabs3.equals("current-and-previous") %>'
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<c:choose>
+	<c:when test='<%= tabs3.equals("new-import-process") %>'>
 		<div id="<portlet:namespace />exportImportOptions">
 
 			<%
@@ -49,14 +78,14 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 				</c:otherwise>
 			</c:choose>
 		</div>
-	</liferay-ui:section>
+	</c:when>
 
-	<liferay-ui:section>
+	<c:when test='<%= tabs3.equals("current-and-previous") %>'>
 		<div class="process-list" id="<portlet:namespace />importProcesses">
 			<liferay-util:include page="/import_portlet_processes.jsp" servletContext="<%= application %>" />
 		</div>
-	</liferay-ui:section>
-</liferay-ui:tabs>
+	</c:when>
+</c:choose>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="importProcessesURL">

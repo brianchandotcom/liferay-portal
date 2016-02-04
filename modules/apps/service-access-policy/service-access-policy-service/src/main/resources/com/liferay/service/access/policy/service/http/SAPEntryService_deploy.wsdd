@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_SAP_SAPEntryService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://model.policy.access.service.liferay.com" qname="ns:ArrayOf_tns16_SAPEntrySoap" type="java:com.liferay.service.access.policy.model.SAPEntrySoap[]" innerType="cmp-ns:SAPEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://model.policy.access.service.liferay.com" qname="ns:ArrayOf_tns2_SAPEntrySoap" type="java:com.liferay.service.access.policy.model.SAPEntrySoap[]" innerType="cmp-ns:SAPEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -38,12 +38,12 @@
 		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCompanySAPEntriesCount" qname="operNS:getCompanySAPEntriesCount" returnQName="getCompanySAPEntriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns16_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns2_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns16_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns2_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>

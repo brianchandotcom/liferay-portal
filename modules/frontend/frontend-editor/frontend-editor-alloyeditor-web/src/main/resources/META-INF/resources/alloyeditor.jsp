@@ -223,7 +223,7 @@ if (showSource) {
 
 		editorConfig = A.merge(
 			{
-				title: '<%= LanguageUtil.get(request, "rich-text-format") %>'
+				title: '<%= LanguageUtil.get(request, "rich-text-editor") %>'
 			},
 			editorConfig
 		);

@@ -14,17 +14,24 @@
 
 package com.liferay.portal.security.sso.google;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.liferay.portal.model.User;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Stian Sigvartsen
  */
 public interface GoogleAuthorization {
 
-	public GoogleAuthorizationCodeFlow getGoogleAuthorizationCodeFlow(
-			long companyId, List<String> scopes)
+	public User addOrUpdateUser(
+			HttpSession session, long companyId, String authorizationCode,
+			String returnRequestUri, List<String> scopes)
+		throws Exception;
+
+	public String getLoginRedirect(
+			long companyId, String returnRequestUri, List<String> scopes)
 		throws Exception;
 
 	public boolean isEnabled(long companyId);

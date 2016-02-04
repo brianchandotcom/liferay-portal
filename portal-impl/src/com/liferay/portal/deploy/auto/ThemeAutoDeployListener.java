@@ -28,7 +28,7 @@ import java.io.File;
 public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() {
+	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
 		return new ThreadSafeAutoDeployer(new ThemeAutoDeployer());
 	}
 

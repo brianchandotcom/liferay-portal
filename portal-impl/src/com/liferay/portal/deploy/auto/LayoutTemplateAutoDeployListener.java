@@ -28,7 +28,7 @@ import java.io.File;
 public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() {
+	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
 		return new ThreadSafeAutoDeployer(new LayoutTemplateAutoDeployer());
 	}
 

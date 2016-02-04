@@ -18,10 +18,10 @@ import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
 

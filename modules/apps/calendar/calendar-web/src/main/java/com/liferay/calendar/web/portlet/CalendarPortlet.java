@@ -91,6 +91,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -100,7 +101,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.comparator.UserFirstNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;

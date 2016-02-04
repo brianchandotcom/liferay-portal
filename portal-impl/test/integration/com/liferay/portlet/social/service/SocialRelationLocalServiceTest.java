@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
 

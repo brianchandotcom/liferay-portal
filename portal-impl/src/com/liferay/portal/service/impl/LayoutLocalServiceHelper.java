@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -54,7 +55,6 @@ import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;

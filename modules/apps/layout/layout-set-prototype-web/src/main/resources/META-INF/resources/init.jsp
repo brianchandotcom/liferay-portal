@@ -47,6 +47,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.util.comparator.LayoutSetPrototypeCreateDateComparator" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.LayoutSetPrototype" %><%@
 page import="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" %><%@
@@ -58,7 +59,6 @@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.comparator.LayoutSetPrototypeCreateDateComparator" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
 <%@ page import="java.util.Set" %>

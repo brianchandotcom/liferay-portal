@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
+import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Country;
@@ -67,8 +69,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.comparator.OrganizationIdComparator;
-import com.liferay.portal.util.comparator.OrganizationNameComparator;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 

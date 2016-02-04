@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
@@ -32,7 +33,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.comparator.LayoutRevisionCreateDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Layout;
@@ -32,7 +33,6 @@ import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
-import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
 import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 

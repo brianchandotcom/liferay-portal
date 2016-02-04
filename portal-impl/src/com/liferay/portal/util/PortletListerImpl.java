@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.TreeNodeView;
 import com.liferay.portal.kernel.util.TreeView;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
+import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
@@ -29,8 +31,6 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.comparator.PortletCategoryComparator;
-import com.liferay.portal.util.comparator.PortletTitleComparator;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.util.ArrayList;

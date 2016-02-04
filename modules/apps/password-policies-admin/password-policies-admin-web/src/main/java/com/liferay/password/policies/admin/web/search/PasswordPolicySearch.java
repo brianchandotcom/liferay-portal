@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.PasswordPolicyDescriptionComparator;
+import com.liferay.portal.kernel.util.comparator.PasswordPolicyNameComparator;
 import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.util.comparator.PasswordPolicyDescriptionComparator;
-import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 

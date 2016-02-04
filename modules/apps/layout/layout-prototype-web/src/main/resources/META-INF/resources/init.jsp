@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.LayoutPrototype" %><%@
 page import="com.liferay.portal.model.impl.LayoutPrototypeImpl" %><%@
@@ -51,7 +52,6 @@ page import="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.comparator.LayoutPrototypeCreateDateComparator" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

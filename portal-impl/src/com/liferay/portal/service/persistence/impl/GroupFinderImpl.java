@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -39,7 +40,6 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupUtil;
-import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;

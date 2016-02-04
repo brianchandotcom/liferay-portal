@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconFactoryComparator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Layout;
@@ -54,7 +55,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.comparator.PortletConfigurationIconFactoryComparator;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;

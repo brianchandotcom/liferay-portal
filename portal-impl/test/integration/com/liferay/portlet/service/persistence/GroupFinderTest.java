@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.ResourceTypePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceAction;
@@ -39,7 +40,6 @@ import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupFinderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;

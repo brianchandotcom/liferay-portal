@@ -38,6 +38,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
+page import="com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator" %><%@
 page import="com.liferay.portal.model.ColorScheme" %><%@
 page import="com.liferay.portal.model.Plugin" %><%@
 page import="com.liferay.portal.model.PluginSetting" %><%@
@@ -52,8 +54,6 @@ page import="com.liferay.portal.service.ResourcePermissionLocalServiceUtil" %><%
 page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.ThemeLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portal.util.comparator.RoleRoleIdComparator" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

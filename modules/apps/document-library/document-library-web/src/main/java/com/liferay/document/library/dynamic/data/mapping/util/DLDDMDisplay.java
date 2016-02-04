@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.ddm;
+package com.liferay.document.library.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;

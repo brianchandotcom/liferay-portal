@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.journal.web.asset,\
 	com.liferay.journal.web.constants,\
-	com.liferay.journal.web.ddm,\
+	com.liferay.journal.web.dynamic.data.mapping.util,\
 	com.liferay.journal.web.social,\
 	com.liferay.journal.web.util
 Import-Package:\

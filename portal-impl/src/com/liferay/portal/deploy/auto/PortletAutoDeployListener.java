@@ -53,6 +53,11 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			autoDeployer = new WAIAutoDeployer();
 		}
 
+		if (autoDeployer == null) {
+			throw new AutoDeployException(
+				"No Portlet auto deployers have been found.");
+		}
+
 		if (_log.isDebugEnabled()) {
 			Class<?> clazz = autoDeployer.getClass();
 

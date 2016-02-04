@@ -159,12 +159,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	@Override
 	public String getDevice() {
-		if (isWapTheme()) {
-			return "wap";
-		}
-		else {
-			return "regular";
-		}
+		return "regular";
 	}
 
 	@Override
@@ -388,11 +383,6 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	@Override
-	public boolean getWapTheme() {
-		return _wapTheme;
-	}
-
-	@Override
 	public boolean getWARFile() {
 		return _warFile;
 	}
@@ -435,11 +425,6 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	@Override
 	public boolean isPageTheme() {
 		return _pageTheme;
-	}
-
-	@Override
-	public boolean isWapTheme() {
-		return _wapTheme;
 	}
 
 	@Override
@@ -600,11 +585,6 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		_virtualPath = virtualPath;
 	}
 
-	@Override
-	public void setWapTheme(boolean wapTheme) {
-		_wapTheme = wapTheme;
-	}
-
 	protected boolean isAvailable(ThemeCompanyLimit limit, long id) {
 		boolean available = true;
 
@@ -704,7 +684,6 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		new LinkedHashMap<>();
 	private long _timestamp;
 	private String _virtualPath = StringPool.BLANK;
-	private boolean _wapTheme;
 	private boolean _warFile;
 
 }

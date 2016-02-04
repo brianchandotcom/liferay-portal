@@ -49,7 +49,7 @@ public class ThemeServiceTest {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(
-			_group.getCompanyId(), layoutSet.getThemeId(), false);
+			_group.getCompanyId(), layoutSet.getThemeId());
 
 		Assert.notNull(theme);
 	}

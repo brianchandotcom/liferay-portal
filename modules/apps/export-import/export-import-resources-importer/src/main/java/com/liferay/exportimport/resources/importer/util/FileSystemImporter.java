@@ -1791,7 +1791,7 @@ public class FileSystemImporter extends BaseImporter {
 
 		if (Validator.isNotNull(themeId)) {
 			LayoutSetLocalServiceUtil.updateLookAndFeel(
-				groupId, themeId, null, null, false);
+				groupId, themeId, null, null);
 		}
 	}
 

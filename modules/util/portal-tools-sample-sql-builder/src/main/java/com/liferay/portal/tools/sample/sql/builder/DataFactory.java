@@ -2850,8 +2850,6 @@ public class DataFactory {
 		layoutSetModel.setPrivateLayout(privateLayout);
 		layoutSetModel.setThemeId("classic");
 		layoutSetModel.setColorSchemeId("01");
-		layoutSetModel.setWapThemeId("mobile");
-		layoutSetModel.setWapColorSchemeId("01");
 		layoutSetModel.setPageCount(pageCount);
 
 		return layoutSetModel;

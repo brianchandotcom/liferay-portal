@@ -74,6 +74,10 @@ public interface Sites {
 		throws PortalException;
 
 	public void addPortletBreadcrumbEntries(
+			Group group, HttpServletRequest request, PortletURL portletURL)
+		throws Exception;
+
+	public void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception;

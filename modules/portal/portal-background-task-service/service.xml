@@ -50,7 +50,7 @@
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_T" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
@@ -67,7 +67,7 @@
 			<finder-column name="taskExecutorClassName" />
 		</finder>
 		<finder name="G_T_C" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
 			<finder-column name="completed" />
 		</finder>

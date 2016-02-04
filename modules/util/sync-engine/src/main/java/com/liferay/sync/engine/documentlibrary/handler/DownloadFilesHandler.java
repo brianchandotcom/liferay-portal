@@ -70,10 +70,10 @@ public class DownloadFilesHandler extends BaseHandler {
 
 		final Session session = SessionManager.getSession(getSyncAccountId());
 
-		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
+		Header header = httpResponse.getFirstHeader("Sync-JWT");
 
-		if (tokenHeader != null) {
-			session.setToken(tokenHeader.getValue());
+		if (header != null) {
+			session.addHeader("Sync-JWT", header.getValue());
 		}
 
 		Map<String, DownloadFileHandler> handlers =

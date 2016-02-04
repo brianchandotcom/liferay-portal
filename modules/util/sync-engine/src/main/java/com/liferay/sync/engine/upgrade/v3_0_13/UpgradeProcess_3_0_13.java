@@ -12,31 +12,30 @@
  * details.
  */
 
-package com.liferay.sync.engine.util;
+package com.liferay.sync.engine.upgrade.v3_0_13;
+
+import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
+import com.liferay.sync.engine.upgrade.UpgradeProcess;
 
 /**
+ * @author Dennis Ju
  * @author Shinn Lok
  */
-public class ReleaseInfo {
+public class UpgradeProcess_3_0_13 extends UpgradeProcess {
 
-	public static final int getBuildNumber() {
-		return _BUILD_NUMBER;
+	@Override
+	public int getThreshold() {
+		return 3013;
 	}
 
-	public static final int getFeatureSet() {
-		return _FEATURE_SET;
+	@Override
+	public void upgrade() throws Exception {
+		SyncAccountPersistence syncAccountPersistence =
+			SyncAccountService.getSyncAccountPersistence();
+
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR;");
 	}
-
-	public static final String getVersion() {
-		return _VERSION;
-	}
-
-	private static final String _BUILD = "3013";
-
-	private static final int _BUILD_NUMBER = Integer.parseInt(_BUILD);
-
-	private static final int _FEATURE_SET = 1;
-
-	private static final String _VERSION = "3.0.13";
 
 }

@@ -17,6 +17,7 @@ package com.liferay.sync.engine.session;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.util.Encryptor;
+import com.liferay.sync.engine.util.ServerInfo;
 
 import java.net.URL;
 
@@ -36,6 +37,13 @@ public class SessionManager {
 		Session session = _sessions.get(syncAccountId);
 
 		if (session != null) {
+			if (ServerInfo.supportsDeviceRegistration(syncAccountId)) {
+				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+					syncAccountId);
+
+				session.addHeader("Sync-UUID", syncAccount.getUuid());
+			}
+
 			return session;
 		}
 
@@ -60,6 +68,10 @@ public class SessionManager {
 					Encryptor.decrypt(syncAccount.getPassword()),
 					syncAccount.isTrustSelfSigned(),
 					syncAccount.getMaxConnections());
+			}
+
+			if (ServerInfo.supportsDeviceRegistration(syncAccountId)) {
+				session.addHeader("Sync-UUID", syncAccount.getUuid());
 			}
 
 			session.startTrackTransferRate();

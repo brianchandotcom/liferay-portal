@@ -266,7 +266,7 @@ public class DownloadFileHandler extends BaseHandler {
 		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
 
 		if (tokenHeader != null) {
-			session.setToken(tokenHeader.getValue());
+			session.addHeader("Sync-JWT", tokenHeader.getValue());
 		}
 
 		InputStream inputStream = null;

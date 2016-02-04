@@ -18,7 +18,7 @@ import com.liferay.sync.engine.documentlibrary.handler.GetSyncDLObjectUpdateHand
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncSiteService;
-import com.liferay.sync.engine.util.ReleaseInfo;
+import com.liferay.sync.engine.util.ServerInfo;
 
 import java.util.Map;
 
@@ -72,7 +72,7 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 		parameters.put("repositoryId", syncSite.getGroupId());
 
 		if ((syncSite.getRemoteSyncTime() == -1) &&
-			ReleaseInfo.isServerCompatible(getSyncAccountId(), 5)) {
+			ServerInfo.supportsRetrieveFromCache(getSyncAccountId())) {
 
 			parameters.put("retrieveFromCache", false);
 		}

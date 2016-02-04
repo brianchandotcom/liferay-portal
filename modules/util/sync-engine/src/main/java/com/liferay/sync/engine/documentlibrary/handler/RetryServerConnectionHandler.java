@@ -23,7 +23,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
-import com.liferay.sync.engine.util.ReleaseInfo;
+import com.liferay.sync.engine.util.ServerInfo;
 
 import java.util.List;
 import java.util.Set;
@@ -47,7 +47,7 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
-		if (ReleaseInfo.isServerCompatible(syncContext)) {
+		if (ServerInfo.isCompatible(syncContext)) {
 			if (_logger.isDebugEnabled()) {
 				_logger.debug("Connected to {}", syncAccount.getUrl());
 			}

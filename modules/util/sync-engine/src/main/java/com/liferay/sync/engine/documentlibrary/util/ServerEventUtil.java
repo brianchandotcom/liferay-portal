@@ -16,9 +16,14 @@ package com.liferay.sync.engine.documentlibrary.util;
 
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetUserSitesGroupsEvent;
+import com.liferay.sync.engine.documentlibrary.event.RegisterSyncDeviceEvent;
 import com.liferay.sync.engine.documentlibrary.event.RetryServerConnectionEvent;
+import com.liferay.sync.engine.documentlibrary.event.UnregisterSyncDeviceEvent;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.util.OSDetector;
+import com.liferay.sync.engine.util.ReleaseInfo;
+import com.liferay.sync.engine.util.ServerInfo;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,6 +37,41 @@ import java.util.concurrent.TimeUnit;
  * @author Shinn Lok
  */
 public class ServerEventUtil {
+
+	public static void registerSyncDevice(long syncAccountId) {
+		if (!ServerInfo.supportsDeviceRegistration(syncAccountId)) {
+			return;
+		}
+
+		Map<String, Object> parameters = new HashMap<>();
+
+		parameters.put("buildNumber", ReleaseInfo.getBuildNumber());
+		parameters.put("featureSet", ReleaseInfo.getFeatureSet());
+
+		String type = null;
+
+		if (OSDetector.isApple()) {
+			type = "desktop-mac";
+		}
+		else if (OSDetector.isLinux()) {
+			type = "desktop-linux";
+		}
+		else if (OSDetector.isWindows()) {
+			type = "desktop-windows";
+		}
+
+		parameters.put("type", type);
+
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			syncAccountId);
+
+		parameters.put("uuid", syncAccount.getUuid());
+
+		RegisterSyncDeviceEvent registerSyncDeviceEvent =
+			new RegisterSyncDeviceEvent(syncAccountId, parameters);
+
+		registerSyncDeviceEvent.run();
+	}
 
 	public static synchronized void retryServerConnection(
 		long syncAccountId, long delay) {
@@ -69,6 +109,24 @@ public class ServerEventUtil {
 				syncAccountId, Collections.<String, Object>emptyMap());
 
 		getUserSitesGroupsEvent.run();
+	}
+
+	public static void unregisterSyncDevice(long syncAccountId) {
+		if (!ServerInfo.supportsDeviceRegistration(syncAccountId)) {
+			return;
+		}
+
+		Map<String, Object> parameters = new HashMap<>();
+
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			syncAccountId);
+
+		parameters.put("uuid", syncAccount.getUuid());
+
+		UnregisterSyncDeviceEvent unregisterSyncDeviceEvent =
+			new UnregisterSyncDeviceEvent(syncAccountId, parameters);
+
+		unregisterSyncDeviceEvent.run();
 	}
 
 	private static final Map<Long, ScheduledFuture>

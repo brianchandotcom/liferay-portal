@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.service;
 
+import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncAccountModelListener;
@@ -180,9 +181,19 @@ public class SyncAccountService {
 	}
 
 	public static void deleteSyncAccount(long syncAccountId) {
+		deleteSyncAccount(syncAccountId, true);
+	}
+
+	public static void deleteSyncAccount(
+		long syncAccountId, boolean unregister) {
+
 		try {
 
 			// Sync account
+
+			if (unregister) {
+				ServerEventUtil.unregisterSyncDevice(syncAccountId);
+			}
 
 			SyncAccount syncAccount = fetchSyncAccount(syncAccountId);
 

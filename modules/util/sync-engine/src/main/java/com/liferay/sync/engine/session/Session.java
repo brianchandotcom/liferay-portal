@@ -34,6 +34,7 @@ import java.security.cert.X509Certificate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -237,6 +238,10 @@ public class Session {
 		_oAuthEnabled = true;
 	}
 
+	public void addHeader(String key, String value) {
+		_headers.put(key, value);
+	}
+
 	public void asynchronousExecute(
 			final HttpGet httpGet, final Handler<Void> handler)
 		throws Exception {
@@ -356,10 +361,6 @@ public class Session {
 
 	public void incrementUploadedBytes(int bytes) {
 		_uploadedBytes.getAndAdd(bytes);
-	}
-
-	public void setToken(String token) {
-		_token = token;
 	}
 
 	public void startTrackTransferRate() {
@@ -560,8 +561,15 @@ public class Session {
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpRequest);
 		}
-		else {
-			httpRequest.setHeader("Sync-JWT", _token);
+
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			String key = entry.getKey();
+
+			if (_oAuthEnabled && key.equals("Sync-JWT")) {
+				continue;
+			}
+
+			httpRequest.setHeader(key, entry.getValue());
 		}
 	}
 
@@ -577,13 +585,13 @@ public class Session {
 	private final AtomicInteger _downloadedBytes = new AtomicInteger(0);
 	private volatile int _downloadRate;
 	private final ExecutorService _executorService;
+	private final Map<String, String> _headers = new HashMap<>();
 	private final HttpClient _httpClient;
 	private final HttpHost _httpHost;
 	private final Set<String> _ignoredParameterKeys = new HashSet<>(
 		Arrays.asList("filePath", "syncFile", "syncSite", "uiEvent"));
 	private OAuthConsumer _oAuthConsumer;
 	private final boolean _oAuthEnabled;
-	private String _token;
 	private ScheduledFuture<?> _trackTransferRateScheduledFuture;
 	private final AtomicInteger _uploadedBytes = new AtomicInteger(0);
 	private volatile int _uploadRate;

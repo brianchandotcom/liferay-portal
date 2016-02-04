@@ -163,6 +163,8 @@ public class SyncEngine {
 
 		SyncAccountService.update(syncAccount);
 
+		ServerEventUtil.registerSyncDevice(syncAccountId);
+
 		Path syncAccountFilePath = Paths.get(syncAccount.getFilePathName());
 
 		SyncFile syncAccountFile = SyncFileService.fetchSyncFile(

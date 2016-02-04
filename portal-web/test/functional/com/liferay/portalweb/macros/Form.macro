@@ -171,7 +171,5 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Button#SUBMIT" value1="Submit" />
-
-		<execute macro="Navigator#openURL" />
 	</command>
 </definition>

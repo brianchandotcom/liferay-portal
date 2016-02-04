@@ -22,10 +22,9 @@ String cmd = ParamUtil.getString(request, Constants.CMD, Constants.ADD);
 long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
-
 Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
-
 Map<String, String[]> parameterMap = Collections.emptyMap();
+long[] selectedLayoutIds = null;
 
 if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
 	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
@@ -35,8 +34,6 @@ if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "ex
 	}
 
 	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
-
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 }
 else {
 	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
@@ -45,9 +42,13 @@ else {
 		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-
-		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	}
+}
+
+if (MapUtil.isNotEmpty(exportImportConfigurationSettingsMap)) {
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	privateLayout = GetterUtil.getBoolean(exportImportConfigurationSettingsMap.get("privateLayout"), privateLayout);
+	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 }
 
 if (exportImportConfiguration != null) {
@@ -72,19 +73,18 @@ treeId = treeId + liveGroupId;
 
 treeId = treeId + privateLayout + layoutSetBranchId;
 
-long[] selectedLayoutIds = null;
+if (!cmd.equals(Constants.UPDATE)) {
+	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
-String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+	if (openNodes == null) {
+		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
 
-if (openNodes == null) {
-	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
-
-	for (long selectedLayoutId : selectedLayoutIds) {
-		SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
+		for (long selectedLayoutId : selectedLayoutIds) {
+			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
+		}
+	} else {
+		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
 	}
-}
-else {
-	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
 }
 
 PortletURL renderURL = renderResponse.createRenderURL();

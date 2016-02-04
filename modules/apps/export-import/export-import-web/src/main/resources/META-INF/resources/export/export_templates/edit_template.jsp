@@ -45,9 +45,6 @@ if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "ex
 	}
 
 	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
-
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 }
 else {
 	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
@@ -56,10 +53,13 @@ else {
 		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-
-		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-		selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 	}
+}
+
+if (MapUtil.isNotEmpty(exportImportConfigurationSettingsMap)) {
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	privateLayout = GetterUtil.getBoolean(exportImportConfigurationSettingsMap.get("privateLayout"), privateLayout);
+	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 }
 
 String rootNodeName = StringPool.BLANK;

@@ -38,8 +38,10 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -57,6 +59,7 @@ import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -76,6 +79,8 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
@@ -108,6 +113,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -118,6 +124,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String DEFAULT_REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	public static final String INCREMENT_BUNDLE_VERSION_TASK_NAME =
+		"incrementBundleVersion";
 
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
 
@@ -195,6 +204,75 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		classesTask.dependsOn(copy);
 
 		return copy;
+	}
+
+	protected Task addTaskIncrementBundleVersion(Project project) {
+		Task task = project.task(INCREMENT_BUNDLE_VERSION_TASK_NAME);
+
+		Action<Task> action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				try {
+					Project project = task.getProject();
+
+					File bndFile = project.file("bnd.bnd");
+
+					if (!bndFile.exists()) {
+						if (_logger.isInfoEnabled()) {
+							_logger.info("Unable to find " + bndFile);
+						}
+
+						return;
+					}
+
+					String bndContent = new String(
+						Files.readAllBytes(bndFile.toPath()),
+						StandardCharsets.UTF_8);
+
+					VersionNumber versionNumber = VersionNumber.parse(
+						String.valueOf(project.getVersion()));
+
+					VersionNumber nextVersionNumber = new VersionNumber(
+						versionNumber.getMajor(), versionNumber.getMinor(),
+						versionNumber.getMicro() + 1,
+						versionNumber.getQualifier());
+
+					String nextBndContent = bndContent.replace(
+						Constants.BUNDLE_VERSION + ": " + versionNumber,
+						Constants.BUNDLE_VERSION + ": " + nextVersionNumber);
+
+					if (bndContent.equals(nextBndContent)) {
+						if (_logger.isWarnEnabled()) {
+							_logger.warn("Unable to increment bundle version");
+						}
+
+						return;
+					}
+
+					Files.write(
+						bndFile.toPath(),
+						nextBndContent.getBytes(StandardCharsets.UTF_8));
+
+					if (_logger.isLifecycleEnabled()) {
+						_logger.lifecycle(
+							"Bundle version of " + project +
+								" incremented to " + nextVersionNumber);
+					}
+				}
+				catch (IOException ioe) {
+					throw new GradleException(
+						"Unable to increment bundle version", ioe);
+				}
+			}
+
+		};
+
+		task.doLast(action);
+
+		task.setDescription("Increments the bundle version.");
+
+		return task;
 	}
 
 	protected Jar addTaskJarJavadoc(Project project) {
@@ -540,6 +618,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
+					addTaskIncrementBundleVersion(project);
 					configureBundleDefaultInstructions(project, publishing);
 					configureTaskJavadoc(project);
 				}
@@ -1004,6 +1083,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			taskContainer.withType(PublishNodeModuleTask.class);
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
+
+		Task incrementBundleVersionTask = taskContainer.findByName(
+			INCREMENT_BUNDLE_VERSION_TASK_NAME);
+
+		if (incrementBundleVersionTask != null) {
+			uploadArchivesTask.finalizedBy(incrementBundleVersionTask);
+		}
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -1110,5 +1196,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC",
 		"-XX:-UseSplitVerifier"
 	};
+
+	private static final Logger _logger = Logging.getLogger(
+		LiferayDefaultsPlugin.class);
 
 }

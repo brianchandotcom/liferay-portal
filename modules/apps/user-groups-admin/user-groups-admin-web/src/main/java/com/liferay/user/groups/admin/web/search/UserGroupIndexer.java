@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.LinkedHashMap;
@@ -60,6 +62,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	public UserGroupIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
+		setFilterSearch(true);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}
@@ -67,6 +70,19 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
+			entryClassPK);
+
+		return UserGroupPermissionUtil.contains(
+			permissionChecker, userGroup.getUserGroupId(), actionId);
 	}
 
 	@Override

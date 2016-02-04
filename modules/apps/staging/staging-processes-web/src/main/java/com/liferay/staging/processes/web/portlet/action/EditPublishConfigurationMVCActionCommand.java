@@ -134,7 +134,7 @@ public class EditPublishConfigurationMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				setLayoutIds(actionRequest);
+				setLayoutIdMap(actionRequest);
 
 				updatePublishConfiguration(actionRequest);
 			}
@@ -222,7 +222,7 @@ public class EditPublishConfigurationMVCActionCommand
 		_groupLocalService = groupLocalService;
 	}
 
-	protected void setLayoutIds(ActionRequest actionRequest) {
+	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -239,7 +239,7 @@ public class EditPublishConfigurationMVCActionCommand
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
 				groupId, privateLayout, openNodes);
 
-		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
+		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
 
 	@Reference(unbind = "-")

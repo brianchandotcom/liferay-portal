@@ -1,3 +1,0 @@
-<definition>
-	<var name="test" value="${test?()}" />
-</definition>

@@ -1,3 +1,0 @@
-<definition component-name="portal-collaboration" extends="">
-	<property name="testray.main.component.name" value="Blogs" />
-</definition>

@@ -1,7 +1,0 @@
-<definition>
-	<command name="click">
-		<case locator1="locator1">
-			<function name="name" />
-		</case>
-	</command>
-</definition>

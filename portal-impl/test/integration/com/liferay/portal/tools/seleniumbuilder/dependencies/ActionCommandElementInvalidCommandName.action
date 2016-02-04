@@ -1,7 +1,0 @@
-<definition>
-	<command name="nameFail">
-		<case locator1="locator1">
-			<execute function="Click#clickAt" />
-		</case>
-	</command>
-</definition>

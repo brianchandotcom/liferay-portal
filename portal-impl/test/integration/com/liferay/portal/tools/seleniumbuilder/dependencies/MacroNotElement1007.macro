@@ -1,8 +1,0 @@
-<definition>
-	<command name="name">
-		<if>
-			<not>
-				<isset var="siteScopeName" />
-		</if>
-	</command>
-</definition>

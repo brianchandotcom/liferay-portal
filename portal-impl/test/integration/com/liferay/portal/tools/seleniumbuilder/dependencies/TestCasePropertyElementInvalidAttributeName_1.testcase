@@ -1,3 +1,0 @@
-<definition component-name="portal-collaboration">
-	<property name="custom.properties" value="test-value" delimiter="-" />
-</definition>

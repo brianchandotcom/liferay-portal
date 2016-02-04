@@ -1,9 +1,0 @@
-<definition>
-	<command name="name">
-		<execute macro="macro" />
-	</command>
-
-	<command name="name">
-		<execute macro="macro" />
-	</command>
-</definition>

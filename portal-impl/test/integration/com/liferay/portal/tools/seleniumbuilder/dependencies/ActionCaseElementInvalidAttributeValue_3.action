@@ -1,7 +1,0 @@
-<definition>
-	<command name="name">
-		<case comparator="" locator1="locator1">
-			<execute function="Function#function" />
-		</case>
-	</command>
-</definition>

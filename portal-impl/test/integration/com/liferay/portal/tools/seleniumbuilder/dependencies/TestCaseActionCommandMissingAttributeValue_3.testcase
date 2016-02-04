@@ -1,9 +1,0 @@
-<definition component-name="portal-collaboration">
-	<command name="ReplaceString" priority="5">
-		<execute
-			action="BaseLiferay#antCommand"
-			locator1="build-test.xml"
-			value1="replace-file -Dfil=test.xml -Dtoken=HELLO -Dvalue=WORLD"
-		/>
-	</command>
-</definition>

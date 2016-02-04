@@ -1,7 +1,0 @@
-<definition>
-	<command name="name">
-		<case locator1="locator1">
-			<execute function="" />
-		</case>
-	</command>
-</definition>

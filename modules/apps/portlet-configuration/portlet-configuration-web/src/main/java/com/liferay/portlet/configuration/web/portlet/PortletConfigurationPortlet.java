@@ -491,10 +491,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				actionRequest, "rolesSearchContainerPrimaryKeys"),
 			0L);
 
+		boolean portletResourceUpdate = true;
+
 		String selResource = PortletConstants.getRootPortletId(portletResource);
 
 		if (Validator.isNotNull(modelResource)) {
 			selResource = modelResource;
+			portletResourceUpdate = false;
 		}
 
 		long resourceGroupId = ParamUtil.getLong(
@@ -542,14 +545,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			}
 		}
 
-		// Force update of layout modified date. See LPS-59246.
+		if (portletResourceUpdate) {
 
-		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+			// Force update of layout modified date. See LPS-59246.
 
-		PortletPreferences portletPreferences =
-			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+			Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
-		portletPreferences.store();
+			PortletPreferences portletPreferences =
+				ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+			portletPreferences.store();
+		}
 	}
 
 	protected void checkEditPermissionsScreenPermissions(PortletRequest request)

@@ -252,7 +252,10 @@ public class CalendarPortlet extends MVCPortlet {
 		try {
 			String resourceID = resourceRequest.getResourceID();
 
-			if (resourceID.equals("calendarBookingInvitees")) {
+			if (resourceID.equals("calendar")) {
+				serveCalendar(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("calendarBookingInvitees")) {
 				serveCalendarBookingInvitees(resourceRequest, resourceResponse);
 			}
 			else if (resourceID.equals("calendarBookings")) {
@@ -936,6 +939,23 @@ public class CalendarPortlet extends MVCPortlet {
 		Indexer<?> indexer = CalendarSearcher.getInstance();
 
 		return indexer.search(searchContext);
+	}
+
+	protected void serveCalendar(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long calendarId = ParamUtil.getLong(resourceRequest, "calendarId");
+
+		Calendar calendar = _calendarService.getCalendar(calendarId);
+
+		JSONObject jsonObject = CalendarUtil.toCalendarJSONObject(
+			themeDisplay, calendar);
+
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
 	protected void serveCalendarBookingInvitees(

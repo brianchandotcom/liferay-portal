@@ -276,6 +276,20 @@ AUI.add(
 				scheduler.syncEventsUI();
 			},
 
+			getCalendar: function(calendarId, callback) {
+				var instance = this;
+
+				instance.invokeResourceURL(
+					{
+						callback: callback,
+						queryParameters: {
+							calendarId: calendarId
+						},
+						resourceId: 'calendar'
+					}
+				);
+			},
+
 			getCalendarBookingInvitees: function(calendarBookingId, callback) {
 				var instance = this;
 

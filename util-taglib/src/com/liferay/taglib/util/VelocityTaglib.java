@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
-import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -143,8 +142,6 @@ public interface VelocityTaglib {
 	public IconTag getIconTag() throws Exception;
 
 	public JournalArticleTag getJournalArticleTag() throws Exception;
-
-	public LayoutTag getLayoutTag() throws Exception;
 
 	public MySitesTag getMySitesTag() throws Exception;
 

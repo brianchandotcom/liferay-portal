@@ -126,7 +126,8 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementNotPresent" locator1="Home#LOADING_ANIMATION" />
+		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />
+		<execute function="AssertVisible" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Applications" />
 
 		<execute macro="Panel#expandSidebarPanel">
 			<var name="panelHeading" value="Applications" />

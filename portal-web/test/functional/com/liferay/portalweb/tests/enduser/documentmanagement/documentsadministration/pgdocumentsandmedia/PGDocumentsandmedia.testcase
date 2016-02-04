@@ -1,4 +1,5 @@
 <definition component-name="portal-document-management">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
 	<var name="pageName" value="Documents and Media Page" />
@@ -19,12 +20,6 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />

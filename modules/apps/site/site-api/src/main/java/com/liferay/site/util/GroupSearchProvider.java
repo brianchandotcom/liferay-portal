@@ -15,6 +15,7 @@
 package com.liferay.site.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +45,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- *
  * @author Julio Camarero
  */
 @Component(immediate = true, service = GroupSearchProvider.class)
@@ -237,12 +237,18 @@ public class GroupSearchProvider {
 		_groupService = groupService;
 	}
 
-	private static final long[] _classNameIds = new long[] {
-		PortalUtil.getClassNameId(Company.class),
-		PortalUtil.getClassNameId(Group.class),
-		PortalUtil.getClassNameId(Organization.class)
-	};
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 
+		_classNameIds = new long[] {
+			PortalUtil.getClassNameId(Company.class),
+			PortalUtil.getClassNameId(Group.class),
+			PortalUtil.getClassNameId(Organization.class)
+		};
+	}
+
+	private long[] _classNameIds;
 	private GroupLocalService _groupLocalService;
 	private GroupService _groupService;
 

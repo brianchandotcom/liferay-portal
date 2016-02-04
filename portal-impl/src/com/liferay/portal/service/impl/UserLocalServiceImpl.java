@@ -19,6 +19,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.exception.CompanyMaxUsersException;
 import com.liferay.portal.exception.ContactBirthdayException;
 import com.liferay.portal.exception.ContactNameException;
+import com.liferay.portal.exception.DuplicateGoogleIdException;
 import com.liferay.portal.exception.DuplicateOpenIdException;
 import com.liferay.portal.exception.GroupFriendlyURLException;
 import com.liferay.portal.exception.ModelListenerException;
@@ -1930,6 +1931,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the Google ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  googleId the user's Google ID
+	 * @return the user with the Google ID, or <code>null</code> if a user with the
+	 *         Google ID could not be found
+	 */
+	@Override
+	public User fetchUserByGoogleId(long companyId, String googleId) {
+		return userPersistence.fetchByC_GID(companyId, googleId);
+	}
+
+	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param  userId the primary key of the user
@@ -2566,6 +2580,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		return userPersistence.findByC_FID(companyId, facebookId);
+	}
+
+	/**
+	 * Returns the user with the Google ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  googleId the user's Google ID
+	 * @return the user with the Google ID
+	 */
+	@Override
+	public User getUserByGoogleId(long companyId, String googleId)
+		throws PortalException {
+
+		return userPersistence.findByC_GID(companyId, googleId);
 	}
 
 	/**
@@ -4192,6 +4220,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		user.setFacebookId(facebookId);
+
+		userPersistence.update(user);
+
+		return user;
+	}
+
+	/**
+	 * Updates the user's GoogleId.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  googleId the new GoogleId
+	 * @return the user
+	 */
+	@Override
+	public User updateGoogleId(long userId, String googleId)
+		throws PortalException {
+
+		googleId = googleId.trim();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		validateGoogleId(user.getCompanyId(), userId, googleId);
+
+		user.setGoogleId(googleId);
 
 		userPersistence.update(user);
 
@@ -6438,6 +6490,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			throw new ContactNameException.MustHaveValidFullName(
 				fullNameValidator);
+		}
+	}
+
+	protected void validateGoogleId(
+			long companyId, long userId, String googleId)
+		throws PortalException {
+
+		if (Validator.isNull(googleId)) {
+			return;
+		}
+
+		User user = userPersistence.fetchByC_GID(companyId, googleId);
+
+		if ((user != null) && (user.getUserId() != userId)) {
+			throw new DuplicateGoogleIdException(
+				"existing userId = =" + user.getUserId() + ", googleId" +
+					googleId + ", userId=" + userId);
 		}
 	}
 

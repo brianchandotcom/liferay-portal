@@ -982,6 +982,19 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the user with the Google ID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param googleId the user's Google ID
+	* @return the user with the Google ID, or <code>null</code> if a user with the
+	Google ID could not be found
+	*/
+	public static com.liferay.portal.model.User fetchUserByGoogleId(
+		long companyId, java.lang.String googleId) {
+		return getService().fetchUserByGoogleId(companyId, googleId);
+	}
+
+	/**
 	* Returns the user with the primary key.
 	*
 	* @param userId the primary key of the user
@@ -1615,6 +1628,19 @@ public class UserLocalServiceUtil {
 		long companyId, long facebookId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserByFacebookId(companyId, facebookId);
+	}
+
+	/**
+	* Returns the user with the Google ID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param googleId the user's Google ID
+	* @return the user with the Google ID
+	*/
+	public static com.liferay.portal.model.User getUserByGoogleId(
+		long companyId, java.lang.String googleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserByGoogleId(companyId, googleId);
 	}
 
 	/**
@@ -2571,6 +2597,19 @@ public class UserLocalServiceUtil {
 		long facebookId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateFacebookId(userId, facebookId);
+	}
+
+	/**
+	* Updates the user's GoogleId.
+	*
+	* @param userId the primary key of the user
+	* @param googleId the new GoogleId
+	* @return the user
+	*/
+	public static com.liferay.portal.model.User updateGoogleId(long userId,
+		java.lang.String googleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateGoogleId(userId, googleId);
 	}
 
 	/**

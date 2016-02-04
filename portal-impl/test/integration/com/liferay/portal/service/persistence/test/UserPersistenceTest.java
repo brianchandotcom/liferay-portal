@@ -158,6 +158,8 @@ public class UserPersistenceTest {
 
 		newUser.setOpenId(RandomTestUtil.randomString());
 
+		newUser.setGoogleId(RandomTestUtil.randomString());
+
 		newUser.setPortraitId(RandomTestUtil.nextLong());
 
 		newUser.setLanguageId(RandomTestUtil.randomString());
@@ -239,6 +241,7 @@ public class UserPersistenceTest {
 		Assert.assertEquals(existingUser.getLdapServerId(),
 			newUser.getLdapServerId());
 		Assert.assertEquals(existingUser.getOpenId(), newUser.getOpenId());
+		Assert.assertEquals(existingUser.getGoogleId(), newUser.getGoogleId());
 		Assert.assertEquals(existingUser.getPortraitId(),
 			newUser.getPortraitId());
 		Assert.assertEquals(existingUser.getLanguageId(),
@@ -392,6 +395,15 @@ public class UserPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_GID() throws Exception {
+		_persistence.countByC_GID(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_GID(0L, StringPool.NULL);
+
+		_persistence.countByC_GID(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_S() throws Exception {
 		_persistence.countByC_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -447,14 +459,14 @@ public class UserPersistenceTest {
 			true, "reminderQueryQuestion", true, "reminderQueryAnswer", true,
 			"graceLoginCount", true, "screenName", true, "emailAddress", true,
 			"facebookId", true, "ldapServerId", true, "openId", true,
-			"portraitId", true, "languageId", true, "timeZoneId", true,
-			"greeting", true, "comments", true, "firstName", true,
-			"middleName", true, "lastName", true, "jobTitle", true,
-			"loginDate", true, "loginIP", true, "lastLoginDate", true,
-			"lastLoginIP", true, "lastFailedLoginDate", true,
-			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
-			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
-			true);
+			"googleId", true, "portraitId", true, "languageId", true,
+			"timeZoneId", true, "greeting", true, "comments", true,
+			"firstName", true, "middleName", true, "lastName", true,
+			"jobTitle", true, "loginDate", true, "loginIP", true,
+			"lastLoginDate", true, "lastLoginIP", true, "lastFailedLoginDate",
+			true, "failedLoginAttempts", true, "lockout", true, "lockoutDate",
+			true, "agreedToTermsOfUse", true, "emailAddressVerified", true,
+			"status", true);
 	}
 
 	@Test
@@ -702,6 +714,13 @@ public class UserPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingUser.getOpenId(),
 				ReflectionTestUtil.invoke(existingUser, "getOriginalOpenId",
 					new Class<?>[0])));
+
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUser.getGoogleId(),
+				ReflectionTestUtil.invoke(existingUser, "getOriginalGoogleId",
+					new Class<?>[0])));
 	}
 
 	protected User addUser() throws Exception {
@@ -748,6 +767,8 @@ public class UserPersistenceTest {
 		user.setLdapServerId(RandomTestUtil.nextLong());
 
 		user.setOpenId(RandomTestUtil.randomString());
+
+		user.setGoogleId(RandomTestUtil.randomString());
 
 		user.setPortraitId(RandomTestUtil.nextLong());
 

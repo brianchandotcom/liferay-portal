@@ -196,22 +196,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		// Send redirect
 
-		String login = null;
-
-		String authType = company.getAuthType();
-
-		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = String.valueOf(user.getUserId());
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			login = user.getScreenName();
-		}
-		else {
-			login = user.getEmailAddress();
-		}
-
 		sendRedirect(
-			actionRequest, actionResponse, themeDisplay, login,
+			actionRequest, actionResponse, themeDisplay, user,
 			user.getPasswordUnencrypted());
 	}
 
@@ -349,8 +335,24 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			ThemeDisplay themeDisplay, String login, String password)
+			ThemeDisplay themeDisplay, User user, String password)
 		throws Exception {
+
+		String login = null;
+
+		Company company = themeDisplay.getCompany();
+
+		String authType = company.getAuthType();
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			login = String.valueOf(user.getUserId());
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			login = user.getScreenName();
+		}
+		else {
+			login = user.getEmailAddress();
+		}
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
@@ -398,8 +400,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
+		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(actionRequest));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -414,12 +416,22 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		HttpSession session = request.getSession();
 
+		boolean sendEmail = true;
+
 		long facebookId = GetterUtil.getLong(
 			session.getAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID));
 
-		if (facebookId > 0) {
+		String googleId = GetterUtil.getString(
+			session.getAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID));
+
+		if ((facebookId > 0) || Validator.isNotNull(googleId)) {
 			password1 = PwdGenerator.getPassword();
 			password2 = password1;
+		}
+
+		if (Validator.isNotNull(googleId)) {
+			autoPassword = false;
+			sendEmail = false;
 		}
 
 		String openId = ParamUtil.getString(actionRequest, "openId");
@@ -435,7 +447,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 		boolean updateUserInformation = true;
-		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
@@ -445,39 +456,24 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			sendEmail, updateUserInformation, serviceContext);
+			updateUserInformation, sendEmail, serviceContext);
 
 		if (facebookId > 0) {
-			_userLocalService.updateLastLogin(
-				user.getUserId(), user.getLoginIP());
-
-			_userLocalService.updatePasswordReset(user.getUserId(), false);
-
-			_userLocalService.updateEmailAddressVerified(
-				user.getUserId(), true);
-
 			session.removeAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID);
 
-			Company company = themeDisplay.getCompany();
+			updateUserAndRedirect(
+				actionRequest, actionResponse, themeDisplay, user, password1);
 
-			// Send redirect
+			return;
+		}
 
-			String login = null;
+		if (Validator.isNotNull(googleId)) {
+			_userLocalService.updateGoogleId(user.getUserId(), googleId);
 
-			String authType = company.getAuthType();
+			session.removeAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID);
 
-			if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				login = String.valueOf(user.getUserId());
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				login = user.getScreenName();
-			}
-			else {
-				login = user.getEmailAddress();
-			}
-
-			sendRedirect(
-				actionRequest, actionResponse, themeDisplay, login, password1);
+			updateUserAndRedirect(
+				actionRequest, actionResponse, themeDisplay, user, password1);
 
 			return;
 		}
@@ -495,25 +491,26 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		// Send redirect
 
-		String login = null;
+		sendRedirect(
+			actionRequest, actionResponse, themeDisplay, user,
+			user.getPasswordUnencrypted());
+	}
 
-		Company company = themeDisplay.getCompany();
+	protected void updateUserAndRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ThemeDisplay themeDisplay, User user, String password1)
+		throws Exception {
 
-		String authType = company.getAuthType();
+		_userLocalService.updateLastLogin(user.getUserId(), user.getLoginIP());
 
-		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = String.valueOf(user.getUserId());
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			login = user.getScreenName();
-		}
-		else {
-			login = user.getEmailAddress();
-		}
+		_userLocalService.updatePasswordReset(user.getUserId(), false);
+
+		_userLocalService.updateEmailAddressVerified(user.getUserId(), true);
+
+		// Send redirect
 
 		sendRedirect(
-			actionRequest, actionResponse, themeDisplay, login,
-			user.getPasswordUnencrypted());
+			actionRequest, actionResponse, themeDisplay, user, password1);
 	}
 
 	private static final boolean _AUTO_SCREEN_NAME = false;

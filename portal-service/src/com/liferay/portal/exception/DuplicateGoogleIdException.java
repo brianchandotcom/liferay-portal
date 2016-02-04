@@ -12,16 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.constants;
+package com.liferay.portal.exception;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Sergio González
+ * @author Brian Wing Shun Chan
  */
-public class GoogleWebKeys {
+@ProviderType
+public class DuplicateGoogleIdException extends PortalException {
 
-	public static final String GOOGLE_USER_EMAIL_ADDRESS =
-		"GOOGLE_USER_EMAIL_ADDRESS";
+	public DuplicateGoogleIdException() {
+	}
 
-	public static final String GOOGLE_USER_ID = "GOOGLE_USER_ID";
+	public DuplicateGoogleIdException(String msg) {
+		super(msg);
+	}
+
+	public DuplicateGoogleIdException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DuplicateGoogleIdException(Throwable cause) {
+		super(cause);
+	}
 
 }

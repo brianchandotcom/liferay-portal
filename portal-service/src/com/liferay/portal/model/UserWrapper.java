@@ -78,6 +78,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("facebookId", getFacebookId());
 		attributes.put("ldapServerId", getLdapServerId());
 		attributes.put("openId", getOpenId());
+		attributes.put("googleId", getGoogleId());
 		attributes.put("portraitId", getPortraitId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("timeZoneId", getTimeZoneId());
@@ -230,6 +231,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (openId != null) {
 			setOpenId(openId);
+		}
+
+		String googleId = (String)attributes.get("googleId");
+
+		if (googleId != null) {
+			setGoogleId(googleId);
 		}
 
 		Long portraitId = (Long)attributes.get("portraitId");
@@ -754,6 +761,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public java.lang.String getFullName(boolean usePrefix, boolean useSuffix) {
 		return _user.getFullName(usePrefix, useSuffix);
+	}
+
+	/**
+	* Returns the google ID of this user.
+	*
+	* @return the google ID of this user
+	*/
+	@Override
+	public java.lang.String getGoogleId() {
+		return _user.getGoogleId();
 	}
 
 	/**
@@ -1600,6 +1617,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setFirstName(java.lang.String firstName) {
 		_user.setFirstName(firstName);
+	}
+
+	/**
+	* Sets the google ID of this user.
+	*
+	* @param googleId the google ID of this user
+	*/
+	@Override
+	public void setGoogleId(java.lang.String googleId) {
+		_user.setGoogleId(googleId);
 	}
 
 	/**

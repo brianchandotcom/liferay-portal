@@ -409,6 +409,21 @@ public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
 	public void setOpenId(String openId);
 
 	/**
+	 * Returns the google ID of this user.
+	 *
+	 * @return the google ID of this user
+	 */
+	@AutoEscape
+	public String getGoogleId();
+
+	/**
+	 * Sets the google ID of this user.
+	 *
+	 * @param googleId the google ID of this user
+	 */
+	public void setGoogleId(String googleId);
+
+	/**
 	 * Returns the portrait ID of this user.
 	 *
 	 * @return the portrait ID of this user

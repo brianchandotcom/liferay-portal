@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.constants;
+package com.liferay.portal.upgrade.v7_0_0;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Sergio González
+ * @author Michael C. Han
  */
-public class GoogleWebKeys {
+public class UpgradeUser extends UpgradeProcess {
 
-	public static final String GOOGLE_USER_EMAIL_ADDRESS =
-		"GOOGLE_USER_EMAIL_ADDRESS";
-
-	public static final String GOOGLE_USER_ID = "GOOGLE_USER_ID";
+	@Override
+	protected void doUpgrade() throws Exception {
+		runSQL("alter table User_ add googleId VARCHAR(24) null");
+	}
 
 }

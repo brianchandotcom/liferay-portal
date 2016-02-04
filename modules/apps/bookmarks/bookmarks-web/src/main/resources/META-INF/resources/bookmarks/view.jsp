@@ -226,19 +226,6 @@ else {
 }
 %>
 
-<aui:script>
-	$('#<portlet:namespace />infoPanelId').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '.infoPanelToggler',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
-</aui:script>
-
 <aui:script use="liferay-bookmarks">
 	var bookmarks = new Liferay.Portlet.Bookmarks(
 		{

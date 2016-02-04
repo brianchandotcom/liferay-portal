@@ -148,19 +148,6 @@ data.put("qa-id", "navigation");
 	<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<aui:script>
-	$('#<portlet:namespace />infoPanelId').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '.infoPanelToggler',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
-</aui:script>
-
 <aui:script use="liferay-journal-navigation">
 	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{

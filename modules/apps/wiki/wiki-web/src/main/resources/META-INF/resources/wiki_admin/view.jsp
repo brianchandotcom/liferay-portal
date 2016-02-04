@@ -78,7 +78,13 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	searchContainerId="wikiNodes"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			disabled="<%= false %>"
+			href="javascript:;"
+			icon="info-circle"
+			label="info"
+			sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+		/>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
@@ -241,15 +247,4 @@ boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChe
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_node" />');
 		}
 	}
-
-	$('#<portlet:namespace />infoPanelId').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '.infoPanelToggler',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
 </aui:script>

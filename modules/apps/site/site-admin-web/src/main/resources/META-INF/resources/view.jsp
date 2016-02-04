@@ -58,7 +58,13 @@ if (group != null) {
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				disabled="<%= false %>"
+				href="javascript:;"
+				icon="info-circle"
+				label="info"
+				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			/>
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
@@ -124,17 +130,6 @@ if (group != null) {
 </div>
 
 <aui:script>
-	$('#<portlet:namespace />infoPanelId').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '.infoPanelToggler',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
-
 	$('#<portlet:namespace />deleteSites').on(
 		'click',
 		function() {

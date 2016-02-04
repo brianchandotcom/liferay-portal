@@ -37,7 +37,13 @@ public class ManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
 		return EVAL_BODY_INCLUDE;
+	}
+
+	public String getId() {
+		return _id;
 	}
 
 	public void setActive(boolean active) {
@@ -125,10 +131,8 @@ public class ManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:active", _active);
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:cssClass", _cssClass);
+		setNamespacedAttribute(request, "active", _active);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
 
 		if (_data == null) {
 			_data = new HashMap<>();
@@ -136,22 +140,17 @@ public class ManagementBarButtonTag extends IncludeTag {
 
 		_data.put("qa-id", _label + "Button");
 
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:data", _data);
-
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:disabled", isDisabled());
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:href", _href);
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:icon", _icon);
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:iconCssClass",
-			_iconCssClass);
-		request.setAttribute("liferay-frontend:management-bar-button:id", _id);
-		request.setAttribute(
-			"liferay-frontend:management-bar-button:label", _label);
+		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "href", _href);
+		setNamespacedAttribute(request, "icon", _icon);
+		setNamespacedAttribute(request, "iconCssClass", _iconCssClass);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "label", _label);
 	}
+
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:management-bar-button:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 

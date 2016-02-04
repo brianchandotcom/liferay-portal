@@ -180,17 +180,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 %>
 
 <aui:script>
-	AUI.$('#<portlet:namespace />infoPanelId').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '.infoPanelToggler',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
-
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm2);
 

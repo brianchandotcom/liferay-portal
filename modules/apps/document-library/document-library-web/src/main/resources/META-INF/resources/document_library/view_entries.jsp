@@ -272,6 +272,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					rowData.put("title", fileEntry.getTitle());
 
 					row.setData(rowData);
+
+					String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 					%>
 
 					<c:choose>
@@ -279,13 +281,26 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							<c:choose>
 								<c:when test="<%= fileShortcut != null %>">
 									<liferay-ui:search-container-column-icon
-										icon="icon-share-alt"
+										icon="shortcut"
 										toggleRowChecker="<%= true %>"
 									/>
 								</c:when>
-								<c:otherwise>
+								<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 									<liferay-ui:search-container-column-image
-										src="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
+										src="<%= thumbnailSrc %>"
+										toggleRowChecker="<%= true %>"
+									/>
+								</c:when>
+								<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
+									<liferay-ui:search-container-column-text>
+										<div class="sticker sticker-default sticker-lg <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
+											<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
+										</div>
+									</liferay-ui:search-container-column-text>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:search-container-column-icon
+										icon="documents-and-media"
 										toggleRowChecker="<%= true %>"
 									/>
 								</c:otherwise>
@@ -316,38 +331,36 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 								%>
 
-								<liferay-frontend:vertical-card
-									actionJsp="/document_library/file_entry_action.jsp"
-									actionJspServletContext="<%= application %>"
-									cssClass="entry-display-style"
-									imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= entriesChecker %>"
-									title="<%= latestFileVersion.getTitle() %>"
-									url="<%= rowURL != null ? rowURL.toString() : null %>"
-								>
-									<liferay-frontend:vertical-card-sticker-bottom>
-										<c:if test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
-											<div class="sticker sticker-bottom <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-												<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
-											</div>
-										</c:if>
-
-										<c:if test="<%= fileEntry.hasLock() %>">
-											<div class="file-icon-color-0 sticker sticker-right">
-												<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
-											</div>
-										</c:if>
-									</liferay-frontend:vertical-card-sticker-bottom>
-
-									<liferay-frontend:vertical-card-header>
-										<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - latestFileVersion.getCreateDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
-									</liferay-frontend:vertical-card-header>
-
-									<liferay-frontend:vertical-card-footer>
-										<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
-									</liferay-frontend:vertical-card-footer>
-								</liferay-frontend:vertical-card>
+								<c:choose>
+									<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+										<liferay-frontend:icon-vertical-card
+											actionJsp="/document_library/file_entry_action.jsp"
+											actionJspServletContext="<%= application %>"
+											cssClass="entry-display-style"
+											icon="documents-and-media"
+											resultRow="<%= row %>"
+											rowChecker="<%= entriesChecker %>"
+											title="<%= latestFileVersion.getTitle() %>"
+											url="<%= rowURL != null ? rowURL.toString() : null %>"
+										>
+											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
+										</liferay-frontend:icon-vertical-card>
+									</c:when>
+									<c:otherwise>
+										<liferay-frontend:vertical-card
+											actionJsp="/document_library/file_entry_action.jsp"
+											actionJspServletContext="<%= application %>"
+											cssClass="entry-display-style"
+											imageUrl="<%= thumbnailSrc %>"
+											resultRow="<%= row %>"
+											rowChecker="<%= entriesChecker %>"
+											title="<%= latestFileVersion.getTitle() %>"
+											url="<%= rowURL != null ? rowURL.toString() : null %>"
+										>
+											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
+										</liferay-frontend:vertical-card>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
@@ -369,6 +382,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									<c:if test="<%= fileEntry.hasLock() %>">
 										<span>
 											<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
+										</span>
+									</c:if>
+
+									<c:if test="<%= fileShortcut != null %>">
+										<span>
+											<aui:icon cssClass="icon-monospaced" image="shortcut" markupView="lexicon" message="shortcut" />
 										</span>
 									</c:if>
 								</liferay-ui:search-container-column-text>

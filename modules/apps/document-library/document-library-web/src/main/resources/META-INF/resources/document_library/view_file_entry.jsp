@@ -426,17 +426,11 @@ if (portletTitleBasedNavigation) {
 
 					<%
 					String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
-
-					if (layoutAssetEntry != null) {
-						AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), fileEntry.getFileEntryId());
-
-						if (incrementAssetEntry != null) {
-							layoutAssetEntry = incrementAssetEntry;
-						}
-					}
 					%>
 
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+					<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+					</c:if>
 				</span>
 
 				<span class="user-date">
@@ -462,6 +456,16 @@ if (portletTitleBasedNavigation) {
 						/>
 					</span>
 				</c:if>
+
+				<%
+				if (layoutAssetEntry != null) {
+					AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), fileEntry.getFileEntryId());
+
+					if (incrementAssetEntry != null) {
+						layoutAssetEntry = incrementAssetEntry;
+					}
+				}
+				%>
 
 				<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
 					<div class="entry-links">

@@ -125,7 +125,14 @@ summary.setQueryTerms(queryTerms);
 			<div class="entry-attachment">
 				<aui:a class="lfr-discussion-details" href="<%= url %>">
 					<div class="image">
-						<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>" class="attachment" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
+
+						<%
+						String fileEntryThumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(fileEntryThumbnailSrc) %>">
+							<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>" class="attachment" src="<%= fileEntryThumbnailSrc %>" />
+						</c:if>
 					</div>
 
 					<span class="title">

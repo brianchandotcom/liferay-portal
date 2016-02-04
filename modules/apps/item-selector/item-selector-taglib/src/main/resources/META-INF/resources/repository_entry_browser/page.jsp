@@ -348,11 +348,27 @@ if (Validator.isNotNull(keywords)) {
 								%>
 
 									<liferay-ui:search-container-column-text>
-										<liferay-frontend:image-card
-											cssClass="item-preview"
-											data="<%= data %>"
-											imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-										/>
+
+										<%
+										String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+										%>
+
+										<c:choose>
+											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+												<liferay-frontend:icon-vertical-card
+													cssClass="item-preview"
+													data="<%= data %>"
+													icon="documents-and-media"
+												/>
+											</c:when>
+											<c:otherwise>
+												<liferay-frontend:image-card
+													cssClass="item-preview"
+													data="<%= data %>"
+													imageUrl="<%= thumbnailSrc %>"
+												/>
+											</c:otherwise>
+										</c:choose>
 									</liferay-ui:search-container-column-text>
 
 								<%

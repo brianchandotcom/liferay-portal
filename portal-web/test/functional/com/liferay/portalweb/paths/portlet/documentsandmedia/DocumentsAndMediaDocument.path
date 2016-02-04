@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_THUMBNAIL</td>
-	<td>//span[@class='document-thumbnail']/img</td>
+	<td>//span[contains(@class,'document-thumbnail')] | //span[contains(@class,'document-thumbnail')]/img</td>
 	<td></td>
 </tr>
 <tr>

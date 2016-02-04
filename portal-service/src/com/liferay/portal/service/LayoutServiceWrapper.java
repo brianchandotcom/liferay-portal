@@ -1163,16 +1163,15 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param themeId the primary key of the layout's new theme
 	* @param colorSchemeId the primary key of the layout's new color scheme
 	* @param css the layout's new CSS
-	* @param wapTheme whether the theme is for WAP browsers
 	* @return the updated layout
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateLookAndFeel(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.updateLookAndFeel(groupId, privateLayout,
-			layoutId, themeId, colorSchemeId, css, wapTheme);
+			layoutId, themeId, colorSchemeId, css);
 	}
 
 	/**

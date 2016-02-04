@@ -135,10 +135,6 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setColorSchemeId(RandomTestUtil.randomString());
 
-		newLayoutSet.setWapThemeId(RandomTestUtil.randomString());
-
-		newLayoutSet.setWapColorSchemeId(RandomTestUtil.randomString());
-
 		newLayoutSet.setCss(RandomTestUtil.randomString());
 
 		newLayoutSet.setPageCount(RandomTestUtil.nextInt());
@@ -175,10 +171,6 @@ public class LayoutSetPersistenceTest {
 			newLayoutSet.getThemeId());
 		Assert.assertEquals(existingLayoutSet.getColorSchemeId(),
 			newLayoutSet.getColorSchemeId());
-		Assert.assertEquals(existingLayoutSet.getWapThemeId(),
-			newLayoutSet.getWapThemeId());
-		Assert.assertEquals(existingLayoutSet.getWapColorSchemeId(),
-			newLayoutSet.getWapColorSchemeId());
 		Assert.assertEquals(existingLayoutSet.getCss(), newLayoutSet.getCss());
 		Assert.assertEquals(existingLayoutSet.getPageCount(),
 			newLayoutSet.getPageCount());
@@ -241,9 +233,8 @@ public class LayoutSetPersistenceTest {
 			true, "layoutSetId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "privateLayout", true,
 			"logoId", true, "themeId", true, "colorSchemeId", true,
-			"wapThemeId", true, "wapColorSchemeId", true, "pageCount", true,
-			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
-			true);
+			"pageCount", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -477,10 +468,6 @@ public class LayoutSetPersistenceTest {
 		layoutSet.setThemeId(RandomTestUtil.randomString());
 
 		layoutSet.setColorSchemeId(RandomTestUtil.randomString());
-
-		layoutSet.setWapThemeId(RandomTestUtil.randomString());
-
-		layoutSet.setWapColorSchemeId(RandomTestUtil.randomString());
 
 		layoutSet.setCss(RandomTestUtil.randomString());
 

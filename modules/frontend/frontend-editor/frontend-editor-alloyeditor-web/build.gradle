@@ -7,7 +7,7 @@ configurations {
 
 task buildAlloyEditor(type: Copy)
 
-String alloyEditorVersion = "0.7.1"
+String alloyEditorVersion = "1.0.0-alpha.1"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
@@ -52,7 +52,7 @@ classes {
 }
 
 dependencies {
-	alloyEditor group: "org.webjars.bower", name: "alloyeditor", transitive: false, version: alloyEditorVersion
+	alloyEditor group: "com.liferay.webjars", name: "alloyeditor", transitive: false, version: alloyEditorVersion
 
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion

@@ -49,8 +49,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setThemeId(model.getThemeId());
 		soapModel.setColorSchemeId(model.getColorSchemeId());
-		soapModel.setWapThemeId(model.getWapThemeId());
-		soapModel.setWapColorSchemeId(model.getWapColorSchemeId());
 		soapModel.setCss(model.getCss());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
@@ -237,22 +235,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		_colorSchemeId = colorSchemeId;
 	}
 
-	public String getWapThemeId() {
-		return _wapThemeId;
-	}
-
-	public void setWapThemeId(String wapThemeId) {
-		_wapThemeId = wapThemeId;
-	}
-
-	public String getWapColorSchemeId() {
-		return _wapColorSchemeId;
-	}
-
-	public void setWapColorSchemeId(String wapColorSchemeId) {
-		_wapColorSchemeId = wapColorSchemeId;
-	}
-
 	public String getCss() {
 		return _css;
 	}
@@ -305,8 +287,6 @@ public class LayoutSetBranchSoap implements Serializable {
 	private long _logoId;
 	private String _themeId;
 	private String _colorSchemeId;
-	private String _wapThemeId;
-	private String _wapColorSchemeId;
 	private String _css;
 	private String _settings;
 	private String _layoutSetPrototypeUuid;

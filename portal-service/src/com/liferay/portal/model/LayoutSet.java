@@ -116,10 +116,6 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	*/
 	public java.lang.String getVirtualHostname();
 
-	public com.liferay.portal.model.ColorScheme getWapColorScheme();
-
-	public com.liferay.portal.model.Theme getWapTheme();
-
 	public boolean hasSetModifiedDate();
 
 	public boolean isLayoutSetPrototypeLinkActive();

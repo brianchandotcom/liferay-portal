@@ -353,18 +353,18 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
 		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetLocalService.updateLookAndFeel(groupId, privateLayout,
-			themeId, colorSchemeId, css, wapTheme);
+			themeId, colorSchemeId, css);
 	}
 
 	@Override
 	public void updateLookAndFeel(long groupId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutSetLocalService.updateLookAndFeel(groupId, themeId,
-			colorSchemeId, css, wapTheme);
+			colorSchemeId, css);
 	}
 
 	@Override

@@ -72,8 +72,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("wapThemeId", getWapThemeId());
-		attributes.put("wapColorSchemeId", getWapColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
@@ -173,18 +171,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
-		}
-
-		String wapThemeId = (String)attributes.get("wapThemeId");
-
-		if (wapThemeId != null) {
-			setWapThemeId(wapThemeId);
-		}
-
-		String wapColorSchemeId = (String)attributes.get("wapColorSchemeId");
-
-		if (wapColorSchemeId != null) {
-			setWapColorSchemeId(wapColorSchemeId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -490,36 +476,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _layoutSetBranch.getUserUuid();
-	}
-
-	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme() {
-		return _layoutSetBranch.getWapColorScheme();
-	}
-
-	/**
-	* Returns the wap color scheme ID of this layout set branch.
-	*
-	* @return the wap color scheme ID of this layout set branch
-	*/
-	@Override
-	public java.lang.String getWapColorSchemeId() {
-		return _layoutSetBranch.getWapColorSchemeId();
-	}
-
-	@Override
-	public com.liferay.portal.model.Theme getWapTheme() {
-		return _layoutSetBranch.getWapTheme();
-	}
-
-	/**
-	* Returns the wap theme ID of this layout set branch.
-	*
-	* @return the wap theme ID of this layout set branch
-	*/
-	@Override
-	public java.lang.String getWapThemeId() {
-		return _layoutSetBranch.getWapThemeId();
 	}
 
 	@Override
@@ -833,26 +789,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_layoutSetBranch.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the wap color scheme ID of this layout set branch.
-	*
-	* @param wapColorSchemeId the wap color scheme ID of this layout set branch
-	*/
-	@Override
-	public void setWapColorSchemeId(java.lang.String wapColorSchemeId) {
-		_layoutSetBranch.setWapColorSchemeId(wapColorSchemeId);
-	}
-
-	/**
-	* Sets the wap theme ID of this layout set branch.
-	*
-	* @param wapThemeId the wap theme ID of this layout set branch
-	*/
-	@Override
-	public void setWapThemeId(java.lang.String wapThemeId) {
-		_layoutSetBranch.setWapThemeId(wapThemeId);
 	}
 
 	@Override

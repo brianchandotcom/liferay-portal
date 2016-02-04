@@ -62,8 +62,7 @@ public class LayoutRevisionServiceHttp {
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String wapThemeId,
-		java.lang.String wapColorSchemeId, java.lang.String css,
+		java.lang.String colorSchemeId, java.lang.String css,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -74,8 +73,8 @@ public class LayoutRevisionServiceHttp {
 					layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
 					head, plid, portletPreferencesPlid, privateLayout, name,
 					title, description, keywords, robots, typeSettings,
-					iconImage, iconImageId, themeId, colorSchemeId, wapThemeId,
-					wapColorSchemeId, css, serviceContext);
+					iconImage, iconImageId, themeId, colorSchemeId, css,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -106,7 +105,6 @@ public class LayoutRevisionServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, long.class,
-			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

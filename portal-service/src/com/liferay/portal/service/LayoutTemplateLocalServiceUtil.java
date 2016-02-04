@@ -71,12 +71,6 @@ public class LayoutTemplateLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String getWapContent(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
-		return getService().getWapContent(layoutTemplateId, standard, themeId);
-	}
-
 	public static java.util.List<com.liferay.portal.model.LayoutTemplate> init(
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {

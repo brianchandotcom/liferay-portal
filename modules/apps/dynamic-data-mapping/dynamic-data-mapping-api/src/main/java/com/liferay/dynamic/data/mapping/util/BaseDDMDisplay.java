@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -319,13 +319,20 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
+		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
+
+		ResourceBundle baseDDMDisplayResourceBundle =
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale,
+				baseDDMDisplayClazz.getClassLoader());
+
 		Class<?> clazz = getClass();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, clazz.getClassLoader());
 
 		return new AggregateResourceBundle(
-			resourceBundle,
+			baseDDMDisplayResourceBundle, resourceBundle,
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale,
 				PortalClassLoaderUtil.getClassLoader()));

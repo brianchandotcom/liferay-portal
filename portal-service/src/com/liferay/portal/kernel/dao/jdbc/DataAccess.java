@@ -14,22 +14,26 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProvider;
-import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -137,21 +141,19 @@ public class DataAccess {
 	public static Connection getUpgradeOptimizedConnection()
 		throws SQLException {
 
-		Connection connection = getConnection();
+		DB db = DBManagerUtil.getDB();
 
-		DatabaseMetaData metaData = connection.getMetaData();
-
-		String productName = metaData.getDatabaseProductName();
+		DBType dbType = db.getDBType();
 
 		UpgradeOptimizedConnectionProvider connectionProvider =
-			UpgradeOptimizedConnectionProviderRegistryUtil.
-				getConnectionProvider(productName);
+			_upgradeOptimizedConnectionProviderRegistry.getConnectionProvider(
+				dbType);
 
 		if (connectionProvider != null) {
 			return connectionProvider.getConnection();
 		}
 
-		return connection;
+		return getConnection();
 	}
 
 	public interface PACL {
@@ -165,6 +167,9 @@ public class DataAccess {
 	private static final Log _log = LogFactoryUtil.getLog(DataAccess.class);
 
 	private static final PACL _pacl = new NoPACL();
+	private static final UpgradeOptimizedConnectionProviderRegistry
+		_upgradeOptimizedConnectionProviderRegistry =
+			new UpgradeOptimizedConnectionProviderRegistry();
 
 	private static class NoPACL implements PACL {
 
@@ -184,6 +189,37 @@ public class DataAccess {
 
 			return (DataSource)JNDIUtil.lookup(context, location);
 		}
+
+	}
+
+	private static class UpgradeOptimizedConnectionProviderRegistry {
+
+		public UpgradeOptimizedConnectionProviderRegistry() {
+			Class<UpgradeOptimizedConnectionProviderRegistry> clazz =
+				UpgradeOptimizedConnectionProviderRegistry.class;
+
+			ServiceLoader<UpgradeOptimizedConnectionProvider> serviceLoader =
+				ServiceLoader.load(
+					UpgradeOptimizedConnectionProvider.class,
+					clazz.getClassLoader());
+
+			for (UpgradeOptimizedConnectionProvider
+					upgradeOptimizedConnectionProvider : serviceLoader) {
+
+				_upgradeOptimizedConnectionProviderMap.put(
+					upgradeOptimizedConnectionProvider.getDBType(),
+					upgradeOptimizedConnectionProvider);
+			}
+		}
+
+		public UpgradeOptimizedConnectionProvider getConnectionProvider(
+			DBType dbType) {
+
+			return _upgradeOptimizedConnectionProviderMap.get(dbType);
+		}
+
+		private final Map<DBType, UpgradeOptimizedConnectionProvider>
+			_upgradeOptimizedConnectionProviderMap = new HashMap<>();
 
 	}
 

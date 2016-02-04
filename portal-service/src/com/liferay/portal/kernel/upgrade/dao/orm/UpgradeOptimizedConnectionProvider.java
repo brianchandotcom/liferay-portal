@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.dao.orm;
 
+import com.liferay.portal.kernel.dao.db.DBType;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -24,6 +26,6 @@ public interface UpgradeOptimizedConnectionProvider {
 
 	public Connection getConnection() throws SQLException;
 
-	public String getDBProductName();
+	public DBType getDBType();
 
 }

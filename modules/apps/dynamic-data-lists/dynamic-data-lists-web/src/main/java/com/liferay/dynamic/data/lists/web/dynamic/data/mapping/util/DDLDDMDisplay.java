@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.document.library.ddm;
+package com.liferay.dynamic.data.lists.web.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 
@@ -29,29 +31,36 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
 	service = DDMDisplay.class
 )
-public class DLDDMDisplay extends BaseDDMDisplay {
+public class DDLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
 
 	@Override
 	public String getStorageType() {
-		return StorageType.JSON.toString();
+		return StorageType.JSON.getValue();
 	}
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "metadata-set");
+		return LanguageUtil.get(locale, "data-definition");
 	}
 
 	@Override
 	public String getStructureType() {
-		return DLFileEntryMetadata.class.getName();
+		return DDLRecordSet.class.getName();
+	}
+
+	@Override
+	public long getTemplateHandlerClassNameId(
+		DDMTemplate template, long classNameId) {
+
+		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
 
 }

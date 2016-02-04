@@ -12,55 +12,62 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.ddm;
+package com.liferay.document.library.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 @Component(
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
 	service = DDMDisplay.class
 )
-public class DDLDDMDisplay extends BaseDDMDisplay {
+public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override
 	public String getStorageType() {
-		return StorageType.JSON.getValue();
+		return StorageType.JSON.toString();
 	}
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "data-definition");
+		return LanguageUtil.get(locale, "metadata-set");
 	}
 
 	@Override
 	public String getStructureType() {
-		return DDLRecordSet.class.getName();
+		return DLFileEntryMetadata.class.getName();
 	}
 
 	@Override
-	public long getTemplateHandlerClassNameId(
-		DDMTemplate template, long classNameId) {
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
-		return PortalUtil.getClassNameId(DDLRecordSet.class);
+		return LanguageUtil.get(resourceBundle, "metadata-sets");
+	}
+
+	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
 	}
 
 }

@@ -81,6 +81,8 @@ public interface DDMDisplay {
 
 	public String getTemplateType(DDMTemplate template, Locale locale);
 
+	public String getTitle(Locale locale);
+
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classPK)

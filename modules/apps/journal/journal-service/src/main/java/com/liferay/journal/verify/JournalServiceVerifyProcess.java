@@ -319,6 +319,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void updateDynamicElements(JournalArticle article)
 		throws Exception {
 
+		if (Validator.isNull(article.getDDMStructureKey())) {
+			return;
+		}
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -390,32 +394,34 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 		String type = element.attributeValue("type");
 
-		if (type.equals("image")) {
-			String index = element.attributeValue("index");
+		if (!type.equals("image")) {
+			return;
+		}
 
-			String name = element.attributeValue("name");
+		String index = element.attributeValue("index");
 
-			Element dynamicContentElement = element.element("dynamic-content");
+		String name = element.attributeValue("name");
 
-			long articleImageId = GetterUtil.getLong(
-				dynamicContentElement.attributeValue("id"));
+		Element dynamicContentElement = element.element("dynamic-content");
 
-			JournalArticleImage articleImage =
-				_journalArticleImageLocalService.fetchJournalArticleImage(
-					articleImageId);
+		long articleImageId = GetterUtil.getLong(
+			dynamicContentElement.attributeValue("id"));
 
-			if (articleImage == null) {
-				return;
-			}
+		JournalArticleImage articleImage =
+			_journalArticleImageLocalService.fetchJournalArticleImage(
+				articleImageId);
 
-			String elName = name + StringPool.UNDERLINE + index;
+		if (articleImage == null) {
+			return;
+		}
 
-			if (!elName.equals(articleImage.getElName())) {
-				articleImage.setElName(elName);
+		String elName = name + StringPool.UNDERLINE + index;
 
-				_journalArticleImageLocalService.updateJournalArticleImage(
-					articleImage);
-			}
+		if (!elName.equals(articleImage.getElName())) {
+			articleImage.setElName(elName);
+
+			_journalArticleImageLocalService.updateJournalArticleImage(
+				articleImage);
 		}
 	}
 
@@ -813,9 +819,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 					}
 
 					try {
-						if (Validator.isNotNull(article.getDDMStructureKey())) {
-							updateDynamicElements(article);
-						}
+						updateDynamicElements(article);
 					}
 					catch (Exception e) {
 						_log.error(

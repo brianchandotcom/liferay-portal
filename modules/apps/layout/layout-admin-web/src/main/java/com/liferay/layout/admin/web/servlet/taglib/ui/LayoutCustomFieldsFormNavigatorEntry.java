@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -36,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LayoutCustomFieldsFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
+
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_ADVANCED;
+	}
 
 	@Override
 	public String getKey() {

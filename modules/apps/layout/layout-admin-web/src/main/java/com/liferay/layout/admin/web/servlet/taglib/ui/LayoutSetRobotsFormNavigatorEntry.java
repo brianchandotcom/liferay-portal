@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -25,11 +26,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=150"},
+	property = {"service.ranking:Integer=170"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutSetRobotsFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
+
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_SET_ADVANCED;
+	}
 
 	@Override
 	public String getKey() {

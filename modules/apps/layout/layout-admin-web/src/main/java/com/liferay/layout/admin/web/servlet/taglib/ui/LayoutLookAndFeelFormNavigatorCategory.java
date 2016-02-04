@@ -14,46 +14,37 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
-import javax.servlet.ServletContext;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
+ * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=100"},
-	service = FormNavigatorEntry.class
+	property = {"service.ranking:Integer=20"},
+	service = FormNavigatorCategory.class
 )
-public class LayoutLookAndFeelFormNavigatorEntry
-	extends BaseLayoutFormNavigatorEntry {
+public class LayoutLookAndFeelFormNavigatorCategory
+	implements FormNavigatorCategory {
 
 	@Override
-	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_LOOK_AND_FEEL;
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT;
 	}
 
 	@Override
 	public String getKey() {
-		return "look-and-feel";
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_LOOK_AND_FEEL;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/layout/look_and_feel.jsp";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "look-and-feel");
 	}
 
 }

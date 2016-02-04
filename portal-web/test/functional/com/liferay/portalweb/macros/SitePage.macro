@@ -1,10 +1,12 @@
 <definition>
 	<command name="addJavaScript">
-		<var name="key_page" value="${sitePageName}" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
-		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
-
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Advanced" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="JavaScript" />
@@ -23,7 +25,7 @@
 
 		<var name="key_pageTranslation" value="${pageTranslation}" />
 
-		<execute function="Click" locator1="SitePages#DETAILS_LANGAUGE_TRANSLATIONS" />
+		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
@@ -49,11 +51,9 @@
 	<command name="changePageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
-
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
 		<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}" />
 
@@ -175,9 +175,9 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 
@@ -217,9 +217,9 @@
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
 		<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 
@@ -470,9 +470,9 @@
 	</command>
 
 	<command name="viewFriendlyURLCP">
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePages#DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
 	</command>
@@ -585,9 +585,9 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />
@@ -608,11 +608,9 @@
 	<command name="viewPanelPortletListCP">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
-
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${sitePageName}" />
+		</execute>
 
 		<var name="key_componentName" value="${componentName}" />
 

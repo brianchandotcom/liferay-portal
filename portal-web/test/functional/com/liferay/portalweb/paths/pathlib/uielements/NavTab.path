@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIVE_TAB_LINK</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'${key_tab}') and contains(@class,'active')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB_LINK</td>
 	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tab}')]/a</td>
 	<td></td>
@@ -221,11 +226,6 @@
 <tr>
 	<td>SYSTEM_PROPERTIES</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'System Properties')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAB_LINK</td>
-	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tab}')]/a</td>
 	<td></td>
 </tr>
 <tr>

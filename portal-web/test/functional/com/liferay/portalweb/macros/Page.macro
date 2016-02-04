@@ -205,9 +205,9 @@
 	</command>
 
 	<command name="changeLogoViaPageCP">
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PUBLIC_PAGE_ICON" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Logo" />
@@ -567,12 +567,13 @@
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE" />
-			<then>
-				<execute function="Click" locator1="NavListItem#SEO" />
-			</then>
-		</if>
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="SEO" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="SEO" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE" />
 		<execute function="AssertElementPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE_META_TAGS" />

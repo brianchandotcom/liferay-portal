@@ -213,7 +213,7 @@
 </tr>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_LANGAUGE_TRANSLATIONS</td>
+	<td>DETAILS_LANGUAGE_TRANSLATIONS</td>
 	<td>//div[contains(@id,'nameContentBox')]//li[contains(@data-value,'${key_pageTranslation}')]</td>
 	<td></td>
 </tr>

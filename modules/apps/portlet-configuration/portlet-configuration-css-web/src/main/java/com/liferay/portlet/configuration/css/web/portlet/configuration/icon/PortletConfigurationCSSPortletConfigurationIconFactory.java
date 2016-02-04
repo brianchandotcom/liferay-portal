@@ -31,7 +31,8 @@ public class PortletConfigurationCSSPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new PortletConfigurationCSSPortletConfigurationIcon(portletRequest);
+		return new PortletConfigurationCSSPortletConfigurationIcon(
+			portletRequest);
 	}
 
 	@Override

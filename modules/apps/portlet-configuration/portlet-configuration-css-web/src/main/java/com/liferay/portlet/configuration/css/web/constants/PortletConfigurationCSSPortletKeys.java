@@ -20,6 +20,7 @@ package com.liferay.portlet.configuration.css.web.constants;
 public class PortletConfigurationCSSPortletKeys {
 
 	public static final String PORTLET_CONFIGURATION_CSS =
-		"com_liferay_portlet_configuration_css_web_portlet_PortletConfigurationCSSPortlet";
+		"com_liferay_portlet_configuration_css_web_portlet_" +
+			"PortletConfigurationCSSPortlet";
 
 }

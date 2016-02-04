@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
 public class PortletConfigurationCSSPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PortletConfigurationCSSPortletConfigurationIcon(PortletRequest portletRequest) {
+	public PortletConfigurationCSSPortletConfigurationIcon(
+		PortletRequest portletRequest) {
+
 		super(portletRequest);
 	}
 
@@ -45,15 +47,18 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	@Override
 	public String getOnClick() {
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
+			portletRequest,
+			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
 		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
+			portletRequest,
+			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
+			portletRequest,
+			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);

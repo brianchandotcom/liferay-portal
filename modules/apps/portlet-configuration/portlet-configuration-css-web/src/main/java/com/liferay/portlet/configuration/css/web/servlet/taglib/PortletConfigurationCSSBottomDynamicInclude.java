@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class PortletConfigurationCSSBottomDynamicInclude extends BaseDynamicInclude {
+public class PortletConfigurationCSSBottomDynamicInclude
+	extends BaseDynamicInclude {
 
 	@Override
 	public void include(

@@ -25,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class PortletConfigurationCSSWebUpgrade implements UpgradeStepRegistrator {
+public class PortletConfigurationCSSWebUpgrade
+	implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
@@ -40,7 +41,11 @@ public class PortletConfigurationCSSWebUpgrade implements UpgradeStepRegistrator
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"113", PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS}
+						new String[] {
+							"113",
+							PortletConfigurationCSSPortletKeys.
+								PORTLET_CONFIGURATION_CSS
+						}
 					};
 				}
 

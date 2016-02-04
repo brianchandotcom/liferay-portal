@@ -67,7 +67,7 @@ boolean showInListView = ParamUtil.getBoolean(request, "showInListView");
 String sections = "details";
 
 if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
-	sections += ",versions,activity";
+	sections += ",versions,activity,links";
 }
 %>
 
@@ -194,12 +194,15 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 	</liferay-ui:section>
 
 	<c:if test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
+
+		<%
+		WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
+		%>
+
 		<liferay-ui:section>
 			<div class="sidebar-body">
 
 				<%
-				WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-
 				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
 
 				for (WikiPage curPage : pages) {
@@ -237,8 +240,6 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 				<%
 				WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
 
-				WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-
 				List<SocialActivity> socialActivities = SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				for (SocialActivity socialActivity : socialActivities) {
@@ -274,6 +275,10 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 				%>
 
 			</div>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<liferay-util:include page="/wiki/page_links.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
 	</c:if>
 </liferay-ui:tabs>

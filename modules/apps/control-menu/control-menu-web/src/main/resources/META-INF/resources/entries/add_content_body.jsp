@@ -18,6 +18,11 @@
 
 <div class="closed lfr-add-panel lfr-admin-panel lfr-product-menu-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="addPanelId">
 	<div class="product-menu sidebar sidebar-body sidebar-inverse">
+		<h4 class="sidebar-header">
+			<span><liferay-ui:message key="add" /></span>
+
+			<aui:icon cssClass="close" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
+		</h4>
 	</div>
 </div>
 
@@ -25,4 +30,11 @@
 	var addToggle = $('#addToggleId');
 
 	addToggle.sideNavigation();
+
+	A.one('#<portlet:namespace />closePanelAdd').on(
+		'click',
+		function(event) {
+			addToggle.sideNavigation('hide');
+		}
+	);
 </aui:script>

@@ -18,6 +18,11 @@
 
 <div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="simulationPanelId">
 	<div class="product-menu sidebar sidebar-body sidebar-inverse">
+		<h4 class="sidebar-header">
+			<span><liferay-ui:message key="simulation" /></span>
+
+			<aui:icon cssClass="close" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
+		</h4>
 	</div>
 </div>
 
@@ -25,4 +30,11 @@
 	var simulationToggle = $('#simulationToggleId');
 
 	simulationToggle.sideNavigation();
+
+	A.one('#<portlet:namespace />closeSimulationPanel').on(
+		'click',
+		function(event) {
+			simulationToggle.sideNavigation('hide');
+		}
+	);
 </aui:script>

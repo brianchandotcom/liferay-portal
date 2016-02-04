@@ -28,10 +28,10 @@
 			position: absolute;
 			left: 50%;
 			transform: translate(-50%);
-			margin-top: 12px;
+			margin-top: 16px;
 
 			@include sm() {
-				margin-top: 16px;
+				margin-top: 20px;
 			}
 		}
 

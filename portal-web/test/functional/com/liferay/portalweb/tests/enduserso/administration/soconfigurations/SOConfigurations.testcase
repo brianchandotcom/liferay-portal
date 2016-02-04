@@ -180,7 +180,7 @@
 
 	<command name="AssignSORolePortalInstance" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instances" />
+			<var name="portlet" value="Virtual Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">

@@ -124,7 +124,7 @@
 		</if>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instances" />
+			<var name="portlet" value="Virtual Instances" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

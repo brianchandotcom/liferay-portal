@@ -957,7 +957,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instances" />
+			<var name="portlet" value="Virtual Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">
@@ -1081,7 +1081,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instances" />
+			<var name="portlet" value="Virtual Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">

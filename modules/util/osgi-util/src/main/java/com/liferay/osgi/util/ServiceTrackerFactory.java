@@ -36,26 +36,38 @@ public class ServiceTrackerFactory {
 		BundleContext bundleContext, Class<S> clazz,
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
-		return new ServiceTracker<S, T>(
+		return new ServiceTracker<>(
 			bundleContext, clazz, serviceTrackerCustomizer);
 	}
 
 	public static <S, T> ServiceTracker<S, T> create(
-			BundleContext bundleContext, String filterString)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, String filterString) {
 
-		return new ServiceTracker<S, T>(
-			bundleContext, bundleContext.createFilter(filterString), null);
+		try {
+			return new ServiceTracker<>(
+				bundleContext, bundleContext.createFilter(filterString), null);
+		}
+		catch (InvalidSyntaxException ise) {
+			throwException(ise);
+
+			return null;
+		}
 	}
 
 	public static <S, T> ServiceTracker<S, T> create(
-			BundleContext bundleContext, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
-		return new ServiceTracker<S, T>(
-			bundleContext, bundleContext.createFilter(filterString),
-			serviceTrackerCustomizer);
+		try {
+			return new ServiceTracker<>(
+				bundleContext, bundleContext.createFilter(filterString),
+				serviceTrackerCustomizer);
+		}
+		catch (InvalidSyntaxException ise) {
+			throwException(ise);
+
+			return null;
+		}
 	}
 
 	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
@@ -83,8 +95,7 @@ public class ServiceTrackerFactory {
 	}
 
 	public static <S, T> ServiceTracker<S, T> open(
-			BundleContext bundleContext, String filterString)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, String filterString) {
 
 		ServiceTracker<S, T> serviceTracker = create(
 			bundleContext, filterString);
@@ -95,9 +106,8 @@ public class ServiceTrackerFactory {
 	}
 
 	public static <S, T> ServiceTracker<S, T> open(
-			BundleContext bundleContext, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
 		ServiceTracker<S, T> serviceTracker = create(
 			bundleContext, filterString, serviceTrackerCustomizer);
@@ -113,6 +123,19 @@ public class ServiceTrackerFactory {
 		serviceTracker.open();
 
 		return serviceTracker;
+	}
+
+	public static <T> T throwException(Throwable throwable) {
+		return ServiceTrackerFactory.<T, RuntimeException>_throwException(
+			throwable);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T, E extends Throwable> T _throwException(
+			Throwable throwable)
+		throws E {
+
+		throw (E)throwable;
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.theme.contributor.extender.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.theme.contributor.extender.BundleWebResources;
@@ -27,7 +28,6 @@ import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
@@ -55,11 +55,11 @@ public class ThemeContributorExtension implements Extension {
 	public void start() throws Exception {
 		final BundleContext bundleContext = _bundle.getBundleContext();
 
-		Filter filter = bundleContext.createFilter(
+		String filter =
 			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))");
+				")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))";
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter,
 			new ServiceTrackerCustomizer
 				<ServletContext, Collection<ServiceRegistration<?>>>() {
@@ -118,8 +118,6 @@ public class ThemeContributorExtension implements Extension {
 				}
 
 			});
-
-		_serviceTracker.open();
 	}
 
 	private final Bundle _bundle;

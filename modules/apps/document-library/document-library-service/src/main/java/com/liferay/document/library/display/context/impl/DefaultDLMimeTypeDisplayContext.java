@@ -21,7 +21,6 @@ import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 
 import java.util.Map;
 
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -78,9 +77,7 @@ public class DefaultDLMimeTypeDisplayContext
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws InvalidSyntaxException {
-
+	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = Configurable.createConfigurable(
 			DLConfiguration.class, properties);
 	}

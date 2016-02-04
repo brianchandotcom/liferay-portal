@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
@@ -46,18 +45,11 @@ public class JSONWebServiceTracker
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
-		try {
-			_serviceTracker = ServiceTrackerFactory.open(
-				bundleContext,
-				"(&(json.web.service.context.name=*)(json.web.service." +
-					"context.path=*))",
-				this);
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(
-				"Unable to activate Liferay Portal JSON Web Service Tracker",
-				ise);
-		}
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
+			"(&(json.web.service.context.name=*)(json.web.service." +
+				"context.path=*))",
+			this);
 	}
 
 	@Override

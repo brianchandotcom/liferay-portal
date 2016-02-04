@@ -16,6 +16,7 @@ package com.liferay.application.list.user.personal.site.permissions;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,8 +37,6 @@ import com.liferay.portal.service.RoleLocalService;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -115,20 +114,16 @@ public class UserPersonalSitePermissions {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		Filter filter = bundleContext.createFilter(
+		String filter =
 			"(&(objectClass=" + PanelApp.class.getName() + ")" +
 				"(panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION +
-					"*))");
+					"*))";
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter, new PanelAppServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	protected void deactivated() {

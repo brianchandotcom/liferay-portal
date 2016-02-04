@@ -66,7 +66,6 @@ import org.apache.jasper.compiler.Node.Nodes;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
@@ -509,15 +508,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_systemPackageNames = systemPackageNames;
 
-		try {
-			_serviceTracker = ServiceTrackerFactory.open(
-				bundleContext,
-				"(&(jsp.compiler.resource.map=*)(objectClass=" +
-					Map.class.getName() + "))");
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new ExceptionInInitializerError(ise);
-		}
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
+			"(&(jsp.compiler.resource.map=*)(objectClass=" +
+				Map.class.getName() + "))");
 	}
 
 	private Bundle[] _allParticipatingBundles;

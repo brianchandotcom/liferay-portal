@@ -14,13 +14,13 @@
 
 package com.liferay.portal.rtl.servlet;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import java.util.Hashtable;
 
 import javax.servlet.Servlet;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -38,15 +38,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class RTLServletTracker {
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
-		throws InvalidSyntaxException {
+	protected void activate(final BundleContext bundleContext) {
+		String filterString =
+			"(&(objectClass=" + ServletContextHelper.class.getName() + ")" +
+				"(rtl.required = true))";
 
-		Filter filter = bundleContext.createFilter(
-			"(&(objectClass=" + ServletContextHelper.class.getSimpleName() +
-				")(rtl.required=true))");
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, filterString,
 			new ServiceTrackerCustomizer
 				<ServletContextHelper, ServiceRegistration<Servlet>>() {
 
@@ -101,8 +99,6 @@ public class RTLServletTracker {
 				}
 
 			});
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate

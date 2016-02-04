@@ -30,7 +30,6 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.jaxws22.spi.ProviderImpl;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +51,7 @@ public class JaxWsApiEnabler {
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
-		throws InterruptedException, InvalidSyntaxException {
+		throws InterruptedException {
 
 		JaxWsApiConfiguration jaxWsApiConfiguration =
 			Configurable.createConfigurable(
@@ -96,7 +95,7 @@ public class JaxWsApiEnabler {
 	@Modified
 	protected void modified(
 			BundleContext bundleContext, Map<String, Object> properties)
-		throws InterruptedException, InvalidSyntaxException {
+		throws InterruptedException {
 
 		deactivate();
 

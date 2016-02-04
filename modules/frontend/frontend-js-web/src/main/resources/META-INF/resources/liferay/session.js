@@ -601,7 +601,7 @@ AUI.add(
 							)
 						);
 
-						DOC.title = banner.get('contentBox').text;
+						DOC.title = banner.get('contentBox').text();
 					}
 				}
 			}

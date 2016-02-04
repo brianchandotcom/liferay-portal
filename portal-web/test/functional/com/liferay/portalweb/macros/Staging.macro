@@ -200,18 +200,34 @@
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Check" locator1="PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+				<if>
+					<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" />
+					<then>
+						<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
+						<execute function="Check" locator1="PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
+						<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+					</then>
+					<else>
+						<execute function="Check" locator1="PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
+					</else>
+				</if>
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${uncheckLogo}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+				<if>
+					<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" />
+					<then>
+						<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
+						<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
+						<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+					</then>
+					<else>
+						<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
+					</else>
+				</if>
 			</then>
 		</if>
 
@@ -231,7 +247,12 @@
 					<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
 				</for>
 
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+				<if>
+					<condition function="IsElementPresent" locator1="Button#OK" />
+					<then>
+						<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -288,7 +309,6 @@
 		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_RADIO" />
 				<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_HEADER" />
 				<execute function="Check#checkToggleSwitch" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
 			</then>
@@ -312,9 +332,6 @@
 					<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
-			<else>
-				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
-			</else>
 		</if>
 
 		<if>
@@ -328,9 +345,6 @@
 					<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
-			<else>
-				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
-			</else>
 		</if>
 
 		<if>

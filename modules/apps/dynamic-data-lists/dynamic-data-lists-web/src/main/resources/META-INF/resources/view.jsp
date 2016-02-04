@@ -40,10 +40,6 @@ recordSetSearch.setOrderByType(orderByType);
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<h5>
-		<%= portletDisplay.getTitle() %>
-	</h5>
-
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="recordSetIds" type="hidden" />

@@ -200,10 +200,13 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
 	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
 	@Reference
 	private JSONFactory _jsonFactory;
 

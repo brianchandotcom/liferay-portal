@@ -328,8 +328,10 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
+
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 

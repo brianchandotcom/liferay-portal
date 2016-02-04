@@ -99,6 +99,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
 

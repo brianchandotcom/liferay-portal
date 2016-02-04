@@ -117,6 +117,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
 	@Reference
 	private IndexerRegistry _indexerRegistry;
 

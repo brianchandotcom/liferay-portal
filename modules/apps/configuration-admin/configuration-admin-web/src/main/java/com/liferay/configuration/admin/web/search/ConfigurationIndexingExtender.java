@@ -73,12 +73,16 @@ public class ConfigurationIndexingExtender {
 		ConfigurationIndexingExtender.class);
 
 	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
+
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
 	@Reference
 	private ConfigurationModelIndexer _configurationModelIndexer;
+
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 

@@ -299,7 +299,9 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 *         <code>null</code> if it cannot be determined
 	 */
 	protected String getPortletId(Map<String, String> routeParameters) {
-		if (!isPortletInstanceable()) {
+		String fullInstanceId = routeParameters.remove("fullInstanceId");
+
+		if (!isPortletInstanceable() && Validator.isNull(fullInstanceId)) {
 			return getPortletId();
 		}
 
@@ -307,6 +309,14 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		if (Validator.isNotNull(portletInstanceKey)) {
 			return portletInstanceKey;
+		}
+
+		if (Validator.isNotNull(fullInstanceId)) {
+			PortletInstance portletInstance =
+				PortletInstance.fromPortletNameAndFullInstanceId(
+					getPortletId(), fullInstanceId);
+
+			return portletInstance.getPortletInstanceKey();
 		}
 
 		String instanceId = routeParameters.remove("instanceId");

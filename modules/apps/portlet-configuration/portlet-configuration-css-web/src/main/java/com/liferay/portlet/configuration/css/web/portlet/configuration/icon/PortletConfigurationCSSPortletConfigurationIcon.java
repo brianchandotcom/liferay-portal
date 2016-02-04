@@ -25,10 +25,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Eudaldo Alonso
  */
-public class PortletCSSPortletConfigurationIcon
+public class PortletConfigurationCSSPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PortletCSSPortletConfigurationIcon(PortletRequest portletRequest) {
+	public PortletConfigurationCSSPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
 	}
 

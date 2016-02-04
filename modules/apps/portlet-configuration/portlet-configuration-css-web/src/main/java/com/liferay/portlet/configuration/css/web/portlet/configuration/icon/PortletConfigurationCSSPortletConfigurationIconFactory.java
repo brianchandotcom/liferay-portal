@@ -26,12 +26,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class PortletCSSPortletConfigurationIconFactory
+public class PortletConfigurationCSSPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new PortletCSSPortletConfigurationIcon(portletRequest);
+		return new PortletConfigurationCSSPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

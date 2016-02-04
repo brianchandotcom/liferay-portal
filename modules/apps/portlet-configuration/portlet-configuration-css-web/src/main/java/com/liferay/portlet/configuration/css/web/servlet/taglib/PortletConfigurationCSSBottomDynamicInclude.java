@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
+public class PortletConfigurationCSSBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -71,7 +71,7 @@ public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 	private static final String _JSP_PATH = "/definitions.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletCSSBottomDynamicInclude.class);
+		PortletConfigurationCSSBottomDynamicInclude.class);
 
 	private ServletContext _servletContext;
 

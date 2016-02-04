@@ -806,7 +806,7 @@ public class LayoutTypePortletImpl
 	public boolean isPortletEmbedded(String portletId) {
 		Layout layout = getLayout();
 
-		return layout.isPortletEmbedded(portletId);
+		return layout.isPortletEmbedded(portletId, layout.getGroupId());
 	}
 
 	@Override

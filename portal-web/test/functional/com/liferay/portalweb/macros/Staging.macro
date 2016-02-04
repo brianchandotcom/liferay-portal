@@ -86,14 +86,7 @@
 	</command>
 
 	<command name="addEventRepeatDaily">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
-		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -126,13 +119,6 @@
 	</command>
 
 	<command name="addPageVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Page Variations" />
 
 		<execute function="SelectFrame" locator1="IFrame#PAGE_VARIATION_IFRAME" />
@@ -160,13 +146,6 @@
 	</command>
 
 	<command name="addSitePagesVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
@@ -191,13 +170,6 @@
 	</command>
 
 	<command name="changePageVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<var name="key_pageVariationName" value="${pageVariationName}" />
 
 		<execute function="Click" locator1="Staging#PAGE_VARIATION_DROPDOWN" />
@@ -208,13 +180,6 @@
 	</command>
 
 	<command name="changeSitePageVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
 		<execute function="Click" locator1="Staging#SITE_PAGES_VARIATION_DROPDOWN" />
@@ -381,7 +346,7 @@
 				<var name="key_subContent" value="${uncheckSubContent}" />
 
 				<execute function="Uncheck" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
@@ -399,7 +364,7 @@
 				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
 
 				<execute function="Uncheck" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
@@ -450,13 +415,6 @@
 	</command>
 
 	<command name="editSitePageVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
@@ -476,13 +434,6 @@
 	<command name="enablePageInSitePagesVariation">
 		<execute function="Refresh" />
 
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_MENU_REVISION_DETAILS_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
@@ -495,12 +446,12 @@
 	<command name="gotoPublishToLive">
 		<if>
 			<and>
-				<condition function="IsElementNotPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+				<condition function="IsElementNotPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 				<condition function="IsElementPresent" locator1="Dockbar#STAGING_ICON" />
 			</and>
 			<then>
 				<execute function="Click" locator1="Dockbar#STAGING_ICON" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+				<execute function="AssertElementPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 			</then>
 		</if>
 
@@ -522,20 +473,12 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="markAsReadyForPublication">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
-
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
@@ -546,13 +489,6 @@
 	</command>
 
 	<command name="mergeSitePagesVariation">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 
@@ -639,9 +575,13 @@
 			</then>
 		</if>
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
 
-		<var name="key_publishTemplateName" value="${publishTemplateName}" />
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_ARROW_BUTTON" />
 
@@ -721,14 +661,6 @@
 
 	<command name="schedulePublishToLivePG">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
-
-		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
 				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
@@ -736,7 +668,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
@@ -784,14 +716,6 @@
 
 	<command name="setContentDateRange">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
-
-		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
 				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
@@ -799,7 +723,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
@@ -815,12 +739,7 @@
 	</command>
 
 	<command name="setHistoryVersionPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
@@ -859,13 +778,6 @@
 	</command>
 
 	<command name="viewHistoryVersionPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
@@ -895,13 +807,6 @@
 	</command>
 
 	<command name="viewPageVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<var name="key_pageVariationName" value="${pageVariationName}" />
 
 		<execute function="AssertTextEquals" locator1="Staging#PAGE_VARIATION" value1="${pageVariationName}" />
@@ -931,13 +836,6 @@
 	</command>
 
 	<command name="viewSitePagesVariationPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
-
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#SITE_PAGES_VARIATION" value1="${sitePagesVariationName}" />
@@ -959,14 +857,6 @@
 	</command>
 
 	<command name="viewStagingWorkflowStatusPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			</then>
-		</if>
-
 		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${stagingWorkflowStatus}" />
 	</command>
 

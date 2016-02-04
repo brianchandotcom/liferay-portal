@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PUBLISH_TO_LIVE_IFRAME</td>
-	<td>//iframe</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_BUTTON</td>
-	<td>//button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_EVENT_BUTTON</td>
 	<td>//button[contains(@id,'addButton')]</td>
 	<td></td>
@@ -116,16 +101,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGES_OK_BUTTON</td>
-	<td>//button[contains(.,'OK')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGES_CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -203,11 +178,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON</td>
-	<td>//button[contains(.,'OK')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -271,69 +241,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CURRENT_AND_PREVIOUS_TABLE-->
-<tr>
-	<td>CURRENT_AND_PREVIOUS_TABLE_USER_NAME</td>
-	<td>//tbody/tr/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_AND_PREVIOUS_TABLE_STATUS</td>
-	<td>//tr/td[contains(@class,'status-column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SCHEDULED_TABLE-->
-<tr>
-	<td>SCHEDULED_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_TABLE_END_DATE</td>
-	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PUBLISH_TEMPLATES-->
-<tr>
-	<td>PUBLISH_TEMPLATES_NEW_BUTTON</td>
-	<td>//a[@role='menuitem' and contains(.,'New')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
-	<td>//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PUBLISH_TEMPLATES_TABLE-->
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_NAME</td>
@@ -348,22 +255,6 @@
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_ARROW_BUTTON</td>
 	<td>//div[contains(@id,'savedConfigurations')]//tr[contains(.,'${key_publishTemplateName}')]/td/span/a[contains(.,'Publish to Live')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_UNDO_BUTTON</td>
-	<td>//a[contains(@id,'undo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PUBLISH_TEMPLATE_PUBLISH-->
-<tr>
-	<td>PUBLISH_TEMPLATE_PUBLISH_TO_LIVE_BUTTON</td>
-	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -87,11 +87,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_DROP_DOWN_BUTTON</td>
-	<td>//a[contains(@class,'staging-link') and contains(@class,'dropdown-toggle')]/span[contains(.,'Staging')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LIVE_DROP_DOWN_BUTTON</td>
 	<td>//a[contains(@class,'staging-link') and contains(@class,'dropdown-toggle')]/span[contains(.,'Live')]</td>
 	<td></td>
@@ -150,7 +145,7 @@
 <!--PAGE_VARIATION_MENULIST-->
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
-	<td>xpath=(//ul//li//a[contains(.,'${key_pageVariationName}')])[4]</td>
+	<td>xpath=(//ul//li//a[contains(.,'${key_pageVariationName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,11 +168,6 @@
 <tr>
 	<td>LIVE_MENU_SITE</td>
 	<td>//span[@class='staging-live-group-name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIVE_MENU_HELP</td>
-	<td>//span[@class='staging-live-help']</td>
 	<td></td>
 </tr>
 <tr>
@@ -244,17 +234,6 @@
 <tr>
 	<td>STAGING_MENU_ENABLE_PAGE_BUTTON</td>
 	<td>//a[contains(@id,'submitLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--STAGING_MENULIST-->
-<tr>
-	<td>STAGING_MENULIST_PUBLISH_TO_LIVE_NOW</td>
-	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 </tbody>

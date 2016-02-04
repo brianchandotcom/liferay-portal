@@ -15,7 +15,7 @@
 package com.liferay.portal.module.configuration;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = ConfigurationFactory.class)
-public class ConfigurationFactoryImpl implements ConfigurationFactory {
+@Component(immediate = true, service = ConfigurationProvider.class)
+public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 	@Override
 	public <T> T getConfiguration(

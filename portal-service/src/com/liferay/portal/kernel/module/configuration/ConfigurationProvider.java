@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
 /**
  * @author Jorge Ferrer
  */
-public interface ConfigurationFactory {
+public interface ConfigurationProvider {
 
 	public <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)

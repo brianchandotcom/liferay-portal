@@ -22,26 +22,27 @@ import com.liferay.registry.collections.ServiceTrackerList;
 /**
  * @author Jorge Ferrer
  */
-public class ConfigurationFactoryUtil {
+public class ConfigurationProviderUtil {
 
 	public static <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ConfigurationException {
 
-		ConfigurationFactory configurationFactory = getConfigurationFactory();
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
 
-		return configurationFactory.getConfiguration(clazz, settingsLocator);
+		return configurationProvider.getConfiguration(clazz, settingsLocator);
 	}
 
-	public static ConfigurationFactory getConfigurationFactory() {
+	public static ConfigurationProvider getConfigurationProvider() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			ConfigurationFactoryUtil.class);
+			ConfigurationProviderUtil.class);
 
 		return _configurationFactories.get(0);
 	}
 
-	private static final ServiceTrackerList<ConfigurationFactory>
+	private static final ServiceTrackerList<ConfigurationProvider>
 		_configurationFactories = ServiceTrackerCollections.openList(
-			ConfigurationFactory.class);
+			ConfigurationProvider.class);
 
 }

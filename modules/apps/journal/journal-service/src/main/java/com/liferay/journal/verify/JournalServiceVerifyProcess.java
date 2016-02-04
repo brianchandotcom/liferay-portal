@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -774,7 +775,9 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 					}
 
 					try {
-						updateDynamicElements(article);
+						if (Validator.isNotNull(article.getDDMStructureKey())) {
+							updateDynamicElements(article);
+						}
 					}
 					catch (Exception e) {
 						_log.error(

@@ -15,7 +15,9 @@
 package com.liferay.journal.verify;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
@@ -59,6 +61,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -315,15 +318,21 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void updateDynamicElements(JournalArticle article)
 		throws Exception {
 
-		Document document = SAXReaderUtil.read(article.getContent());
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			article.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			article.getDDMStructureKey(), true);
 
-		Element rootElement = document.getRootElement();
+		Fields ddmFields = _journalConverter.getDDMFields(
+			ddmStructure, article.getDocument());
 
-		updateDynamicElements(rootElement.elements("dynamic-element"));
+		String content = _journalConverter.getContent(ddmStructure, ddmFields);
 
-		article.setContent(document.asXML());
+		if (!content.equals(article.getContent())) {
+			article.setContent(content);
 
-		_journalArticleLocalService.updateJournalArticle(article);
+			_journalArticleLocalService.updateJournalArticle(article);
+		}
 	}
 
 	protected void updateDynamicElements(List<Element> dynamicElements)

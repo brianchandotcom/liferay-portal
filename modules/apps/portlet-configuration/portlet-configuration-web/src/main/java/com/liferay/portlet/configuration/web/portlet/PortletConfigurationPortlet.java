@@ -14,11 +14,15 @@
 
 package com.liferay.portlet.configuration.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionPropagator;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -27,7 +31,6 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,11 +52,14 @@ import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.PermissionService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
 import com.liferay.portal.service.ResourceBlockService;
 import com.liferay.portal.service.ResourcePermissionService;
+import com.liferay.portal.service.permission.PortletPermission;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -546,6 +552,40 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		portletPreferences.store();
 	}
 
+	protected void checkEditPermissionsScreenPermissions(PortletRequest request)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String modelResource = ParamUtil.getString(request, "modelResource");
+
+		long resourceGroupId = ParamUtil.getLong(
+			request, "resourceGroupId", themeDisplay.getScopeGroupId());
+
+		if (!Validator.isBlank(modelResource)) {
+			String resourcePrimKey = ParamUtil.getString(
+				request, "resourcePrimKey");
+
+			_permissionService.checkPermission(
+				resourceGroupId, modelResource, resourcePrimKey);
+
+			return;
+		}
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		Layout layout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
+
+		_portletPermission.check(
+			permissionChecker, resourceGroupId, layout, portletResource,
+			ActionKeys.PERMISSIONS);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -555,6 +595,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String mvcPath = renderRequest.getParameter("mvcPath");
 
 			if (mvcPath.equals("/edit_permissions.jsp")) {
+				checkEditPermissionsScreenPermissions(renderRequest);
+
 				super.doDispatch(renderRequest, renderResponse);
 
 				return;
@@ -848,10 +890,20 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setPermissionService(PermissionService permissionService) {
+		_permissionService = permissionService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
 		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPermission(PortletPermission portletPermission) {
+		_portletPermission = portletPermission;
 	}
 
 	@Reference(unbind = "-")
@@ -994,7 +1046,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
+	private PermissionService _permissionService;
 	private PortletLocalService _portletLocalService;
+	private PortletPermission _portletPermission;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new AutoResetThreadLocal<>("_portletRequestThreadLocal");

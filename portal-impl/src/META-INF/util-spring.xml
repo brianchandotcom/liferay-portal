@@ -464,10 +464,9 @@
 			<bean class="com.liferay.portal.service.permission.PortalPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.PortletPermission" class="com.liferay.portal.service.permission.PortletPermissionImpl" />
 	<bean id="com.liferay.portal.service.permission.PortletPermissionUtil" class="com.liferay.portal.service.permission.PortletPermissionUtil">
-		<property name="portletPermission">
-			<bean class="com.liferay.portal.service.permission.PortletPermissionImpl" />
-		</property>
+		<property name="portletPermission" ref="com.liferay.portal.service.permission.PortletPermission" />
 	</bean>
 	<bean id="com.liferay.portal.service.permission.RolePermissionUtil" class="com.liferay.portal.service.permission.RolePermissionUtil">
 		<property name="rolePermission">

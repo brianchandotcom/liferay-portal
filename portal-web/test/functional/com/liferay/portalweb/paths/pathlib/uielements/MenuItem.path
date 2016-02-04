@@ -335,7 +335,7 @@
 </tr>
 <tr>
 	<td>EXPORT</td>
-	<td>//div[contains(@class,'dropdown  open')]//a[@role='menuitem' and contains(.,'Export')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Export') and not(contains(.,'Import'))]</td>
 	<td></td>
 </tr>
 <tr>

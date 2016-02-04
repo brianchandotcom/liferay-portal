@@ -17,46 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
-
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String navigation = ParamUtil.getString(request, "navigation", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
 
 boolean localPublishing = true;
 
-if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+if (liveGroup.isStaged() && liveGroup.isStagedRemotely()) {
 	localPublishing = false;
 }
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
-renderURL.setParameter("mvcRenderCommandName", "publishLayouts");
-renderURL.setParameter("groupId", String.valueOf(groupId));
-renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
-renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
+renderURL.setParameter("mvcRenderCommandName", "publishLayoutsView");
+renderURL.setParameter("tabs1", "processes");
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
-	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
-}
-else {
-	orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
-	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
-}
+renderURL.setParameter("searchContainerId", searchContainerId);
+renderURL.setParameter("displayStyle", displayStyle);
+renderURL.setParameter("navigation", navigation);
+renderURL.setParameter("orderByCol", orderByCol);
+renderURL.setParameter("orderByType", orderByType);
 
 String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
+
+OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
 <div id="<portlet:namespace />publishProcessesSearchContainer">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-publication-processes-were-found"
-		id="publishProcesses"
+		id="<%= searchContainerId %>"
 		iteratorURL="<%= renderURL %>"
 		orderByCol="<%= orderByCol %>"
+		orderByComparator="<%= orderByComparator %>"
 		orderByType="<%= orderByType %>"
 		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 	>
@@ -64,19 +59,26 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 		<liferay-ui:search-container-results>
 
 			<%
-			List<BackgroundTask> backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(groupId, taskExecutorClassName);
+			int importProcessesCount = 0;
+			List<BackgroundTask> importProcesses = null;
 
-			results.addAll(backgroundTasks);
+			if (navigation.equals("all")) {
+				importProcessesCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName);
+				importProcesses = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			}
+			else {
+				boolean completed = false;
 
-			if (localPublishing) {
-				results.addAll(BackgroundTaskManagerUtil.getBackgroundTasks(liveGroupId, taskExecutorClassName));
+				if (navigation.equals("completed")) {
+					completed = true;
+				}
+
+				importProcessesCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed);
+				importProcesses = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
 
-			searchContainer.setTotal(results.size());
-
-			results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
-
-			searchContainer.setResults(results);
+			searchContainer.setResults(importProcesses);
+			searchContainer.setTotal(importProcessesCount);
 			%>
 
 		</liferay-ui:search-container-results>

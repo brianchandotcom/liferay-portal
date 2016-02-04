@@ -41,24 +41,3 @@ boolean showStagingConfiguration = ParamUtil.getBoolean(request, "showStagingCon
 		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
-
-<aui:script use="liferay-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
-		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
-		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	</liferay-portlet:resourceURL>
-
-	new Liferay.ExportImport(
-		{
-			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			locale: '<%= locale.toLanguageTag() %>',
-			namespace: '<portlet:namespace />',
-			processesNode: '#publishProcessesSearchContainer',
-			processesResourceURL: '<%= publishProcessesURL.toString() %>',
-			timeZone: '<%= timeZone.getID() %>'
-		}
-	);
-</aui:script>

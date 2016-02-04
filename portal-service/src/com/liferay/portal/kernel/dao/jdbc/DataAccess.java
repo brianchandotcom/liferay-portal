@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +27,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -137,21 +139,19 @@ public class DataAccess {
 	public static Connection getUpgradeOptimizedConnection()
 		throws SQLException {
 
-		Connection connection = getConnection();
+		DB db = DBManagerUtil.getDB();
 
-		DatabaseMetaData metaData = connection.getMetaData();
-
-		String productName = metaData.getDatabaseProductName();
+		DBType dbType = db.getDBType();
 
 		UpgradeOptimizedConnectionProvider connectionProvider =
 			UpgradeOptimizedConnectionProviderRegistryUtil.
-				getConnectionProvider(productName);
+				getConnectionProvider(dbType);
 
 		if (connectionProvider != null) {
 			return connectionProvider.getConnection();
 		}
 
-		return connection;
+		return getConnection();
 	}
 
 	public interface PACL {

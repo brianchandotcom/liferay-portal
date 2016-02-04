@@ -248,20 +248,4 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}
 	);
-
-	var processDataValue = function(dataValue) {
-		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
-		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
-
-		if (dataValue === 'custom') {
-			savedConfigurations.hide();
-
-			customConfiguration.show();
-		}
-		else if (dataValue === 'saved') {
-			customConfiguration.hide();
-
-			savedConfigurations.show();
-		}
-	};
 </aui:script>

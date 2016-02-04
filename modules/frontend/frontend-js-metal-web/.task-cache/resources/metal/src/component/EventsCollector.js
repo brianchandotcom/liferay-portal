@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/component/EventsCollector", ['exports', '../core', '../component/ComponentCollector', '../disposable/Disposable', '../events/EventHandler'], function (exports, _core, _ComponentCollector, _Disposable2, _EventHandler) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/component/EventsCollector", ['exports', 'metal/src/core', 'metal/src/component/ComponentCollector', 'metal/src/disposable/Disposable', 'metal/src/events/EventHandler'], function (exports, _core, _ComponentCollector, _Disposable2, _EventHandler) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -51,7 +51,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/EventsCollector", ['expo
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var EventsCollector = (function (_Disposable) {
+	var EventsCollector = function (_Disposable) {
 		_inherits(EventsCollector, _Disposable);
 
 		function EventsCollector(component) {
@@ -178,7 +178,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/EventsCollector", ['expo
 		};
 
 		return EventsCollector;
-	})(_Disposable3.default);
+	}(_Disposable3.default);
 
 	EventsCollector.prototype.registerMetalComponent && EventsCollector.prototype.registerMetalComponent(EventsCollector, 'EventsCollector')
 	exports.default = EventsCollector;

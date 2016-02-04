@@ -1,6 +1,6 @@
-'use strict';
-
 define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exports', 'metal/src/dom/dom'], function (exports, _dom) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 		}
 	}
 
-	var DragShim = (function () {
+	var DragShim = function () {
 		function DragShim() {
 			_classCallCheck(this, DragShim);
 		}
@@ -71,7 +71,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 		};
 
 		return DragShim;
-	})();
+	}();
 
 	DragShim.docShim_ = null;
 	exports.default = DragShim;

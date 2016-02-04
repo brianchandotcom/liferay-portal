@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal-position/src/Align', 'metal/src/component/Component', 'metal/src/events/EventHandler', 'metal/src/soy/SoyRenderer', 'metal-jquery-adapter/src/JQueryAdapter', 'metal/src/dom/events'], function (exports, _core, _dom, _Align, _Component2, _EventHandler, _SoyRenderer, _JQueryAdapter) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -57,7 +57,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var TooltipBase = (function (_Component) {
+	var TooltipBase = function (_Component) {
 		_inherits(TooltipBase, _Component);
 
 		function TooltipBase(opt_config) {
@@ -197,7 +197,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 		};
 
 		return TooltipBase;
-	})(_Component3.default);
+	}(_Component3.default);
 
 	TooltipBase.prototype.registerMetalComponent && TooltipBase.prototype.registerMetalComponent(TooltipBase, 'TooltipBase')
 	TooltipBase.Align = _Align2.default;

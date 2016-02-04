@@ -1,6 +1,6 @@
-'use strict';
-
 define("frontend-js-metal-web@1.0.0/metal/src/string/string", ['exports'], function (exports) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -11,13 +11,18 @@ define("frontend-js-metal-web@1.0.0/metal/src/string/string", ['exports'], funct
 		}
 	}
 
-	var string = (function () {
+	var string = function () {
 		function string() {
 			_classCallCheck(this, string);
 		}
 
 		string.collapseBreakingSpaces = function collapseBreakingSpaces(str) {
 			return str.replace(/[\t\r\n ]+/g, ' ').replace(/^[\t\r\n ]+|[\t\r\n ]+$/g, '');
+		};
+
+		string.getRandomString = function getRandomString() {
+			var x = 2147483648;
+			return Math.floor(Math.random() * x).toString(36) + Math.abs(Math.floor(Math.random() * x) ^ Date.now()).toString(36);
 		};
 
 		string.hashCode = function hashCode(val) {
@@ -36,7 +41,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/string/string", ['exports'], funct
 		};
 
 		return string;
-	})();
+	}();
 
 	exports.default = string;
 });

@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle", ['exports', '../events/EventHandle'], function (exports, _EventHandle2) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle", ['exports', 'metal/src/events/EventHandle'], function (exports, _EventHandle2) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -45,7 +45,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle", ['exports'
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var DomEventHandle = (function (_EventHandle) {
+	var DomEventHandle = function (_EventHandle) {
 		_inherits(DomEventHandle, _EventHandle);
 
 		function DomEventHandle(emitter, event, listener, opt_capture) {
@@ -62,7 +62,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle", ['exports'
 		};
 
 		return DomEventHandle;
-	})(_EventHandle3.default);
+	}(_EventHandle3.default);
 
 	DomEventHandle.prototype.registerMetalComponent && DomEventHandle.prototype.registerMetalComponent(DomEventHandle, 'DomEventHandle')
 	exports.default = DomEventHandle;

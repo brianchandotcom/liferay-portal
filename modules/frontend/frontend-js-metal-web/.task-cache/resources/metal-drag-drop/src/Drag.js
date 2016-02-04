@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/attribute/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal/src/events/EventHandler', 'metal-position/src/Position'], function (exports, _core, _dom, _object, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _EventHandler, _Position) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/attribute/Attribute', 'metal-drag-drop/src/helpers/DragAutoScroll', 'metal-drag-drop/src/helpers/DragScrollDelta', 'metal-drag-drop/src/helpers/DragShim', 'metal/src/events/EventHandler', 'metal-position/src/Position'], function (exports, _core, _dom, _object, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _EventHandler, _Position) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -61,7 +61,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Drag = (function (_Attribute) {
+	var Drag = function (_Attribute) {
 		_inherits(Drag, _Attribute);
 
 		function Drag(opt_config) {
@@ -484,7 +484,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		return Drag;
-	})(_Attribute3.default);
+	}(_Attribute3.default);
 
 	Drag.prototype.registerMetalComponent && Drag.prototype.registerMetalComponent(Drag, 'Drag')
 	Drag.ATTRS = {

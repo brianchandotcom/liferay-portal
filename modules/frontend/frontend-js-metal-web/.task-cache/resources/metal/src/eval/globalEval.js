@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/eval/globalEval", ['exports', '../dom/dom'], function (exports, _dom) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/eval/globalEval", ['exports', 'metal/src/dom/dom'], function (exports, _dom) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/eval/globalEval", ['exports', 'met
 		}
 	}
 
-	var globalEval = (function () {
+	var globalEval = function () {
 		function globalEval() {
 			_classCallCheck(this, globalEval);
 		}
@@ -30,35 +30,62 @@ define("frontend-js-metal-web@1.0.0/metal/src/eval/globalEval", ['exports', 'met
 			document.head.appendChild(script).parentNode.removeChild(script);
 		};
 
-		globalEval.runFile = function runFile(src) {
+		globalEval.runFile = function runFile(src, opt_callback) {
 			var script = document.createElement('script');
 			script.src = src;
 
-			_dom2.default.on(script, 'load', function () {
+			var callback = function callback() {
 				script.parentNode.removeChild(script);
-			});
+				opt_callback && opt_callback();
+			};
 
-			_dom2.default.on(script, 'error', function () {
-				script.parentNode.removeChild(script);
-			});
+			_dom2.default.on(script, 'load', callback);
+
+			_dom2.default.on(script, 'error', callback);
 
 			document.head.appendChild(script);
 		};
 
-		globalEval.runScript = function runScript(script) {
+		globalEval.runScript = function runScript(script, opt_callback) {
+			if (script.type && script.type !== 'text/javascript') {
+				opt_callback && opt_callback();
+				return;
+			}
+
 			if (script.parentNode) {
 				script.parentNode.removeChild(script);
 			}
 
 			if (script.src) {
-				globalEval.runFile(script.src);
+				globalEval.runFile(script.src, opt_callback);
 			} else {
 				globalEval.run(script.text);
+				opt_callback && opt_callback();
 			}
 		};
 
+		globalEval.runScriptsInElement = function runScriptsInElement(element, opt_callback) {
+			var scripts = element.querySelectorAll('script');
+
+			if (scripts.length) {
+				globalEval.runScriptsInOrder(scripts, 0, opt_callback);
+			} else if (opt_callback) {
+				opt_callback();
+			}
+		};
+
+		globalEval.runScriptsInOrder = function runScriptsInOrder(scripts, index, opt_callback) {
+			globalEval.runScript(scripts.item(index), function () {
+				if (index < scripts.length - 1) {
+					globalEval.runScriptsInOrder(scripts, index + 1, opt_callback);
+				} else if (opt_callback) {
+					opt_callback();
+				}
+			});
+		};
+
 		return globalEval;
-	})();
+	}();
 
 	exports.default = globalEval;
 });

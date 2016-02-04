@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-affix/src/Affix", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/attribute/Attribute', 'metal/src/events/EventEmitter', 'metal/src/events/EventEmitterProxy', 'metal-position/src/Position', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _Attribute2, _EventEmitter, _EventEmitterProxy, _Position, _JQueryAdapter) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -57,7 +57,7 @@ define("frontend-js-metal-web@1.0.0/metal-affix/src/Affix", ['exports', 'metal/s
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Affix = (function (_Attribute) {
+	var Affix = function (_Attribute) {
 		_inherits(Affix, _Attribute);
 
 		function Affix(opt_config) {
@@ -135,7 +135,7 @@ define("frontend-js-metal-web@1.0.0/metal-affix/src/Affix", ['exports', 'metal/s
 		};
 
 		return Affix;
-	})(_Attribute3.default);
+	}(_Attribute3.default);
 
 	Affix.prototype.registerMetalComponent && Affix.prototype.registerMetalComponent(Affix, 'Affix')
 	Affix.Position = {

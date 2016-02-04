@@ -1,0 +1,35 @@
+{namespace Templates.List}
+
+/**
+ * This renders the main element
+ * @param? elementClasses
+ * @param id
+ * @skipUpdates elementClasses
+ */
+{template .render}
+	<div id="{$id}" class="list component{$elementClasses ? ' ' + $elementClasses : ''}">
+		{call .items data="all" /}
+	</div>
+{/template}
+
+/**
+ * This renders the main element
+ * @param id
+ * @param items
+ * @param itemsHtml
+ */
+{template .items}
+	<ul id="{$id}-items" class="list-group" data-onclick="handleClick">
+		{if isNonnull($itemsHtml)}
+			{$itemsHtml}
+		{else}
+			{foreach $item in $items}
+				{call Templates.ListItem.render}
+					{param id: $id + '-items-' + index($item) /}
+					{param index: index($item) /}
+					{param item: $item /}
+				{/call}
+			{/foreach}
+		{/if}
+	</ul>
+{/template}

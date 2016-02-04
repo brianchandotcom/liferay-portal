@@ -1,0 +1,50 @@
+{namespace Templates.ListItem}
+
+/**
+ * @param id
+ * @param index
+ * @param item
+ * @param? elementClasses
+ * @skipUpdates elementClasses
+ */
+{template .render}
+	<li id="{$id}" class="listitem list-group-item component{$elementClasses ? ' ' + $elementClasses : ''} clearfix" data-index="{$index}">
+		{call .item data="all" /}
+	</li>
+{/template}
+
+/**
+ * @param item
+ */
+{template .item}
+	{if $item.avatar}
+		<span class="list-image pull-left {$item.avatar.class}">
+			{$item.avatar.content}
+		</span>
+	{/if}
+	<div class="list-main-content pull-left">
+		<div class="list-text-primary">{$item.textPrimary}</div>
+		{if $item.textSecondary}
+			<div class="list-text-secondary">{$item.textSecondary}</div>
+		{/if}
+	</div>
+	{if $item.icons}
+		<div class="list-icons pull-right">
+			{foreach $icon in $item.icons}
+				<span class="list-icon {$icon}"></span>
+			{/foreach}
+		</div>
+	{/if}
+	{if $item.iconsHtml}
+		<div class="list-icons pull-right">
+			{foreach $iconHtml in $item.iconsHtml}
+				{$iconHtml}
+			{/foreach}
+		</div>
+	{/if}
+	{if $item.label}
+		<span class="label list-label pull-right {$item.label.class}">
+			{$item.label.content}
+		</span>
+	{/if}
+{/template}

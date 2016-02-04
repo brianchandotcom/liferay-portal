@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Position'], function (exports, _Position) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'metal-position/src/Position'], function (exports, _Position) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 		}
 	}
 
-	var Align = (function () {
+	var Align = function () {
 		function Align() {
 			_classCallCheck(this, Align);
 		}
@@ -150,7 +150,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 		};
 
 		return Align;
-	})();
+	}();
 
 	Align.TopCenter = 0;
 	Align.TopRight = 1;

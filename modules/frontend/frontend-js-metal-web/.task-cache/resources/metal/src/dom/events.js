@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/dom/events", ['./dom', './features'], function (_dom, _features) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/dom/events", ['metal/src/dom/dom', 'metal/src/dom/features'], function (_dom, _features) {
 	var _dom2 = _interopRequireDefault(_dom);
 
 	var _features2 = _interopRequireDefault(_features);

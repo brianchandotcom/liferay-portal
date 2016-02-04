@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+  'use strict';
+
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
@@ -57,12 +57,12 @@ define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown.soy", ['exports'
     Templates.Dropdown = {};
   }
 
-  Templates.Dropdown.content = function (opt_data, opt_ignored, opt_ijData) {
+  Templates.Dropdown.render = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="dropdown component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + soy.$$escapeHtmlAttribute(opt_data.expanded ? ' open' : '') + '">' + (opt_data.header ? soy.$$escapeHtml(opt_data.header) : '') + Templates.Dropdown.body(opt_data, null, opt_ijData) + '</div>');
   };
 
   if (goog.DEBUG) {
-    Templates.Dropdown.content.soyTemplateName = 'Templates.Dropdown.content';
+    Templates.Dropdown.render.soyTemplateName = 'Templates.Dropdown.render';
   }
 
   Templates.Dropdown.body = function (opt_data, opt_ignored, opt_ijData) {
@@ -73,10 +73,10 @@ define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown.soy", ['exports'
     Templates.Dropdown.body.soyTemplateName = 'Templates.Dropdown.body';
   }
 
-  Templates.Dropdown.content.params = ["header", "id"];
+  Templates.Dropdown.render.params = ["header", "id"];
   Templates.Dropdown.body.params = ["body", "id"];
 
-  var Dropdown = (function (_Component) {
+  var Dropdown = function (_Component) {
     _inherits(Dropdown, _Component);
 
     function Dropdown() {
@@ -86,7 +86,7 @@ define("frontend-js-metal-web@1.0.0/metal-dropdown/src/Dropdown.soy", ['exports'
     }
 
     return Dropdown;
-  })(_Component3.default);
+  }(_Component3.default);
 
   Dropdown.prototype.registerMetalComponent && Dropdown.prototype.registerMetalComponent(Dropdown, 'Dropdown')
   Dropdown.RENDERER = _SoyRenderer2.default;

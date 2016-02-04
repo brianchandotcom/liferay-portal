@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal-modal/src/Modal", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/events/EventHandler', './Modal.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _EventHandler, _Modal, _JQueryAdapter) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-modal/src/Modal", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/events/EventHandler', 'metal-modal/src/Modal.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _EventHandler, _Modal, _JQueryAdapter) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -53,7 +53,7 @@ define("frontend-js-metal-web@1.0.0/metal-modal/src/Modal", ['exports', 'metal/s
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Modal = (function (_ModalBase) {
+	var Modal = function (_ModalBase) {
 		_inherits(Modal, _ModalBase);
 
 		function Modal(opt_config) {
@@ -163,7 +163,7 @@ define("frontend-js-metal-web@1.0.0/metal-modal/src/Modal", ['exports', 'metal/s
 		};
 
 		return Modal;
-	})(_Modal2.default);
+	}(_Modal2.default);
 
 	Modal.prototype.registerMetalComponent && Modal.prototype.registerMetalComponent(Modal, 'Modal')
 	Modal.ELEMENT_CLASSES = 'modal';

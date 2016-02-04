@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar", ['exports', 'metal/src/core', 'metal/src/dom/dom', './ProgressBar.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _ProgressBar, _JQueryAdapter) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal-progressbar/src/ProgressBar.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _ProgressBar, _JQueryAdapter) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -51,7 +51,7 @@ define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar", ['export
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var ProgressBar = (function (_ProgressBarBase) {
+	var ProgressBar = function (_ProgressBarBase) {
 		_inherits(ProgressBar, _ProgressBarBase);
 
 		function ProgressBar() {
@@ -130,7 +130,7 @@ define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar", ['export
 		};
 
 		return ProgressBar;
-	})(_ProgressBar2.default);
+	}(_ProgressBar2.default);
 
 	ProgressBar.prototype.registerMetalComponent && ProgressBar.prototype.registerMetalComponent(ProgressBar, 'ProgressBar')
 	ProgressBar.ATTRS = {

@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry", ['exports', '../core'], function (exports, _core) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry", ['exports', 'metal/src/core'], function (exports, _core) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry", ['ex
 		}
 	}
 
-	var ComponentRegistry = (function () {
+	var ComponentRegistry = function () {
 		function ComponentRegistry() {
 			_classCallCheck(this, ComponentRegistry);
 		}
@@ -50,7 +50,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry", ['ex
 		};
 
 		return ComponentRegistry;
-	})();
+	}();
 
 	ComponentRegistry.components_ = {};
 	exports.default = ComponentRegistry;

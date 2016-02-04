@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/array/array", ['exports', '../core'], function (exports, _core) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/array/array", ['exports', 'metal/src/core'], function (exports, _core) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/array/array", ['exports', 'metal/s
 		}
 	}
 
-	var array = (function () {
+	var array = function () {
 		function array() {
 			_classCallCheck(this, array);
 		}
@@ -83,7 +83,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/array/array", ['exports', 'metal/s
 		};
 
 		return array;
-	})();
+	}();
 
 	exports.default = array;
 });

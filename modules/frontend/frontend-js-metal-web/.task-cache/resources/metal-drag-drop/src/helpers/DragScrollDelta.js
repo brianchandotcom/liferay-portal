@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragScrollDelta", ['exports', 'metal/src/dom/dom', 'metal/src/events/EventEmitter', 'metal/src/events/EventHandler', 'metal-position/src/Position'], function (exports, _dom, _EventEmitter2, _EventHandler, _Position) {
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -51,7 +51,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragScrollDelta"
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var DragScrollDelta = (function (_EventEmitter) {
+	var DragScrollDelta = function (_EventEmitter) {
 		_inherits(DragScrollDelta, _EventEmitter);
 
 		function DragScrollDelta() {
@@ -107,7 +107,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragScrollDelta"
 		};
 
 		return DragScrollDelta;
-	})(_EventEmitter3.default);
+	}(_EventEmitter3.default);
 
 	DragScrollDelta.prototype.registerMetalComponent && DragScrollDelta.prototype.registerMetalComponent(DragScrollDelta, 'DragScrollDelta')
 	exports.default = DragScrollDelta;

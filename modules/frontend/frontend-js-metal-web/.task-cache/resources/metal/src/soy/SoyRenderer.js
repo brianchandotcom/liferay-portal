@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soyutils', '../core', '../dom/dom', '../object/object', '../component/Component', '../component/ComponentRegistry', '../component/ComponentRenderer', './SoyAop', './SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soyutils', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -61,7 +61,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 
 	var ijData = {};
 
-	var SoyRenderer = (function (_ComponentRenderer) {
+	var SoyRenderer = function (_ComponentRenderer) {
 		_inherits(SoyRenderer, _ComponentRenderer);
 
 		function SoyRenderer() {
@@ -83,7 +83,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 				var templateFn = _SoyAop2.default.getOriginalFn(templates[templateName]);
 
 				if (SoyRenderer.isSurfaceTemplate_(templateName, templateFn)) {
-					var surfaceId = templateName === 'content' ? component.id : templateName;
+					var surfaceId = templateName === 'render' ? component.id : templateName;
 					component.addSurface(surfaceId, {
 						renderAttrs: templateFn.params,
 						templateComponentName: name,
@@ -134,7 +134,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 
 			var name = 'TemplateComponent' + _core2.default.getUid();
 
-			var TemplateComponent = (function (_Component) {
+			var TemplateComponent = function (_Component) {
 				_inherits(TemplateComponent, _Component);
 
 				function TemplateComponent() {
@@ -144,7 +144,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 				}
 
 				return TemplateComponent;
-			})(_Component3.default);
+			}(_Component3.default);
 
 			TemplateComponent.prototype.registerMetalComponent && TemplateComponent.prototype.registerMetalComponent(TemplateComponent, 'TemplateComponent')
 			TemplateComponent.RENDERER = SoyRenderer;
@@ -152,7 +152,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 			_ComponentRegistry2.default.register(TemplateComponent, name);
 
 			_SoyTemplates2.default.set(name, {
-				content: function content(opt_attrs, opt_ignored, opt_ijData) {
+				render: function render(opt_attrs, opt_ignored, opt_ijData) {
 					return _SoyAop2.default.getOriginalFn(templateFn)(data, opt_ignored, opt_ijData);
 				}
 			});
@@ -211,7 +211,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 		SoyRenderer.handleInterceptedCall_ = function handleInterceptedCall_(component, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData) {
 			if (SoyRenderer.skipInnerCalls_) {
 				return '';
-			} else if (templateName === 'content') {
+			} else if (templateName === 'render') {
 				return this.handleComponentCall_.call(this, component, templateComponentName, data);
 			} else {
 				return this.handleSurfaceCall_.call(this, component, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData);
@@ -278,7 +278,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 		};
 
 		return SoyRenderer;
-	})(_ComponentRenderer3.default);
+	}(_ComponentRenderer3.default);
 
 	SoyRenderer.prototype.registerMetalComponent && SoyRenderer.prototype.registerMetalComponent(SoyRenderer, 'SoyRenderer')
 	var originalSanitizedHtmlFromFn = soydata.SanitizedHtml.from;

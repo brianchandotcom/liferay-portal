@@ -1,6 +1,6 @@
-'use strict';
+define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', '../core'], function (exports, _core) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', 'metal/src/core'], function (exports, _core) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -19,7 +19,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', 'metal
 		}
 	}
 
-	var object = (function () {
+	var object = function () {
 		function object() {
 			_classCallCheck(this, object);
 		}
@@ -66,7 +66,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', 'metal
 		};
 
 		return object;
-	})();
+	}();
 
 	exports.default = object;
 });

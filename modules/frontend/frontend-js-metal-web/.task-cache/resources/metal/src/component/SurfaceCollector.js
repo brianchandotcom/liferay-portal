@@ -1,8 +1,8 @@
-'use strict';
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+define("frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector", ['exports', '../object/object', '../disposable/Disposable'], function (exports, _object, _Disposable2) {
+	'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector", ['exports', 'metal/src/object/object', 'metal/src/disposable/Disposable'], function (exports, _object, _Disposable2) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -47,7 +47,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector", ['exp
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var SurfaceCollector = (function (_Disposable) {
+	var SurfaceCollector = function (_Disposable) {
 		_inherits(SurfaceCollector, _Disposable);
 
 		function SurfaceCollector() {
@@ -89,7 +89,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector", ['exp
 		};
 
 		return SurfaceCollector;
-	})(_Disposable3.default);
+	}(_Disposable3.default);
 
 	SurfaceCollector.prototype.registerMetalComponent && SurfaceCollector.prototype.registerMetalComponent(SurfaceCollector, 'SurfaceCollector')
 	exports.default = SurfaceCollector;

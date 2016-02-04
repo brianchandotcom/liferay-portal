@@ -1,8 +1,8 @@
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+  'use strict';
+
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
@@ -57,7 +57,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy", ['exports', 
     Templates.Tooltip = {};
   }
 
-  Templates.Tooltip.content = function (opt_data, opt_ignored, opt_ijData) {
+  Templates.Tooltip.render = function (opt_data, opt_ignored, opt_ijData) {
     var output = '';
     var positionClasses__soy3 = ['top', 'right', 'bottom', 'left'];
     var positionClass__soy4 = opt_data.position != null ? positionClasses__soy3[opt_data.position] : 'bottom';
@@ -66,7 +66,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy", ['exports', 
   };
 
   if (goog.DEBUG) {
-    Templates.Tooltip.content.soyTemplateName = 'Templates.Tooltip.content';
+    Templates.Tooltip.render.soyTemplateName = 'Templates.Tooltip.render';
   }
 
   Templates.Tooltip.inner = function (opt_data, opt_ignored, opt_ijData) {
@@ -77,10 +77,10 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy", ['exports', 
     Templates.Tooltip.inner.soyTemplateName = 'Templates.Tooltip.inner';
   }
 
-  Templates.Tooltip.content.params = ["id"];
+  Templates.Tooltip.render.params = ["id"];
   Templates.Tooltip.inner.params = ["title", "id"];
 
-  var Tooltip = (function (_Component) {
+  var Tooltip = function (_Component) {
     _inherits(Tooltip, _Component);
 
     function Tooltip() {
@@ -90,7 +90,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip.soy", ['exports', 
     }
 
     return Tooltip;
-  })(_Component3.default);
+  }(_Component3.default);
 
   Tooltip.prototype.registerMetalComponent && Tooltip.prototype.registerMetalComponent(Tooltip, 'Tooltip')
   Tooltip.RENDERER = _SoyRenderer2.default;

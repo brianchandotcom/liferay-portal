@@ -227,9 +227,6 @@
 	<bean id="com.liferay.portlet.blogs.service.BlogsStatsUserLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" />
 	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.calendar.service.CalEventLocalService" class="com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl" />
-	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventPersistence" class="com.liferay.portlet.calendar.service.persistence.impl.CalEventPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventFinder" class="com.liferay.portlet.calendar.service.persistence.impl.CalEventFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" />

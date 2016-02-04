@@ -147,8 +147,6 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(RESOURCE_NAME);
-
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "calendars")) {
@@ -201,8 +199,6 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
-
-		portletDataContext.importPortletPermissions(RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "calendars")) {
 			Element calendarsElement =
@@ -348,9 +344,6 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 		_calendarResourceLocalService = calendarResourceLocalService;
 	}
-
-	protected static final String RESOURCE_NAME =
-		"com.liferay.portlet.calendar";
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarLocalService _calendarLocalService;

@@ -16,6 +16,7 @@ package com.liferay.portal.language.servlet.filter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.CachingResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -119,10 +120,11 @@ public class LanguageFilterTracker {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
 
 			ResourceBundleLoader resourceBundleLoader =
-				new AggregateResourceBundleLoader(
-					ResourceBundleUtil.getResourceBundleLoader(
-						"content.Language", classLoader),
-					LanguageResources.RESOURCE_BUNDLE_LOADER);
+				new CachingResourceBundleLoader(
+					new AggregateResourceBundleLoader(
+						ResourceBundleUtil.getResourceBundleLoader(
+							"content.Language", classLoader),
+						LanguageResources.RESOURCE_BUNDLE_LOADER));
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 

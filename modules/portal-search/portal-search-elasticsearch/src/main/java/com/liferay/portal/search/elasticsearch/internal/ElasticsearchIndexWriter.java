@@ -200,7 +200,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				_log.info(
 					"No index found while attempting to delete documents for " +
 						className + " in index: " +
-						searchContext.getCompanyId());
+							searchContext.getCompanyId());
 			}
 		}
 		catch (Exception e) {

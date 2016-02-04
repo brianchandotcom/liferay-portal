@@ -33,7 +33,7 @@ import java.io.File;
 public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() {
+	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
 		AutoDeployer autoDeployer = null;
 
 		if (_isPortletDeployer) {

@@ -62,7 +62,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		return isDeployable(autoDeploymentContext.getFile());
 	}
 
-	protected abstract AutoDeployer buildAutoDeployer();
+	protected abstract AutoDeployer buildAutoDeployer()
+		throws AutoDeployException;
 
 	protected abstract String getPluginPathInfoMessage(File file);
 

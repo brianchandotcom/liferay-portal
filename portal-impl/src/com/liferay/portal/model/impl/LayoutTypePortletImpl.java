@@ -804,9 +804,13 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isPortletEmbedded(String portletId) {
-		Layout layout = getLayout();
+		for (Portlet embeddedPortlet : getEmbeddedPortlets()) {
+			if (portletId.equals(embeddedPortlet.getPortletId())) {
+				return true;
+			}
+		}
 
-		return layout.isPortletEmbedded(portletId);
+		return false;
 	}
 
 	@Override

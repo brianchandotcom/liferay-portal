@@ -210,6 +210,10 @@ if (groupThreadsUserId > 0) {
 							%>
 
 							<span class="h6">
+								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+							</span>
+
+							<span class="h6">
 								<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />
 							</span>
 

@@ -119,7 +119,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
-	<td>//input[contains(@name,'ExportImportPortlet_DELETIONS')]</td>
+	<td>//input[contains(@name,'DELETIONS')]</td>
 	<td></td>
 </tr>
 <tr>

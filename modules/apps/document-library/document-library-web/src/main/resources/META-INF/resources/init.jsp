@@ -56,7 +56,6 @@ page import="com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredExcepti
 page import="com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException" %><%@
 page import="com.liferay.dynamic.data.mapping.kernel.StructureNameException" %><%@
-page import="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil" %><%@

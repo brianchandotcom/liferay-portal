@@ -218,6 +218,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getTitle(Locale locale) {
+		return LanguageUtil.get(locale, "structures");
+	}
+
+	@Override
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classPK)

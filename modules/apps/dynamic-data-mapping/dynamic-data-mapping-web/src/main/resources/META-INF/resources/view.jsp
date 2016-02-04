@@ -38,7 +38,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle(LanguageUtil.get(request, "structures"));
+	renderResponse.setTitle(ddmDisplay.getTitle(locale));
 	%>
 
 </c:if>

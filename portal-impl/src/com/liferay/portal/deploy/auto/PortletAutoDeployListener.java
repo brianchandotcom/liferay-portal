@@ -32,35 +32,42 @@ import java.io.File;
  */
 public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
-	public PortletAutoDeployListener() {
-		_autoDeployer = new PortletAutoDeployer();
-	}
-
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
+		AutoDeployer autoDeployer = null;
+
+		if (_isPortletDeployer) {
+			autoDeployer = new PortletAutoDeployer();
+		}
+		else if (_isMvcDeployer) {
+			autoDeployer = getMvcDeployer();
+		}
+		else if (_isPhpDeployer) {
+			autoDeployer = getPhpDeployer();
+		}
+		else if (_isWaiDeployer) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Deploying package as a web application");
+			}
+
+			autoDeployer = getWaiDeployer();
+		}
+
 		if (_log.isDebugEnabled()) {
-			Class<?> clazz = _autoDeployer.getClass();
+			Class<?> clazz = autoDeployer.getClass();
 
 			_log.debug("Using deployer " + clazz.getName());
 		}
 
-		return new ThreadSafeAutoDeployer(_autoDeployer);
+		return new ThreadSafeAutoDeployer(autoDeployer);
 	}
 
 	protected AutoDeployer getMvcDeployer() {
-		if (_mvcPortletAutoDeployer == null) {
-			_mvcPortletAutoDeployer = new MVCPortletAutoDeployer();
-		}
-
-		return _mvcPortletAutoDeployer;
+		return new MVCPortletAutoDeployer();
 	}
 
 	protected AutoDeployer getPhpDeployer() throws AutoDeployException {
-		if (_phpPortletAutoDeployer == null) {
-			_phpPortletAutoDeployer = new PHPPortletAutoDeployer();
-		}
-
-		return _phpPortletAutoDeployer;
+		return new PHPPortletAutoDeployer();
 	}
 
 	@Override
@@ -74,11 +81,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	}
 
 	protected AutoDeployer getWaiDeployer() throws AutoDeployException {
-		if (_waiAutoDeployer == null) {
-			_waiAutoDeployer = new WAIAutoDeployer();
-		}
-
-		return _waiAutoDeployer;
+		return new WAIAutoDeployer();
 	}
 
 	@Override
@@ -89,17 +92,19 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		if (pluginAutoDeployListenerHelper.isMatchingFile(
 				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
 
+			_isPortletDeployer = true;
+
 			return true;
 		}
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile("index_mvc.jsp")) {
-			_autoDeployer = getMvcDeployer();
+			_isMvcDeployer = true;
 
 			return true;
 		}
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
-			_autoDeployer = getPhpDeployer();
+			_isPhpDeployer = true;
 
 			return true;
 		}
@@ -116,7 +121,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 				_log.info("Deploying package as a web application");
 			}
 
-			_autoDeployer = getWaiDeployer();
+			_isWaiDeployer = true;
 
 			return true;
 		}
@@ -127,9 +132,9 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAutoDeployListener.class);
 
-	private AutoDeployer _autoDeployer;
-	private MVCPortletAutoDeployer _mvcPortletAutoDeployer;
-	private PHPPortletAutoDeployer _phpPortletAutoDeployer;
-	private WAIAutoDeployer _waiAutoDeployer;
+	private boolean _isMvcDeployer;
+	private boolean _isPhpDeployer;
+	private boolean _isPortletDeployer;
+	private boolean _isWaiDeployer;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
@@ -83,5 +84,9 @@ public interface CheckboxDDMFormFieldTypeSettings
 		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	public boolean showAsSwitcher();
+
+	@DDMFormField(visibilityExpression = "false")
+	@Override
+	public DDMFormFieldValidation validation();
 
 }

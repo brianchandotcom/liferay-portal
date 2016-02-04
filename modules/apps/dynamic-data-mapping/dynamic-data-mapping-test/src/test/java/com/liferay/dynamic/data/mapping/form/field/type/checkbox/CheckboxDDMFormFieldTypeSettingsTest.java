@@ -76,6 +76,13 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(
 			"true", showAsSwitcherDDMFormField.getProperty("showAsSwitcher"));
+
+		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
+			"validation");
+
+		Assert.assertNotNull(validationDDMFormField);
+		Assert.assertEquals(
+			"false", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

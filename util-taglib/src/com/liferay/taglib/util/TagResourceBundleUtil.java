@@ -42,17 +42,8 @@ public class TagResourceBundleUtil {
 	public static ResourceBundle getResourceBundle(
 		HttpServletRequest request, Locale locale) {
 
-		ServletContext servletContext = request.getServletContext();
-
-		String servletContextName = servletContext.getServletContextName();
-
-		ResourceBundleLoader resourceBundleLoader = null;
-
-		if (Validator.isNotNull(servletContextName)) {
-			resourceBundleLoader = ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByServletContextName(
-					servletContext.getServletContextName());
-		}
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader(
+			request);
 
 		if (resourceBundleLoader != null) {
 			return resourceBundleLoader.loadResourceBundle(
@@ -67,6 +58,21 @@ public class TagResourceBundleUtil {
 
 		return new AggregateResourceBundle(
 			portletResourceBundle, portalResourceBundle);
+	}
+
+	protected static ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest request) {
+
+		ServletContext servletContext = request.getServletContext();
+
+		String servletContextName = servletContext.getServletContextName();
+
+		if (Validator.isNull(servletContextName)) {
+			return null;
+		}
+
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByServletContextName(servletContextName);
 	}
 
 	public static ResourceBundle getResourceBundle(PageContext pageContext) {

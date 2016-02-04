@@ -90,19 +90,20 @@ public class GoogleAutoLogin extends BaseAutoLogin {
 		return null;
 	}
 
-	@Reference(unbind = "-")
 	protected void setGoogleAuthorization(
 		GoogleAuthorization googleAuthorization) {
 
 		_googleAuthorization = googleAuthorization;
 	}
 
-	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
+	@Reference
 	private GoogleAuthorization _googleAuthorization;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

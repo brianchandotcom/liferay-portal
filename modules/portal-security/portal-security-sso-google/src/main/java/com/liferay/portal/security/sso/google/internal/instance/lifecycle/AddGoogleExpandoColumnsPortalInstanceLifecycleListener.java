@@ -95,34 +95,18 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 			expandoColumn.getColumnId(), properties.toString());
 	}
 
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoColumnLocalService(
-		ExpandoColumnLocalService expandoColumnLocalService) {
-
-		_expandoColumnLocalService = expandoColumnLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoTableLocalService(
-		ExpandoTableLocalService expandoTableLocalService) {
-
-		_expandoTableLocalService = expandoTableLocalService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

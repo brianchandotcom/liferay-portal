@@ -163,6 +163,8 @@
 	</command>
 
 	<command name="EditDDLRecordViaMyWorkflowTasks" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<description message="This is a use case for LPS-61212." />
 
 		<execute macro="Navigator#openURL" />

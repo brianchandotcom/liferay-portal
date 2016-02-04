@@ -14,18 +14,18 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Roberto Díaz
@@ -40,7 +40,10 @@ public abstract class BaseItemSelectorCriterionHandler
 
 		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 
-		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
+		List<ItemSelectorView> itemSelectorViews =
+			_serviceTrackerMap.getService(itemSelectorCriterion.getClass());
+
+		for (ItemSelectorView itemSelectorView : itemSelectorViews) {
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
@@ -61,9 +64,11 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorView.class,
-			new ItemSelectorViewServiceTrackerCustomizer(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ItemSelectorView.class, null,
+			new ItemSelectorViewServiceReferenceMapper(bundleContext),
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator("service.ranking")));
 	}
 
 	private boolean _isItemSelectorViewSupported(
@@ -92,59 +97,39 @@ public abstract class BaseItemSelectorCriterionHandler
 		return false;
 	}
 
-	private final List<ItemSelectorView<?>> _itemSelectorViews =
-		new CopyOnWriteArrayList<>();
-	private ServiceTracker _serviceTracker;
+	private ServiceTrackerMap<Class, List<ItemSelectorView>> _serviceTrackerMap;
 
-	private class ItemSelectorViewServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ItemSelectorView, ItemSelectorView> {
+	private class ItemSelectorViewServiceReferenceMapper
+		implements ServiceReferenceMapper<Class, ItemSelectorView> {
 
-		public ItemSelectorViewServiceTrackerCustomizer(
+		public ItemSelectorViewServiceReferenceMapper(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;
 		}
 
 		@Override
-		public ItemSelectorView addingService(
-			ServiceReference<ItemSelectorView> reference) {
+		public void map(
+			ServiceReference<ItemSelectorView> serviceReference,
+			Emitter<Class> emitter) {
 
-			ItemSelectorView service = _bundleContext.getService(reference);
+			ItemSelectorView service = _bundleContext.getService(
+				serviceReference);
 
-			Class<?> itemSelectorCriterionClass =
-				service.getItemSelectorCriterionClass();
+			try {
+				Class<?> itemSelectorCriterionClass =
+					service.getItemSelectorCriterionClass();
 
-			if (!itemSelectorCriterionClass.isAssignableFrom(
-					BaseItemSelectorCriterionHandler.this.
-						getItemSelectorCriterionClass())) {
+				if (itemSelectorCriterionClass.isAssignableFrom(
+						BaseItemSelectorCriterionHandler.this.
+							getItemSelectorCriterionClass())) {
 
-				return null;
+					emitter.emit(service.getItemSelectorCriterionClass());
+				}
 			}
-
-			_itemSelectorViews.add(service);
-
-			return service;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ItemSelectorView> serviceReference,
-			ItemSelectorView itemSelectorView) {
-
-			removedService(serviceReference, itemSelectorView);
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ItemSelectorView> serviceReference,
-			ItemSelectorView itemSelectorView) {
-
-			_itemSelectorViews.remove(itemSelectorView);
-
-			_bundleContext.ungetService(serviceReference);
+			finally {
+				_bundleContext.ungetService(serviceReference);
+			}
 		}
 
 		private final BundleContext _bundleContext;

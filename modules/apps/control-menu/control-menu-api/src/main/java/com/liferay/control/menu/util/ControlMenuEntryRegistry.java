@@ -31,7 +31,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -91,7 +90,8 @@ public class ControlMenuEntryRegistry {
 			bundleContext, ControlMenuEntry.class,
 			"(control.menu.category.key=*)",
 			new ControlMenuEntryServiceReferenceMapper(),
-			new ServiceRankingPropertyServiceReferenceComparator());
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator("service.ranking")));
 	}
 
 	@Deactivate
@@ -104,22 +104,5 @@ public class ControlMenuEntryRegistry {
 
 	private ServiceTrackerMap<String, List<ControlMenuEntry>>
 		_serviceTrackerMap;
-
-	private static class ServiceRankingPropertyServiceReferenceComparator
-		extends PropertyServiceReferenceComparator<ControlMenuEntry> {
-
-		public ServiceRankingPropertyServiceReferenceComparator() {
-			super("service.ranking");
-		}
-
-		@Override
-		public int compare(
-			ServiceReference<ControlMenuEntry> serviceReference1,
-			ServiceReference<ControlMenuEntry> serviceReference2) {
-
-			return -(super.compare(serviceReference1, serviceReference2));
-		}
-
-	}
 
 }

@@ -78,6 +78,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -107,6 +108,7 @@ import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
 import org.gradle.api.tasks.testing.logging.TestLogEvent;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
+import org.gradle.external.javadoc.MinimalJavadocOptions;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -919,6 +921,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		configureTaskJavadocFilter(javadoc);
+		configureTaskJavadocOptions(javadoc);
 	}
 
 	protected void configureTaskJavadocFilter(Javadoc javadoc) {
@@ -967,6 +970,33 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			else {
 				javadoc.include(pattern);
 			}
+		}
+	}
+
+	protected void configureTaskJavadocOptions(Javadoc javadoc) {
+		MinimalJavadocOptions minimalJavadocOptions = javadoc.getOptions();
+		Project project = javadoc.getProject();
+
+		File overviewFile = null;
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
+
+		for (File dir : sourceDirectorySet.getSrcDirs()) {
+			File file = new File(dir, "overview.html");
+
+			if (file.exists()) {
+				overviewFile = file;
+
+				break;
+			}
+		}
+
+		if (overviewFile != null) {
+			minimalJavadocOptions.setOverview(
+				project.relativePath(overviewFile));
 		}
 	}
 

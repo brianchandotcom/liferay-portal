@@ -40,17 +40,17 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			autoDeployer = new PortletAutoDeployer();
 		}
 		else if (_isMvcDeployer) {
-			autoDeployer = getMvcDeployer();
+			autoDeployer = new MVCPortletAutoDeployer();
 		}
 		else if (_isPhpDeployer) {
-			autoDeployer = getPhpDeployer();
+			autoDeployer = new PHPPortletAutoDeployer();
 		}
 		else if (_isWaiDeployer) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying package as a web application");
 			}
 
-			autoDeployer = getWaiDeployer();
+			autoDeployer = new WAIAutoDeployer();
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -62,14 +62,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		return new ThreadSafeAutoDeployer(autoDeployer);
 	}
 
-	protected AutoDeployer getMvcDeployer() {
-		return new MVCPortletAutoDeployer();
-	}
-
-	protected AutoDeployer getPhpDeployer() throws AutoDeployException {
-		return new PHPPortletAutoDeployer();
-	}
-
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copying portlets for " + file.getPath();
@@ -78,10 +70,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getSuccessMessage(File file) {
 		return "Portlets for " + file.getPath() + " copied successfully";
-	}
-
-	protected AutoDeployer getWaiDeployer() throws AutoDeployException {
-		return new WAIAutoDeployer();
 	}
 
 	@Override

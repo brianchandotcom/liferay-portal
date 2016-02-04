@@ -69,39 +69,21 @@ public class ConfigurationIndexingExtender {
 		_bundleTracker = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationModelIndexer(
-		ConfigurationModelIndexer configurationModelIndexer) {
-
-		_configurationModelIndexer = configurationModelIndexer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
-		_indexWriterHelper = indexWriterHelper;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationIndexingExtender.class);
 
 	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
+
+	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	@Reference
 	private ConfigurationModelIndexer _configurationModelIndexer;
+
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
 	private class ConfigurationModelsBundleTrackerCustomizer

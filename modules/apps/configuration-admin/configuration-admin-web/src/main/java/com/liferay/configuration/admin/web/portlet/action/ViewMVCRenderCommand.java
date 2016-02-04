@@ -92,13 +92,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

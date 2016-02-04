@@ -263,19 +263,10 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
-		_indexWriterHelper = indexWriterHelper;
-	}
-
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
 }

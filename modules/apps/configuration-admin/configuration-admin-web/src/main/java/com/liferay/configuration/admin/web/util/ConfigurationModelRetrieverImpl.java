@@ -327,22 +327,12 @@ public class ConfigurationModelRetrieverImpl
 		return sb.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigAdminService(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExtendedMetaTypeService(
-		ExtendedMetaTypeService extendedMetaTypeService) {
-
-		_extendedMetaTypeService = extendedMetaTypeService;
-	}
-
 	private BundleContext _bundleContext;
+
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 	private static class ConfigurationCategoryComparator

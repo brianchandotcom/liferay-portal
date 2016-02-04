@@ -115,19 +115,10 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
-		_indexerRegistry = indexerRegistry;
-	}
-
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 }

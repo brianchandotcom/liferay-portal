@@ -55,6 +55,13 @@ public class SitesUtil {
 	}
 
 	public static void addPortletBreadcrumbEntries(
+			Group group, HttpServletRequest request, PortletURL portletURL)
+		throws Exception {
+
+		getSites().addPortletBreadcrumbEntries(group, request, portletURL);
+	}
+
+	public static void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {

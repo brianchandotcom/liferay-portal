@@ -35,48 +35,44 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 		/>
 	</div>
 
-	<div class="hide">
-		<div id="<portlet:namespace/>siteSelectorContent">
-			<liferay-util:include page="/sites/my_sites.jsp" servletContext="<%= application %>" />
+	<%
+	String eventName = liferayPortletResponse.getNamespace() + "selectSite";
 
-			<c:if test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getManageSitesURL()) %>">
-				<div class="manage-sites-link">
-					<aui:icon image="sites" label='<%= LanguageUtil.get(resourceBundle, "manage-sites") %>' markupView="lexicon" url="<%= siteAdministrationPanelCategoryDisplayContext.getManageSitesURL() %>" />
-				</div>
-			</c:if>
-		</div>
-	</div>
+	ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteAdministrationWebKeys.ITEM_SELECTOR);
 
-	<aui:script position="auto" use="aui-popover,event-outside">
-		var trigger = A.one('#<portlet:namespace/>manageSitesLink');
+	SiteItemSelectorCriterion siteItemSelectorCriterion = new SiteItemSelectorCriterion();
 
-		var popOver = new A.Popover(
-			{
-				align: {
-					node: '#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler',
-					points: [A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
-				},
-				bodyContent: A.one('#<portlet:namespace/>siteSelectorContent'),
-				constrain: true,
-				cssClass: 'product-menu',
-				hideOn: [
+	List<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
+
+	desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+	siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+	PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, siteItemSelectorCriterion);
+	%>
+
+	<aui:script sandbox="<%= true %>">
+		$('#<portlet:namespace />manageSitesLink').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
 					{
-						eventName: 'key',
-						keyCode: 'esc',
-						node: A.one('document')
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						eventName: '<%= eventName %>',
+						id: '<portlet:namespace />selectSite',
+						title: '<liferay-ui:message key="select-site" />',
+						uri: '<%= itemSelectorURL.toString() %>'
 					},
-					{
-						eventName: 'clickoutside',
-						node: A.one('document')
+					function(event) {
+						location.href = event.url;
 					}
-				],
-				position: 'right',
-				trigger: trigger,
-				visible: false,
-				width: 300,
-				zIndex: Liferay.zIndex.TOOLTIP
+				);
 			}
-		).render();
+		);
 	</aui:script>
 </c:if>
 

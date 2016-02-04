@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[contains(@class,'workflow-status')]/strong</td>
+	<td>//span[contains(@class,'workflow-status')]/strong | //span[@class='workflow-status']/span </td>
 	<td></td>
 </tr>
 <tr>

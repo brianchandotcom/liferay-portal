@@ -36,6 +36,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletSetupUtil;
+import com.liferay.portlet.configuration.css.web.constants.PortletCSSPortletKeys;
 
 import java.io.IOException;
 
@@ -70,6 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + PortletCSSPortletKeys.PORTLET_CSS,
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class

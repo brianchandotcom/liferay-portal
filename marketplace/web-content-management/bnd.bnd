@@ -82,7 +82,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portlet.configuration.icon.refresh:1.0.0,\
 	com.liferay.portlet.configuration.icon.widget:1.0.0,\
 	com.liferay.portlet.configuration.web:1.0.0,\
-	com.liferay.portlet.css.web:1.0.0,\
+	com.liferay.portlet.configuration.css.web:1.0.0,\
 	com.liferay.portlet.display.template.web:1.0.0,\
 	com.liferay.portlet.display.template:1.0.0,\
 	com.liferay.portlet.sharing.web:1.0.0,\

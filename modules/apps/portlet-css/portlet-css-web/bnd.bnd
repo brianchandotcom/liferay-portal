@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portlet CSS Web
-Bundle-SymbolicName: com.liferay.portlet.css.web
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Management
-Web-ContextPath: /portlet-css-web
--include: ../../../../marketplace/web-content-management/bnd.bnd

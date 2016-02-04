@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins Workspace
 Bundle-SymbolicName: com.liferay.gradle.plugins.workspace
 Bundle-Version: 1.0.8
-Export-Package: com.liferay.gradle.plugins.workspace
+Export-Package: com.liferay.gradle.plugins.workspace.*
 -donotcopy: (\.gradle)

@@ -178,7 +178,17 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String[][] categoryPrefixAndNameArray = getCategoryPrefixAndNameArray();
 
+		StringBundler sb = new StringBundler(allDuplicateLines.size() + 4);
+
+		sb.append("The following language keys were used in multiple modules ");
+		sb.append("and have been consolidated, or they already existed in ");
+		sb.append("portal-impl\\src\\content\\Language.properties:");
+		sb.append("\n");
+
 		for (String line : allDuplicateLines) {
+			sb.append(line);
+			sb.append("\n");
+
 			String categoryName = getCategoryName(
 				line, categoryPrefixAndNameArray);
 
@@ -197,15 +207,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!coreLanguagePropertiesContent.equals(
-				newCoreLanguagePropertiesContent)) {
+		processErrorMessage(
+			"portal-impl/src/content/Language.properties", sb.toString());
 
-			processFormattedFile(
-				coreLanguagePropertiesFile,
-				"portal-impl/src/content/Language.properties",
-				coreLanguagePropertiesContent,
-				newCoreLanguagePropertiesContent);
-		}
+		processFormattedFile(
+			coreLanguagePropertiesFile,
+			"portal-impl/src/content/Language.properties",
+			coreLanguagePropertiesContent, newCoreLanguagePropertiesContent);
 	}
 
 	protected void formatPortalProperties(String fileName, String content)

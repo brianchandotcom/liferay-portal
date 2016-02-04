@@ -23,6 +23,8 @@
 
 			<aui:icon cssClass="close" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
 		</h4>
+
+		<div class="loading-animation"></div>
 	</div>
 </div>
 
@@ -30,6 +32,15 @@
 	var addToggle = $('#addToggleId');
 
 	addToggle.sideNavigation();
+
+	var addPanel = $('#addPanelId');
+
+	addPanel.on(
+		'urlLoaded.lexicon.sidenav',
+		function() {
+			addPanel.find('.loading-animation').remove();
+		}
+	);
 
 	A.one('#<portlet:namespace />closePanelAdd').on(
 		'click',

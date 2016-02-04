@@ -23,6 +23,8 @@
 
 			<aui:icon cssClass="close" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
 		</h4>
+
+		<div class="loading-animation"></div>
 	</div>
 </div>
 
@@ -30,6 +32,15 @@
 	var simulationToggle = $('#simulationToggleId');
 
 	simulationToggle.sideNavigation();
+
+	var simulationPanel = $('#simulationPanelId');
+
+	simulationPanel.on(
+		'urlLoaded.lexicon.sidenav',
+		function() {
+			simulationPanel.find('.loading-animation').remove();
+		}
+	);
 
 	A.one('#<portlet:namespace />closeSimulationPanel').on(
 		'click',

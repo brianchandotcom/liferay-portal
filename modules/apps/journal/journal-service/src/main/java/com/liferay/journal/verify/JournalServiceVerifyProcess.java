@@ -337,30 +337,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
-	protected void updateDynamicElements(List<Element> dynamicElements)
-		throws PortalException {
-
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
-
-		for (Element dynamicElement : dynamicElements) {
-			updateDynamicElements(dynamicElement.elements("dynamic-element"));
-
-			String name = dynamicElement.attributeValue("name");
-
-			int index = ddmFieldsCounter.get(name);
-
-			dynamicElement.addAttribute("index", String.valueOf(index));
-
-			String type = dynamicElement.attributeValue("type");
-
-			if (type.equals("image")) {
-				updateImageElement(dynamicElement, name, index);
-			}
-
-			ddmFieldsCounter.incrementKey(name);
-		}
-	}
-
 	protected void updateElement(long groupId, Element element) {
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
@@ -442,26 +418,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 					articleImage);
 			}
 		}
-	}
-
-	protected void updateImageElement(Element element, String name, int index) {
-		Element dynamicContentElement = element.element("dynamic-content");
-
-		long articleImageId = GetterUtil.getLong(
-			dynamicContentElement.attributeValue("id"));
-
-		JournalArticleImage articleImage =
-			_journalArticleImageLocalService.fetchJournalArticleImage(
-				articleImageId);
-
-		if (articleImage == null) {
-			return;
-		}
-
-		articleImage.setElName(name + StringPool.UNDERLINE + index);
-
-		_journalArticleImageLocalService.updateJournalArticleImage(
-			articleImage);
 	}
 
 	protected void updateLinkToLayoutElements(long groupId, Element element) {

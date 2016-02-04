@@ -31,3 +31,5 @@
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %>
 <%@ page import="com.liferay.portlet.display.template.PortletDisplayTemplateUtil" %>
+
+<%@ page import="java.util.ResourceBundle" %>

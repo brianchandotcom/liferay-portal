@@ -59,8 +59,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 		else {
 			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), getTheme().getThemeId(), getColorSchemeId(),
-				false);
+				getCompanyId(), getTheme().getThemeId(), getColorSchemeId());
 		}
 	}
 
@@ -142,8 +141,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			return getLayoutSet().getTheme();
 		}
 		else {
-			return ThemeLocalServiceUtil.getTheme(
-				getCompanyId(), getThemeId(), false);
+			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 		}
 	}
 
@@ -160,7 +158,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 		if (!isInheritLookAndFeel()) {
 			try {
-				Theme theme = getTheme(device);
+				Theme theme = getTheme();
 
 				return theme.getSetting(key);
 			}
@@ -215,29 +213,6 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
-	public ColorScheme getWapColorScheme() throws PortalException {
-		if (isInheritLookAndFeel()) {
-			return getLayoutSet().getWapColorScheme();
-		}
-		else {
-			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), getWapTheme().getThemeId(),
-				getWapColorSchemeId(), true);
-		}
-	}
-
-	@Override
-	public Theme getWapTheme() throws PortalException {
-		if (isInheritWapLookAndFeel()) {
-			return getLayoutSet().getWapTheme();
-		}
-		else {
-			return ThemeLocalServiceUtil.getTheme(
-				getCompanyId(), getWapThemeId(), true);
-		}
-	}
-
-	@Override
 	public boolean hasChildren() {
 		if (!getChildren().isEmpty()) {
 			return true;
@@ -280,18 +255,6 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
-	public boolean isInheritWapLookAndFeel() {
-		if (Validator.isNull(getWapThemeId()) ||
-			Validator.isNull(getWapColorSchemeId())) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettingsProperties = null;
 
@@ -305,15 +268,6 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
-	}
-
-	protected Theme getTheme(String device) throws PortalException {
-		if (device.equals("regular")) {
-			return getTheme();
-		}
-		else {
-			return getWapTheme();
-		}
 	}
 
 	private UnicodeProperties _typeSettingsProperties;

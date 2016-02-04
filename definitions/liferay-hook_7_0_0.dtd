@@ -44,8 +44,6 @@ control.panel.entry.class.default
 default.landing.page.path
 default.regular.color.scheme.id
 default.regular.theme.id
-default.wap.color.scheme.id
-default.wap.theme.id
 dl.file.entry.drafts.enabled
 dl.file.entry.processors
 dl.repository.impl

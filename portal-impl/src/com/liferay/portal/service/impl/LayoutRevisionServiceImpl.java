@@ -35,8 +35,8 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 			long portletPreferencesPlid, boolean privateLayout, String name,
 			String title, String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,
-			String themeId, String colorSchemeId, String wapThemeId,
-			String wapColorSchemeId, String css, ServiceContext serviceContext)
+			String themeId, String colorSchemeId, String css,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSetBranch layoutSetBranch =
@@ -50,8 +50,7 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 			userId, layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
 			head, plid, portletPreferencesPlid, privateLayout, name, title,
 			description, keywords, robots, typeSettings, iconImage, iconImageId,
-			themeId, colorSchemeId, wapThemeId, wapColorSchemeId, css,
-			serviceContext);
+			themeId, colorSchemeId, css, serviceContext);
 	}
 
 }

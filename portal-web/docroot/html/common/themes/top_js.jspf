@@ -72,12 +72,6 @@
 				isSun: function() {
 					return <%= BrowserSnifferUtil.isSun(request) %>;
 				},
-				isWap: function() {
-					return <%= BrowserSnifferUtil.isWap(request) %>;
-				},
-				isWapXhtml: function() {
-					return <%= BrowserSnifferUtil.isWapXhtml(request) %>;
-				},
 				isWebKit: function() {
 					return <%= BrowserSnifferUtil.isWebKit(request) %>;
 				},

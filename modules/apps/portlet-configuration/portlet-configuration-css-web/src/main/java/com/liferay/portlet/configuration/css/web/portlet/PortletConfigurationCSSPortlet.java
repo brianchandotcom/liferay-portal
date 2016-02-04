@@ -33,7 +33,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletSetupUtil;
 import com.liferay.portlet.configuration.css.web.constants.PortletConfigurationCSSPortletKeys;
@@ -248,22 +247,6 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		}
 
 		portletSetup.setValue("portletSetupCss", css);
-
-		if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
-			JSONObject wapData = jsonObject.getJSONObject("wapData");
-
-			String wapInitialWindowState = wapData.getString(
-				"initialWindowState");
-			String wapTitle = wapData.getString("title");
-
-			portletSetup.setValue(
-				"lfrWapInitialWindowState", wapInitialWindowState);
-			portletSetup.setValue("lfrWapTitle", wapTitle);
-		}
-		else {
-			portletSetup.reset("lfrWapInitialWindowState");
-			portletSetup.reset("lfrWapTitle");
-		}
 
 		portletSetup.store();
 	}

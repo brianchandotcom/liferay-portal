@@ -111,11 +111,11 @@ public class LayoutSetServiceSoap {
 
 	public static com.liferay.portal.model.LayoutSetSoap updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.LayoutSet returnValue = LayoutSetServiceUtil.updateLookAndFeel(groupId,
-					privateLayout, themeId, colorSchemeId, css, wapTheme);
+					privateLayout, themeId, colorSchemeId, css);
 
 			return com.liferay.portal.model.LayoutSetSoap.toSoapModel(returnValue);
 		}

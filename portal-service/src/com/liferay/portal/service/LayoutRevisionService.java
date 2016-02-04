@@ -54,8 +54,7 @@ public interface LayoutRevisionService extends BaseService {
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String wapThemeId,
-		java.lang.String wapColorSchemeId, java.lang.String css,
+		java.lang.String colorSchemeId, java.lang.String css,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

@@ -44,6 +44,12 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 </liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+	<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		</div>
+	</c:if>
+
 	<liferay-ui:search-container
 		searchContainer="<%= siteItemSelectorViewDisplayContext.getGroupSearch() %>"
 	>

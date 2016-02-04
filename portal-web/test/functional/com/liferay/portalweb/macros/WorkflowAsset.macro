@@ -9,4 +9,15 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for creating an account. You will be notified via email at ${userEmailAddress} when your account has been approved." />
 	</command>
+
+	<command name="viewFormEntryTable">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+
+		<var name="key_workflowStatus" value="${workflowStatus}" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}" />
+	</command>
 </definition>

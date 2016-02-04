@@ -144,55 +144,57 @@ else {
 		<liferay-util:include page="/wiki_admin/page_info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
-	<%
-	WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
-	%>
-
-	<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
+	<div class="sidenav-content">
 
 		<%
-		PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
+		WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
 		%>
 
-		<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
-	</c:if>
-
-	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
-		<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-		<liferay-ui:search-container
-			id="wikiPages"
-			searchContainer="<%= wikiPagesSearchContainer %>"
-			total="<%= wikiPagesSearchContainer.getTotal() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= wikiPagesSearchContainer.getResults() %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.wiki.model.WikiPage"
-				keyProperty="pageId"
-				modelVar="curPage"
-			>
+		<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
 
 			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
-
-			if (!navigation.equals("draft-pages") || Validator.isNotNull(keywords)) {
-				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("nodeName", curPage.getNode().getName());
-			}
-			else {
-				rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
-			}
-
-			rowURL.setParameter("title", curPage.getTitle());
+			PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 			%>
+
+			<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
+		</c:if>
+
+		<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+			<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+			<liferay-ui:search-container
+				id="wikiPages"
+				searchContainer="<%= wikiPagesSearchContainer %>"
+				total="<%= wikiPagesSearchContainer.getTotal() %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= wikiPagesSearchContainer.getResults() %>"
+				/>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.wiki.model.WikiPage"
+					keyProperty="pageId"
+					modelVar="curPage"
+				>
+
+				<%
+				PortletURL rowURL = renderResponse.createRenderURL();
+
+				if (!navigation.equals("draft-pages") || Validator.isNotNull(keywords)) {
+					rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("nodeName", curPage.getNode().getName());
+				}
+				else {
+					rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
+				}
+
+				rowURL.setParameter("title", curPage.getTitle());
+				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
@@ -203,57 +205,57 @@ else {
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
-							<%
-							Date modifiedDate = curPage.getModifiedDate();
+								<%
+								Date modifiedDate = curPage.getModifiedDate();
 
-							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-							%>
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+								%>
 
-							<h5 class="text-default">
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(curPage.getUserName()) %>">
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
-									</c:otherwise>
-								</c:choose>
-							</h5>
+								<h5 class="text-default">
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(curPage.getUserName()) %>">
+											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+										</c:otherwise>
+									</c:choose>
+								</h5>
 
-							<h4>
-								<aui:a href="<%= rowURL.toString() %>">
-									<%= curPage.getTitle() %>
-								</aui:a>
-							</h4>
+								<h4>
+									<aui:a href="<%= rowURL.toString() %>">
+										<%= curPage.getTitle() %>
+									</aui:a>
+								</h4>
 
-							<h5 class="text-default">
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
-							</h5>
-						</liferay-ui:search-container-column-text>
+								<h5 class="text-default">
+									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
+								</h5>
+							</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-jsp
-							path="/wiki/page_action.jsp"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
-							name="title"
-							value="<%= curPage.getTitle() %>"
-						/>
+							<liferay-ui:search-container-column-jsp
+								path="/wiki/page_action.jsp"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="title"
+								value="<%= curPage.getTitle() %>"
+							/>
 
 						<liferay-ui:search-container-column-status
 							name="status"
 							status="<%= curPage.getStatus() %>"
 						/>
 
-						<%
-						String revision = String.valueOf(curPage.getVersion());
+							<%
+							String revision = String.valueOf(curPage.getVersion());
 
-						if (curPage.isMinorEdit()) {
-							revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
-						}
-						%>
+							if (curPage.isMinorEdit()) {
+								revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
+							}
+							%>
 
 						<liferay-ui:search-container-column-text
 							name="revision"
@@ -270,17 +272,18 @@ else {
 							value="<%= curPage.getModifiedDate() %>"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
-							path="/wiki/page_action.jsp"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-row>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/wiki/page_action.jsp"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-		</liferay-ui:search-container>
-	</aui:form>
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:form>
+	</div>
 </div>
 
 <liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />

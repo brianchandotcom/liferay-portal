@@ -275,6 +275,10 @@ public class WebDriverUtil extends PropsValues {
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
+			System.setProperty(
+				"webdriver.ie.driver",
+				SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_IE_DRIVER_EXECUTABLE);
+
 			_webDriver = _getInternetExplorerDriver();
 		}
 		else if (BROWSER_TYPE.equals("internetexplorer") &&

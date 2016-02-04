@@ -58,12 +58,12 @@ if (group != null) {
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
-			<liferay-frontend:management-bar-toggler-button
+			<liferay-frontend:management-bar-sidenav-toggler-button
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"
 				label="info"
-				sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 			/>
 		</c:if>
 

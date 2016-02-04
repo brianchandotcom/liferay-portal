@@ -676,14 +676,9 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>management-bar-toggler-button</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarTogglerButtonTag</tag-class>
+		<name>management-bar-sidenav-toggler-button</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarSidenavTogglerButtonTag</tag-class>
 		<body-content>JSP</body-content>
-		<attribute>
-			<name>active</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<attribute>
 			<name>cssClass</name>
 			<required>false</required>
@@ -725,7 +720,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>sidenavSelector</name>
+			<name>sidenavId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

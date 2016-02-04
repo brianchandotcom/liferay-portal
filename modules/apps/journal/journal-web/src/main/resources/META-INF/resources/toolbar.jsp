@@ -27,12 +27,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-toggler-button
+			<liferay-frontend:management-bar-sidenav-toggler-button
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"
 				label="info"
-				sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 			/>
 		</c:if>
 
@@ -97,12 +97,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-toggler-button
+			<liferay-frontend:management-bar-sidenav-toggler-button
 				disabled="<%= false %>"
 				href="javascript:;"
 				icon="info-circle"
 				label="info"
-				sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 			/>
 		</c:if>
 

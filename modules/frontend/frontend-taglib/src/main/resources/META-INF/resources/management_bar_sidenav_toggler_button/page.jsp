@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/management_bar_toggler_button/init.jsp" %>
+<%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
 <liferay-frontend:management-bar-button
-	active="<%= active %>"
+	active="<%= false %>"
 	cssClass="<%= cssClass %>"
 	data="<%= data %>"
 	disabled="<%= disabled %>"
@@ -29,7 +29,7 @@
 />
 
 <aui:script>
-	var sidenavSlider = $('<%= sidenavSelector %>');
+	var sidenavSlider = $('#<%= sidenavId %>');
 
 	sidenavSlider.sideNavigation(
 		{
@@ -45,14 +45,14 @@
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.info.panel_<portlet:namespace />', 'closed');
+			Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'closed');
 		}
 	);
 
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.info.panel_<portlet:namespace />', 'open');
+			Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');
 		}
 	);
 </aui:script>

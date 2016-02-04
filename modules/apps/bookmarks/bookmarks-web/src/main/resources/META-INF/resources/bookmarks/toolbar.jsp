@@ -33,12 +33,12 @@ portletURL.setParameter("tag", StringPool.BLANK);
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-toggler-button
+		<liferay-frontend:management-bar-sidenav-toggler-button
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />

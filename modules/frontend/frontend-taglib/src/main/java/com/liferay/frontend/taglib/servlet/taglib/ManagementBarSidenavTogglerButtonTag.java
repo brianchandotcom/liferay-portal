@@ -22,15 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Lancha
  */
-public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
+public class ManagementBarSidenavTogglerButtonTag extends ManagementBarButtonTag {
 
-	public void setSidenavSelector(String sidenavSelector) {
-		_sidenavSelector = sidenavSelector;
+	public void setSidenavId(String sidenavId) {
+		_sidenavId = sidenavId;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_sidenavSelector = null;
+		_sidenavId = null;
 
 		super.cleanUp();
 	}
@@ -48,17 +48,17 @@ public class ManagementBarTogglerButtonTag extends ManagementBarButtonTag {
 			setId(StringUtil.randomId());
 		}
 
-		setNamespacedAttribute(request, "sidenavSelector", _sidenavSelector);
+		setNamespacedAttribute(request, "sidenavId", _sidenavId);
 
 		super.setAttributes(request);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-toggler-button:";
+		"liferay-frontend:management-bar-sidenav-toggler-button:";
 
 	private static final String _PAGE =
-		"/management_bar_toggler_button/page.jsp";
+		"/management_bar_sidenav_toggler_button/page.jsp";
 
-	private String _sidenavSelector;
+	private String _sidenavId;
 
 }

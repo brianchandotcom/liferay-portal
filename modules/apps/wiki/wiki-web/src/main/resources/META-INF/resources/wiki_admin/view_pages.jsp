@@ -90,13 +90,13 @@ else {
 	searchContainerId="wikiPages"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-toggler-button
+		<liferay-frontend:management-bar-sidenav-toggler-button
 			cssClass="infoPanelToggler"
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"
 			label="info"
-			sidenavSelector='<%= StringPool.POUND + liferayPortletResponse.getNamespace() + "infoPanelId" %>'
+			sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 		/>
 
 		<liferay-frontend:management-bar-display-buttons

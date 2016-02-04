@@ -14,45 +14,24 @@
 
 package com.liferay.portal.security.sso.google.internal.portlet.action;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.oauth2.Oauth2;
-import com.google.api.services.oauth2.model.Userinfoplus;
-
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
-import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -93,30 +72,24 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (cmd.equals("login")) {
-			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
-				getGoogleLoginAuthorizationCodeFlow(
-					themeDisplay.getCompanyId());
+			String returnRequestUri = getReturnRequestUri(request);
 
-			GoogleAuthorizationCodeRequestUrl
-				googleAuthorizationCodeRequestUrl =
-					googleAuthorizationCodeFlow.newAuthorizationUrl();
+			String loginRedirect = _googleAuthorization.getLoginRedirect(
+				themeDisplay.getCompanyId(), returnRequestUri, _SCOPES_LOGIN);
 
-			googleAuthorizationCodeRequestUrl.setRedirectUri(
-				getRedirectURI(request));
-
-			response.sendRedirect(googleAuthorizationCodeRequestUrl.build());
+			response.sendRedirect(loginRedirect);
 		}
 		else if (cmd.equals("token")) {
 			HttpSession session = request.getSession();
 
-			String code = ParamUtil.getString(request, "code");
+			String authorizationCode = ParamUtil.getString(request, "code");
 
-			if (Validator.isNotNull(code)) {
-				Credential credential = getCredential(
-					themeDisplay.getCompanyId(), code, getRedirectURI(request));
+			if (Validator.isNotNull(authorizationCode)) {
+				String returnRequestUri = getReturnRequestUri(request);
 
-				User user = setCredential(
-					session, themeDisplay.getCompanyId(), credential);
+				User user = _googleAuthorization.addOrUpdateUser(
+					session, themeDisplay.getCompanyId(), authorizationCode,
+					returnRequestUri, _SCOPES_LOGIN);
 
 				if ((user != null) &&
 					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
@@ -143,120 +116,9 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		return null;
 	}
 
-	protected User addUser(
-			HttpSession session, long companyId, Userinfoplus userinfoplus)
-		throws Exception {
-
-		long creatorUserId = 0;
-		boolean autoPassword = true;
-		String password1 = StringPool.BLANK;
-		String password2 = StringPool.BLANK;
-		boolean autoScreenName = true;
-		String screenName = StringPool.BLANK;
-		String emailAddress = userinfoplus.getEmail();
-		String googleUserId = userinfoplus.getId();
-		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.getDefault();
-		String firstName = userinfoplus.getGivenName();
-		String middleName = StringPool.BLANK;
-		String lastName = userinfoplus.getFamilyName();
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = Validator.equals(userinfoplus.getGender(), "male");
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringPool.BLANK;
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendEmail = true;
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		User user = _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, 0, openId, locale,
-			firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-
-		user = _userLocalService.updateGoogleUserId(
-			user.getUserId(), googleUserId);
-
-		user = _userLocalService.updateLastLogin(
-			user.getUserId(), user.getLoginIP());
-
-		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
-
-		user = _userLocalService.updateEmailAddressVerified(
-			user.getUserId(), true);
-
-		session.setAttribute(
-			GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS, emailAddress);
-
-		return user;
-	}
-
-	protected Credential getCredential(
-			long companyId, String authorizationCode, String redirectURI)
-		throws Exception {
-
-		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
-			getGoogleLoginAuthorizationCodeFlow(companyId);
-
-		GoogleAuthorizationCodeTokenRequest
-			googleAuthorizationCodeTokenRequest =
-				googleAuthorizationCodeFlow.newTokenRequest(authorizationCode);
-
-		googleAuthorizationCodeTokenRequest.setRedirectUri(redirectURI);
-
-		GoogleTokenResponse googleTokenResponse =
-			googleAuthorizationCodeTokenRequest.execute();
-
-		return googleAuthorizationCodeFlow.createAndStoreCredential(
-			googleTokenResponse, null);
-	}
-
-	protected GoogleAuthorizationCodeFlow getGoogleLoginAuthorizationCodeFlow(
-			long companyId)
-		throws Exception {
-
-		return _googleAuthorization.getGoogleAuthorizationCodeFlow(
-			companyId, _SCOPES_LOGIN);
-	}
-
-	protected String getRedirectURI(HttpServletRequest request) {
+	protected String getReturnRequestUri(HttpServletRequest request) {
 		return PortalUtil.getPortalURL(request) + PortalUtil.getPathMain() +
 			_REDIRECT_URI;
-	}
-
-	protected Userinfoplus getUserinfoplus(
-			com.google.api.services.oauth2.Oauth2.Userinfo oAuth2Userinfo)
-		throws Exception {
-
-		com.google.api.services.oauth2.Oauth2.Userinfo.Get oAuth2UserinfoGet =
-			oAuth2Userinfo.get();
-
-		return oAuth2UserinfoGet.execute();
-	}
-
-	protected Userinfoplus getUserinfoplus(Credential credentials)
-		throws Exception {
-
-		Oauth2.Builder builder = new Oauth2.Builder(
-			new NetHttpTransport(), new JacksonFactory(), credentials);
-
-		Oauth2 oauth2 = builder.build();
-
-		Userinfoplus userinfoplus = getUserinfoplus(oauth2.userinfo());
-
-		if ((userinfoplus == null) || (userinfoplus.getId() == null)) {
-			throw new PrincipalException();
-		}
-
-		return userinfoplus;
 	}
 
 	protected void sendLoginRedirect(
@@ -315,131 +177,6 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		response.sendRedirect(portletURL.toString());
 	}
 
-	protected User setCredential(
-			HttpSession session, long companyId, Credential credential)
-		throws Exception {
-
-		Userinfoplus userinfoplus = getUserinfoplus(credential);
-
-		if (userinfoplus == null) {
-			return null;
-		}
-
-		User user = null;
-
-		String googleUserId = userinfoplus.getId();
-
-		if (Validator.isNotNull(googleUserId)) {
-			user = _userLocalService.fetchUserByGoogleUserId(
-				companyId, googleUserId);
-
-			if ((user != null) &&
-				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
-
-				session.setAttribute(
-					GoogleWebKeys.GOOGLE_USER_ID, String.valueOf(googleUserId));
-			}
-		}
-
-		String emailAddress = userinfoplus.getEmail();
-
-		if ((user == null) && Validator.isNotNull(emailAddress)) {
-			user = _userLocalService.fetchUserByEmailAddress(
-				companyId, emailAddress);
-
-			if ((user != null) &&
-				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
-
-				session.setAttribute(
-					GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS, emailAddress);
-			}
-		}
-
-		if (user != null) {
-			if (user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-				session.setAttribute(
-					WebKeys.GOOGLE_INCOMPLETE_USER_ID, userinfoplus.getId());
-
-				user.setEmailAddress(userinfoplus.getEmail());
-				user.setFirstName(userinfoplus.getGivenName());
-				user.setLastName(userinfoplus.getFamilyName());
-
-				return user;
-			}
-
-			user = updateUser(user, userinfoplus);
-		}
-		else {
-			user = addUser(session, companyId, userinfoplus);
-		}
-
-		return user;
-	}
-
-	protected User updateUser(User user, Userinfoplus userinfoplus)
-		throws Exception {
-
-		String emailAddress = userinfoplus.getEmail();
-		String googleUserId = userinfoplus.getId();
-		String firstName = userinfoplus.getGivenName();
-		String lastName = userinfoplus.getFamilyName();
-		boolean male = Validator.equals(userinfoplus.getGender(), "male");
-
-		if (emailAddress.equals(user.getEmailAddress()) &&
-			firstName.equals(user.getFirstName()) &&
-			lastName.equals(user.getLastName()) && (male == user.isMale())) {
-
-			return user;
-		}
-
-		Contact contact = user.getContact();
-
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
-
-		birthdayCal.setTime(contact.getBirthday());
-
-		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		List<UserGroupRole> userGroupRoles = null;
-		long[] userGroupIds = null;
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (!StringUtil.equalsIgnoreCase(
-				googleUserId, user.getGoogleUserId())) {
-
-			_userLocalService.updateGoogleUserId(
-				user.getUserId(), googleUserId);
-		}
-
-		if (!StringUtil.equalsIgnoreCase(
-				emailAddress, user.getEmailAddress())) {
-
-			_userLocalService.updateEmailAddress(
-				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
-		}
-
-		_userLocalService.updateEmailAddressVerified(user.getUserId(), true);
-
-		return _userLocalService.updateUser(
-			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, false, user.getReminderQueryQuestion(),
-			user.getReminderQueryAnswer(), user.getScreenName(), emailAddress,
-			0, user.getOpenId(), true, null, user.getLanguageId(),
-			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
-			firstName, user.getMiddleName(), lastName, contact.getPrefixId(),
-			contact.getSuffixId(), male, birthdayMonth, birthdayDay,
-			birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
-			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
-			contact.getJobTitle(), groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
-	}
-
 	private static final String _REDIRECT_URI =
 		"/portal/google_login?cmd=token";
 
@@ -448,8 +185,5 @@ public class GoogleLoginAction extends BaseStrutsAction {
 
 	@Reference
 	private GoogleAuthorization _googleAuthorization;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

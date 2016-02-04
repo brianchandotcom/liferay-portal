@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
@@ -63,7 +65,7 @@ TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
 								<aui:script>
 									<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
-										<portlet:param name="redirect" value="<%= currentURL %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 									</portlet:actionURL>
 

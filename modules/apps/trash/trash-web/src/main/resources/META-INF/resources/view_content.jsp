@@ -115,7 +115,9 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		showParentGroups="<%= false %>"
 	/>
 
-	<liferay-util:include page="/info_panel_content.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/info_panel_content.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="redirect" value="<%= redirect %>" />
+	</liferay-util:include>
 
 	<%
 	PortletURL iteratorURL = renderResponse.createRenderURL();

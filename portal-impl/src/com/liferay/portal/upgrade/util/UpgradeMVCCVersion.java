@@ -41,10 +41,12 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		throws Exception {
 
 		for (String excludeTableName : getExcludedTableNames()) {
-			if (excludeTableName.equals(tableName)) {
+			if (excludeTableName.equalsIgnoreCase(tableName)) {
 				return;
 			}
 		}
+
+		tableName = normalizeName(tableName, databaseMetaData);
 
 		ResultSet tableResultSet = databaseMetaData.getTables(
 			null, null, tableName, null);

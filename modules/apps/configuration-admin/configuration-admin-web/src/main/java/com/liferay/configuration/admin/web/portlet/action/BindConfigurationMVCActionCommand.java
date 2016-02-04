@@ -195,38 +195,19 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		return _ddmFormValuesFactory.create(actionRequest, ddmForm);
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigAdminService(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationModelRetriever(
-		ConfigurationModelRetriever configurationModelRetriever) {
-
-		_configurationModelRetriever = configurationModelRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesFactory(
-		DDMFormValuesFactory ddmFormValuesFactory) {
-
-		_ddmFormValuesFactory = ddmFormValuesFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BindConfigurationMVCActionCommand.class);
 
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

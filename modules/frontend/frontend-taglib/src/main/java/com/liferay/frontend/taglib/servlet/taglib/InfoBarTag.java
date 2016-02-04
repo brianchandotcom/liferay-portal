@@ -17,29 +17,12 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Roberto Díaz
  */
 public class InfoBarTag extends IncludeTag {
-
-	@Override
-	public int doEndTag() throws JspException {
-		super.doEndTag();
-
-		return EVAL_PAGE;
-	}
-
-	@Override
-	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
-		super.doStartTag();
-
-		return EVAL_BODY_INCLUDE;
-	}
 
 	@Override
 	public void setPageContext(PageContext pageContext) {
@@ -57,9 +40,6 @@ public class InfoBarTag extends IncludeTag {
 	protected String getStartPage() {
 		return _START_PAGE;
 	}
-
-	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:info-bar:";
 
 	private static final String _END_PAGE = "/info_bar/end.jsp";
 

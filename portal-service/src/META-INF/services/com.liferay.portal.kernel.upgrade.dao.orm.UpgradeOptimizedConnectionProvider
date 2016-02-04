@@ -1,0 +1,1 @@
+com.liferay.portal.kernel.upgrade.dao.orm.SQLServerUpgradeOptimizedConnectionProvider

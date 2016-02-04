@@ -59,31 +59,38 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Receives <code>HttpServletRequest</code>s much like a servlet.
- * 
+ *
  * <p>
  * By setting the <code>path</code> property on the <code>@Component</code>
- * annotation to </code>/login/facebook_connect_oauth/</code>, this Struts
+ * annotation to <code>/login/facebook_connect_oauth/</code>, this Struts
  * action is published at the URL <code>/c/login/facebook_connect_oauth/</code>
  * which corresponds to the default OAuth Redirect URL. This Struts action
  * carries out these tasks:
  * </p>
- * 
+ *
  * <ol>
- * <li>Exchanges OAuth request tokens for OAuth access tokens.</li>
- * <li>Retrieves the current user's Facebook ID and email address using the
- * Facebook Graph API.</li>
- * <li>If either the Facebook ID or email address matches an existing Liferay
- * user, then one of two HTTP session attributes is set:
- * <code>FACEBOOK_USER_ID</code> or </code>FACEBOOK_USER_EMAIL_ADDRESS</code>.
+ * <li>
+ * Exchanges OAuth request tokens for OAuth access tokens.
  * </li>
- * <li>If no matching Liferay user is found, a new Liferay Portal user is
+ * <li>
+ * Retrieves the current user's Facebook ID and email address using the
+ * Facebook Graph API.
+ * </li>
+ * <li>
+ * If either the Facebook ID or email address matches an existing Liferay
+ * user, then one of two HTTP session attributes is set:
+ * <code>FACEBOOK_USER_ID</code> or <code>FACEBOOK_USER_EMAIL_ADDRESS</code>.
+ * </li>
+ * <li>
+ * If no matching Liferay user is found, a new Liferay Portal user is
  * created and the HTTP session attribute
  * <code>FACEBOOK_USER_EMAIL_ADDRESS</code> is set accordingly. If the data
  * available from Facebook is not sufficient to successfully create a new
  * Liferay user, the user is directed to submit the missing information to
- * complete the process.</li>
+ * complete the process.
+ * </li>
  * </ol>
- * 
+ *
  * @author Wilson Man
  * @author Sergio González
  * @author Mika Koivisto

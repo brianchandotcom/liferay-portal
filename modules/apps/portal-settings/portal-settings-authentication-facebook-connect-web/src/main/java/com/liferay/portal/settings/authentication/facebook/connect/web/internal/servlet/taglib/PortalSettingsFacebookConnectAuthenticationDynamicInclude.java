@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Adds a Facebook tab to the Authentication section of Instance Settings in the
  * Control Panel.
- * 
+ *
  * @author Stian Sigvartsen
  */
 @Component(

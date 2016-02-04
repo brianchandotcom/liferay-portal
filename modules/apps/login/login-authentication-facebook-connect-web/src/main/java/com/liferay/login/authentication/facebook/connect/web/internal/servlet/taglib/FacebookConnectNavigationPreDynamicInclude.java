@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * When Liferay's Sign In portlet is requested, this class adds a Facebook link
  * to the portlet if Facebook Connect authentication has been enabled for the
  * portal instance being accessed.
- * 
+ *
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)

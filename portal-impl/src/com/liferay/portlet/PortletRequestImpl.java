@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -482,12 +481,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public String getResponseContentType() {
-		if (_wapTheme) {
-			return ContentTypes.XHTML_MP;
-		}
-		else {
-			return ContentTypes.TEXT_HTML;
-		}
+		return ContentTypes.TEXT_HTML;
 	}
 
 	@Override
@@ -851,7 +845,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_request = dynamicRequest;
 		_originalRequest = request;
-		_wapTheme = BrowserSnifferUtil.isWap(_request);
 		_portlet = portlet;
 		_portalContext = new PortalContextImpl();
 		_portletContext = portletContext;
@@ -995,7 +988,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private boolean _strutsPortlet;
 	private boolean _triggeredByActionURL;
 	private Principal _userPrincipal;
-	private boolean _wapTheme;
 	private WindowState _windowState;
 
 	private class PortletPreferencesPrivilegedAction

@@ -280,7 +280,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	@Override
 	public LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			String colorSchemeId, String css)
 		throws PortalException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -298,15 +298,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 		}
 
-		if (wapTheme) {
-			layoutSet.setWapThemeId(themeId);
-			layoutSet.setWapColorSchemeId(colorSchemeId);
-		}
-		else {
-			layoutSet.setThemeId(themeId);
-			layoutSet.setColorSchemeId(colorSchemeId);
-			layoutSet.setCss(css);
-		}
+		layoutSet.setThemeId(themeId);
+		layoutSet.setColorSchemeId(colorSchemeId);
+		layoutSet.setCss(css);
 
 		layoutSetPersistence.update(layoutSet);
 
@@ -317,14 +311,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			LayoutSet otherLayoutSet = layoutSetPersistence.findByG_P(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
-			if (wapTheme) {
-				otherLayoutSet.setWapThemeId(themeId);
-				otherLayoutSet.setWapColorSchemeId(colorSchemeId);
-			}
-			else {
-				otherLayoutSet.setThemeId(themeId);
-				otherLayoutSet.setColorSchemeId(colorSchemeId);
-			}
+			otherLayoutSet.setThemeId(themeId);
+			otherLayoutSet.setColorSchemeId(colorSchemeId);
 
 			layoutSetPersistence.update(otherLayoutSet);
 		}
@@ -334,13 +322,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
 	public void updateLookAndFeel(
-			long groupId, String themeId, String colorSchemeId, String css,
-			boolean wapTheme)
+			long groupId, String themeId, String colorSchemeId, String css)
 		throws PortalException {
 
-		updateLookAndFeel(
-			groupId, false, themeId, colorSchemeId, css, wapTheme);
-		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
+		updateLookAndFeel(groupId, false, themeId, colorSchemeId, css);
+		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css);
 	}
 
 	@Override
@@ -459,8 +445,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			layoutSet.setThemeId(liveLayoutSet.getThemeId());
 			layoutSet.setColorSchemeId(liveLayoutSet.getColorSchemeId());
-			layoutSet.setWapThemeId(liveLayoutSet.getWapThemeId());
-			layoutSet.setWapColorSchemeId(liveLayoutSet.getWapColorSchemeId());
 			layoutSet.setCss(liveLayoutSet.getCss());
 			layoutSet.setSettings(liveLayoutSet.getSettings());
 		}
@@ -470,10 +454,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 					group.getCompanyId()));
 			layoutSet.setColorSchemeId(
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId());
-			layoutSet.setWapThemeId(
-				ThemeFactoryUtil.getDefaultWapThemeId(group.getCompanyId()));
-			layoutSet.setWapColorSchemeId(
-				ColorSchemeFactoryUtil.getDefaultWapColorSchemeId());
 			layoutSet.setCss(StringPool.BLANK);
 			layoutSet.setSettings(StringPool.BLANK);
 		}

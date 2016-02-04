@@ -74,7 +74,7 @@ public class ThemeImporter {
 
 		LayoutSetLocalServiceUtil.updateLookAndFeel(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), themeId,
-			colorSchemeId, css, false);
+			colorSchemeId, css);
 	}
 
 	private ThemeImporter() {

@@ -215,45 +215,6 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	@Override
-	public String getWapContent(
-		String layoutTemplateId, boolean standard, String themeId) {
-
-		LayoutTemplate layoutTemplate = getLayoutTemplate(
-			layoutTemplateId, standard, themeId);
-
-		if (layoutTemplate == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Layout template " + layoutTemplateId + " does not exist");
-			}
-
-			layoutTemplate = getLayoutTemplate(
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID, standard, themeId);
-
-			if (layoutTemplate == null) {
-				_log.error(
-					"Layout template " + layoutTemplateId +
-						" and default layout template " +
-							PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID +
-								" do not exist");
-
-				return StringPool.BLANK;
-			}
-		}
-
-		if (PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED) {
-			return layoutTemplate.getWapContent();
-		}
-
-		try {
-			return layoutTemplate.getUncachedWapContent();
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
 	public List<LayoutTemplate> init(
 		ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
@@ -357,10 +318,6 @@ public class LayoutTemplateLocalServiceImpl
 				GetterUtil.getString(
 					layoutTemplateElement.elementText("template-path"),
 					layoutTemplateModel.getTemplatePath()));
-			layoutTemplateModel.setWapTemplatePath(
-				GetterUtil.getString(
-					layoutTemplateElement.elementText("wap-template-path"),
-					layoutTemplateModel.getWapTemplatePath()));
 			layoutTemplateModel.setThumbnailPath(
 				GetterUtil.getString(
 					layoutTemplateElement.elementText("thumbnail-path"),
@@ -404,36 +361,6 @@ public class LayoutTemplateLocalServiceImpl
 				layoutTemplateModel.setContent(content);
 				layoutTemplateModel.setColumns(
 					_getColumns(velocityTemplateId, content));
-			}
-
-			if (Validator.isNull(layoutTemplateModel.getWapTemplatePath())) {
-				_log.error(
-					"The element wap-template-path is not defined for " +
-						layoutTemplateId);
-			}
-			else {
-				String wapContent = null;
-
-				try {
-					wapContent = HttpUtil.URLtoString(
-						servletContext.getResource(
-							layoutTemplateModel.getWapTemplatePath()));
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to get content at WAP template path " +
-							layoutTemplateModel.getWapTemplatePath() + ": " +
-								e.getMessage());
-				}
-
-				if (Validator.isNull(wapContent)) {
-					_log.error(
-						"No content found at WAP template path " +
-							layoutTemplateModel.getWapTemplatePath());
-				}
-				else {
-					layoutTemplateModel.setWapContent(wapContent);
-				}
 			}
 
 			Element rolesElement = layoutTemplateElement.element("roles");

@@ -124,7 +124,7 @@
 <h4><liferay-ui:message key="look-and-feel" /></h4>
 
 <aui:fieldset>
-	<aui:select label='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED? "default-regular-theme" : "default-theme" %>' name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
+	<aui:select label="default-theme" name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
 
 		<%
 		String defaultRegularThemeId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_REGULAR_THEME_ID, PropsValues.DEFAULT_REGULAR_THEME_ID);
@@ -149,34 +149,6 @@
 			<aui:option label='<%= defaultRegularThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultRegularThemeId %>" />
 		</c:if>
 	</aui:select>
-
-	<c:if test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
-		<aui:select helpMessage="default-mobile-theme-help" label="default-mobile-theme" name='<%= "settings--" + PropsKeys.DEFAULT_WAP_THEME_ID + "--" %>'>
-
-			<%
-			String defaultWapThemeId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_WAP_THEME_ID, PropsValues.DEFAULT_WAP_THEME_ID);
-
-			boolean deployed = false;
-
-			List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), 0, user.getUserId(), true);
-
-			for (Theme curTheme: themes) {
-				if (Validator.equals(defaultWapThemeId, curTheme.getThemeId())) {
-					deployed = true;
-				}
-			%>
-
-				<aui:option label="<%= curTheme.getName() %>" selected="<%= Validator.equals(defaultWapThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
-
-			<%
-			}
-			%>
-
-			<c:if test="<%= !deployed %>">
-				<aui:option label='<%= defaultWapThemeId + "(" + LanguageUtil.get(request, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultWapThemeId %>" />
-			</c:if>
-		</aui:select>
-	</c:if>
 
 	<aui:select label="default-control-panel-theme" name='<%= "settings--" + PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID + "--" %>'>
 

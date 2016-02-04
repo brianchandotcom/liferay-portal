@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.upgrade.dao.orm;
 
+import com.liferay.portal.kernel.dao.db.DBType;
+
 /**
  * @author Cristina González
  */
 public interface UpgradeOptimizedConnectionProviderRegistry {
 
 	public UpgradeOptimizedConnectionProvider getConnectionProvider(
-		String productName);
+		DBType dbType);
 
 }

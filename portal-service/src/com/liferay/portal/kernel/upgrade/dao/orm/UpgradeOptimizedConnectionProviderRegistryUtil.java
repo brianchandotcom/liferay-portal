@@ -14,16 +14,18 @@
 
 package com.liferay.portal.kernel.upgrade.dao.orm;
 
+import com.liferay.portal.kernel.dao.db.DBType;
+
 /**
  * @author Cristina González
  */
 public class UpgradeOptimizedConnectionProviderRegistryUtil {
 
 	public static UpgradeOptimizedConnectionProvider getConnectionProvider(
-		String productName) {
+		DBType dbType) {
 
 		return _upgradeOptimizedConnectionProviderRegister.
-			getConnectionProvider(productName);
+			getConnectionProvider(dbType);
 	}
 
 	public static void setRegister(

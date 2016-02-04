@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.dao.orm;
 
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProvider;
 import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistry;
 
@@ -43,19 +44,19 @@ public class UpgradeOptimizedConnectionProviderRegistryImpl
 				upgradeOptimizedConnectionProvider : serviceLoader) {
 
 			_upgradeOptimizedConnectionProviderMap.put(
-				upgradeOptimizedConnectionProvider.getDBProductName(),
+				upgradeOptimizedConnectionProvider.getDBType(),
 				upgradeOptimizedConnectionProvider);
 		}
 	}
 
 	@Override
 	public UpgradeOptimizedConnectionProvider getConnectionProvider(
-		String productName) {
+		DBType dbType) {
 
-		return _upgradeOptimizedConnectionProviderMap.get(productName);
+		return _upgradeOptimizedConnectionProviderMap.get(dbType);
 	}
 
-	private final Map<String, UpgradeOptimizedConnectionProvider>
+	private final Map<DBType, UpgradeOptimizedConnectionProvider>
 		_upgradeOptimizedConnectionProviderMap;
 
 }

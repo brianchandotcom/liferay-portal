@@ -178,6 +178,10 @@ DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
 DDMServiceConfiguration ddmServiceConfiguration = ddmWebRequestHelper.getDDMServiceConfiguration();
 
 DDMWebConfiguration ddmWebConfiguration = (DDMWebConfiguration)request.getAttribute(DDMWebConfiguration.class.getName());
+
+if (ddmWebConfiguration == null) {
+	ddmWebConfiguration = ddmWebRequestHelper.getDDMWebConfiguration();
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

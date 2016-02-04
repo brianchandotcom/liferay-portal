@@ -100,6 +100,11 @@ public interface BackgroundTaskManager {
 		long groupId, String taskExecutorClassName);
 
 	public List<BackgroundTask> getBackgroundTasks(
+		long groupId, String taskExecutorClassName, boolean completed,
+		int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator);
+
+	public List<BackgroundTask> getBackgroundTasks(
 		long groupId, String taskExecutorClassName, int status);
 
 	public List<BackgroundTask> getBackgroundTasks(
@@ -118,6 +123,15 @@ public interface BackgroundTaskManager {
 
 	public List<BackgroundTask> getBackgroundTasks(
 		long groupId, String[] taskExecutorClassNames, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator);
+
+	public List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String taskExecutorClassName, boolean completed,
+		int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator);
+
+	public List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator);
 
 	public List<BackgroundTask> getBackgroundTasks(
@@ -156,6 +170,12 @@ public interface BackgroundTaskManager {
 
 	public int getBackgroundTasksCount(
 		long groupId, String[] taskExecutorClassNames, boolean completed);
+
+	public int getBackgroundTasksCount(
+		long[] groupIds, String taskExecutorClassName);
+
+	public int getBackgroundTasksCount(
+		long[] groupIds, String taskExecutorClassName, boolean completed);
 
 	public int getBackgroundTasksCount(
 		long[] groupIds, String name, String taskExecutorClassName);

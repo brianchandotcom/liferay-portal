@@ -24,7 +24,7 @@ category name is "test", then the key in the portal's resource bundle will be
 
 See:
 
-http://www.liferay.com/page/guest/documentation/development/languages
+https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/localization
 -->
 <!ATTLIST category
 	name CDATA #REQUIRED

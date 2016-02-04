@@ -93,7 +93,7 @@ users to configure the portlet at runtime.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/messageboards/action/ConfigurationActionImpl.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/portlet/action/MBAdminConfigurationAction.java
 -->
 <!ELEMENT configuration-action-class (#PCDATA)>
 
@@ -207,8 +207,8 @@ example of its uses.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/wiki/WikiFriendlyURLMapper.html
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/portlet/FriendlyURLMapper.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/wiki/wiki-web/src/main/java/com/liferay/wiki/web/portlet/route/WikiFriendlyURLMapper.java
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/portlet/FriendlyURLMapper.html
 -->
 <!ELEMENT friendly-url-mapper-class (#PCDATA)>
 
@@ -236,13 +236,13 @@ method. This is useful if you need to add custom logic to rewrite URLs.
 
 <!--
 The portlet-data-handler-class value must be a class that implements
-com.liferay.portal.kernel.lar.PortletDataHandler and is called when archiving
+com.liferay.portlet.exportimport.lar.PortletDataHandler and is called when archiving
 tasks are run.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/journal/lar/JournalPortletDataHandler.html
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/lar/PortletDataHandler.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-service/src/main/java/com/liferay/journal/lar/JournalPortletDataHandler.java
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/exportimport/lar/PortletDataHandler.html
 -->
 <!ELEMENT portlet-data-handler-class (#PCDATA)>
 
@@ -260,8 +260,8 @@ is added, moved, or removed from a layout.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/journalcontent/JournalContentPortletLayoutListener.html
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-content-web/src/main/java/com/liferay/journal/content/web/JournalContentPortletLayoutListener.java
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
 -->
 <!ELEMENT portlet-layout-listener-class (#PCDATA)>
 
@@ -273,7 +273,7 @@ notified of data changes. See the Chat portlet for a real world implementation.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/poller/PollerProcessor.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/poller/PollerProcessor.html
 -->
 <!ELEMENT poller-processor-class (#PCDATA)>
 
@@ -284,8 +284,8 @@ emails.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/messageboards/pop/MessageListenerImpl.html
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/pop/MessageListener.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/pop/MessageListenerImpl.java
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/pop/MessageListener.html
 -->
 <!ELEMENT pop-message-listener-class (#PCDATA)>
 
@@ -297,8 +297,8 @@ human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/messageboards/social/MBMessageActivityInterpreter.html
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/social/kernel/model/SocialActivityInterpreter.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/social/MBMessageActivityInterpreter.java
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/social/model/SocialActivityInterpreter.html
 -->
 <!ELEMENT social-activity-interpreter-class (#PCDATA)>
 
@@ -310,7 +310,7 @@ human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/social/kernel/model/SocialRequestInterpreter.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/social/model/SocialRequestInterpreter.html
 -->
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
 
@@ -322,12 +322,13 @@ understandable by a human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
 -->
 <!ELEMENT user-notification-handler-class (#PCDATA)>
 
 <!--
-The user-notification-definitions points to the XML file that defines the user notifications for this portlet. This file is read by the class loader.
+The user-notification-definitions points to the XML file that defines the user
+notifications for this portlet. This file is read by the class loader.
 -->
 <!ELEMENT user-notification-definitions (#PCDATA)>
 
@@ -337,7 +338,7 @@ this portlet.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/documentlibrary/webdav/DLWebDAVStorageImpl.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/webdav/DLWebDAVStorageImpl.java
 -->
 <!ELEMENT webdav-storage-token (#PCDATA)>
 
@@ -348,7 +349,7 @@ the WebDAV protocol.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/documentlibrary/webdav/DLWebDAVStorageImpl.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/webdav/DLWebDAVStorageImpl.java
 -->
 <!ELEMENT webdav-storage-class (#PCDATA)>
 
@@ -359,7 +360,7 @@ XML-RPC protocol.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/blogs/util/PingbackMethodImpl.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/blogs/blogs-service/src/main/java/com/liferay/blogs/util/PingbackMethodImpl.java
 -->
 <!ELEMENT xml-rpc-method-class (#PCDATA)>
 
@@ -396,7 +397,7 @@ context. The default value is set in portal.properties.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/ControlPanelEntry.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/ControlPanelEntry.html
 -->
 <!ELEMENT control-panel-entry-class (#PCDATA)>
 
@@ -407,7 +408,7 @@ Publisher.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/asset/model/AssetRendererFactory.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/asset/model/AssetRendererFactory.html
 -->
 <!ELEMENT asset-renderer-factory (#PCDATA)>
 
@@ -424,13 +425,13 @@ custom fields administration UI.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
+http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
 -->
 <!ELEMENT custom-attributes-display (#PCDATA)>
 
 <!--
 The permission-propagator value must be a class that implements
-com.liferay.portal.security.permission.PermissionPropagator and is called to
+com.liferay.portal.kernel.security.permission.PermissionPropagator and is called to
 propagate permissions.
 -->
 <!ELEMENT permission-propagator (#PCDATA)>
@@ -533,7 +534,7 @@ portlet. The default value is set in portal.properties.
 
 See:
 
-http://www.liferay.com/page/guest/documentation/development/properties
+http://docs.liferay.com/portal/7.0/propertiesdoc/portal.properties.html
 -->
 <!ELEMENT show-portlet-access-denied (#PCDATA)>
 
@@ -543,7 +544,7 @@ with an inactive message if the portlet is inactive. If set to false, users are
 never shown the portlet if the portlet is inactive. The default value is set in
 portal.properties.
 
-http://www.liferay.com/page/guest/documentation/development/properties
+http://docs.liferay.com/portal/7.0/propertiesdoc/portal.properties.html
 -->
 <!ELEMENT show-portlet-inactive (#PCDATA)>
 
@@ -841,15 +842,9 @@ See the comments in role-mapper element.
 The custom-user-attribute contains a list of names that are retrieved using a
 custom class that extends com.liferay.portlet.CustomUserAttributes.
 
-Download the sample hot deployable portlet WAR named test.war. Look for the
-class com.sample.strutsliferay.portlet.SampleUserAttributes to see how it
-associates the custom user attribute "user.name.test" with the value
-"Test Name". This class could be modified to read custom user attributes from
-another datasource that may be a database, a LDAP server, or a web service.
-
 See:
 
-http://www.liferay.com/page/guest/documentation/development/hot_deploy
+https://dev.liferay.com/develop/tutorials
 -->
 <!ELEMENT custom-user-attribute (name+, custom-class)>
 

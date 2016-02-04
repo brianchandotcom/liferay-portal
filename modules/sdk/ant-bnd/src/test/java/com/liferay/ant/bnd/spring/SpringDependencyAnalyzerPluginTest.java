@@ -135,7 +135,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		analyzer.setBundleSymbolicName("test.bundle");
 		analyzer.setBundleVersion("1.0.0");
-		analyzer.setProperty("Require-SchemaVersion", "1.0.0.1");
+		analyzer.setProperty("Liferay-Require-SchemaVersion", "1.0.0.1");
 		analyzer.setProperty(
 			"-spring-dependency", ServiceReference.class.getName());
 

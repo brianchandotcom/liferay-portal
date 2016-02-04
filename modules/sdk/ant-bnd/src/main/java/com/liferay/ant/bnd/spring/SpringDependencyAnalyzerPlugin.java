@@ -85,7 +85,7 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected String getReleaseInfo(Analyzer analyzer) {
-		String property = analyzer.getProperty("Require-SchemaVersion");
+		String property = analyzer.getProperty("Liferay-Require-SchemaVersion");
 
 		if (property == null) {
 			return "";

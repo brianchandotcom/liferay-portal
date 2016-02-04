@@ -5,7 +5,7 @@ buildService {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.3"
 	compile project(":apps:bookmarks:bookmarks-api")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")

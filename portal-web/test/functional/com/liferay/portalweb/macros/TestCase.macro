@@ -1,19 +1,27 @@
 <definition>
-	<command name="getDefaultSiteName" returns="defaultSiteName">
+	<command name="getSiteName" returns="siteName">
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
+			<equals arg1="${siteName}" arg2="Liferay" />
 			<then>
-				<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+				<if>
+					<equals arg1="${testPortalInstance}" arg2="true" />
+					<then>
+						<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-				<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
-				<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
+						<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
+						<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
 
-				<return name="defaultSiteName" value="${portalURL}" />
+						<return name="siteName" value="${portalURL}" />
+					</then>
+					<else>
+						<return name="siteName" value="Liferay" />
+					</else>
+				</if>
 			</then>
 			<else>
-				<return name="defaultSiteName" value="Liferay" />
+				<return name="siteName" value="${siteName}" />
 			</else>
 		</if>
 	</command>

@@ -105,10 +105,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			!pluginAutoDeployListenerHelper.isWebPlugin() &&
 			file.getName().endsWith(".war")) {
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Deploying package as a web application");
-			}
-
 			_isWaiDeployer = true;
 
 			return true;

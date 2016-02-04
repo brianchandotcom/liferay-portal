@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.css.web.servlet.taglib;
+package main.java.com.liferay.portlet.css.web.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

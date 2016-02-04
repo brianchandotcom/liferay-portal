@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.css.web.upgrade;
+package main.java.com.liferay.portlet.css.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

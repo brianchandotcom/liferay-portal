@@ -292,7 +292,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					<div class="separator"><!-- --></div>
 				</c:if>
 
-				<aui:layout cssClass="calendar-booking-invitations">
+				<aui:row cssClass="calendar-booking-invitations">
 					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
 						<label class="field-label">
 							<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
@@ -348,7 +348,7 @@ while (manageableCalendarsIterator.hasNext()) {
 							</div>
 						</div>
 					</aui:col>
-				</aui:layout>
+				</aui:row>
 			</liferay-ui:panel>
 
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingReminderPanel" persistState="<%= true %>" title="reminders">

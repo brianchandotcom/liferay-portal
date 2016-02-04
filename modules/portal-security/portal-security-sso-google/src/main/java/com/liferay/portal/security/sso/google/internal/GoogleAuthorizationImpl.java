@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google;
+package com.liferay.portal.security.sso.google.internal;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.HttpTransport;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 

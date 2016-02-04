@@ -321,36 +321,6 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
-	 * Returns the wap theme ID of this layout set branch.
-	 *
-	 * @return the wap theme ID of this layout set branch
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout set branch.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout set branch
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout set branch.
-	 *
-	 * @return the wap color scheme ID of this layout set branch
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout set branch.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout set branch
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
-
-	/**
 	 * Returns the css of this layout set branch.
 	 *
 	 * @return the css of this layout set branch

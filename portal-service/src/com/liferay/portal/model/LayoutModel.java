@@ -882,36 +882,6 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
-	 * Returns the wap theme ID of this layout.
-	 *
-	 * @return the wap theme ID of this layout
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout.
-	 *
-	 * @return the wap color scheme ID of this layout
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
-
-	/**
 	 * Returns the css of this layout.
 	 *
 	 * @return the css of this layout

@@ -16,8 +16,10 @@ package com.liferay.site.application.list;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks;
 
@@ -34,6 +36,15 @@ public class LatentGroupProvider implements GroupProvider {
 
 	@Override
 	public Group getGroup(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!group.isControlPanel()) {
+			return group;
+		}
+
 		HttpServletRequest originalRequest =
 			PortalUtil.getOriginalServletRequest(request);
 

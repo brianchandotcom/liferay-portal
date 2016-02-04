@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Journal Editor Config
 Bundle-SymbolicName: com.liferay.journal.editor.config
 Bundle-Version: 1.0.0
-Include-Resource: classes

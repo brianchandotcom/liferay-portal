@@ -74,28 +74,18 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
-	@Reference(unbind = "-")
-	protected void setGoogleAuthorization(
-		GoogleAuthorization googleAuthorization) {
-
-		_googleAuthorization = googleAuthorization;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final String _JSP_PATH =
 		"/html/portlet/login/navigation/google.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleNavigationPreDynamicInclude.class);
 
+	@Reference
 	private GoogleAuthorization _googleAuthorization;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google)"
+	)
 	private ServletContext _servletContext;
 
 }

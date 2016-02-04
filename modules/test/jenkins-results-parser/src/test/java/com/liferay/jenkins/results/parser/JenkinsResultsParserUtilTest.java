@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.net.URI;
 import java.net.URL;
 
 import org.json.JSONObject;
@@ -199,6 +200,15 @@ public class JenkinsResultsParserUtilTest
 		Assert.assertEquals(
 			expectedJSONString.replace("\n", ""),
 			actualJSONString.replace("\n", ""));
+	}
+
+	@Override
+	protected String toURLString(File file) throws Exception {
+		URI uri = file.toURI();
+
+		URL url = uri.toURL();
+
+		return url.toString();
 	}
 
 	@Override

@@ -58,6 +58,10 @@ public class DDMFormRenderingContext {
 		return _readOnly;
 	}
 
+	public boolean isShowRequiredFieldsWarning() {
+		return _showRequiredFieldsWarning;
+	}
+
 	public void setContainerId(String containerId) {
 		_containerId = containerId;
 	}
@@ -88,6 +92,12 @@ public class DDMFormRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	public void setShowRequiredFieldsWarning(
+		boolean showRequiredFieldsWarning) {
+
+		_showRequiredFieldsWarning = showRequiredFieldsWarning;
+	}
+
 	public void setSubmitLabel(String submitLabel) {
 		_submitLabel = submitLabel;
 	}
@@ -99,6 +109,7 @@ public class DDMFormRenderingContext {
 	private Locale _locale;
 	private String _portletNamespace;
 	private boolean _readOnly;
+	private boolean _showRequiredFieldsWarning = true;
 	private String _submitLabel;
 
 }

@@ -299,9 +299,9 @@ AUI.add(
 								label: instance.getLabel(),
 								name: instance.getQualifiedName(),
 								readOnly: instance.get('readOnly'),
+								tip: instance.getLocalizedValue(instance.get('tip')),
 								value: instance.getContextValue() || '',
-								visible: instance.get('visible'),
-								tip: instance.getLocalizedValue(instance.get('tip'))
+								visible: instance.get('visible')
 							}
 						);
 					},

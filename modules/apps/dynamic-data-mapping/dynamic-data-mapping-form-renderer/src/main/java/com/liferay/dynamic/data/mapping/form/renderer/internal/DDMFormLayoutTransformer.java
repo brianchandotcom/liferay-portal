@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -32,16 +34,31 @@ import java.util.Map;
 public class DDMFormLayoutTransformer {
 
 	public DDMFormLayoutTransformer(
-		DDMFormLayout ddmFormLayout,
-		Map<String, String> renderedDDMFormFieldsMap, Locale locale) {
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		Map<String, String> renderedDDMFormFieldsMap,
+		boolean showRequiredFieldsWarning, Locale locale) {
 
+		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
 		_ddmFormLayout = ddmFormLayout;
 		_renderedDDMFormFieldsMap = renderedDDMFormFieldsMap;
+		_showRequiredFieldsWarning = showRequiredFieldsWarning;
 		_locale = locale;
 	}
 
 	public List<Object> getPages() {
 		return getPages(_ddmFormLayout.getDDMFormLayoutPages());
+	}
+
+	protected boolean containsRequiredField(List<String> ddmFormFieldNames) {
+		for (String ddmFormFieldName : ddmFormFieldNames) {
+			DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
+
+			if (ddmFormField.isRequired()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Map<String, Object> getColumn(
@@ -92,6 +109,11 @@ public class DDMFormLayoutTransformer {
 
 		page.put("title", title.getString(_locale));
 
+		boolean showRequiredFieldsWarning = isShowRequiredFieldsWarning(
+			ddmFormLayoutPage.getDDMFormLayoutRows());
+
+		page.put("showRequiredFieldsWarning", showRequiredFieldsWarning);
+
 		return page;
 	}
 
@@ -126,8 +148,32 @@ public class DDMFormLayoutTransformer {
 		return rows;
 	}
 
+	protected boolean isShowRequiredFieldsWarning(
+		List<DDMFormLayoutRow> ddmFormLayoutRows) {
+
+		if (!_showRequiredFieldsWarning) {
+			return false;
+		}
+
+		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
+			for (DDMFormLayoutColumn ddmFormLayoutColumn :
+					ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+
+				if (containsRequiredField(
+						ddmFormLayoutColumn.getDDMFormFieldNames())) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final DDMFormLayout _ddmFormLayout;
 	private final Locale _locale;
 	private final Map<String, String> _renderedDDMFormFieldsMap;
+	private final boolean _showRequiredFieldsWarning;
 
 }

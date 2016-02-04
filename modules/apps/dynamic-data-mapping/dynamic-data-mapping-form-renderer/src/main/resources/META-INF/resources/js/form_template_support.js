@@ -3,7 +3,13 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 
+		var Lang = A.Lang;
+
+		var TPL_ASTERISK = '<i class="icon-asterisk text-warning"></i>';
+
 		var TPL_DIV = '<div></div>';
+
+		var TPL_REQUIRED_FIELDS_WARNING_MESSAGE = '<label class="required-warning">{message}</label>';
 
 		var FormTemplateSupport = function() {
 		};
@@ -19,6 +25,14 @@ AUI.add(
 
 			readOnly: {
 				value: false
+			},
+
+			showRequiredFieldsWarning: {
+				value: false
+			},
+
+			requiredFieldsWarningMessageHTML: {
+				valueFn: '_getRequiredFieldsWarningMessageHTML'
 			},
 
 			submitLabel: {
@@ -49,6 +63,7 @@ AUI.add(
 				return {
 					pages: normalizedLayout.pages,
 					readOnly: instance.get('readOnly'),
+					requiredFieldsWarningMessageHTML: instance.get('requiredFieldsWarningMessageHTML'),
 					strings: instance.get('strings'),
 					submitLabel: instance.get('submitLabel')
 				};
@@ -96,6 +111,22 @@ AUI.add(
 				);
 			},
 
+			_getRequiredFieldsWarningMessageHTML: function() {
+				var instance = this;
+
+				return Lang.sub(
+					TPL_REQUIRED_FIELDS_WARNING_MESSAGE,
+					{
+						message: Lang.sub(
+							Liferay.Language.get('all-fields-marked-with-x-are-required'),
+							{
+								'0': TPL_ASTERISK
+							}
+						)
+					}
+				);
+			},
+
 			_normalizeLayout: function(layout) {
 				var instance = this;
 
@@ -126,11 +157,18 @@ AUI.add(
 
 				var locale = instance.get('locale');
 
+				instance._pageHasRequiredFields = false;
+
+				var rows = page.rows.map(A.bind('_normalizeLayoutRow', instance));
+
+				var showRequiredFieldsWarning = instance.get('showRequiredFieldsWarning');
+
 				return A.merge(
 					page,
 					{
 						description: (page.description && page.description[locale]) || '',
-						rows: page.rows.map(A.bind('_normalizeLayoutRow', instance)),
+						rows: rows,
+						showRequiredFieldsWarning: showRequiredFieldsWarning && instance._pageHasRequiredFields,
 						title: (page.title && page.title[locale]) || ''
 					}
 				);
@@ -152,9 +190,11 @@ AUI.add(
 
 				var field = instance.getField(fieldName);
 
-				var repeatedSiblings = field.getRepeatedSiblings();
+				if (!instance._pageHasRequiredFields) {
+					instance._pageHasRequiredFields = field.get('required');
+				}
 
-				return repeatedSiblings.map(
+				return field.getRepeatedSiblings().map(
 					function(sibling) {
 						var fragment = A.Node.create(TPL_DIV);
 

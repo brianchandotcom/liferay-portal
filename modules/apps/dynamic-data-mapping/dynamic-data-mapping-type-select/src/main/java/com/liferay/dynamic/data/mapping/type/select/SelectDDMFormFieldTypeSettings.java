@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 
 /**
  * @author Marcellus Tavares
@@ -91,5 +92,9 @@ public interface SelectDDMFormFieldTypeSettings
 		visibilityExpression = "dataSourceType.equals(\"manual\")"
 	)
 	public DDMFormFieldOptions options();
+
+	@DDMFormField(visibilityExpression = "false")
+	@Override
+	public DDMFormFieldValidation validation();
 
 }

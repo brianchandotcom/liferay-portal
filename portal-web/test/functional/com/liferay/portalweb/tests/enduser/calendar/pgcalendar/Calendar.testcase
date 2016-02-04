@@ -3777,7 +3777,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewComment">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="Calendar Event Regular Comment" />
 			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />

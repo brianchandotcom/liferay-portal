@@ -17,7 +17,7 @@ package com.liferay.wiki.web.display.context.util;
 import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -57,7 +57,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiGroupServiceOverriddenConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -67,7 +67,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiGroupServiceOverriddenConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), WikiConstants.SERVICE_NAME));
@@ -100,7 +100,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiPortletInstanceOverridenConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -109,7 +109,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiPortletInstanceOverridenConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new PortletInstanceSettingsLocator(
 								getLayout(), getPortletId()));

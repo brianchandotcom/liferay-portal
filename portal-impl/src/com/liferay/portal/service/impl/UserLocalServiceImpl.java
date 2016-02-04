@@ -6188,14 +6188,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		for (long oldGroupId : oldGroupIds) {
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
-				unsetGroupUsers(
+				userLocalService.unsetGroupUsers(
 					oldGroupId, new long[] {userId}, serviceContext);
 			}
 		}
 
 		for (long newGroupId : newGroupIds) {
 			if (!ArrayUtil.contains(oldGroupIds, newGroupId)) {
-				addGroupUsers(newGroupId, new long[] {userId});
+				userLocalService.addGroupUsers(newGroupId, new long[] {userId});
 			}
 		}
 

@@ -159,19 +159,6 @@
 		#set ($is_portlet_page = true)
 	#end
 
-	#if ($is_portlet_page && $theme_display.isWapTheme())
-		#set ($all_portlets = $layoutTypePortlet.getPortlets())
-		#set ($column_1_portlets = $layoutTypePortlet.getAllPortlets("column-1"))
-		#set ($column_2_portlets = $layoutTypePortlet.getAllPortlets("column-2"))
-		#set ($column_3_portlets = $layoutTypePortlet.getAllPortlets("column-3"))
-		#set ($column_4_portlets = $layoutTypePortlet.getAllPortlets("column-4"))
-		#set ($column_5_portlets = $layoutTypePortlet.getAllPortlets("column-5"))
-
-		#if ($layoutTypePortlet.hasStateMax())
-			#set ($maximized_portlet_id = $layoutTypePortlet.getStateMaxPortletId())
-		#end
-	#end
-
 	#set ($typeSettingsProperties = $layout.getTypeSettingsProperties())
 
 	#if ($typeSettingsProperties)
@@ -337,12 +324,7 @@
 
 ## ---------- Includes ---------- ##
 
-#if ($is_portlet_page && $theme_display.isWapTheme())
-	#set ($dir_include = "/wap")
-#else
-	#set ($dir_include = "/html")
-#end
-
+#set ($dir_include = "/html")
 #set ($body_bottom_include = "$dir_include/common/themes/body_bottom.jsp")
 #set ($body_top_include = "$dir_include/common/themes/body_top.jsp")
 #set ($bottom_include = "$dir_include/common/themes/bottom.jsp")

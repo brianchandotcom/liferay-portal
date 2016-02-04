@@ -905,8 +905,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setIconImageId(layoutRevision.getIconImageId());
 		layout.setThemeId(layoutRevision.getThemeId());
 		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
-		layout.setWapThemeId(layoutRevision.getWapThemeId());
-		layout.setWapColorSchemeId(layoutRevision.getWapColorSchemeId());
 		layout.setCss(layoutRevision.getCss());
 
 		return layoutLocalService.updateLayout(layout);

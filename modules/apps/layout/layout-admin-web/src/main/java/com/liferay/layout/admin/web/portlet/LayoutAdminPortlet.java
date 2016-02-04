@@ -538,8 +538,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			incompleteLayoutRevision.getIconImageId(),
 			incompleteLayoutRevision.getThemeId(),
 			incompleteLayoutRevision.getColorSchemeId(),
-			incompleteLayoutRevision.getWapThemeId(),
-			incompleteLayoutRevision.getWapColorSchemeId(),
 			incompleteLayoutRevision.getCss(), serviceContext);
 	}
 
@@ -666,11 +664,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	protected String getColorSchemeId(
-			long companyId, String themeId, String colorSchemeId,
-			boolean wapTheme)
+			long companyId, String themeId, String colorSchemeId)
 		throws Exception {
 
-		Theme theme = themeLocalService.getTheme(companyId, themeId, wapTheme);
+		Theme theme = themeLocalService.getTheme(companyId, themeId);
 
 		if (!theme.hasColorSchemes()) {
 			colorSchemeId = StringPool.BLANK;
@@ -678,7 +675,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		if (Validator.isNull(colorSchemeId)) {
 			ColorScheme colorScheme = themeLocalService.getColorScheme(
-				companyId, themeId, colorSchemeId, wapTheme);
+				companyId, themeId, colorSchemeId);
 
 			colorSchemeId = colorScheme.getColorSchemeId();
 		}
@@ -953,7 +950,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, device + "ColorSchemeId");
 			String deviceCss = ParamUtil.getString(
 				actionRequest, device + "Css");
-			boolean deviceWapTheme = device.equals("wap");
 
 			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
 				actionRequest, device + "InheritLookAndFeel");
@@ -967,12 +963,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			}
 			else if (Validator.isNotNull(deviceThemeId)) {
 				deviceColorSchemeId = getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId,
-					deviceWapTheme);
+					companyId, deviceThemeId, deviceColorSchemeId);
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, deviceWapTheme, true);
+					deviceThemeId, true);
 			}
 
 			long groupId = liveGroupId;
@@ -987,7 +982,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 			layoutService.updateLookAndFeel(
 				groupId, privateLayout, layoutId, deviceThemeId,
-				deviceColorSchemeId, deviceCss, deviceWapTheme);
+				deviceColorSchemeId, deviceCss);
 		}
 	}
 
@@ -1007,16 +1002,14 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, device + "ColorSchemeId");
 			String deviceCss = ParamUtil.getString(
 				actionRequest, device + "Css");
-			boolean deviceWapTheme = device.equals("wap");
 
 			if (Validator.isNotNull(deviceThemeId)) {
 				deviceColorSchemeId = getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId,
-					deviceWapTheme);
+					companyId, deviceThemeId, deviceColorSchemeId);
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, deviceWapTheme, false);
+					deviceThemeId, false);
 			}
 
 			long groupId = liveGroupId;
@@ -1027,7 +1020,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 			layoutSetService.updateLookAndFeel(
 				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
-				deviceCss, deviceWapTheme);
+				deviceCss);
 		}
 	}
 
@@ -1099,11 +1092,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
 			UnicodeProperties typeSettingsProperties, String device,
-			String deviceThemeId, boolean wapTheme, boolean isLayout)
+			String deviceThemeId, boolean isLayout)
 		throws Exception {
 
-		Theme theme = themeLocalService.getTheme(
-			companyId, deviceThemeId, wapTheme);
+		Theme theme = themeLocalService.getTheme(companyId, deviceThemeId);
 
 		deleteThemeSettingsProperties(typeSettingsProperties, device);
 

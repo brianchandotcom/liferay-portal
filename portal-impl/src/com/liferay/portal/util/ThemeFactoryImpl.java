@@ -43,20 +43,6 @@ public class ThemeFactoryImpl implements ThemeFactory {
 	}
 
 	@Override
-	public Theme getDefaultWapTheme(long companyId) {
-		return new ThemeImpl(
-			ThemeFactoryUtil.getDefaultWapThemeId(companyId), StringPool.BLANK);
-	}
-
-	@Override
-	public String getDefaultWapThemeId(long companyId) {
-		String defaultWapThemeId = PrefsPropsUtil.getString(
-			companyId, PropsKeys.DEFAULT_WAP_THEME_ID);
-
-		return PortalUtil.getJsSafePortletId(defaultWapThemeId);
-	}
-
-	@Override
 	public Theme getTheme() {
 		return new ThemeImpl();
 	}

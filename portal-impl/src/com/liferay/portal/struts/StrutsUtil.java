@@ -16,7 +16,6 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 
 import java.io.IOException;
 
@@ -45,8 +44,6 @@ public class StrutsUtil {
 
 	public static final String TEXT_HTML_DIR = "/html";
 
-	public static final String TEXT_WAP_DIR = "/wap";
-
 	public static void forward(
 			String uri, ServletContext servletContext,
 			HttpServletRequest request, HttpServletResponse response)
@@ -62,10 +59,6 @@ public class StrutsUtil {
 
 		if (!response.isCommitted()) {
 			String path = TEXT_HTML_DIR + uri;
-
-			if (BrowserSnifferUtil.isWap(request)) {
-				path = TEXT_WAP_DIR + uri;
-			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Forward path " + path);
@@ -86,10 +79,6 @@ public class StrutsUtil {
 				request.setAttribute(PageContext.EXCEPTION, se1.getRootCause());
 
 				String errorPath = TEXT_HTML_DIR + "/common/error.jsp";
-
-				if (BrowserSnifferUtil.isWap(request)) {
-					path = TEXT_WAP_DIR + "/common/error.jsp";
-				}
 
 				requestDispatcher = servletContext.getRequestDispatcher(
 					errorPath);
@@ -122,10 +111,6 @@ public class StrutsUtil {
 		}
 
 		String path = TEXT_HTML_DIR + uri;
-
-		if (BrowserSnifferUtil.isWap(request)) {
-			path = TEXT_WAP_DIR + uri;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Include path " + path);

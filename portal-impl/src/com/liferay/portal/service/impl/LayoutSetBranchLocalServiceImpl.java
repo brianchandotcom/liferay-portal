@@ -74,8 +74,6 @@ public class LayoutSetBranchLocalServiceImpl
 		long logoId = 0;
 		String themeId = null;
 		String colorSchemeId = null;
-		String wapThemeId = null;
-		String wapColorSchemeId = null;
 		String css = null;
 		String settings = null;
 
@@ -87,8 +85,6 @@ public class LayoutSetBranchLocalServiceImpl
 			logoId = copyLayoutSetBranch.getLogoId();
 			themeId = copyLayoutSetBranch.getThemeId();
 			colorSchemeId = copyLayoutSetBranch.getColorSchemeId();
-			wapThemeId = copyLayoutSetBranch.getWapThemeId();
-			wapColorSchemeId = copyLayoutSetBranch.getWapColorSchemeId();
 			css = copyLayoutSetBranch.getCss();
 			settings = copyLayoutSetBranch.getSettings();
 		}
@@ -100,8 +96,6 @@ public class LayoutSetBranchLocalServiceImpl
 			logoId = layoutSet.getLogoId();
 			themeId = layoutSet.getThemeId();
 			colorSchemeId = layoutSet.getColorSchemeId();
-			wapThemeId = layoutSet.getWapThemeId();
-			wapColorSchemeId = layoutSet.getWapColorSchemeId();
 			css = layoutSet.getCss();
 			settings = layoutSet.getSettings();
 		}
@@ -136,8 +130,6 @@ public class LayoutSetBranchLocalServiceImpl
 
 		layoutSetBranch.setThemeId(themeId);
 		layoutSetBranch.setColorSchemeId(colorSchemeId);
-		layoutSetBranch.setWapThemeId(wapThemeId);
-		layoutSetBranch.setWapColorSchemeId(wapColorSchemeId);
 		layoutSetBranch.setCss(css);
 		layoutSetBranch.setSettings(settings);
 
@@ -190,8 +182,6 @@ public class LayoutSetBranchLocalServiceImpl
 						lastLayoutRevision.getIconImageId(),
 						lastLayoutRevision.getThemeId(),
 						lastLayoutRevision.getColorSchemeId(),
-						lastLayoutRevision.getWapThemeId(),
-						lastLayoutRevision.getWapColorSchemeId(),
 						lastLayoutRevision.getCss(), serviceContext);
 				}
 				else {
@@ -206,8 +196,7 @@ public class LayoutSetBranchLocalServiceImpl
 						layout.getKeywords(), layout.getRobots(),
 						layout.getTypeSettings(), layout.isIconImage(),
 						layout.getIconImageId(), layout.getThemeId(),
-						layout.getColorSchemeId(), layout.getWapThemeId(),
-						layout.getWapColorSchemeId(), layout.getCss(),
+						layout.getColorSchemeId(), layout.getCss(),
 						serviceContext);
 				}
 			}
@@ -237,10 +226,8 @@ public class LayoutSetBranchLocalServiceImpl
 					layoutRevision.isIconImage(),
 					layoutRevision.getIconImageId(),
 					layoutRevision.getThemeId(),
-					layoutRevision.getColorSchemeId(),
-					layoutRevision.getWapThemeId(),
-					layoutRevision.getWapColorSchemeId(),
-					layoutRevision.getCss(), serviceContext);
+					layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
+					serviceContext);
 			}
 		}
 
@@ -454,9 +441,7 @@ public class LayoutSetBranchLocalServiceImpl
 				layoutRevision.getKeywords(), layoutRevision.getRobots(),
 				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-				layoutRevision.getColorSchemeId(),
-				layoutRevision.getWapThemeId(),
-				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+				layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
 		}
 

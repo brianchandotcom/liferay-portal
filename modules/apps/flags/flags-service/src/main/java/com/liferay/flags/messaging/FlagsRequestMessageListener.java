@@ -14,15 +14,18 @@
 
 package com.liferay.flags.messaging;
 
+import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -31,16 +34,16 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
 
@@ -51,11 +54,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Julio Camarero
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = MessageListener.class)
 public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	@Override
@@ -70,13 +78,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		long companyId = serviceContext.getCompanyId();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			serviceContext.getCompanyId());
+		Company company = FlagsRequestMessageListenerHelper.getCompany(
+			_companyLocalService, serviceContext.getCompanyId());
 
 		// Group
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			serviceContext.getPlid());
+		Layout layout = FlagsRequestMessageListenerHelper.getLayout(
+			_layoutLocalService, serviceContext.getPlid());
 
 		Group group = layout.getGroup();
 
@@ -87,8 +95,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String reporterUserName = null;
 		String reporterEmailAddress = null;
 
-		User reporterUser = UserLocalServiceUtil.getUserById(
-			serviceContext.getUserId());
+		User reporterUser = FlagsRequestMessageListenerHelper.getUserById(
+			_userLocalService, serviceContext.getUserId());
 
 		Locale locale = LocaleUtil.getDefault();
 
@@ -106,8 +114,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String reportedEmailAddress = StringPool.BLANK;
 		String reportedURL = StringPool.BLANK;
 
-		User reportedUser = UserLocalServiceUtil.getUserById(
-			flagsRequest.getReportedUserId());
+		User reportedUser = FlagsRequestMessageListenerHelper.getUserById(
+			_userLocalService, flagsRequest.getReportedUserId());
 
 		if (reportedUser.isDefaultUser()) {
 			reportedUserName = group.getDescriptiveName();
@@ -130,17 +138,22 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Email
 
-		String fromName = PrefsPropsUtil.getStringFromNames(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		String fromAddress = PrefsPropsUtil.getStringFromNames(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
+			ConfigurationFactoryUtil.getConfiguration(
+				FlagsGroupServiceConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId,
+					"com.liferay.flags.configuration.FlagsConfiguration"));
 
-		String subject = PrefsPropsUtil.getContent(
-			companyId, PropsKeys.FLAGS_EMAIL_SUBJECT);
-		String body = PrefsPropsUtil.getContent(
-			companyId, PropsKeys.FLAGS_EMAIL_BODY);
+		String fromName = flagsGroupServiceConfiguration.emailFromName();
+		String fromAddress = flagsGroupServiceConfiguration.emailFromAddress();
+
+		String emailSubject = ContentUtil.get(
+			FlagsRequestMessageListener.class.getClassLoader(),
+			flagsGroupServiceConfiguration.emailSubject());
+		String emailBody = ContentUtil.get(
+			FlagsRequestMessageListener.class.getClassLoader(),
+			flagsGroupServiceConfiguration.emailBody());
 
 		// Recipients
 
@@ -156,7 +169,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
 					contentType, flagsRequest.getContentURL(), reason, fromName,
 					fromAddress, recipient.getFullName(),
-					recipient.getEmailAddress(), subject, body, serviceContext);
+					recipient.getEmailAddress(), emailSubject, emailBody,
+					serviceContext);
 			}
 			catch (IOException ioe) {
 				if (_log.isWarnEnabled()) {
@@ -173,7 +187,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		List<String> roleNames = new ArrayList<>();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = FlagsRequestMessageListenerHelper.getGroup(
+			_groupLocalService, groupId);
 
 		if (group.isSite()) {
 			roleNames.add(RoleConstants.SITE_ADMINISTRATOR);
@@ -189,11 +204,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 
 		for (String roleName : roleNames) {
-			Role role = RoleLocalServiceUtil.getRole(companyId, roleName);
+			Role role = FlagsRequestMessageListenerHelper.getRole(
+				_roleLocalService, companyId, roleName);
 
 			List<UserGroupRole> userGroupRoles =
-				UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(
-					groupId, role.getRoleId());
+				FlagsRequestMessageListenerHelper.
+					getUserGroupRolesByGroupAndRole(
+						_userGroupRoleLocalService, groupId, role.getRoleId());
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				recipients.add(userGroupRole.getUser());
@@ -201,11 +218,12 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 
 		if (recipients.isEmpty()) {
-			Role role = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.ADMINISTRATOR);
+			Role role = FlagsRequestMessageListenerHelper.getRole(
+				_roleLocalService, companyId, RoleConstants.ADMINISTRATOR);
 
 			recipients.addAll(
-				UserLocalServiceUtil.getRoleUsers(role.getRoleId()));
+				FlagsRequestMessageListenerHelper.getRoleUsers(
+					_userLocalService, role.getRoleId()));
 		}
 
 		return recipients;
@@ -218,7 +236,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			String reportedUserURL, long contentId, String contentTitle,
 			String contentType, String contentURL, String reason,
 			String fromName, String fromAddress, String toName,
-			String toAddress, String subject, String body,
+			String toAddress, String emailSubject, String emailBody,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -226,7 +244,9 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
+		subscriptionSender.setSubject(emailSubject);
+		subscriptionSender.setBody(emailBody);
+
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$CONTENT_ID$]", contentId, "[$CONTENT_TYPE$]", contentType,
@@ -246,14 +266,56 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.setMailId("flags_request", contentId);
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FlagsRequestMessageListener.class);
+
+	private CompanyLocalService _companyLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	private UserLocalService _userLocalService;
 
 }

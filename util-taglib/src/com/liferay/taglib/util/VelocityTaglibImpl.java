@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.TagSupport;
-import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.portlet.ActionURLTag;
 import com.liferay.taglib.portletext.IconBackTag;
 import com.liferay.taglib.portletext.IconOptionsTag;
@@ -420,14 +419,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return journalArticleTag;
 	}
 
-	@Override
-	public LayoutTag getLayoutTag() throws Exception {
-		LayoutTag layoutTag = new LayoutTag();
-
-		setUp(layoutTag);
-
-		return layoutTag;
-	}
 
 	@Override
 	public MySitesTag getMySitesTag() throws Exception {

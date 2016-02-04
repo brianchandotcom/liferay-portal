@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.ddm;
+package com.liferay.dynamic.data.lists.web.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;

@@ -61,7 +61,7 @@ public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portlet.configuration.css.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

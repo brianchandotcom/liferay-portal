@@ -65,7 +65,7 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
-		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_';
+		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_configuration_css_web_portlet_PortletCSSPortlet_';
 
 		var NORMAL = 'normal';
 
@@ -1222,11 +1222,13 @@ AUI.add(
 							updateLookAndFeelURL.setParameter('portletId', instance._portletId);
 							updateLookAndFeelURL.setWindowState('normal');
 
+							var paramName = LOOK_AND_FEEL_NS + 'css';
+
 							A.io.request(
 								updateLookAndFeelURL.toString(),
 								{
 									data: {
-										_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_css: JSON.stringify(instance._objData)
+										paramName: JSON.stringify(instance._objData)
 									},
 									on: {
 										complete: saveHandler

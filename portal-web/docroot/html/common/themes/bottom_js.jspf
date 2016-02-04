@@ -151,12 +151,22 @@ if (layout != null) {
 		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
 
 		if (navBlock) {
-			navBlock.once(
-				['gesturemovestart', 'mousemove'],
-				function() {
-					Liferay.fire('initNavigation');
-				}
-			);
+			if (A.UA.touchMobile) {
+				$('#navigationCollapse').one(
+					'shown.bs.collapse',
+					function () {
+						Liferay.fire('initNavigation');
+					}
+				);
+			}
+			else {
+				navBlock.once(
+					['gesturemovestart', 'mousemove'],
+					function() {
+						Liferay.fire('initNavigation');
+					}
+				);
+			}
 		}
 
 		A.on(

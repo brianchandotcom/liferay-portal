@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.messageboards.service.persistence.test;
 
+import com.liferay.message.boards.kernel.exception.NoSuchMailingListException;
+import com.liferay.message.boards.kernel.model.MBMailingList;
+import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence;
+import com.liferay.message.boards.kernel.service.persistence.MBMailingListUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -33,12 +39,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-
-import com.liferay.portlet.messageboards.exception.NoSuchMailingListException;
-import com.liferay.portlet.messageboards.model.MBMailingList;
-import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.persistence.MBMailingListPersistence;
-import com.liferay.portlet.messageboards.service.persistence.MBMailingListUtil;
 
 import org.junit.After;
 import org.junit.Assert;

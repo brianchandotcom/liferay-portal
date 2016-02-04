@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.model.MBBan;
+import com.liferay.message.boards.kernel.service.MBBanService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

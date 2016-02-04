@@ -14,6 +14,17 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.blogs.kernel.exception.EntryContentException;
+import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
+import com.liferay.blogs.kernel.exception.EntryDescriptionException;
+import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
+import com.liferay.blogs.kernel.exception.EntrySmallImageNameException;
+import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
+import com.liferay.blogs.kernel.exception.EntryTitleException;
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,17 +71,6 @@ import com.liferay.portlet.asset.exception.AssetTagException;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.BlogsEntryImageSelectorHelper;
-import com.liferay.portlet.blogs.exception.EntryContentException;
-import com.liferay.portlet.blogs.exception.EntryCoverImageCropException;
-import com.liferay.portlet.blogs.exception.EntryDescriptionException;
-import com.liferay.portlet.blogs.exception.EntryDisplayDateException;
-import com.liferay.portlet.blogs.exception.EntrySmallImageNameException;
-import com.liferay.portlet.blogs.exception.EntrySmallImageScaleException;
-import com.liferay.portlet.blogs.exception.EntryTitleException;
-import com.liferay.portlet.blogs.exception.NoSuchEntryException;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;

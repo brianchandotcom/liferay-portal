@@ -15,10 +15,10 @@
 package com.liferay.message.boards.web.display.context;
 
 import com.liferay.message.boards.display.context.MBHomeDisplayContext;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.web.display.context.util.MBRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 
 import java.util.UUID;
 

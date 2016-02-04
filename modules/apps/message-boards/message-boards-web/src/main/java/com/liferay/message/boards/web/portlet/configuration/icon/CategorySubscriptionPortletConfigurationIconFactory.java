@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.model.MBCategory;
 
 import javax.portlet.PortletRequest;
 

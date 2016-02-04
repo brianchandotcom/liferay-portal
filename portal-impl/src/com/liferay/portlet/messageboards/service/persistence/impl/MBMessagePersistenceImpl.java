@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -52,11 +56,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
-import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 
 import java.io.Serializable;
 
@@ -79,7 +80,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBMessagePersistence
- * @see com.liferay.portlet.messageboards.service.persistence.MBMessageUtil
+ * @see com.liferay.message.boards.kernel.service.persistence.MBMessageUtil
  * @generated
  */
 @ProviderType
@@ -19186,7 +19187,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			try {
 				mbMessage.setSubject(SanitizerUtil.sanitize(companyId, groupId,
 						userId,
-						com.liferay.portlet.messageboards.model.MBMessage.class.getName(),
+						com.liferay.message.boards.kernel.model.MBMessage.class.getName(),
 						messageId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						mbMessage.getSubject(), null));
 			}

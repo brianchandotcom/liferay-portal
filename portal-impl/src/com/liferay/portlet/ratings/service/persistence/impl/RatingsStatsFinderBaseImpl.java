@@ -17,8 +17,8 @@ package com.liferay.portlet.ratings.service.persistence.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 /**
  * @author Brian Wing Shun Chan

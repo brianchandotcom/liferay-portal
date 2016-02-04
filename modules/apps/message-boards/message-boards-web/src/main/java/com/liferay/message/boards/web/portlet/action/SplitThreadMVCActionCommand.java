@@ -14,6 +14,17 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.exception.MessageBodyException;
+import com.liferay.message.boards.kernel.exception.MessageSubjectException;
+import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
+import com.liferay.message.boards.kernel.exception.RequiredMessageException;
+import com.liferay.message.boards.kernel.exception.SplitThreadException;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.model.MBThreadConstants;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -29,17 +40,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.exception.MessageBodyException;
-import com.liferay.portlet.messageboards.exception.MessageSubjectException;
-import com.liferay.portlet.messageboards.exception.NoSuchThreadException;
-import com.liferay.portlet.messageboards.exception.RequiredMessageException;
-import com.liferay.portlet.messageboards.exception.SplitThreadException;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.MBThreadConstants;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageService;
-import com.liferay.portlet.messageboards.service.MBThreadService;
 
 import java.io.InputStream;
 

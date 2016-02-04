@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.service.persistence.MBCategoryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -45,11 +49,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
-import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersistence;
 
 import java.io.Serializable;
 
@@ -72,7 +73,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBCategoryPersistence
- * @see com.liferay.portlet.messageboards.service.persistence.MBCategoryUtil
+ * @see com.liferay.message.boards.kernel.service.persistence.MBCategoryUtil
  * @generated
  */
 @ProviderType

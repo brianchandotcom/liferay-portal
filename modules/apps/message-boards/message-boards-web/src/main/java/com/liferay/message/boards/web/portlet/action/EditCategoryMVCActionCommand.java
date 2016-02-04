@@ -14,6 +14,16 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.exception.CategoryNameException;
+import com.liferay.message.boards.kernel.exception.MailingListEmailAddressException;
+import com.liferay.message.boards.kernel.exception.MailingListInServerNameException;
+import com.liferay.message.boards.kernel.exception.MailingListInUserNameException;
+import com.liferay.message.boards.kernel.exception.MailingListOutEmailAddressException;
+import com.liferay.message.boards.kernel.exception.MailingListOutServerNameException;
+import com.liferay.message.boards.kernel.exception.MailingListOutUserNameException;
+import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
@@ -32,16 +42,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.exception.CategoryNameException;
-import com.liferay.portlet.messageboards.exception.MailingListEmailAddressException;
-import com.liferay.portlet.messageboards.exception.MailingListInServerNameException;
-import com.liferay.portlet.messageboards.exception.MailingListInUserNameException;
-import com.liferay.portlet.messageboards.exception.MailingListOutEmailAddressException;
-import com.liferay.portlet.messageboards.exception.MailingListOutServerNameException;
-import com.liferay.portlet.messageboards.exception.MailingListOutUserNameException;
-import com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryService;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 

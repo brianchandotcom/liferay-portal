@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
-import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
+import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;

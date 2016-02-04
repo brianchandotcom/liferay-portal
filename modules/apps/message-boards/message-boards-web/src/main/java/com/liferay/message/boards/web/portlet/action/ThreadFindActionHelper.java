@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import javax.portlet.PortletURL;
 
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portlet.messageboards.model.MBThread",
+	property = "model.class.name=com.liferay.message.boards.kernel.model.MBThread",
 	service = FindActionHelper.class
 )
 public class ThreadFindActionHelper extends BaseFindActionHelper {
@@ -92,7 +92,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBThread)",
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBThread)",
 		unbind = "-"
 	)
 	protected void setPortletLayoutFinder(

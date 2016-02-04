@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

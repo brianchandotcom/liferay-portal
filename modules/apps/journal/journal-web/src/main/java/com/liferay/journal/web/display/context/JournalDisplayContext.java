@@ -38,6 +38,8 @@ import com.liferay.journal.web.search.ArticleSearch;
 import com.liferay.journal.web.search.EntriesChecker;
 import com.liferay.journal.web.search.EntriesMover;
 import com.liferay.journal.web.util.JournalPortletUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,8 +72,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -16,6 +16,7 @@ package com.liferay.portlet.exportimport.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,8 +33,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.io.InputStream;
 import java.io.Serializable;

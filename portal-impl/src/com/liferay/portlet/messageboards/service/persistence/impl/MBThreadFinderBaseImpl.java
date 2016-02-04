@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
 
 import java.util.Set;
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,
 		ViewPortletProvider.class

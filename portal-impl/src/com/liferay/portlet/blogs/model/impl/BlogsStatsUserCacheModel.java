@@ -16,11 +16,11 @@ package com.liferay.portlet.blogs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.model.BlogsStatsUser;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
-
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.message.boards.kernel.exception.MailingListEmailAddressException;
+import com.liferay.message.boards.kernel.exception.MailingListInServerNameException;
+import com.liferay.message.boards.kernel.exception.MailingListInUserNameException;
+import com.liferay.message.boards.kernel.exception.MailingListOutEmailAddressException;
+import com.liferay.message.boards.kernel.exception.MailingListOutServerNameException;
+import com.liferay.message.boards.kernel.exception.MailingListOutUserNameException;
+import com.liferay.message.boards.kernel.model.MBMailingList;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -26,14 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.messageboards.exception.MailingListEmailAddressException;
-import com.liferay.portlet.messageboards.exception.MailingListInServerNameException;
-import com.liferay.portlet.messageboards.exception.MailingListInUserNameException;
-import com.liferay.portlet.messageboards.exception.MailingListOutEmailAddressException;
-import com.liferay.portlet.messageboards.exception.MailingListOutServerNameException;
-import com.liferay.portlet.messageboards.exception.MailingListOutUserNameException;
 import com.liferay.portlet.messageboards.messaging.MailingListRequest;
-import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.service.base.MBMailingListLocalServiceBaseImpl;
 
 import java.util.Calendar;

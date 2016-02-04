@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.model.MBBan;
+import com.liferay.message.boards.kernel.service.MBBanLocalService;
+import com.liferay.message.boards.kernel.service.persistence.MBBanPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -47,9 +51,6 @@ import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanLocalService;
-import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
 
 import java.io.Serializable;
 
@@ -66,7 +67,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl
- * @see com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil
+ * @see com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -75,7 +76,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil} to access the message boards ban local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil} to access the message boards ban local service.
 	 */
 
 	/**
@@ -242,7 +243,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBBan.class);
 
@@ -255,7 +256,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MBBan.class);
 
@@ -266,7 +267,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBBan.class);
 
@@ -571,13 +572,13 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.messageboards.model.MBBan",
+		persistedModelLocalServiceRegistry.register("com.liferay.message.boards.kernel.model.MBBan",
 			mbBanLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.messageboards.model.MBBan");
+			"com.liferay.message.boards.kernel.model.MBBan");
 	}
 
 	/**
@@ -622,7 +623,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.messageboards.service.MBBanLocalService.class)
+	@BeanReference(type = com.liferay.message.boards.kernel.service.MBBanLocalService.class)
 	protected MBBanLocalService mbBanLocalService;
 	@BeanReference(type = MBBanPersistence.class)
 	protected MBBanPersistence mbBanPersistence;

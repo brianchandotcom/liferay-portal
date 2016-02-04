@@ -14,15 +14,15 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.model.MBCategoryDisplay;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListTree;
 import com.liferay.portal.kernel.util.TreeNode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.model.MBCategoryDisplay;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

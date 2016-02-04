@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
-import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.ratings.kernel.model.RatingsStats;
 
 import java.io.Externalizable;
 import java.io.IOException;

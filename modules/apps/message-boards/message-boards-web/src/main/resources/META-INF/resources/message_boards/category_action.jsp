@@ -43,7 +43,7 @@ if (!defaultParentCategory) {
 	showPermissionsURL = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = "com.liferay.portlet.messageboards";
+	modelResource = "com.liferay.message.boards.kernel";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 

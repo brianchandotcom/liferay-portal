@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
+		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory",
+		"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion",
+		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage",
+		"model.class.name=com.liferay.message.boards.kernel.model.MBThread"
 	},
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

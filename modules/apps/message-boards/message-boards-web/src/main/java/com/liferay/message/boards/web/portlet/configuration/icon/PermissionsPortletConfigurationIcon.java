@@ -45,7 +45,7 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			String modelResource = "com.liferay.portlet.messageboards";
+			String modelResource = "com.liferay.message.boards.kernel";
 			String modelResourceDescription = themeDisplay.getScopeGroupName();
 			String resourcePrimKey = String.valueOf(
 				themeDisplay.getScopeGroupId());

@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -45,11 +49,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.exception.NoSuchThreadException;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
-import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
 
 import java.io.Serializable;
 
@@ -74,7 +75,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadPersistence
- * @see com.liferay.portlet.messageboards.service.persistence.MBThreadUtil
+ * @see com.liferay.message.boards.kernel.service.persistence.MBThreadUtil
  * @generated
  */
 @ProviderType

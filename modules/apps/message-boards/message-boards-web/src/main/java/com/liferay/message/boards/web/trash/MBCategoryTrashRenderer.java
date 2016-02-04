@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.web.trash;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBCategory;
 
 import java.util.Locale;
 

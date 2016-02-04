@@ -14,6 +14,11 @@
 
 package com.liferay.portlet.ratings.service.base;
 
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -29,16 +34,13 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
-import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.service.RatingsEntryService;
-import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
-import com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryService;
+import com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder;
+import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 import javax.sql.DataSource;
 
@@ -51,7 +53,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl
- * @see com.liferay.portlet.ratings.service.RatingsEntryServiceUtil
+ * @see com.liferay.ratings.kernel.service.RatingsEntryServiceUtil
  * @generated
  */
 public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
@@ -59,7 +61,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.ratings.service.RatingsEntryServiceUtil} to access the ratings entry remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.ratings.kernel.service.RatingsEntryServiceUtil} to access the ratings entry remote service.
 	 */
 
 	/**
@@ -67,7 +69,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the ratings entry local service
 	 */
-	public com.liferay.portlet.ratings.service.RatingsEntryLocalService getRatingsEntryLocalService() {
+	public com.liferay.ratings.kernel.service.RatingsEntryLocalService getRatingsEntryLocalService() {
 		return ratingsEntryLocalService;
 	}
 
@@ -77,7 +79,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param ratingsEntryLocalService the ratings entry local service
 	 */
 	public void setRatingsEntryLocalService(
-		com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService) {
+		com.liferay.ratings.kernel.service.RatingsEntryLocalService ratingsEntryLocalService) {
 		this.ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
@@ -141,7 +143,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the ratings stats local service
 	 */
-	public com.liferay.portlet.ratings.service.RatingsStatsLocalService getRatingsStatsLocalService() {
+	public com.liferay.ratings.kernel.service.RatingsStatsLocalService getRatingsStatsLocalService() {
 		return ratingsStatsLocalService;
 	}
 
@@ -151,7 +153,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param ratingsStatsLocalService the ratings stats local service
 	 */
 	public void setRatingsStatsLocalService(
-		com.liferay.portlet.ratings.service.RatingsStatsLocalService ratingsStatsLocalService) {
+		com.liferay.ratings.kernel.service.RatingsStatsLocalService ratingsStatsLocalService) {
 		this.ratingsStatsLocalService = ratingsStatsLocalService;
 	}
 
@@ -441,7 +443,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs entry local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryLocalService getBlogsEntryLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryLocalService getBlogsEntryLocalService() {
 		return blogsEntryLocalService;
 	}
 
@@ -451,7 +453,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsEntryLocalService the blogs entry local service
 	 */
 	public void setBlogsEntryLocalService(
-		com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService) {
+		com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService) {
 		this.blogsEntryLocalService = blogsEntryLocalService;
 	}
 
@@ -460,7 +462,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs entry remote service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryService getBlogsEntryService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryService getBlogsEntryService() {
 		return blogsEntryService;
 	}
 
@@ -470,7 +472,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsEntryService the blogs entry remote service
 	 */
 	public void setBlogsEntryService(
-		com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService) {
+		com.liferay.blogs.kernel.service.BlogsEntryService blogsEntryService) {
 		this.blogsEntryService = blogsEntryService;
 	}
 
@@ -516,7 +518,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs stats user local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
 		return blogsStatsUserLocalService;
 	}
 
@@ -526,7 +528,7 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsStatsUserLocalService the blogs stats user local service
 	 */
 	public void setBlogsStatsUserLocalService(
-		com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
@@ -616,16 +618,16 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
-	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
+	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsEntryLocalService.class)
+	protected com.liferay.ratings.kernel.service.RatingsEntryLocalService ratingsEntryLocalService;
+	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsEntryService.class)
 	protected RatingsEntryService ratingsEntryService;
 	@BeanReference(type = RatingsEntryPersistence.class)
 	protected RatingsEntryPersistence ratingsEntryPersistence;
 	@BeanReference(type = RatingsEntryFinder.class)
 	protected RatingsEntryFinder ratingsEntryFinder;
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsStatsLocalService.class)
-	protected com.liferay.portlet.ratings.service.RatingsStatsLocalService ratingsStatsLocalService;
+	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsStatsLocalService.class)
+	protected com.liferay.ratings.kernel.service.RatingsStatsLocalService ratingsStatsLocalService;
 	@BeanReference(type = RatingsStatsPersistence.class)
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
@@ -656,16 +658,16 @@ public abstract class RatingsEntryServiceBaseImpl extends BaseServiceImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryService blogsEntryService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsStatsUserLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsStatsUserLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)

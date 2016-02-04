@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -21,18 +22,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(
-	property = {"resource.name=com.liferay.portlet.messageboards"}
-)
+@OSGiBeanProperties(property = {"resource.name=" + MBPermission.RESOURCE_NAME})
 public class MBPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
-		"com.liferay.portlet.messageboards";
+		"com.liferay.message.boards.kernel";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

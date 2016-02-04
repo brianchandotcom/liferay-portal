@@ -41,12 +41,12 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
-import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
-import com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder;
+import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 import java.io.Serializable;
 
@@ -63,7 +63,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl
- * @see com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil
+ * @see com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -73,7 +73,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil} to access the ratings stats local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil} to access the ratings stats local service.
 	 */
 
 	/**
@@ -231,7 +231,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RatingsStats.class);
 
@@ -244,7 +244,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(RatingsStats.class);
 
@@ -255,7 +255,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RatingsStats.class);
 
@@ -320,7 +320,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	 *
 	 * @return the ratings entry local service
 	 */
-	public com.liferay.portlet.ratings.service.RatingsEntryLocalService getRatingsEntryLocalService() {
+	public com.liferay.ratings.kernel.service.RatingsEntryLocalService getRatingsEntryLocalService() {
 		return ratingsEntryLocalService;
 	}
 
@@ -330,7 +330,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	 * @param ratingsEntryLocalService the ratings entry local service
 	 */
 	public void setRatingsEntryLocalService(
-		com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService) {
+		com.liferay.ratings.kernel.service.RatingsEntryLocalService ratingsEntryLocalService) {
 		this.ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
@@ -559,13 +559,13 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.ratings.model.RatingsStats",
+		persistedModelLocalServiceRegistry.register("com.liferay.ratings.kernel.model.RatingsStats",
 			ratingsStatsLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.ratings.model.RatingsStats");
+			"com.liferay.ratings.kernel.model.RatingsStats");
 	}
 
 	/**
@@ -610,13 +610,13 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
-	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
+	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsEntryLocalService.class)
+	protected com.liferay.ratings.kernel.service.RatingsEntryLocalService ratingsEntryLocalService;
 	@BeanReference(type = RatingsEntryPersistence.class)
 	protected RatingsEntryPersistence ratingsEntryPersistence;
 	@BeanReference(type = RatingsEntryFinder.class)
 	protected RatingsEntryFinder ratingsEntryFinder;
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsStatsLocalService.class)
+	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsStatsLocalService.class)
 	protected RatingsStatsLocalService ratingsStatsLocalService;
 	@BeanReference(type = RatingsStatsPersistence.class)
 	protected RatingsStatsPersistence ratingsStatsPersistence;

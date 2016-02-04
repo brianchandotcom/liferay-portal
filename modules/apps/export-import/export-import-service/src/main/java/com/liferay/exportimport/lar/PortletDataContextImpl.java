@@ -18,6 +18,7 @@ import com.liferay.exportimport.xstream.ConverterAdapter;
 import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.exception.NoSuchTeamException;
@@ -102,8 +103,7 @@ import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 import com.liferay.portlet.exportimport.xstream.XStreamType;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.comment;
 
-import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.message.boards.kernel.model.MBDiscussion;
 
 /**
  * @author Adolfo Pérez

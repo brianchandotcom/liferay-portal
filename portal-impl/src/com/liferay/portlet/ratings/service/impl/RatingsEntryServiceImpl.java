@@ -16,8 +16,8 @@ package com.liferay.portlet.ratings.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.base.RatingsEntryServiceBaseImpl;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 
 /**
  * @author Brian Wing Shun Chan

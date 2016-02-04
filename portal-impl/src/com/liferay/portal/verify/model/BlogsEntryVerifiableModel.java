@@ -14,8 +14,8 @@
 
 package com.liferay.portal.verify.model;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
  * @author Brian Wing Shun Chan

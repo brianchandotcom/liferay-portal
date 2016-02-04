@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

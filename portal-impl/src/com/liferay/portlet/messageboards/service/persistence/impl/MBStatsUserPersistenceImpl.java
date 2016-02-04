@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.exception.NoSuchStatsUserException;
+import com.liferay.message.boards.kernel.model.MBStatsUser;
+import com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -36,11 +40,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.exception.NoSuchStatsUserException;
-import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
-import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
 
 import java.io.Serializable;
 
@@ -61,7 +62,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBStatsUserPersistence
- * @see com.liferay.portlet.messageboards.service.persistence.MBStatsUserUtil
+ * @see com.liferay.message.boards.kernel.service.persistence.MBStatsUserUtil
  * @generated
  */
 @ProviderType

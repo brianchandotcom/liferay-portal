@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.exception.NoSuchBanException;
+import com.liferay.message.boards.kernel.model.MBBan;
+import com.liferay.message.boards.kernel.service.persistence.MBBanPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -41,11 +45,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.exception.NoSuchBanException;
-import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
 import com.liferay.portlet.messageboards.model.impl.MBBanModelImpl;
-import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
 
 import java.io.Serializable;
 
@@ -67,7 +68,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanPersistence
- * @see com.liferay.portlet.messageboards.service.persistence.MBBanUtil
+ * @see com.liferay.message.boards.kernel.service.persistence.MBBanUtil
  * @generated
  */
 @ProviderType

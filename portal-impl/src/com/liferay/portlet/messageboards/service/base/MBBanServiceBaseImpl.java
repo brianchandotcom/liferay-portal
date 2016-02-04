@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.messageboards.service.base;
 
+import com.liferay.message.boards.kernel.model.MBBan;
+import com.liferay.message.boards.kernel.service.MBBanService;
+import com.liferay.message.boards.kernel.service.persistence.MBBanPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -27,10 +31,6 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanService;
-import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
-
 import javax.sql.DataSource;
 
 /**
@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl
- * @see com.liferay.portlet.messageboards.service.MBBanServiceUtil
+ * @see com.liferay.message.boards.kernel.service.MBBanServiceUtil
  * @generated
  */
 public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
@@ -50,7 +50,7 @@ public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.messageboards.service.MBBanServiceUtil} to access the message boards ban remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.message.boards.kernel.service.MBBanServiceUtil} to access the message boards ban remote service.
 	 */
 
 	/**
@@ -58,7 +58,7 @@ public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the message boards ban local service
 	 */
-	public com.liferay.portlet.messageboards.service.MBBanLocalService getMBBanLocalService() {
+	public com.liferay.message.boards.kernel.service.MBBanLocalService getMBBanLocalService() {
 		return mbBanLocalService;
 	}
 
@@ -68,7 +68,7 @@ public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
 	 * @param mbBanLocalService the message boards ban local service
 	 */
 	public void setMBBanLocalService(
-		com.liferay.portlet.messageboards.service.MBBanLocalService mbBanLocalService) {
+		com.liferay.message.boards.kernel.service.MBBanLocalService mbBanLocalService) {
 		this.mbBanLocalService = mbBanLocalService;
 	}
 
@@ -287,9 +287,9 @@ public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.messageboards.service.MBBanLocalService.class)
-	protected com.liferay.portlet.messageboards.service.MBBanLocalService mbBanLocalService;
-	@BeanReference(type = com.liferay.portlet.messageboards.service.MBBanService.class)
+	@BeanReference(type = com.liferay.message.boards.kernel.service.MBBanLocalService.class)
+	protected com.liferay.message.boards.kernel.service.MBBanLocalService mbBanLocalService;
+	@BeanReference(type = com.liferay.message.boards.kernel.service.MBBanService.class)
 	protected MBBanService mbBanService;
 	@BeanReference(type = MBBanPersistence.class)
 	protected MBBanPersistence mbBanPersistence;

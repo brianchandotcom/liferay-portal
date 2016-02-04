@@ -14,6 +14,11 @@
 
 package com.liferay.message.boards.web.security.permission;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -24,11 +29,6 @@ import com.liferay.portal.kernel.security.permission.BasePermissionPropagator;
 import com.liferay.portal.kernel.security.permission.PermissionPropagator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 					roleIds);
 			}
 		}
-		else if (className.equals("com.liferay.portlet.messageboards")) {
+		else if (className.equals("com.liferay.message.boards.kernel")) {
 			propagateMBRolePermissions(
 				actionRequest, className, primKey, roleIds);
 		}

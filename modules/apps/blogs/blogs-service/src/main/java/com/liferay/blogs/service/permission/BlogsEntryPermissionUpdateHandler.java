@@ -14,10 +14,10 @@
 
 package com.liferay.blogs.service.permission;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import java.util.Date;
 
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
 	service = PermissionUpdateHandler.class
 )
 public class BlogsEntryPermissionUpdateHandler

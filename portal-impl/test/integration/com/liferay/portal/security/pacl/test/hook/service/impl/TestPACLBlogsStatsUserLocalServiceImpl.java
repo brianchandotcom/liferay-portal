@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.pacl.test.hook.service.impl;
 
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceWrapper;
+import com.liferay.blogs.kernel.service.BlogsStatsUserLocalService;
+import com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceWrapper;
 
 /**
  * @author Brian Wing Shun Chan

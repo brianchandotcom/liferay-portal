@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.model.MBMailingList;
+import com.liferay.message.boards.kernel.service.MBMailingListLocalService;
+import com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -46,9 +50,6 @@ import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.messageboards.model.MBMailingList;
-import com.liferay.portlet.messageboards.service.MBMailingListLocalService;
-import com.liferay.portlet.messageboards.service.persistence.MBMailingListPersistence;
 
 import java.io.Serializable;
 
@@ -65,7 +66,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl
- * @see com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil
+ * @see com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -75,7 +76,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil} to access the message boards mailing list local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil} to access the message boards mailing list local service.
 	 */
 
 	/**
@@ -247,7 +248,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBMailingList.class);
 
@@ -260,7 +261,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MBMailingList.class);
 
@@ -272,7 +273,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBMailingList.class);
 
@@ -541,13 +542,13 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.messageboards.model.MBMailingList",
+		persistedModelLocalServiceRegistry.register("com.liferay.message.boards.kernel.model.MBMailingList",
 			mbMailingListLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.messageboards.model.MBMailingList");
+			"com.liferay.message.boards.kernel.model.MBMailingList");
 	}
 
 	/**
@@ -592,7 +593,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMailingListLocalService.class)
+	@BeanReference(type = com.liferay.message.boards.kernel.service.MBMailingListLocalService.class)
 	protected MBMailingListLocalService mbMailingListLocalService;
 	@BeanReference(type = MBMailingListPersistence.class)
 	protected MBMailingListPersistence mbMailingListPersistence;

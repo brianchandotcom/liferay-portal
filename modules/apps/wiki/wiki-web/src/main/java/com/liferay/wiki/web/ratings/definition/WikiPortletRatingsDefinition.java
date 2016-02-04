@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.ratings.definition;
 
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
+import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinition;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

@@ -16,10 +16,10 @@ package com.liferay.portlet.messageboards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.service.MBBanServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.messageboards.model.MBBanSoap}.
+ * is translated to an array of {@link com.liferay.message.boards.kernel.model.MBBanSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.messageboards.model.MBBan}, that is translated to a
- * {@link com.liferay.portlet.messageboards.model.MBBanSoap}. Methods that SOAP cannot
+ * {@link com.liferay.message.boards.kernel.model.MBBan}, that is translated to a
+ * {@link com.liferay.message.boards.kernel.model.MBBanSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,20 +59,20 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanServiceHttp
- * @see com.liferay.portlet.messageboards.model.MBBanSoap
+ * @see com.liferay.message.boards.kernel.model.MBBanSoap
  * @see MBBanServiceUtil
  * @generated
  */
 @ProviderType
 public class MBBanServiceSoap {
-	public static com.liferay.portlet.messageboards.model.MBBanSoap addBan(
+	public static com.liferay.message.boards.kernel.model.MBBanSoap addBan(
 		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.messageboards.model.MBBan returnValue = MBBanServiceUtil.addBan(banUserId,
+			com.liferay.message.boards.kernel.model.MBBan returnValue = MBBanServiceUtil.addBan(banUserId,
 					serviceContext);
 
-			return com.liferay.portlet.messageboards.model.MBBanSoap.toSoapModel(returnValue);
+			return com.liferay.message.boards.kernel.model.MBBanSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

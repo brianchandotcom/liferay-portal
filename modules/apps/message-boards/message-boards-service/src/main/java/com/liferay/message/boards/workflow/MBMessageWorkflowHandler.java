@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.workflow;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.Locale;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBMessage"},
+	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
 	service = WorkflowHandler.class
 )
 public class MBMessageWorkflowHandler extends BaseMBWorkflowHandler {

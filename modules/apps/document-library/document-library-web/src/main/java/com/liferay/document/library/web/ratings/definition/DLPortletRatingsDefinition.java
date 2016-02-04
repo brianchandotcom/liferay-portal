@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.ratings.definition;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
+import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 

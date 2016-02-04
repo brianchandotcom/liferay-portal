@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.workflow;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -21,8 +23,6 @@ import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import java.io.Serializable;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
 	service = WorkflowHandler.class
 )
 public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {

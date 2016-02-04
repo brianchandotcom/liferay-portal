@@ -14,10 +14,10 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

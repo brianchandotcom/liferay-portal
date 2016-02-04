@@ -16,11 +16,11 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.model.MBStatsUser;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
-
-import com.liferay.portlet.messageboards.model.MBStatsUser;
 
 import java.io.Externalizable;
 import java.io.IOException;

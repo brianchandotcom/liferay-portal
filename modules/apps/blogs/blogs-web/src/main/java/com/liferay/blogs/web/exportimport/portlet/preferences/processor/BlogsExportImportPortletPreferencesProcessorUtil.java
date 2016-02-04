@@ -14,11 +14,11 @@
 
 package com.liferay.blogs.web.exportimport.portlet.preferences.processor;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import javax.portlet.PortletPreferences;
 

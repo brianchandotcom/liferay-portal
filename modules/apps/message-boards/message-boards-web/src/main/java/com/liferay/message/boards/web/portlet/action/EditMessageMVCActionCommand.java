@@ -14,6 +14,15 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.kernel.exception.LockedThreadException;
+import com.liferay.message.boards.kernel.exception.MessageBodyException;
+import com.liferay.message.boards.kernel.exception.MessageSubjectException;
+import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
+import com.liferay.message.boards.kernel.exception.RequiredMessageException;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
@@ -54,15 +63,6 @@ import com.liferay.portlet.documentlibrary.exception.FileExtensionException;
 import com.liferay.portlet.documentlibrary.exception.FileNameException;
 import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.exception.LockedThreadException;
-import com.liferay.portlet.messageboards.exception.MessageBodyException;
-import com.liferay.portlet.messageboards.exception.MessageSubjectException;
-import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
-import com.liferay.portlet.messageboards.exception.RequiredMessageException;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageService;
-import com.liferay.portlet.messageboards.service.MBThreadLocalService;
-import com.liferay.portlet.messageboards.service.MBThreadService;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.io.InputStream;

@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.web.portlet.toolbar.contributor;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,8 +33,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
@@ -184,7 +184,7 @@ public class MBPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setBaseModelPermissionChecker(

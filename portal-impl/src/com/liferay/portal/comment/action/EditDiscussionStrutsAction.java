@@ -14,6 +14,10 @@
 
 package com.liferay.portal.comment.action;
 
+import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsException;
+import com.liferay.message.boards.kernel.exception.MessageBodyException;
+import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
+import com.liferay.message.boards.kernel.exception.RequiredMessageException;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -41,10 +45,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.messageboards.exception.DiscussionMaxCommentsException;
-import com.liferay.portlet.messageboards.exception.MessageBodyException;
-import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
-import com.liferay.portlet.messageboards.exception.RequiredMessageException;
 
 import java.io.IOException;
 

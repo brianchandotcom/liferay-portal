@@ -15,8 +15,8 @@
 package com.liferay.message.boards.web.ratings.definition;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
+import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage"
+		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"
 	}
 )
 public class MBPortletRatingsDefinition implements PortletRatingsDefinition {

@@ -16,14 +16,14 @@ package com.liferay.portlet.messageboards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.service.MBBanServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
  */
 @ProviderType
 public class MBBanServiceHttp {
-	public static com.liferay.portlet.messageboards.model.MBBan addBan(
+	public static com.liferay.message.boards.kernel.model.MBBan addBan(
 		HttpPrincipal httpPrincipal, long banUserId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,7 +79,7 @@ public class MBBanServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBBan)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBBan)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

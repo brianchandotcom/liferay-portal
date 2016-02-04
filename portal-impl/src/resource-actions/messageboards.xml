@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portlet.messageboards</model-name>
+		<model-name>com.liferay.message.boards.kernel</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
@@ -46,7 +46,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.messageboards.model.MBCategory</model-name>
+		<model-name>com.liferay.message.boards.kernel.model.MBCategory</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
@@ -88,7 +88,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
+		<model-name>com.liferay.message.boards.kernel.model.MBMessage</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
@@ -116,7 +116,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
+		<model-name>com.liferay.message.boards.kernel.model.MBThread</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>

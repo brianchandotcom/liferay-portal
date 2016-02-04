@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
+import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.ratings.model.RatingsEntrySoap}.
+ * is translated to an array of {@link com.liferay.ratings.kernel.model.RatingsEntrySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.ratings.model.RatingsEntry}, that is translated to a
- * {@link com.liferay.portlet.ratings.model.RatingsEntrySoap}. Methods that SOAP cannot
+ * {@link com.liferay.ratings.kernel.model.RatingsEntry}, that is translated to a
+ * {@link com.liferay.ratings.kernel.model.RatingsEntrySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,7 +59,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see RatingsEntryServiceHttp
- * @see com.liferay.portlet.ratings.model.RatingsEntrySoap
+ * @see com.liferay.ratings.kernel.model.RatingsEntrySoap
  * @see RatingsEntryServiceUtil
  * @generated
  */
@@ -77,14 +77,14 @@ public class RatingsEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.ratings.model.RatingsEntrySoap updateEntry(
+	public static com.liferay.ratings.kernel.model.RatingsEntrySoap updateEntry(
 		java.lang.String className, long classPK, double score)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.ratings.model.RatingsEntry returnValue = RatingsEntryServiceUtil.updateEntry(className,
+			com.liferay.ratings.kernel.model.RatingsEntry returnValue = RatingsEntryServiceUtil.updateEntry(className,
 					classPK, score);
 
-			return com.liferay.portlet.ratings.model.RatingsEntrySoap.toSoapModel(returnValue);
+			return com.liferay.ratings.kernel.model.RatingsEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

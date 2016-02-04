@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.workflow;
 
+import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.Locale;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"},
+	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion"},
 	service = WorkflowHandler.class
 )
 public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {

@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.comment.search;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.Locale;
 

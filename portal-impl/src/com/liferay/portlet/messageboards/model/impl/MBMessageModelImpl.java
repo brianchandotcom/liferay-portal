@@ -16,6 +16,10 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageModel;
+import com.liferay.message.boards.kernel.model.MBMessageSoap;
+
 import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,9 +45,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageModel;
-import com.liferay.portlet.messageboards.model.MBMessageSoap;
 
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
@@ -148,13 +149,13 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.messageboards.model.MBMessage"),
+				"value.object.entity.cache.enabled.com.liferay.message.boards.kernel.model.MBMessage"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBMessage"),
+				"value.object.finder.cache.enabled.com.liferay.message.boards.kernel.model.MBMessage"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBMessage"),
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.kernel.model.MBMessage"),
 			true);
 	public static final long ANSWER_COLUMN_BITMASK = 1L;
 	public static final long CATEGORYID_COLUMN_BITMASK = 2L;
@@ -234,7 +235,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBMessage"));
+				"lock.expiration.time.com.liferay.message.boards.kernel.model.MBMessage"));
 
 	public MBMessageModelImpl() {
 	}
@@ -1565,7 +1566,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.messageboards.model.MBMessage");
+		sb.append("com.liferay.message.boards.kernel.model.MBMessage");
 		sb.append("</model-name>");
 
 		sb.append(

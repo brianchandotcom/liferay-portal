@@ -29,7 +29,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
+import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.InputStream;

@@ -81,7 +81,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="category-buttons">
 
 				<%
-				String modelResource = "com.liferay.portlet.messageboards";
+				String modelResource = "com.liferay.message.boards.kernel";
 				String modelResourceDescription = themeDisplay.getScopeGroupName();
 				String resourcePrimKey = String.valueOf(scopeGroupId);
 
@@ -338,7 +338,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portlet.messageboards.model.MBCategory"
+				className="com.liferay.message.boards.kernel.model.MBCategory"
 				escapedModel="<%= true %>"
 				keyProperty="categoryId"
 				modelVar="curCategory"

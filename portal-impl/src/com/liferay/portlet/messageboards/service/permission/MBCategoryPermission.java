@@ -14,6 +14,11 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
+import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -24,11 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
-import com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +36,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory"
+		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"
 	}
 )
 public class MBCategoryPermission implements BaseModelPermissionChecker {

@@ -14,6 +14,11 @@
 
 package com.liferay.message.boards.web.social;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,11 +27,6 @@ import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ClassNameLocalService;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
+	property = "model.class.name=com.liferay.message.boards.kernel.model.MBMessage",
 	service = SocialActivityManager.class
 )
 public class MBMessageSocialActivityManager

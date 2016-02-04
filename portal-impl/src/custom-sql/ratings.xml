@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder.findByU_C_C">
+	<sql id="com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder.findByU_C_C">
 		<![CDATA[
 			SELECT
 				{RatingsEntry.*}
@@ -13,7 +13,7 @@
 				(RatingsEntry.classPK IN ([$CLASS_PKS$]))
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder.findByC_C">
+	<sql id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder.findByC_C">
 		<![CDATA[
 			SELECT
 				{RatingsStats.*}

@@ -15,6 +15,8 @@
 package com.liferay.blogs.lar;
 
 import com.liferay.blogs.exportimport.content.processor.BlogsEntryExportImportContentProcessor;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,8 +38,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;

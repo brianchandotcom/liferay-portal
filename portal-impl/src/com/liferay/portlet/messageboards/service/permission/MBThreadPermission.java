@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
+		"model.class.name=com.liferay.message.boards.kernel.model.MBThread"
 	}
 )
 public class MBThreadPermission

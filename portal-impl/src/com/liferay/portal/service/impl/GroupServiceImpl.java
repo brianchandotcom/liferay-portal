@@ -50,7 +50,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
+import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 
 import java.io.Serializable;
 

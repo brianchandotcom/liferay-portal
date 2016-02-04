@@ -14,6 +14,14 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
+import com.liferay.blogs.kernel.exception.EntryContentException;
+import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
+import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
+import com.liferay.blogs.kernel.exception.EntrySmallImageNameException;
+import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
+import com.liferay.blogs.kernel.exception.EntryTitleException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -76,19 +84,11 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.exception.EntryContentException;
-import com.liferay.portlet.blogs.exception.EntryCoverImageCropException;
-import com.liferay.portlet.blogs.exception.EntryDisplayDateException;
-import com.liferay.portlet.blogs.exception.EntrySmallImageNameException;
-import com.liferay.portlet.blogs.exception.EntrySmallImageScaleException;
-import com.liferay.portlet.blogs.exception.EntryTitleException;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
-import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.model.TrashEntry;

@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.atom;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
@@ -29,8 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
 	service = AtomCollectionAdapter.class
 )
 public class BlogsEntryAtomCollectionAdapter

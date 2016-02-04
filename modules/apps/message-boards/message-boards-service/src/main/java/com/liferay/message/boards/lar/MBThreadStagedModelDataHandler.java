@@ -15,11 +15,11 @@
 package com.liferay.message.boards.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import java.util.List;
 import java.util.Map;

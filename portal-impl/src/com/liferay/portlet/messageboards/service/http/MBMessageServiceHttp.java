@@ -16,14 +16,14 @@ package com.liferay.portlet.messageboards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
  */
 @ProviderType
 public class MBMessageServiceHttp {
-	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
 		long classPK, long threadId, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
@@ -82,7 +82,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -91,7 +91,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
@@ -120,7 +120,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -129,7 +129,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format, java.lang.String fileName, java.io.File file,
@@ -162,7 +162,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -171,7 +171,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long categoryId, java.lang.String subject,
 		java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -196,7 +196,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -205,7 +205,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
@@ -234,7 +234,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -443,7 +443,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getCategoryMessages(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -467,7 +467,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.messageboards.model.MBMessage>)returnObj;
+			return (java.util.List<com.liferay.message.boards.kernel.model.MBMessage>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -680,7 +680,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage getMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage getMessage(
 		HttpPrincipal httpPrincipal, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -702,7 +702,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -711,7 +711,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		HttpPrincipal httpPrincipal, long messageId, int status,
 		boolean includePrevAndNext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -735,7 +735,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessageDisplay)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessageDisplay)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -744,7 +744,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		HttpPrincipal httpPrincipal, long messageId, int status,
 		java.lang.String threadView, boolean includePrevAndNext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -768,7 +768,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessageDisplay)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessageDisplay)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -805,7 +805,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		long threadId, int status, int start, int end) {
 		try {
@@ -824,7 +824,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.messageboards.model.MBMessage>)returnObj;
+			return (java.util.List<com.liferay.message.boards.kernel.model.MBMessage>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1009,7 +1009,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		long messageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1035,7 +1035,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1044,7 +1044,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(
+	public static com.liferay.message.boards.kernel.model.MBMessage updateMessage(
 		HttpPrincipal httpPrincipal, long messageId, java.lang.String subject,
 		java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -1073,7 +1073,7 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.messageboards.model.MBMessage)returnObj;
+			return (com.liferay.message.boards.kernel.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

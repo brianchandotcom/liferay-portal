@@ -1679,7 +1679,7 @@ public class ServiceBuilder {
 			returnTypeGenericsName.equals("java.util.List<java.lang.Object>") ||
 			returnValueName.equals("com.liferay.portal.model.Lock") ||
 			returnValueName.equals(
-				"com.liferay.portlet.messageboards.model.MBMessageDisplay") ||
+				"com.liferay.message.boards.kernel.model.MBMessageDisplay") ||
 			returnValueName.startsWith("java.io") ||
 			returnValueName.equals("java.util.Map") ||
 			returnValueName.equals("java.util.Properties") ||

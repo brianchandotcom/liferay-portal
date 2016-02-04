@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.service.permission;
 
+import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 
 import java.util.Date;
 
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"
+		"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion"
 	},
 	service = PermissionUpdateHandler.class
 )

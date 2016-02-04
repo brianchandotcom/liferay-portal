@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.comment;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Date;

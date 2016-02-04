@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.web.dao.search;
 
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
-import com.liferay.portlet.messageboards.model.MBCategory;
 
 import java.util.ArrayList;
 import java.util.List;

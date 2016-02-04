@@ -16,6 +16,10 @@ package com.liferay.portlet.blogs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.model.BlogsEntryModel;
+import com.liferay.blogs.kernel.model.BlogsEntrySoap;
+
 import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,9 +42,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.model.BlogsEntryModel;
-import com.liferay.portlet.blogs.model.BlogsEntrySoap;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
@@ -154,13 +155,13 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.blogs.model.BlogsEntry"),
+				"value.object.entity.cache.enabled.com.liferay.blogs.kernel.model.BlogsEntry"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.blogs.model.BlogsEntry"),
+				"value.object.finder.cache.enabled.com.liferay.blogs.kernel.model.BlogsEntry"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.blogs.model.BlogsEntry"),
+				"value.object.column.bitmask.enabled.com.liferay.blogs.kernel.model.BlogsEntry"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
@@ -238,7 +239,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.blogs.model.BlogsEntry"));
+				"lock.expiration.time.com.liferay.blogs.kernel.model.BlogsEntry"));
 
 	public BlogsEntryModelImpl() {
 	}
@@ -1615,7 +1616,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.blogs.model.BlogsEntry");
+		sb.append("com.liferay.blogs.kernel.model.BlogsEntry");
 		sb.append("</model-name>");
 
 		sb.append(

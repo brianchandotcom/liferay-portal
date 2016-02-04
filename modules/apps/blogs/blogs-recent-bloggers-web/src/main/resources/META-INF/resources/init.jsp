@@ -23,7 +23,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.orm.QueryDefinition" %><%@
+<%@ page import="com.liferay.blogs.kernel.model.BlogsEntry" %><%@
+page import="com.liferay.blogs.kernel.model.BlogsStatsUser" %><%@
+page import="com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil" %><%@
+page import="com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceUtil" %><%@
+page import="com.liferay.blogs.kernel.util.comparator.StatsUserLastPostDateComparator" %><%@
+page import="com.liferay.portal.kernel.dao.orm.QueryDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
@@ -43,12 +48,7 @@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portlet.blogs.model.BlogsStatsUser" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
-page import="com.liferay.portlet.blogs.util.comparator.StatsUserLastPostDateComparator" %><%@
-page import="com.liferay.portlet.ratings.RatingsType" %><%@
+page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>

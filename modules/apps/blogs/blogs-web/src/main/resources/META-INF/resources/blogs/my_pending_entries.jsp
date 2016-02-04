@@ -45,7 +45,7 @@ int myPendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scope
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portlet.blogs.model.BlogsEntry"
+				className="com.liferay.blogs.kernel.model.BlogsEntry"
 				keyProperty="entryId"
 				modelVar="entry"
 			>

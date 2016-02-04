@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
+		"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry",
 		"service.ranking:Integer=100"
 	},
 	service = {EditPortletProvider.class, ViewPortletProvider.class}

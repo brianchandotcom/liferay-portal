@@ -16,8 +16,8 @@ package com.liferay.portlet.ratings.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the RatingsEntry service. Represents a row in the &quot;RatingsEntry&quot; database table, with each column mapped to a property of this class.

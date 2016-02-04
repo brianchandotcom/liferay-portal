@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.mail.service.MailService;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.exception.CompanyMaxUsersException;
 import com.liferay.portal.exception.ContactBirthdayException;
 import com.liferay.portal.exception.ContactNameException;
@@ -139,7 +140,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;

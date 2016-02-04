@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.ratings.exception.EntryScoreException;
-import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.ratings.kernel.exception.EntryScoreException;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1355,7 +1355,7 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.blogs.model.BlogsEntry">
+	<model name="com.liferay.blogs.kernel.model.BlogsEntry">
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
@@ -1409,7 +1409,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.blogs.model.BlogsStatsUser">
+	<model name="com.liferay.blogs.kernel.model.BlogsStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1680,7 +1680,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBBan">
+	<model name="com.liferay.message.boards.kernel.model.MBBan">
 		<field name="uuid" type="String" />
 		<field name="banId" type="long" />
 		<field name="groupId" type="long" />
@@ -1692,7 +1692,7 @@
 		<field name="banUserId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBCategory">
+	<model name="com.liferay.message.boards.kernel.model.MBCategory">
 		<field name="uuid" type="String" />
 		<field name="categoryId" type="long" />
 		<field name="groupId" type="long" />
@@ -1718,7 +1718,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBDiscussion">
+	<model name="com.liferay.message.boards.kernel.model.MBDiscussion">
 		<field name="uuid" type="String" />
 		<field name="discussionId" type="long" />
 		<field name="groupId" type="long" />
@@ -1732,7 +1732,7 @@
 		<field name="threadId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBMailingList">
+	<model name="com.liferay.message.boards.kernel.model.MBMailingList">
 		<field name="uuid" type="String" />
 		<field name="mailingListId" type="long" />
 		<field name="groupId" type="long" />
@@ -1764,7 +1764,7 @@
 		<field name="allowAnonymous" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBMessage">
+	<model name="com.liferay.message.boards.kernel.model.MBMessage">
 		<field name="uuid" type="String" />
 		<field name="messageId" type="long" />
 		<field name="groupId" type="long" />
@@ -1798,7 +1798,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBStatsUser">
+	<model name="com.liferay.message.boards.kernel.model.MBStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1806,7 +1806,7 @@
 		<field name="messageCount" type="int" />
 		<field name="lastPostDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBThread">
+	<model name="com.liferay.message.boards.kernel.model.MBThread">
 		<field name="uuid" type="String" />
 		<field name="threadId" type="long" />
 		<field name="groupId" type="long" />
@@ -1830,7 +1830,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBThreadFlag">
+	<model name="com.liferay.message.boards.kernel.model.MBThreadFlag">
 		<field name="uuid" type="String" />
 		<field name="threadFlagId" type="long" />
 		<field name="groupId" type="long" />
@@ -1842,7 +1842,7 @@
 		<field name="threadId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.ratings.model.RatingsEntry">
+	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
@@ -1854,7 +1854,7 @@
 		<field name="classPK" type="long" />
 		<field name="score" type="double" />
 	</model>
-	<model name="com.liferay.portlet.ratings.model.RatingsStats">
+	<model name="com.liferay.ratings.kernel.model.RatingsStats">
 		<field name="statsId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />

@@ -29,13 +29,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface RequestHeaderAutoLoginConfiguration {
 
-	@Meta.AD(
-		deflt = "255.255.255.255",
-		description = "Input a list of comma delimited IPs that can automatically authenticate via request headers. Input a blank list to allow any IP to automatically authenticate via request headers. SERVER_IP will be replaced with the IP of the host server.",
-		required = false
-	)
-	public String authHostsAllowed();
-
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
 
@@ -45,5 +38,12 @@ public interface RequestHeaderAutoLoginConfiguration {
 		required = false
 	)
 	public boolean importFromLDAP();
+
+	@Meta.AD(
+		deflt = "255.255.255.255",
+		description = "Input a list of comma delimited IPs that can automatically authenticate via request headers. Input a blank list to allow any IP to automatically authenticate via request headers. SERVER_IP will be replaced with the IP of the host server.",
+		required = false
+	)
+	public String authHostsAllowed();
 
 }

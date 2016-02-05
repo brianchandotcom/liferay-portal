@@ -80,9 +80,6 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		serviceContext.setAttribute(
-			"assetClassName", DDLFormRecord.class.getName());
-
 		DDLRecord ddlRecord = _ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);

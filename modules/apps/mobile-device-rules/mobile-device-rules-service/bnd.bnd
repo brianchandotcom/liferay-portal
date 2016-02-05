@@ -19,4 +19,4 @@ Require-Capability:\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Spring-Context: META-INF/spring
 -include: ../../../../marketplace/platform/bnd.bnd
--spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

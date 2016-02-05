@@ -24,7 +24,7 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 	<h4 class="sidebar-header">
 		<a href="<%= themeDisplay.getURLPortal() %>">
 			<span class="company-details">
-				<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
+				<img alt="" class="company-logo" src="<%= themeDisplay.getRealCompanyLogo() %>" />
 				<span class="company-name"><%= company.getName() %></span>
 			</span>
 

@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -137,6 +138,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String UPDATE_BUNDLE_VERSION_TASK_NAME =
 		"updateBundleVersion";
+
+	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
+		"updateFileVersions";
 
 	protected Configuration addConfigurationPortalTest(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -381,6 +385,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return task;
 	}
 
+	protected ReplaceRegexTask addTaskUpdateFileVersions(
+		final Project project) {
+
+		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
+
+		replaceRegexTask.setDescription(
+			"Updates the project version in external files.");
+
+		replaceRegexTask.setReplacement(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					return project.getVersion();
+				}
+
+			});
+
+		return replaceRegexTask;
+	}
+
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
@@ -596,6 +622,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
+		final ReplaceRegexTask updateFileVersionsTask =
+			addTaskUpdateFileVersions(project);
 
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
@@ -659,7 +687,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					configureTaskUploadArchives(project);
+					configureTaskUploadArchives(
+						project, updateFileVersionsTask);
 				}
 
 			});
@@ -1104,7 +1133,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
-	protected void configureTaskUploadArchives(Project project) {
+	protected void configureTaskUploadArchives(
+		Project project, ReplaceRegexTask updateFileVersionsTask) {
+
 		String version = String.valueOf(project.getVersion());
 
 		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
@@ -1127,6 +1158,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		if (updateBundleVersionTask != null) {
 			uploadArchivesTask.finalizedBy(updateBundleVersionTask);
 		}
+
+		uploadArchivesTask.finalizedBy(updateBundleVersionTask);
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

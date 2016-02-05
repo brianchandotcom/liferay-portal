@@ -2331,15 +2331,15 @@
 				<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 				<execute function="AssertTextNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 			</then>
 			<elseif>
 				<equals arg1="${documentAdded}" arg2="false" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
 					<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 				</then>
 			</elseif>
 		</if>

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.product.navigation.control.menu.web.constants.ControlMenuWebKeys;
+import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;
 
@@ -63,10 +63,11 @@ public class PortletHeaderControlMenuEntry
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		request.setAttribute(
-			ControlMenuWebKeys.PORTLET_DESCRIPTION,
+			ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION,
 			portletDisplay.getDescription());
 		request.setAttribute(
-			ControlMenuWebKeys.PORTLET_TITLE, portletDisplay.getTitle());
+			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
+			portletDisplay.getTitle());
 
 		return super.includeIcon(request, response);
 	}

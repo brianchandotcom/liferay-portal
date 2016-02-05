@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.product.navigation.control.menu.web.constants.ControlMenuWebKeys;
+import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;
 
@@ -58,7 +58,8 @@ public class PortletBackLinkControlMenuEntry
 		throws IOException {
 
 		request.setAttribute(
-			ControlMenuWebKeys.PORTLET_BACK_URL, getPortletBackURL(request));
+			ProductNavigationControlMenuWebKeys.PORTLET_BACK_URL,
+			getPortletBackURL(request));
 
 		return super.includeIcon(request, response);
 	}

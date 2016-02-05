@@ -17,7 +17,7 @@ package com.liferay.product.navigation.control.menu.web.portlet;
 import com.liferay.admin.kernel.util.PortalControlMenuApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.product.navigation.control.menu.web.constants.ControlMenuPortletKeys;
+import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,12 +36,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ViewPortletProvider.class
 )
 @Deprecated
-public class ControlMenuViewPortletProvider
+public class ProductNavigationControlMenuViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return ControlMenuPortletKeys.CONTROL_MENU;
+		return ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU;
 	}
 
 }

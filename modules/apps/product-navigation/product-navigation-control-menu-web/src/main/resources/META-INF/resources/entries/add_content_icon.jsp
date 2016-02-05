@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL addPanelURL = PortletURLFactoryUtil.create(request, ControlMenuPortletKeys.CONTROL_MENU, plid, PortletRequest.RENDER_PHASE);
+PortletURL addPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU, plid, PortletRequest.RENDER_PHASE);
 
 addPanelURL.setParameter("mvcPath", "/add_panel.jsp");
 addPanelURL.setParameter("stateMaximized", String.valueOf(themeDisplay.isStateMaximized()));

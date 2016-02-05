@@ -15,11 +15,14 @@
 package com.liferay.product.navigation.control.menu.web.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
-public class ControlMenuPortletKeys {
+public class ProductNavigationControlMenuWebKeys {
 
-	public static final String CONTROL_MENU =
-		"com_liferay_control_menu_web_portlet_ControlMenuPortlet";
+	public static final String PORTLET_BACK_URL = "PORTLET_BACK_URL";
+
+	public static final String PORTLET_DESCRIPTION = "PORTLET_DESCRIPTION";
+
+	public static final String PORTLET_TITLE = "PORTLET_TITLE";
 
 }

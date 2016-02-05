@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletBackURL = (String)request.getAttribute(ControlMenuWebKeys.PORTLET_BACK_URL);
+String portletBackURL = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_BACK_URL);
 %>
 
 <div class="toolbar-group-content">

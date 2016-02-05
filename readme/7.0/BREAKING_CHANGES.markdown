@@ -3566,6 +3566,32 @@ prevent future ones.
 
 ---------------------------------------
 
+### The aui:column taglib has been removed and replaced with aui:col taglib
+- **Date:** 2016-Jan-19
+- **JIRA Ticket:** LPS-62208
+
+#### What changed?
+
+The `aui:column` taglib has been removed and replaced with
+`aui:col` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:column` tag need
+to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `aui` tag library if it isn't already and
+update the tag namespace from `aui:column` to `aui:col`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### The title Field of FileEntry Models is Now Mandatory
 - **Date:** 2016-Jan-25
 - **JIRA Ticket:** LPS-62251
@@ -3622,29 +3648,3 @@ icon instead.
 
 In order to display the `documents-and-media` Lexicon icon in Documents and
 Media, this change was necessary.
-
----------------------------------------
-
-### The aui:column taglib has been removed and replaced with aui:col taglib
-- **Date:** 2016-Jan-19
-- **JIRA Ticket:** LPS-62208
-
-#### What changed?
-
-The `aui:column` taglib has been removed and replaced with
-`aui:col` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `aui:column` tag need
-to update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `aui` tag library if it isn't already and
-update the tag namespace from `aui:column` to `aui:col`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.

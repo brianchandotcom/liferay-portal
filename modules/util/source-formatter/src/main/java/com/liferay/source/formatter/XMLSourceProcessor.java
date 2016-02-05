@@ -756,8 +756,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
+		Element rootElement = document.getRootElement();
+
 		checkOrder(
-			fileName, document.getRootElement(), "import", null,
+			fileName, rootElement, "class", null,
+			new HBMClassElementComparator());
+		checkOrder(
+			fileName, rootElement, "import", null,
 			new ElementComparator("class"));
 	}
 
@@ -1434,6 +1439,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
 
 		private String _nameAttribute;
+
+	}
+
+	private static class HBMClassElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element classElement1, Element classElement2) {
+			String classElementName1 = getElementName(classElement1);
+
+			if (classElementName1.endsWith("Impl")) {
+				classElementName1 = classElementName1.substring(
+					0, classElementName1.length() - 4);
+			}
+
+			String classElementName2 = getElementName(classElement2);
+
+			if (classElementName2.endsWith("Impl")) {
+				classElementName2 = classElementName2.substring(
+					0, classElementName2.length() - 4);
+			}
+
+			return classElementName1.compareToIgnoreCase(classElementName2);
+		}
 
 	}
 

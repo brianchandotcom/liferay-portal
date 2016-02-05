@@ -1781,6 +1781,10 @@
 
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 
+		<execute function="Click" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
+	
+		<execute function="AssertClick" locator1="MenuItem#DM_DOCUMENT_TYPE" value1="Document Type" />
+
 		<var name="key_marketingSelect" value="${marketingSelect}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#MARKETING_SELECT" value1="${marketingSelect}" />

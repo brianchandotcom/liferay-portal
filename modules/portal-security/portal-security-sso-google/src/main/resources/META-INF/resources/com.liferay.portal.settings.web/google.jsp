@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationFactoryUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "google--", new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));
+GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationProviderUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "google--", new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));
 
 boolean googleAuthEnabled = googleAuthorizationConfiguration.enabled();
 String googleClientId = googleAuthorizationConfiguration.clientId();

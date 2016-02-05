@@ -86,7 +86,7 @@ public class LayoutSetLocalServiceStagingAdvice
 				(byte[])arguments[3]);
 		}
 		else if (methodName.equals("updateLookAndFeel") &&
-				 (arguments.length == 6)) {
+				 (arguments.length == 5)) {
 
 			returnValue = updateLookAndFeel(
 				(LayoutSetLocalService)thisObject, (Long)arguments[0],

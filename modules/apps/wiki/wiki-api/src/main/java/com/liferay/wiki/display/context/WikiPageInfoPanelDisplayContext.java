@@ -31,6 +31,8 @@ public interface WikiPageInfoPanelDisplayContext extends WikiDisplayContext {
 
 	public boolean isMultiplePageSelection();
 
+	public boolean isShowSidebarHeader();
+
 	public boolean isSinglePageSelection();
 
 }

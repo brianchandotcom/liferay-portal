@@ -52,7 +52,7 @@ classes {
 }
 
 dependencies {
-	alloyEditor group: "com.liferay.webjars", name: "alloyeditor", transitive: false, version: alloyEditorVersion
+	alloyEditor group: "com.liferay.webjars", name: "com.liferay.webjars.alloyeditor", transitive: false, version: alloyEditorVersion
 
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion

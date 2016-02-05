@@ -15,10 +15,10 @@
 package com.liferay.control.menu.theme.contributor;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 

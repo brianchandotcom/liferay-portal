@@ -90,7 +90,7 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	*/
 	public static com.liferay.social.kernel.model.SocialRequestFeedEntry interpret(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return getService().interpret(request, themeDisplay);
 	}
 
@@ -110,7 +110,7 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	*/
 	public static void processConfirmation(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		getService().processConfirmation(request, themeDisplay);
 	}
 
@@ -131,7 +131,7 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	*/
 	public static void processRejection(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		getService().processRejection(request, themeDisplay);
 	}
 

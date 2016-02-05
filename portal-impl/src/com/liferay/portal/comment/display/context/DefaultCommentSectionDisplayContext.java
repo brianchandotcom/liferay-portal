@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.display.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Adolfo Pérez

@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 

@@ -16,6 +16,7 @@ package com.liferay.notifications.web.portlet;
 
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -23,7 +24,6 @@ import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.service.UserNotificationEventLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

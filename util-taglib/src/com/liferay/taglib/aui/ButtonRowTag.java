@@ -14,9 +14,9 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseButtonRowTag;
 
 import javax.servlet.http.HttpServletRequest;

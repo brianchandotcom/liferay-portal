@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.theme;
+package com.liferay.portal.kernel.theme;
+
+import com.liferay.portal.model.PortletDecorator;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-public class ThemeGroupId extends ThemeCompanyId {
+public interface PortletDecoratorFactory {
 
-	public ThemeGroupId(String value, boolean pattern) {
-		super(value, pattern);
-	}
+	public PortletDecorator getDefaultPortletDecorator();
+
+	public String getDefaultPortletDecoratorCssClass();
+
+	public String getDefaultPortletDecoratorId();
+
+	public PortletDecorator getPortletDecorator();
+
+	public PortletDecorator getPortletDecorator(String portletDecoratorId);
+
+	public PortletDecorator getPortletDecorator(
+		String portletDecoratorId, String name, String cssClass);
 
 }

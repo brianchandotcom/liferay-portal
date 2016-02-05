@@ -44,3 +44,9 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }
+
+sourceSets {
+	test {
+		runtimeClasspath = sourceSets.main.output + sourceSets.test.runtimeClasspath
+	}
+}

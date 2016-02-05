@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `61d6186`.*
+*This document has been reviewed through commit `9a2eb64`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3566,6 +3566,31 @@ prevent future ones.
 
 ---------------------------------------
 
+### Removed the aui:column Tag and Replaced with aui:col
+- **Date:** 2016-Jan-19
+- **JIRA Ticket:** LPS-62208
+
+#### What changed?
+
+The `aui:column` tag has been removed and replaced with the `aui:col` tag.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:column` tag must update their usage
+of the tag.
+
+#### How should I update my code?
+
+You should import the `aui` tag library (if necessary) and update the tag
+namespace from `aui:column` to `aui:col`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### The title Field of FileEntry Models is Now Mandatory
 - **Date:** 2016-Jan-25
 - **JIRA Ticket:** LPS-62251
@@ -3594,56 +3619,31 @@ file name automatically. This was considered confusing from a UX perspective.
 
 ---------------------------------------
 
-### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc can return blank
+### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc Can Return Empty Strings
 - **Date:** 2016-Jan-28
 - **JIRA Ticket:** LPS-62643
 
 #### What changed?
 
-DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc will return a blank
-string if there are not previews or thumbnails for the specific image, video or
-document.
+The `DLUtil.getImagePreviewURL` and `DLUtil.getThumbnailSrc` methods return an
+empty string if there are no previews or thumbnails for the specific image,
+video, or document.
 
-Before, if there was no previews or thumbnail it would return a url to a image
-based on the document.
+Previously, if there were no previews or thumbnails, these methods would return
+a URL to an image based on the document.
 
 #### Who is affected?
 
-Any developer invoking DLUtil.getImagePreviewURL or DLUtil.getThumbnailSrc.
+This affects any developer invoking `DLUtil.getImagePreviewURL` or
+`DLUtil.getThumbnailSrc`.
 
 #### How should I update my code?
 
-You should take into account that the method could return a blank string and act
-accordingly. For example, you could display the `documents-and-media` lexicon
+You should be aware that the method could return an empty string and act
+accordingly. For example, you could display the `documents-and-media` Lexicon
 icon instead.
 
 #### Why was this change made?
 
-In order to display the `documents-and-media` lexicon icon in Documents and
-Media this change was necessary.
-
----------------------------------------
-
-### The aui:column taglib has been removed and replaced with aui:col taglib
-- **Date:** 2016-Jan-19
-- **JIRA Ticket:** LPS-62208
-
-#### What changed?
-
-The `aui:column` taglib has been removed and replaced with
-`aui:col` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `aui:column` tag need
-to update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `aui` tag library if it isn't already and
-update the tag namespace from `aui:column` to `aui:col`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.
+In order to display the `documents-and-media` Lexicon icon in Documents and
+Media, this change was necessary.

@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":apps:control-menu:control-menu-web")
+	compile project(":apps:product-navigation:product-navigation-control-menu-web")
 }
 
 liferay {

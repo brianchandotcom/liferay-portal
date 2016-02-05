@@ -1,8 +1,8 @@
-Bundle-Name: Liferay Control Menu Theme Contributor
-Bundle-SymbolicName: com.liferay.control.menu.theme.contributor
+Bundle-Name: Liferay Product Navigation Control Menu Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.control.menu.theme.contributor
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
 Liferay-Theme-Contributor-Type: control-menu
-Web-ContextPath: /control-menu-theme-contributor
+Web-ContextPath: /product-navigation-control-menu-theme-contributor
 -include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -23,6 +23,16 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY);
 MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
+
+int index = GetterUtil.getInteger(request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_INDEX));
+
+index++;
+
+request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_INDEX, Integer.valueOf(index));
+
+if (message.getMessageId() == selMessage.getMessageId()) {
+	request.setAttribute("view_thread_tree.jsp-messageFound", true);
+}
 %>
 
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
@@ -37,10 +47,6 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
-	<c:if test="<%= depth == 0 %>">
-		<div class="card-tab-group message-container">
-	</c:if>
-
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 	<%
@@ -49,42 +55,44 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 
 </c:if>
 
-<%
-List messages = treeWalker.getMessages();
-int[] range = treeWalker.getChildrenRange(message);
+<c:if test="<%= message.getMessageId() != treeWalker.getRoot().getMessageId() %>">
 
-depth++;
+	<%
+	List messages = treeWalker.getMessages();
+	int[] range = treeWalker.getChildrenRange(message);
 
-for (int i = range[0]; i < range[1]; i++) {
-	MBMessage curMessage = (MBMessage)messages.get(i);
+	depth++;
 
-	if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
-		continue;
+	MBMessageIterator mbMessageIterator = new MBMessageIteratorImpl(messages, range[0], range[1]);
+
+	while (mbMessageIterator.hasNext()) {
+		MBMessage curMessage = mbMessageIterator.next();
+
+		if (!MBUtil.isViewableMessage(themeDisplay, curMessage, message)) {
+			continue;
+		}
+
+		boolean lastChildNode = false;
+
+		if (!mbMessageIterator.hasNext()) {
+			lastChildNode = true;
+		}
+
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+	%>
+
+		<div class="card-tab message-container">
+			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+		</div>
+
+	<%
 	}
+	%>
 
-	boolean lastChildNode = false;
-
-	if ((i + 1) == range[1]) {
-		lastChildNode = true;
-	}
-
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-%>
-
-	<div class="card-tab message-container">
-		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
-	</div>
-
-<%
-}
-%>
-
-<c:if test="<%= (depth == 0) && ((message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message)) %>">
-	</div>
 </c:if>

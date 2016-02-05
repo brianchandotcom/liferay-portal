@@ -265,7 +265,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								/>
 
 								<%
-								String taglibQuickReplyURL = "javascript:" + renderResponse.getNamespace() + "addQuickReply('reply', '" + message.getMessageId() + "');";
+								String taglibQuickReplyURL = "javascript:" + liferayPortletResponse.getNamespace() + "addQuickReply('reply', '" + message.getMessageId() + "');";
 								%>
 
 								<liferay-ui:icon
@@ -321,7 +321,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<c:if test="<%= hasDeletePermission %>">
 
 								<%
-								PortletURL categoryURL = renderResponse.createRenderURL();
+								PortletURL categoryURL = liferayPortletResponse.createRenderURL();
 
 								if (message.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 									categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view");

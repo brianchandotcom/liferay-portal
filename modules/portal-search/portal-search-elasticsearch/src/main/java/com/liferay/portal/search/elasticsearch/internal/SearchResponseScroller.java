@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.ArrayList;
@@ -44,11 +45,13 @@ import org.elasticsearch.search.SearchHits;
 public class SearchResponseScroller {
 
 	public SearchResponseScroller(
-		Client client, SearchContext searchContext, QueryBuilder queryBuilder,
+		Client client, SearchContext searchContext,
+		IndexNameBuilder indexNameBuilder, QueryBuilder queryBuilder,
 		TimeValue scrollTimeValue, String... types) {
 
 		_client = client;
 		_searchContext = searchContext;
+		_indexNameBuilder = indexNameBuilder;
 		_queryBuilder = queryBuilder;
 		_scrollTimeValue = scrollTimeValue;
 		_types = types;
@@ -79,7 +82,7 @@ public class SearchResponseScroller {
 
 	public void prepare() throws Exception {
 		SearchRequestBuilder searchRequestBuilder = _client.prepareSearch(
-			String.valueOf(_searchContext.getCompanyId()));
+			_indexNameBuilder.getIndexName(_searchContext));
 
 		searchRequestBuilder.addField(Field.UID);
 		searchRequestBuilder.setQuery(_queryBuilder);
@@ -138,6 +141,7 @@ public class SearchResponseScroller {
 		SearchResponseScroller.class);
 
 	private final Client _client;
+	private final IndexNameBuilder _indexNameBuilder;
 	private final List<String> _previousScrollIds = new ArrayList<>();
 	private final QueryBuilder _queryBuilder;
 	private String _scrollId;

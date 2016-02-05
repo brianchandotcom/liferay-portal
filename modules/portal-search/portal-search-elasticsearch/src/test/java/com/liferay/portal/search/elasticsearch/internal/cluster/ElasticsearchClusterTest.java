@@ -59,7 +59,7 @@ public class ElasticsearchClusterTest {
 	protected ReplicasClusterContext createReplicasClusterContext() {
 		ElasticsearchCluster elasticsearchCluster = new ElasticsearchCluster();
 
-		elasticsearchCluster.setCompanyLocalService(_companyLocalService);
+		elasticsearchCluster.companyLocalService =_companyLocalService;
 
 		return elasticsearchCluster.new ReplicasClusterContextImpl();
 	}

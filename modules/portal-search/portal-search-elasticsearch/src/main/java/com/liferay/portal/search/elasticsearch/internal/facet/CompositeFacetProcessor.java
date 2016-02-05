@@ -56,16 +56,6 @@ public class CompositeFacetProcessor
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(class.name=DEFAULT)", unbind = "-"
-	)
-	protected void setDefaultFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> defaultFacetProcessor) {
-
-		_defaultFacetProcessor = defaultFacetProcessor;
-	}
-
-	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -89,8 +79,13 @@ public class CompositeFacetProcessor
 		_facetProcessors.remove(className);
 	}
 
-	private static FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor;
-	private static final Map<String, FacetProcessor<SearchRequestBuilder>>
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		target = "(class.name=DEFAULT)"
+	)
+	private FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor;
+
+	private final Map<String, FacetProcessor<SearchRequestBuilder>>
 		_facetProcessors = new HashMap<>();
 
 }

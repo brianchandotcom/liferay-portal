@@ -51,6 +51,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
@@ -107,7 +108,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
 	public String getQueryString(SearchContext searchContext, Query query) {
-		QueryBuilder queryBuilder = _queryTranslator.translate(
+		QueryBuilder queryBuilder = queryTranslator.translate(
 			query, searchContext);
 
 		return queryBuilder.toString();
@@ -225,7 +226,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			_facetProcessor.processFacet(searchRequestBuilder, facet);
+			facetProcessor.processFacet(searchRequestBuilder, facet);
 		}
 	}
 
@@ -239,7 +240,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
-		_groupByTranslator.translate(
+		groupByTranslator.translate(
 			searchRequestBuilder, searchContext, start, end);
 	}
 
@@ -433,7 +434,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		Map<String, Stats> statsMap = searchContext.getStats();
 
 		for (Stats stats : statsMap.values()) {
-			_statsTranslator.translate(searchRequestBuilder, stats);
+			statsTranslator.translate(searchRequestBuilder, stats);
 		}
 	}
 
@@ -442,7 +443,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			boolean count)
 		throws Exception {
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchConnectionManager.getClient();
 
 		QueryConfig queryConfig = query.getQueryConfig();
 
@@ -468,17 +469,17 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		if (query.getPostFilter() != null) {
-			QueryBuilder postFilterQueryBuilder = _filterTranslator.translate(
+			QueryBuilder postFilterQueryBuilder = filterTranslator.translate(
 				query.getPostFilter(), searchContext);
 
 			searchRequestBuilder.setPostFilter(postFilterQueryBuilder);
 		}
 
-		QueryBuilder queryBuilder = _queryTranslator.translate(
+		QueryBuilder queryBuilder = queryTranslator.translate(
 			query, searchContext);
 
 		if (query.getPreBooleanFilter() != null) {
-			QueryBuilder preFilterQueryBuilder = _filterTranslator.translate(
+			QueryBuilder preFilterQueryBuilder = filterTranslator.translate(
 				query.getPreBooleanFilter(), searchContext);
 
 			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -533,7 +534,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return selectedIndexNames;
 		}
 
-		return new String[] {String.valueOf(searchContext.getCompanyId())};
+		String indexName = indexNameBuilder.getIndexName(searchContext);
+
+		return new String[] {indexName};
 	}
 
 	protected String[] getSelectedTypes(QueryConfig queryConfig) {
@@ -624,44 +627,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return hits;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(service = CompositeFacetProcessor.class, unbind = "-")
-	protected void setFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setFilterTranslator(
-		FilterTranslator<QueryBuilder> filterTranslator) {
-
-		_filterTranslator = filterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
-		_groupByTranslator = groupByTranslator;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsTranslator(StatsTranslator statsTranslator) {
-		_statsTranslator = statsTranslator;
-	}
-
 	protected void updateFacetCollectors(
 		SearchContext searchContext, SearchResponse searchResponse) {
 
@@ -747,23 +712,38 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			StatsResults statsResults = _statsTranslator.translate(
+			StatsResults statsResults = statsTranslator.translate(
 				aggregationsMap, stats);
 
 			hits.addStatsResults(statsResults);
 		}
 	}
 
+	@Reference
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(service = CompositeFacetProcessor.class)
+	protected FacetProcessor<SearchRequestBuilder> facetProcessor;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected FilterTranslator<QueryBuilder> filterTranslator;
+
+	@Reference
+	protected GroupByTranslator groupByTranslator;
+
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected QueryTranslator<QueryBuilder> queryTranslator;
+
+	@Reference
+	protected StatsTranslator statsTranslator;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
-	private FilterTranslator<QueryBuilder> _filterTranslator;
-	private GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
-	private QueryTranslator<QueryBuilder> _queryTranslator;
-	private StatsTranslator _statsTranslator;
 
 }

@@ -50,6 +50,7 @@ public class CompanyIndexFactoryTest {
 		_testCluster.setUp();
 
 		_elasticsearchFixture = _testCluster.getNode(0);
+		_companyIndexFactory.indexNameBuilder = new CompanyIdIndexNameBuilder();
 	}
 
 	@After

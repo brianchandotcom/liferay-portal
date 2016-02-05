@@ -318,7 +318,7 @@ public class ElasticsearchFixture {
 		embeddedElasticsearchConnection.setClusterSettingsContext(
 			clusterSettingsContext);
 
-		embeddedElasticsearchConnection.setProps(props);
+		embeddedElasticsearchConnection.props = props);
 
 		embeddedElasticsearchConnection.activate(
 			_elasticsearchConfigurationProperties);

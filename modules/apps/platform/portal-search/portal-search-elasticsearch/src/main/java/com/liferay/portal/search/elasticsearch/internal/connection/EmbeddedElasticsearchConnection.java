@@ -187,18 +187,18 @@ public class EmbeddedElasticsearchConnection
 	protected void configurePaths() {
 		settingsBuilder.put(
 			"path.data",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
 		settingsBuilder.put(
 			"path.home",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
 		settingsBuilder.put(
-			"path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
+			"path.logs", props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		settingsBuilder.put(
 			"path.plugins",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins");
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins");
 		settingsBuilder.put(
 			"path.repo",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
 		settingsBuilder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
@@ -324,16 +324,13 @@ public class EmbeddedElasticsearchConnection
 		_clusterSettingsContext = clusterSettingsContext;
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
+	@Reference
+	protected Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
 	private ClusterSettingsContext _clusterSettingsContext;
 	private Node _node;
-	private Props _props;
 
 }

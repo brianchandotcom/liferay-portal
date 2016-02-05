@@ -80,7 +80,7 @@ public class ElasticsearchSpellCheckIndexWriter
 			String documentType, SearchContext searchContext, Document document)
 		throws SearchException {
 
-		_elasticsearchUpdateDocumentCommand.updateDocument(
+		elasticsearchUpdateDocumentCommand.updateDocument(
 			documentType, searchContext, document, false);
 	}
 
@@ -90,7 +90,7 @@ public class ElasticsearchSpellCheckIndexWriter
 			Collection<Document> documents)
 		throws SearchException {
 
-		_elasticsearchUpdateDocumentCommand.updateDocuments(
+		elasticsearchUpdateDocumentCommand.updateDocuments(
 			documentType, searchContext, documents, false);
 	}
 
@@ -127,7 +127,7 @@ public class ElasticsearchSpellCheckIndexWriter
 		SearchResponseScroller searchResponseScroller = null;
 
 		try {
-			Client client = _elasticsearchConnectionManager.getClient();
+			Client client = elasticsearchConnectionManager.getClient();
 
 			MatchAllQueryBuilder matchAllQueryBuilder =
 				QueryBuilders.matchAllQuery();
@@ -147,21 +147,6 @@ public class ElasticsearchSpellCheckIndexWriter
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchUpdateDocumentCommand(
-		ElasticsearchUpdateDocumentCommand elasticsearchUpdateDocumentCommand) {
-
-		_elasticsearchUpdateDocumentCommand =
-			elasticsearchUpdateDocumentCommand;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -178,11 +163,15 @@ public class ElasticsearchSpellCheckIndexWriter
 	}
 
 	@Reference(unbind = "-")
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(unbind = "-")
+	protected ElasticsearchUpdateDocumentCommand
+		elasticsearchUpdateDocumentCommand;
+
+	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private ElasticsearchUpdateDocumentCommand
-		_elasticsearchUpdateDocumentCommand;
 	private volatile SearchHitsProcessor _searchHitsProcessor;
 
 }

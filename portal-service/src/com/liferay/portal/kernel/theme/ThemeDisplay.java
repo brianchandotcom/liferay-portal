@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.theme;
+package com.liferay.portal.kernel.theme;
 
 import aQute.bnd.annotation.ProviderType;
 

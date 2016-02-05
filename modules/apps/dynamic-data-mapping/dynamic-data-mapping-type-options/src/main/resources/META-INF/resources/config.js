@@ -9,6 +9,7 @@
 				'field-options': {
 					base: PATH_DDM_TYPE_OPTIONS + '/',
 					filter: LiferayAUI.getFilterConfig(),
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-options': {
 							condition: {

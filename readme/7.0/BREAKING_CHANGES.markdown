@@ -3475,6 +3475,8 @@ else.
 
 - `com.liferay.portal.security.xml` &rarr; `com.liferay.portal.kernel.security.xml`
 
+- `com.liferay.portal.theme` &rarr; `com.liferay.portal.kernel.theme`
+
 - `com.liferay.portal.util.comparator` &rarr; `com.liferay.portal.kernel.util.comparator`
 
 - `com.liferay.portal.verify.model` &rarr; `com.liferay.portal.kernel.verify.model`

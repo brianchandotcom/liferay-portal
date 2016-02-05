@@ -6,6 +6,7 @@
 			groups: {
 				mapbase: {
 					base: PATH_FRONTEND_MAP_COMMON_WEB + '/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-map-common': {
 							path: 'map.js',

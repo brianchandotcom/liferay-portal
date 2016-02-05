@@ -6,6 +6,7 @@
 			groups: {
 				blogs: {
 					base: PATH_BLOGS_WEB + '/blogs/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-blogs': {
 							path: 'blogs.js',

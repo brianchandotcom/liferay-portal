@@ -460,7 +460,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleService.getArticleContent(groupId, articleId,
 			languageId, portletRequestModel, themeDisplay);
@@ -482,7 +482,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	@Override
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleService.getArticleContent(groupId, articleId,
 			languageId, themeDisplay);
@@ -505,7 +505,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		java.lang.String articleId, double version,
 		java.lang.String languageId,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleService.getArticleContent(groupId, articleId,
 			version, languageId, portletRequestModel, themeDisplay);
@@ -529,7 +529,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, double version,
 		java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleService.getArticleContent(groupId, articleId,
 			version, languageId, themeDisplay);

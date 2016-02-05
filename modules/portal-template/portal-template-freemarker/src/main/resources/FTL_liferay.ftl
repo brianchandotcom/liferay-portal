@@ -109,7 +109,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 		defaultPreferences=default_preferences
 		instanceId=instance_id
 		portletProviderAction=portletProviderAction.VIEW
-		portletProviderClassName="com.liferay.portal.theme.NavItem"
+		portletProviderClassName="com.liferay.portal.kernel.theme.NavItem"
 	/>
 </#macro>
 

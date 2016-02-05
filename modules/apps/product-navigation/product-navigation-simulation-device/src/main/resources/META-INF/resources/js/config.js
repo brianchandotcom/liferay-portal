@@ -6,6 +6,7 @@
 			groups: {
 				'navigation-simulation-device': {
 					base: PATH_NAVIGATION_SIMULATION_DEVICE + '/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-product-navigation-simulation-device': {
 							path: 'product_navigation_simulation_device.js',

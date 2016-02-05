@@ -6,6 +6,7 @@
 			groups: {
 				bookmarks: {
 					base: PATH_BOOKMARKS_WEB + '/bookmarks/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-bookmarks': {
 							path: 'main.js',

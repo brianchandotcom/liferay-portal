@@ -12,29 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.theme;
-
-import java.io.Serializable;
+package com.liferay.portal.kernel.theme;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ThemeCompanyId implements Serializable {
+public class ThemeGroupId extends ThemeCompanyId {
 
-	public ThemeCompanyId(String value, boolean pattern) {
-		_value = value;
-		_pattern = pattern;
+	public ThemeGroupId(String value, boolean pattern) {
+		super(value, pattern);
 	}
-
-	public String getValue() {
-		return _value;
-	}
-
-	public boolean isPattern() {
-		return _pattern;
-	}
-
-	private final boolean _pattern;
-	private final String _value;
 
 }

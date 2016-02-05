@@ -14,11 +14,11 @@
 
 package com.liferay.map.google.maps.display.context;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;

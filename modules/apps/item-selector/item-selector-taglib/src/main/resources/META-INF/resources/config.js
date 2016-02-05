@@ -6,6 +6,7 @@
 			groups: {
 				'item-selector-taglib': {
 					base: PATH_ITEM_SELECTOR_TAGLIB + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-image-selector': {
 							path: 'image_selector/js/image_selector.js',

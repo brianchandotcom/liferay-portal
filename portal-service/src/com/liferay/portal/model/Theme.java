@@ -16,8 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.theme.ThemeCompanyLimit;
-import com.liferay.portal.theme.ThemeGroupLimit;
+import com.liferay.portal.kernel.theme.ThemeCompanyLimit;
+import com.liferay.portal.kernel.theme.ThemeGroupLimit;
 
 import java.io.Serializable;
 

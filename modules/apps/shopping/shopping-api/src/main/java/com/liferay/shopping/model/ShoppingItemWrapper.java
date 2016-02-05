@@ -602,7 +602,7 @@ public class ShoppingItemWrapper implements ShoppingItem,
 
 	@Override
 	public java.lang.String getShoppingItemImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _shoppingItem.getShoppingItemImageURL(themeDisplay);
 	}
 

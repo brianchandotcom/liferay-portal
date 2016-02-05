@@ -460,7 +460,7 @@ public class JournalArticleServiceUtil {
 	public static java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getArticleContent(groupId, articleId, languageId,
@@ -482,7 +482,7 @@ public class JournalArticleServiceUtil {
 	@Deprecated
 	public static java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getArticleContent(groupId, articleId, languageId,
@@ -505,7 +505,7 @@ public class JournalArticleServiceUtil {
 		java.lang.String articleId, double version,
 		java.lang.String languageId,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getArticleContent(groupId, articleId, version, languageId,
@@ -529,7 +529,7 @@ public class JournalArticleServiceUtil {
 	public static java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, double version,
 		java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getArticleContent(groupId, articleId, version, languageId,

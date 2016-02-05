@@ -90,16 +90,16 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout);
 
 	public java.lang.String getIconCssClass();
 
 	public java.lang.String getIconURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
 		java.util.Locale locale);
@@ -110,7 +110,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 		java.lang.String key);
 
 	public java.lang.String getLogoURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean useDefault);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
+		boolean useDefault);
 
 	public long getOrganizationId();
 
@@ -120,7 +121,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public com.liferay.portal.kernel.util.UnicodeProperties getParentLiveGroupTypeSettingsProperties();
 
 	public java.lang.String getPathFriendlyURL(boolean privateLayout,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public com.liferay.portal.model.LayoutSet getPrivateLayoutSet();
 
@@ -133,11 +134,11 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public long getRemoteLiveGroupId();
 
 	public java.lang.String getScopeDescriptiveName(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getScopeLabel(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public com.liferay.portal.model.Group getStagingGroup();
 

@@ -9,6 +9,7 @@
 				'field-validation': {
 					base: PATH_DDM_TYPE_VALIDATION + '/',
 					filter: LiferayAUI.getFilterConfig(),
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-validation': {
 							condition: {

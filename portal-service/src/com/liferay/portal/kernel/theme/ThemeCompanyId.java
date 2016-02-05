@@ -12,26 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.theme;
+package com.liferay.portal.kernel.theme;
 
-import com.liferay.portal.model.PortletDecorator;
+import java.io.Serializable;
 
 /**
- * @author Eduardo Garcia
+ * @author Brian Wing Shun Chan
  */
-public interface PortletDecoratorFactory {
+public class ThemeCompanyId implements Serializable {
 
-	public PortletDecorator getDefaultPortletDecorator();
+	public ThemeCompanyId(String value, boolean pattern) {
+		_value = value;
+		_pattern = pattern;
+	}
 
-	public String getDefaultPortletDecoratorCssClass();
+	public String getValue() {
+		return _value;
+	}
 
-	public String getDefaultPortletDecoratorId();
+	public boolean isPattern() {
+		return _pattern;
+	}
 
-	public PortletDecorator getPortletDecorator();
-
-	public PortletDecorator getPortletDecorator(String portletDecoratorId);
-
-	public PortletDecorator getPortletDecorator(
-		String portletDecoratorId, String name, String cssClass);
+	private final boolean _pattern;
+	private final String _value;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.toolbar.contributor.locator;
+package com.liferay.portlet.configuration.toolbar.contributor.locator;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = PortletToolbarContributorLocator.class)
-public class MVCPortletToolbarContributorLocator
+public class MVCCommandPortletToolbarContributorLocator
 	extends BasePortletToolbarContributorLocator {
 
 	@Activate
@@ -43,12 +43,12 @@ public class MVCPortletToolbarContributorLocator
 
 	@Override
 	protected String getParameterName() {
-		return "mvcPath";
+		return "mvcRenderCommandName";
 	}
 
 	@Override
 	protected String getPropertyName() {
-		return "mvc.path";
+		return "mvc.render.command.name";
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

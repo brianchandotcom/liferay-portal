@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.toolbar.contributor.locator;
+package com.liferay.portlet.configuration.toolbar.contributor.locator;
 
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;

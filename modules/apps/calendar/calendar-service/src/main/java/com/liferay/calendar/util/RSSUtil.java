@@ -16,10 +16,10 @@ package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.ContentUtil;
 
 import java.text.Format;

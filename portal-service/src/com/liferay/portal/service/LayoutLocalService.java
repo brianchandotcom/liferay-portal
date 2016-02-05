@@ -1391,12 +1391,11 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param themeId the primary key of the layout's new theme
 	* @param colorSchemeId the primary key of the layout's new color scheme
 	* @param css the layout's new CSS
-	* @param wapTheme whether the theme is for WAP browsers
 	* @return the updated layout
 	*/
 	public Layout updateLookAndFeel(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws PortalException;
 
 	/**

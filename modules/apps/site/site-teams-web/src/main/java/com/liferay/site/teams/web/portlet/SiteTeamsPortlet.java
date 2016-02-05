@@ -21,6 +21,7 @@ import com.liferay.portal.exception.TeamNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Team;
@@ -29,7 +30,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.TeamService;
 import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
 import java.io.IOException;

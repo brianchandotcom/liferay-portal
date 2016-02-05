@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.repository.model;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.InputStream;
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,7 +35,6 @@ import com.liferay.portal.service.LayoutSetBranchService;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys;
 
@@ -136,9 +136,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				layoutRevision.getKeywords(), layoutRevision.getRobots(),
 				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-				layoutRevision.getColorSchemeId(),
-				layoutRevision.getWapThemeId(),
-				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+				layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
 
 		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
@@ -174,8 +172,6 @@ public class StagingBarPortlet extends MVCPortlet {
 					lastLayoutRevision.getIconImageId(),
 					lastLayoutRevision.getThemeId(),
 					lastLayoutRevision.getColorSchemeId(),
-					lastLayoutRevision.getWapThemeId(),
-					lastLayoutRevision.getWapColorSchemeId(),
 					lastLayoutRevision.getCss(), serviceContext);
 
 			StagingUtil.setRecentLayoutRevisionId(

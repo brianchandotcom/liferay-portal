@@ -15,9 +15,9 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;

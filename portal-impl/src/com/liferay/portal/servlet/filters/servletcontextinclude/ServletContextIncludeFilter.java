@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.servletcontextinclude;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,7 +26,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.ThemeUtil;
@@ -97,7 +97,7 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 		if (Validator.isNotNull(themeId)) {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			return ThemeLocalServiceUtil.getTheme(companyId, themeId, false);
+			return ThemeLocalServiceUtil.getTheme(companyId, themeId);
 		}
 
 		long plid = ParamUtil.getLong(request, "plid");

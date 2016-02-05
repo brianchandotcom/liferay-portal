@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.expando;
 
-import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl;
 
 import java.math.BigDecimal;

@@ -3475,6 +3475,8 @@ else.
 
 - `com.liferay.portal.security.xml` &rarr; `com.liferay.portal.kernel.security.xml`
 
+- `com.liferay.portal.theme` &rarr; `com.liferay.portal.kernel.theme`
+
 - `com.liferay.portal.util.comparator` &rarr; `com.liferay.portal.kernel.util.comparator`
 
 - `com.liferay.portal.verify.model` &rarr; `com.liferay.portal.kernel.verify.model`
@@ -3500,6 +3502,8 @@ else.
 - `com.liferay.portlet.blogs.util.comparator` &rarr; `com.liferay.blogs.kernel.util.comparator`
 
 - `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
+
+- `com.liferay.portlet.expando` &rarr; `com.liferay.expando.kernel`
 
 - `com.liferay.portlet.exportimport` &rarr; `com.liferay.exportimport.kernel`
 

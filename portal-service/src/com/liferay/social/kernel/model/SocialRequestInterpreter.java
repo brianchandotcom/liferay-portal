@@ -14,7 +14,7 @@
 
 package com.liferay.social.kernel.model;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Brian Wing Shun Chan

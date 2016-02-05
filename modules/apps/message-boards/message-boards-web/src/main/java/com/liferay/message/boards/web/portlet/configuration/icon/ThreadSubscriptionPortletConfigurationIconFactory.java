@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.SubscriptionLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 
 import javax.portlet.PortletRequest;

@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.custom.attributes;
 
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 

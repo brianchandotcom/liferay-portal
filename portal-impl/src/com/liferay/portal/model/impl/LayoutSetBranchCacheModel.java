@@ -79,7 +79,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,10 +111,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(themeId);
 		sb.append(", colorSchemeId=");
 		sb.append(colorSchemeId);
-		sb.append(", wapThemeId=");
-		sb.append(wapThemeId);
-		sb.append(", wapColorSchemeId=");
-		sb.append(wapColorSchemeId);
 		sb.append(", css=");
 		sb.append(css);
 		sb.append(", settings=");
@@ -192,20 +188,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 			layoutSetBranchImpl.setColorSchemeId(colorSchemeId);
 		}
 
-		if (wapThemeId == null) {
-			layoutSetBranchImpl.setWapThemeId(StringPool.BLANK);
-		}
-		else {
-			layoutSetBranchImpl.setWapThemeId(wapThemeId);
-		}
-
-		if (wapColorSchemeId == null) {
-			layoutSetBranchImpl.setWapColorSchemeId(StringPool.BLANK);
-		}
-		else {
-			layoutSetBranchImpl.setWapColorSchemeId(wapColorSchemeId);
-		}
-
 		if (css == null) {
 			layoutSetBranchImpl.setCss(StringPool.BLANK);
 		}
@@ -258,8 +240,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		logoId = objectInput.readLong();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
-		wapThemeId = objectInput.readUTF();
-		wapColorSchemeId = objectInput.readUTF();
 		css = objectInput.readUTF();
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
@@ -324,20 +304,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 			objectOutput.writeUTF(colorSchemeId);
 		}
 
-		if (wapThemeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(wapThemeId);
-		}
-
-		if (wapColorSchemeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(wapColorSchemeId);
-		}
-
 		if (css == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -377,8 +343,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public long logoId;
 	public String themeId;
 	public String colorSchemeId;
-	public String wapThemeId;
-	public String wapColorSchemeId;
 	public String css;
 	public String settings;
 	public String layoutSetPrototypeUuid;

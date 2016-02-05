@@ -17,12 +17,12 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 

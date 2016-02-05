@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository.model;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.InputStream;
 import java.io.Serializable;

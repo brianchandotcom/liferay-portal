@@ -25,9 +25,9 @@ import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriority
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Collection;
 import java.util.Collections;

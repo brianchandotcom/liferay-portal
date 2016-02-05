@@ -52,14 +52,6 @@ public class ColorSchemeFactoryUtil {
 		return getColorSchemeFactory().getDefaultRegularColorSchemeId();
 	}
 
-	public static ColorScheme getDefaultWapColorScheme() {
-		return getColorSchemeFactory().getDefaultWapColorScheme();
-	}
-
-	public static String getDefaultWapColorSchemeId() {
-		return getColorSchemeFactory().getDefaultWapColorSchemeId();
-	}
-
 	public void setColorSchemeFactory(ColorSchemeFactory colorSchemeFactory) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

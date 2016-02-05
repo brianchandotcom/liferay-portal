@@ -16,8 +16,8 @@ package com.liferay.bookmarks.web.custom.attributes;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource portal="true">
-		<model-name>com.liferay.portlet.expando.model.ExpandoColumn</model-name>
+		<model-name>com.liferay.expando.kernel.model.ExpandoColumn</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_expando_web_portlet_ExpandoPortlet</portlet-name>
 		</portlet-ref>

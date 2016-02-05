@@ -16,11 +16,11 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -880,36 +880,6 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	 * @param colorSchemeId the color scheme ID of this layout
 	 */
 	public void setColorSchemeId(String colorSchemeId);
-
-	/**
-	 * Returns the wap theme ID of this layout.
-	 *
-	 * @return the wap theme ID of this layout
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout.
-	 *
-	 * @return the wap color scheme ID of this layout
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
 
 	/**
 	 * Returns the css of this layout.

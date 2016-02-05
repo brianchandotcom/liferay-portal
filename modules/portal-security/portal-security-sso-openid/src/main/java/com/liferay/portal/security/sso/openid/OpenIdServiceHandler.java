@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.openid;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

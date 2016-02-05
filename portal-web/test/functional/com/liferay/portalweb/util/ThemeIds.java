@@ -55,9 +55,7 @@ public class ThemeIds {
 					httpPrincipal, TestPropsValues.getCompanyId());
 
 				for (Theme theme : themes) {
-					if (!theme.isWapTheme()) {
-						themeIdList.add(theme.getThemeId());
-					}
+					themeIdList.add(theme.getThemeId());
 				}
 
 				themeIds = themeIdList.toArray(new String[themeIdList.size()]);

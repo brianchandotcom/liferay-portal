@@ -77,9 +77,6 @@
 				},
 				isWindows: function() {
 					return <%= BrowserSnifferUtil.isWindows(request) %>;
-				},
-				isWml: function() {
-					return <%= BrowserSnifferUtil.isWml(request) %>;
 				}
 			},
 

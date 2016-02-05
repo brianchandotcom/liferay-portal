@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-request.setAttribute("edit_pages.jsp-editable", true);
-%>
-
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
 
 <aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />

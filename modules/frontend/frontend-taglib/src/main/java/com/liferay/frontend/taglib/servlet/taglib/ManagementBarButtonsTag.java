@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.servlet.taglib.base.BarTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.JspException;
@@ -29,14 +30,12 @@ public class ManagementBarButtonsTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {
-		ManagementBarTag managementBarTag =
-			(ManagementBarTag)findAncestorWithClass(
-				this, ManagementBarTag.class);
+		BarTag barTag = (BarTag)findAncestorWithClass(this, BarTag.class);
 
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
-			managementBarTag.setButtons(bodyContent.getString());
+			barTag.setButtons(bodyContent.getString());
 		}
 
 		return EVAL_PAGE;

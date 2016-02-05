@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.frontend.taglib.servlet.taglib.base;
 
-<%
-String buttons = (String)request.getAttribute("liferay-frontend:info-bar:buttons");
-%>
+/**
+ * @author Roberto Díaz
+ */
+public interface BarTag {
+
+	public void setButtons(String buttons);
+
+}

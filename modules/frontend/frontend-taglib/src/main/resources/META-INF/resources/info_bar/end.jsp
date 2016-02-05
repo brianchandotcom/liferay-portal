@@ -17,6 +17,13 @@
 <%@ include file="/info_bar/init.jsp" %>
 
 			</div>
+
+			<c:if test="<%= Validator.isNotNull(buttons) %>">
+				<div class="management-bar-header-right">
+					<%= buttons %>
+				</div>
+			</c:if>
+
 		</div>
 	</div>
 </div>

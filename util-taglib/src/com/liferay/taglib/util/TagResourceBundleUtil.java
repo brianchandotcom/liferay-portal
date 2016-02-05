@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -61,29 +60,6 @@ public class TagResourceBundleUtil {
 			portletResourceBundle, portalResourceBundle);
 	}
 
-	protected static ResourceBundleLoader getResourceBundleLoader(
-		HttpServletRequest request) {
-
-		ResourceBundleLoader resourceBundleLoader =
-			(ResourceBundleLoader)request.getAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER);
-
-		if (resourceBundleLoader != null) {
-			return resourceBundleLoader;
-		}
-
-		ServletContext servletContext = request.getServletContext();
-
-		String servletContextName = servletContext.getServletContextName();
-
-		if (Validator.isNull(servletContextName)) {
-			return null;
-		}
-
-		return ResourceBundleLoaderUtil.
-			getResourceBundleLoaderByServletContextName(servletContextName);
-	}
-
 	public static ResourceBundle getResourceBundle(PageContext pageContext) {
 		ResourceBundle resourceBundle =
 			(ResourceBundle)pageContext.getAttribute("resourceBundle");
@@ -111,6 +87,29 @@ public class TagResourceBundleUtil {
 		}
 
 		return _emptyResourceBundle;
+	}
+
+	protected static ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest request) {
+
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		if (resourceBundleLoader != null) {
+			return resourceBundleLoader;
+		}
+
+		ServletContext servletContext = request.getServletContext();
+
+		String servletContextName = servletContext.getServletContextName();
+
+		if (Validator.isNull(servletContextName)) {
+			return null;
+		}
+
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByServletContextName(servletContextName);
 	}
 
 	private static final ResourceBundle _emptyResourceBundle =

@@ -65,9 +65,6 @@ public interface CASConfiguration {
 	@Meta.AD(deflt = "https://localhost:8443/cas-web/logout", required = false)
 	public String logoutURL();
 
-	@Meta.AD(deflt = "http://localhost:8080", required = false)
-	public String noSuchUserRedirectURL();
-
 	@Meta.AD(
 		deflt = "http://localhost:8080",
 		description = "Setting server name allows deep linking. See LEP-4423.",
@@ -80,5 +77,8 @@ public interface CASConfiguration {
 
 	@Meta.AD(required = false)
 	public String serviceURL();
+
+	@Meta.AD(deflt = "http://localhost:8080", required = false)
+	public String noSuchUserRedirectURL();
 
 }

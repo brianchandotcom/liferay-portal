@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,6 +43,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -99,8 +103,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 				template.getName(locale), structure.getName(locale));
 		}
 		else if (structure != null) {
+			ResourceBundle resourceBundle = getResourceBundle(locale);
+
 			return LanguageUtil.format(
-				locale, "new-template-for-structure-x",
+				resourceBundle, "new-template-for-structure-x",
 				structure.getName(locale), false);
 		}
 		else if (template != null) {
@@ -132,7 +138,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "structure");
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "structure");
 	}
 
 	@Override
@@ -251,9 +259,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		Locale locale) {
 
 		if (structure != null) {
+			ResourceBundle resourceBundle = getResourceBundle(locale);
+
 			return LanguageUtil.format(
-				locale, "templates-for-structure-x", structure.getName(locale),
-				false);
+				resourceBundle, "templates-for-structure-x",
+				structure.getName(locale), false);
 		}
 
 		return getDefaultViewTemplateTitle(locale);
@@ -305,11 +315,33 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	protected String getDefaultEditTemplateTitle(Locale locale) {
-		return LanguageUtil.get(locale, "new-template");
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "new-template");
 	}
 
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "templates");
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
+
+		ResourceBundle baseDDMDisplayResourceBundle =
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale,
+				baseDDMDisplayClazz.getClassLoader());
+
+		Class<?> clazz = getClass();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		return new AggregateResourceBundle(
+			baseDDMDisplayResourceBundle, resourceBundle,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale,
+				PortalClassLoaderUtil.getClassLoader()));
 	}
 
 	protected String getViewTemplatesURL(

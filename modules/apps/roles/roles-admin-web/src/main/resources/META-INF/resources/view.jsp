@@ -36,6 +36,22 @@ String portletURLString = portletURL.toString();
 portletURL.setParameter("keywords", keywords);
 
 pageContext.setAttribute("portletURL", portletURL);
+
+String breadcrumbKey = null;
+
+if (type == RoleConstants.TYPE_SITE) {
+	breadcrumbKey = "site-roles";
+}
+else if (type == RoleConstants.TYPE_ORGANIZATION) {
+	breadcrumbKey = "organization-roles";
+}
+else {
+	breadcrumbKey = "regular-roles";
+}
+
+String breadcrumbEntry = LanguageUtil.get(request, breadcrumbKey);
+
+PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbEntry, currentURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
@@ -129,7 +145,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteRoles" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteRoles" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -137,6 +153,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	<aui:input name="deleteRoleIds" type="hidden" />
 
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
 
 	<liferay-ui:search-container
 		id="roleSearch"
@@ -170,12 +191,20 @@ pageContext.setAttribute("portletURL", portletURL);
 		>
 
 			<%
+			String name = role.getName();
+
+			boolean unassignableRole = false;
+
+			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
+				unassignableRole = true;
+			}
+
 			PortletURL rowURL = null;
 
-			if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
+			if (!unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_role.jsp");
+				rowURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			}
@@ -185,12 +214,6 @@ pageContext.setAttribute("portletURL", portletURL);
 				href="<%= rowURL %>"
 				name="title"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="type"
-				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 			/>
 
 			<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">

@@ -207,31 +207,12 @@
 		</if>
 
 		<if>
-			<equals arg1="${portletOption}" arg2="Look and Feel" />
+			<isset var="portletOption" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+				<var name="key_menuItem" value="${portletOption}" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 			</then>
-			<elseif>
-				<equals arg1="${portletOption}" arg2="Configuration" />
-				<then>
-					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${portletOption}" arg2="Preferences" />
-				<then>
-					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_PREFERENCES" value1="Preferences" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${portletOption}" arg2="Export / Import" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#EXPORT_IMPORT" value1="Export / Import" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var portletOption. Must be (Look and Feel|Configuration|Export / Import)." />
-			</else>
 		</if>
 	</command>
 

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.contacts.service.persistence.EntryFinder.countByU_FN_EA">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				Contacts_Entry
+			WHERE
+				(userId = ?) AND
+				(
+					(lower(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.contacts.service.persistence.EntryFinder.findByU_FN_EA">
+		<![CDATA[
+			SELECT
+				{Contacts_Entry.*}
+			FROM
+				Contacts_Entry
+			WHERE
+				(userId = ?) AND
+				(
+					(lower(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				fullName ASC
+		]]>
+	</sql>
+</custom-sql>

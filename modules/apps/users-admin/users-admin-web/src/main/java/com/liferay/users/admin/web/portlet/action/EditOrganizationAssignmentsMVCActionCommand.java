@@ -55,22 +55,13 @@ public class EditOrganizationAssignmentsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		try {
-			if (cmd.equals("organization_user_groups")) {
-				updateOrganizationUserGroups(actionRequest);
-			}
-			else if (cmd.equals("organization_users")) {
-				updateOrganizationUsers(actionRequest);
-			}
+			updateOrganizationUsers(actionRequest);
 
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "assignmentsRedirect");
+			String redirect = ParamUtil.getString(
+				actionRequest, "assignmentsRedirect");
 
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof MembershipPolicyException) {
@@ -90,40 +81,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 	}
 
 	@Reference(unbind = "-")
-	protected void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupService(UserGroupService userGroupService) {
-		_userGroupService = userGroupService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		_userService = userService;
-	}
-
-	protected void updateOrganizationUserGroups(ActionRequest actionRequest)
-		throws Exception {
-
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationId");
-
-		Organization organization = _organizationLocalService.getOrganization(
-			organizationId);
-
-		long groupId = organization.getGroupId();
-
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
-
-		_userGroupService.addGroupUserGroups(groupId, addUserGroupIds);
-		_userGroupService.unsetGroupUserGroups(groupId, removeUserGroupIds);
 	}
 
 	protected void updateOrganizationUsers(ActionRequest actionRequest)
@@ -141,8 +100,6 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 	}
 
-	private OrganizationLocalService _organizationLocalService;
-	private UserGroupService _userGroupService;
 	private UserService _userService;
 
 }

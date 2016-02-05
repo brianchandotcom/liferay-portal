@@ -137,7 +137,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		analyzer.setBundleVersion("1.0.0");
 		analyzer.setProperty("Liferay-Require-SchemaVersion", "1.0.0.1");
 		analyzer.setProperty(
-			"-spring-dependency", ServiceReference.class.getName());
+			"-liferay-spring-dependency", ServiceReference.class.getName());
 
 		ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 

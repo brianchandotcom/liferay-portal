@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.portlet.configuration.icon.locator;
+package com.liferay.portlet.configuration.icon.locator;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
 
@@ -34,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = PortletConfigurationIconLocator.class)
-public class MVCCommandPortletConfigurationIconLocator
+public class StrutsPortletConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 
 	@Override
@@ -49,15 +48,18 @@ public class MVCCommandPortletConfigurationIconLocator
 
 		Map<String, String> initParams = portlet.getInitParams();
 
-		String[] mvcCommandNamesDefaultViews = StringUtil.split(
-			initParams.get("mvc-command-names-default-views"));
+		String viewAction = initParams.get("view-action");
 
-		return ListUtil.fromArray(mvcCommandNamesDefaultViews);
+		if (Validator.isNotNull(viewAction)) {
+			defaultViews.add(viewAction);
+		}
+
+		return defaultViews;
 	}
 
 	@Override
 	public String getPath(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "mvcRenderCommandName");
+		return ParamUtil.getString(portletRequest, "struts_action");
 	}
 
 	@Reference(unbind = "-")

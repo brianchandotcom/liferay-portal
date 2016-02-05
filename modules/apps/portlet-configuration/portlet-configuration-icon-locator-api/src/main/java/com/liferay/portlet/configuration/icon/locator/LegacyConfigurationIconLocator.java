@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.configuration.icon.locator;
+package com.liferay.portlet.configuration.icon.locator;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.util.GetterUtil;

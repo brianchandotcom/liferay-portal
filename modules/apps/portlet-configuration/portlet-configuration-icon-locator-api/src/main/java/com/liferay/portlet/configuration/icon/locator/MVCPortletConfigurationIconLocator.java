@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.configuration.icon.locator;
+package com.liferay.portlet.configuration.icon.locator;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIconLocator.class)
-public class StrutsPortletConfigurationIconLocator
+public class MVCPortletConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 
 	@Override
@@ -48,10 +48,10 @@ public class StrutsPortletConfigurationIconLocator
 
 		Map<String, String> initParams = portlet.getInitParams();
 
-		String viewAction = initParams.get("view-action");
+		String viewTemplate = initParams.get("view-template");
 
-		if (Validator.isNotNull(viewAction)) {
-			defaultViews.add(viewAction);
+		if (Validator.isNotNull(viewTemplate)) {
+			defaultViews.add(viewTemplate);
 		}
 
 		return defaultViews;
@@ -59,7 +59,7 @@ public class StrutsPortletConfigurationIconLocator
 
 	@Override
 	public String getPath(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "struts_action");
+		return ParamUtil.getString(portletRequest, "mvcPath");
 	}
 
 	@Reference(unbind = "-")

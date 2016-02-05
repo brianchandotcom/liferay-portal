@@ -61,7 +61,7 @@ AUI.add(
 						if (event.namespace.indexOf(instance.get('namespace')) === 0) {
 							var index = event.selectedIndex;
 
-							Liferay.Store('com.liferay.control.menu.web_addPanelTab', event.names[index]);
+							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelTab', event.names[index]);
 						}
 					},
 
@@ -73,7 +73,7 @@ AUI.add(
 						if (delta) {
 							instance._delta = delta;
 
-							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', delta);
+							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelNumItems', delta);
 						}
 
 						var displayStyle = event.displayStyle;
@@ -81,7 +81,7 @@ AUI.add(
 						if (displayStyle) {
 							instance._displayStyle = displayStyle;
 
-							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', displayStyle);
+							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelNumItems', displayStyle);
 						}
 
 						A.io.request(

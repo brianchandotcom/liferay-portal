@@ -21,10 +21,10 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.asset.tags.compiler.web:1.0.0,\
 	com.liferay.asset.tags.navigation.web:1.0.0,\
 	com.liferay.asset.tags.service:1.0.0,\
-	com.liferay.control.menu.api:1.0.0,\
-	com.liferay.control.menu.taglib.freemarker.contributor:1.0.0,\
-	com.liferay.control.menu.taglib:1.0.0,\
-	com.liferay.control.menu.web:1.0.0,\
+	com.liferay.product.navigation.control.menu.api:1.0.0,\
+	com.liferay.product.navigation.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.product.navigation.taglib:1.0.0,\
+	com.liferay.product.navigation.control.menu.web:1.0.0,\
 	com.liferay.exportimport.api:1.0.0,\
 	com.liferay.exportimport.service:1.0.0,\
 	com.liferay.exportimport.test:1.0.0,\

@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelNumItems", "10"));
+int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelNumItems", "10"));
 
 int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 
-String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
+String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelDisplayStyle", "descriptive"));
 String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
 
 String keywords = ParamUtil.getString(request, "keywords");

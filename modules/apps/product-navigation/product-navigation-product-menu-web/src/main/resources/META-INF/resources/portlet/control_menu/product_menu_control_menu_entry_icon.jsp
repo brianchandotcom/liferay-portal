@@ -35,7 +35,7 @@
 <portlet:defineObjects />
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
+String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_productMenuState", "closed");
 
 PortletURL portletURL = PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, plid, RenderRequest.RENDER_PHASE);
 

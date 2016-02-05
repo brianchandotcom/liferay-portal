@@ -94,7 +94,7 @@ public class PortletHeaderControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.control.menu.web)",
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

@@ -44,7 +44,7 @@
 
 					boolean hasAddContentPermission = hasAddApplicationsPermission && !group.isLayoutPrototype();
 
-					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
+					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", "content"));
 					%>
 
 					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">

@@ -50,7 +50,7 @@ public class ProductMenuTemplateContextContributor
 		String cssClass = GetterUtil.getString(
 			contextObjects.get("bodyCssClass"));
 		String productMenuState = SessionClicks.get(
-			request, "com.liferay.control.menu.web_productMenuState", "closed");
+			request, "com.liferay.product.navigation.control.menu.web_productMenuState", "closed");
 
 		contextObjects.put(
 			"bodyCssClass", cssClass + StringPool.SPACE + productMenuState);

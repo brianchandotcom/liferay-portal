@@ -27,7 +27,7 @@
 <portlet:defineObjects />
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
+String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_productMenuState", "closed");
 %>
 
 <div class="<%= productMenuState %> lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">

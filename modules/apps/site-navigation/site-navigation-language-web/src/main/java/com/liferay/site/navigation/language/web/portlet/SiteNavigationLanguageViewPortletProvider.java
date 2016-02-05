@@ -17,7 +17,7 @@ package com.liferay.site.navigation.language.web.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;

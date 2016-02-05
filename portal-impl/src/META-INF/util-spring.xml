@@ -7,6 +7,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
+		<property name="expandoColumnPermission">
+			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil">
+		<property name="expandoBridgeFactory">
+			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil">
+		<property name="expandoBridgeIndexer">
+			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.mail.util.DummyHook" class="com.liferay.mail.util.DummyHook" />
 	<bean class="com.liferay.portal.convert.database.DatabaseConvertProcess" />
 	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" >
@@ -261,6 +276,11 @@
 	<bean id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
 		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil" class="com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil">
+		<property name="portletDecoratorFactory">
+			<bean class="com.liferay.portal.theme.PortletDecoratorFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
 		<property name="upgradeTableFactory">
 			<bean class="com.liferay.portal.upgrade.util.DefaultUpgradeTableFactoryImpl" />
@@ -488,11 +508,6 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
-	<bean id="com.liferay.portal.theme.PortletDecoratorFactoryUtil" class="com.liferay.portal.theme.PortletDecoratorFactoryUtil">
-		<property name="portletDecoratorFactory">
-			<bean class="com.liferay.portal.theme.PortletDecoratorFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
@@ -565,21 +580,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
-		<property name="expandoColumnPermission">
-			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil">
-		<property name="expandoBridgeFactory">
-			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil">
-		<property name="expandoBridgeIndexer">
-			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />

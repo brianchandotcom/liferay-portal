@@ -14,10 +14,10 @@
 
 package com.liferay.journal.web.custom.attributes;
 
+import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
 import org.osgi.service.component.annotations.Component;
 

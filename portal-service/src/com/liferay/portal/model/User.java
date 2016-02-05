@@ -201,7 +201,7 @@ public interface User extends UserModel, PersistedModel {
 	* @return the user's display URL
 	*/
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -236,7 +236,7 @@ public interface User extends UserModel, PersistedModel {
 	* @throws PortalException
 	*/
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -331,7 +331,7 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<com.liferay.portal.model.Phone> getPhones();
 
 	public java.lang.String getPortraitURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public int getPrivateLayoutsPageCount()

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.repository.liferayrepository.model;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 
 /**
  * @author Alexander Chow

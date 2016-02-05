@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.util.AttributeDefinitionUtil;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.FileInputStream;
 

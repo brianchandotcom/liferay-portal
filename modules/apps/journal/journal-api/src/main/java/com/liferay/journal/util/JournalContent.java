@@ -16,7 +16,7 @@ package com.liferay.journal.util;
 
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Raymond Augé

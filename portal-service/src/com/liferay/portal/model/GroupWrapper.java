@@ -16,10 +16,10 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -463,13 +463,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _group.getDisplayURL(themeDisplay);
 	}
 
 	@Override
 	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout) {
 		return _group.getDisplayURL(themeDisplay, privateLayout);
 	}
@@ -516,7 +516,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.lang.String getIconURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _group.getIconURL(themeDisplay);
 	}
 
@@ -559,7 +559,8 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.lang.String getLogoURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean useDefault) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
+		boolean useDefault) {
 		return _group.getLogoURL(themeDisplay, useDefault);
 	}
 
@@ -698,7 +699,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.lang.String getPathFriendlyURL(boolean privateLayout,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _group.getPathFriendlyURL(privateLayout, themeDisplay);
 	}
 
@@ -754,14 +755,14 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.lang.String getScopeDescriptiveName(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getScopeDescriptiveName(themeDisplay);
 	}
 
 	@Override
 	public java.lang.String getScopeLabel(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _group.getScopeLabel(themeDisplay);
 	}
 

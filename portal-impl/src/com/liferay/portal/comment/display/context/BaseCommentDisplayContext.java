@@ -15,8 +15,8 @@
 package com.liferay.portal.comment.display.context;
 
 import com.liferay.portal.kernel.comment.display.context.CommentDisplayContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.security.sso.SSOUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Adolfo Pérez

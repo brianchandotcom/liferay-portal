@@ -62,7 +62,7 @@ public interface ShoppingItem extends ShoppingItemModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getShoppingItemImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public boolean isInfiniteStock();
 

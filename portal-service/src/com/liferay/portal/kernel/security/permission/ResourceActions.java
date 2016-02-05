@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.exception.NoSuchResourceActionException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -22,7 +23,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portlet.expando.model.ExpandoColumn;
 
 import java.io.InputStream;
 

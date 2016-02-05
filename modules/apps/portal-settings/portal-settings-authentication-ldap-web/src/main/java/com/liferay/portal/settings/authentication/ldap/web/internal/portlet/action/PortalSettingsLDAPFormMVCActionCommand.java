@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
@@ -28,7 +29,6 @@ import com.liferay.portal.ldap.constants.LDAPConstants;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Dictionary;
 

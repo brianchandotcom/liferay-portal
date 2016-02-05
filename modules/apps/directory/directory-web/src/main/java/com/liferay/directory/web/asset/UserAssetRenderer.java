@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Locale;

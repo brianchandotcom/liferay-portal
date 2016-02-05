@@ -15,7 +15,6 @@
 package com.liferay.product.navigation.site.administration.constants;
 
 /**
- *
  * @author Julio Camarero
  */
 public class SiteAdministrationWebKeys {

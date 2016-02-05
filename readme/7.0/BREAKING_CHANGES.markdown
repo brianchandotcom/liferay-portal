@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `f5acb27`.*
+*This document has been reviewed through commit `9a2eb64`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3566,24 +3566,23 @@ prevent future ones.
 
 ---------------------------------------
 
-### The aui:column taglib has been removed and replaced with aui:col taglib
+### Removed the aui:column Tag and Replaced with aui:col
 - **Date:** 2016-Jan-19
 - **JIRA Ticket:** LPS-62208
 
 #### What changed?
 
-The `aui:column` taglib has been removed and replaced with
-`aui:col` taglib.
+The `aui:column` tag has been removed and replaced with the `aui:col` tag.
 
 #### Who is affected?
 
-Plugins or templates that are using the `aui:column` tag need
-to update their usage of the tag.
+Plugins or templates that are using the `aui:column` tag must update their usage
+of the tag.
 
 #### How should I update my code?
 
-You should import the `aui` tag library if it isn't already and
-update the tag namespace from `aui:column` to `aui:col`.
+You should import the `aui` tag library (if necessary) and update the tag
+namespace from `aui:column` to `aui:col`.
 
 #### Why was this change made?
 

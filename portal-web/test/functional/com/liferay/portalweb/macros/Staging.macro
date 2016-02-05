@@ -34,7 +34,13 @@
 			</then>
 		</if>
 
-		<for list="Application Display Template,Audience Targeting,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Shopping,Web Content,Wiki" param="contentName">
+		<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Shopping,Web Content,Wiki" param="contentName">
+			<var name="key_contentName" value="${contentName}" />
+
+			<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
+		</for>
+
+		<for list="Audience Targeting" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
 			<if>

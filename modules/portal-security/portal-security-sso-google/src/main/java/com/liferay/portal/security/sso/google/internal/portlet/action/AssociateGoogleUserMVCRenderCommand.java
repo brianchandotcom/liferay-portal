@@ -89,11 +89,7 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 		return "/update_account.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

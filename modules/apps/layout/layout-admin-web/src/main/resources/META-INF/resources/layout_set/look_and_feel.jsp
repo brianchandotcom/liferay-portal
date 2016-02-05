@@ -17,13 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = layoutsAdminDisplayContext.getGroupId();
-long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme selTheme = layoutSet.getTheme();
-ColorScheme selColorScheme = layoutSet.getColorScheme();
+
+List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
+
+request.setAttribute("edit_pages.jsp-themes", themes);
+request.setAttribute("edit_pages.jsp-colorSchemes", selTheme.getColorSchemes());
+request.setAttribute("edit_pages.jsp-selTheme", selTheme);
+request.setAttribute("edit_pages.jsp-selColorScheme", layoutSet.getColorScheme());
+request.setAttribute("edit_pages.jsp-device", "regular");
+request.setAttribute("edit_pages.jsp-editable", true);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
@@ -32,4 +37,4 @@ ColorScheme selColorScheme = layoutSet.getColorScheme();
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<%@ include file="/layout_set/look_and_feel_regular_browser.jspf" %>
+<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />

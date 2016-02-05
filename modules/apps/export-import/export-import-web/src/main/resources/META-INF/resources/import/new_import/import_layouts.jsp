@@ -29,6 +29,8 @@ PortletURL importProcessesURL = PortalUtil.getControlPanelPortletURL(request, Ex
 importProcessesURL.setParameter("mvcPath", "/import/view.jsp");
 
 portletDisplay.setURLBack(importProcessesURL.toString());
+
+renderResponse.setTitle(LanguageUtil.get(request, "new-import-process"));
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />exportImportOptions">

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Portlet Toolbar Contributor Locator
-Bundle-SymbolicName: com.liferay.portal.portlet.toolbar.contributor.locator
+Bundle-Name: Liferay Portlet Configuration Toolbar Contributor Locator
+Bundle-SymbolicName: com.liferay.portlet.toolbar.contributor.locator
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management

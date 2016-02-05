@@ -6,6 +6,7 @@
 			groups: {
 				'field-radio': {
 					base: PATH_DDM_TYPE_RADIO + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-radio': {
 							condition: {

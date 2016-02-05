@@ -6,6 +6,7 @@
 			groups: {
 				'field-checkbox': {
 					base: PATH_DDM_TYPE_CHECKBOX + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-checkbox': {
 							condition: {

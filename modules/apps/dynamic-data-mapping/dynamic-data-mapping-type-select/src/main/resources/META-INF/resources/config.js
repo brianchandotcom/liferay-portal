@@ -9,6 +9,7 @@
 				'field-select': {
 					base: PATH_DDM_TYPE_SELECT + '/',
 					filter: LiferayAUI.getFilterConfig(),
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-select': {
 							condition: {

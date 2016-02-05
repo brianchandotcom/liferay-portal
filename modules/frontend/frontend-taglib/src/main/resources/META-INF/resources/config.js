@@ -6,6 +6,7 @@
 			groups: {
 				'frontend-taglib': {
 					base: PATH_FRONTEND_TAGLIB + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-diff-version-comparator': {
 							path: 'diff_version_comparator/js/diff_version_comparator.js',

@@ -33,15 +33,13 @@ public interface RequestHeaderAutoLoginConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to automatically import users from LDAP if they do not exist in the portal.",
+		deflt = "false", description = "%import-from-ldap-help",
 		required = false
 	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(
-		deflt = "255.255.255.255",
-		description = "Input a list of comma delimited IPs that can automatically authenticate via request headers. Input a blank list to allow any IP to automatically authenticate via request headers. SERVER_IP will be replaced with the IP of the host server.",
+		deflt = "255.255.255.255", description = "%auth-hosts-allowed-help",
 		required = false
 	)
 	public String authHostsAllowed();

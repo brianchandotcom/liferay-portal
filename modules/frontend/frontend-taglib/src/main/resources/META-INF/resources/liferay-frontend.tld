@@ -842,12 +842,12 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>searchContainerId</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>resourceURL</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

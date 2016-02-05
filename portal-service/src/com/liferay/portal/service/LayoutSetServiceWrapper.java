@@ -99,10 +99,10 @@ public class LayoutSetServiceWrapper implements LayoutSetService,
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
 		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetService.updateLookAndFeel(groupId, privateLayout,
-			themeId, colorSchemeId, css, wapTheme);
+			themeId, colorSchemeId, css);
 	}
 
 	@Override

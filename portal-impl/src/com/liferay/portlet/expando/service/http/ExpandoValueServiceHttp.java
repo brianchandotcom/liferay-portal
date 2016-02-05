@@ -16,14 +16,14 @@ package com.liferay.portlet.expando.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.service.ExpandoValueServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
-import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
  */
 @ProviderType
 public class ExpandoValueServiceHttp {
-	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
+	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.Object data)
@@ -80,7 +80,7 @@ public class ExpandoValueServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoValue)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoValue)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -89,7 +89,7 @@ public class ExpandoValueServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
+	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.String data)
@@ -114,7 +114,7 @@ public class ExpandoValueServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoValue)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoValue)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

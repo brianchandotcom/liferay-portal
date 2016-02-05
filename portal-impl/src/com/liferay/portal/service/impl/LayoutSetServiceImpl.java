@@ -120,7 +120,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 	@Override
 	public LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			String colorSchemeId, String css)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
@@ -130,7 +130,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			getUserId(), themeId, Plugin.TYPE_THEME);
 
 		return layoutSetLocalService.updateLookAndFeel(
-			groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+			groupId, privateLayout, themeId, colorSchemeId, css);
 	}
 
 	@Override

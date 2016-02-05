@@ -16,11 +16,11 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -882,36 +882,6 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 * @param colorSchemeId the color scheme ID of this layout revision
 	 */
 	public void setColorSchemeId(String colorSchemeId);
-
-	/**
-	 * Returns the wap theme ID of this layout revision.
-	 *
-	 * @return the wap theme ID of this layout revision
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout revision.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout revision
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout revision.
-	 *
-	 * @return the wap color scheme ID of this layout revision
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout revision.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout revision
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
 
 	/**
 	 * Returns the css of this layout revision.

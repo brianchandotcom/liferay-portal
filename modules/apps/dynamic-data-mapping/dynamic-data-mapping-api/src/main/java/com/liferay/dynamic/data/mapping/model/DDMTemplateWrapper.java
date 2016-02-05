@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -629,7 +629,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 	@Override
 	public java.lang.String getTemplateImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _ddmTemplate.getTemplateImageURL(themeDisplay);
 	}
 
@@ -750,7 +750,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	*/
 	@Override
 	public java.lang.String getWebDavURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		java.lang.String webDAVToken) {
 		return _ddmTemplate.getWebDavURL(themeDisplay, webDAVToken);
 	}

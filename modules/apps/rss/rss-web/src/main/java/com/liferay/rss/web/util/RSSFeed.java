@@ -14,13 +14,13 @@
 
 package com.liferay.rss.web.util;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
 
 import com.sun.syndication.feed.synd.SyndEntry;

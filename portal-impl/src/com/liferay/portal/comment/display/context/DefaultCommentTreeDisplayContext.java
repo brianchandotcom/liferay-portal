@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayConte
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;

@@ -120,24 +120,12 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().isSun(request);
 	}
 
-	public static boolean isWap(HttpServletRequest request) {
-		return getBrowserSniffer().isWap(request);
-	}
-
-	public static boolean isWapXhtml(HttpServletRequest request) {
-		return getBrowserSniffer().isWapXhtml(request);
-	}
-
 	public static boolean isWebKit(HttpServletRequest request) {
 		return getBrowserSniffer().isWebKit(request);
 	}
 
 	public static boolean isWindows(HttpServletRequest request) {
 		return getBrowserSniffer().isWindows(request);
-	}
-
-	public static boolean isWml(HttpServletRequest request) {
-		return getBrowserSniffer().isWml(request);
 	}
 
 	public void setBrowserSniffer(BrowserSniffer browserSniffer) {

@@ -24,7 +24,20 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.expando.web.constants.ExpandoPortletKeys" %><%@
+<%@ page import="com.liferay.expando.kernel.exception.ColumnNameException" %><%@
+page import="com.liferay.expando.kernel.exception.ColumnTypeException" %><%@
+page import="com.liferay.expando.kernel.exception.DuplicateColumnNameException" %><%@
+page import="com.liferay.expando.kernel.exception.NoSuchColumnException" %><%@
+page import="com.liferay.expando.kernel.exception.ValueDataException" %><%@
+page import="com.liferay.expando.kernel.model.CustomAttributesDisplay" %><%@
+page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
+page import="com.liferay.expando.kernel.model.ExpandoColumn" %><%@
+page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
+page import="com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil" %><%@
+page import="com.liferay.expando.kernel.service.ExpandoColumnServiceUtil" %><%@
+page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
+page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %><%@
+page import="com.liferay.expando.web.constants.ExpandoPortletKeys" %><%@
 page import="com.liferay.expando.web.search.CustomFieldChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -46,19 +59,6 @@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.expando.exception.ColumnNameException" %><%@
-page import="com.liferay.portlet.expando.exception.ColumnTypeException" %><%@
-page import="com.liferay.portlet.expando.exception.DuplicateColumnNameException" %><%@
-page import="com.liferay.portlet.expando.exception.NoSuchColumnException" %><%@
-page import="com.liferay.portlet.expando.exception.ValueDataException" %><%@
-page import="com.liferay.portlet.expando.model.CustomAttributesDisplay" %><%@
-page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
-page import="com.liferay.portlet.expando.model.ExpandoColumn" %><%@
-page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %><%@
-page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %><%@
-page import="com.liferay.portlet.expando.service.ExpandoColumnServiceUtil" %><%@
-page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %><%@
-page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

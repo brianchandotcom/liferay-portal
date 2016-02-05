@@ -16,11 +16,11 @@ package com.liferay.document.library.item.selector.web;
 
 import com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 

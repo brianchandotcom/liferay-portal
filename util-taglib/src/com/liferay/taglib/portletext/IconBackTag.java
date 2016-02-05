@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
-import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.ui.IconTag;
 

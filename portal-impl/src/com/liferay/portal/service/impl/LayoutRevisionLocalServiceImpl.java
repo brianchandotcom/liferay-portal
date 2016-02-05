@@ -54,8 +54,8 @@ public class LayoutRevisionLocalServiceImpl
 			long portletPreferencesPlid, boolean privateLayout, String name,
 			String title, String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,
-			String themeId, String colorSchemeId, String wapThemeId,
-			String wapColorSchemeId, String css, ServiceContext serviceContext)
+			String themeId, String colorSchemeId, String css,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout revision
@@ -91,8 +91,6 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setIconImageId(iconImageId);
 		layoutRevision.setThemeId(themeId);
 		layoutRevision.setColorSchemeId(colorSchemeId);
-		layoutRevision.setWapThemeId(wapThemeId);
-		layoutRevision.setWapColorSchemeId(wapColorSchemeId);
 		layoutRevision.setCss(css);
 		layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
 		layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
@@ -385,8 +383,7 @@ public class LayoutRevisionLocalServiceImpl
 			long userId, long layoutRevisionId, long layoutBranchId,
 			String name, String title, String description, String keywords,
 			String robots, String typeSettings, boolean iconImage,
-			long iconImageId, String themeId, String colorSchemeId,
-			String wapThemeId, String wapColorSchemeId, String css,
+			long iconImageId, String themeId, String colorSchemeId, String css,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -435,8 +432,6 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setIconImageId(iconImageId);
 			layoutRevision.setThemeId(themeId);
 			layoutRevision.setColorSchemeId(colorSchemeId);
-			layoutRevision.setWapThemeId(wapThemeId);
-			layoutRevision.setWapColorSchemeId(wapColorSchemeId);
 			layoutRevision.setCss(css);
 			layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
 			layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
@@ -476,8 +471,6 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setIconImageId(iconImageId);
 			layoutRevision.setThemeId(themeId);
 			layoutRevision.setColorSchemeId(colorSchemeId);
-			layoutRevision.setWapThemeId(wapThemeId);
-			layoutRevision.setWapColorSchemeId(wapColorSchemeId);
 			layoutRevision.setCss(css);
 
 			layoutRevisionPersistence.update(layoutRevision);

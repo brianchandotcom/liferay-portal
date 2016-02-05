@@ -509,7 +509,7 @@ public class MBMessageServiceHttp {
 		int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -546,7 +546,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, int status, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -611,7 +611,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, int status, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -648,7 +648,7 @@ public class MBMessageServiceHttp {
 		int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -865,7 +865,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long threadId, int status, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -1143,12 +1143,14 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _getCategoryMessagesRSSParameterTypes14 = new Class[] {
 			long.class, long.class, int.class, int.class, java.lang.String.class,
 			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getCompanyMessagesRSSParameterTypes15 = new Class[] {
 			long.class, int.class, int.class, java.lang.String.class,
 			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getGroupMessagesCountParameterTypes16 = new Class[] {
 			long.class, int.class
@@ -1156,12 +1158,14 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _getGroupMessagesRSSParameterTypes17 = new Class[] {
 			long.class, int.class, int.class, java.lang.String.class,
 			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getGroupMessagesRSSParameterTypes18 = new Class[] {
 			long.class, long.class, int.class, int.class, java.lang.String.class,
 			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _getMessageParameterTypes19 = new Class[] {
 			long.class
@@ -1184,7 +1188,8 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _getThreadMessagesRSSParameterTypes25 = new Class[] {
 			long.class, int.class, int.class, java.lang.String.class,
 			double.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, com.liferay.portal.theme.ThemeDisplay.class
+			java.lang.String.class,
+			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
 	private static final Class<?>[] _restoreMessageAttachmentFromTrashParameterTypes26 =
 		new Class[] { long.class, java.lang.String.class };

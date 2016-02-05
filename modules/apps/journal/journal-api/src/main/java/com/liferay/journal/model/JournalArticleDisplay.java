@@ -14,7 +14,7 @@
 
 package com.liferay.journal.model;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.Serializable;
 

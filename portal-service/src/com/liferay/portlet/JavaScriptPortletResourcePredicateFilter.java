@@ -14,8 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Carlos Sierra Andrés

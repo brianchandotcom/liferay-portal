@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,7 +30,6 @@ import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutWrapper;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.VirtualLayoutConstants;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 
 import java.util.List;

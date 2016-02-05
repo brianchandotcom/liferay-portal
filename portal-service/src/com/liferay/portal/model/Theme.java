@@ -16,8 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.theme.ThemeCompanyLimit;
-import com.liferay.portal.theme.ThemeGroupLimit;
+import com.liferay.portal.kernel.theme.ThemeCompanyLimit;
+import com.liferay.portal.kernel.theme.ThemeGroupLimit;
 
 import java.io.Serializable;
 
@@ -99,8 +99,6 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
 	public String getVirtualPath();
 
-	public boolean getWapTheme();
-
 	public boolean getWARFile();
 
 	public boolean hasColorSchemes();
@@ -114,8 +112,6 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 	public boolean isLoadFromServletContext();
 
 	public boolean isPageTheme();
-
-	public boolean isWapTheme();
 
 	public boolean isWARFile();
 
@@ -157,7 +153,5 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 	public void setTimestamp(long timestamp);
 
 	public void setVirtualPath(String virtualPath);
-
-	public void setWapTheme(boolean wapTheme);
 
 }

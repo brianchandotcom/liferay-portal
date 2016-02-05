@@ -74,10 +74,6 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device);
 
-	public com.liferay.portal.model.ColorScheme getWapColorScheme();
-
-	public com.liferay.portal.model.Theme getWapTheme();
-
 	public boolean isLayoutSetPrototypeLinkActive();
 
 	public boolean isLogo();

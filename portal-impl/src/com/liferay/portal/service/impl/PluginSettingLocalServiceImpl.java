@@ -70,9 +70,7 @@ public class PluginSettingLocalServiceImpl
 				pluginId, false, null);
 		}
 		else if (pluginType.equals(Plugin.TYPE_THEME)) {
-			boolean wapTheme = true;
-
-			plugin = themeLocalService.getTheme(companyId, pluginId, wapTheme);
+			plugin = themeLocalService.getTheme(companyId, pluginId);
 		}
 
 		if ((plugin == null) || (plugin.getDefaultPluginSetting() == null)) {

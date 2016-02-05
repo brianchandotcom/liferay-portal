@@ -1087,15 +1087,11 @@ public class LayoutStagedModelDataHandler
 			importedLayout.setColorSchemeId(layout.getColorSchemeId());
 			importedLayout.setCss(layout.getCss());
 			importedLayout.setThemeId(layout.getThemeId());
-			importedLayout.setWapColorSchemeId(layout.getWapColorSchemeId());
-			importedLayout.setWapThemeId(layout.getWapThemeId());
 		}
 		else {
 			importedLayout.setColorSchemeId(StringPool.BLANK);
 			importedLayout.setCss(StringPool.BLANK);
 			importedLayout.setThemeId(StringPool.BLANK);
-			importedLayout.setWapColorSchemeId(StringPool.BLANK);
-			importedLayout.setWapThemeId(StringPool.BLANK);
 		}
 	}
 

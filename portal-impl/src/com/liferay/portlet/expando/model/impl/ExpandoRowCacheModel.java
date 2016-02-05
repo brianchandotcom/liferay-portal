@@ -16,11 +16,11 @@ package com.liferay.portlet.expando.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoRow;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
-
-import com.liferay.portlet.expando.model.ExpandoRow;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -55,7 +55,7 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 		};
 
 	public java.lang.String getCoverImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -64,13 +64,13 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	*/
 	@java.lang.Deprecated()
 	public java.lang.String getEntryImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getSmallImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isVisible();

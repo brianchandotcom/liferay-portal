@@ -16,10 +16,10 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -213,36 +213,6 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
 	 * @param colorSchemeId the color scheme ID of this layout set
 	 */
 	public void setColorSchemeId(String colorSchemeId);
-
-	/**
-	 * Returns the wap theme ID of this layout set.
-	 *
-	 * @return the wap theme ID of this layout set
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout set.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout set
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout set.
-	 *
-	 * @return the wap color scheme ID of this layout set
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout set.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout set
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
 
 	/**
 	 * Returns the css of this layout set.

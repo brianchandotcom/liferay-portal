@@ -137,7 +137,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	* @return the WebDAV URL
 	*/
 	public java.lang.String getWebDavURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		java.lang.String webDAVToken);
 
 	public boolean hasField(java.lang.String fieldName);

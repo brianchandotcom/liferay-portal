@@ -87,7 +87,7 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	@Override
 	public com.liferay.social.kernel.model.SocialRequestFeedEntry interpret(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _socialRequestInterpreterLocalService.interpret(request,
 			themeDisplay);
 	}
@@ -109,7 +109,7 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	@Override
 	public void processConfirmation(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		_socialRequestInterpreterLocalService.processConfirmation(request,
 			themeDisplay);
 	}
@@ -132,7 +132,7 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	@Override
 	public void processRejection(
 		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		_socialRequestInterpreterLocalService.processRejection(request,
 			themeDisplay);
 	}

@@ -23,6 +23,10 @@ import com.liferay.registry.collections.ServiceTrackerMap;
  */
 public class ResourceBundleLoaderUtil {
 
+	public static ResourceBundleLoader getPortalResourceBundleLoader() {
+		return _portalResourceBundleLoader;
+	}
+
 	public static ResourceBundleLoader
 		getResourceBundleLoaderByBundleSymbolicName(String bundleSymbolicName) {
 
@@ -37,6 +41,12 @@ public class ResourceBundleLoaderUtil {
 			servletContextName);
 	}
 
+	public static void setPortalResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_portalResourceBundleLoader = resourceBundleLoader;
+	}
+
 	private ResourceBundleLoaderUtil() {
 		_resourceBundleLoaderByBundleSymbolicName =
 			ServiceTrackerCollections.openSingleValueMap(
@@ -48,6 +58,8 @@ public class ResourceBundleLoaderUtil {
 
 	private static final ResourceBundleLoaderUtil _instance =
 		new ResourceBundleLoaderUtil();
+
+	private static ResourceBundleLoader _portalResourceBundleLoader;
 
 	private final ServiceTrackerMap<String, ResourceBundleLoader>
 		_resourceBundleLoaderByBundleSymbolicName;

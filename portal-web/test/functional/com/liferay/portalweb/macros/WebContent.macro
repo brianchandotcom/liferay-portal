@@ -1637,6 +1637,8 @@
 	</command>
 
 	<command name="viewTranslationPGViaWCD">
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
 		<if>
 			<isset var="structureLocalizationName" />
 			<then>

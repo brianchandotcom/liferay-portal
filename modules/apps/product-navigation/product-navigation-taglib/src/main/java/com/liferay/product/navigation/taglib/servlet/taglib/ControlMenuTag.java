@@ -74,7 +74,8 @@ public class ControlMenuTag extends IncludeTag {
 			ServletContextUtil.getControlMenuEntryRegistry();
 
 		request.setAttribute(
-			"liferay-product-navigation:control-menu:control-menu-entry-registry",
+			"liferay-product-navigation:control-menu:" +
+				"control-menu-entry-registry",
 			controlMenuEntryRegistry);
 	}
 

@@ -1,4 +1,5 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile project(":apps:product-navigation:product-navigation-control-menu-web")
 }
 

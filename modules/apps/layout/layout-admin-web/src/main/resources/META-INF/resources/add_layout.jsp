@@ -155,7 +155,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 						</div>
 
 						<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-							<aui:input id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />
+							<aui:input id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="automatically-apply-changes-done-to-the-page-template" name='<%= "layoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' type="checkbox" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />
 						</div>
 					</aui:nav-item>
 

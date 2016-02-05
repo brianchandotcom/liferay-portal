@@ -11,7 +11,7 @@
 	<uri>http://liferay.com/tld/product-navigation</uri>
 	<tag>
 		<name>control-menu</name>
-		<tag-class>com.liferay.control.menu.taglib.servlet.taglib.ControlMenuTag</tag-class>
+		<tag-class>com.liferay.product.navigation.taglib.servlet.taglib.ControlMenuTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 </taglib>

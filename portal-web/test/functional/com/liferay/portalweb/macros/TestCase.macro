@@ -3,7 +3,12 @@
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
-			<equals arg1="${siteName}" arg2="Liferay" />
+			<or>
+				<equals arg1="${siteName}" arg2="Liferay" />
+				<not>
+					<isset var="siteName" />
+				</not>
+			</or>
 			<then>
 				<if>
 					<equals arg1="${testPortalInstance}" arg2="true" />

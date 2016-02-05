@@ -12,36 +12,29 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.frontend.taglib.servlet.taglib.base;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Roberto Díaz
  */
-public class InfoBarTag extends BaseBarTag {
+public abstract class BaseBarTag extends IncludeTag implements BarTag {
 
-	@Override
-	public int doEndTag() throws JspException {
-		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
-
-		return super.doEndTag();
+	public void setButtons(String buttons) {
+		this.buttons = buttons;
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	private static final String _END_PAGE = "/info_bar/end.jsp";
-
-	private static final String _START_PAGE = "/info_bar/start.jsp";
+	protected String buttons;
 
 }

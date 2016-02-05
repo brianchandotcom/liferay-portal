@@ -14,34 +14,9 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
-
-import javax.servlet.jsp.JspException;
-
 /**
  * @author Roberto Díaz
  */
-public class InfoBarTag extends BaseBarTag {
-
-	@Override
-	public int doEndTag() throws JspException {
-		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
-
-		return super.doEndTag();
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	private static final String _END_PAGE = "/info_bar/end.jsp";
-
-	private static final String _START_PAGE = "/info_bar/start.jsp";
-
+public class InfoBarSidenavTogglerButtonTag
+	extends ManagementBarSidenavTogglerButtonTag {
 }

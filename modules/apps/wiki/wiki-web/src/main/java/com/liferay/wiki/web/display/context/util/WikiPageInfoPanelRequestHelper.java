@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -75,6 +76,10 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 		}
 
 		return _pages;
+	}
+
+	public boolean isShowSidebarHeader() {
+		return ParamUtil.getBoolean(getRequest(), "showSidebarHeader");
 	}
 
 	private WikiPage _page;

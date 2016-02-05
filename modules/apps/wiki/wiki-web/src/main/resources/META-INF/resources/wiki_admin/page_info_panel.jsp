@@ -18,11 +18,9 @@
 
 <%
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
-
-boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader");
 %>
 
-<c:if test="<%= showSidebarHeader %>">
+<c:if test="<%= wikiPageInfoPanelDisplayContext %>">
 	<div class="sidebar-header">
 		<c:choose>
 			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">

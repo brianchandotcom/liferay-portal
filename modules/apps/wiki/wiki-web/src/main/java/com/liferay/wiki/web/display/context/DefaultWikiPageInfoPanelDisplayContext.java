@@ -100,6 +100,11 @@ public class DefaultWikiPageInfoPanelDisplayContext
 	}
 
 	@Override
+	public boolean isShowSidebarHeader() {
+		return _wikiPageInfoPanelRequestHelper.isShowSidebarHeader();
+	}
+
+	@Override
 	public boolean isSinglePageSelection() {
 		List<WikiPage> pages = _wikiPageInfoPanelRequestHelper.getPages();
 

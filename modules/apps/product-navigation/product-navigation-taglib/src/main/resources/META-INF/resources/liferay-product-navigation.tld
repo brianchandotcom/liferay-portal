@@ -7,8 +7,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
 	<tlib-version>1.0</tlib-version>
-	<short-name>liferay-control-menu</short-name>
-	<uri>http://liferay.com/tld/control-menu</uri>
+	<short-name>liferay-product-navigation</short-name>
+	<uri>http://liferay.com/tld/product-navigation</uri>
 	<tag>
 		<name>control-menu</name>
 		<tag-class>com.liferay.control.menu.taglib.servlet.taglib.ControlMenuTag</tag-class>

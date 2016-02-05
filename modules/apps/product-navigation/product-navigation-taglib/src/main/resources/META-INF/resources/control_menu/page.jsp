@@ -17,8 +17,8 @@
 <%@ include file="/control_menu/init.jsp" %>
 
 <%
-List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute("liferay-control-menu:control-menu:control-menu-categories");
-ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute("liferay-control-menu:control-menu:control-menu-entry-registry");
+List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
+ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">

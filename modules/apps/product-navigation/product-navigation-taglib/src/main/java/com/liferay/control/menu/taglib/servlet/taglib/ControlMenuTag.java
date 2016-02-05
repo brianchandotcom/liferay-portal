@@ -67,14 +67,14 @@ public class ControlMenuTag extends IncludeTag {
 				ControlMenuCategoryKeys.ROOT);
 
 		request.setAttribute(
-			"liferay-control-menu:control-menu:control-menu-categories",
+			"liferay-product-navigation:control-menu:control-menu-categories",
 			controlMenuCategories);
 
 		ControlMenuEntryRegistry controlMenuEntryRegistry =
 			ServletContextUtil.getControlMenuEntryRegistry();
 
 		request.setAttribute(
-			"liferay-control-menu:control-menu:control-menu-entry-registry",
+			"liferay-product-navigation:control-menu:control-menu-entry-registry",
 			controlMenuEntryRegistry);
 	}
 

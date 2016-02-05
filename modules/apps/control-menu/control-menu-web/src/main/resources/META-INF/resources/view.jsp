@@ -16,4 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-control-menu:control-menu />
+<liferay-product-navigation:control-menu />

@@ -139,6 +139,7 @@ else {
 
 		<%
 		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
+		request.setAttribute("showSidebarHeader", true);
 		%>
 
 		<liferay-util:include page="/wiki_admin/page_info_panel.jsp" servletContext="<%= application %>" />

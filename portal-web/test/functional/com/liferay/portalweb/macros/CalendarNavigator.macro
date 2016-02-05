@@ -12,11 +12,12 @@
 	</command>
 
 	<command name="gotoAddCurrentSiteCalendars">
-		<execute macro="TestCase#getDefaultSiteName">
-			<return from="defaultSiteName" name="defaultSiteName" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 
@@ -111,11 +112,12 @@
 	</command>
 
 	<command name="gotoCurrentSiteCalendarsManage">
-		<execute macro="TestCase#getDefaultSiteName">
-			<return from="defaultSiteName" name="defaultSiteName" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${defaultSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 

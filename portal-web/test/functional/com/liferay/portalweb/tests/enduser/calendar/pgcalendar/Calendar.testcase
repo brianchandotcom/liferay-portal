@@ -3688,16 +3688,17 @@
 	</command>
 
 	<command name="ImportCalendarAndViewEventRegularComment" priority="5">
-		<execute macro="TestCase#getDefaultSiteName">
-			<return from="defaultSiteName" name="defaultSiteName" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="calendarName" value="${defaultSiteName}" />
+		<var name="calendarName" value="${siteName}" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="site" value="${defaultSiteName}" />
+		<var name="site" value="${siteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">

@@ -128,10 +128,6 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().isWindows(request);
 	}
 
-	public static boolean isWml(HttpServletRequest request) {
-		return getBrowserSniffer().isWml(request);
-	}
-
 	public void setBrowserSniffer(BrowserSniffer browserSniffer) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

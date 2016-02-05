@@ -555,8 +555,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, packagePath, className);
 
 		newContent = StringUtil.replace(
-			newContent, new String[] {";\n/**", "\t/*\n\t *", ";;\n"},
-			new String[] {";\n\n/**", "\t/**\n\t *", ";\n"});
+			newContent,
+			new String[] {";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *"},
+			new String[] {";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *"});
 
 		newContent = fixMissingEmptyLines(newContent);
 

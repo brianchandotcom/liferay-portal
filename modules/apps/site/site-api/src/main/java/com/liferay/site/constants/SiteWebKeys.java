@@ -15,7 +15,6 @@
 package com.liferay.site.constants;
 
 /**
- *
  * @author Julio Camarero
  */
 public class SiteWebKeys {

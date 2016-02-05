@@ -6,6 +6,7 @@
 			groups: {
 				mapopenstreet: {
 					base: PATH_FRONTEND_MAP_OPEN_STREET_MAP_WEB + '/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-map-openstreetmap': {
 							path: 'map.js',

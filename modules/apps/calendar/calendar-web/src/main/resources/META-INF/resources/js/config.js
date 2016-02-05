@@ -6,6 +6,7 @@
 			groups: {
 				components: {
 					base: PATH_CALENDAR_WEB + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-calendar-recurrence-converter': {
 							path: 'js/recurrence_converter.js',

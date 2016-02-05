@@ -6,6 +6,7 @@
 			groups: {
 				'field-captcha': {
 					base: PATH_DDM_TYPE_CAPTCHA + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-captcha': {
 							condition: {

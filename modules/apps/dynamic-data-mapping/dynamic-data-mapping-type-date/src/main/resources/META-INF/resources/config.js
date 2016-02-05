@@ -6,6 +6,7 @@
 			groups: {
 				'field-date': {
 					base: PATH_DDM_TYPE_DATE + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-date': {
 							condition: {

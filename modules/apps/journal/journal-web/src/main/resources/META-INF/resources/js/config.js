@@ -6,6 +6,7 @@
 			groups: {
 				journal: {
 					base: PATH_JOURNAL_WEB + '/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-journal-content': {
 							path: 'content.js',

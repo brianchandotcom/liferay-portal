@@ -6,6 +6,7 @@
 			groups: {
 				alloyeditor: {
 					base: PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB + '/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-alloy-editor': {
 							path: 'alloyeditor.js',

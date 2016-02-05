@@ -9,6 +9,7 @@
 				ddm: {
 					base: PATH_DDM_WEB + '/js/',
 					filter: LiferayAUI.getFilterConfig(),
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-portlet-dynamic-data-mapping': {
 							condition: {

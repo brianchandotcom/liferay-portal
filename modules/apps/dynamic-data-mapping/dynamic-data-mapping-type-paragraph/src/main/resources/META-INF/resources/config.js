@@ -6,6 +6,7 @@
 			groups: {
 				'field-paragraph': {
 					base: PATH_DDM_TYPE_PARAGRAPH + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-paragraph': {
 							condition: {

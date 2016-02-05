@@ -6,6 +6,7 @@
 			groups: {
 				'field-text': {
 					base: PATH_DDM_TYPE_TEXT + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-text': {
 							condition: {

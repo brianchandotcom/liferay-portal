@@ -6,6 +6,7 @@
 			groups: {
 				'layout-taglib': {
 					base: PATH_LAYOUT_TAGLIB + '/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-layouts-tree': {
 							path: 'layouts_tree/js/layouts_tree.js',

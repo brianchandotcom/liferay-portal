@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.webdav;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.InvalidLockException;
@@ -67,7 +68,6 @@ import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.File;

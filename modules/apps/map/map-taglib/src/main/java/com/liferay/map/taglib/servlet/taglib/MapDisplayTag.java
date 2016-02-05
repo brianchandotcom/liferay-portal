@@ -18,9 +18,9 @@ import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
 import com.liferay.map.util.MapProviderHelper;
 import com.liferay.map.util.MapProviderTracker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;

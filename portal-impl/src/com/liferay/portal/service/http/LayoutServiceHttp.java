@@ -2008,15 +2008,14 @@ public class LayoutServiceHttp {
 	public static com.liferay.portal.model.Layout updateLookAndFeel(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		long layoutId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class,
 					"updateLookAndFeel", _updateLookAndFeelParameterTypes59);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, layoutId, themeId, colorSchemeId, css,
-					wapTheme);
+					privateLayout, layoutId, themeId, colorSchemeId, css);
 
 			Object returnObj = null;
 
@@ -2830,7 +2829,7 @@ public class LayoutServiceHttp {
 		};
 	private static final Class<?>[] _updateLookAndFeelParameterTypes59 = new Class[] {
 			long.class, boolean.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class
+			java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateNameParameterTypes60 = new Class[] {
 			long.class, boolean.class, long.class, java.lang.String.class,

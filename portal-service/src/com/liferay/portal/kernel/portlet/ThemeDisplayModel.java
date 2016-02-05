@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.TimeZone;

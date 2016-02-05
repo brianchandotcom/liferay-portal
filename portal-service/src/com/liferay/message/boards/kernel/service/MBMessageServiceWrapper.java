@@ -165,7 +165,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		long categoryId, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getCategoryMessagesRSS(groupId, categoryId,
 			status, max, type, version, displayStyle, feedURL, entryURL,
@@ -177,7 +177,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getCompanyMessagesRSS(companyId, status, max,
 			type, version, displayStyle, feedURL, entryURL, themeDisplay);
@@ -193,7 +193,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getGroupMessagesRSS(groupId, status, max,
 			type, version, displayStyle, feedURL, entryURL, themeDisplay);
@@ -204,7 +204,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		int status, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getGroupMessagesRSS(groupId, userId, status,
 			max, type, version, displayStyle, feedURL, entryURL, themeDisplay);
@@ -276,7 +276,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.getThreadMessagesRSS(threadId, status, max,
 			type, version, displayStyle, feedURL, entryURL, themeDisplay);

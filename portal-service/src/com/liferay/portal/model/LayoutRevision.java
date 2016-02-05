@@ -91,12 +91,6 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public java.lang.String getTypeSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue);
 
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public boolean hasChildren();
 
 	public boolean isContentDisplayPage();
@@ -104,8 +98,6 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public boolean isIconImage();
 
 	public boolean isInheritLookAndFeel();
-
-	public boolean isInheritWapLookAndFeel();
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);

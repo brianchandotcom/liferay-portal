@@ -16,7 +16,7 @@ package com.liferay.portlet.configuration.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 import com.liferay.portlet.configuration.web.constants.PortletConfigurationPortletKeys;
 

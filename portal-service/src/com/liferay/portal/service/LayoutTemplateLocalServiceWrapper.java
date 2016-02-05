@@ -69,13 +69,6 @@ public class LayoutTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String getWapContent(java.lang.String layoutTemplateId,
-		boolean standard, java.lang.String themeId) {
-		return _layoutTemplateLocalService.getWapContent(layoutTemplateId,
-			standard, themeId);
-	}
-
-	@Override
 	public java.util.List<com.liferay.portal.model.LayoutTemplate> init(
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {

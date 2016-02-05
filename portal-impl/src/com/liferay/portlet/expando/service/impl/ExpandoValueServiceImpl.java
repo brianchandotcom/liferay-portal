@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.expando.service.impl;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,10 +25,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.base.ExpandoValueServiceBaseImpl;
-import com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil;
 
 import java.io.Serializable;
 

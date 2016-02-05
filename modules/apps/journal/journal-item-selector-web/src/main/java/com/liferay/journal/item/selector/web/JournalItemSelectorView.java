@@ -22,8 +22,8 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.context.JournalItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 

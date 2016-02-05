@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.json.transformer.CompanyJSONTransformer;
 import com.liferay.portal.json.transformer.FileJSONTransformer;
 import com.liferay.portal.json.transformer.JSONArrayJSONTransformer;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.File;
 import java.io.InputStream;

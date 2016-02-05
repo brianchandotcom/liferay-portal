@@ -134,6 +134,46 @@
 		<field name="name" type="String" />
 		<field name="currentId" type="long" />
 	</model>
+	<model name="com.liferay.expando.kernel.model.ExpandoColumn">
+		<field name="columnId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tableId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="type" type="int" />
+		<field name="defaultData" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.expando.kernel.model.ExpandoRow">
+		<field name="rowId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="tableId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.expando.kernel.model.ExpandoTable">
+		<field name="tableId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.expando.kernel.model.ExpandoValue">
+		<field name="valueId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tableId" type="long" />
+		<field name="columnId" type="long" />
+		<field name="rowId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.exportimport.kernel.model.ExportImportConfiguration">
 		<field name="mvccVersion" type="long" />
 		<field name="exportImportConfigurationId" type="long" />
@@ -578,8 +618,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -679,8 +717,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -700,8 +736,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -733,8 +767,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1802,46 +1834,6 @@
 		<field name="event" type="String" />
 		<field name="type" type="String" />
 		<field name="typePK" type="long" />
-	</model>
-	<model name="com.liferay.portlet.expando.model.ExpandoColumn">
-		<field name="columnId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="tableId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="type" type="int" />
-		<field name="defaultData" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-	</model>
-	<model name="com.liferay.portlet.expando.model.ExpandoRow">
-		<field name="rowId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="modifiedDate" type="Date" />
-		<field name="tableId" type="long" />
-		<field name="classPK" type="long" />
-	</model>
-	<model name="com.liferay.portlet.expando.model.ExpandoTable">
-		<field name="tableId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="name" type="String" />
-	</model>
-	<model name="com.liferay.portlet.expando.model.ExpandoValue">
-		<field name="valueId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="tableId" type="long" />
-		<field name="columnId" type="long" />
-		<field name="rowId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="data" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
 	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
 		<field name="uuid" type="String" />

@@ -8,8 +8,7 @@
 
 <!ELEMENT standard (layout-template*)>
 
-<!ELEMENT layout-template (template-path, wap-template-path, thumbnail-path?,
-roles?)>
+<!ELEMENT layout-template (template-path, thumbnail-path?, roles?)>
 
 <!ATTLIST layout-template
 	id CDATA #REQUIRED
@@ -17,8 +16,6 @@ roles?)>
 >
 
 <!ELEMENT template-path (#PCDATA)>
-
-<!ELEMENT wap-template-path (#PCDATA)>
 
 <!ELEMENT thumbnail-path (#PCDATA)>
 

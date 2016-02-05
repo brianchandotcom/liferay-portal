@@ -571,7 +571,7 @@ public class SocialRequestLocalServiceUtil {
 	*/
 	public static com.liferay.social.kernel.model.SocialRequest updateRequest(
 		long requestId, int status,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateRequest(requestId, status, themeDisplay);
 	}

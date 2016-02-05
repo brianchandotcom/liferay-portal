@@ -94,7 +94,7 @@ public interface LayoutSetService extends BaseService {
 
 	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
 		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css, boolean wapTheme) throws PortalException;
+		java.lang.String css) throws PortalException;
 
 	public LayoutSet updateSettings(long groupId, boolean privateLayout,
 		java.lang.String settings) throws PortalException;

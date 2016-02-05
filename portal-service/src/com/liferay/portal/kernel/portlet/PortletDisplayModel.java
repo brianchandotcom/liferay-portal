@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 
 /**
  * @author Shuyang Zhou

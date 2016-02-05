@@ -15,9 +15,9 @@
 package com.liferay.xsl.content.web.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
 import com.liferay.xsl.content.web.util.XSLContentUtil;

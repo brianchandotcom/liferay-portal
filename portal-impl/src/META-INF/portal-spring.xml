@@ -18,6 +18,16 @@
 	<bean id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" />
 	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoColumnLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoColumnService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoRowLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoTableLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTablePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoValueLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.ExpandoValueService" class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" />
+	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.exportimport.kernel.service.ExportImportLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" />
 	<bean id="com.liferay.exportimport.kernel.service.ExportImportService" class="com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl" />
 	<bean id="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" />
@@ -291,16 +301,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLTrashLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLTrashService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoColumnLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoColumnService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoColumnPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoRowLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoTableLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoTablePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTablePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoValueLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.ExpandoValueService" class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" />
-	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" />
 	<bean id="com.liferay.ratings.kernel.service.RatingsEntryService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" />
 	<bean id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" parent="basePersistence" />

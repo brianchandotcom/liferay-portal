@@ -16,8 +16,8 @@ package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 import java.io.PrintWriter;

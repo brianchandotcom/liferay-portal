@@ -95,7 +95,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getCompanyEntriesRSS(companyId, displayDate,
 			status, max, type, version, displayStyle, feedURL, entryURL,
@@ -166,7 +166,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getGroupEntriesRSS(groupId, displayDate,
 			status, max, type, version, displayStyle, feedURL, entryURL,
@@ -233,7 +233,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getOrganizationEntriesRSS(organizationId,
 			displayDate, status, max, type, version, displayStyle, feedURL,

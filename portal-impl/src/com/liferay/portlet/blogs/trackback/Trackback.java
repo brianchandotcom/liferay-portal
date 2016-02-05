@@ -17,9 +17,9 @@ package com.liferay.portlet.blogs.trackback;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 
 /**

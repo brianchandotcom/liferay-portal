@@ -72,10 +72,6 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getWapContent(java.lang.String layoutTemplateId,
-		boolean standard, java.lang.String themeId);
-
 	public List<LayoutTemplate> init(ServletContext servletContext,
 		java.lang.String[] xmls, PluginPackage pluginPackage);
 

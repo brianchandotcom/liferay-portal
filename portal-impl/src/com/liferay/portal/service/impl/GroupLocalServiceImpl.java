@@ -3415,24 +3415,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			updateLayoutSet = true;
 		}
 
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_THEME_ID)) {
-
-			layoutSet.setWapThemeId(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID)) {
-
-			layoutSet.setWapColorSchemeId(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
 		if (updateLayoutSet) {
 			layoutSetLocalService.updateLayoutSet(layoutSet);
 		}

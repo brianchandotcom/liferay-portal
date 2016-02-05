@@ -14,12 +14,12 @@
 
 package com.liferay.portal.upgrade.v6_0_2;
 
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.expando.model.ExpandoTableConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

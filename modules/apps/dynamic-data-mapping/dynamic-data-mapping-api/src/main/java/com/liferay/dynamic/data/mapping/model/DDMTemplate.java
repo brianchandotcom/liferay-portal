@@ -61,7 +61,7 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getTemplateImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -76,7 +76,7 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	* @return the WebDAV URL
 	*/
 	public java.lang.String getWebDavURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		java.lang.String webDAVToken);
 
 	public void setSmallImageType(java.lang.String smallImageType);

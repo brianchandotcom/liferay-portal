@@ -161,7 +161,7 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 	public java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingService.getCalendarBookingsRSS(calendarId,
 			startTime, endTime, max, type, version, displayStyle, themeDisplay);

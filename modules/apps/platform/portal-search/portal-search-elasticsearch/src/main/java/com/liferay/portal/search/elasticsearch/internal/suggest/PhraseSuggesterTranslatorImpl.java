@@ -111,24 +111,12 @@ public class PhraseSuggesterTranslatorImpl
 		return suggestBuilder;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
 	protected void translate(
 		PhraseSuggester.Collate collate,
 		PhraseSuggestionBuilder phraseSuggestionBuilder) {
 
-		if ((collate != null) && (_queryTranslator != null)) {
-			QueryBuilder queryBuilder = _queryTranslator.translate(
+		if ((collate != null) && (queryTranslator != null)) {
+			QueryBuilder queryBuilder = queryTranslator.translate(
 				collate.getQuery(), null);
 
 			phraseSuggestionBuilder.collateParams(collate.getParams());
@@ -226,12 +214,12 @@ public class PhraseSuggesterTranslatorImpl
 		}
 	}
 
-	protected void unsetQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = null;
-	}
-
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
+	protected volatile QueryTranslator<QueryBuilder> queryTranslator;
 
 }

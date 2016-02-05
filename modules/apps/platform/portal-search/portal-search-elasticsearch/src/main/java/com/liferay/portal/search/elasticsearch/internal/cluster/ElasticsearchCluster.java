@@ -62,31 +62,8 @@ public class ElasticsearchCluster {
 		_replicasClusterListener = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
-		_clusterExecutor = clusterExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
+	@Reference
+	protected CompanyLocalService companyLocalService;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
@@ -115,7 +92,7 @@ public class ElasticsearchCluster {
 
 		@Override
 		public String[] getTargetIndexNames() {
-			List<Company> companies = _companyLocalService.getCompanies();
+			List<Company> companies = companyLocalService.getCompanies();
 
 			String[] targetIndexNames = new String[companies.size() + 1];
 
@@ -154,10 +131,15 @@ public class ElasticsearchCluster {
 
 	}
 
+	@Reference
 	private ClusterExecutor _clusterExecutor;
+
+	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+
 	private ReplicasClusterListener _replicasClusterListener;
 
 }

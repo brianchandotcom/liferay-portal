@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.menu.theme.contributor;
+package com.liferay.product.navigation.control.menu.theme.contributor;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

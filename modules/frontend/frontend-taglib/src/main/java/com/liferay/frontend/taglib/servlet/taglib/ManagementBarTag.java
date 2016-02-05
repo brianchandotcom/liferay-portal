@@ -61,13 +61,13 @@ public class ManagementBarTag extends BaseBarTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
-		buttons = null;
-
 		_actionButtons = null;
 		_disabled = false;
 		_filters = null;
 		_includeCheckBox = false;
 		_searchContainerId = null;
+
+		super.cleanUp();
 	}
 
 	@Override

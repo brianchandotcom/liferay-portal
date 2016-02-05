@@ -21,10 +21,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.asset.tags.compiler.web:1.0.0,\
 	com.liferay.asset.tags.navigation.web:1.0.0,\
 	com.liferay.asset.tags.service:1.0.0,\
-	com.liferay.product.navigation.control.menu.api:1.0.0,\
-	com.liferay.product.navigation.taglib.freemarker.contributor:1.0.0,\
-	com.liferay.product.navigation.taglib:1.0.0,\
-	com.liferay.product.navigation.control.menu.web:1.0.0,\
 	com.liferay.exportimport.api:1.0.0,\
 	com.liferay.exportimport.service:1.0.0,\
 	com.liferay.exportimport.test:1.0.0,\
@@ -86,6 +82,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portlet.display.template.web:1.0.0,\
 	com.liferay.portlet.display.template:1.0.0,\
 	com.liferay.portlet.sharing.web:1.0.0,\
+	com.liferay.product.navigation.control.menu.api:1.0.0,\
+	com.liferay.product.navigation.control.menu.web:1.0.0,\
 	com.liferay.product.navigation.control.panel.menu.web:1.0.0,\
 	com.liferay.product.navigation.control.panel:1.0.0,\
 	com.liferay.product.navigation.product.menu.web:1.0.0,\
@@ -94,6 +92,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.product.navigation.simulation:1.0.0,\
 	com.liferay.product.navigation.site.administration.menu.web:1.0.0,\
 	com.liferay.product.navigation.site.administration:1.0.0,\
+	com.liferay.product.navigation.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.product.navigation.taglib:1.0.0,\
 	com.liferay.product.navigation.user.menu.web:1.0.0,\
 	com.liferay.product.navigation.user.personal.bar.web:1.0.0,\
 	com.liferay.product.navigation.user:1.0.0,\

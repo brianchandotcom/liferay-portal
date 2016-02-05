@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -41,7 +42,9 @@ public class PreviewPortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return new PreviewPortletConfigurationIcon(
 			getServletContext(), getJspPath(), portletRequest);
 	}

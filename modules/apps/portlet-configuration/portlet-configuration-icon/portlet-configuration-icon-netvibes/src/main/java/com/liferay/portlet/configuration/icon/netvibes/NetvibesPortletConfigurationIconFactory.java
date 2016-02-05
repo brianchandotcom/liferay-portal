@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +32,7 @@ public class NetvibesPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(
-		final PortletRequest portletRequest) {
+		final PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return new NetvibesPortletConfigurationIcon(portletRequest);
 	}

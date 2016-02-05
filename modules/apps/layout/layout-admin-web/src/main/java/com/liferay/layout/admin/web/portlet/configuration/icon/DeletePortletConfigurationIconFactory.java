@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.service.LayoutLocalService;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -39,7 +40,9 @@ public class DeletePortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+	public PortletConfigurationIcon create(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return new DeletePortletConfigurationIcon(
 			getServletContext(), getJspPath(), portletRequest,
 			_layoutLocalService);

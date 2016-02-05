@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -26,10 +27,11 @@ public class PortletConfigurationIconMenu {
 
 	public List<PortletConfigurationIcon>
 		getPortletConfigurationIcons(
-			String portletId, PortletRequest portletRequest) {
+			String portletId, PortletRequest portletRequest,
+			PortletResponse portletResponse) {
 
 		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
-			portletId, portletRequest, _comparator);
+			portletId, portletRequest, portletResponse, _comparator);
 	}
 
 	public void setComparator(Comparator<?> comparator) {

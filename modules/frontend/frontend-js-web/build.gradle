@@ -167,13 +167,13 @@ classes {
 }
 
 dependencies {
-	alloyUI group: "com.liferay.webjars", name: "alloy-ui", transitive: false, version: alloyUIVersion
+	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
 
-	lexicon group: "com.liferay.webjars", name: "lexicon", transitive: false, version: lexiconVersion
+	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 
-	liferayAMDLoader group: "com.liferay.webjars", name: "liferay-amd-loader", transitive: false, version: liferayAMDLoaderVersion
+	liferayAMDLoader group: "com.liferay.webjars", name: "com.liferay.webjars.liferay-amd-loader", transitive: false, version: liferayAMDLoaderVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 

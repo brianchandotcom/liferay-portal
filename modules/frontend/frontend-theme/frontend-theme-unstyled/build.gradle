@@ -155,9 +155,9 @@ classes {
 }
 
 dependencies {
-	alloyUI group: "com.liferay.webjars", name: "alloy-ui", transitive: false, version: alloyUIVersion
+	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
-	lexicon group: "com.liferay.webjars", name: "lexicon", transitive: false, version: lexiconVersion
+	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

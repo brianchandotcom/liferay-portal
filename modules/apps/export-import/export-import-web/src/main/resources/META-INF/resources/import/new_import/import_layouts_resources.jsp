@@ -28,8 +28,6 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
@@ -106,22 +104,23 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<portlet:param name="mvcRenderCommandName" value="viewImport" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= importPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<portlet:renderURL var="portletURL">
 		<portlet:param name="mvcRenderCommandName" value="importLayoutsView" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	</portlet:renderURL>
 
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+	<aui:input name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="hidden" value="<%= true %>" />
+	<aui:input name="<%= PortletDataHandlerKeys.LOGO %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+	<aui:input name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="hidden" value="<%= true %>" />
 
 	<div class="export-dialog-tree">
 		<div id="<portlet:namespace />importConfiguration">
@@ -164,21 +163,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-						<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
+						<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
 
-						<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
+						<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
 
-						<div class="hide" id="<portlet:namespace />pages">
-							<aui:fieldset cssClass="portlet-data-section" label="pages">
-								<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
-
-								<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
-
-								<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
-
-								<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
-							</aui:fieldset>
-						</div>
+						<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
 					</aui:fieldset>
 				</c:if>
 
@@ -361,7 +350,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					<portlet:param name="mvcRenderCommandName" value="importLayouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				</portlet:renderURL>
 
 				<aui:button cssClass="btn-lg" href="<%= backURL %>" name="back1" value="back" />

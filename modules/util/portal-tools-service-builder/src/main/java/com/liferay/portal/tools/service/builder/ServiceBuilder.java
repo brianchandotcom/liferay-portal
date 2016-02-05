@@ -269,7 +269,6 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.copyright.txt=copyright.txt\n"+
 				"\t-Dservice.tpl.ejb_pk=" + _TPL_ROOT + "ejb_pk.ftl\n"+
 				"\t-Dservice.tpl.exception=" + _TPL_ROOT + "exception.ftl\n"+
-				"\t-Dservice.tpl.export_actionable_dynamic_query=" + _TPL_ROOT + "export_actionable_dynamic_query.ftl\n"+
 				"\t-Dservice.tpl.extended_model=" + _TPL_ROOT + "extended_model.ftl\n"+
 				"\t-Dservice.tpl.extended_model_base_impl=" + _TPL_ROOT + "extended_model_base_impl.ftl\n"+
 				"\t-Dservice.tpl.extended_model_impl=" + _TPL_ROOT + "extended_model_impl.ftl\n"+
@@ -653,23 +652,8 @@ public class ServiceBuilder {
 
 						_removeOldServices(entity);
 
-						if (entity.hasActionableDynamicQuery()) {
-							_createActionableDynamicQuery(entity);
-
-							if (entity.isStagedModel()) {
-								_createExportActionableDynamicQuery(entity);
-							}
-							else {
-								_removeExportActionableDynamicQuery(
-									entity, _serviceOutputPath);
-							}
-						}
-						else {
-							_removeActionableDynamicQuery(
-								entity, _serviceOutputPath);
-							_removeExportActionableDynamicQuery(
-								entity, _serviceOutputPath);
-						}
+						_removeActionableDynamicQuery(entity);
+						_removeExportActionableDynamicQuery(entity);
 
 						if (entity.hasColumns()) {
 							_createHbm(entity);
@@ -1870,30 +1854,6 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createActionableDynamicQuery(Entity entity) throws Exception {
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ActionableDynamicQuery.java");
-
-		if (_osgiModule) {
-			ejbFile.delete();
-
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplActionableDynamicQuery, context);
-
-		// Write file
-
-		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
-	}
-
 	private void _createBlobModels(Entity entity) throws Exception {
 		List<EntityColumn> blobList = _getBlobList(entity);
 
@@ -2043,33 +2003,6 @@ public class ServiceBuilder {
 				}
 			}
 		}
-	}
-
-	private void _createExportActionableDynamicQuery(Entity entity)
-		throws Exception {
-
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ExportActionableDynamicQuery.java");
-
-		if (_osgiModule) {
-			ejbFile.delete();
-
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(
-			_tplExportActionableDynamicQuery, context);
-
-		// Write file
-
-		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createExtendedModel(Entity entity) throws Exception {
@@ -5215,12 +5148,18 @@ public class ServiceBuilder {
 		return lines;
 	}
 
-	private void _removeActionableDynamicQuery(
-		Entity entity, String outputPath) {
-
-		_deleteFile(
-			outputPath + "/service/persistence/" +
+	private void _removeActionableDynamicQuery(Entity entity) {
+		File ejbFile = new File(
+			_oldServiceOutputPath + "/service/persistence/" +
 				entity.getName() + "ActionableDynamicQuery.java");
+
+		ejbFile.delete();
+
+		ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ActionableDynamicQuery.java");
+
+		ejbFile.delete();
 	}
 
 	private void _removeBlobModels(Entity entity, String outputPath) {
@@ -5243,12 +5182,18 @@ public class ServiceBuilder {
 				".java");
 	}
 
-	private void _removeExportActionableDynamicQuery(
-		Entity entity, String outputPath) {
-
-		_deleteFile(
-			outputPath + "/service/persistence/" +
+	private void _removeExportActionableDynamicQuery(Entity entity) {
+		File ejbFile = new File(
+			_oldServiceOutputPath + "/service/persistence/" +
 				entity.getName() + "ExportActionableDynamicQuery.java");
+
+		ejbFile.delete();
+
+		ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ExportActionableDynamicQuery.java");
+
+		ejbFile.delete();
 	}
 
 	private void _removeExtendedModel(Entity entity, String outputPath) {
@@ -5294,10 +5239,8 @@ public class ServiceBuilder {
 			return;
 		}
 
-		_removeActionableDynamicQuery(entity, _oldServiceOutputPath);
 		_removeBlobModels(entity, _oldServiceOutputPath);
 		_removeEJBPK(entity, _oldServiceOutputPath);
-		_removeExportActionableDynamicQuery(entity, _oldServiceOutputPath);
 		_removeExtendedModel(entity, _oldServiceOutputPath);
 		_removeFinder(entity, _oldServiceOutputPath);
 		_removeFinderUtil(entity, _oldServiceOutputPath);
@@ -5513,16 +5456,12 @@ public class ServiceBuilder {
 	private String _targetEntityName;
 	private String _testDirName;
 	private String _testOutputPath;
-	private String _tplActionableDynamicQuery =
-		_TPL_ROOT + "actionable_dynamic_query.ftl";
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
-	private String _tplExportActionableDynamicQuery =
-		_TPL_ROOT + "export_actionable_dynamic_query.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
 	private String _tplExtendedModelBaseImpl =
 		_TPL_ROOT + "extended_model_base_impl.ftl";

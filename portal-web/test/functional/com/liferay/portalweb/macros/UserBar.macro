@@ -82,20 +82,25 @@
 
 	<command name="signOut">
 		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
+			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 			<then>
 				<if>
-					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 					<then>
-						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+						<if>
+							<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+							<then>
+								<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+							</then>
+						</if>
 					</then>
 				</if>
+
+				<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
+
+				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
 			</then>
 		</if>
-
-		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
-
-		<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">

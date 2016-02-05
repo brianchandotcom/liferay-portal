@@ -15,7 +15,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%
-String buttons = (String)request.getAttribute("liferay-frontend:info-bar:buttons");
-%>

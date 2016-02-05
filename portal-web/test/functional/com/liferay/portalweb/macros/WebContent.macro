@@ -1368,7 +1368,14 @@
 
 	<command name="viewEditWCViaWCD">
 		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
-		<execute function="AssertElementPresent" locator1="WCD#EDIT_WEB_CONTENT" />
+
+		<var name="key_portletName" value="Web Content Display" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+
+		<var name="key_menuItem" value="Edit Web Content" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Web Content" />
 	</command>
 
 	<command name="viewEmailConfigurationCP">
@@ -1472,7 +1479,10 @@
 
 	<command name="viewNoEditWCViaWCD">
 		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
-		<execute function="AssertElementNotPresent" locator1="WCD#EDIT_WEB_CONTENT" />
+
+		<var name="key_portletName" value="Web Content Display" />
+
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
 	</command>
 
 	<command name="viewNoPermissionCP">

@@ -194,7 +194,7 @@
 				<if>
 					<equals arg1="${portletName}" arg2="Navigation Menu" />
 					<then>
-						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" />
+						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
 					</then>
 					<else>
 						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />

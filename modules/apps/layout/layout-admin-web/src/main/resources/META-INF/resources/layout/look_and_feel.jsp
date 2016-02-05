@@ -77,9 +77,40 @@ if (group.isLayoutPrototype()) {
 else {
 	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
 }
+
+List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), liveGroupId, user.getUserId());
+List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
+
+request.setAttribute("edit_pages.jsp-themes", themes);
+request.setAttribute("edit_pages.jsp-colorSchemes", colorSchemes);
+request.setAttribute("edit_pages.jsp-selTheme", selTheme);
+request.setAttribute("edit_pages.jsp-selColorScheme", selColorScheme);
+request.setAttribute("edit_pages.jsp-device", "regular");
+request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 %>
 
-<%@ include file="/layout/look_and_feel_regular_browser.jspf" %>
+<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+
+<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
+
+<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
+	<c:if test="<%= !group.isLayoutPrototype() %>">
+		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+	</c:if>
+</div>
+
+<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
+
+	<%
+	request.setAttribute("edit_pages.jsp-editable", Boolean.TRUE);
+	%>
+
+	<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+
+	<legend><liferay-ui:message key="css" /></legend>
+
+	<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
+</div>
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />regularInheritLookAndFeel', '<portlet:namespace />inheritThemeOptions', '<portlet:namespace />themeOptions');

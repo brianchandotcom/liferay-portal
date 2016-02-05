@@ -45,6 +45,8 @@
 				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
 
 	<command name="expandPanelSites">
@@ -58,6 +60,8 @@
 				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
 
 	<command name="expandPanelUser">
@@ -71,6 +75,8 @@
 				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
 
 	<command name="gotoAddPage">

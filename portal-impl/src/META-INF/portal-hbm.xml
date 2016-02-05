@@ -1380,6 +1380,14 @@
 		<property name="ratingsTotalScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
+	<class name="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" table="DLContent" lazy="true">
+		<id name="contentId" column="contentId">
+			<generator class="foreign">
+				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>
+			</generator>
+		</id>
+		<property column="data_" name="dataBlob" type="blob" />
+	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
 		<id name="contentId" type="long">
 			<generator class="assigned" />
@@ -1391,14 +1399,6 @@
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<one-to-one name="dataBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" cascade="save-update" outer-join="false" constrained="true" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
-	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" table="DLContent" lazy="true">
-		<id name="contentId" column="contentId">
-			<generator class="foreign">
-				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>
-			</generator>
-		</id>
-		<property column="data_" name="dataBlob" type="blob" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
 		<id name="fileEntryId" type="long">

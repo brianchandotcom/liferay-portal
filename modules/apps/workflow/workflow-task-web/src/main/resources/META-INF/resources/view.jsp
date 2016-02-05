@@ -24,17 +24,15 @@ String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 main-content-body">
 	<c:choose>
 		<c:when test="<%= workflowTaskDisplayContext.isAssignedToMeTabSelected() %>">
-			<liferay-ui:panel-container extended="<%= false %>" id="workflowTasksPanelContainer" persistState="<%= true %>">
 
-				<%
-				WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getTasksAssignedToMe();
-				%>
+			<%
+			WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getTasksAssignedToMe();
+			%>
 
-				<%@ include file="/workflow_tasks.jspf" %>
-			</liferay-ui:panel-container>
+			<%@ include file="/workflow_tasks.jspf" %>
 		</c:when>
 		<c:otherwise>
 

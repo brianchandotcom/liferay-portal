@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean editable = (Boolean)request.getAttribute("edit_pages.jsp-editable");
+boolean editable = ParamUtil.getBoolean(request, "editable", true);
 %>
 
 <c:choose>

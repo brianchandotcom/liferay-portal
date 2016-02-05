@@ -93,8 +93,6 @@
 
 			<execute macro="WebContent#publish" />
 
-			<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-
 			<execute macro="WebContent#viewTitle">
 				<var name="webContentTitle" value="${webContentTitle}" />
 			</execute>

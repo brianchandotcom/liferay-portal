@@ -65,7 +65,7 @@
 	</command>
 
 	<command name="enableAdvancedOptions">
-		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="show-more-options" />
+		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="Show More Options" />
 	</command>
 
 	<command name="enableCheckbox">

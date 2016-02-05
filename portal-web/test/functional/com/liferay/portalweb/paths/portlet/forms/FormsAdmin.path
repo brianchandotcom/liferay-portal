@@ -80,7 +80,7 @@
 <!--DATA_PROVIDER-->
 <tr>
 	<td>DATA_PROVIDER_PLUS_BUTTON</td>
-	<td>//a[contains(@id,'DDMDataProviderPortlet') and contains(@class,'btn') and span[contains(@class,'icon-plus')]]</td>
+	<td>//*[@data-qa-id='addButton' and contains(@id,'DDMDataProviderPortlet')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -105,9 +105,11 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyArticleAssets();
 		verifyArticleContents();
 		verifyArticleExpirationDate();
-		verifyArticleImages();
 		verifyArticleLayouts();
 		verifyArticleStructures();
+
+		verifyArticleImages();
+
 		verifyContentSearch();
 		verifyFolderAssets();
 		verifyOracleNewLine();

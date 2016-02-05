@@ -1,6 +1,9 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	compile project(":apps:journal:journal-lang")
 	compile project(":apps:journal:journal-service")
 }
 

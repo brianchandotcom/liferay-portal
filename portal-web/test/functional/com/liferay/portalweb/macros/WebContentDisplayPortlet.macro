@@ -1,6 +1,9 @@
 <definition>
 	<command name="changeTemplate">
-		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Edit Web Content" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
@@ -137,10 +140,16 @@
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="WCD#EDIT_TEMPLATE" />
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletName" value="Web Content Display" />
+					<var name="portletOption" value="Edit Template" />
+				</execute>
 			</then>
 			<else>
-				<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletName" value="Web Content Display" />
+					<var name="portletOption" value="Edit Web Content" />
+				</execute>
 
 				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
@@ -280,7 +289,6 @@
 	<command name="selectWebContent">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Web Content Display" />
-			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

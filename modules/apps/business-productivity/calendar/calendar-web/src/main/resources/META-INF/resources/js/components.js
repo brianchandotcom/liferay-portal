@@ -897,7 +897,7 @@
 		},
 		'',
 		{
-			requires: ['aui-base']
+			requires: ['aui-base', 'liferay-scheduler']
 		}
 	);
 

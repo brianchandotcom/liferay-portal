@@ -17,7 +17,6 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
@@ -133,8 +132,6 @@ public interface VelocityTaglib {
 	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception;
 
 	public BreadcrumbTag getBreadcrumbTag() throws Exception;
-
-	public ColumnTag getColumnTag() throws Exception;
 
 	public DiscussionTag getDiscussionTag() throws Exception;
 

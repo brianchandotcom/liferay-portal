@@ -1257,48 +1257,6 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Deprecated as of 6.2, replaced by <code>aui:col</code>.]]></description>
-		<name>column</name>
-		<tag-class>com.liferay.taglib.aui.ColumnTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[The width of the column in percentage. For example, <code>20</code> would be 20%. The default value is <code>0</code>.]]></description>
-			<name>columnWidth</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>int</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A CSS class for styling the component]]></description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether the column should be the first column. The default value is <code>false</code>.]]></description>
-			<name>first</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An ID for the component instance]]></description>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether the column is the last column. The default value is <code>false</code>.]]></description>
-			<name>last</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
 		<name>component</name>
 		<tag-class>com.liferay.taglib.aui.ComponentTag</tag-class>
 		<body-content>JSP</body-content>

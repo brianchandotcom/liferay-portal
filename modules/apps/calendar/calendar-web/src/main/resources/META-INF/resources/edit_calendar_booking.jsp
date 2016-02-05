@@ -293,39 +293,39 @@ while (manageableCalendarsIterator.hasNext()) {
 				</c:if>
 
 				<aui:layout cssClass="calendar-booking-invitations">
-					<aui:column columnWidth="<%= (calendarBooking != null) ? 25 : 50 %>" first="<%= true %>">
+					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
 						<label class="field-label">
 							<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
 						</label>
 
 						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>
-					</aui:column>
-					<aui:column columnWidth="<%= (calendarBooking != null) ? 25 : 50 %>">
+					</aui:col>
+					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
 						<label class="field-label">
 							<liferay-ui:message key="accepted" /> (<span id="<portlet:namespace />acceptedCounter"><%= acceptedCalendarsJSONArray.length() %></span>)
 						</label>
 
 						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListAccepted"></div>
-					</aui:column>
+					</aui:col>
 
 					<c:if test="<%= calendarBooking != null %>">
-						<aui:column columnWidth="<%= 25 %>" last="<%= true %>">
+						<aui:col width="<%= 25 %>">
 							<label class="field-label">
 								<liferay-ui:message key="maybe" /> (<span id="<portlet:namespace />maybeCounter"><%= maybeCalendarsJSONArray.length() %></span>)
 							</label>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
-						</aui:column>
-						<aui:column columnWidth="<%= 25 %>" last="<%= true %>">
+						</aui:col>
+						<aui:col width="<%= 25 %>">
 							<label class="field-label">
 								<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)
 							</label>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListDeclined"></div>
-						</aui:column>
+						</aui:col>
 					</c:if>
 
-					<aui:column columnWidth="<%= 100 %>">
+					<aui:col width="<%= 100 %>">
 						<div class="calendar-portlet-list-header toggler-header-collapsed" id="<portlet:namespace />checkAvailability">
 							<span class="calendar-portlet-list-arrow"></span>
 
@@ -347,7 +347,7 @@ while (manageableCalendarsIterator.hasNext()) {
 								</liferay-util:include>
 							</div>
 						</div>
-					</aui:column>
+					</aui:col>
 				</aui:layout>
 			</liferay-ui:panel>
 

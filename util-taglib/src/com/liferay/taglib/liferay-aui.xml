@@ -331,41 +331,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Column" bodyContent="true" writeEndJSP="false">
-		<description>Deprecated as of 6.2, replaced by <![CDATA[<code>aui:col</code>]]>.</description>
-		<attributes>
-			<attribute>
-				<description>The width of the column in percentage. For example, <![CDATA[<code>20</code>]]> would be 20%. The default value is <![CDATA[<code>0</code>]]>.</description>
-				<name>columnWidth</name>
-				<inputType>int</inputType>
-				<outputType>int</outputType>
-			</attribute>
-			<attribute>
-				<description>A CSS class for styling the component</description>
-				<name>cssClass</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<description>Whether the column should be the first column. The default value is <![CDATA[<code>false</code>]]>.</description>
-				<name>first</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-			<attribute>
-				<description>An ID for the component instance</description>
-				<name>id</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<description>Whether the column is the last column. The default value is <![CDATA[<code>false</code>]]>.</description>
-				<name>last</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-		</attributes>
-	</component>
 	<component name="Component">
 		<attributes>
 			<attribute>

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
@@ -169,11 +168,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public BreadcrumbTag getBreadcrumbTag() {
-		return null;
-	}
-
-	@Override
-	public ColumnTag getColumnTag() {
 		return null;
 	}
 

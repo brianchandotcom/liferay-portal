@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter.builder;
+package com.liferay.portal.kernel.model.adapter.builder;
 
 /**
  * @author Carlos Sierra Andrés

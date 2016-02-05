@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter;
+package com.liferay.portal.kernel.model.adapter;
 
+import com.liferay.portal.model.GroupModel;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.Theme;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
-public interface StagedTheme extends Theme, StagedModel {
+public interface StagedGroup extends GroupModel, StagedModel {
 }

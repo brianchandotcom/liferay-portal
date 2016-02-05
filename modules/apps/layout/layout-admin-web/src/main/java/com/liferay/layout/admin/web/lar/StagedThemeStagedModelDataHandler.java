@@ -18,10 +18,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.adapter.StagedTheme;
 import com.liferay.portal.service.ThemeLocalService;
 
 import java.util.Collections;

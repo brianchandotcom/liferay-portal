@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter.builder;
+package com.liferay.portal.kernel.model.adapter;
+
+import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.Theme;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Mate Thurzo
  */
-public interface ModelAdapterBuilder<T, V> {
-
-	public V build(T adapteeModel);
-
+public interface StagedTheme extends Theme, StagedModel {
 }

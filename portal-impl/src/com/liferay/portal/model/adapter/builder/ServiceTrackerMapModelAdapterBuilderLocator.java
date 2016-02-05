@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.adapter.builder;
 
+import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
+import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilderLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.registry.Registry;

@@ -14,8 +14,9 @@
 
 package com.liferay.portal.model.adapter.builder;
 
+import com.liferay.portal.kernel.model.adapter.StagedTheme;
+import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.adapter.StagedTheme;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 
 /**

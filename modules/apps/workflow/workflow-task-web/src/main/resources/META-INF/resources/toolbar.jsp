@@ -41,7 +41,7 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:nav-bar>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+	<aui:nav cssClass="nav-bar-workflow nav-tabs nav-tabs-default">
 		<portlet:renderURL var="viewAssignedToMeURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="assigned-to-me" />

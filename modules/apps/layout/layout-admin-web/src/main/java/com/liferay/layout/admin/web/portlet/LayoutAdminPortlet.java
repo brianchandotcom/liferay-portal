@@ -213,7 +213,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
 
 			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-				uploadPortletRequest, "layoutPrototypeLinkEnabled");
+				uploadPortletRequest,
+				"layoutPrototypeLinkEnabled" + layoutPrototype.getUuid());
 
 			serviceContext.setAttribute(
 				"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);

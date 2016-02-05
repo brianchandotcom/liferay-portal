@@ -101,7 +101,7 @@ public class BlogsEntryServiceUtil {
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCompanyEntriesRSS(companyId, displayDate, status, max,
@@ -160,7 +160,7 @@ public class BlogsEntryServiceUtil {
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getGroupEntriesRSS(groupId, displayDate, status, max, type,
@@ -221,7 +221,7 @@ public class BlogsEntryServiceUtil {
 		long organizationId, java.util.Date displayDate, int status, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getOrganizationEntriesRSS(organizationId, displayDate,

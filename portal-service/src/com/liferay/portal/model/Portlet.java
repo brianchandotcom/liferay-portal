@@ -303,7 +303,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the custom attribute display instances of the portlet
 	*/
-	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances();
+	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 
 	/**
 	* Get the default plugin settings of the portlet.

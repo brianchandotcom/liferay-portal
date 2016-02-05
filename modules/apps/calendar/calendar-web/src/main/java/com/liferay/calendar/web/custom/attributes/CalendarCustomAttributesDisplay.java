@@ -16,8 +16,8 @@ package com.liferay.calendar.web.custom.attributes;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 
 import org.osgi.service.component.annotations.Component;
 

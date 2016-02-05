@@ -65,7 +65,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.expando.model.CustomAttributesDisplay"
+			className="com.liferay.expando.kernel.model.CustomAttributesDisplay"
 			modelVar="customAttributesDisplay"
 			stringKey="<%= true %>"
 		>

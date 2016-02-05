@@ -19,10 +19,10 @@ import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 

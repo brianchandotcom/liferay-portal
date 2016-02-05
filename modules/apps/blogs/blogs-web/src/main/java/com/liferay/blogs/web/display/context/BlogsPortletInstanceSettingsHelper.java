@@ -15,8 +15,8 @@
 package com.liferay.blogs.web.display.context;
 
 import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.http.HttpServletRequest;
 

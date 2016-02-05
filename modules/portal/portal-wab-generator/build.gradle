@@ -22,6 +22,7 @@ dependencies {
 	compile group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
 	compile group: "org.springframework", name: "spring-web", version: "3.2.15.RELEASE"
 
+	provided group: "com.liferay", name: "com.liferay.ant.bnd", transitive: false, version: "2.0.6"
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 

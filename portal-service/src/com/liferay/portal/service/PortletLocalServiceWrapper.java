@@ -271,7 +271,7 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplays() {
+	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplays() {
 		return _portletLocalService.getCustomAttributesDisplays();
 	}
 

@@ -18,7 +18,7 @@ import com.liferay.document.library.google.docs.util.FreeMarkerRenderer;
 import com.liferay.document.library.google.docs.util.GoogleDocsConfigurationHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
 
 import freemarker.template.TemplateException;

@@ -14,11 +14,22 @@
 
 package com.liferay.expando.web.portlet;
 
+import com.liferay.expando.kernel.exception.ColumnNameException;
+import com.liferay.expando.kernel.exception.ColumnTypeException;
+import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
+import com.liferay.expando.kernel.exception.NoSuchColumnException;
+import com.liferay.expando.kernel.exception.ValueDataException;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnService;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.kernel.util.ExpandoPresetUtil;
 import com.liferay.expando.web.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,18 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.expando.exception.ColumnNameException;
-import com.liferay.portlet.expando.exception.ColumnTypeException;
-import com.liferay.portlet.expando.exception.DuplicateColumnNameException;
-import com.liferay.portlet.expando.exception.NoSuchColumnException;
-import com.liferay.portlet.expando.exception.ValueDataException;
-import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.service.ExpandoColumnService;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
 import java.io.IOException;
 import java.io.Serializable;

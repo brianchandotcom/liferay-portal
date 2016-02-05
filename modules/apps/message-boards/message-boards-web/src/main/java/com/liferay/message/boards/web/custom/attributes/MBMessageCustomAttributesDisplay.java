@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.web.custom.attributes;
 
+import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.template.freemarker;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,7 +27,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import freemarker.ext.beans.BeansWrapper;
 

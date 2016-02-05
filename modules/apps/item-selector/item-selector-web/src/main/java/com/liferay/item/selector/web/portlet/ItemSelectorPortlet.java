@@ -19,9 +19,9 @@ import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Release;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.io.IOException;

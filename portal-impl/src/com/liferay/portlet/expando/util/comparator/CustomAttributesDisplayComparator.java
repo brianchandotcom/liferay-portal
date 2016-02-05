@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.expando.util.comparator;
 
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
 import java.io.Serializable;
 

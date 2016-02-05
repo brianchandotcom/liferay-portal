@@ -64,6 +64,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		Set<String> processedArticleIds = new HashSet<>();
 
+		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
+
 		for (JournalArticle journalArticle : journalArticles) {
 			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
 				(journalArticle.getStatus() !=
@@ -72,8 +74,6 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 				continue;
 			}
-
-			String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
 
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(

@@ -145,21 +145,13 @@
 	</command>
 
 	<command name="viewFormNotPublished">
-		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishFormURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#openPublishURL" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3_ALT" value1="This form is not available or it was not published." />
 	</command>
 
 	<command name="viewFormPublish">
-		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishFormURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#openPublishURL" />
 
 		<var name="key_formName" value="${formName}" />
 

@@ -649,7 +649,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, document.getRootElement(), "sql", null,
-			new CustomSQLElementComparator());
+			new CustomSQLElementComparator("id"));
 
 		Matcher matcher = _whereNotInSQLPattern.matcher(content);
 
@@ -868,7 +868,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		ServiceFinderElementComparator serviceFinderElementComparator =
 			new ServiceFinderElementComparator();
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
-			new ServiceReferenceElementComparator();
+			new ServiceReferenceElementComparator("entity");
 
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
@@ -924,7 +924,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
-			new StrutsActionElementComparator());
+			new StrutsActionElementComparator("path"));
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
@@ -1357,6 +1357,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private class CustomSQLElementComparator extends ElementComparator {
 
+		public CustomSQLElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(Element sqlElement1, Element sqlElement2) {
 			String sqlElementName1 = getElementName(sqlElement1);
@@ -1385,13 +1389,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return elementName.substring(0, pos);
 		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "id";
 
 	}
 
@@ -1529,6 +1526,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class ServiceReferenceElementComparator
 		extends ElementComparator {
 
+		public ServiceReferenceElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(
 			Element referenceElement1, Element referenceElement2) {
@@ -1547,13 +1548,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return entityName1.compareToIgnoreCase(entityName2);
 		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "entity";
 
 	}
 
@@ -1594,6 +1588,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class StrutsActionElementComparator
 		extends ElementComparator {
 
+		public StrutsActionElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(Element actionElement1, Element actionElement2) {
 			String path1 = actionElement1.attributeValue("path");
@@ -1609,13 +1607,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return path1.compareTo(path2);
 		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "path";
 
 	}
 

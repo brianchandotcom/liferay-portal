@@ -3588,7 +3588,7 @@ public class PortalImpl implements Portal {
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
-				i--) {
+			i--) {
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
 				persistentHttpServletRequestWrappers.get(i);
@@ -5341,7 +5341,7 @@ public class PortalImpl implements Portal {
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
-				i--) {
+			i--) {
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
 				persistentHttpServletRequestWrappers.get(i);

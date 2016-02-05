@@ -807,6 +807,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected final void format(String fileName) throws Exception {
+		if (!fileName.endsWith("ExportImportLifecycleEventTest.java")) {
+			//return;
+		}
+
 		if (!_isMatchPath(fileName)) {
 			return;
 		}

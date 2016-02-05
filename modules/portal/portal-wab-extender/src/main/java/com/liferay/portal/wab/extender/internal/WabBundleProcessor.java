@@ -222,7 +222,7 @@ public class WabBundleProcessor implements ServletContextListener {
 		Dictionary<String, Object> jspProperties = new HashMapDictionary<>();
 
 		for (Enumeration<String> keys = properties.keys();
-				keys.hasMoreElements();) {
+			keys.hasMoreElements();) {
 
 			String key = keys.nextElement();
 

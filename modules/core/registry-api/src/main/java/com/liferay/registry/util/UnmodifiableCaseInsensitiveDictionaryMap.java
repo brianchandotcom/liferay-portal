@@ -35,7 +35,7 @@ public class UnmodifiableCaseInsensitiveDictionaryMap<V>
 
 		if (dictionary != null) {
 			for (Enumeration<String> enumeration = dictionary.keys();
-					enumeration.hasMoreElements();) {
+				enumeration.hasMoreElements();) {
 
 				String key = enumeration.nextElement();
 

@@ -133,12 +133,12 @@ public class MBMessageServiceTest {
 		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					BasePersistenceImpl.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender2 =
-					Log4JLoggerTestUtil.configureLog4JLogger(
-						DoAsUserThread.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender3 =
-					Log4JLoggerTestUtil.configureLog4JLogger(
-						JDBCExceptionReporter.class.getName(), Level.ERROR)) {
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					DoAsUserThread.class.getName(), Level.ERROR);
+			CaptureAppender captureAppender3 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JDBCExceptionReporter.class.getName(), Level.ERROR)) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();

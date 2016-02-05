@@ -1114,7 +1114,7 @@ public class PortletTracker
 			_componentContext.getProperties();
 
 		for (Enumeration<String> keys = componentProperties.keys();
-				keys.hasMoreElements();) {
+			keys.hasMoreElements();) {
 
 			String key = keys.nextElement();
 

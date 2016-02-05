@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

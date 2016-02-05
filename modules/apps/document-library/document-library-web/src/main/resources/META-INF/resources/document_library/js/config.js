@@ -6,6 +6,7 @@
 			groups: {
 				dl: {
 					base: PATH_DL_WEB + '/document_library/js/',
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'document-library-checkin': {
 							path: 'checkin.js',

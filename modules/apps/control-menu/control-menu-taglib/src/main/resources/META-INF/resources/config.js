@@ -6,6 +6,7 @@
 			groups: {
 				controlmenu: {
 					base: PATH_CONTROL_MENU_WEB,
+					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-control-menu': {
 							path: 'control_menu/js/control_menu.js',

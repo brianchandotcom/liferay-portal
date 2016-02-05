@@ -6,6 +6,7 @@
 		<model-name>com.liferay.dynamic.data.lists</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -28,6 +29,7 @@
 		<model-name>com.liferay.dynamic.data.lists.model.DDLRecordSet</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -56,6 +58,7 @@
 		</composite-model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

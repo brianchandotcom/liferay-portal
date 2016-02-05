@@ -36,6 +36,11 @@ public abstract class BaseBarTag extends IncludeTag implements BarTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	@Override
+	protected void cleanUp() {
+		buttons = null;
+	}
+
 	protected String buttons;
 
 }

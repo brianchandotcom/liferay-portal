@@ -22,7 +22,7 @@
 	<div class="list-group-panel">
 		<div class="devices">
 			<div class="container-fluid default-devices">
-				<div class="col-xs-3 lfr-device-item selected text-center" data-device="smartphone">
+				<div class="col-md-3 col-sm-12 lfr-device-item selected text-center" data-device="smartphone">
 					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
@@ -32,7 +32,7 @@
 					<h5 class="text-default">768px</h5>
 				</div>
 
-				<div class="col-xs-3 lfr-device-item text-center" data-device="tablet">
+				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="tablet">
 					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
@@ -42,7 +42,7 @@
 					<h5 class="text-default">1024px</h5>
 				</div>
 
-				<div class="col-xs-3 lfr-device-item text-center" data-device="desktop">
+				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="desktop">
 					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "desktop") %></h5>
@@ -50,7 +50,7 @@
 					<h5 class="text-default">1280px</h5>
 				</div>
 
-				<div class="col-xs-3 lfr-device-item text-center" data-device="autosize">
+				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
 					<aui:icon cssClass="icon icon-monospaced" image="full-size" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "autosize") %></h5>
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 
-			<div class="container-fluid custom-devices">
+			<div class="container-fluid custom-devices hidden-sm hidden-xs">
 				<aui:input inlineField="<%= true %>" inlineLabel="left" name="width" size="4" value="400" wrapperCssClass="col-xs-5" />
 
 				<aui:input inlineField="<%= true %>" inlineLabel="left" name="height" size="4" value="400" wrapperCssClass="col-xs-5" />

@@ -161,6 +161,8 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
+				hideDefaultSuccessMessage(actionRequest);
+
 				_importLayoutsMVCActionCommand.handleUploadException(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +

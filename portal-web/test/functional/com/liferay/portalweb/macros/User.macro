@@ -749,6 +749,8 @@
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK" value1="Select" />
 

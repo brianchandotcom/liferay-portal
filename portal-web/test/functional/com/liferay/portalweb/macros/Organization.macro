@@ -355,6 +355,8 @@
 
 		<var name="key_orgName" value="${orgName}" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_ORGANIZATION_ROLES" value1="Assign Organization Roles" />
 
 		<execute function="SelectFrame" locator1="//iframe[contains(@class,'dialog-iframe-node')]" />

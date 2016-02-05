@@ -3647,3 +3647,28 @@ icon instead.
 
 In order to display the `documents-and-media` Lexicon icon in Documents and
 Media, this change was necessary.
+
+---------------------------------------
+
+### The aui:button-item taglib has been removed and replaced with aui:button taglib
+- **Date:** 2016-Feb-4
+- **JIRA Ticket:** LPS-62922
+
+#### What changed?
+
+The `aui:button-item` taglib has been removed and replaced with
+`aui:button` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:button-item` tag need
+to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `aui` tag library if it isn't already and
+update the tag namespace from `aui:button-item` to `aui:button`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to remove deprecated code.

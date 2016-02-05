@@ -1757,7 +1757,7 @@ public class JavadocFormatter {
 					boolean useGenericType = false;
 
 					for (int j = 0; j < ancestorActualTypeArguments.length;
-							j++) {
+						j++) {
 
 						if (typeValue.equals(
 								ancestorActualTypeArguments[j].getValue())) {

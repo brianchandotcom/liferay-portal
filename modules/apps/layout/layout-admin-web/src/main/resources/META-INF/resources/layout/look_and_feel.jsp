@@ -62,8 +62,6 @@ if (group.isLayoutPrototype()) {
 else {
 	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
 }
-
-request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 %>
 
 <aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
@@ -72,16 +70,13 @@ request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
 	<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
-		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
 	</div>
 </c:if>
 
 <div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
-
-	<%
-	request.setAttribute("edit_pages.jsp-editable", Boolean.TRUE);
-	%>
-
 	<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 
 	<legend><liferay-ui:message key="css" /></legend>

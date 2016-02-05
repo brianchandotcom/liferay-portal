@@ -36,7 +36,7 @@
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/attribute/Attribute", "metal-position/src/Position", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/metal-promise/src/promise/Promise": {
-        "dependencies": ["exports", "metal/src/index"]
+        "dependencies": ["exports", "metal/src/core", "metal/src/async/async"]
     },
     "frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "./ProgressBar.soy", "metal-jquery-adapter/src/JQueryAdapter"]

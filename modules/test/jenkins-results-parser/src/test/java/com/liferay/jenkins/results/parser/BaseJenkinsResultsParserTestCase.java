@@ -50,6 +50,14 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		actualMessage = actualMessage.replace(" \n", "\n");
 
+		if (actualMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL)) {
+
+			actualMessage = actualMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL,
+				"${dependencies.url}");
+		}
+
 		boolean value = expectedMessage.equals(actualMessage);
 
 		if (value) {
@@ -223,6 +231,14 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 		String expectedMessage = getMessage(toURLString(sampleDir));
+
+		if (expectedMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL)) {
+
+			expectedMessage = expectedMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL,
+				"${dependencies.url}");
+		}
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}

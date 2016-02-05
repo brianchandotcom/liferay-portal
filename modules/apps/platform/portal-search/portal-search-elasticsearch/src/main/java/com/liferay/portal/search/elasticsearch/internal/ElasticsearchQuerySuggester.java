@@ -110,9 +110,9 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		stopWatch.start();
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchConnectionManager.getClient();
 
-		SuggestBuilder suggestBuilder = _suggesterTranslator.translate(
+		SuggestBuilder suggestBuilder = suggesterTranslator.translate(
 			suggester, searchContext);
 
 		SuggestRequestBuilder suggestRequestBuilder = client.prepareSuggest(
@@ -196,20 +196,6 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		return keywordQueries.toArray(new String[keywordQueries.size()]);
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setQueryTranslator(
-		SuggesterTranslator<SuggestBuilder> suggesterTranslator) {
-
-		_suggesterTranslator = suggesterTranslator;
-	}
-
 	protected SuggesterResult translate(
 		Suggest.Suggestion
 			<? extends Suggest.Suggestion.Entry
@@ -279,12 +265,15 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 	}
 
 	@Reference(unbind = "-")
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	protected SuggesterTranslator<SuggestBuilder> suggesterTranslator;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQuerySuggester.class);
-
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private SuggesterTranslator<SuggestBuilder> _suggesterTranslator;
 
 }

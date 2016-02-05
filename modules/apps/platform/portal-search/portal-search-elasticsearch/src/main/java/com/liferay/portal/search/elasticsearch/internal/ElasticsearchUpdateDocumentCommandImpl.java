@@ -59,20 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ElasticsearchUpdateDocumentCommandImpl
 	implements ElasticsearchUpdateDocumentCommand {
 
-	@Reference(unbind = "-")
-	public void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(unbind = "-")
-	public void setElasticsearchDocumentFactory(
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
-
-		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
-	}
-
 	@Override
 	public String updateDocument(
 			String documentType, SearchContext searchContext, Document document,
@@ -128,14 +114,14 @@ public class ElasticsearchUpdateDocumentCommandImpl
 			String documentType, SearchContext searchContext, Document document)
 		throws IOException {
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchConnectionManager.getClient();
 
 		UpdateRequestBuilder updateRequestBuilder = client.prepareUpdate(
 			indexNameBuilder.getIndexName(searchContext.getCompanyId()),
 			documentType, document.getUID());
 
 		String elasticSearchDocument =
-			_elasticsearchDocumentFactory.getElasticsearchDocument(document);
+			elasticsearchDocumentFactory.getElasticsearchDocument(document);
 
 		updateRequestBuilder.setDoc(elasticSearchDocument);
 		updateRequestBuilder.setDocAsUpsert(true);
@@ -153,7 +139,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		throws SearchException {
 
 		try {
-			Client client = _elasticsearchConnectionManager.getClient();
+			Client client = elasticsearchConnectionManager.getClient();
 
 			BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
 
@@ -194,13 +180,17 @@ public class ElasticsearchUpdateDocumentCommandImpl
 	}
 
 	@Reference(unbind = "-")
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(unbind = "-")
+	protected ElasticsearchDocumentFactory elasticsearchDocumentFactory;
+
+	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchUpdateDocumentCommandImpl.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 
 }

@@ -16,9 +16,9 @@ package com.liferay.product.navigation.taglib.servlet.taglib;
 
 import com.liferay.product.navigation.control.menu.ControlMenuCategory;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.product.navigation.control.menu.util.ControlMenuCategoryRegistry;
 import com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry;
+import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

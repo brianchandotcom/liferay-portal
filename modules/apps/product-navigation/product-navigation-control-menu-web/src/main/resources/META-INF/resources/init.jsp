@@ -30,11 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %>
-
-<%@
-<%@ page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys" %><%@
-page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys" %><%@
+page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
@@ -76,8 +72,8 @@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.product.navigation.control.menu.web.constants.ControlMenuPortletKeys" %><%@
-page import="com.liferay.product.navigation.control.menu.web.constants.ControlMenuWebKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

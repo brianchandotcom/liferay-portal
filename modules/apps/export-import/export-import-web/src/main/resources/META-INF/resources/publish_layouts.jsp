@@ -177,12 +177,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						data-value="custom"
 						iconCssClass="icon-puzzle"
 						label="custom"
+						selected='<%= publishConfigurationButtons.equals("custom") %>'
 					/>
 
 					<aui:nav-item
 						data-value="saved"
 						iconCssClass="icon-archive"
 						label="publish-templates"
+						selected='<%= publishConfigurationButtons.equals("saved") %>'
 					/>
 
 					<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -476,15 +478,22 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
 		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
 
+		var customConfigurationsNavItem = A.one('li[data-value=custom]');
+		var savedConfigurationsNavItem = A.one('li[data-value=saved]');
+
 		if (dataValue === 'custom') {
 			savedConfigurations.hide();
+			savedConfigurationsNavItem.removeClass('active');
 
 			customConfiguration.show();
+			customConfigurationsNavItem.addClass('active');
 		}
 		else if (dataValue === 'saved') {
 			customConfiguration.hide();
+			customConfigurationsNavItem.removeClass('active');
 
 			savedConfigurations.show();
+			savedConfigurationsNavItem.addClass('active');
 		}
 	};
 

@@ -7,8 +7,6 @@ AUI.add(
 
 		var FAILURE_TIMEOUT = 10000;
 
-		var REGEX_LAYOUT_ID = /plid_(\d+)/;
-
 		var RENDER_INTERVAL_IDLE = 60000;
 
 		var RENDER_INTERVAL_IN_PROGRESS = 2000;
@@ -28,14 +26,11 @@ AUI.add(
 				ATTRS: {
 					archivedSetupsNode: defaultConfig,
 					commentsNode: defaultConfig,
-					deleteMissingLayoutsNode: defaultConfig,
 					deletionsNode: defaultConfig,
 					exportLAR: defaultConfig,
 					form: defaultConfig,
 					incompleteProcessMessageNode: defaultConfig,
-					layoutSetSettingsNode: defaultConfig,
 					locale: STR_EMPTY,
-					logoNode: defaultConfig,
 					processesNode: defaultConfig,
 					rangeAllNode: defaultConfig,
 					rangeDateRangeNode: defaultConfig,
@@ -48,7 +43,6 @@ AUI.add(
 					remotePortNode: defaultConfig,
 					secureConnectionNode: defaultConfig,
 					setupNode: defaultConfig,
-					themeReferenceNode: defaultConfig,
 					timeZone: STR_EMPTY,
 					userPreferencesNode: defaultConfig
 				},
@@ -84,10 +78,6 @@ AUI.add(
 
 						if (instance._globalConfigurationDialog) {
 							instance._globalConfigurationDialog.destroy();
-						}
-
-						if (instance._pagesDialog) {
-							instance._pagesDialog.destroy();
 						}
 
 						if (instance._rangeDialog) {
@@ -179,19 +169,6 @@ AUI.add(
 									var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
 									globalConfigurationDialog.show();
-								}
-							);
-						}
-
-						var pagesLink = instance.byId('pagesLink');
-
-						if (pagesLink) {
-							pagesLink.on(
-								STR_CLICK,
-								function(event) {
-									var pagesDialog = instance._getPagesDialog();
-
-									pagesDialog.show();
 								}
 							);
 						}
@@ -463,63 +440,6 @@ AUI.add(
 						return globalConfigurationDialog;
 					},
 
-					_getPagesDialog: function() {
-						var instance = this;
-
-						var pagesDialog = instance._pagesDialog;
-
-						if (!pagesDialog) {
-							var pagesNode = instance.byId('pages');
-
-							pagesNode.show();
-
-							pagesDialog = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										bodyContent: pagesNode,
-										centered: true,
-										modal: true,
-										render: instance.get('form'),
-										toolbars: {
-											footer: [
-												{
-													label: Liferay.Language.get('ok'),
-													on: {
-														click: function(event) {
-															event.domEvent.preventDefault();
-
-															if (instance._layoutsExportTreeOutput) {
-																instance._reloadForm();
-															}
-
-															pagesDialog.hide();
-														}
-													},
-													primary: true
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													on: {
-														click: function(event) {
-															event.domEvent.preventDefault();
-
-															pagesDialog.hide();
-														}
-													}
-												}
-											]
-										}
-									},
-									title: Liferay.Language.get('pages')
-								}
-							);
-
-							instance._pagesDialog = pagesDialog;
-						}
-
-						return pagesDialog;
-					},
-
 					_getRangeDialog: function() {
 						var instance = this;
 
@@ -711,7 +631,6 @@ AUI.add(
 						instance._refreshDeletions();
 						instance._setContentOptionsLabels();
 						instance._setGlobalConfigurationLabels();
-						instance._setPageLabels();
 						instance._setRangeLabels();
 						instance._setRemoteLabels();
 					},
@@ -728,8 +647,6 @@ AUI.add(
 						var instance = this;
 
 						if (instance._isChecked('deletionsNode')) {
-							var deletionsNode = instance.get('deletionsNode');
-
 							instance.all('.deletions').each(
 									function(item, index, collection) {
 										item.show();
@@ -1004,47 +921,6 @@ AUI.add(
 						return val;
 					},
 
-					_setPageLabels: function() {
-						var instance = this;
-
-						var selectedPages = [];
-
-						if (instance._layoutsExportTreeOutput) {
-							var layoutIdsInput = instance.byId('layoutIds');
-
-							var treeView = instance._layoutsExportTreeOutput.getData('tree-view');
-
-							var rootNode = treeView.item(0);
-
-							if (rootNode.isChecked()) {
-								layoutIdsInput.val(STR_EMPTY);
-
-								selectedPages.push(Liferay.Language.get('all-pages'));
-							}
-							else {
-								selectedPages.push(Liferay.Language.get('selected-pages'));
-							}
-						}
-
-						if (instance._isChecked('deleteMissingLayoutsNode')) {
-							selectedPages.push(Liferay.Language.get('delete-missing-layouts'));
-						}
-
-						if (instance._isChecked('layoutSetSettingsNode')) {
-							selectedPages.push(Liferay.Language.get('site-pages-settings'));
-						}
-
-						if (instance._isChecked('themeReferenceNode')) {
-							selectedPages.push(Liferay.Language.get('theme-settings'));
-						}
-
-						if (instance._isChecked('logoNode')) {
-							selectedPages.push(Liferay.Language.get('logo'));
-						}
-
-						instance._setLabels('pagesLink', 'selectedPages', selectedPages.join(', '));
-					},
-
 					_setRangeLabels: function() {
 						var instance = this;
 
@@ -1109,8 +985,8 @@ AUI.add(
 
 						var rangeDialog = instance._rangeDialog;
 
-						var endsLater = true;
 						var endsInPast = true;
+						var endsLater = true;
 						var startsInPast = true;
 
 						if (instance._isChecked('rangeDateRangeNode')) {
@@ -1141,7 +1017,14 @@ AUI.add(
 							var localeString = instance.get('locale');
 							var timeZoneString = instance.get('timeZone');
 
-							var today = new Date(new Date().toLocaleString(localeString, {timeZone: timeZoneString}));
+							var today = new Date(
+								new Date().toLocaleString(
+									localeString,
+									{
+										timeZone: timeZoneString
+									}
+								)
+							);
 
 							endsInPast = ADate.isGreaterOrEqual(today, endDate);
 							startsInPast = ADate.isGreaterOrEqual(today, startDate);

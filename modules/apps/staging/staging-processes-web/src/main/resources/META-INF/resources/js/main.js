@@ -647,19 +647,17 @@ AUI.add(
 						var instance = this;
 
 						if (instance._isChecked('deletionsNode')) {
-							var deletionsNode = instance.get('deletionsNode');
-
 							instance.all('.deletions').each(
-									function(item, index, collection) {
-										item.show();
-									}
+								function(item, index, collection) {
+									item.show();
+								}
 							);
 						}
 						else {
 							instance.all('.deletions').each(
-									function(item, index, collection) {
-										item.hide();
-									}
+								function(item, index, collection) {
+									item.hide();
+								}
 							);
 						}
 					},
@@ -668,10 +666,9 @@ AUI.add(
 						var instance = this;
 
 						var cmdNode = instance.byId('cmd');
+						var redirectNode = instance.byId('redirect');
 
 						if ((cmdNode.val() === 'add') || (cmdNode.val() === 'update')) {
-							var redirectNode = instance.byId('redirect');
-
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
 							portletURL.setParameter('cmd', cmdNode.val());
@@ -716,7 +713,6 @@ AUI.add(
 
 						if (cmdNode) {
 							var currentURL = instance.byId('currentURL');
-							var redirectNode = instance.byId('redirect');
 
 							cmdNode.val(STR_EMPTY);
 							redirectNode.val(currentURL);
@@ -992,8 +988,8 @@ AUI.add(
 
 						var rangeDialog = instance._rangeDialog;
 
-						var endsLater = true;
 						var endsInPast = true;
+						var endsLater = true;
 						var startsInPast = true;
 
 						if (instance._isChecked('rangeDateRangeNode')) {
@@ -1024,7 +1020,14 @@ AUI.add(
 							var localeString = instance.get('locale');
 							var timeZoneString = instance.get('timeZone');
 
-							var today = new Date(new Date().toLocaleString(localeString, {timeZone: timeZoneString}));
+							var today = new Date(
+								new Date().toLocaleString(
+									localeString,
+									{
+										timeZone: timeZoneString
+									}
+								)
+							);
 
 							endsInPast = ADate.isGreaterOrEqual(today, endDate);
 							startsInPast = ADate.isGreaterOrEqual(today, startDate);

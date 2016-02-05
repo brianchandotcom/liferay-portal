@@ -791,17 +791,7 @@ public interface PropsKeys {
 
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED = "finalize.manager.thread.enabled";
 
-	public static final String FLAGS_EMAIL_BODY = "flags.email.body";
-
-	public static final String FLAGS_EMAIL_FROM_ADDRESS = "flags.email.from.address";
-
-	public static final String FLAGS_EMAIL_FROM_NAME = "flags.email.from.name";
-
-	public static final String FLAGS_EMAIL_SUBJECT = "flags.email.subject";
-
 	public static final String FLAGS_GUEST_USERS_ENABLED = "flags.guest.users.enabled";
-
-	public static final String FLAGS_REASONS = "flags.reasons";
 
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 

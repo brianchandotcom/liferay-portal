@@ -590,8 +590,6 @@ public class PropsValues {
 
 	public static final boolean FLAGS_GUEST_USERS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FLAGS_GUEST_USERS_ENABLED));
 
-	public static final String[] FLAGS_REASONS = PropsUtil.getArray(PropsKeys.FLAGS_REASONS);
-
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
 
 	public static final String[] GLOBAL_STARTUP_EVENTS = PropsUtil.getArray(PropsKeys.GLOBAL_STARTUP_EVENTS);

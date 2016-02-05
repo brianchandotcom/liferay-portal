@@ -774,9 +774,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
+		Element rootElement = document.getRootElement();
+
+		ElementComparator elementComparator = new ElementComparator();
+
 		checkOrder(
-			fileName, document.getRootElement(), "hint-collection", null,
-			new ElementComparator());
+			fileName, rootElement, "hint-collection", null, elementComparator);
+		checkOrder(fileName, rootElement, "model", null, elementComparator);
 	}
 
 	protected String formatPortletXML(

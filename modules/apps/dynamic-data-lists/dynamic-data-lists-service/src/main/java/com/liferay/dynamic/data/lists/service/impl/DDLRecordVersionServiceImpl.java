@@ -54,6 +54,16 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	@Override
+	public List<DDLRecordVersion> getRecordVersions(long recordId)
+		throws PortalException {
+
+		DDLRecordPermission.check(
+			getPermissionChecker(), recordId, ActionKeys.VIEW);
+
+		return ddlRecordVersionPersistence.findByRecordId(recordId);
+	}
+
+	@Override
 	public List<DDLRecordVersion> getRecordVersions(
 			long recordId, int start, int end,
 			OrderByComparator<DDLRecordVersion> orderByComparator)

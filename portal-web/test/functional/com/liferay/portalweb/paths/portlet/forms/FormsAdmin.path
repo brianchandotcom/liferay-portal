@@ -16,12 +16,12 @@
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_NAME</td>
-	<td>//div[contains(@id,'searchContainer')]//h5[contains(.,'${key_formName}')]/a</td>
+	<td>//div[contains(@class,'searchcontainer')]//h4[contains(.,'${key_formName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORMS_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'searchContainer')]//h6[contains(.,'${key_formDescription}')]</td>
+	<td>//div[contains(@class,'searchcontainer')]//h5[contains(.,'${key_formDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

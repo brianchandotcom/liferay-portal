@@ -17,7 +17,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_productMenuState", "closed");
+String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
 %>
 
 <div id="productMenuSidebar">
@@ -52,14 +52,14 @@ String productMenuState = SessionClicks.get(request, "com.liferay.product.naviga
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.product.navigation.control.menu.web_productMenuState', 'closed');
+			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'closed');
 		}
 	);
 
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.product.navigation.control.menu.web_productMenuState', 'open');
+			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'open');
 		}
 	);
 

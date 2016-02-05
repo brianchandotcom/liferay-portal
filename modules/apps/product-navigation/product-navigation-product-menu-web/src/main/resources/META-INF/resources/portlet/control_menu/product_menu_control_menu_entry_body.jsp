@@ -21,13 +21,14 @@
 
 <%@ page import="com.liferay.portal.kernel.util.SessionClicks" %>
 <%@ page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys" %>
+<%@ page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_productMenuState", "closed");
+String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
 %>
 
 <div class="<%= productMenuState %> lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">

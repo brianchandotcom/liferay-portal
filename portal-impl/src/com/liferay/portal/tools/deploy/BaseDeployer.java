@@ -708,7 +708,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				if (content.contains(_PORTAL_CLASS_LOADER)) {
 					excludes += "**/WEB-INF/lib/util-bridges.jar,";
 					excludes += "**/WEB-INF/lib/util-java.jar,";
-					excludes += "**/WEB-INF/lib/util-taglib.jar,";
 				}
 			}
 

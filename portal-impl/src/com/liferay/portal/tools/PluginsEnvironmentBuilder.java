@@ -323,7 +323,6 @@ public class PluginsEnvironmentBuilder {
 		jars.add("log4j.jar");
 		jars.add("util-bridges.jar");
 		jars.add("util-java.jar");
-		jars.add("util-taglib.jar");
 
 		return jars;
 	}
@@ -605,7 +604,6 @@ public class PluginsEnvironmentBuilder {
 			customJars.remove(projectName + "-service.jar");
 			customJars.remove("util-bridges.jar");
 			customJars.remove("util-java.jar");
-			customJars.remove("util-taglib.jar");
 
 			Collections.sort(customJars);
 		}
@@ -698,8 +696,6 @@ public class PluginsEnvironmentBuilder {
 		if (portalJars.contains("util-slf4j.jar")) {
 			addClasspathEntry(sb, "/portal/util-slf4j/util-slf4j.jar");
 		}
-
-		addClasspathEntry(sb, "/portal/util-taglib/util-taglib.jar");
 
 		for (String jar : extGlobalJars) {
 			addClasspathEntry(sb, "docroot/WEB-INF/ext-lib/global/" + jar);

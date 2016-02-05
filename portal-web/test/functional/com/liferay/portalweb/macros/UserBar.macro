@@ -88,15 +88,12 @@
 					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 					<then>
 						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-
-						<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
 					</then>
 				</if>
 			</then>
-			<else>
-				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
-			</else>
 		</if>
+
+		<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">

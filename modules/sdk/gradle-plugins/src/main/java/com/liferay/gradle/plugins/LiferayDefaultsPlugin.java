@@ -391,6 +391,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
 
+		replaceRegexTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					ReplaceRegexTask replaceRegexTask = (ReplaceRegexTask)task;
+
+					if (!_logger.isLifecycleEnabled()) {
+						return;
+					}
+
+					String replacement = replaceRegexTask.getReplacement();
+
+					for (Object file : replaceRegexTask.getMatchedFiles()) {
+						_logger.lifecycle(
+							"Project version in " + project.relativePath(file) +
+								" updated to " + replacement);
+					}
+				}
+
+			});
+
 		replaceRegexTask.setDescription(
 			"Updates the project version in external files.");
 

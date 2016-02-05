@@ -104,7 +104,10 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Wiki" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Wiki" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="Button#ADD_WIKI" />
 		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
 	</command>

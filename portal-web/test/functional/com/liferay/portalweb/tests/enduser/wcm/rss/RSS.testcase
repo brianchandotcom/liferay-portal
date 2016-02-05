@@ -130,7 +130,6 @@
 
 		<execute macro="RSS#viewWarningMessageDisplay">
 			<var name="errorMessage" value="The following are invalid URLs: www.theverge.com/rss/index.xml." />
-			<var name="warningMessage" value="Your request failed to complete." />
 		</execute>
 
 		<execute macro="Page#gotoPG">

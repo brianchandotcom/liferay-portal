@@ -1395,7 +1395,9 @@
 	</command>
 
 	<command name="viewEntryAsWorkflowAsset">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${webContentTitle}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${webContentTitle}" />
+		</execute>
 
 		<var name="key_webContentContent" value="${webContentContent}" />
 
@@ -1474,7 +1476,10 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Web Content" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Web Content" />
+		</execute>
+
 		<execute function="AssertElementPresent" locator1="WC#NAVBAR_CONTAINER" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
 	</command>

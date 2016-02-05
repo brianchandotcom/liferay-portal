@@ -26,7 +26,10 @@
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New ${adtType} Template" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="New ${adtType} Template" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

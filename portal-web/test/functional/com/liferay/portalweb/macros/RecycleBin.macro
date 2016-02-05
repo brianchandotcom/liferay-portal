@@ -56,13 +56,17 @@
 
 		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_CONTENT_LINK" value1="${assetName}" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${assetName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${assetName}" />
+		</execute>
 	</command>
 
 	<command name="gotoRecycleBinViaSuccessMessage">
 		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_RECYCLE_BIN_LINK" value1="the Recycle Bin" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Recycle Bin" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Recycle Bin" />
+		</execute>
 	</command>
 
 	<command name="restoreContentFromFolderCP">
@@ -213,7 +217,10 @@
 	</command>
 
 	<command name="viewEntry">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${assetName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${assetName}" />
+		</execute>
+
 		<execute function="AssertTextPresent" value1="${assetContent}" />
 		<execute function="AssertElementPresent" locator1="Button#RESTORE" />
 		<execute function="AssertElementPresent" locator1="Button#DELETE" />

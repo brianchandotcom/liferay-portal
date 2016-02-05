@@ -151,7 +151,7 @@
 	<command name="editFieldSettingCP">
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
-		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -237,10 +237,14 @@
 				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 					<var name="addOrRemoveViewPermission" value="Add" />
 					<var name="roleList" value="${addRoleViewPermissions}" />
 				</execute>
+
+				<execute macro="IFrame#selectTopFrame" />
 			</then>
 		</if>
 	</command>
@@ -297,17 +301,6 @@
 			<isset var="structureDescription" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
-
-		<execute macro="WebContentNavigator#showStructureDetails" />
-
-		<if>
-			<isset var="structureDescription" />
-			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 			</then>
 		</if>
 

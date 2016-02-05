@@ -592,7 +592,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_PORTLET_TITLE</td>
-	<td>//*[@data-qa-id='headerTitle']</td>
+	<td>//*[@data-qa-id='headerTitle' and contains(.,'${key_portletTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

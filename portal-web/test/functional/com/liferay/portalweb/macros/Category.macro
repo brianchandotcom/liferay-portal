@@ -406,11 +406,15 @@
 
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${categoryName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${categoryName}" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#BACK" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${vocabularyName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${vocabularyName}" />
+		</execute>
 	</command>
 
 	<command name="viewRemoveFilterViaCategoriesNavigationPG">

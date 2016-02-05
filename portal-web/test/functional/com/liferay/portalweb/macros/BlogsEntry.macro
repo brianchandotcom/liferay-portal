@@ -1365,7 +1365,9 @@
 	</command>
 
 	<command name="viewEntryAsWorkflowAsset">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${entryTitle}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${entryTitle}" />
+		</execute>
 
 		<var name="key_entryContent" value="${entryContent}" />
 

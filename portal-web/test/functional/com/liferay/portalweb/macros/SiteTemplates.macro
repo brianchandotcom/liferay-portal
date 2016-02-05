@@ -39,7 +39,9 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Site Template Settings" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Site Template Settings" />
+		</execute>
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
@@ -177,7 +179,9 @@
 
 		<execute function="AssertClick" locator1="SiteTemplates#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Site Template Settings" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Site Template Settings" />
+		</execute>
 	</command>
 
 	<command name="gotoViewPages">

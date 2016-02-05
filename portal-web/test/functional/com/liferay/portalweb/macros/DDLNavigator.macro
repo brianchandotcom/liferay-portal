@@ -5,7 +5,9 @@
 	<command name="gotoAddListRecord">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New ${ddlDataDefinitionName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="New ${ddlDataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="gotoDDLRecordEditViaWorkflow">
@@ -27,7 +29,9 @@
 
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${ddlListName}" />
+		</execute>
 	</command>
 
 	<command name="gotoManageDataDefinitions">

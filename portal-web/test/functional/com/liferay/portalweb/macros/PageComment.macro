@@ -63,7 +63,9 @@
 	</command>
 
 	<command name="viewAsWorkflowAsset">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${commentBody}" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${commentBody}" />
+		</execute>
 
 		<var name="key_commentBody" value="${commentBody}" />
 

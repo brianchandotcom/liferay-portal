@@ -109,7 +109,7 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#STRUCTURES" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -118,7 +118,9 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="WC Template Description" />
@@ -139,6 +141,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Add" />
@@ -223,11 +227,12 @@
 
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldName" value="Text" />
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="templateDescription" value="WC Template Description" />

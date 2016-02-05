@@ -1398,6 +1398,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class ElementComparator
 		extends NaturalOrderStringComparator {
 
+		public ElementComparator() {
+			this(_NAME_ATTRIBUTE_DEFAULT);
+		}
+
+		public ElementComparator(String nameAttribute) {
+			_nameAttribute = nameAttribute;
+		}
+
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
 			String elementName2 = getElementName(element2);
@@ -1410,10 +1418,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
+			return _nameAttribute;
 		}
 
-		private static final String _NAME_ATTRIBUTE = "name";
+		private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
+
+		private String _nameAttribute;
 
 	}
 

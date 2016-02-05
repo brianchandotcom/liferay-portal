@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,13 +54,22 @@ public class ElasticsearchClusterTest {
 		Arrays.sort(targetIndexNames);
 
 		Assert.assertEquals(
-			"[0, 142857, 42]", Arrays.toString(targetIndexNames));
+			"[cid-0, cid-142857, cid-42]", Arrays.toString(targetIndexNames));
 	}
 
 	protected ReplicasClusterContext createReplicasClusterContext() {
 		ElasticsearchCluster elasticsearchCluster = new ElasticsearchCluster();
 
-		elasticsearchCluster.setCompanyLocalService(_companyLocalService);
+		elasticsearchCluster.companyLocalService =_companyLocalService;
+
+		elasticsearchCluster.indexNameBuilder = new IndexNameBuilder() {
+
+			@Override
+			public String getIndexName(long companyId) {
+				return getTestIndexName(companyId);
+			}
+
+		};
 
 		return elasticsearchCluster.new ReplicasClusterContextImpl();
 	}
@@ -84,6 +94,10 @@ public class ElasticsearchClusterTest {
 		);
 
 		return company;
+	}
+
+	protected String getTestIndexName(long companyId) {
+		return "cid-" + companyId;
 	}
 
 	protected void setUpCompanyLocalService(List<Company> companies) {

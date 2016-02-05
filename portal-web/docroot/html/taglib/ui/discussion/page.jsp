@@ -120,7 +120,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 											<aui:input name="postReplyBody0" type="hidden" />
 
 											<aui:button-row>
-												<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+												<aui:button cssClass="btn-comment bt-lg btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 											</aui:button-row>
 										</div>
 									</aui:row>

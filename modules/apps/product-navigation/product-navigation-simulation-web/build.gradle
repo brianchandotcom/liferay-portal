@@ -1,7 +1,7 @@
 dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:application-list:application-list-taglib")
-	compile project(":apps:control-menu:control-menu-api")
+	compile project(":apps:product-navigation:product-navigation-control-menu-api")
 	compile project(":apps:product-navigation:product-navigation-simulation")
 }
 

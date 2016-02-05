@@ -32,21 +32,19 @@ import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
+import java.io.IOException;
+
 import java.net.InetAddress;
 
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.elasticsearch.Version;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.plugin.analysis.icu.AnalysisICUPlugin;
-import org.elasticsearch.plugin.analysis.kuromoji.AnalysisKuromojiPlugin;
-import org.elasticsearch.plugin.analysis.smartcn.AnalysisSmartChinesePlugin;
-import org.elasticsearch.plugin.analysis.stempel.AnalysisStempelPlugin;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -165,12 +163,31 @@ public class EmbeddedElasticsearchConnection
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
+	protected void configurePlugin(String name, Settings settings) {
+		String version = Version.CURRENT.toString();
+
+		String zip = "/plugins/" + name + "-" + version + ".zip";
+
+		try {
+			EmbeddedElasticsearchPluginManager.installPlugin(
+				name, zip, getClass(), settings);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to install " + name + " plugin from " + zip, ioe);
+		}
+	}
+
 	protected void configurePlugins(Builder builder) {
-		builder.putArray(
-			"plugin.types", AnalysisICUPlugin.class.getName(),
-			AnalysisKuromojiPlugin.class.getName(),
-			AnalysisSmartChinesePlugin.class.getName(),
-			AnalysisStempelPlugin.class.getName());
+		Settings settings = builder.build();
+
+		String[] plugins = {
+			"analysis-icu", "analysis-kuromoji", "analysis-smartcn",
+			"analysis-stempel" };
+
+		for (String plugin : plugins) {
+			configurePlugin(plugin, settings);
+		}
 	}
 
 	@Override
@@ -198,11 +215,7 @@ public class EmbeddedElasticsearchConnection
 					elasticsearchConfiguration.clusterName());
 		}
 
-		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
-
-		nodeBuilder.settings(builder);
-
-		_node = nodeBuilder.node();
+		_node = new Node(builder.build());
 
 		_node.start();
 

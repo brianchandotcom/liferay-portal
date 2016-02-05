@@ -87,12 +87,7 @@
 				<if>
 					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 					<then>
-						<if>
-							<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
-							<then>
-								<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-							</then>
-						</if>
+						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 					</then>
 				</if>
 

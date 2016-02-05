@@ -41,10 +41,10 @@
 			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED" />
 
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
@@ -56,10 +56,10 @@
 			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_EXPANDED" />
 
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
@@ -71,10 +71,10 @@
 			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>

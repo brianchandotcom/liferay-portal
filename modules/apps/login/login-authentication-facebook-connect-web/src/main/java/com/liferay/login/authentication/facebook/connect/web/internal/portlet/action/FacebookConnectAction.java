@@ -58,14 +58,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Receives <code>HttpServletRequest</code>s much like a servlet.
+ * Receives HTTP servlet requests much like a servlet.
  *
  * <p>
  * By setting the <code>path</code> property on the <code>@Component</code>
- * annotation to <code>/login/facebook_connect_oauth/</code>, this Struts
- * action is published at the URL <code>/c/login/facebook_connect_oauth/</code>
- * which corresponds to the default OAuth Redirect URL. This Struts action
- * carries out these tasks:
+ * annotation to <code>/login/facebook_connect_oauth/</code>, this Struts action
+ * is published at the URL <code>/c/login/facebook_connect_oauth/</code>, which
+ * corresponds to the default OAuth redirect URL. This Struts action carries out
+ * these tasks:
  * </p>
  *
  * <ol>
@@ -85,9 +85,9 @@ import org.osgi.service.component.annotations.Reference;
  * If no matching Liferay user is found, a new Liferay Portal user is
  * created and the HTTP session attribute
  * <code>FACEBOOK_USER_EMAIL_ADDRESS</code> is set accordingly. If the data
- * available from Facebook is not sufficient to successfully create a new
- * Liferay user, the user is directed to submit the missing information to
- * complete the process.
+ * available from Facebook is insufficient to successfully create a new Liferay
+ * user, the user is directed to submit the missing information to complete the
+ * process.
  * </li>
  * </ol>
  *

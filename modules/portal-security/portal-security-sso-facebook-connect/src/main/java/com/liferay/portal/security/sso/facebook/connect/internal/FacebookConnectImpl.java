@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * <p>
  * This class is utilized by many of the other Facebook Connect classes via
- * {@link com.liferay.portal.facebook.FacebookConnectUtil} which exposes all of
+ * {@link com.liferay.portal.facebook.FacebookConnectUtil}, which exposes all of
  * its methods statically.
  * </p>
  *

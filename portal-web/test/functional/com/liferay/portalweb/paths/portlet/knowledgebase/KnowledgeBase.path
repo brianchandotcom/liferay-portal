@@ -361,12 +361,12 @@
 <!--SCOPE-->
 <tr>
 	<td>SCOPE_DROPDOWN</td>
-	<td>//div[contains(.,'Default Scope')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[@class='scope-selector']//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCOPE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_kbPageScope}')]</td>
+	<td>//div[@class='scope-selector']//li[contains(.,'${key_kbPageScope}')]//span</td>
 	<td></td>
 </tr>
 </tbody>

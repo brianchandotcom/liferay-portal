@@ -1297,7 +1297,7 @@
 	</command>
 
 	<command name="viewDisabledSocialBookmarkSites">
-		<execute function="AssertElementNotPresent" locator1="Button#SHARE" value1="Share" />
+		<execute function="AssertElementNotPresent" locator1="Icon#SHARE" />
 	</command>
 
 	<command name="viewEditLinkPG">
@@ -1309,7 +1309,7 @@
 	</command>
 
 	<command name="viewEnabledSocialBookmarkSites">
-		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+		<execute function="Click" locator1="Icon#SHARE" />
 
 		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
 			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
@@ -1338,9 +1338,7 @@
 		<if>
 			<isset var="uploadFileName" />
 			<then>
-				<execute macro="BlogsEntry#viewInlineImage">
-					<var name="uploadFileName" value="${uploadFileName}" />
-				</execute>
+				<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
 			</then>
 		</if>
 

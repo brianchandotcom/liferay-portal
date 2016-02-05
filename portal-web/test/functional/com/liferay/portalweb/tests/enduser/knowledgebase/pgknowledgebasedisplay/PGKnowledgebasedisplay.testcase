@@ -318,7 +318,9 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<for list="Twitter, Facebook, Google+, LinkedIn, BlinkList, Delicious, Digg, Evernote, Newsvine, Reddit, Slashdot, StumbleUpon, Technorati, Tuenti" param="socialBookmarkSites" >
+		<execute function="Click" locator1="Icon#SHARE" />
+
+		<for list="Twitter,Facebook,Google+,LinkedIn,BlinkList,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Technorati,Tuenti" param="socialBookmarkSites" >
 			<execute macro="KBArticle#viewEnabledKBSocialBookmarkSites">
 				<var name="socialBookmarkSite" value="${socialBookmarkSites}" />
 			</execute>

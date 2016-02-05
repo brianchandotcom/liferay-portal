@@ -145,8 +145,11 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addContentWithInlineImage">
-			<var name="entryContent" value="${entryContent}" />
+		<execute function="Click" locator1="BlogsEditEntry#COVER_IMAGE" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+
+		<execute macro="ItemSelector#uploadFile">
 			<var name="navTab" value="${navTab}" />
 			<var name="uploadFileName" value="${uploadFileName}" />
 		</execute>

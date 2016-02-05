@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARE</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[@title='Share']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE</td>
 	<td>//span/*[name()='svg'][contains(@class,'icon-star')]</td>
 	<td></td>

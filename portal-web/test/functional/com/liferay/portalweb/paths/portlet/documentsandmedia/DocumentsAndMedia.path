@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_ICON_LOCKED</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]//img[@alt='Locked']</td>
+	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//*[name()='svg'][@message='locked']</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and @class='card-dm-details']//span[@class='workflow-status']</td>
+	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//span[@class='workflow-status']</td>
 	<td></td>
 </tr>
 <tr>

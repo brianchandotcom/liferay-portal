@@ -284,8 +284,6 @@
 	<command name="MoveToRecycleBinFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<property name="portal.acceptance" value="true" />
-
 		<var name="assetName" value="${dmFolderName}" />
 		<var name="assetType" value="Documents Folder" />
 		<var name="dmFolderDescription" value="DM Folder Description" />

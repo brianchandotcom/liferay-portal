@@ -7,6 +7,14 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 	</command>
 
+	<command name="addPageContentViaSource">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
+
+		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="addPageTitle">
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 	</command>
@@ -46,11 +54,20 @@
 	</command>
 
 	<command name="selectPageFormat">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
-		</execute>
+		<if>
+			<condition function="IsNotVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
+			<then>
+				<execute function="AssertClick" locator1="Panel#ENTRY_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+				<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+			</then>
+			<elseif>
+				<condition function="IsVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
+				<then>
+					<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewPageContentBody">

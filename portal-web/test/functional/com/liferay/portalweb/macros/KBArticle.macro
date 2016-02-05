@@ -895,6 +895,7 @@
 		<var name="key_kbPageScope" value="${kbPageScope}" />
 
 		<execute function="Click" locator1="KnowledgeBase#SCOPE_DROPDOWN" />
+
 		<execute function="AssertClick" locator1="KnowledgeBase#SCOPE" value1="${kbPageScope}" />
 	</command>
 

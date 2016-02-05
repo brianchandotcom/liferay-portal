@@ -39,6 +39,37 @@
 	<td>//div[contains(@class,'toggler-content-expanded')]//a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_ATTACHMENTS</td>
+	<td>//div[@id='attachmentsHeader']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CATEGORIZATION</td>
+	<td>//div[@id='categorizationHeader']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS</td>
+	<td>//div[@id='relatedAssetsHeader']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONFIGURATION</td>
+	<td>//div[@id='configurationHeader']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_PERMISSIONS</td>
+	<td>//div[@id='permissionsHeader']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

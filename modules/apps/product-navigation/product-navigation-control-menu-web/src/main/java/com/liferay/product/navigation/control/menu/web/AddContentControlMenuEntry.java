@@ -12,30 +12,25 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.product.navigation.control.menu.web;
 
-import com.liferay.control.menu.BaseControlMenuEntry;
+import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 
-import java.util.Locale;
-import java.util.Map;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -43,55 +38,22 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
-		"service.ranking:Integer=200"
+		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
+		"service.ranking:Integer=100"
 	},
 	service = ControlMenuEntry.class
 )
-public class ToggleControlsControlMenuEntry
-	extends BaseControlMenuEntry implements ControlMenuEntry {
+public class AddContentControlMenuEntry
+	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public Map<String, Object> getData(HttpServletRequest request) {
-		Map<String, Object> data = super.getData(request);
-
-		data.put("qa-id", "showControls");
-
-		return data;
+	public String getBodyJspPath() {
+		return "/entries/add_content_body.jsp";
 	}
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
-		String stateCss = null;
-
-		String toggleControls = GetterUtil.getString(
-			SessionClicks.get(
-				request, "com.liferay.frontend.js.web_toggleControls",
-				"visible"));
-
-		if (toggleControls.equals("visible")) {
-			stateCss = "view";
-		}
-		else {
-			stateCss = "hidden";
-		}
-
-		return stateCss;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "edit-controls");
-	}
-
-	@Override
-	public String getLinkCssClass(HttpServletRequest request) {
-		return "toggle-controls";
-	}
-
-	@Override
-	public String getURL(HttpServletRequest request) {
-		return "javascript:;";
+	public String getIconJspPath() {
+		return "/entries/add_content_icon.jsp";
 	}
 
 	@Override
@@ -99,26 +61,58 @@ public class ToggleControlsControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isStateMaximized()) {
+			return false;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
 			return false;
 		}
 
-		Group group = layout.getGroup();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
 
-		if (group.hasStagingGroup() && !group.isStagingGroup()) {
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
 			return false;
 		}
 
-		if (!(hasUpdateLayoutPermission(themeDisplay) ||
-			  hasCustomizePermission(themeDisplay) ||
-			  hasPortletConfigurationPermission(themeDisplay))) {
+		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
+			return false;
+		}
+
+		if (!(hasCustomizePermission(themeDisplay) ||
+			  hasUpdateLayoutPermission(themeDisplay))) {
 
 			return false;
 		}
 
 		return super.isShow(request);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.control.menu.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	protected boolean hasAddContentOrApplicationPermission(
+		ThemeDisplay themeDisplay) {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isLayoutPrototypeLinkActive()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
@@ -146,15 +140,6 @@ public class ToggleControlsControlMenuEntry
 		}
 
 		return false;
-	}
-
-	protected boolean hasPortletConfigurationPermission(
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return PortletPermissionUtil.hasConfigurationPermission(
-			themeDisplay.getPermissionChecker(), themeDisplay.getSiteGroupId(),
-			themeDisplay.getLayout(), ActionKeys.CONFIGURATION);
 	}
 
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

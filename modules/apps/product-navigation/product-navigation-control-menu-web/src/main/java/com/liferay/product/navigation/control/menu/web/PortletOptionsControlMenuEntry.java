@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 
-import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,36 +34,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
 		"service.ranking:Integer=100"
 	},
 	service = ControlMenuEntry.class
 )
-public class PortletHeaderControlMenuEntry
+public class PortletOptionsControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/portlet_header.jsp";
-	}
-
-	@Override
-	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		request.setAttribute(
-			ControlMenuWebKeys.PORTLET_DESCRIPTION,
-			portletDisplay.getDescription());
-		request.setAttribute(
-			ControlMenuWebKeys.PORTLET_TITLE, portletDisplay.getTitle());
-
-		return super.includeIcon(request, response);
+		return "/entries/portlet_options.jsp";
 	}
 
 	@Override
@@ -79,12 +55,6 @@ public class PortletHeaderControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (!layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (portletDisplay == null) {
 			return false;
 		}
 

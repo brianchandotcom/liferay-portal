@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.control.menu.web.portlet;
+package com.liferay.product.navigation.control.menu.web.portlet;
 
-import com.liferay.control.menu.web.constants.ControlMenuPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.product.navigation.control.menu.web.constants.ControlMenuPortletKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import javax.portlet.ActionRequest;

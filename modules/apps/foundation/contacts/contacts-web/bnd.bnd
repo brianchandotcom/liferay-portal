@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Contacts Web
+Bundle-SymbolicName: com.liferay.contacts.web
+Bundle-Version: 1.0.0
+Import-Package:*
+Include-Resource: WEB-INF=src/main/resources/WEB-INF,
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Contacts
+Private-Package: com.liferay.contacts.web.*

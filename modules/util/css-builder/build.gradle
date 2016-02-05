@@ -32,3 +32,7 @@ formatSource {
 liferay {
 	deployDir = "../../../tools/sdk/tmp/portal-tools/css-builder"
 }
+
+updateFileVersions {
+	match(/com\.liferay\.css\.builder=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

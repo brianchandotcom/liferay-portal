@@ -34,3 +34,7 @@ formatSource {
 liferay {
 	deployDir = "../../../tools/sdk/tmp/portal-tools/source-formatter"
 }
+
+updateFileVersions {
+	match(/com\.liferay\.source\.formatter=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

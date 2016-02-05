@@ -59,3 +59,7 @@ publishNodeModule {
 	dependsOn jar
 	workingDir = "src/main/resources/META-INF/resources"
 }
+
+updateFileVersions {
+	match(/com\.liferay\.frontend\.common\.css=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

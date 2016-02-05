@@ -2,3 +2,7 @@ dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.21"
 }
+
+updateFileVersions {
+	match(/"com\.liferay\.gradle\.plugins\.cache", version: "(.+)"/, "../../build-buildscript.gradle")
+}

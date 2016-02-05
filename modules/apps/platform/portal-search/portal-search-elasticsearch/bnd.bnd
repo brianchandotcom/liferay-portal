@@ -37,6 +37,7 @@ Bundle-ClassPath:\
 	lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar,\
 	lib/netty.jar,\
+	lib/noggit.jar,\
 	lib/snakeyaml.jar,\
 	lib/spatial4j.jar,\
 	lib/t-digest.jar
@@ -149,9 +150,10 @@ Include-Resource:\
 	lib/lucene-spatial.jar=lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
 	lib/netty.jar=lib/netty.jar,\
+	lib/noggit.jar=lib/noggit.jar,\
 	lib/snakeyaml.jar=lib/snakeyaml.jar,\
 	lib/spatial4j.jar=lib/spatial4j.jar,\
 	lib/t-digest.jar=lib/t-digest.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Elasticsearch
--include: ../../../../../marketplace/platform/bnd.bnd
+-include: ../../../marketplace/platform/bnd.bnd

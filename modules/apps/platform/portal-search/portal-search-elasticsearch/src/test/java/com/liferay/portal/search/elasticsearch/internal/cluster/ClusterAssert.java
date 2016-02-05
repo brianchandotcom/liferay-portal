@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
-import static org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus.GREEN;
-import static org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus.YELLOW;
+import static org.elasticsearch.cluster.health.ClusterHealthStatus.GREEN;
+import static org.elasticsearch.cluster.health.ClusterHealthStatus.YELLOW;
 
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;

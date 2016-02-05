@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `61d6186`.*
+*This document has been reviewed through commit `f5acb27`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3594,33 +3594,34 @@ file name automatically. This was considered confusing from a UX perspective.
 
 ---------------------------------------
 
-### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc can return blank
+### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc Can Return Empty Strings
 - **Date:** 2016-Jan-28
 - **JIRA Ticket:** LPS-62643
 
 #### What changed?
 
-DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc will return a blank
-string if there are not previews or thumbnails for the specific image, video or
-document.
+The `DLUtil.getImagePreviewURL` and `DLUtil.getThumbnailSrc` methods return an
+empty string if there are no previews or thumbnails for the specific image,
+video, or document.
 
-Before, if there was no previews or thumbnail it would return a url to a image
-based on the document.
+Previously, if there were no previews or thumbnails, these methods would return
+a URL to an image based on the document.
 
 #### Who is affected?
 
-Any developer invoking DLUtil.getImagePreviewURL or DLUtil.getThumbnailSrc.
+This affects any developer invoking `DLUtil.getImagePreviewURL` or
+`DLUtil.getThumbnailSrc`.
 
 #### How should I update my code?
 
-You should take into account that the method could return a blank string and act
-accordingly. For example, you could display the `documents-and-media` lexicon
+You should be aware that the method could return an empty string and act
+accordingly. For example, you could display the `documents-and-media` Lexicon
 icon instead.
 
 #### Why was this change made?
 
-In order to display the `documents-and-media` lexicon icon in Documents and
-Media this change was necessary.
+In order to display the `documents-and-media` Lexicon icon in Documents and
+Media, this change was necessary.
 
 ---------------------------------------
 

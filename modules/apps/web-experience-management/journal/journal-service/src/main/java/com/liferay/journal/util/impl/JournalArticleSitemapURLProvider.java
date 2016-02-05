@@ -20,7 +20,6 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,27 +93,27 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			String articleURL = PortalUtil.getCanonicalURL(
 				sb.toString(), themeDisplay, layout);
 
+			Map<Locale, String> alternateURLs = SitemapUtil.getAlternateURLs(
+				articleURL, themeDisplay, layout);
+
 			SitemapUtil.addURLElement(
 				element, articleURL, null, journalArticle.getModifiedDate(),
-				articleURL,
-				SitemapUtil.getAlternateURLs(articleURL, themeDisplay, layout));
+				articleURL, alternateURLs);
 
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-				layout.getGroupId());
-
-			if (availableLocales.size() > 1) {
+			if (alternateURLs.size() > 1) {
 				Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-				for (Locale availableLocale : availableLocales) {
-					if (!availableLocale.equals(defaultLocale)) {
-						String alternateURL = PortalUtil.getAlternateURL(
-							articleURL, themeDisplay, availableLocale, layout);
+				for (Map.Entry<Locale, String> entry :
+						alternateURLs.entrySet()) {
 
+					Locale availableLocale = entry.getKey();
+					String alternateURL = entry.getValue();
+
+					if (!availableLocale.equals(defaultLocale)) {
 						SitemapUtil.addURLElement(
 							element, alternateURL, null,
 							journalArticle.getModifiedDate(), articleURL,
-							SitemapUtil.getAlternateURLs(
-								articleURL, themeDisplay, layout));
+							alternateURLs);
 					}
 				}
 			}

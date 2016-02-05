@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib.base;
+package com.liferay.frontend.taglib.servlet.taglib;
 
 /**
  * @author Roberto Díaz

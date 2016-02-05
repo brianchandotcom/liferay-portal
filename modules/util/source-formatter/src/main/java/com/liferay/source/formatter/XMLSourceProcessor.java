@@ -1004,12 +1004,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		x = newContent.indexOf("<security-constraint>");
 
-		x = newContent.indexOf(
-			"<web-resource-name>/c/portal/protected</web-resource-name>", x);
+		x = newContent.indexOf("<web-resource-collection>", x);
 
 		x = newContent.indexOf("<url-pattern>", x) - 3;
 
-		y = newContent.indexOf("<http-method>", x);
+		y = newContent.indexOf("</web-resource-collection>", x);
 
 		y = newContent.lastIndexOf("</url-pattern>", y) + 15;
 

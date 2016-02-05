@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.LinkedHashMap;
@@ -78,8 +78,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-			entryClassPK);
+		UserGroup userGroup = _userGroupLocalService.getUserGroup(entryClassPK);
 
 		return UserGroupPermissionUtil.contains(
 			permissionChecker, userGroup.getUserGroupId(), actionId);

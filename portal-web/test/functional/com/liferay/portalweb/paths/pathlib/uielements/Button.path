@@ -300,7 +300,7 @@
 </tr>
 <tr>
 	<td>EXPORT</td>
-	<td>//button[contains(.,'Export')]</td>
+	<td>//div[contains(@class,'footer')]//button[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -335,7 +335,7 @@
 </tr>
 <tr>
 	<td>IMPORT</td>
-	<td>//button[contains(.,'Import')]</td>
+	<td>//div[contains(@class,'footer')]//button[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_IMPORT</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Import')]</td>
+	<td>//ul[contains(@id,'navTag') and contains(@class,'navbar-nav')]/li/a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

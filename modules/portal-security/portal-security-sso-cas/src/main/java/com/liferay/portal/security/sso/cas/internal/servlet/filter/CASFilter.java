@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.cas.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -103,7 +103,7 @@ public class CASFilter extends BaseFilter {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			CASConfiguration casConfiguration =
-				_configurationFactory.getConfiguration(
+				_configurationProvider.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, CASConstants.SERVICE_NAME));
@@ -134,7 +134,7 @@ public class CASFilter extends BaseFilter {
 		}
 
 		CASConfiguration casConfiguration =
-			_configurationFactory.getConfiguration(
+			_configurationProvider.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
@@ -171,7 +171,7 @@ public class CASFilter extends BaseFilter {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		CASConfiguration casConfiguration =
-			_configurationFactory.getConfiguration(
+			_configurationProvider.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
@@ -252,10 +252,10 @@ public class CASFilter extends BaseFilter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
@@ -263,6 +263,6 @@ public class CASFilter extends BaseFilter {
 	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<>();
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 
 }

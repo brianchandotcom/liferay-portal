@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,7 +71,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 		if (Validator.isNotNull(getPortletResource())) {
 			HttpServletRequest request = getRequest();
 
-			return (T)ConfigurationFactoryUtil.getConfiguration(
+			return (T)ConfigurationProviderUtil.getConfiguration(
 				clazz,
 				new ParameterMapSettingsLocator(
 					request.getParameterMap(),
@@ -79,7 +79,7 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 						getSiteGroupId(), DDMConstants.SERVICE_NAME)));
 		}
 		else {
-			return (T)ConfigurationFactoryUtil.getConfiguration(
+			return (T)ConfigurationProviderUtil.getConfiguration(
 				clazz,
 				new GroupServiceSettingsLocator(
 					getSiteGroupId(), DDMConstants.SERVICE_NAME));

@@ -82,7 +82,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -6986,7 +6986,7 @@ public class JournalArticleLocalServiceImpl
 			getJournalGroupServiceConfiguration(long groupId)
 		throws ConfigurationException {
 
-		return configurationFactory.getConfiguration(
+		return configurationProvider.getConfiguration(
 			JournalGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, JournalConstants.SERVICE_NAME));
@@ -7881,8 +7881,8 @@ public class JournalArticleLocalServiceImpl
 			groupId, content);
 	}
 
-	@ServiceReference(type = ConfigurationFactory.class)
-	protected ConfigurationFactory configurationFactory;
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 	@ServiceReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;

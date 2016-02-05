@@ -18,7 +18,7 @@ import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,7 +50,7 @@ public class JournalWebRequestHelper {
 
 				if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 					_journalGroupServiceConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
 							new ParameterMapSettingsLocator(
 								_request.getParameterMap(),
@@ -60,7 +60,7 @@ public class JournalWebRequestHelper {
 				}
 				else {
 					_journalGroupServiceConfiguration =
-						ConfigurationFactoryUtil.getConfiguration(
+						ConfigurationProviderUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								themeDisplay.getSiteGroupId(),

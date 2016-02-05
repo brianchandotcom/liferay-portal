@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-NtlmConfiguration ntlmConfiguration = ConfigurationFactoryUtil.getConfiguration(NtlmConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "ntlm--", new CompanyServiceSettingsLocator(company.getCompanyId(), NtlmConstants.SERVICE_NAME)));
+NtlmConfiguration ntlmConfiguration = ConfigurationProviderUtil.getConfiguration(NtlmConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "ntlm--", new CompanyServiceSettingsLocator(company.getCompanyId(), NtlmConstants.SERVICE_NAME)));
 
 boolean enabled = ntlmConfiguration.enabled();
 String domainController = ntlmConfiguration.domainController();

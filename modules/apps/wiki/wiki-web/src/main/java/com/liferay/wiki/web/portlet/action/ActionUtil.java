@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -104,7 +104,7 @@ public class ActionUtil {
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceOverriddenConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
+				ConfigurationProviderUtil.getConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));

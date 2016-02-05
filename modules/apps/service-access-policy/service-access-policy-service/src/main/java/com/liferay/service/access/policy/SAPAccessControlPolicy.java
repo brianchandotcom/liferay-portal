@@ -16,7 +16,7 @@ package com.liferay.service.access.policy;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -143,7 +143,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		SAPConfiguration sapConfiguration = null;
 
 		try {
-			sapConfiguration = _configurationFactory.getConfiguration(
+			sapConfiguration = _configurationProvider.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
@@ -321,10 +321,10 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationFactory(
-		ConfigurationFactory configurationFactory) {
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
 
-		_configurationFactory = configurationFactory;
+		_configurationProvider = configurationProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -334,7 +334,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	private ConfigurationFactory _configurationFactory;
+	private ConfigurationProvider _configurationProvider;
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }

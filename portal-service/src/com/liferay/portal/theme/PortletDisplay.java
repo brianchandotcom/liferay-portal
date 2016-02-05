@@ -17,7 +17,7 @@ package com.liferay.portal.theme;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -265,7 +265,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		String portletId = Validator.isNull(
 			_portletResource) ? _id : _portletResource;
 
-		return ConfigurationFactoryUtil.getConfiguration(
+		return ConfigurationProviderUtil.getConfiguration(
 			clazz,
 			new PortletInstanceSettingsLocator(
 				_themeDisplay.getLayout(), portletId));

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CASConfiguration casConfiguration = ConfigurationFactoryUtil.getConfiguration(CASConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "cas--", new CompanyServiceSettingsLocator(company.getCompanyId(), CASConstants.SERVICE_NAME)));
+CASConfiguration casConfiguration = ConfigurationProviderUtil.getConfiguration(CASConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "cas--", new CompanyServiceSettingsLocator(company.getCompanyId(), CASConstants.SERVICE_NAME)));
 
 boolean enabled = casConfiguration.enabled();
 boolean importFromLDAP = casConfiguration.importFromLDAP();

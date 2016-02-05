@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -799,7 +799,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 				WikiGroupServiceOverriddenConfiguration
 					wikiGroupServiceOverriddenConfiguration =
-						configurationFactory.getConfiguration(
+						configurationProvider.getConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new GroupServiceSettingsLocator(
 								page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -872,7 +872,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = ConfigurationFactory.class)
-	protected ConfigurationFactory configurationFactory;
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 }

@@ -25,10 +25,6 @@ public interface ThemeFactory {
 
 	public String getDefaultRegularThemeId(long companyId);
 
-	public Theme getDefaultWapTheme(long companyId);
-
-	public String getDefaultWapThemeId(long companyId);
-
 	public Theme getTheme();
 
 	public Theme getTheme(String themeId);

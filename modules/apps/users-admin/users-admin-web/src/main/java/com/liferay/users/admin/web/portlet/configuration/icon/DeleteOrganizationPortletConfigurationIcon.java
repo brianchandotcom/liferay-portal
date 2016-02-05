@@ -17,10 +17,10 @@ package com.liferay.users.admin.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.users.admin.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;

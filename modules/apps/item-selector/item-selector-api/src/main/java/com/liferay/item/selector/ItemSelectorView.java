@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 

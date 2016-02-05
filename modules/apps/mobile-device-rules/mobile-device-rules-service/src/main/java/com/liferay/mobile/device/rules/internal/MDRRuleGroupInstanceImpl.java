@@ -14,9 +14,9 @@
 
 package com.liferay.mobile.device.rules.internal;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.util.Date;
 import java.util.Map;

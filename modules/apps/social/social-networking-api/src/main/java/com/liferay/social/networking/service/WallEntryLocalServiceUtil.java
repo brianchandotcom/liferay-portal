@@ -43,7 +43,7 @@ public class WallEntryLocalServiceUtil {
 	 */
 	public static com.liferay.social.networking.model.WallEntry addWallEntry(
 		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
 	}

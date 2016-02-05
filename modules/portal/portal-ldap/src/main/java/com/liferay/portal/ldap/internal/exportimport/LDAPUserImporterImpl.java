@@ -14,6 +14,10 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -66,10 +70,6 @@ import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.ExpandoValueLocalService;
-import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
 import java.io.Serializable;
 

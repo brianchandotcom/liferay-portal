@@ -16,10 +16,10 @@ package com.liferay.portlet.expando.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.service.ExpandoValueServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.expando.model.ExpandoValueSoap}.
+ * is translated to an array of {@link com.liferay.expando.kernel.model.ExpandoValueSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.expando.model.ExpandoValue}, that is translated to a
- * {@link com.liferay.portlet.expando.model.ExpandoValueSoap}. Methods that SOAP cannot
+ * {@link com.liferay.expando.kernel.model.ExpandoValue}, that is translated to a
+ * {@link com.liferay.expando.kernel.model.ExpandoValueSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,21 +59,21 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoValueServiceHttp
- * @see com.liferay.portlet.expando.model.ExpandoValueSoap
+ * @see com.liferay.expando.kernel.model.ExpandoValueSoap
  * @see ExpandoValueServiceUtil
  * @generated
  */
 @ProviderType
 public class ExpandoValueServiceSoap {
-	public static com.liferay.portlet.expando.model.ExpandoValueSoap addValue(
+	public static com.liferay.expando.kernel.model.ExpandoValueSoap addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.Object data)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.expando.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
+			com.liferay.expando.kernel.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
 					className, tableName, columnName, classPK, data);
 
-			return com.liferay.portlet.expando.model.ExpandoValueSoap.toSoapModel(returnValue);
+			return com.liferay.expando.kernel.model.ExpandoValueSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -82,15 +82,15 @@ public class ExpandoValueServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoValueSoap addValue(
+	public static com.liferay.expando.kernel.model.ExpandoValueSoap addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.String data)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.expando.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
+			com.liferay.expando.kernel.model.ExpandoValue returnValue = ExpandoValueServiceUtil.addValue(companyId,
 					className, tableName, columnName, classPK, data);
 
-			return com.liferay.portlet.expando.model.ExpandoValueSoap.toSoapModel(returnValue);
+			return com.liferay.expando.kernel.model.ExpandoValueSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -587,8 +587,6 @@
 		<column name="iconImageId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
-		<column name="wapThemeId" type="String" />
-		<column name="wapColorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
 		<column name="layoutPrototypeUuid" type="String" />
@@ -859,8 +857,6 @@
 		<column name="iconImageId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
-		<column name="wapThemeId" type="String" />
-		<column name="wapColorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -957,8 +953,6 @@
 		<column name="logoId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
-		<column name="wapThemeId" type="String" />
-		<column name="wapColorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="pageCount" type="int" />
 		<column name="settings" type="String" />
@@ -1014,8 +1008,6 @@
 		<column name="logoId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
-		<column name="wapThemeId" type="String" />
-		<column name="wapColorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="settings" type="String" />
 		<column name="layoutSetPrototypeUuid" type="String" />

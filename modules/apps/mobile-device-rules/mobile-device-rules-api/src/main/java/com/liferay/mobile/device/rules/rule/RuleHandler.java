@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.rule;
 
 import com.liferay.mobile.device.rules.model.MDRRule;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Collection;
 

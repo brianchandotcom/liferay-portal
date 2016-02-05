@@ -16,14 +16,14 @@ package com.liferay.portlet.expando.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.service.ExpandoColumnServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
-import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
  */
 @ProviderType
 public class ExpandoColumnServiceHttp {
-	public static com.liferay.portlet.expando.model.ExpandoColumn addColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
 		HttpPrincipal httpPrincipal, long tableId, java.lang.String name,
 		int type) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -78,7 +78,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -87,7 +87,7 @@ public class ExpandoColumnServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoColumn addColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn addColumn(
 		HttpPrincipal httpPrincipal, long tableId, java.lang.String name,
 		int type, java.lang.Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -111,7 +111,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -146,7 +146,7 @@ public class ExpandoColumnServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
 		HttpPrincipal httpPrincipal, long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -168,7 +168,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -177,7 +177,7 @@ public class ExpandoColumnServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
 		HttpPrincipal httpPrincipal, long columnId, java.lang.String name,
 		int type) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -200,7 +200,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -209,7 +209,7 @@ public class ExpandoColumnServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
 		HttpPrincipal httpPrincipal, long columnId, java.lang.String name,
 		int type, java.lang.Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -233,7 +233,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -242,7 +242,7 @@ public class ExpandoColumnServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoColumn updateTypeSettings(
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
 		HttpPrincipal httpPrincipal, long columnId,
 		java.lang.String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -266,7 +266,7 @@ public class ExpandoColumnServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.expando.model.ExpandoColumn)returnObj;
+			return (com.liferay.expando.kernel.model.ExpandoColumn)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

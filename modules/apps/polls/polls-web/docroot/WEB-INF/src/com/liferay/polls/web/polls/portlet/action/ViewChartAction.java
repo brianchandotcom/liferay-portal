@@ -15,11 +15,11 @@
 package com.liferay.polls.web.polls.portlet.action;
 
 import com.liferay.polls.web.util.PollsUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.OutputStream;
 

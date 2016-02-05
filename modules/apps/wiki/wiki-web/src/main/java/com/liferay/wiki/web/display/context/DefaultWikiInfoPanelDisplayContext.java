@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.display.context;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;

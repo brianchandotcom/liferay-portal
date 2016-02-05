@@ -15,10 +15,10 @@
 package com.liferay.site.navigation.directory.web.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.navigation.directory.web.configuration.SitesDirectoryPortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;

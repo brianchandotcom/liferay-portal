@@ -53,15 +53,4 @@ public class ColorSchemeFactoryImpl implements ColorSchemeFactory {
 		return PropsValues.DEFAULT_REGULAR_COLOR_SCHEME_ID;
 	}
 
-	@Override
-	public ColorScheme getDefaultWapColorScheme() {
-		return new ColorSchemeImpl(
-			getDefaultWapColorSchemeId(), StringPool.BLANK, StringPool.BLANK);
-	}
-
-	@Override
-	public String getDefaultWapColorSchemeId() {
-		return PropsValues.DEFAULT_WAP_COLOR_SCHEME_ID;
-	}
-
 }

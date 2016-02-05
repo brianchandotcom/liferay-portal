@@ -37,11 +37,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -89,7 +89,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
@@ -675,8 +674,6 @@ public class ServicePreAction extends Action {
 		Theme theme = null;
 		ColorScheme colorScheme = null;
 
-		boolean wapTheme = BrowserSnifferUtil.isWap(request);
-
 		if ((layout != null) &&
 			(layout.isTypeControlPanel() || group.isControlPanel())) {
 
@@ -685,18 +682,9 @@ public class ServicePreAction extends Action {
 			String colorSchemeId =
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 
-			theme = ThemeLocalServiceUtil.getTheme(
-				companyId, themeId, wapTheme);
+			theme = ThemeLocalServiceUtil.getTheme(companyId, themeId);
 			colorScheme = ThemeLocalServiceUtil.getColorScheme(
-				companyId, theme.getThemeId(), colorSchemeId, wapTheme);
-
-			if (!wapTheme && theme.isWapTheme()) {
-				theme = ThemeLocalServiceUtil.getTheme(
-					companyId,
-					PropsValues.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID, false);
-				colorScheme = ThemeLocalServiceUtil.getColorScheme(
-					companyId, theme.getThemeId(), colorSchemeId, false);
-			}
+				companyId, theme.getThemeId(), colorSchemeId);
 
 			request.setAttribute(WebKeys.THEME, theme);
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
@@ -1243,24 +1231,6 @@ public class ServicePreAction extends Action {
 			updateLayoutSet = true;
 		}
 
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_THEME_ID)) {
-
-			layoutSet.setWapThemeId(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_COLOR_SCHEME_ID)) {
-
-			layoutSet.setWapColorSchemeId(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
 		if (updateLayoutSet) {
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
@@ -1336,24 +1306,6 @@ public class ServicePreAction extends Action {
 
 			layoutSet.setColorSchemeId(
 				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_WAP_THEME_ID)) {
-
-			layoutSet.setWapThemeId(
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_WAP_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID)) {
-
-			layoutSet.setWapColorSchemeId(
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID);
 
 			updateLayoutSet = true;
 		}

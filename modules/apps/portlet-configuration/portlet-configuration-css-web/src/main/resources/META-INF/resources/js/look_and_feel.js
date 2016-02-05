@@ -911,10 +911,6 @@ AUI.add(
 						textAlign: EMPTY,
 						textDecoration: EMPTY,
 						wordSpacing: EMPTY
-					},
-					wapData: {
-						initialWindowState: 'NORMAL',
-						title: EMPTY
 					}
 				};
 			},
@@ -1060,15 +1056,6 @@ AUI.add(
 
 					instance._saveButton = instance._getNodeById('lfr-lookfeel-save');
 					instance._resetButton = instance._getNodeById('lfr-lookfeel-reset');
-
-					// WAP styling
-
-					instance._wapStyling = instance._getNodeById('wap-styling');
-
-					if (instance._wapStyling) {
-						instance._wapTitleInput = instance._getNodeById('lfr-wap-title');
-						instance._wapInitialWindowStateSelect = instance._getNodeById('lfr-wap-initial-window-state');
-					}
 				}
 
 				instance._tabs = new A.TabView(
@@ -1210,11 +1197,6 @@ AUI.add(
 							instance._objData.advancedData.customCSSClassName = newCSSClass;
 
 							updatePortletCSSClassName(previousCSSClass, newCSSClass);
-
-							if (instance._wapStyling) {
-								instance._objData.wapData.title = instance._wapTitleInput.val();
-								instance._objData.wapData.initialWindowState = instance._wapInitialWindowStateSelect.val();
-							}
 
 							var updateLookAndFeelURL = new Liferay.PortletURL.createURL(instance._baseActionPortletURL);
 
@@ -1505,16 +1487,6 @@ AUI.add(
 				var portletData = objData.portletData;
 				var spacingData = objData.spacingData;
 				var textData = objData.textData;
-				var wapData = objData.wapData;
-
-				if (wapData == null) {
-					wapData = {
-						initialWindowState: 'NORMAL',
-						title: EMPTY
-					};
-
-					objData.wapData = wapData;
-				}
 
 				var fontStyle = false;
 				var fontWeight = false;
@@ -1646,13 +1618,6 @@ AUI.add(
 				instance._setTextarea(instance._customCSS, customStyles);
 
 				instance._setTextarea(instance._customCSSClassName, objData.advancedData.customCSSClassName);
-
-				// WAP styling
-
-				if (instance._wapStyling) {
-					instance._setInput(instance._wapTitleInput, wapData.title);
-					instance._setSelect(instance._wapInitialWindowStateSelect, wapData.initialWindowState);
-				}
 			},
 
 			_setInput: function(obj, value) {

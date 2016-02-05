@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.social.kernel.model.BaseSocialRequestInterpreter;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestFeedEntry;

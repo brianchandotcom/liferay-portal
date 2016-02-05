@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch.internal.connection;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
 /**
  * @author André de Oliveira

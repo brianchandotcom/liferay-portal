@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_3</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_CONTENT</td>
 	<td>//div[@class='portlet-body']/div[contains(.,'${key_assetType}')]</td>
 	<td></td>

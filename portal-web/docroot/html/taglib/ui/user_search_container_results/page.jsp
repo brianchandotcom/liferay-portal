@@ -22,6 +22,10 @@ boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:user
 LinkedHashMap<String, Object> userParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-search-container-results:userParams");
 SearchContainer userSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-search-container-results:searchContainer");
 
+if (Validator.isNotNull(searchTerms.getKeywords())) {
+	useIndexer = true;
+}
+
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 %>
 
@@ -54,6 +58,8 @@ Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 			<c:otherwise>
 
 				<%
+				userParams.put("forceDatabase", Boolean.TRUE);
+
 				if (searchTerms.isAdvancedSearch()) {
 					total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator());
 

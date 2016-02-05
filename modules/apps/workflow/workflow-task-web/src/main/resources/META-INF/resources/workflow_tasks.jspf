@@ -90,6 +90,7 @@
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_task_action.jsp"
 						/>
 					</c:when>
@@ -102,6 +103,7 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
+					cssClass="asset-title"
 					href="<%= rowURL %>"
 					name="asset-title"
 					value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
@@ -138,6 +140,7 @@
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_task_action.jsp"
 						/>
 					</c:when>

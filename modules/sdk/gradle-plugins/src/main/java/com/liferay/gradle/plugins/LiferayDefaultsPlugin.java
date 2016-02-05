@@ -127,9 +127,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String DEFAULT_REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
 
-	public static final String INCREMENT_BUNDLE_VERSION_TASK_NAME =
-		"incrementBundleVersion";
-
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
 
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
@@ -137,6 +134,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
+
+	public static final String UPDATE_BUNDLE_VERSION_TASK_NAME =
+		"updateBundleVersion";
 
 	protected Configuration addConfigurationPortalTest(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -206,75 +206,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		classesTask.dependsOn(copy);
 
 		return copy;
-	}
-
-	protected Task addTaskIncrementBundleVersion(Project project) {
-		Task task = project.task(INCREMENT_BUNDLE_VERSION_TASK_NAME);
-
-		Action<Task> action = new Action<Task>() {
-
-			@Override
-			public void execute(Task task) {
-				try {
-					Project project = task.getProject();
-
-					File bndFile = project.file("bnd.bnd");
-
-					if (!bndFile.exists()) {
-						if (_logger.isInfoEnabled()) {
-							_logger.info("Unable to find " + bndFile);
-						}
-
-						return;
-					}
-
-					String bndContent = new String(
-						Files.readAllBytes(bndFile.toPath()),
-						StandardCharsets.UTF_8);
-
-					VersionNumber versionNumber = VersionNumber.parse(
-						String.valueOf(project.getVersion()));
-
-					VersionNumber nextVersionNumber = new VersionNumber(
-						versionNumber.getMajor(), versionNumber.getMinor(),
-						versionNumber.getMicro() + 1,
-						versionNumber.getQualifier());
-
-					String nextBndContent = bndContent.replace(
-						Constants.BUNDLE_VERSION + ": " + versionNumber,
-						Constants.BUNDLE_VERSION + ": " + nextVersionNumber);
-
-					if (bndContent.equals(nextBndContent)) {
-						if (_logger.isWarnEnabled()) {
-							_logger.warn("Unable to increment bundle version");
-						}
-
-						return;
-					}
-
-					Files.write(
-						bndFile.toPath(),
-						nextBndContent.getBytes(StandardCharsets.UTF_8));
-
-					if (_logger.isLifecycleEnabled()) {
-						_logger.lifecycle(
-							"Bundle version of " + project +
-								" incremented to " + nextVersionNumber);
-					}
-				}
-				catch (IOException ioe) {
-					throw new GradleException(
-						"Unable to increment bundle version", ioe);
-				}
-			}
-
-		};
-
-		task.doLast(action);
-
-		task.setDescription("Increments the bundle version.");
-
-		return task;
 	}
 
 	protected Jar addTaskJarJavadoc(Project project) {
@@ -376,6 +307,78 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		jar.from(tlddocTask);
 
 		return jar;
+	}
+
+	protected Task addTaskUpdateBundleVersion(Project project) {
+		Task task = project.task(UPDATE_BUNDLE_VERSION_TASK_NAME);
+
+		Action<Task> action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				try {
+					Project project = task.getProject();
+
+					File bndFile = project.file("bnd.bnd");
+
+					if (!bndFile.exists()) {
+						if (_logger.isInfoEnabled()) {
+							_logger.info("Unable to find " + bndFile);
+						}
+
+						return;
+					}
+
+					String bndContent = new String(
+						Files.readAllBytes(bndFile.toPath()),
+						StandardCharsets.UTF_8);
+
+					VersionNumber versionNumber = VersionNumber.parse(
+						String.valueOf(project.getVersion()));
+
+					VersionNumber nextVersionNumber = new VersionNumber(
+						versionNumber.getMajor(), versionNumber.getMinor(),
+						versionNumber.getMicro() + 1,
+						versionNumber.getQualifier());
+
+					String nextBndContent = bndContent.replace(
+						Constants.BUNDLE_VERSION + ": " + versionNumber,
+						Constants.BUNDLE_VERSION + ": " + nextVersionNumber);
+
+					if (bndContent.equals(nextBndContent)) {
+						if (_logger.isWarnEnabled()) {
+							_logger.warn(
+								"Unable to update " + Constants.BUNDLE_VERSION);
+						}
+
+						return;
+					}
+
+					Files.write(
+						bndFile.toPath(),
+						nextBndContent.getBytes(StandardCharsets.UTF_8));
+
+					if (_logger.isLifecycleEnabled()) {
+						_logger.lifecycle(
+							Constants.BUNDLE_VERSION + " of " + project +
+								" updated to " + nextVersionNumber);
+					}
+				}
+				catch (IOException ioe) {
+					throw new GradleException(
+						"Unable to update " + Constants.BUNDLE_VERSION, ioe);
+				}
+			}
+
+		};
+
+		task.doLast(action);
+
+		task.setDescription(
+			"Updates the project version in the " + Constants.BUNDLE_VERSION +
+				" header.");
+
+		return task;
 	}
 
 	protected void applyConfigScripts(Project project) {
@@ -620,7 +623,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
-					addTaskIncrementBundleVersion(project);
+					addTaskUpdateBundleVersion(project);
 					configureBundleDefaultInstructions(project, publishing);
 					configureTaskJavadoc(project);
 				}
@@ -1118,11 +1121,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
-		Task incrementBundleVersionTask = taskContainer.findByName(
-			INCREMENT_BUNDLE_VERSION_TASK_NAME);
+		Task updateBundleVersionTask = taskContainer.findByName(
+			UPDATE_BUNDLE_VERSION_TASK_NAME);
 
-		if (incrementBundleVersionTask != null) {
-			uploadArchivesTask.finalizedBy(incrementBundleVersionTask);
+		if (updateBundleVersionTask != null) {
+			uploadArchivesTask.finalizedBy(updateBundleVersionTask);
 		}
 	}
 

@@ -19,10 +19,10 @@
 <%
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
 
-boolean showInListView = ParamUtil.getBoolean(request, "showInListView");
+boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader");
 %>
 
-<c:if test="<%= showInListView %>">
+<c:if test="<%= showSidebarHeader %>">
 	<div class="sidebar-header">
 		<c:choose>
 			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
@@ -117,13 +117,11 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
 					</p>
 
-					<c:if test="<%= showInListView %>">
-						<h5><strong><liferay-ui:message key="attachments" /></strong></h5>
+					<h5><strong><liferay-ui:message key="attachments" /></strong></h5>
 
-						<p>
-							<%= wikiPage.getAttachmentsFileEntriesCount() %>
-						</p>
-					</c:if>
+					<p>
+						<%= wikiPage.getAttachmentsFileEntriesCount() %>
+					</p>
 
 					<h5><strong><liferay-ui:message key="rss" /></strong></h5>
 
@@ -133,50 +131,48 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						</aui:a>
 					</p>
 
-					<c:if test="<%= showInListView %>">
-						<div class="lfr-asset-categories">
-							<liferay-ui:asset-categories-summary
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								message="categories"
+					<div class="lfr-asset-categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="categories"
+						/>
+					</div>
+
+					<div class="lfr-asset-tags">
+						<liferay-ui:asset-tags-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="tags"
+						/>
+					</div>
+
+					<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
+						<liferay-ui:ratings
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+						/>
+					</c:if>
+
+					<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+
+					<%
+					AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
+					%>
+
+					<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
 							/>
 						</div>
-
-						<div class="lfr-asset-tags">
-							<liferay-ui:asset-tags-summary
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								message="tags"
-							/>
-						</div>
-
-						<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
-							<liferay-ui:ratings
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-							/>
-						</c:if>
-
-						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-							<liferay-ui:custom-attribute-list
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								editable="<%= false %>"
-								label="<%= true %>"
-							/>
-						</liferay-ui:custom-attributes-available>
-
-						<%
-						AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
-						%>
-
-						<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
-							<div class="entry-links">
-								<liferay-ui:asset-links
-									assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
-								/>
-							</div>
-						</c:if>
 					</c:if>
 				</c:when>
 				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">

@@ -17,8 +17,10 @@ package com.liferay.portal.search.elasticsearch.internal.index;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
@@ -38,7 +40,9 @@ import org.elasticsearch.common.settings.Settings;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 /**
  * @author André de Oliveira
@@ -47,6 +51,8 @@ public class CompanyIndexFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_companyIndexFactory = createCompanyIndexFactory();
+
 		_testCluster.setUp();
 
 		_elasticsearchFixture = _testCluster.getNode(0);
@@ -129,7 +135,7 @@ public class CompanyIndexFactoryTest {
 		createIndices();
 
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
-			String.valueOf(_COMPANY_ID));
+			getTestIndexName());
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
 			mappings = getIndexResponse.mappings();
@@ -194,23 +200,34 @@ public class CompanyIndexFactoryTest {
 		assertAnalyzer(field, "brazilian");
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
 		FieldMappingAssert.assertAnalyzer(
 			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			String.valueOf(_COMPANY_ID),
-			_elasticsearchFixture.getIndicesAdminClient());
+			getTestIndexName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	protected CompanyIndexFactory createCompanyIndexFactory() {
+		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory();
+
+		companyIndexFactory.indexNameBuilder = new TestIndexNameBuilder();
+
+		return companyIndexFactory;
 	}
 
 	protected void createIndices() throws Exception {
 		AdminClient adminClient = _elasticsearchFixture.getAdminClient();
 
-		_companyIndexFactory.createIndices(adminClient, _COMPANY_ID);
+		_companyIndexFactory.createIndices(
+			adminClient, RandomTestUtil.randomLong());
 	}
 
 	protected Settings getIndexSettings() {
-		String name = String.valueOf(_COMPANY_ID);
+		String name = getTestIndexName();
 
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
 			name);
@@ -221,11 +238,17 @@ public class CompanyIndexFactoryTest {
 		return immutableOpenMap.get(name);
 	}
 
+	protected String getTestIndexName() {
+		IndexName indexName = new IndexName(testName.getMethodName());
+
+		return indexName.getName();
+	}
+
 	protected String indexOneDocument() {
 		Client client = _elasticsearchFixture.getClient();
 
 		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			String.valueOf(_COMPANY_ID),
+			getTestIndexName(),
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		String field = RandomTestUtil.randomString() + "_ja";
@@ -252,10 +275,16 @@ public class CompanyIndexFactoryTest {
 			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
-	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+	protected class TestIndexNameBuilder implements IndexNameBuilder {
 
-	private final CompanyIndexFactory _companyIndexFactory =
-		new CompanyIndexFactory();
+		@Override
+		public String getIndexName(long companyId) {
+			return getTestIndexName();
+		}
+
+	}
+
+	private CompanyIndexFactory _companyIndexFactory;
 	private ElasticsearchFixture _elasticsearchFixture;
 	private final TestCluster _testCluster = new TestCluster(1, this);
 

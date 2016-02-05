@@ -77,6 +77,4 @@ public interface BrowserSniffer {
 
 	public boolean isWindows(HttpServletRequest request);
 
-	public boolean isWml(HttpServletRequest request);
-
 }

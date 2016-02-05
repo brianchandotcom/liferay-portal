@@ -357,11 +357,6 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		return false;
 	}
 
-	@Override
-	public boolean isWml(HttpServletRequest request) {
-		return false;
-	}
-
 	protected static String parseVersion(
 		String userAgent, String[] leadings, char[] separators) {
 

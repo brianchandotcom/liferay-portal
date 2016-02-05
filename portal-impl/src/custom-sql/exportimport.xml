@@ -17,7 +17,7 @@
 				(type_ = ?)
 		]]>
 	</sql>
-	<sql id="om.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder.findByC_G_N_D_T">
+	<sql id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder.findByC_G_N_D_T">
 		<![CDATA[
 			SELECT
 				{ExportImportConfiguration.*}

@@ -20,7 +20,7 @@
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
 %>
 
-<c:if test="<%= wikiPageInfoPanelDisplayContext %>">
+<c:if test="<%= wikiPageInfoPanelDisplayContext.isShowSidebarHeader() %>">
 	<div class="sidebar-header">
 		<c:choose>
 			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">

@@ -231,11 +231,10 @@ String backURL = PortalUtil.getCurrentURL(request);
 													calendarList.get('calendars'),
 													function(item) {
 														if (activeCalendarId === item.get('calendarId')) {
-															return calendar;
+															item = calendar;
 														}
-														else {
-															return item;
-														}
+
+														return item;
 													}
 												);
 

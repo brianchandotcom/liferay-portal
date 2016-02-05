@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,8 @@ import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
+
+import java.lang.reflect.Method;
 
 import java.util.Calendar;
 import java.util.List;
@@ -66,6 +69,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = GoogleAuthorization.class
 )
 public class GoogleAuthorizationImpl implements GoogleAuthorization {
+
+	public GoogleAuthorizationImpl() {
+		try {
+			Class<?> clazz = getClass();
+
+			_doAddOrUpdateUser = clazz.getDeclaredMethod(
+				"doAddOrUpdateUser", HttpSession.class, long.class,
+				Userinfoplus.class);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
 
 	@Override
 	public User addOrUpdateUser(
@@ -94,6 +110,11 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		if (userinfoplus == null) {
 			return null;
 		}
+
+		ServiceBeanMethodInvocationFactoryUtil.proceed(
+			this, GoogleAuthorizationImpl.class, _doAddOrUpdateUser,
+			new Object[] {session, companyId, userinfoplus},
+			new String[] {"transactionAdvice"});
 
 		return doAddOrUpdateUser(session, companyId, userinfoplus);
 	}
@@ -366,6 +387,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private final Method _doAddOrUpdateUser;
 
 	@Reference
 	private UserLocalService _userLocalService;

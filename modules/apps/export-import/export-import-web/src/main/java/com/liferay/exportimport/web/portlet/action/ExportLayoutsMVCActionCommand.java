@@ -89,7 +89,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		setLayoutIds(actionRequest);
+		setLayoutIdMap(actionRequest);
 
 		try {
 			ThemeDisplay themeDisplay =
@@ -184,7 +184,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		_exportImportService = exportImportService;
 	}
 
-	protected void setLayoutIds(ActionRequest actionRequest) {
+	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -201,7 +201,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
 				groupId, privateLayout, openNodes);
 
-		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
+		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
 
 	@Reference(unbind = "-")

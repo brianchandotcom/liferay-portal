@@ -24,8 +24,8 @@ WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 List<WikiPage> incomingLinkPages = WikiPageLocalServiceUtil.getIncomingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 List<WikiPage> outgoingLinkPages = WikiPageLocalServiceUtil.getOutgoingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 
-boolean hasIncomingLinkPages = (incomingLinkPages != null) && !incomingLinkPages.isEmpty();
-boolean hasOutgoingLinkPages = (outgoingLinkPages != null) && !outgoingLinkPages.isEmpty();
+boolean hasIncomingLinkPages = ListUtil.isNotEmpty(incomingLinkPages);
+boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 %>
 
 <div>
@@ -37,11 +37,13 @@ boolean hasOutgoingLinkPages = (outgoingLinkPages != null) && !outgoingLinkPages
 
 						<%
 						for (WikiPage incomingLinkPage : incomingLinkPages) {
+							WikiNode wikiNode = incomingLinkPage.getNode();
+
 							PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 							portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 							portletURL.setParameter("redirect", currentURL);
-							portletURL.setParameter("nodeName", incomingLinkPage.getNode().getName());
+							portletURL.setParameter("nodeName", wikiNode.getName());
 							portletURL.setParameter("title", incomingLinkPage.getTitle());
 						%>
 
@@ -72,11 +74,13 @@ boolean hasOutgoingLinkPages = (outgoingLinkPages != null) && !outgoingLinkPages
 
 						<%
 						for (WikiPage outgoingLinkPage : outgoingLinkPages) {
+							WikiNode wikiNode = outgoingLinkPage.getNode();
+
 							PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 							portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 							portletURL.setParameter("redirect", currentURL);
-							portletURL.setParameter("nodeName", outgoingLinkPage.getNode().getName());
+							portletURL.setParameter("nodeName", wikiNode.getName());
 							portletURL.setParameter("title", outgoingLinkPage.getTitle());
 						%>
 

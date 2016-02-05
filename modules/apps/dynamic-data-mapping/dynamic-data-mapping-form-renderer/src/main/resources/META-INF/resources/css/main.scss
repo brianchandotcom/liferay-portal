@@ -60,6 +60,10 @@
 		.liferay-ddm-form-field-date .input-group-addon {
 			cursor: pointer;
 		}
+
+		select.form-control[multiple] {
+			height: auto;
+		}
 	}
 
 	.lfr-ddm-form-page {

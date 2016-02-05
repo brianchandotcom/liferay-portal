@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.control.menu.categories;
+package com.liferay.product.navigation.control.menu.categories;
 
-import com.liferay.control.menu.ControlMenuCategory;
-import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.ControlMenuCategory;
+import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 
 import javax.servlet.http.HttpServletRequest;
 

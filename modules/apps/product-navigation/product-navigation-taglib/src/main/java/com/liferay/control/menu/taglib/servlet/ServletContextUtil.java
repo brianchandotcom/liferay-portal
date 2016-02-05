@@ -14,8 +14,8 @@
 
 package com.liferay.control.menu.taglib.servlet;
 
-import com.liferay.control.menu.util.ControlMenuCategoryRegistry;
-import com.liferay.control.menu.util.ControlMenuEntryRegistry;
+import com.liferay.product.navigation.control.menu.util.ControlMenuCategoryRegistry;
+import com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry;
 
 import javax.servlet.ServletContext;
 

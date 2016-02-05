@@ -12,36 +12,20 @@
  * details.
  */
 
-package com.liferay.control.menu.categories;
+package com.liferay.product.navigation.control.menu;
 
-import com.liferay.control.menu.ControlMenuCategory;
-import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true,
-	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.ROOT,
-		"service.ranking:Integer=300"
-	},
-	service = ControlMenuCategory.class
-)
-public class UserControlMenuCategory implements ControlMenuCategory {
+public interface ControlMenuCategory {
 
-	@Override
-	public String getKey() {
-		return ControlMenuCategoryKeys.USER;
-	}
+	public String getKey();
 
-	@Override
-	public boolean hasAccessPermission(HttpServletRequest request) {
-		return true;
-	}
+	public boolean hasAccessPermission(HttpServletRequest request)
+		throws PortalException;
 
 }

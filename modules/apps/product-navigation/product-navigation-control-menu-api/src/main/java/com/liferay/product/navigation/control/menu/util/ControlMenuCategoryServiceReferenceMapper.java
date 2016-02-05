@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.control.menu.util;
+package com.liferay.product.navigation.control.menu.util;
 
-import com.liferay.control.menu.ControlMenuCategory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.product.navigation.control.menu.ControlMenuCategory;
 
 import org.osgi.framework.ServiceReference;
 

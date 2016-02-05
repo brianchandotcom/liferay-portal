@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.menu;
+package com.liferay.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

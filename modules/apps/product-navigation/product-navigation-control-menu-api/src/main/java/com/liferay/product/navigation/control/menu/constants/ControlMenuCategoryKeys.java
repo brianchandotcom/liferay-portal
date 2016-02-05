@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.menu.constants;
+package com.liferay.product.navigation.control.menu.constants;
 
 /**
  * @author Julio Camarero

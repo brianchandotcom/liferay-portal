@@ -14,14 +14,14 @@
 
 package com.liferay.product.navigation.control.menu.web;
 
-import com.liferay.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.control.menu.ControlMenuEntry;
-import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;

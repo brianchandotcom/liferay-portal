@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.control.menu.util;
+package com.liferay.product.navigation.control.menu.util;
 
-import com.liferay.control.menu.ControlMenuCategory;
-import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -24,6 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.product.navigation.control.menu.ControlMenuCategory;
+import com.liferay.product.navigation.control.menu.ControlMenuEntry;
 
 import java.util.Collections;
 import java.util.List;

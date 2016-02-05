@@ -14,9 +14,6 @@
 
 package com.liferay.product.navigation.control.menu.web;
 
-import com.liferay.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.control.menu.ControlMenuEntry;
-import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -25,6 +22,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

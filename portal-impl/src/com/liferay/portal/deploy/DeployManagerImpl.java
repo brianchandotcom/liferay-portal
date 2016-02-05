@@ -87,7 +87,7 @@ public class DeployManagerImpl implements DeployManager {
 				levelRequiredDeploymentContexts);
 
 			for (int j = 0; j < levelRequiredDeploymentWARFileNames.length;
-					j++) {
+				j++) {
 
 				String warFileName = levelRequiredDeploymentWARFileNames[j];
 

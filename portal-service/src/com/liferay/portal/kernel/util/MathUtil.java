@@ -93,7 +93,7 @@ public class MathUtil {
 		for (int i = 2; i <= limit; i++) {
 			if (!crossedOut[i]) {
 				for (int multiple = 2 * i; multiple < crossedOut.length;
-						multiple += i) {
+					multiple += i) {
 
 					crossedOut[multiple] = true;
 				}

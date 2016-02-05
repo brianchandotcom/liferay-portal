@@ -475,7 +475,7 @@ public class PoshiRunnerContext {
 			properties.addAll(_getTestCaseCommandProperties(classCommandName));
 
 			for (Iterator<String> iterator = properties.iterator();
-					iterator.hasNext();) {
+				iterator.hasNext();) {
 
 				String next = iterator.next();
 

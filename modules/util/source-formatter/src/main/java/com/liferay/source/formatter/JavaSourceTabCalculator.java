@@ -217,10 +217,8 @@ public class JavaSourceTabCalculator {
 			texts = new String[] {"{\n", ";\n"};
 		}
 
-		if (forClause &&
-			(line.endsWith(";") || line.endsWith("=") || line.endsWith("("))) {
-
-			texts = new String[] {"{\n"};
+		if (forClause && (line.endsWith("=") || line.endsWith("("))) {
+			texts = new String[] {"{\n", ";\n"};
 		}
 
 		int x = -1;
@@ -250,7 +248,14 @@ public class JavaSourceTabCalculator {
 				}
 			}
 
-			if (level > 0) {
+			if ((line.startsWith("for (") || line.startsWith("try (")) &&
+				matchingText.equals(";\n") && s.contains("\n")) {
+
+				if (level > 1) {
+					continue;
+				}
+			}
+			else if (level > 0) {
 				continue;
 			}
 
@@ -473,7 +478,7 @@ public class JavaSourceTabCalculator {
 			return true;
 		}
 
-		if (line.endsWith(";") && !forClause) {
+		if (line.endsWith(";")) {
 			return true;
 		}
 

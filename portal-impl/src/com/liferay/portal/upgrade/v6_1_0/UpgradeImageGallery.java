@@ -341,14 +341,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				"and scope = ? and primKey = ? and roleId = ?";
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
-				PreparedStatement ps1 = con.prepareStatement(selectSQL);) {
+			PreparedStatement ps1 = con.prepareStatement(selectSQL);) {
 
 			ps1.setString(1, igResourceName);
 
 			try (ResultSet rs = ps1.executeQuery();
-					PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							con.prepareStatement(deleteSQL))) {
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						con.prepareStatement(deleteSQL))) {
 
 				while (rs.next()) {
 					ps2.setString(1, dlResourceName);

@@ -124,8 +124,7 @@ public class PortletTCKBridge {
 
 				while (!Thread.interrupted()) {
 					try (Socket socket = serverSocket.accept();
-							OutputStream outputStream =
-								socket.getOutputStream()) {
+						OutputStream outputStream = socket.getOutputStream()) {
 
 						outputStream.write(
 							"Portlet TCK Bridge is ready".getBytes(

@@ -160,7 +160,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD];
 
 		for (int i = 0; i < PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD;
-				i++) {
+			i++) {
 
 			verifiableUUIDModels[i] = new VerifiableUUIDModel() {
 

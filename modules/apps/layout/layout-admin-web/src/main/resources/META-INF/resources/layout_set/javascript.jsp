@@ -24,4 +24,4 @@ UnicodeProperties layoutSetTypeSettings = selLayoutSet.getSettingsProperties();
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="javascript" />
 
-<aui:input cssClass="lfr-textarea-container" label="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" name="TypeSettingsProperties--javascript--" style="height: 300px; width: 300px" type="textarea" value='<%= layoutSetTypeSettings.getProperty("javascript") %>' wrap="soft" />
+<aui:input label="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" name="TypeSettingsProperties--javascript--" type="textarea" value='<%= layoutSetTypeSettings.getProperty("javascript") %>' wrap="soft" />

@@ -1,8 +1,8 @@
-Bundle-Name: Liferay Control Menu Web
-Bundle-SymbolicName: com.liferay.control.menu.web
+Bundle-Name: Liferay Product Navigation Control Menu Web
+Bundle-SymbolicName: com.liferay.product.navigation.control.menu.web
 Bundle-Version: 1.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
-Web-ContextPath: /control-menu-web
+Web-ContextPath: /product-navigation-control-menu-web
 -include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -206,52 +206,6 @@ public class LayoutTemplateImpl
 	}
 
 	@Override
-	public String getUncachedWapContent() {
-		if (_servletContext == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Cannot get latest WAP content for " + _servletContextName +
-						" " + getWapTemplatePath() +
-							" because the servlet context is null");
-			}
-
-			return _wapContent;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Getting latest WAP content for " + _servletContextName + " " +
-					getWapTemplatePath());
-		}
-
-		String wapContent = null;
-
-		try {
-			wapContent = HttpUtil.URLtoString(
-				_servletContext.getResource(getWapTemplatePath()));
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to get content at WAP template path " +
-					getWapTemplatePath() + ": " + e.getMessage());
-		}
-
-		setWapContent(wapContent);
-
-		return wapContent;
-	}
-
-	@Override
-	public String getWapContent() {
-		return _wapContent;
-	}
-
-	@Override
-	public String getWapTemplatePath() {
-		return _wapTemplatePath;
-	}
-
-	@Override
 	public boolean getWARFile() {
 		return _warFile;
 	}
@@ -259,11 +213,6 @@ public class LayoutTemplateImpl
 	@Override
 	public boolean hasSetContent() {
 		return _setContent;
-	}
-
-	@Override
-	public boolean hasSetWapContent() {
-		return _setWapContent;
 	}
 
 	@Override
@@ -330,18 +279,6 @@ public class LayoutTemplateImpl
 		_thumbnailPath = thumbnailPath;
 	}
 
-	@Override
-	public void setWapContent(String wapContent) {
-		_setWapContent = true;
-
-		_wapContent = wapContent;
-	}
-
-	@Override
-	public void setWapTemplatePath(String wapTemplatePath) {
-		_wapTemplatePath = wapTemplatePath;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateImpl.class);
 
@@ -352,13 +289,10 @@ public class LayoutTemplateImpl
 	private transient ServletContext _servletContext;
 	private String _servletContextName = StringPool.BLANK;
 	private boolean _setContent;
-	private boolean _setWapContent;
 	private boolean _standard;
 	private String _templatePath;
 	private String _themeId;
 	private String _thumbnailPath;
-	private String _wapContent;
-	private String _wapTemplatePath;
 	private boolean _warFile;
 
 }

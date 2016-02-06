@@ -136,9 +136,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				layoutRevision.getKeywords(), layoutRevision.getRobots(),
 				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-				layoutRevision.getColorSchemeId(),
-				layoutRevision.getWapThemeId(),
-				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+				layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
 
 		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
@@ -174,8 +172,6 @@ public class StagingBarPortlet extends MVCPortlet {
 					lastLayoutRevision.getIconImageId(),
 					lastLayoutRevision.getThemeId(),
 					lastLayoutRevision.getColorSchemeId(),
-					lastLayoutRevision.getWapThemeId(),
-					lastLayoutRevision.getWapColorSchemeId(),
 					lastLayoutRevision.getCss(), serviceContext);
 
 			StagingUtil.setRecentLayoutRevisionId(

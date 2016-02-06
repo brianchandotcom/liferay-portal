@@ -1212,10 +1212,6 @@ public class ThemeDisplay
 		return _tilesSelectable;
 	}
 
-	public boolean isWapTheme() {
-		return _theme.isWapTheme();
-	}
-
 	public boolean isWidget() {
 		return _widget;
 	}

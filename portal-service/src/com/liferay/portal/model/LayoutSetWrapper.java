@@ -66,8 +66,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("wapThemeId", getWapThemeId());
-		attributes.put("wapColorSchemeId", getWapColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("pageCount", getPageCount());
 		attributes.put("settings", getSettings());
@@ -138,18 +136,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
-		}
-
-		String wapThemeId = (String)attributes.get("wapThemeId");
-
-		if (wapThemeId != null) {
-			setWapThemeId(wapThemeId);
-		}
-
-		String wapColorSchemeId = (String)attributes.get("wapColorSchemeId");
-
-		if (wapColorSchemeId != null) {
-			setWapColorSchemeId(wapColorSchemeId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -462,36 +448,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme() {
-		return _layoutSet.getWapColorScheme();
-	}
-
-	/**
-	* Returns the wap color scheme ID of this layout set.
-	*
-	* @return the wap color scheme ID of this layout set
-	*/
-	@Override
-	public java.lang.String getWapColorSchemeId() {
-		return _layoutSet.getWapColorSchemeId();
-	}
-
-	@Override
-	public com.liferay.portal.model.Theme getWapTheme() {
-		return _layoutSet.getWapTheme();
-	}
-
-	/**
-	* Returns the wap theme ID of this layout set.
-	*
-	* @return the wap theme ID of this layout set
-	*/
-	@Override
-	public java.lang.String getWapThemeId() {
-		return _layoutSet.getWapThemeId();
-	}
-
-	@Override
 	public boolean hasSetModifiedDate() {
 		return _layoutSet.hasSetModifiedDate();
 	}
@@ -764,26 +720,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public void setVirtualHostname(java.lang.String virtualHostname) {
 		_layoutSet.setVirtualHostname(virtualHostname);
-	}
-
-	/**
-	* Sets the wap color scheme ID of this layout set.
-	*
-	* @param wapColorSchemeId the wap color scheme ID of this layout set
-	*/
-	@Override
-	public void setWapColorSchemeId(java.lang.String wapColorSchemeId) {
-		_layoutSet.setWapColorSchemeId(wapColorSchemeId);
-	}
-
-	/**
-	* Sets the wap theme ID of this layout set.
-	*
-	* @param wapThemeId the wap theme ID of this layout set
-	*/
-	@Override
-	public void setWapThemeId(java.lang.String wapThemeId) {
-		_layoutSet.setWapThemeId(wapThemeId);
 	}
 
 	@Override

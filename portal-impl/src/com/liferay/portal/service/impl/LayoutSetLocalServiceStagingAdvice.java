@@ -86,13 +86,12 @@ public class LayoutSetLocalServiceStagingAdvice
 				(byte[])arguments[3]);
 		}
 		else if (methodName.equals("updateLookAndFeel") &&
-				 (arguments.length == 6)) {
+				 (arguments.length == 5)) {
 
 			returnValue = updateLookAndFeel(
 				(LayoutSetLocalService)thisObject, (Long)arguments[0],
 				(Boolean)arguments[1], (String)arguments[2],
-				(String)arguments[3], (String)arguments[4],
-				(Boolean)arguments[5]);
+				(String)arguments[3], (String)arguments[4]);
 		}
 		else if (methodName.equals("updateSettings")) {
 			returnValue = updateSettings(
@@ -199,7 +198,7 @@ public class LayoutSetLocalServiceStagingAdvice
 
 	public LayoutSet updateLookAndFeel(
 			LayoutSetLocalService target, long groupId, boolean privateLayout,
-			String themeId, String colorSchemeId, String css, boolean wapTheme)
+			String themeId, String colorSchemeId, String css)
 		throws PortalException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -212,7 +211,7 @@ public class LayoutSetLocalServiceStagingAdvice
 
 		if (layoutSetBranch == null) {
 			return target.updateLookAndFeel(
-				groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+				groupId, privateLayout, themeId, colorSchemeId, css);
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());
@@ -227,15 +226,9 @@ public class LayoutSetLocalServiceStagingAdvice
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 		}
 
-		if (wapTheme) {
-			layoutSetBranch.setWapThemeId(themeId);
-			layoutSetBranch.setWapColorSchemeId(colorSchemeId);
-		}
-		else {
-			layoutSetBranch.setThemeId(themeId);
-			layoutSetBranch.setColorSchemeId(colorSchemeId);
-			layoutSetBranch.setCss(css);
-		}
+		layoutSetBranch.setThemeId(themeId);
+		layoutSetBranch.setColorSchemeId(colorSchemeId);
+		layoutSetBranch.setCss(css);
 
 		layoutSetBranchPersistence.update(layoutSetBranch);
 

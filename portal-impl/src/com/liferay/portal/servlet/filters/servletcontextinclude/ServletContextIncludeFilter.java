@@ -97,7 +97,7 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 		if (Validator.isNotNull(themeId)) {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			return ThemeLocalServiceUtil.getTheme(companyId, themeId, false);
+			return ThemeLocalServiceUtil.getTheme(companyId, themeId);
 		}
 
 		long plid = ParamUtil.getLong(request, "plid");

@@ -343,12 +343,7 @@ public class SitesImpl implements Sites {
 		LayoutLocalServiceUtil.updateLookAndFeel(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
-			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
-
-		LayoutLocalServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
-			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
+			sourceLayout.getColorSchemeId(), sourceLayout.getCss());
 	}
 
 	@Override

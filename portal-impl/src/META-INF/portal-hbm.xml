@@ -346,8 +346,6 @@
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="layoutPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -431,8 +429,6 @@
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -452,8 +448,6 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="pageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="settings_" />
@@ -478,8 +472,6 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="settings_" />
 		<property name="layoutSetPrototypeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />

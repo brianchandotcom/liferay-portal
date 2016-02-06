@@ -54,17 +54,9 @@ public interface LayoutTemplate
 
 	public String getUncachedContent() throws IOException;
 
-	public String getUncachedWapContent() throws IOException;
-
-	public String getWapContent();
-
-	public String getWapTemplatePath();
-
 	public boolean getWARFile();
 
 	public boolean hasSetContent();
-
-	public boolean hasSetWapContent();
 
 	public boolean isStandard();
 
@@ -87,9 +79,5 @@ public interface LayoutTemplate
 	public void setThemeId(String themeId);
 
 	public void setThumbnailPath(String thumbnailPath);
-
-	public void setWapContent(String wapContent);
-
-	public void setWapTemplatePath(String wapWapTemplatePath);
 
 }

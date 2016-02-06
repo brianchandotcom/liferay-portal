@@ -156,9 +156,10 @@ public class FileShortcutStagedModelDataHandler
 		Element fileShortcutElement = portletDataContext.getExportDataElement(
 			fileShortcut);
 
-		long shortcutGroupId = fileShortcut.getGroupId();
+		long fileShortcutGroupId = fileShortcut.getGroupId();
 
-		Group shortcutGroup = _groupLocalService.getGroup(shortcutGroupId);
+		Group fileShortcutGroup = _groupLocalService.getGroup(
+			fileShortcutGroupId);
 
 		long fileEntryGroupId = fileEntry.getGroupId();
 
@@ -166,7 +167,7 @@ public class FileShortcutStagedModelDataHandler
 
 		String fileEntryLiveGroupId = null;
 
-		if (shortcutGroup.isStagedRemotely()) {
+		if (fileShortcutGroup.isStagedRemotely()) {
 			UnicodeProperties typeSettingsProperties =
 				fileEntryGroup.getTypeSettingsProperties();
 

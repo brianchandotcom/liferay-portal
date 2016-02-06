@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.RenderRequestImpl;
-import com.liferay.portlet.RenderResponseFactory;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -36,9 +34,11 @@ public class EditJournalArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public EditJournalArticlePortletConfigurationIcon(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		super(portletRequest);
+
+		this._portletResponse = portletResponse;
 
 		createJournalContentDisplayContext(portletRequest);
 	}
@@ -99,17 +99,13 @@ public class EditJournalArticlePortletConfigurationIcon
 		PortletRequest portletRequest) {
 
 		try {
-			PortletResponse portletResponse = RenderResponseFactory.create(
-				(RenderRequestImpl)portletRequest, themeDisplay.getResponse(),
-				portletDisplay.getPortletName(), themeDisplay.getCompanyId());
-
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration =
 					portletDisplay.getPortletInstanceConfiguration(
 						JournalContentPortletInstanceConfiguration.class);
 
 			_journalContentDisplayContext = new JournalContentDisplayContext(
-				portletRequest, portletResponse,
+				portletRequest, _portletResponse,
 				journalContentPortletInstanceConfiguration);
 		}
 		catch (Exception e) {
@@ -121,5 +117,6 @@ public class EditJournalArticlePortletConfigurationIcon
 		EditJournalArticlePortletConfigurationIcon.class);
 
 	private JournalContentDisplayContext _journalContentDisplayContext;
+	private final PortletResponse _portletResponse;
 
 }

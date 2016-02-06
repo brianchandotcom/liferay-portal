@@ -120,12 +120,43 @@ public class DDLRecordVersionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
+		HttpPrincipal httpPrincipal, long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordVersionServiceUtil.class,
+					"getRecordVersions", _getRecordVersionsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, recordId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		HttpPrincipal httpPrincipal, long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordVersionServiceUtil.class,
-					"getRecordVersions", _getRecordVersionsParameterTypes2);
+					"getRecordVersions", _getRecordVersionsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					recordId, start, end, orderByComparator);
@@ -158,7 +189,7 @@ public class DDLRecordVersionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordVersionServiceUtil.class,
 					"getRecordVersionsCount",
-					_getRecordVersionsCountParameterTypes3);
+					_getRecordVersionsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, recordId);
 
@@ -192,10 +223,13 @@ public class DDLRecordVersionServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getRecordVersionsParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getRecordVersionsParameterTypes3 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getRecordVersionsCountParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getRecordVersionsCountParameterTypes4 = new Class[] {
 			long.class
 		};
 }

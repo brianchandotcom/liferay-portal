@@ -2189,7 +2189,7 @@
 	<command name="viewPGDetails">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 

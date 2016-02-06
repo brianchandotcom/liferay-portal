@@ -125,40 +125,40 @@
 <!--ASSET_ENTRY_TABLE-->
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-title']/a</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
 	<td></td>
 </tr><tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_1</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle1}')]//span[@class='asset-entry-title']/a)[1]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle1}')]//a)[1]</td>
 	<td></td>
 </tr><tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_2</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle2}')]//span[@class='asset-entry-title']/a)[2]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle2}')]//a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_3</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle3}')]//span[@class='asset-entry-title']/a)[3]</td>
+	<td>xpath=(///li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle3}')]//a)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-type']</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE_1</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle1}')]//span[@class='asset-entry-type'])[1]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle1}')]//h6)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE_2</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle2}')]//span[@class='asset-entry-type'])[2]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle2}')]//h6)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE_3</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle3}')]//span[@class='asset-entry-type'])[3]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle3}')]//h6)[3]</td>
 	<td></td>
 </tr>
 <tr>

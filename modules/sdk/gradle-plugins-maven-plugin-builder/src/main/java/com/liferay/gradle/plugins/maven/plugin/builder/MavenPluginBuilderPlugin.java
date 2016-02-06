@@ -167,11 +167,17 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			});
 
 		buildPluginDescriptorTask.setPomVersion(
-			new Callable<Object>() {
+			new Callable<String>() {
 
 				@Override
-				public Object call() throws Exception {
-					return project.getVersion();
+				public String call() throws Exception {
+					String version = String.valueOf(project.getVersion());
+
+					if (version.endsWith("-SNAPSHOT")) {
+						version = version.substring(0, version.length() - 9);
+					}
+
+					return version;
 				}
 
 			});

@@ -75,6 +75,50 @@
 		<execute function="AssertElementPresent" locator1="NavTab#ACTIVE_TAB_LINK" />
 	</command>
 
+	<command name="gotoViewPage">
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<elseif>
+				<not>
+					<and>
+						<isset var="defaultURL" />
+						<equals arg1="${defaultURL}" arg2="false" />
+					</and>
+				</not>
+				<then>
+					<execute macro="ProductMenuHelper#expandPanelSites" />
+
+					<execute macro="ProductMenuHelper#expandCategory">
+						<var name="category" value="Pages" />
+					</execute>
+
+					<execute macro="ProductMenuHelper#expandPagePagination" />
+
+					<var name="key_page" value="${pageName}" />
+
+					<execute function="Click" locator1="ProductMenu#PAGES" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute macro-mobile="MobileNavigator#clickReorderButton" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<if>
+			<contains string="${pageName}" substring="&apos;" />
+			<then>
+				<execute function="AssertClick" locator1="Home#PAGE_WITH_QUOTES" value1="${pageName}" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="openNodePort">
 		<execute function="Open" locator1="http://localhost:${nodePort}" />
 	</command>

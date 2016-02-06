@@ -121,7 +121,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_URL_FIELD</td>
-	<td>//input[contains(@id,'GroupPagesPortlet_url')]</td>
+	<td>//input[contains(@name,'TypeSettingsProperties--url') and contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

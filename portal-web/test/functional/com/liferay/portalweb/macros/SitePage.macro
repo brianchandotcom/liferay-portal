@@ -221,7 +221,9 @@
 			<var name="page" value="${sitePageName}" />
 		</execute>
 
-		<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
@@ -230,6 +232,8 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The first page cannot be of type Link to URL." />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 	</command>

@@ -4,6 +4,7 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>samples</short-name>
 	<tag>
+		<description>Hello World <![CDATA[<img src="../images/breadcrumb.png"]]></description>
 		<name>hello-world</name>
 		<tag-class>com.example.helloworld.HelloWorldTag</tag-class>
 		<body-content>empty</body-content>

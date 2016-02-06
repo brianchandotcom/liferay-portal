@@ -607,7 +607,7 @@
 			breakiterator="yes"
 			classpathref="project.classpath"
 			destdir="${doc.java.dir}"
-			doctitle="Liferay ${lp.version} Public API Documentation"
+			doctitle="Liferay ${lp.version} portal-service API Documentation"
 			encoding="UTF-8"
 			header="&lt;b&gt;Liferay ${lp.version}&lt;/b&gt;"
 			maxmemory="2048m"
@@ -616,7 +616,7 @@
 			stylesheetfile="${project.dir}/tools/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
-			windowtitle="Liferay ${lp.version} API"
+			windowtitle="Liferay ${lp.version} portal-service API"
 		>
 			<doclet name="com.liferay.tools.doclets.standard.Standard" path="${project.dir}/lib/development/liferay-doclet.jar">
 				<param name="-linksource" />
@@ -651,7 +651,7 @@
 			breakiterator="yes"
 			classpathref="project.classpath"
 			destdir="${doc.java.dir}"
-			doctitle="Liferay ${lp.version} Internal API Documentation"
+			doctitle="Liferay ${lp.version} portal-impl API Documentation"
 			encoding="UTF-8"
 			header="&lt;b&gt;Liferay ${lp.version}&lt;/b&gt;"
 			maxmemory="2048m"
@@ -660,7 +660,7 @@
 			stylesheetfile="${project.dir}/tools/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
-			windowtitle="Liferay ${lp.version} Internal API"
+			windowtitle="Liferay ${lp.version} portal-impl API"
 		>
 			<doclet name="com.liferay.tools.doclets.standard.Standard" path="${project.dir}/lib/development/liferay-doclet.jar">
 				<param name="-linksource" />

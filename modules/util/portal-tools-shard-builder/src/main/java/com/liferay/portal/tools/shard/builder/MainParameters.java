@@ -93,7 +93,7 @@ public class MainParameters {
 	private String _schemaName;
 
 	@Parameter(
-		description = "Write tables to separated SQL files",
+		description = "Whether to write tables to separate SQL files",
 		names = {"-W", "--write-file"}
 	)
 	private boolean _writeFile;

@@ -66,30 +66,36 @@ public class MainParameters {
 	}
 
 	@Parameter(
+		description = "Comma-separated list of company Ids to be exported",
 		names = {"-C", "--company-ids"},
 		validateWith = CompanyIdsRequiredParameterValidator.class
 	)
 	private String _companyIds;
 
 	@Parameter(
-		names = {"-O", "--output-dir"},
+		description = "Output directory", names = {"-O", "--output-dir"},
 		validateWith = WritableFileRequiredParameterValidator.class
 	)
 	private String _outputDirName;
 
 	@Parameter(
+		description = "Properties file with database configuration",
 		names = {"-P", "--properties-file"},
 		validateWith = FileRequiredParameterValidator.class
 	)
 	private String _propertiesFileName;
 
 	@Parameter(
+		description = "Schema name to be exported",
 		names = {"-S", "--schema-name"},
 		validateWith = RequiredParameterValidator.class
 	)
 	private String _schemaName;
 
-	@Parameter(names = {"-W", "--write-file"})
+	@Parameter(
+		description = "Write tables to separated SQL files",
+		names = {"-W", "--write-file"}
+	)
 	private boolean _writeFile;
 
 }

@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_ADD_NEW_PAGE</td>
-	<td>//li[@class='form-builder-page-manager-add-last-position' and contains(text(),'Add new page')]</td>
+	<td>//li[@class='form-builder-page-manager-add-last-position' and contains(text(),'Add New Page')]</td>
 	<td></td>
 </tr>
 <tr>

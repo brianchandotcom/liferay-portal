@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -50,7 +51,6 @@ import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.util.ContentUtil;
 

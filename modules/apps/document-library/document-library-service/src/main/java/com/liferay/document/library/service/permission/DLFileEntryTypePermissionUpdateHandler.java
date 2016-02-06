@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.service.permission;
 
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 
 import java.util.Date;
 
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntryType"},
+	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"},
 	service = PermissionUpdateHandler.class
 )
 public class DLFileEntryTypePermissionUpdateHandler

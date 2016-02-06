@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Properties;
 

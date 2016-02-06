@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.Serializable;
 

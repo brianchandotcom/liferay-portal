@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.test;
 
+import com.liferay.document.library.kernel.exception.NoSuchContentException;
+import com.liferay.document.library.kernel.model.DLContent;
+import com.liferay.document.library.kernel.service.DLContentLocalServiceUtil;
+import com.liferay.document.library.kernel.service.persistence.DLContentPersistence;
+import com.liferay.document.library.kernel.service.persistence.DLContentUtil;
+
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,12 +40,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-
-import com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
-import com.liferay.portlet.documentlibrary.model.DLContent;
-import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentUtil;
 
 import org.junit.After;
 import org.junit.Assert;

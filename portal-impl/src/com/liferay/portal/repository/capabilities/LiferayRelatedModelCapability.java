@@ -14,11 +14,11 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author Iván Zaera

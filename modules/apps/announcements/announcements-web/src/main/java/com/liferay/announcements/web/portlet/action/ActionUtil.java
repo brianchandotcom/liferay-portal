@@ -17,8 +17,8 @@ package com.liferay.announcements.web.portlet.action;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 

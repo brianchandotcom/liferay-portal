@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.store;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.File;
 import java.io.InputStream;

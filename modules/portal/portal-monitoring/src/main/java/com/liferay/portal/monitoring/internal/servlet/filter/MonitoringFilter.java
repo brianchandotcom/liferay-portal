@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 

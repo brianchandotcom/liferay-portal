@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portlet.documentlibrary</model-name>
+		<model-name>com.liferay.document.library.kernel</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
@@ -48,7 +48,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</model-name>
+		<model-name>com.liferay.document.library.kernel.model.DLFileEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
@@ -85,7 +85,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntryType</model-name>
+		<model-name>com.liferay.document.library.kernel.model.DLFileEntryType</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
@@ -113,7 +113,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.documentlibrary.model.DLFileShortcut</model-name>
+		<model-name>com.liferay.document.library.kernel.model.DLFileShortcut</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
@@ -141,7 +141,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.documentlibrary.model.DLFolder</model-name>
+		<model-name>com.liferay.document.library.kernel.model.DLFolder</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
@@ -183,7 +183,7 @@
 	</model-resource>
 	<model-resource>
 		<composite-model-name>
-			<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata</model-name>
+			<model-name>com.liferay.document.library.kernel.model.DLFileEntryMetadata</model-name>
 			<model-name>com.liferay.dynamic.data.mapping.model.DDMStructure</model-name>
 		</composite-model-name>
 		<portlet-ref>

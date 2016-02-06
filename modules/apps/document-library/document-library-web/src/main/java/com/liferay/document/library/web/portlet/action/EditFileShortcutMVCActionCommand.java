@@ -14,6 +14,12 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.kernel.exception.FileShortcutPermissionException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
+import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -25,12 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.documentlibrary.exception.FileShortcutPermissionException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppService;
-import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.portlet.ActionRequest;

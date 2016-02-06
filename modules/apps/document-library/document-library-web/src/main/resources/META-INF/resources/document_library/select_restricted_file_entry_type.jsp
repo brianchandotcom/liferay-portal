@@ -39,7 +39,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			keyProperty="fileEntryTypeId"
 			modelVar="fileEntryType"
 		>

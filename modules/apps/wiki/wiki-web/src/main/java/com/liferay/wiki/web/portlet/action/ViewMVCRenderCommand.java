@@ -16,7 +16,7 @@ package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 

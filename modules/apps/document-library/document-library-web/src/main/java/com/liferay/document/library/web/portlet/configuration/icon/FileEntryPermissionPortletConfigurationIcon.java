@@ -14,12 +14,12 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;

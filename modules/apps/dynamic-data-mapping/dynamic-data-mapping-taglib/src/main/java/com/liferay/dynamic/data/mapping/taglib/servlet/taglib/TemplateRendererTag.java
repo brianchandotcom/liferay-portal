@@ -18,8 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateRendererTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
 

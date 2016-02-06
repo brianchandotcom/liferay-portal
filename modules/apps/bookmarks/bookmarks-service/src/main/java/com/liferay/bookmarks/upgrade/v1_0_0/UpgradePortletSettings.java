@@ -17,7 +17,7 @@ package com.liferay.bookmarks.upgrade.v1_0_0;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Miguel Pastor

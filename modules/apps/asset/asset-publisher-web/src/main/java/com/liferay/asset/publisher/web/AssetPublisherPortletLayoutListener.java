@@ -19,6 +19,7 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
@@ -27,7 +28,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.SubscriptionLocalService;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import org.osgi.service.component.annotations.Component;

@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

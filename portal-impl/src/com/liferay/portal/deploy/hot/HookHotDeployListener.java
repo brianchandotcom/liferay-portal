@@ -14,6 +14,11 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil;
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerWrapper;
+import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -116,12 +121,7 @@ import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
-import com.liferay.portlet.documentlibrary.util.DLProcessor;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -185,7 +185,6 @@ public class HookHotDeployListener
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"control.panel.entry.class.default", "default.landing.page.path",
 		"default.regular.color.scheme.id", "default.regular.theme.id",
-		"default.wap.color.scheme.id", "default.wap.theme.id",
 		"dl.file.entry.drafts.enabled",
 		"dl.file.entry.open.in.ms.office.manual.check.in.required",
 		"dl.file.entry.processors", "dl.repository.impl",
@@ -2406,8 +2405,7 @@ public class HookHotDeployListener
 	private static final String[] _PROPS_VALUES_STRING = {
 		"company.default.locale", "company.default.time.zone",
 		"default.landing.page.path", "default.regular.color.scheme.id",
-		"default.regular.theme.id", "default.wap.color.scheme.id",
-		"default.wap.theme.id", "passwords.passwordpolicytoolkit.generator",
+		"default.regular.theme.id", "passwords.passwordpolicytoolkit.generator",
 		"passwords.passwordpolicytoolkit.static",
 		"phone.number.format.international.regexp",
 		"phone.number.format.usa.regexp", "social.activity.sets.selector",

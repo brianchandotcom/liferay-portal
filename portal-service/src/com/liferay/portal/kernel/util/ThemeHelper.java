@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.util.PortalUtil;
 
 import java.net.URL;
 

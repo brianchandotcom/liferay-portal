@@ -41,6 +41,10 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,10 +55,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.File;
 import java.io.IOException;

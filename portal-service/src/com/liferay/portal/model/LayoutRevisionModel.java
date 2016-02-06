@@ -884,36 +884,6 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
-	 * Returns the wap theme ID of this layout revision.
-	 *
-	 * @return the wap theme ID of this layout revision
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout revision.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout revision
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout revision.
-	 *
-	 * @return the wap color scheme ID of this layout revision
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout revision.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout revision
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
-
-	/**
 	 * Returns the css of this layout revision.
 	 *
 	 * @return the css of this layout revision

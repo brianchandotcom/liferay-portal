@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 

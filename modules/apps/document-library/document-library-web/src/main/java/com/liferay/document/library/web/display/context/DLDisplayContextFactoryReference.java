@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
 import com.liferay.registry.ServiceReference;
 
 /**

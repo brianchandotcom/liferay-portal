@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
 

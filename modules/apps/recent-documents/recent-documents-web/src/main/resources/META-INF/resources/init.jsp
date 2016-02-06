@@ -22,11 +22,11 @@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileRank" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
+<%@ page import="com.liferay.document.library.kernel.model.DLFileRank" %><%@
+page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
+page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <%@ page import="java.util.List" %>
 

@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.SystemEventLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;

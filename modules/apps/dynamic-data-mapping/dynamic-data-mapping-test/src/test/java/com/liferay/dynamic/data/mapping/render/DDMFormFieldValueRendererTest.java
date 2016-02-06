@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -47,7 +48,6 @@ import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

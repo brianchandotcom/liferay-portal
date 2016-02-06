@@ -15,7 +15,7 @@
 package com.liferay.workflow.definition.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

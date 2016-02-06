@@ -14,7 +14,7 @@
 
 package com.liferay.portal.module.framework;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.io.IOException;

@@ -15,12 +15,12 @@
 package com.liferay.document.library.item.selector.web.display.context;
 
 import com.liferay.document.library.item.selector.web.DLItemSelectorView;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Locale;
 

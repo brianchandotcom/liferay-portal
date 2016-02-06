@@ -14,7 +14,7 @@
 
 package com.liferay.image.gallery.display.kernel.display.context;
 
-import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
+import com.liferay.document.library.kernel.display.context.DLUIItemKeys;
 
 /**
  * @author Iván Zaera

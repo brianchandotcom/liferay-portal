@@ -20,7 +20,9 @@
 taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+<%@ page import="com.liferay.document.library.kernel.model.DLFolderConstants" %><%@
+page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchPaginationUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
@@ -36,8 +38,6 @@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView" %><%@

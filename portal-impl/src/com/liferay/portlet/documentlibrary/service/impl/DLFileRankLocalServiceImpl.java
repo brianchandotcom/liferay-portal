@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.document.library.kernel.model.DLFileRank;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.util.comparator.FileRankCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -23,10 +26,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.base.DLFileRankLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.comparator.FileRankCreateDateComparator;
 
 import java.util.List;
 

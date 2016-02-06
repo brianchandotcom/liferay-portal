@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,7 +37,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.sharepoint.dws.MemberResponseElement;
 import com.liferay.portal.sharepoint.dws.ResponseElement;
 import com.liferay.portal.sharepoint.dws.RoleResponseElement;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 

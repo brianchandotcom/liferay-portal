@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.display.context.bundle.basedisplaycontextfactory;
 
-import com.liferay.portlet.documentlibrary.display.context.BaseDLDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.kernel.display.context.BaseDLDisplayContextFactory;
+import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
 
 import org.osgi.service.component.annotations.Component;
 

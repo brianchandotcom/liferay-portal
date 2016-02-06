@@ -19,6 +19,8 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
+import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -26,8 +28,6 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
-import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 
 import java.util.HashMap;
 import java.util.List;

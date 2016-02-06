@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,10 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.upgrade.v6_1_0.util.DLFileVersionTable;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -319,7 +318,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select lockId, key_ from Lock_ where className = ?");
 
-			ps.setString(1, DLFileEntry.class.getName());
+			ps.setString(
+				1, "com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
 			rs = ps.executeQuery();
 

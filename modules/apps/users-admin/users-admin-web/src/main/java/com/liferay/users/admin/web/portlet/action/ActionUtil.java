@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -28,7 +29,6 @@ import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.PhoneServiceUtil;
 import com.liferay.portal.service.WebsiteServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 

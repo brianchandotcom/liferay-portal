@@ -84,7 +84,7 @@ if (folder != null) {
 	showPermissionsURL = DLFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = "com.liferay.portlet.documentlibrary";
+	modelResource = "com.liferay.document.library.kernel";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 

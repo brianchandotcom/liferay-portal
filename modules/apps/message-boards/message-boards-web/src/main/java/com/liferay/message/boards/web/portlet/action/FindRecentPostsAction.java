@@ -18,7 +18,7 @@ import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.PortletMode;

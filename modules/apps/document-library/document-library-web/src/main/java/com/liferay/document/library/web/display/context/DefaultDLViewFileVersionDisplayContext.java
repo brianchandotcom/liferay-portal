@@ -15,6 +15,10 @@
 package com.liferay.document.library.web.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
@@ -33,10 +37,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 
 import java.io.IOException;
 

@@ -21,7 +21,7 @@ import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.PortletRequestType;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.portlet.PortletRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.service.ServiceRequestDataSample;
-import com.liferay.portal.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

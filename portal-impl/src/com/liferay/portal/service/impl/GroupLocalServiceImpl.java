@@ -64,6 +64,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,8 +108,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -3411,24 +3411,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			layoutSet.setColorSchemeId(
 				PropsValues.
 					DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_THEME_ID)) {
-
-			layoutSet.setWapThemeId(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID)) {
-
-			layoutSet.setWapColorSchemeId(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_WAP_COLOR_SCHEME_ID);
 
 			updateLayoutSet = true;
 		}

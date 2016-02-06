@@ -18,7 +18,7 @@ import com.liferay.polls.constants.PollsWebKeys;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 

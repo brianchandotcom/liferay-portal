@@ -14,12 +14,12 @@
 
 package com.liferay.portal.sharepoint.methods;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointRequest;
 import com.liferay.portal.sharepoint.SharepointStorage;
 import com.liferay.portal.sharepoint.Tree;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 
 import java.util.ArrayList;
 import java.util.List;

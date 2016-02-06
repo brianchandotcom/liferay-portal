@@ -18,12 +18,12 @@
 <%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 <%@ page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
 <%@ page import="com.liferay.portal.kernel.util.InstancePool" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.model.Layout" %>
 <%@ page import="com.liferay.portal.model.LayoutConstants" %>
 <%@ page import="com.liferay.portal.model.LayoutSet" %>
 <%@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <%
 

@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence;
 
 import java.util.Set;
 

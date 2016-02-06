@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Zsolt Berentey

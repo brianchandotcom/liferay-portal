@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.sql.PreparedStatement;

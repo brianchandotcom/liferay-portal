@@ -16,6 +16,10 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -41,11 +45,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 
 import java.io.Serializable;
 
@@ -67,7 +68,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileVersionPersistence
- * @see com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionUtil
+ * @see com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil
  * @generated
  */
 @ProviderType

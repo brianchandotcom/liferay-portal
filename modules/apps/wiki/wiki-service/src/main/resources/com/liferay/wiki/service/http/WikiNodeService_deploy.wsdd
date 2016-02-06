@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_Wiki_WikiNodeService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.wiki.liferay.com" xmlns:cmp-ns="http://model.wiki.liferay.com" qname="ns:ArrayOf_tns16_WikiNodeSoap" type="java:com.liferay.wiki.model.WikiNodeSoap[]" innerType="cmp-ns:WikiNodeSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.wiki.liferay.com" xmlns:cmp-ns="http://model.wiki.liferay.com" qname="ns:ArrayOf_tns2_WikiNodeSoap" type="java:com.liferay.wiki.model.WikiNodeSoap[]" innerType="cmp-ns:WikiNodeSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -38,25 +38,25 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns16_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns2_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns16_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns2_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns16_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns2_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns16_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns2_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns16_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="urn:http.service.wiki.liferay.com" xmlns:tns2="http://model.wiki.liferay.com" name="getNodes" qname="operNS:getNodes" returnQName="getNodesReturn" returnType="rtns:ArrayOf_tns2_WikiNodeSoap" returnItemType="tns2:WikiNodeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>

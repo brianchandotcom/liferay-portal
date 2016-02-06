@@ -14,9 +14,9 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletURL;

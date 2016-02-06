@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
 import com.liferay.portal.security.sso.token.constants.TokenConstants;
 import com.liferay.portal.security.sso.token.events.LogoutProcessor;
 import com.liferay.portal.security.sso.token.events.LogoutProcessorType;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

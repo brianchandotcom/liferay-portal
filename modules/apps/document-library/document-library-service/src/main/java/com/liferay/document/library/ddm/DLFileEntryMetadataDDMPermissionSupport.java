@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"
 	}
 )
 public class DLFileEntryMetadataDDMPermissionSupport

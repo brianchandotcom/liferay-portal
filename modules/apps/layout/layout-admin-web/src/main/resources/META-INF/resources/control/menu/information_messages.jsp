@@ -30,8 +30,8 @@
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.model.Group" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
 <%@ page import="java.util.HashMap" %>

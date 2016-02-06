@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Adolfo Pérez

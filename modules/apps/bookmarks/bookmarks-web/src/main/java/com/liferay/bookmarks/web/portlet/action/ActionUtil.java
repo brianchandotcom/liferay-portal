@@ -25,8 +25,8 @@ import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionCheck
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;

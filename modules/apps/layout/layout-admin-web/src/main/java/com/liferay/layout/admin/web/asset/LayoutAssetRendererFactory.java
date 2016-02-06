@@ -22,11 +22,11 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.ServletContext;
 

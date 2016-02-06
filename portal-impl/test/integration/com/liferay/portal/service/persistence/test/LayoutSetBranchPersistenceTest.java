@@ -146,10 +146,6 @@ public class LayoutSetBranchPersistenceTest {
 
 		newLayoutSetBranch.setColorSchemeId(RandomTestUtil.randomString());
 
-		newLayoutSetBranch.setWapThemeId(RandomTestUtil.randomString());
-
-		newLayoutSetBranch.setWapColorSchemeId(RandomTestUtil.randomString());
-
 		newLayoutSetBranch.setCss(RandomTestUtil.randomString());
 
 		newLayoutSetBranch.setSettings(RandomTestUtil.randomString());
@@ -194,10 +190,6 @@ public class LayoutSetBranchPersistenceTest {
 			newLayoutSetBranch.getThemeId());
 		Assert.assertEquals(existingLayoutSetBranch.getColorSchemeId(),
 			newLayoutSetBranch.getColorSchemeId());
-		Assert.assertEquals(existingLayoutSetBranch.getWapThemeId(),
-			newLayoutSetBranch.getWapThemeId());
-		Assert.assertEquals(existingLayoutSetBranch.getWapColorSchemeId(),
-			newLayoutSetBranch.getWapColorSchemeId());
 		Assert.assertEquals(existingLayoutSetBranch.getCss(),
 			newLayoutSetBranch.getCss());
 		Assert.assertEquals(existingLayoutSetBranch.getSettings(),
@@ -278,8 +270,7 @@ public class LayoutSetBranchPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "privateLayout", true, "name", true,
 			"description", true, "master", true, "logoId", true, "themeId",
-			true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "layoutSetPrototypeUuid", true,
+			true, "colorSchemeId", true, "layoutSetPrototypeUuid", true,
 			"layoutSetPrototypeLinkEnabled", true);
 	}
 
@@ -529,10 +520,6 @@ public class LayoutSetBranchPersistenceTest {
 		layoutSetBranch.setThemeId(RandomTestUtil.randomString());
 
 		layoutSetBranch.setColorSchemeId(RandomTestUtil.randomString());
-
-		layoutSetBranch.setWapThemeId(RandomTestUtil.randomString());
-
-		layoutSetBranch.setWapColorSchemeId(RandomTestUtil.randomString());
 
 		layoutSetBranch.setCss(RandomTestUtil.randomString());
 

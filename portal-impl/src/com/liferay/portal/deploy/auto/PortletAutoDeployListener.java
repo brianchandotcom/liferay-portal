@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.Portal;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.File;
 

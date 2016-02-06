@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.web.display.context.logic;
 
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Iván Zaera

@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DM_DOCUMENT_TYPE</td>
+	<td>//a[contains(.,'Document Type')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_TYPE</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>

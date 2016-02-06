@@ -1781,6 +1781,10 @@
 
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 
+		<execute function="Click" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
+	
+		<execute function="AssertClick" locator1="MenuItem#DM_DOCUMENT_TYPE" value1="Document Type" />
+
 		<var name="key_marketingSelect" value="${marketingSelect}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#MARKETING_SELECT" value1="${marketingSelect}" />
@@ -2331,15 +2335,15 @@
 				<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 				<execute function="AssertTextNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 			</then>
 			<elseif>
 				<equals arg1="${documentAdded}" arg2="false" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
 					<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 				</then>
 			</elseif>
 		</if>

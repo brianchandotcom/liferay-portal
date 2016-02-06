@@ -218,9 +218,12 @@
 			<var name="page" value="${pageName}" />
 		</execute>
 
-		<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
-		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPageLayoutColumn">

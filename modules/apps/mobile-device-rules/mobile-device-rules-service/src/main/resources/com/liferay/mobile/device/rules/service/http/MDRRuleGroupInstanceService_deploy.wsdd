@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_MDR_MDRRuleGroupInstanceService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.rules.device.mobile.liferay.com" xmlns:cmp-ns="http://model.rules.device.mobile.liferay.com" qname="ns:ArrayOf_tns3_MDRRuleGroupInstanceSoap" type="java:com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap[]" innerType="cmp-ns:MDRRuleGroupInstanceSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.rules.device.mobile.liferay.com" xmlns:cmp-ns="http://model.rules.device.mobile.liferay.com" qname="ns:ArrayOf_tns16_MDRRuleGroupInstanceSoap" type="java:com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap[]" innerType="cmp-ns:MDRRuleGroupInstanceSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.rules.device.mobile.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.rules.device.mobile.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.rules.device.mobile.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -38,7 +38,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.rules.device.mobile.liferay.com" xmlns:rtns="urn:http.service.rules.device.mobile.liferay.com" xmlns:tns2="http://model.rules.device.mobile.liferay.com" name="getRuleGroupInstances" qname="operNS:getRuleGroupInstances" returnQName="getRuleGroupInstancesReturn" returnType="rtns:ArrayOf_tns3_MDRRuleGroupInstanceSoap" returnItemType="tns2:MDRRuleGroupInstanceSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.rules.device.mobile.liferay.com" xmlns:rtns="urn:http.service.rules.device.mobile.liferay.com" xmlns:tns2="http://model.rules.device.mobile.liferay.com" name="getRuleGroupInstances" qname="operNS:getRuleGroupInstances" returnQName="getRuleGroupInstancesReturn" returnType="rtns:ArrayOf_tns16_MDRRuleGroupInstanceSoap" returnItemType="tns2:MDRRuleGroupInstanceSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>

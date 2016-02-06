@@ -31,13 +31,13 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.PortalPreferencesLocalService;
 import com.liferay.portal.service.PortletPreferencesLocalService;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;

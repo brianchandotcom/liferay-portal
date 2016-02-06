@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.atom;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
@@ -25,8 +27,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLAppService;
-import com.liferay.portlet.documentlibrary.util.comparator.FolderNameComparator;
 
 import java.util.ArrayList;
 import java.util.Date;

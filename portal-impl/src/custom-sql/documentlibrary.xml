@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
@@ -15,7 +15,7 @@
 				(CAST_TEXT(DLFileVersion.extraSettings) != '')
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
@@ -28,7 +28,7 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_M_R">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_M_R">
 		<![CDATA[
 			SELECT
 				COUNT(DLFileEntry.fileEntryId) AS COUNT_VALUE
@@ -46,7 +46,7 @@
 				(DLFileEntry.repositoryId = ?) AND
 				([$STATUS$])
 		]]>
-	</sql><sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_U_F">
+	</sql><sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_U_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
@@ -62,7 +62,7 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByAnyImageId">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByAnyImageId">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -75,7 +75,7 @@
 				(DLFileEntry.custom2ImageId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByCompanyId">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByCompanyId">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -96,7 +96,7 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByDDMStructureIds">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByDDMStructureIds">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -114,7 +114,7 @@
 				))
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByMisversioned">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByMisversioned">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -128,7 +128,7 @@
 				(DLFileVersion.fileEntryId IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByNoAssets">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -141,7 +141,7 @@
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByExtraSettings">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByExtraSettings">
 		<![CDATA[
 			SELECT
 				DISTINCT {DLFileEntry.*}
@@ -157,7 +157,7 @@
 				DLFileEntry.modifiedDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByOrphanedFileEntries">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByOrphanedFileEntries">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -170,7 +170,7 @@
 				(Group_.groupId IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -190,7 +190,7 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_U_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_U_F">
 		<![CDATA[
 			SELECT
 				{DLFileEntry.*}
@@ -213,14 +213,14 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">
 		<![CDATA[
 			INNER JOIN
 				DLFileEntry ON
 					(DLFileEntry.fileEntryId = AssetEntry.classPK)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
 		<![CDATA[
 			SELECT
 				{DLFileEntryMetadata.*}
@@ -236,7 +236,7 @@
 				(DDMStructure.companyId != DLFileEntry.companyId)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder.findByNoStructures">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByNoStructures">
 		<![CDATA[
 			SELECT
 				{DLFileEntryMetadata.*}
@@ -252,7 +252,7 @@
 				(DDMStructure.structureId IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
 		<![CDATA[
 			[$BASIC_DOCUMENT$]
 			SELECT
@@ -270,7 +270,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.findByC_G_N_D_S">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder.findByC_G_N_D_S">
 		<![CDATA[
 			[$BASIC_DOCUMENT$]
 			SELECT
@@ -288,7 +288,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByStaleRanks">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder.findByStaleRanks">
 		<![CDATA[
 			SELECT
 				groupId, userId
@@ -299,7 +299,7 @@
 			HAVING COUNT(*) > ?
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByFolderId">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder.findByFolderId">
 		<![CDATA[
 			SELECT
 				{DLFileRank.*}
@@ -312,7 +312,7 @@
 				(DLFileEntry.folderId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countF_ByG_M_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countF_ByG_M_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT folderId) AS COUNT_VALUE
@@ -326,7 +326,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFE_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
@@ -338,7 +338,7 @@
 				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFS_ByG_F_A">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFS_ByG_F_A">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
@@ -352,7 +352,7 @@
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByNoAssets">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByNoAssets">
 		<![CDATA[
 			SELECT
 				{DLFolder.*}
@@ -365,7 +365,7 @@
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_M_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT
 				DISTINCT folderId AS modelFolderId, DLFolder.createDate as createDate, DLFolder.modifiedDate as modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
@@ -379,7 +379,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F">
 		<![CDATA[
 			SELECT
 				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
@@ -392,7 +392,7 @@
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFS_ByG_F_A">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A">
 		<![CDATA[
 			SELECT
 				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, fileShortcutId AS fileShortcutId, 0 AS modelFolder
@@ -408,21 +408,21 @@
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinAE_ByDLFolder">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinAE_ByDLFolder">
 		<![CDATA[
 			INNER JOIN
 				DLFolder ON
 					(DLFolder.folderId = AssetEntry.classPK)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFE_ByDLFileVersion">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinFE_ByDLFileVersion">
 		<![CDATA[
 			INNER JOIN
 				DLFileVersion ON
 					(DLFileEntry.fileEntryId = DLFileVersion.fileEntryId)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFS_ByDLFileEntry">
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinFS_ByDLFileEntry">
 		<![CDATA[
 			INNER JOIN
 				DLFileEntry ON

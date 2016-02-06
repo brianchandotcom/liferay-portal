@@ -16,8 +16,8 @@ package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;

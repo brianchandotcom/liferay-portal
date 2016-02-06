@@ -15,9 +15,9 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Brian Wing Shun Chan

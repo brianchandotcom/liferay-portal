@@ -16,9 +16,9 @@ package com.liferay.journal.content.search.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 

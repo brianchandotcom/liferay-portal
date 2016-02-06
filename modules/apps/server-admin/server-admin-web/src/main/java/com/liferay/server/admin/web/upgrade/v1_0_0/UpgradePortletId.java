@@ -14,7 +14,7 @@
 
 package com.liferay.server.admin.web.upgrade.v1_0_0;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Pei-Jung Lan

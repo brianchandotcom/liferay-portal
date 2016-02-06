@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeCompanyId;
 import com.liferay.portal.kernel.theme.ThemeCompanyLimit;
 import com.liferay.portal.kernel.theme.ThemeGroupLimit;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeHelper;
@@ -34,7 +35,6 @@ import com.liferay.portal.model.PortletDecorator;
 import com.liferay.portal.model.SpriteImage;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;

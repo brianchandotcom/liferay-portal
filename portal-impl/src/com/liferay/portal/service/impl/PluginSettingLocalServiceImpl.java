@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PluginSettingImpl;
 import com.liferay.portal.service.base.PluginSettingLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Jorge Ferrer

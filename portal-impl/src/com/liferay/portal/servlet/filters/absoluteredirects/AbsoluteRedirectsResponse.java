@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet.filters.absoluteredirects;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 

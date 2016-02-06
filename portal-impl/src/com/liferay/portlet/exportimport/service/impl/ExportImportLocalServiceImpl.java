@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.controller.ExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportControllerRegistryUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.exportimport.service.base.ExportImportLocalServiceBaseImpl;
 
 import java.io.File;

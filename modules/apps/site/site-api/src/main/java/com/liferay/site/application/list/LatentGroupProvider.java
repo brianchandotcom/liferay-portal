@@ -17,11 +17,11 @@ package com.liferay.site.application.list;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.SessionClicks;
 
 import javax.servlet.http.HttpServletRequest;
 

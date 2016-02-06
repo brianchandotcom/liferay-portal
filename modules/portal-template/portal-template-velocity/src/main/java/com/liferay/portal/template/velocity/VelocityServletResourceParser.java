@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.template.URLResourceParser;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 

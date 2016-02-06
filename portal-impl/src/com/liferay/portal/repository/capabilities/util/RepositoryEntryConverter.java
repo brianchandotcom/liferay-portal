@@ -14,8 +14,8 @@
 
 package com.liferay.portal.repository.capabilities.util;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author Iván Zaera

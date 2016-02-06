@@ -14,8 +14,8 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.struts.FindAction;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
 

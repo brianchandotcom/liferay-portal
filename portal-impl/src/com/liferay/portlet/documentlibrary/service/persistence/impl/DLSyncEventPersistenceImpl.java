@@ -16,6 +16,10 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.exception.NoSuchSyncEventException;
+import com.liferay.document.library.kernel.model.DLSyncEvent;
+import com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -37,11 +41,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 
-import com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
-import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl;
-import com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence;
 
 import java.io.Serializable;
 
@@ -62,7 +63,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DLSyncEventPersistence
- * @see com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventUtil
+ * @see com.liferay.document.library.kernel.service.persistence.DLSyncEventUtil
  * @generated
  */
 @ProviderType

@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>EDIT_WEB_CONTENT</td>
-	<td>//span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_TEMPLATE</td>
-	<td>//span[contains(.,'Edit Template')]//*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_WEB_CONTENT</td>
 	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select Web Content')]</td>
 	<td></td>

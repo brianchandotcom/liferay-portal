@@ -14,8 +14,8 @@
 
 package com.liferay.portal.verify.model;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author Brian Wing Shun Chan

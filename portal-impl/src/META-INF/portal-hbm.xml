@@ -100,18 +100,18 @@
 	<import class="com.liferay.asset.kernel.model.AssetTag" />
 	<import class="com.liferay.asset.kernel.model.AssetTagStats" />
 	<import class="com.liferay.asset.kernel.model.AssetVocabulary" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLApp" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLAppHelper" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLContent" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntry" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileEntryType" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileRank" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileShortcut" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLSyncEvent" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLTrash" />
+	<import class="com.liferay.document.library.kernel.model.DLApp" />
+	<import class="com.liferay.document.library.kernel.model.DLAppHelper" />
+	<import class="com.liferay.document.library.kernel.model.DLContent" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntryMetadata" />
+	<import class="com.liferay.document.library.kernel.model.DLFileEntryType" />
+	<import class="com.liferay.document.library.kernel.model.DLFileRank" />
+	<import class="com.liferay.document.library.kernel.model.DLFileShortcut" />
+	<import class="com.liferay.document.library.kernel.model.DLFileVersion" />
+	<import class="com.liferay.document.library.kernel.model.DLFolder" />
+	<import class="com.liferay.document.library.kernel.model.DLSyncEvent" />
+	<import class="com.liferay.document.library.kernel.model.DLTrash" />
 	<import class="com.liferay.portlet.flags.model.FlagsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsStats" />
@@ -1389,10 +1389,10 @@
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" column="path_" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<one-to-one name="dataBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" cascade="save-update" outer-join="false" constrained="true" />
+		<one-to-one name="dataBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.liferay.document.library.kernel.model.DLContentDataBlobModel" cascade="save-update" outer-join="false" constrained="true" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
 	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" table="DLContent" lazy="true">
+	<class name="com.liferay.document.library.kernel.model.DLContentDataBlobModel" table="DLContent" lazy="true">
 		<id name="contentId" column="contentId">
 			<generator class="foreign">
 				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>

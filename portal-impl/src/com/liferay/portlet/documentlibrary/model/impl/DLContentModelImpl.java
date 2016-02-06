@@ -16,6 +16,11 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.model.DLContent;
+import com.liferay.document.library.kernel.model.DLContentDataBlobModel;
+import com.liferay.document.library.kernel.model.DLContentModel;
+import com.liferay.document.library.kernel.service.DLContentLocalServiceUtil;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
@@ -27,11 +32,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.documentlibrary.model.DLContent;
-import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
-import com.liferay.portlet.documentlibrary.model.DLContentModel;
-import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -94,20 +94,20 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+				"value.object.entity.cache.enabled.com.liferay.document.library.kernel.model.DLContent"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+				"value.object.finder.cache.enabled.com.liferay.document.library.kernel.model.DLContent"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+				"value.object.column.bitmask.enabled.com.liferay.document.library.kernel.model.DLContent"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long PATH_COLUMN_BITMASK = 2L;
 	public static final long REPOSITORYID_COLUMN_BITMASK = 4L;
 	public static final long VERSION_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLContent"));
+				"lock.expiration.time.com.liferay.document.library.kernel.model.DLContent"));
 
 	public DLContentModelImpl() {
 	}
@@ -543,7 +543,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.documentlibrary.model.DLContent");
+		sb.append("com.liferay.document.library.kernel.model.DLContent");
 		sb.append("</model-name>");
 
 		sb.append(

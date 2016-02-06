@@ -66,7 +66,7 @@ public class RatingsDataTransformerUtilTest {
 		oldPortletPreferences.setValue(
 			"com.liferay.journal.model.JournalArticle_RatingsType", "like");
 		oldPortletPreferences.setValue(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+			"com.liferay.document.library.kernel.model.DLFileEntry" +
 				"_RatingsType",
 			"like");
 		oldPortletPreferences.setValue(
@@ -88,7 +88,7 @@ public class RatingsDataTransformerUtilTest {
 		unicodeProperties.setProperty(
 			"com.liferay.journal.model.JournalArticle_RatingsType", "stars");
 		unicodeProperties.setProperty(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+			"com.liferay.document.library.kernel.model.DLFileEntry" +
 				"_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
@@ -120,7 +120,7 @@ public class RatingsDataTransformerUtilTest {
 		oldUnicodeProperties.setProperty(
 			"com.liferay.journal.model.JournalArticle_RatingsType", "like");
 		oldUnicodeProperties.setProperty(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+			"com.liferay.document.library.kernel.model.DLFileEntry" +
 				"_RatingsType",
 			"like");
 		oldUnicodeProperties.setProperty(
@@ -142,7 +142,7 @@ public class RatingsDataTransformerUtilTest {
 		unicodeProperties.setProperty(
 			"com.liferay.journal.model.JournalArticle_RatingsType", "stars");
 		unicodeProperties.setProperty(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+			"com.liferay.document.library.kernel.model.DLFileEntry" +
 				"_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(

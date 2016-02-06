@@ -14,7 +14,7 @@
 
 package com.liferay.application.list.constants;
 
-import com.liferay.portal.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.PortletCategoryKeys;
 
 /**
  * @author Adolfo Pérez

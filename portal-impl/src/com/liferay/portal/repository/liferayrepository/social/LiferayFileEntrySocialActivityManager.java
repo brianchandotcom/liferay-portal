@@ -14,12 +14,12 @@
 
 package com.liferay.portal.repository.liferayrepository.social;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 /**

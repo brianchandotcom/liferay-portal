@@ -14,6 +14,7 @@
 
 package com.liferay.image.uploader.web.portlet.action;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
 import com.liferay.image.uploader.web.util.UploadImageUtil;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 
 import java.io.InputStream;
 

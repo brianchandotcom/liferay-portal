@@ -17,8 +17,7 @@ package com.liferay.portal.upgrade.v6_0_3;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,7 +79,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		List<Long> tableIds = new ArrayList<>();
 
 		try {
-			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 

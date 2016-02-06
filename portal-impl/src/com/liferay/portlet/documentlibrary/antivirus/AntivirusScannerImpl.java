@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.antivirus;
 
+import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerWrapper;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.util.PropsValues;
 

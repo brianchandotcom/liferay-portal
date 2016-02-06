@@ -16,6 +16,11 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
+import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -47,12 +52,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 
 import java.io.Serializable;
 
@@ -75,7 +76,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryTypePersistence
- * @see com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil
+ * @see com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeUtil
  * @generated
  */
 @ProviderType
@@ -3933,7 +3934,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 * @return the document library folders associated with the document library file entry type
 	 */
 	@Override
-	public List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+	public List<com.liferay.document.library.kernel.model.DLFolder> getDLFolders(
 		long pk) {
 		return getDLFolders(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -3951,7 +3952,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 * @return the range of document library folders associated with the document library file entry type
 	 */
 	@Override
-	public List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+	public List<com.liferay.document.library.kernel.model.DLFolder> getDLFolders(
 		long pk, int start, int end) {
 		return getDLFolders(pk, start, end, null);
 	}
@@ -3970,9 +3971,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 * @return the ordered range of document library folders associated with the document library file entry type
 	 */
 	@Override
-	public List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+	public List<com.liferay.document.library.kernel.model.DLFolder> getDLFolders(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
+		OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> orderByComparator) {
 		return dlFileEntryTypeToDLFolderTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
@@ -4047,7 +4048,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void addDLFolder(long pk,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		com.liferay.document.library.kernel.model.DLFolder dlFolder) {
 		DLFileEntryType dlFileEntryType = fetchByPrimaryKey(pk);
 
 		if (dlFileEntryType == null) {
@@ -4093,7 +4094,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void addDLFolders(long pk,
-		List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders) {
+		List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
 		long companyId = 0;
 
 		DLFileEntryType dlFileEntryType = fetchByPrimaryKey(pk);
@@ -4105,7 +4106,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			companyId = dlFileEntryType.getCompanyId();
 		}
 
-		for (com.liferay.portlet.documentlibrary.model.DLFolder dlFolder : dlFolders) {
+		for (com.liferay.document.library.kernel.model.DLFolder dlFolder : dlFolders) {
 			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(companyId, pk,
 				dlFolder.getPrimaryKey());
 		}
@@ -4140,7 +4141,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void removeDLFolder(long pk,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		com.liferay.document.library.kernel.model.DLFolder dlFolder) {
 		dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
 			dlFolder.getPrimaryKey());
 	}
@@ -4167,8 +4168,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void removeDLFolders(long pk,
-		List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders) {
-		for (com.liferay.portlet.documentlibrary.model.DLFolder dlFolder : dlFolders) {
+		List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
+		for (com.liferay.document.library.kernel.model.DLFolder dlFolder : dlFolders) {
 			dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
 				dlFolder.getPrimaryKey());
 		}
@@ -4222,12 +4223,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void setDLFolders(long pk,
-		List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders) {
+		List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
 		try {
 			long[] dlFolderPKs = new long[dlFolders.size()];
 
 			for (int i = 0; i < dlFolders.size(); i++) {
-				com.liferay.portlet.documentlibrary.model.DLFolder dlFolder = dlFolders.get(i);
+				com.liferay.document.library.kernel.model.DLFolder dlFolder = dlFolders.get(i);
 
 				dlFolderPKs[i] = dlFolder.getPrimaryKey();
 			}
@@ -4273,7 +4274,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
-	protected TableMapper<DLFileEntryType, com.liferay.portlet.documentlibrary.model.DLFolder> dlFileEntryTypeToDLFolderTableMapper;
+	protected TableMapper<DLFileEntryType, com.liferay.document.library.kernel.model.DLFolder> dlFileEntryTypeToDLFolderTableMapper;
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE_PKS_IN = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE fileEntryTypeId IN (";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE ";

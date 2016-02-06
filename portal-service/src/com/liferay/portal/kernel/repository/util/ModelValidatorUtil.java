@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.repository.util;
 
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 /**
  * @author Adolfo Pérez

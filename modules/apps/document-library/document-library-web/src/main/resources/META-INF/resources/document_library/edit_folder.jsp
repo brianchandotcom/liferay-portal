@@ -168,7 +168,7 @@ if (portletTitleBasedNavigation) {
 								/>
 
 								<liferay-ui:search-container-row
-									className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+									className="com.liferay.document.library.kernel.model.DLFileEntryType"
 									escapedModel="<%= true %>"
 									keyProperty="fileEntryTypeId"
 									modelVar="dlFileEntryType"

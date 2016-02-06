@@ -77,6 +77,24 @@ public abstract class BaseDBProviderTestCase {
 	}
 
 	@Test
+	public void testSerializeTableFieldString() throws Exception {
+		String serializeTableField = dbProvider.serializeTableField(
+			new String("1"));
+
+		Assert.assertEquals("'1'", serializeTableField);
+	}
+
+	@Test
+	public void testSerializeTableFieldStringShouldEscapeQuotes()
+		throws Exception {
+
+		String serializeTableField = dbProvider.serializeTableField(
+			new String("'1'"));
+
+		Assert.assertEquals("'\\'1\\''", serializeTableField);
+	}
+
+	@Test
 	public void testSerializeTableFieldTimestamp() throws Exception {
 		String serializeTableField = dbProvider.serializeTableField(
 			new Timestamp(0L));

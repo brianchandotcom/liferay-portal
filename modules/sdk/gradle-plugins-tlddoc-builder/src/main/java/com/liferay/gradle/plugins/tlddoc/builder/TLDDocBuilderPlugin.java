@@ -92,6 +92,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 		tlddocTask.dependsOn(validateTLDTask);
 		tlddocTask.setDescription("Runs Tag Library Documentation Generator.");
+		tlddocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 
 		PluginContainer pluginContainer = project.getPlugins();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.contactscenter.portlet;
+package com.liferay.contacts.web.portlet;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;

@@ -51,7 +51,7 @@ LPS-30525.
 
 <#macro control_menu>
 	<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
-		<@liferay_control_menu["control-menu"] />
+		<@liferay_product_navigation["control-menu"] />
 	</#if>
 </#macro>
 

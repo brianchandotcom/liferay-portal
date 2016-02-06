@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.contactscenter.notifications;
+package com.liferay.contacts.web.notifications;
 
 import com.liferay.contacts.util.PortletKeys;
 import com.liferay.contacts.util.SocialRelationConstants;

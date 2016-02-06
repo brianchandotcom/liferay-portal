@@ -74,7 +74,7 @@ public class ServerEventUtil {
 	}
 
 	public static synchronized void retryServerConnection(
-		long syncAccountId, long delay) {
+		long syncAccountId, long delay, TimeUnit timeUnit) {
 
 		ScheduledFuture scheduledFuture =
 			_retryServerConnectionScheduledFutures.get(syncAccountId);
@@ -88,7 +88,7 @@ public class ServerEventUtil {
 				syncAccountId, Collections.<String, Object>emptyMap());
 
 		scheduledFuture = _scheduledExecutorService.schedule(
-			retryServerConnectionEvent, delay, TimeUnit.MILLISECONDS);
+			retryServerConnectionEvent, delay, timeUnit);
 
 		_retryServerConnectionScheduledFutures.put(
 			syncAccountId, scheduledFuture);

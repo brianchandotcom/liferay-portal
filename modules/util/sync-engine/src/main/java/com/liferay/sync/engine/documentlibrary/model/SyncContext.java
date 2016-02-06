@@ -35,6 +35,9 @@ public class SyncContext {
 
 	public static final String AUTH_TYPE_USER_ID = "userId";
 
+	public static final String PREFERENCE_KEY_AUTHENTICATION_RETRY_INTERVAL =
+		"sync.client.authentication.retry.interval";
+
 	public static final String PREFERENCE_KEY_BATCH_FILE_MAX_SIZE =
 		"sync.client.batch.file.max.size";
 

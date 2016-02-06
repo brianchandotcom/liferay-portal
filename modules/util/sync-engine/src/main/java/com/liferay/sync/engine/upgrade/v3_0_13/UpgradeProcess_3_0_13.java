@@ -35,7 +35,10 @@ public class UpgradeProcess_3_0_13 extends UpgradeProcess {
 			SyncAccountService.getSyncAccountPersistence();
 
 		syncAccountPersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR;");
+			"ALTER TABLE `SyncAccount` ADD COLUMN " +
+				"authenticationRetryInterval INTEGER BEFORE batchFileMaxSize;");
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR(255);");
 	}
 
 }

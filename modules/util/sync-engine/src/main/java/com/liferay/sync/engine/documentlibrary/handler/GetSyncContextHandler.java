@@ -106,6 +106,13 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		Map<String, String> portletPreferencesMap =
 			syncContext.getPortletPreferencesMap();
 
+		int authenticationRetryInterval = GetterUtil.getInteger(
+			portletPreferencesMap.get(
+				SyncContext.PREFERENCE_KEY_AUTHENTICATION_RETRY_INTERVAL),
+			300);
+
+		syncAccount.setAuthenticationRetryInterval(authenticationRetryInterval);
+
 		int batchFileMaxSize = GetterUtil.getInteger(
 			portletPreferencesMap.get(
 				SyncContext.PREFERENCE_KEY_BATCH_FILE_MAX_SIZE));

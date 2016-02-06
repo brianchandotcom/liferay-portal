@@ -35,6 +35,7 @@ import java.net.UnknownHostException;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -88,13 +89,18 @@ public class BaseHandler implements Handler<Void> {
 
 					if (_logger.isDebugEnabled()) {
 						_logger.debug(
-							"Aborting reauthentication attempts. Retry limit " +
-								"reached.");
+							"Authentication failed. Retrying in {} seconds.",
+							syncAccount.getAuthenticationRetryInterval());
 					}
 
 					syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
 
 					SyncAccountService.update(syncAccount);
+
+					ServerEventUtil.retryServerConnection(
+						getSyncAccountId(),
+						syncAccount.getAuthenticationRetryInterval(),
+						TimeUnit.SECONDS);
 				}
 				else {
 					syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
@@ -290,7 +296,8 @@ public class BaseHandler implements Handler<Void> {
 
 		ServerEventUtil.retryServerConnection(
 			getSyncAccountId(),
-			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()));
+			ConnectionRetryUtil.incrementRetryDelay(getSyncAccountId()),
+			TimeUnit.MILLISECONDS);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

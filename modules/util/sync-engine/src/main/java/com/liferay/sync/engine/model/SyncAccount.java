@@ -71,6 +71,10 @@ public class SyncAccount extends StateAwareModel {
 		return active;
 	}
 
+	public int getAuthenticationRetryInterval() {
+		return authenticationRetryInterval;
+	}
+
 	public int getBatchFileMaxSize() {
 		return batchFileMaxSize;
 	}
@@ -164,6 +168,12 @@ public class SyncAccount extends StateAwareModel {
 		this.active = active;
 	}
 
+	public void setAuthenticationRetryInterval(
+		int authenticationRetryInterval) {
+
+		this.authenticationRetryInterval = authenticationRetryInterval;
+	}
+
 	public void setBatchFileMaxSize(int batchFileMaxSize) {
 		this.batchFileMaxSize = batchFileMaxSize;
 	}
@@ -234,6 +244,9 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected boolean active;
+
+	@DatabaseField(useGetSet = true)
+	protected int authenticationRetryInterval;
 
 	@DatabaseField(useGetSet = true)
 	protected int batchFileMaxSize;

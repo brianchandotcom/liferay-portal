@@ -30,9 +30,11 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -42,6 +44,9 @@ import org.gradle.api.tasks.TaskContainer;
 public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "tlddoc";
+
+	public static final String COPY_TLDDOC_RESOURCES_TASK_NAME =
+		"copyTLDDocResources";
 
 	public static final String TLDDOC_TASK_NAME = "tlddoc";
 
@@ -53,7 +58,9 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 		ValidateSchemaTask validateTLDTask = addTaskValidateTLD(project);
 
-		addTaskTLDDoc(project, validateTLDTask);
+		Copy copyTLDDocResourcesTask = addTaskCopyTLDDocResources(project);
+
+		addTaskTLDDoc(project, copyTLDDocResourcesTask, validateTLDTask);
 
 		configureTasksTLDDoc(project, tlddocConfiguration);
 	}
@@ -84,13 +91,38 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 			project, CONFIGURATION_NAME, "taglibrarydoc", "tlddoc", "1.3");
 	}
 
+	protected Copy addTaskCopyTLDDocResources(final Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, COPY_TLDDOC_RESOURCES_TASK_NAME, Copy.class);
+
+		copy.from("src/main/tlddoc");
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+						project, TLDDOC_TASK_NAME);
+
+					return tlddocTask.getDestinationDir();
+				}
+
+			});
+
+		copy.setDescription("Copies Tag Library documentation resources.");
+
+		return copy;
+	}
+
 	protected TLDDocTask addTaskTLDDoc(
-		Project project, ValidateSchemaTask validateTLDTask) {
+		Project project, Copy copyTLDDocResourcesTask,
+		ValidateSchemaTask validateTLDTask) {
 
 		final TLDDocTask tlddocTask = GradleUtil.addTask(
 			project, TLDDOC_TASK_NAME, TLDDocTask.class);
 
-		tlddocTask.dependsOn(validateTLDTask);
+		tlddocTask.dependsOn(copyTLDDocResourcesTask, validateTLDTask);
 		tlddocTask.setDescription("Generates Tag Library documentation.");
 		tlddocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 

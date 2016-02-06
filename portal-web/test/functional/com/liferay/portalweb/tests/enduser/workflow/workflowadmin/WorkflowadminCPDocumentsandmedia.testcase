@@ -24,7 +24,7 @@
 					<var name="portlet" value="Documents and Media" />
 				</execute>
 
-				<execute macro="Workflow#configureWorkflowViaFolderInfo">
+				<execute macro="Workflow#configureWorkflowViaPortlet">
 					<var name="workflowDefinition" value="No Workflow" />
 				</execute>
 
@@ -69,7 +69,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -145,7 +145,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -508,7 +508,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -663,7 +663,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -732,7 +732,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -1113,7 +1113,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

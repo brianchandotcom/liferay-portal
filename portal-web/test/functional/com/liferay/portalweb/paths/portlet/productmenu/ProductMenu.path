@@ -235,6 +235,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_TABS_EXPANDED_PANEL</td>
+	<td>//div[@class='collapse panel-collapse in' or @class='panel-collapse collapse in']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

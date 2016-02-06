@@ -102,6 +102,14 @@ Export-Package:\
 	org.apache.commons.beanutils.expression;version='1.8.2',\
 	org.apache.commons.beanutils.locale;version='1.8.2',\
 	org.apache.commons.beanutils.locale.converters;version='1.8.2',\
+	org.apache.commons.chain;version='1.2',\
+	org.apache.commons.chain.config;version='1.2',\
+	org.apache.commons.chain.generic;version='1.2',\
+	org.apache.commons.chain.impl;version='1.2',\
+	org.apache.commons.chain.web;version='1.2',\
+	org.apache.commons.chain.web.faces;version='1.2',\
+	org.apache.commons.chain.web.portlet;version='1.2',\
+	org.apache.commons.chain.web.servlet;version='1.2',\
 	org.apache.commons.codec;version='1.9',\
 	org.apache.commons.codec.binary;version='1.9',\
 	org.apache.commons.codec.digest;version='1.9',\
@@ -190,6 +198,7 @@ Export-Package:\
 	org.xml.sax.*;version='2.0.2',\
 	*
 Include-Resource:\
+	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.portal.app.license.api.jar,\
 	@lib/com.liferay.registry.api.jar,\
 	@../../../lib/development/jms.jar,\

@@ -281,7 +281,7 @@ public class LoadBalancerUtil {
 		throws Exception {
 
 		return getMostAvailableMasterURL(
-			"http://mirrors.lax.liferay.com/github.com/liferay" +
+			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 				"/liferay-jenkins-ee/commands/build.properties",
 			overridePropertiesArray);
 	}
@@ -606,9 +606,20 @@ public class LoadBalancerUtil {
 						if (why.endsWith("is offline")) {
 							continue;
 						}
-
-						queueCount++;
 					}
+
+					if (itemJSONObject.has("task")) {
+						JSONObject taskJSONObject =
+							itemJSONObject.getJSONObject("task");
+
+						String taskName = taskJSONObject.getString("name");
+
+						if (taskName.equals("verification-node")) {
+							continue;
+						}
+					}
+
+					queueCount++;
 				}
 			}
 

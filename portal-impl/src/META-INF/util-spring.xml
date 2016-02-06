@@ -508,16 +508,16 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
-	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
+	<bean id="com.liferay.portal.kernel.util.CustomJspRegistryUtil" class="com.liferay.portal.kernel.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.util.Portal" class="com.liferay.portal.util.PortalImpl" />
-	<bean id="com.liferay.portal.util.PortalUtil" class="com.liferay.portal.util.PortalUtil">
+	<bean id="com.liferay.portal.kernel.util.PortalUtil" class="com.liferay.portal.kernel.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />
 	</bean>
-	<bean id="com.liferay.portal.util.PortletListerFactoryUtil" class="com.liferay.portal.util.PortletListerFactoryUtil">
+	<bean id="com.liferay.portal.kernel.util.PortletListerFactoryUtil" class="com.liferay.portal.kernel.util.PortletListerFactoryUtil">
 		<property name="portletListerFactory">
 			<bean class="com.liferay.portal.util.PortletListerFactoryImpl" />
 		</property>
@@ -576,7 +576,7 @@
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
-	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
+	<bean id="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil" class="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>

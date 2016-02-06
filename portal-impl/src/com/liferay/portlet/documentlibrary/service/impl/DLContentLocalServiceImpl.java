@@ -14,16 +14,16 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.document.library.kernel.exception.NoSuchContentException;
+import com.liferay.document.library.kernel.model.DLContent;
+import com.liferay.document.library.kernel.util.comparator.DLContentVersionComparator;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
-import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.comparator.DLContentVersionComparator;
 
 import java.io.InputStream;
 

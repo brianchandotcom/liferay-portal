@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.events;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

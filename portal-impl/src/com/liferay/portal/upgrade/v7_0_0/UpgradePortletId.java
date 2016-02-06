@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Cristina González

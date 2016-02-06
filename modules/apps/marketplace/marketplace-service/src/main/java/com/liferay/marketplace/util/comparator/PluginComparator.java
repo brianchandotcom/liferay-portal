@@ -16,12 +16,12 @@ package com.liferay.marketplace.util.comparator;
 
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 

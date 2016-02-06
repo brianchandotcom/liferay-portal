@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.display.context;
 
+import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
 import com.liferay.portal.kernel.display.context.bundle.basedisplaycontextfactory.TestBaseDisplayContextFactoryImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
 
 import java.util.Iterator;
 

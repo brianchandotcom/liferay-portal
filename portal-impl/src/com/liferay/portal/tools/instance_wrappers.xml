@@ -27,6 +27,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-service/src"
+		src-file="com/liferay/portal/kernel/util/SessionClicks.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-service/src"
 		src-file="com/liferay/portal/kernel/util/StringUtil.java"
 	/>
 	<instance-wrapper
@@ -40,9 +44,5 @@
 	<instance-wrapper
 		parent-dir="../portal-service/src"
 		src-file="com/liferay/portal/kernel/util/Validator.java"
-	/>
-	<instance-wrapper
-		parent-dir="../portal-service/src"
-		src-file="com/liferay/portal/util/SessionClicks.java"
 	/>
 </instance-wrappers>

@@ -16,7 +16,7 @@ package com.liferay.wiki.configuration.definition;
 
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfigurationOverride;
 
 /**

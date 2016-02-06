@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLTrashLocalService;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -24,10 +26,8 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.portlet.documentlibrary.service.DLTrashLocalService;
 
 import javax.sql.DataSource;
 
@@ -40,7 +40,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl
- * @see com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil
+ * @see com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -49,7 +49,7 @@ public abstract class DLTrashLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil} to access the d l trash local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil} to access the d l trash local service.
 	 */
 
 	/**
@@ -94,7 +94,7 @@ public abstract class DLTrashLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the d l app helper local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService getDLAppHelperLocalService() {
+	public com.liferay.document.library.kernel.service.DLAppHelperLocalService getDLAppHelperLocalService() {
 		return dlAppHelperLocalService;
 	}
 
@@ -104,7 +104,7 @@ public abstract class DLTrashLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dlAppHelperLocalService the d l app helper local service
 	 */
 	public void setDLAppHelperLocalService(
-		com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService) {
+		com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService) {
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
@@ -148,10 +148,10 @@ public abstract class DLTrashLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLTrashLocalService.class)
+	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashLocalService.class)
 	protected DLTrashLocalService dlTrashLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService;
+	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
+	protected com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService;
 }

@@ -15,6 +15,10 @@
 package com.liferay.document.library.web.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.kernel.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,10 +26,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import java.util.Map;
 

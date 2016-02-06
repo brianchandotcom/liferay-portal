@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 /**
  * @author Adolfo Pérez

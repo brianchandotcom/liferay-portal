@@ -16,16 +16,16 @@ package com.liferay.portal.servlet;
 
 import static org.mockito.Mockito.verify;
 
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;

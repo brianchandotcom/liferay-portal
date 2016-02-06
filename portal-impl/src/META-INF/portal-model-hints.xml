@@ -264,6 +264,202 @@
 		<field name="name" type="String" />
 		<field name="currentId" type="long" />
 	</model>
+	<model name="com.liferay.document.library.kernel.model.DLContent">
+		<field name="contentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="path" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="version" type="String" />
+		<field name="data" type="Blob" />
+		<field name="size" type="long" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileEntry">
+		<field name="uuid" type="String" />
+		<field name="fileEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="fileName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="extension" type="String" />
+		<field name="mimeType" type="String" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="extraSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="fileEntryTypeId" type="long" />
+		<field name="version" type="String" />
+		<field name="size" type="long" />
+		<field name="readCount" type="int" />
+		<field name="smallImageId" type="long" />
+		<field name="largeImageId" type="long" />
+		<field name="custom1ImageId" type="long" />
+		<field name="custom2ImageId" type="long" />
+		<field name="manualCheckInRequired" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileEntryMetadata">
+		<field name="uuid" type="String" />
+		<field name="fileEntryMetadataId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="DDMStorageId" type="long" />
+		<field name="DDMStructureId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="fileVersionId" type="long" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileEntryType">
+		<field name="uuid" type="String" />
+		<field name="fileEntryTypeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fileEntryTypeKey" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileRank">
+		<field name="fileRankId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="fileEntryId" type="long" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">
+		<field name="uuid" type="String" />
+		<field name="fileShortcutId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="toFileEntryId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFileVersion">
+		<field name="uuid" type="String" />
+		<field name="fileVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="fileName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="extension" type="String" />
+		<field name="mimeType" type="String" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="changeLog" type="String" />
+		<field name="extraSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="fileEntryTypeId" type="long" />
+		<field name="version" type="String" />
+		<field name="size" type="long" />
+		<field name="checksum" type="String" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLFolder">
+		<field name="uuid" type="String" />
+		<field name="folderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="mountPoint" type="boolean" />
+		<field name="parentFolderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="lastPostDate" type="Date" />
+		<field name="defaultFileEntryTypeId" type="long" />
+		<field name="hidden" type="boolean" />
+		<field name="restrictionType" type="int" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.document.library.kernel.model.DLSyncEvent">
+		<field name="syncEventId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedTime" type="long" />
+		<field name="event" type="String" />
+		<field name="type" type="String" />
+		<field name="typePK" type="long" />
+	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoColumn">
 		<field name="columnId" type="long" />
 		<field name="companyId" type="long" />
@@ -748,8 +944,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -849,8 +1043,6 @@
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -870,8 +1062,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -903,8 +1093,6 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
-		<field name="wapThemeId" type="String" />
-		<field name="wapColorSchemeId" type="String" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1646,202 +1834,6 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="workflowInstanceId" type="long" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLContent">
-		<field name="contentId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="repositoryId" type="long" />
-		<field name="path" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="version" type="String" />
-		<field name="data" type="Blob" />
-		<field name="size" type="long" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntry">
-		<field name="uuid" type="String" />
-		<field name="fileEntryId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="repositoryId" type="long" />
-		<field name="folderId" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="name" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="fileName" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="extension" type="String" />
-		<field name="mimeType" type="String" />
-		<field name="title" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="extraSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="fileEntryTypeId" type="long" />
-		<field name="version" type="String" />
-		<field name="size" type="long" />
-		<field name="readCount" type="int" />
-		<field name="smallImageId" type="long" />
-		<field name="largeImageId" type="long" />
-		<field name="custom1ImageId" type="long" />
-		<field name="custom2ImageId" type="long" />
-		<field name="manualCheckInRequired" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
-		<field name="uuid" type="String" />
-		<field name="fileEntryMetadataId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="DDMStorageId" type="long" />
-		<field name="DDMStructureId" type="long" />
-		<field name="fileEntryId" type="long" />
-		<field name="fileVersionId" type="long" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryType">
-		<field name="uuid" type="String" />
-		<field name="fileEntryTypeId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="fileEntryTypeKey" type="String" />
-		<field name="name" type="String" localized="true">
-			<hint name="max-length">4000</hint>
-			<validator name="required" />
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="lastPublishDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileRank">
-		<field name="fileRankId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="fileEntryId" type="long" />
-		<field name="active" type="boolean" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileShortcut">
-		<field name="uuid" type="String" />
-		<field name="fileShortcutId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="repositoryId" type="long" />
-		<field name="folderId" type="long" />
-		<field name="toFileEntryId" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="active" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFileVersion">
-		<field name="uuid" type="String" />
-		<field name="fileVersionId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="repositoryId" type="long" />
-		<field name="folderId" type="long" />
-		<field name="fileEntryId" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="fileName" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="extension" type="String" />
-		<field name="mimeType" type="String" />
-		<field name="title" type="String">
-			<hint name="max-length">255</hint>
-			<validator name="required" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="changeLog" type="String" />
-		<field name="extraSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="fileEntryTypeId" type="long" />
-		<field name="version" type="String" />
-		<field name="size" type="long" />
-		<field name="checksum" type="String" />
-		<field name="lastPublishDate" type="Date" />
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLFolder">
-		<field name="uuid" type="String" />
-		<field name="folderId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="repositoryId" type="long" />
-		<field name="mountPoint" type="boolean" />
-		<field name="parentFolderId" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="name" type="String">
-			<hint name="max-length">255</hint>
-			<validator name="required" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="lastPostDate" type="Date" />
-		<field name="defaultFileEntryTypeId" type="long" />
-		<field name="hidden" type="boolean" />
-		<field name="restrictionType" type="int" />
-		<field name="lastPublishDate" type="Date" />
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLSyncEvent">
-		<field name="syncEventId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="modifiedTime" type="long" />
-		<field name="event" type="String" />
-		<field name="type" type="String" />
-		<field name="typePK" type="long" />
 	</model>
 	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
 		<field name="uuid" type="String" />

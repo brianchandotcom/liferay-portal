@@ -23,7 +23,7 @@
 <%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext" %>
 <%@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");

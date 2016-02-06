@@ -14,6 +14,8 @@
 
 package com.liferay.portal.store.db;
 
+import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -25,8 +27,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.MethodInterceptorInvocationHandler;
-import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.TempFileMethodInterceptor;
 
 import java.io.File;

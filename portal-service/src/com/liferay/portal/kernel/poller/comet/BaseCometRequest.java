@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.poller.comet;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

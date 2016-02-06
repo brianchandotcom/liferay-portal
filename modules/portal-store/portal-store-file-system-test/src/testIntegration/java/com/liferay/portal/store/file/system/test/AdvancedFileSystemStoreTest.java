@@ -15,12 +15,12 @@
 package com.liferay.portal.store.file.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.store.StoreWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.module.framework.test.ModuleFrameworkTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.store.StoreWrapper;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import java.util.Collection;

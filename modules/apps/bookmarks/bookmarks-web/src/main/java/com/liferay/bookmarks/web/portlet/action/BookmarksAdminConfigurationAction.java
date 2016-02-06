@@ -17,11 +17,11 @@ package com.liferay.bookmarks.web.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

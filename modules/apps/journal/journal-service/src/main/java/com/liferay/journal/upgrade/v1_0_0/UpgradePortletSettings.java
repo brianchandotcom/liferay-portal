@@ -17,7 +17,7 @@ package com.liferay.journal.upgrade.v1_0_0;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Juergen Kappler

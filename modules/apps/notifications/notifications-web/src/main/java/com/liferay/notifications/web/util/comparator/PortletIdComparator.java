@@ -14,7 +14,7 @@
 
 package com.liferay.notifications.web.util.comparator;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Comparator;
 import java.util.Locale;

@@ -16,14 +16,14 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
  */
 @ProviderType
 public class DLFolderServiceHttp {
-	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder addFolder(
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
 		boolean mountPoint, long parentFolderId, java.lang.String name,
 		java.lang.String description,
@@ -82,7 +82,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -274,7 +274,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder getFolder(
 		HttpPrincipal httpPrincipal, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -296,7 +296,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -305,7 +305,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder getFolder(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -329,7 +329,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -370,10 +370,10 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> getFolders(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		int status, boolean includeMountfolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -395,7 +395,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFolder>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -404,10 +404,10 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> getFolders(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -429,7 +429,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFolder>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -712,10 +712,10 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> getMountFolders(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -737,7 +737,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFolder>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1021,7 +1021,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder moveFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1045,7 +1045,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1143,7 +1143,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId,
@@ -1172,7 +1172,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1181,7 +1181,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
@@ -1209,7 +1209,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1218,7 +1218,7 @@ public class DLFolderServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+	public static com.liferay.document.library.kernel.model.DLFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
@@ -1245,7 +1245,7 @@ public class DLFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFolder)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

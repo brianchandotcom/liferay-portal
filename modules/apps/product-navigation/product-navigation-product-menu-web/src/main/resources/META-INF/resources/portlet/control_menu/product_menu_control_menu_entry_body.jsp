@@ -19,7 +19,7 @@
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.util.SessionClicks" %>
+<%@ page import="com.liferay.portal.kernel.util.SessionClicks" %>
 <%@ page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys" %>
 
 <liferay-theme:defineObjects />

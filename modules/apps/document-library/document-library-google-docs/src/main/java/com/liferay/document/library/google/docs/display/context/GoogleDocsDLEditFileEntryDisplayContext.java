@@ -15,16 +15,16 @@
 package com.liferay.document.library.google.docs.display.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
+import com.liferay.document.library.kernel.display.context.BaseDLEditFileEntryDisplayContext;
+import com.liferay.document.library.kernel.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.kernel.display.context.DLFilePicker;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.display.context.BaseDLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import java.util.UUID;
 

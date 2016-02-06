@@ -16,6 +16,11 @@ package com.liferay.portal.store.file.system;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -26,11 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.documentlibrary.store.Store;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

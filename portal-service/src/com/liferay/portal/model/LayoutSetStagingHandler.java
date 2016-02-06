@@ -171,10 +171,6 @@ public class LayoutSetStagingHandler
 		_layoutSetBranchMethodNames.add("getSettings");
 		_layoutSetBranchMethodNames.add("getTheme");
 		_layoutSetBranchMethodNames.add("getThemeId");
-		_layoutSetBranchMethodNames.add("getWapColorScheme");
-		_layoutSetBranchMethodNames.add("getWapColorSchemeId");
-		_layoutSetBranchMethodNames.add("getWapTheme");
-		_layoutSetBranchMethodNames.add("getWapThemeId");
 		_layoutSetBranchMethodNames.add("getSettingsProperties");
 		_layoutSetBranchMethodNames.add("getSettings");
 		_layoutSetBranchMethodNames.add("getStagingLogoId");
@@ -193,8 +189,6 @@ public class LayoutSetStagingHandler
 		_layoutSetBranchMethodNames.add("setSettings");
 		_layoutSetBranchMethodNames.add("setSettingsProperties");
 		_layoutSetBranchMethodNames.add("setThemeId");
-		_layoutSetBranchMethodNames.add("setWapColorSchemeId");
-		_layoutSetBranchMethodNames.add("setWapThemeId");
 	}
 
 	private final LayoutSet _layoutSet;

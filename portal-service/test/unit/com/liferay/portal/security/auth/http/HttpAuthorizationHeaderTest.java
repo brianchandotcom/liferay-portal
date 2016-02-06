@@ -16,7 +16,7 @@ package com.liferay.portal.security.auth.http;
 
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.util.Portal;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.junit.Assert;
 import org.junit.Test;

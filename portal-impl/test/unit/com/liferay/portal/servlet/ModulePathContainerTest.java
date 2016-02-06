@@ -14,9 +14,9 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.util.PortletKeys;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

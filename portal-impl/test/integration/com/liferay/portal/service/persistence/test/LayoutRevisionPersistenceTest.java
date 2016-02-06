@@ -162,10 +162,6 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setColorSchemeId(RandomTestUtil.randomString());
 
-		newLayoutRevision.setWapThemeId(RandomTestUtil.randomString());
-
-		newLayoutRevision.setWapColorSchemeId(RandomTestUtil.randomString());
-
 		newLayoutRevision.setCss(RandomTestUtil.randomString());
 
 		newLayoutRevision.setStatus(RandomTestUtil.nextInt());
@@ -230,10 +226,6 @@ public class LayoutRevisionPersistenceTest {
 			newLayoutRevision.getThemeId());
 		Assert.assertEquals(existingLayoutRevision.getColorSchemeId(),
 			newLayoutRevision.getColorSchemeId());
-		Assert.assertEquals(existingLayoutRevision.getWapThemeId(),
-			newLayoutRevision.getWapThemeId());
-		Assert.assertEquals(existingLayoutRevision.getWapColorSchemeId(),
-			newLayoutRevision.getWapColorSchemeId());
 		Assert.assertEquals(existingLayoutRevision.getCss(),
 			newLayoutRevision.getCss());
 		Assert.assertEquals(existingLayoutRevision.getStatus(),
@@ -364,9 +356,8 @@ public class LayoutRevisionPersistenceTest {
 			true, "major", true, "plid", true, "privateLayout", true, "name",
 			true, "title", true, "description", true, "keywords", true,
 			"robots", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"colorSchemeId", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -633,10 +624,6 @@ public class LayoutRevisionPersistenceTest {
 		layoutRevision.setThemeId(RandomTestUtil.randomString());
 
 		layoutRevision.setColorSchemeId(RandomTestUtil.randomString());
-
-		layoutRevision.setWapThemeId(RandomTestUtil.randomString());
-
-		layoutRevision.setWapColorSchemeId(RandomTestUtil.randomString());
 
 		layoutRevision.setCss(RandomTestUtil.randomString());
 

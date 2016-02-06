@@ -16,6 +16,9 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.model.DLFileRank;
+import com.liferay.document.library.kernel.model.DLFileRankModel;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
@@ -31,9 +34,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.documentlibrary.model.DLFileRankModel;
 
 import java.io.Serializable;
 
@@ -94,13 +94,13 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
+				"value.object.entity.cache.enabled.com.liferay.document.library.kernel.model.DLFileRank"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
+				"value.object.finder.cache.enabled.com.liferay.document.library.kernel.model.DLFileRank"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
+				"value.object.column.bitmask.enabled.com.liferay.document.library.kernel.model.DLFileRank"),
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
@@ -109,7 +109,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final long USERID_COLUMN_BITMASK = 16L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileRank"));
+				"lock.expiration.time.com.liferay.document.library.kernel.model.DLFileRank"));
 
 	public DLFileRankModelImpl() {
 	}
@@ -539,7 +539,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.documentlibrary.model.DLFileRank");
+		sb.append("com.liferay.document.library.kernel.model.DLFileRank");
 		sb.append("</model-name>");
 
 		sb.append(

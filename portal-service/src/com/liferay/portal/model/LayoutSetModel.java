@@ -215,36 +215,6 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
-	 * Returns the wap theme ID of this layout set.
-	 *
-	 * @return the wap theme ID of this layout set
-	 */
-	@AutoEscape
-	public String getWapThemeId();
-
-	/**
-	 * Sets the wap theme ID of this layout set.
-	 *
-	 * @param wapThemeId the wap theme ID of this layout set
-	 */
-	public void setWapThemeId(String wapThemeId);
-
-	/**
-	 * Returns the wap color scheme ID of this layout set.
-	 *
-	 * @return the wap color scheme ID of this layout set
-	 */
-	@AutoEscape
-	public String getWapColorSchemeId();
-
-	/**
-	 * Sets the wap color scheme ID of this layout set.
-	 *
-	 * @param wapColorSchemeId the wap color scheme ID of this layout set
-	 */
-	public void setWapColorSchemeId(String wapColorSchemeId);
-
-	/**
 	 * Returns the css of this layout set.
 	 *
 	 * @return the css of this layout set

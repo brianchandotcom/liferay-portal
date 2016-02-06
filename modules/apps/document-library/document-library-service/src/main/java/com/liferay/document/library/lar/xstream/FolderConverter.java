@@ -14,13 +14,13 @@
 
 package com.liferay.document.library.lar.xstream;
 
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.xstream.BaseXStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamHierarchicalStreamReader;
 import com.liferay.exportimport.kernel.xstream.XStreamUnmarshallingContext;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.repository.proxy.FolderProxyBean;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 
 import java.util.LinkedList;

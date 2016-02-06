@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"default.model.resource.name=true",
-		"model.class.name=com.liferay.portlet.documentlibrary.util.RawMetadataProcessor"
+		"model.class.name=com.liferay.document.library.kernel.util.RawMetadataProcessor"
 	}
 )
 public class RawMetadataProcessorDDMPermissionSupport

@@ -16,7 +16,7 @@ package com.liferay.workflow.instance.web.portlet.routes;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Ivan Zaera

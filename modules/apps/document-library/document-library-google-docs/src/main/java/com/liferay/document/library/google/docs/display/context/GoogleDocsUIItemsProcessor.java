@@ -17,6 +17,7 @@ package com.liferay.document.library.google.docs.display.context;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.util.ResourceUtil;
+import com.liferay.document.library.kernel.display.context.DLUIItemKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 
 import java.util.List;
 import java.util.ResourceBundle;

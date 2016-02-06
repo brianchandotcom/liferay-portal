@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.messaging;
 
+import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 
 /**
  * @author Alexander Chow

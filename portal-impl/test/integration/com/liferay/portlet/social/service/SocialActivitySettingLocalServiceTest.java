@@ -15,8 +15,8 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalServiceUtil;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;

@@ -16,6 +16,11 @@ package com.liferay.portlet.documentlibrary.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.model.DLContent;
+import com.liferay.document.library.kernel.model.DLContentDataBlobModel;
+import com.liferay.document.library.kernel.service.DLContentLocalService;
+import com.liferay.document.library.kernel.service.persistence.DLContentPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -34,15 +39,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.portlet.documentlibrary.model.DLContent;
-import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
-import com.liferay.portlet.documentlibrary.service.DLContentLocalService;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 
 import java.io.Serializable;
 
@@ -59,7 +59,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl
- * @see com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil
+ * @see com.liferay.document.library.kernel.service.DLContentLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -68,7 +68,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil} to access the document library content local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.document.library.kernel.service.DLContentLocalServiceUtil} to access the document library content local service.
 	 */
 
 	/**
@@ -225,7 +225,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLContentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLContent.class);
 
@@ -238,7 +238,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLContentLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLContent.class);
 
@@ -249,7 +249,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLContentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLContent.class);
 
@@ -385,13 +385,13 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLContent",
+		persistedModelLocalServiceRegistry.register("com.liferay.document.library.kernel.model.DLContent",
 			dlContentLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.documentlibrary.model.DLContent");
+			"com.liferay.document.library.kernel.model.DLContent");
 	}
 
 	/**
@@ -436,7 +436,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLContentLocalService.class)
+	@BeanReference(type = com.liferay.document.library.kernel.service.DLContentLocalService.class)
 	protected DLContentLocalService dlContentLocalService;
 	@BeanReference(type = DLContentPersistence.class)
 	protected DLContentPersistence dlContentPersistence;

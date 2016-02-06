@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
+import com.liferay.document.library.kernel.model.DLFileRank;
+import com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankPersistence;
 
 import java.util.Set;
 

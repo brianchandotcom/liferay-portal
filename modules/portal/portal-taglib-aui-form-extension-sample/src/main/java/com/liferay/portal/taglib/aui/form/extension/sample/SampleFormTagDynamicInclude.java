@@ -15,7 +15,7 @@
 package com.liferay.portal.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicInclude;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;

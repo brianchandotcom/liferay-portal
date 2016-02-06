@@ -16,11 +16,11 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.rmi.RemoteException;
 

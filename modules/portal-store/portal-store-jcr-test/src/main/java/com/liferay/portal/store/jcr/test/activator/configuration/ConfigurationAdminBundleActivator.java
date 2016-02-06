@@ -14,8 +14,8 @@
 
 package com.liferay.portal.store.jcr.test.activator.configuration;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.IOException;
 

@@ -16,8 +16,8 @@ package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

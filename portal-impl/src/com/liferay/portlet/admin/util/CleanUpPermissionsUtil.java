@@ -15,6 +15,7 @@
 package com.liferay.portlet.admin.util;
 
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -24,7 +25,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 

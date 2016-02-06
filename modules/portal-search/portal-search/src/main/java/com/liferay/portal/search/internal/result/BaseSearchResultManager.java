@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
 

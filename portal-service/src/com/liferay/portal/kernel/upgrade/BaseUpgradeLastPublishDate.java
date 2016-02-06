@@ -16,10 +16,10 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.util.PortletKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -15,7 +15,7 @@
 package com.liferay.journal.terms.of.use;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.util.TermsOfUseContentProvider;
+import com.liferay.portal.kernel.util.TermsOfUseContentProvider;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

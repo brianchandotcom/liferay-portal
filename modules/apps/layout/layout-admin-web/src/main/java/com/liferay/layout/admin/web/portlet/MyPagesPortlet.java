@@ -16,10 +16,10 @@ package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.sites.action.ActionUtil;
 

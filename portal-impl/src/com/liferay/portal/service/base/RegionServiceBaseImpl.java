@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.RegionService;
 import com.liferay.portal.service.persistence.CountryPersistence;
 import com.liferay.portal.service.persistence.RegionPersistence;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
 

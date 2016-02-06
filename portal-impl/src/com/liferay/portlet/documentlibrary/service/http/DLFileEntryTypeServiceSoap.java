@@ -16,11 +16,11 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -37,10 +37,10 @@ import java.util.Map;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap}.
+ * is translated to an array of {@link com.liferay.document.library.kernel.model.DLFileEntryTypeSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.documentlibrary.model.DLFileEntryType}, that is translated to a
- * {@link com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap}. Methods that SOAP cannot
+ * {@link com.liferay.document.library.kernel.model.DLFileEntryType}, that is translated to a
+ * {@link com.liferay.document.library.kernel.model.DLFileEntryTypeSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -63,13 +63,13 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryTypeServiceHttp
- * @see com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap
+ * @see com.liferay.document.library.kernel.model.DLFileEntryTypeSoap
  * @see DLFileEntryTypeServiceUtil
  * @generated
  */
 @ProviderType
 public class DLFileEntryTypeServiceSoap {
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap addFileEntryType(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap addFileEntryType(
 		long groupId, java.lang.String fileEntryTypeKey,
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
@@ -83,12 +83,12 @@ public class DLFileEntryTypeServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portlet.documentlibrary.model.DLFileEntryType returnValue =
+			com.liferay.document.library.kernel.model.DLFileEntryType returnValue =
 				DLFileEntryTypeServiceUtil.addFileEntryType(groupId,
 					fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
 					serviceContext);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -97,17 +97,17 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap addFileEntryType(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap addFileEntryType(
 		long groupId, java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.documentlibrary.model.DLFileEntryType returnValue =
+			com.liferay.document.library.kernel.model.DLFileEntryType returnValue =
 				DLFileEntryTypeServiceUtil.addFileEntryType(groupId, name,
 					description, ddmStructureIds, serviceContext);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -128,13 +128,13 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap getFileEntryType(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap getFileEntryType(
 		long fileEntryTypeId) throws RemoteException {
 		try {
-			com.liferay.portlet.documentlibrary.model.DLFileEntryType returnValue =
+			com.liferay.document.library.kernel.model.DLFileEntryType returnValue =
 				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -143,13 +143,13 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFileEntryTypes(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap[] getFileEntryTypes(
 		long[] groupIds) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+			java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> returnValue =
 				DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -158,14 +158,14 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFileEntryTypes(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap[] getFileEntryTypes(
 		long[] groupIds, int start, int end) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+			java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> returnValue =
 				DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, start,
 					end);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -188,15 +188,15 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFolderFileEntryTypes(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap[] getFolderFileEntryTypes(
 		long[] groupIds, long folderId, boolean inherited)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+			java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> returnValue =
 				DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(groupIds,
 					folderId, inherited);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -205,18 +205,18 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] search(
+	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap[] search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+			java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> returnValue =
 				DLFileEntryTypeServiceUtil.search(companyId, groupIds,
 					keywords, includeBasicFileEntryType, start, end,
 					orderByComparator);
 
-			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+			return com.liferay.document.library.kernel.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

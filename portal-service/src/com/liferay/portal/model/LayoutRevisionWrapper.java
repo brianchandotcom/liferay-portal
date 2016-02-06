@@ -81,8 +81,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("wapThemeId", getWapThemeId());
-		attributes.put("wapColorSchemeId", getWapColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -237,18 +235,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
-		}
-
-		String wapThemeId = (String)attributes.get("wapThemeId");
-
-		if (wapThemeId != null) {
-			setWapThemeId(wapThemeId);
-		}
-
-		String wapColorSchemeId = (String)attributes.get("wapColorSchemeId");
-
-		if (wapColorSchemeId != null) {
-			setWapColorSchemeId(wapColorSchemeId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -1050,38 +1036,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getWapColorScheme();
-	}
-
-	/**
-	* Returns the wap color scheme ID of this layout revision.
-	*
-	* @return the wap color scheme ID of this layout revision
-	*/
-	@Override
-	public java.lang.String getWapColorSchemeId() {
-		return _layoutRevision.getWapColorSchemeId();
-	}
-
-	@Override
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getWapTheme();
-	}
-
-	/**
-	* Returns the wap theme ID of this layout revision.
-	*
-	* @return the wap theme ID of this layout revision
-	*/
-	@Override
-	public java.lang.String getWapThemeId() {
-		return _layoutRevision.getWapThemeId();
-	}
-
-	@Override
 	public boolean hasChildren() {
 		return _layoutRevision.hasChildren();
 	}
@@ -1184,11 +1138,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	@Override
 	public boolean isInheritLookAndFeel() {
 		return _layoutRevision.isInheritLookAndFeel();
-	}
-
-	@Override
-	public boolean isInheritWapLookAndFeel() {
-		return _layoutRevision.isInheritWapLookAndFeel();
 	}
 
 	/**
@@ -1869,26 +1818,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_layoutRevision.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the wap color scheme ID of this layout revision.
-	*
-	* @param wapColorSchemeId the wap color scheme ID of this layout revision
-	*/
-	@Override
-	public void setWapColorSchemeId(java.lang.String wapColorSchemeId) {
-		_layoutRevision.setWapColorSchemeId(wapColorSchemeId);
-	}
-
-	/**
-	* Sets the wap theme ID of this layout revision.
-	*
-	* @param wapThemeId the wap theme ID of this layout revision
-	*/
-	@Override
-	public void setWapThemeId(java.lang.String wapThemeId) {
-		_layoutRevision.setWapThemeId(wapThemeId);
 	}
 
 	@Override

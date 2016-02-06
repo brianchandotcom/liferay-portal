@@ -14,13 +14,13 @@
 
 package com.liferay.document.library.web.social;
 
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;

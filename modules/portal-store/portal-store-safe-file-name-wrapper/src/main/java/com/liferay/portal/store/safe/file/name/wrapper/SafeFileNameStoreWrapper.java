@@ -14,11 +14,11 @@
 
 package com.liferay.portal.store.safe.file.name.wrapper;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.StoreWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.store.Store;
-import com.liferay.portlet.documentlibrary.store.StoreWrapper;
 
 import java.io.File;
 import java.io.InputStream;

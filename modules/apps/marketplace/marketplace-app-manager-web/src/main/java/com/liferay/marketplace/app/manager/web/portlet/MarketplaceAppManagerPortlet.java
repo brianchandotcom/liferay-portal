@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -53,7 +54,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.PluginSettingLocalService;
 import com.liferay.portal.service.PluginSettingService;
 import com.liferay.portal.service.PortletService;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;

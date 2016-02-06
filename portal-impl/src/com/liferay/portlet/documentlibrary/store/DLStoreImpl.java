@@ -14,6 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil;
+import com.liferay.document.library.kernel.exception.DirectoryNameException;
+import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -21,9 +26,6 @@ import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
-import com.liferay.portlet.documentlibrary.exception.DirectoryNameException;
-import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.File;
 import java.io.IOException;

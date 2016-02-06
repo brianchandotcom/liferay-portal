@@ -16,14 +16,14 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
  */
 @ProviderType
 public class DLFileEntryServiceHttp {
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry addFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
 		long folderId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
@@ -87,7 +87,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -96,7 +96,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+	public static com.liferay.document.library.kernel.model.DLFileVersion cancelCheckOut(
 		HttpPrincipal httpPrincipal, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -119,7 +119,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileVersion)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -186,7 +186,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -210,7 +210,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -219,7 +219,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, java.lang.String owner,
 		long expirationTime,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -244,7 +244,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -253,7 +253,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry copyFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
 		long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -278,7 +278,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -371,7 +371,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
+	public static com.liferay.document.library.kernel.model.DLFileEntry fetchFileEntryByImageId(
 		HttpPrincipal httpPrincipal, long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -394,7 +394,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -468,10 +468,10 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -493,7 +493,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -502,10 +502,10 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -527,7 +527,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -536,10 +536,10 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -561,7 +561,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -570,10 +570,10 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		java.lang.String[] mimeTypes, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -595,7 +595,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -712,7 +712,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry getFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -735,7 +735,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -744,7 +744,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry getFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -768,7 +768,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -777,7 +777,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByUuidAndGroupId(
+	public static com.liferay.document.library.kernel.model.DLFileEntry getFileEntryByUuidAndGroupId(
 		HttpPrincipal httpPrincipal, java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -801,7 +801,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -865,10 +865,10 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getGroupFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long rootFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -890,7 +890,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -899,11 +899,11 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getGroupFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long repositoryId, long rootFolderId, java.lang.String[] mimeTypes,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -926,7 +926,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -935,11 +935,11 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getGroupFileEntries(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long rootFolderId, java.lang.String[] mimeTypes, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -961,7 +961,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry>)returnObj;
+			return (java.util.List<com.liferay.document.library.kernel.model.DLFileEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1170,7 +1170,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry moveFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1194,7 +1194,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1332,7 +1332,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
+	public static com.liferay.document.library.kernel.model.DLFileEntry updateFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
@@ -1363,7 +1363,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1372,7 +1372,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(
+	public static com.liferay.document.library.kernel.model.DLFileEntry updateStatus(
 		HttpPrincipal httpPrincipal, long userId, long fileVersionId,
 		int status, com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
@@ -1397,7 +1397,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

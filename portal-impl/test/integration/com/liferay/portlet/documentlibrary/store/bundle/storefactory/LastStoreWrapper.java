@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store.bundle.storefactory;
 
-import com.liferay.portlet.documentlibrary.store.Store;
-import com.liferay.portlet.documentlibrary.store.StoreWrapper;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.StoreWrapper;
 
 import org.osgi.service.component.annotations.Component;
 

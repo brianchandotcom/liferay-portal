@@ -17,7 +17,7 @@ package com.liferay.portal.apache.bridges.struts;
 import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.servlet.ServletContextProvider;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletContext;

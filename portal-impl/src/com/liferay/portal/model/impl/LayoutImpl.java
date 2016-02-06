@@ -31,9 +31,12 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,9 +66,6 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
-import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLImpl;
 
@@ -343,7 +343,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			Theme theme = getTheme();
 
 			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), theme.getThemeId(), getColorSchemeId(), false);
+				getCompanyId(), theme.getThemeId(), getColorSchemeId());
 		}
 	}
 
@@ -377,7 +377,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		if (!inheritLookAndFeel) {
 			try {
-				Theme theme = getTheme(device);
+				Theme theme = getTheme();
 
 				return theme.getSetting(key);
 			}
@@ -726,8 +726,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return layoutSet.getTheme();
 		}
 		else {
-			return ThemeLocalServiceUtil.getTheme(
-				getCompanyId(), getThemeId(), false);
+			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 		}
 	}
 
@@ -785,35 +784,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		return typeSettingsProperties.getProperty(key, defaultValue);
-	}
-
-	@Override
-	public ColorScheme getWapColorScheme() throws PortalException {
-		if (isInheritLookAndFeel()) {
-			LayoutSet layoutSet = getLayoutSet();
-
-			return layoutSet.getWapColorScheme();
-		}
-		else {
-			Theme theme = getWapTheme();
-
-			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), theme.getThemeId(), getWapColorSchemeId(),
-				true);
-		}
-	}
-
-	@Override
-	public Theme getWapTheme() throws PortalException {
-		if (isInheritWapLookAndFeel()) {
-			LayoutSet layoutSet = getLayoutSet();
-
-			return layoutSet.getWapTheme();
-		}
-		else {
-			return ThemeLocalServiceUtil.getTheme(
-				getCompanyId(), getWapThemeId(), true);
-		}
 	}
 
 	/**
@@ -982,17 +952,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public boolean isInheritLookAndFeel() {
 		if (Validator.isNull(getThemeId()) ||
 			Validator.isNull(getColorSchemeId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isInheritWapLookAndFeel() {
-		if (Validator.isNull(getWapThemeId()) ||
-			Validator.isNull(getWapColorSchemeId())) {
 
 			return true;
 		}
@@ -1244,15 +1203,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
-	}
-
-	protected Theme getTheme(String device) throws PortalException {
-		if (device.equals("regular")) {
-			return getTheme();
-		}
-		else {
-			return getWapTheme();
-		}
 	}
 
 	private static String _getFriendlyURLKeyword(String friendlyURL) {

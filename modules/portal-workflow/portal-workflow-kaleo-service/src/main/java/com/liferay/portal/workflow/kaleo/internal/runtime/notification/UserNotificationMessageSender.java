@@ -16,10 +16,10 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;

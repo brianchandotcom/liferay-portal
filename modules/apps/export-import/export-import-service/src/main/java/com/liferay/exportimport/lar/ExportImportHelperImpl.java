@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.lar;
 
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -87,7 +88,6 @@ import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.SystemEventLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 
 import java.io.File;
 import java.io.InputStream;

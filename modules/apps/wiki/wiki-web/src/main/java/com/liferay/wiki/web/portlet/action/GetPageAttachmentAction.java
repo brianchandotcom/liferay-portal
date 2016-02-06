@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.portlet.action;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,10 +25,9 @@ import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.impl.mediawiki.MediaWikiImporter;

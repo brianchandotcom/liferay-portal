@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.contactscenter.social;
+package com.liferay.contacts.web.social;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;

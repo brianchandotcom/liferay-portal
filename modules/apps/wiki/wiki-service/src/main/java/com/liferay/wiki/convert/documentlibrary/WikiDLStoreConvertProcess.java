@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.convert.documentlibrary;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DLStoreConverter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 

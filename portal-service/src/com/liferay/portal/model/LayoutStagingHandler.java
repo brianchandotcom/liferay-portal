@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 
 import java.io.Serializable;
 
@@ -236,8 +236,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			layout.getDescription(), layout.getKeywords(), layout.getRobots(),
 			layout.getTypeSettings(), layout.getIconImage(),
 			layout.getIconImageId(), layout.getThemeId(),
-			layout.getColorSchemeId(), layout.getWapThemeId(),
-			layout.getWapColorSchemeId(), layout.getCss(), serviceContext);
+			layout.getColorSchemeId(), layout.getCss(), serviceContext);
 
 		boolean explicitCreation = ParamUtil.getBoolean(
 			serviceContext, "explicitCreation");
@@ -308,15 +307,10 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		_layoutRevisionMethodNames.add("getTypeSettings");
 		_layoutRevisionMethodNames.add("getTypeSettingsProperties");
 		_layoutRevisionMethodNames.add("getTypeSettingsProperty");
-		_layoutRevisionMethodNames.add("getWapColorScheme");
-		_layoutRevisionMethodNames.add("getWapColorSchemeId");
-		_layoutRevisionMethodNames.add("getWapTheme");
-		_layoutRevisionMethodNames.add("getWapThemeId");
 		_layoutRevisionMethodNames.add("isContentDisplayPage");
 		_layoutRevisionMethodNames.add("isEscapedModel");
 		_layoutRevisionMethodNames.add("isIconImage");
 		_layoutRevisionMethodNames.add("isInheritLookAndFeel");
-		_layoutRevisionMethodNames.add("isInheritWapLookAndFeel");
 		_layoutRevisionMethodNames.add("setColorSchemeId");
 		_layoutRevisionMethodNames.add("setCss");
 		_layoutRevisionMethodNames.add("setDescription");
@@ -336,8 +330,6 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		_layoutRevisionMethodNames.add("setTitleMap");
 		_layoutRevisionMethodNames.add("setTypeSettings");
 		_layoutRevisionMethodNames.add("setTypeSettingsProperties");
-		_layoutRevisionMethodNames.add("setWapColorSchemeId");
-		_layoutRevisionMethodNames.add("setWapThemeId");
 	}
 
 	private final Layout _layout;

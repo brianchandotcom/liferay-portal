@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 
 /**
  * @author Alexander Chow

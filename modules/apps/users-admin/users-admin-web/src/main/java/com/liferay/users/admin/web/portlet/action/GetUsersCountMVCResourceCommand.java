@@ -16,11 +16,11 @@ package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.io.PrintWriter;

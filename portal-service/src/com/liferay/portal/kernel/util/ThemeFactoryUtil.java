@@ -30,14 +30,6 @@ public class ThemeFactoryUtil {
 		return getThemeFactory().getDefaultRegularThemeId(companyId);
 	}
 
-	public static Theme getDefaultWapTheme(long companyId) {
-		return getThemeFactory().getDefaultWapTheme(companyId);
-	}
-
-	public static String getDefaultWapThemeId(long companyId) {
-		return getThemeFactory().getDefaultWapThemeId(companyId);
-	}
-
 	public static Theme getTheme() {
 		return getThemeFactory().getTheme();
 	}

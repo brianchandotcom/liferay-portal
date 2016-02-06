@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,7 +48,6 @@ import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -322,8 +322,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
-			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 
 		return layout;
@@ -369,8 +368,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
-			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 
 		return layout;
@@ -379,7 +377,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	public Layout updateLookAndFeel(
 			LayoutLocalService layoutLocalService, long groupId,
 			boolean privateLayout, long layoutId, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			String colorSchemeId, String css)
 		throws PortalException {
 
 		Layout layout = LayoutUtil.findByG_P_L(
@@ -392,19 +390,12 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		if (layoutRevision == null) {
 			return layoutLocalService.updateLookAndFeel(
-				groupId, privateLayout, layoutId, themeId, colorSchemeId, css,
-				wapTheme);
+				groupId, privateLayout, layoutId, themeId, colorSchemeId, css);
 		}
 
-		if (wapTheme) {
-			layout.setWapThemeId(themeId);
-			layout.setWapColorSchemeId(colorSchemeId);
-		}
-		else {
-			layout.setThemeId(themeId);
-			layout.setColorSchemeId(colorSchemeId);
-			layout.setCss(css);
-		}
+		layout.setThemeId(themeId);
+		layout.setColorSchemeId(colorSchemeId);
+		layout.setCss(css);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -426,8 +417,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
-			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 
 		return layout;
@@ -468,8 +458,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
 			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
-			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
+			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 
 		return layout;

@@ -332,19 +332,18 @@ public class LayoutSetLocalServiceUtil {
 
 	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLookAndFeel(groupId, privateLayout, themeId,
-			colorSchemeId, css, wapTheme);
+			colorSchemeId, css);
 	}
 
 	public static void updateLookAndFeel(long groupId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css, boolean wapTheme)
+		java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateLookAndFeel(groupId, themeId, colorSchemeId, css, wapTheme);
+		getService().updateLookAndFeel(groupId, themeId, colorSchemeId, css);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updatePageCount(

@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.systemevent;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Zsolt Berentey

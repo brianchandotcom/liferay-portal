@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store.bundle.storefactory;
 
-import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.documentlibrary.store.Store;
+import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
 
 import java.io.InputStream;
 

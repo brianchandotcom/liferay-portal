@@ -16,7 +16,7 @@ package com.liferay.document.library.web.upgrade.v1_0_0;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 /**

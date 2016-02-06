@@ -15,7 +15,7 @@
 package com.liferay.workflow.task.web.portlet;
 
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry;
 
 import org.osgi.service.component.annotations.Component;

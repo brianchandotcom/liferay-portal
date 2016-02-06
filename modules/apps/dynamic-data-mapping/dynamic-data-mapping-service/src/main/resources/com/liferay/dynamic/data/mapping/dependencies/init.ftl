@@ -138,7 +138,7 @@
 	</#if>
 </#function>
 
-<#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.portlet.documentlibrary.service.DLAppService")>
+<#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.document.library.kernel.service.DLAppService")>
 
 <#function getFileEntry fileJSONObject>
 	<#assign fileEntryUUID = fileJSONObject.getString("uuid")>

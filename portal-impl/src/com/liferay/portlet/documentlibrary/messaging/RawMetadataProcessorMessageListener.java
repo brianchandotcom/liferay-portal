@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.messaging;
 
+import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 
 /**
  * @author Miguel Pastor

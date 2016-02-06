@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.PortletPreferencesService;
@@ -28,7 +29,6 @@ import com.liferay.portal.service.persistence.PortletItemPersistence;
 import com.liferay.portal.service.persistence.PortletPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
 

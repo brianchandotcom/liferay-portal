@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -43,6 +47,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -60,11 +65,6 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.http.GroupServiceHttp;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.portlet.exportimport.service.base.StagingLocalServiceBaseImpl;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -905,8 +905,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setIconImageId(layoutRevision.getIconImageId());
 		layout.setThemeId(layoutRevision.getThemeId());
 		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
-		layout.setWapThemeId(layoutRevision.getWapThemeId());
-		layout.setWapColorSchemeId(layoutRevision.getWapColorSchemeId());
 		layout.setCss(layoutRevision.getCss());
 
 		return layoutLocalService.updateLayout(layout);

@@ -57,15 +57,13 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ColorScheme getColorScheme(
-		long companyId, java.lang.String themeId,
-		java.lang.String colorSchemeId, boolean wapTheme) {
-		return getService()
-				   .getColorScheme(companyId, themeId, colorSchemeId, wapTheme);
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		return getService().getColorScheme(companyId, themeId, colorSchemeId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
-		long companyId, long userId, boolean wapTheme) {
-		return getService().getControlPanelThemes(companyId, userId, wapTheme);
+		long companyId, long userId) {
+		return getService().getControlPanelThemes(companyId, userId);
 	}
 
 	/**
@@ -78,8 +76,8 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Theme> getPageThemes(
-		long companyId, long groupId, long userId, boolean wapTheme) {
-		return getService().getPageThemes(companyId, groupId, userId, wapTheme);
+		long companyId, long groupId, long userId) {
+		return getService().getPageThemes(companyId, groupId, userId);
 	}
 
 	public static com.liferay.portal.model.PortletDecorator getPortletDecorator(
@@ -90,8 +88,8 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Theme getTheme(long companyId,
-		java.lang.String themeId, boolean wapTheme) {
-		return getService().getTheme(companyId, themeId, wapTheme);
+		java.lang.String themeId) {
+		return getService().getTheme(companyId, themeId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Theme> getThemes(

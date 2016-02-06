@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,7 +37,6 @@ import com.liferay.portal.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 import java.util.Locale;

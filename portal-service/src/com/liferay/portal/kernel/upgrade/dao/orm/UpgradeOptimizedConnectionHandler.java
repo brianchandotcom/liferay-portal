@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.dao.orm;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

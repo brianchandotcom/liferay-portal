@@ -28,10 +28,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 		String tabs1Names = "portlet-configuration,text-styles,background-styles,border-styles,margin-and-padding,advanced-styling";
 
-		if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
-			tabs1Names = tabs1Names + ",wap-styling";
-		}
-
 		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 
 		decimalFormatSymbols.setDecimalSeparator('.');
@@ -453,17 +449,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 								<aui:input cssClass="lfr-textarea-container" label="enter-your-custom-css" name="lfr-custom-css" type="textarea" />
 							</aui:fieldset>
-
-							<c:if test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
-								<aui:fieldset id="wap-styling">
-									<aui:input label="title" name="lfr-wap-title" />
-
-									<aui:select label="initial-window-state" name="lfr-wap-initial-window-state">
-										<aui:option label="minimized" value="MINIMIZED" />
-										<aui:option label="normal" value="NORMAL" />
-									</aui:select>
-								</aui:fieldset>
-							</c:if>
 						</div>
 					</aui:fieldset-group>
 				</aui:form>

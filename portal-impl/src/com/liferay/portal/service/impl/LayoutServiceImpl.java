@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -50,7 +51,6 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutServiceBaseImpl;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1651,13 +1651,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  themeId the primary key of the layout's new theme
 	 * @param  colorSchemeId the primary key of the layout's new color scheme
 	 * @param  css the layout's new CSS
-	 * @param  wapTheme whether the theme is for WAP browsers
 	 * @return the updated layout
 	 */
 	@Override
 	public Layout updateLookAndFeel(
 			long groupId, boolean privateLayout, long layoutId, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			String colorSchemeId, String css)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
@@ -1670,8 +1669,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return layoutLocalService.updateLookAndFeel(
-			groupId, privateLayout, layoutId, themeId, colorSchemeId, css,
-			wapTheme);
+			groupId, privateLayout, layoutId, themeId, colorSchemeId, css);
 	}
 
 	/**

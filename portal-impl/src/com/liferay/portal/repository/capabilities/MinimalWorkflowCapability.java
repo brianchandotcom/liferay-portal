@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -26,7 +27,6 @@ import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepos
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.io.Serializable;
 

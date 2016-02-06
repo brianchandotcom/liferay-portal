@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.upgrade.util.DateUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialActivityTable;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialRelationTable;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialRequestTable;
-import com.liferay.portal.util.PortalUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

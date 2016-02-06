@@ -14,10 +14,10 @@
 
 package com.liferay.portal.store.s3.test.activator.configuration;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.IOException;
 

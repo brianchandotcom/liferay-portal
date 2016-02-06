@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.document.library.kernel.exception.RepositoryNameException;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.exception.InvalidRepositoryException;
 import com.liferay.portal.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -35,8 +37,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.exception.RepositoryNameException;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.util.List;
 

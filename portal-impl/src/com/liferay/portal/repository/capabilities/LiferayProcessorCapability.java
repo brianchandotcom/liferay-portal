@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.util.concurrent.Callable;
 

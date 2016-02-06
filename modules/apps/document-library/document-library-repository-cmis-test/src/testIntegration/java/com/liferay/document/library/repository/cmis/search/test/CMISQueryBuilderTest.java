@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 

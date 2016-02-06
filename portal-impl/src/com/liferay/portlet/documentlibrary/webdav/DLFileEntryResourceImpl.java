@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webdav.BaseResourceImpl;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.io.InputStream;
 

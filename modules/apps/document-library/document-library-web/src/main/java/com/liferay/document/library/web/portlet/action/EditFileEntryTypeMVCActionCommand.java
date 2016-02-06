@@ -14,6 +14,12 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
+import com.liferay.document.library.kernel.exception.NoSuchMetadataSetException;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
@@ -33,6 +39,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,13 +47,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchMetadataSetException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLAppService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 
 import java.util.Locale;
 import java.util.Map;

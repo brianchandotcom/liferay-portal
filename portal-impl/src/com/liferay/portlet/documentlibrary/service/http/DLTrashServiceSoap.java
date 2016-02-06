@@ -16,10 +16,10 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 
 import java.rmi.RemoteException;
 

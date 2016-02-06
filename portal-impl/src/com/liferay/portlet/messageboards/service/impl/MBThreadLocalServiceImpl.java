@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
@@ -51,7 +52,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;

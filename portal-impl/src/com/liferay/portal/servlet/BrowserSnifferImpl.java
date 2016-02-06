@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -333,24 +332,6 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
-	public boolean isWap(HttpServletRequest request) {
-		return isWapXhtml(request);
-	}
-
-	@Override
-	public boolean isWapXhtml(HttpServletRequest request) {
-		String accept = getAccept(request);
-
-		if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED &&
-			accept.contains("wap.xhtml")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isWebKit(HttpServletRequest request) {
 		String userAgent = getUserAgent(request);
 
@@ -371,17 +352,6 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 			if (userAgent.contains(windowsAlias)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isWml(HttpServletRequest request) {
-		String accept = getAccept(request);
-
-		if (accept.contains("wap.wml")) {
-			return true;
 		}
 
 		return false;

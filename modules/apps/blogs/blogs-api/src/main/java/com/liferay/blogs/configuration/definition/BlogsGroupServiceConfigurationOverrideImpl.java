@@ -16,7 +16,7 @@ package com.liferay.blogs.configuration.definition;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceConfigurationOverride;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Sergio González

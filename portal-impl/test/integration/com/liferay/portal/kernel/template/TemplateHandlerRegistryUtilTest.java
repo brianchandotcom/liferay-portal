@@ -17,9 +17,9 @@ package com.liferay.portal.kernel.template;
 import com.liferay.portal.kernel.template.bundle.templatehandlerregistryutil.TestTemplateHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 

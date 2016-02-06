@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,7 +28,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.service.LayoutSetLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.lang.reflect.InvocationTargetException;
@@ -86,13 +86,12 @@ public class LayoutSetLocalServiceStagingAdvice
 				(byte[])arguments[3]);
 		}
 		else if (methodName.equals("updateLookAndFeel") &&
-				 (arguments.length == 6)) {
+				 (arguments.length == 5)) {
 
 			returnValue = updateLookAndFeel(
 				(LayoutSetLocalService)thisObject, (Long)arguments[0],
 				(Boolean)arguments[1], (String)arguments[2],
-				(String)arguments[3], (String)arguments[4],
-				(Boolean)arguments[5]);
+				(String)arguments[3], (String)arguments[4]);
 		}
 		else if (methodName.equals("updateSettings")) {
 			returnValue = updateSettings(
@@ -199,7 +198,7 @@ public class LayoutSetLocalServiceStagingAdvice
 
 	public LayoutSet updateLookAndFeel(
 			LayoutSetLocalService target, long groupId, boolean privateLayout,
-			String themeId, String colorSchemeId, String css, boolean wapTheme)
+			String themeId, String colorSchemeId, String css)
 		throws PortalException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -212,7 +211,7 @@ public class LayoutSetLocalServiceStagingAdvice
 
 		if (layoutSetBranch == null) {
 			return target.updateLookAndFeel(
-				groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+				groupId, privateLayout, themeId, colorSchemeId, css);
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());
@@ -227,15 +226,9 @@ public class LayoutSetLocalServiceStagingAdvice
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 		}
 
-		if (wapTheme) {
-			layoutSetBranch.setWapThemeId(themeId);
-			layoutSetBranch.setWapColorSchemeId(colorSchemeId);
-		}
-		else {
-			layoutSetBranch.setThemeId(themeId);
-			layoutSetBranch.setColorSchemeId(colorSchemeId);
-			layoutSetBranch.setCss(css);
-		}
+		layoutSetBranch.setThemeId(themeId);
+		layoutSetBranch.setColorSchemeId(colorSchemeId);
+		layoutSetBranch.setCss(css);
 
 		layoutSetBranchPersistence.update(layoutSetBranch);
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.antivirus;
 
+import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
+
 import java.io.File;
 import java.io.InputStream;
 

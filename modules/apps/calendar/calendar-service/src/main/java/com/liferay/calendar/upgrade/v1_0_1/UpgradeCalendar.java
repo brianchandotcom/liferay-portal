@@ -16,11 +16,11 @@ package com.liferay.calendar.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

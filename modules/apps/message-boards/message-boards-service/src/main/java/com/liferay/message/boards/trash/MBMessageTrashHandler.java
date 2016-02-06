@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.trash;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 import com.liferay.trash.kernel.model.TrashEntry;

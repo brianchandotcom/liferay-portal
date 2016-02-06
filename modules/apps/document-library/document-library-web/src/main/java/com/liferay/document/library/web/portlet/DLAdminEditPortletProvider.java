@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 		"model.class.name=com.liferay.portal.kernel.repository.model.Folder",
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut",
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
 	},
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

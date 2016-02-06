@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.util.comparator;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author William Newbury

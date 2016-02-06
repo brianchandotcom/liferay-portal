@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;

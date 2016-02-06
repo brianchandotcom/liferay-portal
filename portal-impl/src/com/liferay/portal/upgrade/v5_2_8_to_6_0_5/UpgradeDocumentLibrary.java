@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v5_2_8_to_6_0_5;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,8 +33,6 @@ import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryTitleUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryVersionUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileShortcutTable;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

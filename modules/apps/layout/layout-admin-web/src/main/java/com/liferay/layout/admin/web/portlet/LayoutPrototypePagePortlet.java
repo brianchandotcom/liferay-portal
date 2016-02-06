@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.portlet;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.mobile.device.rules.service.MDRActionService;
@@ -30,7 +31,6 @@ import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.LayoutSetService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ThemeLocalService;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.Portlet;
 

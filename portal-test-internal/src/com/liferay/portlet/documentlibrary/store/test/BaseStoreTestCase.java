@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.store.test;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileException;
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.store.BaseStore;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -21,10 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.BufferedInputStream;

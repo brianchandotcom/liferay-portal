@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 	}
 )
 public class DLPortletRatingsDefinition implements PortletRatingsDefinition {

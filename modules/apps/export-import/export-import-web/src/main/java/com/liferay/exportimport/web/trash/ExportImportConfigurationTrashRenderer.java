@@ -17,7 +17,7 @@ package com.liferay.exportimport.web.trash;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.web.constants.ExportImportWebKeys;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Locale;
 

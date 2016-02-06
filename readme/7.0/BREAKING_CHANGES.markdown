@@ -3672,3 +3672,46 @@ update the tag namespace from `aui:button-item` to `aui:button`.
 #### Why was this change made?
 
 This change was made as a part of the ongoing strategy to remove deprecated code.
+
+---------------------------------------
+
+### The wap functionality has been removed
+- **Date:** 2016-Feb-05
+- **JIRA Ticket:** LPS-62920
+
+#### What changed?
+
+The functionality was removed.
+
+#### Who is affected?
+
+Everyone that uses this functionality.
+
+#### How should I update my code?
+
+If you are using any of this methods(updateLookAndFeel) of
+LayoutLocalServiceUtil you need to removed the parameters related with wap
+
+If you are using any of this methods(addLayoutRevision, updateLayoutRevision) of
+LayoutRevisionLocalServiceUtil you need to removed the parameters related with
+wap
+
+If you are using any of this methods(addLayoutRevision) of
+LayoutRevisionServiceUtil you need to removed the parameters related with wap
+
+If you are using any of this methods(updateLookAndFeel) of
+LayoutServiceUtil you need to removed the parameters related with wap
+
+If you are using any of this methods(updateLookAndFeel) of
+LayoutSetLocalServiceUtil you need to removed the parameters related with wap
+
+If you are using any of this methods(updateLookAndFeel) of
+LayoutSetServiceUtil you need to removed the parameters related with wap
+
+If you are using any of this methods(getColorScheme, getControlPanelThemes,
+getPageThemes, getTheme) of ThemeLocalServiceUtil you need to removed the
+parameters related with wap
+
+#### Why was this change made?
+
+This change was made because WAP is an obsolete functionality.

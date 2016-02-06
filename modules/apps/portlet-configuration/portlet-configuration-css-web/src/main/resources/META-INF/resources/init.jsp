@@ -35,8 +35,7 @@ page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.PortletDecorator" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.portal.util.LayoutListUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %>
+page import="com.liferay.portal.util.LayoutListUtil" %>
 
 <%@ page import="java.text.DecimalFormat" %><%@
 page import="java.text.DecimalFormatSymbols" %>

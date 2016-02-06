@@ -21,10 +21,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 

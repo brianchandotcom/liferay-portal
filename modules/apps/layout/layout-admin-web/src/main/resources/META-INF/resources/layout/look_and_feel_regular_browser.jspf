@@ -19,7 +19,7 @@
 <aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
 
 <%
-List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), liveGroupId, user.getUserId(), false);
+List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), liveGroupId, user.getUserId());
 List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 
 request.setAttribute("edit_pages.jsp-themes", themes);

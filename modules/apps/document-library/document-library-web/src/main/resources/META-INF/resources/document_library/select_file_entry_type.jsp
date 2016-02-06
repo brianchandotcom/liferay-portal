@@ -43,7 +43,7 @@ portletURL.setParameter("eventName", eventName);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.documentlibrary.model.DLFileEntryType"
+			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			cssClass="select-action"
 			modelVar="fileEntryType"
 		>

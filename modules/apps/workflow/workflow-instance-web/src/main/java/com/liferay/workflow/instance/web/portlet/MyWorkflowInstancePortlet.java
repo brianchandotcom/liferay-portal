@@ -16,7 +16,7 @@ package com.liferay.workflow.instance.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 
 import java.util.Map;

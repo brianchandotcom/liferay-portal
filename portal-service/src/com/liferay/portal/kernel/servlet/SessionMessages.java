@@ -436,23 +436,17 @@ public class SessionMessages {
 
 		@Override
 		public boolean containsKey(Object key) {
-			key = _transformKey((String)key);
-
-			return super.containsKey(key);
+			return super.containsKey(_transformKey((String)key));
 		}
 
 		@Override
 		public Object get(Object key) {
-			key = _transformKey((String)key);
-
-			return super.get(key);
+			return super.get(_transformKey((String)key));
 		}
 
 		@Override
 		public Object put(String key, Object value) {
-			key = _transformKey(key);
-
-			return super.put(key, value);
+			return super.put(_transformKey(key), value);
 		}
 
 		private String _transformKey(String key) {

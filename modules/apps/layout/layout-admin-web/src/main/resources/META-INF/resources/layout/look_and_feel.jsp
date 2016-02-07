@@ -18,28 +18,11 @@
 
 <%
 Group group = layoutsAdminDisplayContext.getGroup();
-long groupId = layoutsAdminDisplayContext.getGroupId();
-long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
-
-Theme selTheme = null;
-ColorScheme selColorScheme = null;
-
-LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
-
-if (selLayout != null) {
-	selTheme = selLayout.getTheme();
-	selColorScheme = selLayout.getColorScheme();
-}
-else {
-	selTheme = layoutSet.getTheme();
-	selColorScheme = layoutSet.getColorScheme();
-}
 
 String cssText = null;
 
@@ -47,7 +30,9 @@ if ((selLayout != null) && !selLayout.isInheritLookAndFeel()) {
 	cssText = selLayout.getCssText();
 }
 else {
-	cssText = layoutSet.getCss();
+	LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+
+	cssText = selLayoutSet.getCss();
 }
 %>
 
@@ -78,14 +63,6 @@ else {
 	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
 }
 
-List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), liveGroupId, user.getUserId());
-List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
-
-request.setAttribute("edit_pages.jsp-themes", themes);
-request.setAttribute("edit_pages.jsp-colorSchemes", colorSchemes);
-request.setAttribute("edit_pages.jsp-selTheme", selTheme);
-request.setAttribute("edit_pages.jsp-selColorScheme", selColorScheme);
-request.setAttribute("edit_pages.jsp-device", "regular");
 request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 %>
 
@@ -93,11 +70,11 @@ request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 
 <aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
 
-<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
-	<c:if test="<%= !group.isLayoutPrototype() %>">
+<c:if test="<%= !group.isLayoutPrototype() %>">
+	<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
-	</c:if>
-</div>
+	</div>
+</c:if>
 
 <div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
 

@@ -10,8 +10,8 @@ task downloadSassSpec(type: Copy)
 task generateJNALibrary
 
 ext {
-	libSassVersion = "3.3.3"
-	sassSpecVersion = "daff4d6ac54d90151d13e65e0d2f1a0c73a8f267"
+	libSassVersion = "3.3.1"
+	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
 	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
 	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 }
@@ -114,7 +114,7 @@ generateJNALibrary {
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-${libSassVersion}")
+		File libSassDir = new File(temporaryDir, "libsass-${libSassVersion}/include/sass")
 
 		javaexec {
 			args configurations.jnaerator.singleFile
@@ -124,7 +124,11 @@ generateJNALibrary {
 			args "-o", FileUtil.relativize(file("src/main/java"), libSassDir)
 			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
 			args "-runtime", "JNAerator"
-			args "sass_context.h"
+			args "base.h"
+			args "version.h"
+			args "values.h"
+			args "functions.h"
+			args "context.h"
 
 			main = "-jar"
 

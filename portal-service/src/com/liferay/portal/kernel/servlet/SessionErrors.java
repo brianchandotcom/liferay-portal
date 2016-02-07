@@ -68,7 +68,7 @@ public class SessionErrors {
 	}
 
 	public static void add(HttpSession session, String key) {
-		Map<String, Object> map = _getMap(session, null, true);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, true);
 
 		if (map == null) {
 			return;
@@ -78,7 +78,7 @@ public class SessionErrors {
 	}
 
 	public static void add(HttpSession session, String key, Object value) {
-		Map<String, Object> map = _getMap(session, null, true);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, true);
 
 		if (map == null) {
 			return;
@@ -124,7 +124,7 @@ public class SessionErrors {
 	}
 
 	public static void clear(HttpSession session) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map != null) {
 			map.clear();
@@ -168,7 +168,7 @@ public class SessionErrors {
 	}
 
 	public static boolean contains(HttpSession session, String key) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			return false;
@@ -218,7 +218,7 @@ public class SessionErrors {
 	}
 
 	public static Object get(HttpSession session, String key) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			return null;
@@ -246,7 +246,7 @@ public class SessionErrors {
 	}
 
 	public static boolean isEmpty(HttpSession session) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			return true;
@@ -270,7 +270,7 @@ public class SessionErrors {
 	}
 
 	public static Iterator<String> iterator(HttpSession session) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			List<String> list = Collections.<String>emptyList();
@@ -302,7 +302,7 @@ public class SessionErrors {
 	}
 
 	public static Set<String> keySet(HttpSession session) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			return Collections.emptySet();
@@ -346,7 +346,7 @@ public class SessionErrors {
 	}
 
 	public static int size(HttpSession session) {
-		Map<String, Object> map = _getMap(session, null, false);
+		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
 
 		if (map == null) {
 			return 0;
@@ -365,17 +365,27 @@ public class SessionErrors {
 		return map.size();
 	}
 
+	protected static String _getKey(PortletRequest portletRequest) {
+		StringBundler sb = new StringBundler(6);
+
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(portletRequest);
+
+		sb.append(LiferayPortletSession.PORTLET_SCOPE_NAMESPACE);
+		sb.append(liferayPortletRequest.getPortletName());
+		sb.append(LiferayPortletSession.LAYOUT_SEPARATOR);
+		sb.append(liferayPortletRequest.getPlid());
+		sb.append(StringPool.QUESTION);
+		sb.append(_CLASS_NAME);
+
+		return sb.toString();
+	}
+
 	protected static Map<String, Object> _getMap(
-		HttpSession session, String portletKey, boolean createIfAbsent) {
+		HttpSession session, String key, boolean createIfAbsent) {
 
 		if (session == null) {
 			return null;
-		}
-
-		String key = _CLASS_NAME;
-
-		if (portletKey != null) {
-			key = portletKey.concat(_CLASS_NAME);
 		}
 
 		try {
@@ -402,7 +412,7 @@ public class SessionErrors {
 		PortletRequest portletRequest, boolean createIfAbsent) {
 
 		return _getMap(
-			_getPortalSession(portletRequest), _getPortletKey(portletRequest),
+			_getPortalSession(portletRequest), _getKey(portletRequest),
 			createIfAbsent);
 	}
 
@@ -415,21 +425,6 @@ public class SessionErrors {
 		request = PortalUtil.getOriginalServletRequest(request);
 
 		return request.getSession();
-	}
-
-	protected static String _getPortletKey(PortletRequest portletRequest) {
-		StringBundler sb = new StringBundler(5);
-
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(portletRequest);
-
-		sb.append(LiferayPortletSession.PORTLET_SCOPE_NAMESPACE);
-		sb.append(liferayPortletRequest.getPortletName());
-		sb.append(LiferayPortletSession.LAYOUT_SEPARATOR);
-		sb.append(liferayPortletRequest.getPlid());
-		sb.append(StringPool.QUESTION);
-
-		return sb.toString();
 	}
 
 	private static final String _CLASS_NAME = SessionErrors.class.getName();

@@ -382,13 +382,14 @@ public class SessionMessages {
 		Map<String, Object> map = null;
 
 		try {
-			map = (Map<String, Object>)session.getAttribute(
-				portletKey + _CLASS_NAME);
+			String key = portletKey.concat(_CLASS_NAME);
+
+			map = (Map<String, Object>)session.getAttribute(key);
 
 			if ((map == null) && createIfAbsent) {
 				map = new SessionMessagesMap();
 
-				session.setAttribute(portletKey + _CLASS_NAME, map);
+				session.setAttribute(key, map);
 			}
 		}
 		catch (IllegalStateException ise) {

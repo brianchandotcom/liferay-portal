@@ -20,24 +20,28 @@
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-List<Theme> themes = (List<Theme>)request.getAttribute("edit_pages.jsp-themes");
-List<ColorScheme> colorSchemes = (List<ColorScheme>)request.getAttribute("edit_pages.jsp-colorSchemes");
-Theme selTheme = (Theme)request.getAttribute("edit_pages.jsp-selTheme");
-ColorScheme selColorScheme = (ColorScheme)request.getAttribute("edit_pages.jsp-selColorScheme");
-String device = (String)request.getAttribute("edit_pages.jsp-device");
+Theme selTheme = null;
+ColorScheme selColorScheme = null;
 
-Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+if (selLayout != null) {
+	selTheme = selLayout.getTheme();
+	selColorScheme = selLayout.getColorScheme();
+}
+else {
+	selTheme = selLayoutSet.getTheme();
+	selColorScheme = selLayoutSet.getColorScheme();
+}
 %>
 
 <div class="lfr-theme-list">
-	<div class="float-container lfr-current-theme" id="<%= device %>LookAndFeel">
+	<div class="float-container lfr-current-theme" id="regularLookAndFeel">
 		<legend><liferay-ui:message key="current-theme" /></legend>
 
 		<div>
-			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="<portlet:namespace />regularselectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 
 			<div class="theme-details">
-				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id='<%= device + "SelTheme" %>' label="<%= HtmlUtil.escape(selTheme.getName()) %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= selTheme.getThemeId() %>" />
+				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="regularSelTheme" label="<%= HtmlUtil.escape(selTheme.getName()) %>" name="regularThemeId" type="radio" value="<%= selTheme.getThemeId() %>" />
 
 				<dl class="theme-fields">
 
@@ -66,8 +70,12 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			</div>
 		</div>
 
+		<%
+		List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
+		%>
+
 		<c:if test="<%= !colorSchemes.isEmpty() %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelColorsPanel" %>' persistState="<%= true %>" title='<%= LanguageUtil.format(request, "color-schemes-x", colorSchemes.size()) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="regularlayoutsAdminLookAndFeelColorsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "color-schemes-x", colorSchemes.size()) %>'>
 				<aui:fieldset cssCclass="color-schemes">
 					<div class="lfr-theme-list list-unstyled">
 
@@ -83,9 +91,9 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						%>
 
 						<div class="<%= cssClass %> theme-entry">
-							<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectColorScheme('#<portlet:namespace /><%= device %>ColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
+							<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectColorScheme('#<portlet:namespace />regularColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
 
-							<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= device + "ColorSchemeId" + i %>' label="<%= HtmlUtil.escape(curColorScheme.getName()) %>" name='<%= device + "ColorSchemeId" %>' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
+							<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id="regularColorSchemeId" label="<%= HtmlUtil.escape(curColorScheme.getName()) %>" name="regularColorSchemeId" type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
 						</div>
 
 						<%
@@ -97,8 +105,12 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			</liferay-ui:panel>
 		</c:if>
 
+		<%
+		Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+		%>
+
 		<c:if test="<%= !configurableSettings.isEmpty() %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelSettingsPanel" %>' persistState="<%= true %>" title="settings">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="regularlayoutsAdminLookAndFeelSettingsPanel" persistState="<%= true %>" title="settings">
 				<aui:fieldset>
 
 					<%
@@ -109,13 +121,13 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						String value = StringPool.BLANK;
 
 						if (selLayout != null) {
-							value = selLayout.getThemeSetting(name, device);
+							value = selLayout.getThemeSetting(name, "regular");
 						}
 						else {
-							value = selLayoutSet.getThemeSetting(name, device);
+							value = selLayoutSet.getThemeSetting(name, "regular");
 						}
 
-						String propertyName = HtmlUtil.escapeAttribute(device + "ThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
+						String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
 					%>
 
 						<c:choose>
@@ -154,7 +166,11 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		</c:if>
 	</div>
 
-	<div class="float-container lfr-available-themes" id="<%= device %>availableThemes">
+	<%
+	List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
+	%>
+
+	<div class="float-container lfr-available-themes" id="regularavailableThemes">
 		<legend>
 			<span class="header-title">
 				<liferay-ui:message arguments="<%= themes.size() - 1 %>" key="available-themes-x" translateArguments="<%= false %>" />
@@ -184,9 +200,9 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 						<li>
 							<div class="theme-entry">
-								<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectTheme('ThemeId<%= i %>', true);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(curTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curTheme.getName()) %>" />
+								<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectTheme('ThemeId<%= i %>', true);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(curTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curTheme.getName()) %>" />
 
-								<aui:input cssClass="theme-title" id='<%= device + "ThemeId" + i %>' label="<%= HtmlUtil.escape(curTheme.getName()) %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= curTheme.getThemeId() %>" />
+								<aui:input cssClass="theme-title" id="regularThemeId" label="<%= HtmlUtil.escape(curTheme.getName()) %>" name="regularThemeId" type="radio" value="<%= curTheme.getThemeId() %>" />
 							</div>
 						</li>
 
@@ -201,21 +217,21 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </div>
 
 <aui:script sandbox="<%= true %>">
-	var colorSchemePanel = $('#<%= device %>layoutsAdminLookAndFeelColorsPanel');
+	var colorSchemePanel = $('#regularlayoutsAdminLookAndFeelColorsPanel');
 
 	var toggleDisabled = function(disabled) {
-		colorSchemePanel.find('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').prop('disabled', disabled);
+		colorSchemePanel.find('input[name=<portlet:namespace />regularColorSchemeId]').prop('disabled', disabled);
 	};
 
 	if (colorSchemePanel.length) {
-		$('#<%= device %>availableThemes').find('input[name=<portlet:namespace /><%= device %>ThemeId]').on(
+		$('#regularavailableThemes').find('input[name=<portlet:namespace />regularThemeId]').on(
 			'change',
 			function() {
 				toggleDisabled(true);
 			}
 		);
 
-		$('#<%= device %>LookAndFeel').find('#<portlet:namespace /><%= device %>SelTheme').on(
+		$('#regularLookAndFeel').find('#<portlet:namespace />regularSelTheme').on(
 			'change',
 			function() {
 				toggleDisabled(false);
@@ -225,7 +241,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace /><%= device %>selectColorScheme(id) {
+	function <portlet:namespace />regularselectColorScheme(id) {
 		var colorSchemeInput = AUI.$(id);
 
 		if (!colorSchemeInput.prop('disabled')) {
@@ -233,11 +249,11 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		}
 	}
 
-	function <portlet:namespace /><%= device %>selectTheme(themeId, colorSchemesDisabled) {
+	function <portlet:namespace />regularselectTheme(themeId, colorSchemesDisabled) {
 		var $ = AUI.$;
 
-		$('#<portlet:namespace /><%= device %>' + themeId).prop('checked', true);
+		$('#<portlet:namespace />regular' + themeId).prop('checked', true);
 
-		$('#<%= device %>layoutsAdminLookAndFeelColorsPanel').find('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').prop('disabled', colorSchemesDisabled);
+		$('#regularlayoutsAdminLookAndFeelColorsPanel').find('input[name=<portlet:namespace />regularColorSchemeId]').prop('disabled', colorSchemesDisabled);
 	}
 </aui:script>

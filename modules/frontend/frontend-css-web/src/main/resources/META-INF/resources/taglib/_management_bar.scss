@@ -2,6 +2,16 @@
 	position: relative;
 
 	.management-bar {
+		padding: 0;
+
+		> .container-fluid-1280 {
+			padding-right: 15px;
+
+			.management-bar-header > .checkbox {
+				padding-left: 15px;
+			}
+		}
+
 		&.management-bar-no-collapse {
 			height: 0;
 			left: 0;

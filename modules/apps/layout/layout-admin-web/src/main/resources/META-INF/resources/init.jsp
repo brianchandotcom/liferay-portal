@@ -105,7 +105,6 @@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutPrototypeServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@

@@ -17,23 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-Theme selTheme = layoutSet.getTheme();
-
-List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
-
-request.setAttribute("edit_pages.jsp-themes", themes);
-request.setAttribute("edit_pages.jsp-colorSchemes", selTheme.getColorSchemes());
-request.setAttribute("edit_pages.jsp-selTheme", selTheme);
-request.setAttribute("edit_pages.jsp-selColorScheme", layoutSet.getColorScheme());
-request.setAttribute("edit_pages.jsp-device", "regular");
 request.setAttribute("edit_pages.jsp-editable", true);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
 
-<aui:model-context bean="<%= layoutSet %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
 
 <aui:input name="devices" type="hidden" value="regular" />
 

@@ -17,14 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-List<ColorScheme> colorSchemes = (List<ColorScheme>)request.getAttribute("edit_pages.jsp-colorSchemes");
-Theme selTheme = (Theme)request.getAttribute("edit_pages.jsp-selTheme");
-ColorScheme selColorScheme = (ColorScheme)request.getAttribute("edit_pages.jsp-selColorScheme");
-String device = (String)request.getAttribute("edit_pages.jsp-device");
-
-Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+Theme selTheme = selLayout.getTheme();
 %>
 
 <div class="lfr-theme-list">
@@ -52,6 +47,12 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						</dd>
 					</c:if>
 
+					<%
+					ColorScheme selColorScheme = selLayout.getColorScheme();
+
+					List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
+					%>
+
 					<c:if test="<%= !colorSchemes.isEmpty() && Validator.isNotNull(selColorScheme) %>">
 						<dt class="current-color-scheme">
 							<liferay-ui:message key="color-scheme" />
@@ -61,9 +62,15 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						</dd>
 					</c:if>
 
+					<%
+					Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+					%>
+
 					<c:if test="<%= !configurableSettings.isEmpty() %>">
 
 						<%
+						LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+
 						for (String name : configurableSettings.keySet()) {
 						%>
 
@@ -71,7 +78,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 								<liferay-ui:message key="<%= HtmlUtil.escape(name) %>" />
 							</dt>
 							<dd>
-								<%= HtmlUtil.escape(selLayoutSet.getThemeSetting(name, device)) %>
+								<%= HtmlUtil.escape(selLayoutSet.getThemeSetting(name, "regular")) %>
 							</dd>
 
 						<%

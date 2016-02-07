@@ -436,14 +436,14 @@ public class SessionMessages {
 
 		@Override
 		public boolean containsKey(Object key) {
-			key = _transformKey(key);
+			key = _transformKey((String)key);
 
 			return super.containsKey(key);
 		}
 
 		@Override
 		public Object get(Object key) {
-			key = _transformKey(key);
+			key = _transformKey((String)key);
 
 			return super.get(key);
 		}
@@ -455,16 +455,14 @@ public class SessionMessages {
 			return super.put(key, value);
 		}
 
-		private String _transformKey(Object key) {
-			String keyString = String.valueOf(key);
-
-			if (keyString != null) {
-				if (keyString.equals("request_processed")) {
-					keyString = "requestProcessed";
+		private String _transformKey(String key) {
+			if (key != null) {
+				if (key.equals("request_processed")) {
+					key = "requestProcessed";
 				}
 			}
 
-			return keyString;
+			return key;
 		}
 
 	}

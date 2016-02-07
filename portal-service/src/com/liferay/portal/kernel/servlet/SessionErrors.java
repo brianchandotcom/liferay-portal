@@ -378,24 +378,24 @@ public class SessionErrors {
 			key = portletKey.concat(_CLASS_NAME);
 		}
 
-		Map<String, Object> map = null;
-
 		try {
-			map = (Map<String, Object>)session.getAttribute(key);
+			Map<String, Object> map = (Map<String, Object>)session.getAttribute(
+				key);
 
 			if ((map == null) && createIfAbsent) {
 				map = new LinkedHashMap<>();
 
 				session.setAttribute(key, map);
 			}
+
+			return map;
 		}
 		catch (IllegalStateException ise) {
 
 			// Session is already invalidated, just return a null map
 
+			return null;
 		}
-
-		return map;
 	}
 
 	protected static Map<String, Object> _getMap(

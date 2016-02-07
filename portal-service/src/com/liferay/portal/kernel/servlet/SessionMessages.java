@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -432,8 +432,7 @@ public class SessionMessages {
 
 	private static final String _CLASS_NAME = SessionMessages.class.getName();
 
-	private static class SessionMessagesMap
-		extends LinkedHashMap<String, Object> {
+	private static class SessionMessagesMap extends HashMap<String, Object> {
 
 		@Override
 		public boolean containsKey(Object key) {

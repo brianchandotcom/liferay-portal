@@ -456,10 +456,8 @@ public class SessionMessages {
 		}
 
 		private String _transformKey(String key) {
-			if (key != null) {
-				if (key.equals("request_processed")) {
-					key = "requestProcessed";
-				}
+			if ("request_processed".equals(key)) {
+				key = "requestProcessed";
 			}
 
 			return key;

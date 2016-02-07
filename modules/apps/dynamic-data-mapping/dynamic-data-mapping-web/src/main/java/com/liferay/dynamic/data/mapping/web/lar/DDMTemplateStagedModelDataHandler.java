@@ -379,6 +379,17 @@ public class DDMTemplateStagedModelDataHandler
 				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
+					// This means a template with the same key has been imported
+					// before need to force key auto-generation
+
+					existingTemplate = _ddmTemplateLocalService.fetchTemplate(
+						portletDataContext.getScopeGroupId(),
+						template.getClassNameId(), template.getTemplateKey());
+
+					if (existingTemplate != null) {
+						template.setTemplateKey(null);
+					}
+
 					importedTemplate = _ddmTemplateLocalService.addTemplate(
 						userId, portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), classPK, resourceClassNameId,

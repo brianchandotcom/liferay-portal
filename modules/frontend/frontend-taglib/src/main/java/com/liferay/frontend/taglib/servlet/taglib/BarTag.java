@@ -12,32 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.display.context;
-
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
+package com.liferay.frontend.taglib.servlet.taglib;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public interface WikiInfoPanelDisplayContext extends WikiDisplayContext {
+public interface BarTag {
 
-	public WikiNode getFirstNode();
-
-	public WikiPage getFirstPage();
-
-	public String getItemNameLabel();
-
-	public int getItemsCount();
-
-	public String getPageRSSURL(WikiPage page);
-
-	public int getSelectedItemsCount();
-
-	public boolean isMultipleItemSelection();
-
-	public boolean isSingleNodeSelection();
-
-	public boolean isSinglePageSelection();
+	public void setButtons(String buttons);
 
 }

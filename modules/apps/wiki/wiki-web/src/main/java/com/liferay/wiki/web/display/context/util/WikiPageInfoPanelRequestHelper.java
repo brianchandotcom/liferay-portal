@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -26,44 +27,40 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class WikiInfoPanelRequestHelper extends BaseRequestHelper {
+public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 
-	public WikiInfoPanelRequestHelper(HttpServletRequest request) {
+	public WikiPageInfoPanelRequestHelper(HttpServletRequest request) {
 		super(request);
 	}
 
-	public WikiNode getNode() {
-		if (_node != null) {
-			return _node;
+	public WikiNode getCurrentNode() {
+		HttpServletRequest request = getRequest();
+
+		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+
+		if (node == null) {
+			WikiPage page = getPage();
+
+			if (page != null) {
+				return page.getNode();
+			}
+		}
+
+		return node;
+	}
+
+	public WikiPage getPage() {
+		if (_page != null) {
+			return _page;
 		}
 
 		HttpServletRequest request = getRequest();
 
-		_node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+		_page = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-		return _node;
-	}
-
-	public long getNodeId() {
-		return ParamUtil.getLong(getRequest(), "nodeId");
-	}
-
-	public List<WikiNode> getNodes() {
-		if (_nodes != null) {
-			return _nodes;
-		}
-
-		HttpServletRequest request = getRequest();
-
-		_nodes = (List<WikiNode>)request.getAttribute(WikiWebKeys.WIKI_NODES);
-
-		if (_nodes == null) {
-			_nodes = Collections.emptyList();
-		}
-
-		return _nodes;
+		return _page;
 	}
 
 	public List<WikiPage> getPages() {
@@ -82,8 +79,17 @@ public class WikiInfoPanelRequestHelper extends BaseRequestHelper {
 		return _pages;
 	}
 
-	private WikiNode _node;
-	private List<WikiNode> _nodes;
+	public boolean isShowSidebarHeader() {
+		HttpServletRequest request = getRequest();
+
+		boolean showSidebarHeader = GetterUtil.getBoolean(
+			request.getAttribute("showSidebarHeader"));
+
+		return ParamUtil.getBoolean(
+			request, "showSidebarHeader", showSidebarHeader);
+	}
+
+	private WikiPage _page;
 	private List<WikiPage> _pages;
 
 }

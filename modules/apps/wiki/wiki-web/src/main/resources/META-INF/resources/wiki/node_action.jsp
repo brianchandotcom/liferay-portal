@@ -25,7 +25,7 @@ if (row != null) {
 	node = (WikiNode)row.getObject();
 }
 else {
-	node = (WikiNode)request.getAttribute("info_panel.jsp-wikiNode");
+	node = (WikiNode)request.getAttribute("node_info_panel.jsp-wikiNode");
 }
 %>
 

@@ -14,18 +14,16 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarTag extends IncludeTag implements BodyTag {
+public class ManagementBarTag extends BaseBarTag implements BodyTag {
 
 	@Override
 	public int doEndTag() throws JspException {
@@ -45,10 +43,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		_actionButtons = actionButtons;
 	}
 
-	public void setButtons(String buttons) {
-		_buttons = buttons;
-	}
-
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}
@@ -61,13 +55,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		_includeCheckBox = includeCheckBox;
 	}
 
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
-	}
-
 	public void setSearchContainerId(String searchContainerId) {
 		_searchContainerId = searchContainerId;
 	}
@@ -75,11 +62,12 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void cleanUp() {
 		_actionButtons = null;
-		_buttons = null;
 		_disabled = false;
 		_filters = null;
 		_includeCheckBox = false;
 		_searchContainerId = null;
+
+		super.cleanUp();
 	}
 
 	@Override
@@ -102,7 +90,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar:actionButtons", _actionButtons);
 		request.setAttribute(
-			"liferay-frontend:management-bar:buttons", _buttons);
+			"liferay-frontend:management-bar:buttons", buttons);
 		request.setAttribute(
 			"liferay-frontend:management-bar:disabled", _disabled);
 		request.setAttribute(
@@ -120,7 +108,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	private static final String _PAGE = "/management_bar/page.jsp";
 
 	private String _actionButtons;
-	private String _buttons;
 	private boolean _disabled;
 	private String _filters;
 	private boolean _includeCheckBox;

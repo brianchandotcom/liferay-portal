@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `9a2eb64`.*
+*This document has been reviewed through commit `637216c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3650,28 +3650,29 @@ Media, this change was necessary.
 
 ---------------------------------------
 
-### The aui:button-item taglib has been removed and replaced with aui:button taglib
-- **Date:** 2016-Feb-4
+### Removed the aui:button-item Tag and Replaced with aui:button
+- **Date:** 2016-Feb-04
 - **JIRA Ticket:** LPS-62922
 
 #### What changed?
 
-The `aui:button-item` taglib has been removed and replaced with
-`aui:button` taglib.
+The `aui:button-item` tag has been removed and replaced with the `aui:button`
+tag.
 
 #### Who is affected?
 
-Plugins or templates that are using the `aui:button-item` tag need
-to update their usage of the tag.
+Plugins or templates that are using the `aui:button-item` tag must update their
+usage of the tag.
 
 #### How should I update my code?
 
-You should import the `aui` tag library if it isn't already and
-update the tag namespace from `aui:button-item` to `aui:button`.
+You should import the `aui` tag library (if necessary) and update the tag
+namespace from `aui:button-item` to `aui:button`.
 
 #### Why was this change made?
 
-This change was made as a part of the ongoing strategy to remove deprecated code.
+This change was made as a part of the ongoing strategy to remove deprecated
+code.
 
 ---------------------------------------
 

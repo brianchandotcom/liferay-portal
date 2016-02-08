@@ -17,19 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String themeId = ParamUtil.getString(request, "themeId");
+
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme selTheme = null;
 ColorScheme selColorScheme = null;
 
-if (selLayout != null) {
-	selTheme = selLayout.getTheme();
-	selColorScheme = selLayout.getColorScheme();
+if (Validator.isNotNull(themeId)) {
+	selTheme = ThemeLocalServiceUtil.getTheme(company.getCompanyId(), themeId);
+	selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCompanyId(), themeId, StringPool.BLANK);
 }
 else {
-	selTheme = selLayoutSet.getTheme();
-	selColorScheme = selLayoutSet.getColorScheme();
+	if (selLayout != null) {
+		selTheme = selLayout.getTheme();
+		selColorScheme = selLayout.getColorScheme();
+	}
+	else {
+		selTheme = selLayoutSet.getTheme();
+		selColorScheme = selLayoutSet.getColorScheme();
+	}
 }
 
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
@@ -77,22 +85,19 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 <c:if test="<%= !colorSchemes.isEmpty() %>">
 	<h4><liferay-ui:message key="color-schemes" /></h4>
 
-	<div class="lfr-theme-list list-unstyled">
+	<div class="row" id="<portlet:namespace />colorSchemesContainer">
 
 		<%
-		for (int i = 0; i < colorSchemes.size(); i++) {
-			ColorScheme curColorScheme = colorSchemes.get(i);
+		String selColorSchemeId = selColorScheme.getColorSchemeId();
 
-			String cssClass = StringPool.BLANK;
-
-			if (selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId())) {
-				cssClass = "selected-color-scheme";
-			}
+		for (ColorScheme curColorScheme : colorSchemes) {
 		%>
 
-		<div class="<%= cssClass %> theme-entry">
-			<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectColorScheme('#<portlet:namespace />regularColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
-		</div>
+			<div class="col-md-2">
+				<div class="color-scheme-selector img-thumbnail <%= selColorSchemeId.equals(curColorScheme.getColorSchemeId()) ? "selected" : StringPool.BLANK %>" data-color-scheme-id="<%= curColorScheme.getColorSchemeId() %>">
+					<img alt="" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
+				</div>
+			</div>
 
 		<%
 		}
@@ -159,4 +164,24 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 	}
 	%>
 
+</c:if>
+
+<c:if test="<%= !colorSchemes.isEmpty() %>">
+	<aui:script use="aui-base">
+		var colorSchemesContainer = A.one('#<portlet:namespace />colorSchemesContainer');
+
+		colorSchemesContainer.delegate(
+			'click',
+			function(event) {
+				var currentTarget = event.currentTarget;
+
+				colorSchemesContainer.all('.color-scheme-selector').removeClass('selected');
+
+				currentTarget.addClass('selected');
+
+				A.one('#<portlet:namespace />regularColorSchemeId').val(currentTarget.attr('data-color-scheme-id'));
+			},
+			'.color-scheme-selector'
+		);
+	</aui:script>
 </c:if>

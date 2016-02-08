@@ -69,25 +69,6 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${editActivateStaging}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-			</then>
-			<elseif>
-				<equals arg1="${remoteStaging}" arg2="true" />
-				<then>
-					<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-					<execute function="Confirm" value1="Are you sure you want to activate remote staging for ${siteName}?" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-				<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
-				<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
-			</else>
-		</if>
-
 		<execute function="Pause" locator1="5000" />
 		<execute function="Refresh" />
 	</command>
@@ -450,6 +431,36 @@
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was updated." />
 		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="editStagingConfiguration">
+		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#STAGING_CONFIGURATION" value1="Staging Configuration" />
+
+		<if>
+			<equals arg1="${remoteStaging}" arg2="true" />
+			<then>
+				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+				<execute function="Confirm" value1="Are you sure you want to activate remote staging for ${siteName}?" />
+			</then>
+		</if>
+		<else>
+			<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+			<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
+			<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
+		</else>
+
+		<if>
+			<isset var="isNotEditable" />
+			<then>
+				<var name="key_contentName" value="${isNotEditable}" />
+
+				<execute function="AssertNotEditable" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+			</then>
+		</if>
 	</command>
 
 	<command name="enablePageInSitePagesVariation">

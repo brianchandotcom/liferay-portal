@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.display.context;
 
 import com.liferay.message.boards.display.context.MBDisplayContextFactory;
 import com.liferay.message.boards.display.context.MBHomeDisplayContext;
+import com.liferay.message.boards.display.context.MBListDisplayContext;
 
 import java.util.Collection;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
 @Component(service = MBDisplayContextProvider.class)
 public class MBDisplayContextProvider {
@@ -56,6 +58,26 @@ public class MBDisplayContextProvider {
 		}
 
 		return mbHomeDisplayContext;
+	}
+
+	public MBListDisplayContext getMbListDisplayContext(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		Collection<MBDisplayContextFactory> mbDisplayContextFactories =
+			_mbDisplayContextFactories.values();
+
+		MBListDisplayContext mbListDisplayContext =
+			new DefaultMBListDisplayContext(request, response);
+
+		for (MBDisplayContextFactory mbDisplayContextFactory :
+				mbDisplayContextFactories) {
+
+			mbListDisplayContext =
+				mbDisplayContextFactory.getMBListDisplayContext(
+					mbListDisplayContext, request, response);
+		}
+
+		return mbListDisplayContext;
 	}
 
 	protected void activate(BundleContext bundleContext) {

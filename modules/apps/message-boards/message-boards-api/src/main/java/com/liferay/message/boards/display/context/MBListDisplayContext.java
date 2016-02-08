@@ -14,22 +14,8 @@
 
 package com.liferay.message.boards.display.context;
 
-import com.liferay.portal.kernel.display.context.DisplayContextFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface MBDisplayContextFactory extends DisplayContextFactory {
-
-	public MBHomeDisplayContext getMBHomeDisplayContext(
-		MBHomeDisplayContext parentMBHomeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
-
-	public MBListDisplayContext getMBListDisplayContext(
-		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
-
+public interface MBListDisplayContext extends MBDisplayContext {
 }

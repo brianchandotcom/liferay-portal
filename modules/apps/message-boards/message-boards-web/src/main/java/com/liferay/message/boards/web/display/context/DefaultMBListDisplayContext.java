@@ -12,24 +12,30 @@
  * details.
  */
 
-package com.liferay.message.boards.display.context;
+package com.liferay.message.boards.web.display.context;
 
-import com.liferay.portal.kernel.display.context.DisplayContextFactory;
+import com.liferay.message.boards.display.context.MBListDisplayContext;
+
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface MBDisplayContextFactory extends DisplayContextFactory {
+public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
-	public MBHomeDisplayContext getMBHomeDisplayContext(
-		MBHomeDisplayContext parentMBHomeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+	public DefaultMBListDisplayContext(
+		HttpServletRequest request, HttpServletResponse response) {
+	}
 
-	public MBListDisplayContext getMBListDisplayContext(
-		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+	@Override
+	public UUID getUuid() {
+		return _UUID;
+	}
+
+	private static final UUID _UUID = UUID.fromString(
+		"c29b2669-a9ce-45e3-aa4e-9ec766a4ffad");
 
 }

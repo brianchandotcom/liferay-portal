@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu-portlet-dd',
+	'liferay-product-navigation-control-menu-portlet-dd',
 	function(A) {
 		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
@@ -102,6 +102,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd', 'liferay-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
+		requires: ['aui-base', 'dd', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
 	}
 );

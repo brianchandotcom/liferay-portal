@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu-add-content-search',
+	'liferay-product-navigation-control-menu-add-content-search',
 	function(A) {
 		var AddContentSearch = function() {
 		};
@@ -41,6 +41,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-control-menu', 'liferay-search-filter']
+		requires: ['aui-base', 'liferay-product-navigation-control-menu', 'liferay-search-filter']
 	}
 );

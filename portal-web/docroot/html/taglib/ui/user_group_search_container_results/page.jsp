@@ -22,6 +22,10 @@ boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:user
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
 SearchContainer userGroupSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
 
+if (Validator.isNotNull(searchTerms.getKeywords())) {
+	useIndexer = true;
+}
+
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
 %>
 

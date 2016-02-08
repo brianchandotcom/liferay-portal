@@ -44,7 +44,7 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_searchTerms = null;
-		_useIndexer = true;
+		_useIndexer = false;
 		_userGroupParams = null;
 	}
 
@@ -80,7 +80,7 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 		"/html/taglib/ui/user_group_search_container_results/page.jsp";
 
 	private DisplayTerms _searchTerms;
-	private boolean _useIndexer = true;
+	private boolean _useIndexer = false;
 	private LinkedHashMap<String, Object> _userGroupParams;
 
 }

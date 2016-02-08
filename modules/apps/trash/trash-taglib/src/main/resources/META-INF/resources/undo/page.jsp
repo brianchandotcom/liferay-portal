@@ -100,19 +100,9 @@ trashData.put("navigation", Boolean.TRUE.toString());
 				%>
 
 				<liferay-util:buffer var="trashEntityLink">
-					<c:choose>
-						<c:when test="<%= !Validator.equals(cmd, Constants.REMOVE) && themeDisplay.isShowSiteAdministrationIcon() && Validator.isNotNull(className) && Validator.isNotNull(title) && Validator.isNotNull(primaryKeys[0]) %>">
-
-							<%
-							PortletURL trashURL = TrashUtil.getViewContentURL(request, GetterUtil.getLong(primaryKeys[0]));
-							%>
-
-							<em class="delete-entry-title"><aui:a cssClass="alert-link" data="<%= trashData %>" href="<%= trashURL.toString() %>" label="<%= HtmlUtil.escape(title) %>" /></em>
-						</c:when>
-						<c:when test="<%= Validator.isNotNull(title) %>">
-							<em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em>
-						</c:when>
-					</c:choose>
+					<c:if test="<%= Validator.isNotNull(title) %>">
+						<strong><em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em></strong>
+					</c:if>
 				</liferay-util:buffer>
 
 				<c:choose>

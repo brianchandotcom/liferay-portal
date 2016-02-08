@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_FOLDER_BUTTON</td>
+	<td>//button[@data-foldername='${key_dmFolderName}']/span[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_IFRAME</td>
 	<td>//iframe[contains(@id,'DLPortlet')]</td>
 	<td></td>

@@ -20,8 +20,8 @@ dependencies {
 	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
 
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"

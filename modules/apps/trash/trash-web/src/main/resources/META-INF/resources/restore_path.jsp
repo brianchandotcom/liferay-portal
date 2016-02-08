@@ -27,7 +27,7 @@ if (Validator.isNull(redirect)) {
 %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
-	<div class="alert alert-success">
+	<liferay-util:buffer var="alertMessage">
 
 		<%
 		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -72,7 +72,14 @@ if (Validator.isNull(redirect)) {
 				<liferay-ui:message key="the-item-was-restored" />
 			</c:otherwise>
 		</c:choose>
-	</div>
+	</liferay-util:buffer>
+
+	<liferay-ui:alert
+		icon="check"
+		message="<%= alertMessage %>"
+		timeout="0"
+		type="success"
+	/>
 </c:if>
 
 <portlet:resourceURL id="checkEntry" var="checkEntryURL" />

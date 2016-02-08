@@ -481,6 +481,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-control-menu', 'liferay-portlet-base', 'liferay-util-window', 'liferay-widget-size-animation-plugin']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-product-navigation-control-menu', 'liferay-portlet-base', 'liferay-util-window', 'liferay-widget-size-animation-plugin']
 	}
 );

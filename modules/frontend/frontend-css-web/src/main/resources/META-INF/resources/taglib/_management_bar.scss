@@ -35,10 +35,10 @@
 		}
 
 		.management-bar-center {
-			position: absolute;
 			left: 50%;
-			transform: translate(-50%);
 			margin-top: 16px;
+			position: absolute;
+			transform: translate(-50%);
 
 			@include sm() {
 				margin-top: 20px;

@@ -58,6 +58,17 @@ public class VerifyProperties extends VerifyProcess {
 			verifyObsoleteSystemProperty(key);
 		}
 
+		Properties systemProperties = SystemProperties.getProperties();
+
+		for (String[] keys : _MODULARIZED_SYSTEM_KEYS) {
+			String oldKey = keys[0];
+			String newKey = keys[1];
+			String moduleName = keys[2];
+
+			verifyModularizedSystemProperty(
+				systemProperties, oldKey, newKey, moduleName);
+		}
+
 		// portal.properties
 
 		Properties portalProperties = loadPortalProperties();
@@ -168,7 +179,19 @@ public class VerifyProperties extends VerifyProcess {
 		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
 				"Portal property \"" + oldKey + "\" was modularized to " +
-					moduleName + " as \"" + newKey);
+					moduleName + " as \"" + newKey + "\"");
+		}
+	}
+
+	protected void verifyModularizedSystemProperty(
+			Properties systemProperties, String oldKey, String newKey,
+			String moduleName)
+		throws Exception {
+
+		if (systemProperties.containsKey(oldKey)) {
+			_log.error(
+				"System property \"" + oldKey + "\" was modularized to " +
+					moduleName + " as \"" + newKey + "\"");
 		}
 	}
 
@@ -1640,6 +1663,29 @@ public class VerifyProperties extends VerifyProcess {
 			"xsl.template.secure.processing.enabled",
 			"secure.processing.enabled", "com.liferay.portal.template.xsl"
 		}
+	};
+
+	private static final String[][] _MODULARIZED_SYSTEM_KEYS = {
+
+		// Calendar
+
+		new String[] {
+			"ical4j.compatibility.outlook", "ical4j.compatibility.outlook",
+			"com.liferay.calendar.service"
+		},
+		new String[] {
+			"ical4j.parsing.relaxed", "ical4j.parsing.relaxed",
+			"com.liferay.calendar.service"
+		},
+		new String[] {
+			"ical4j.unfolding.relaxed", "ical4j.unfolding.relaxed",
+			"com.liferay.calendar.service"
+		},
+		new String[] {
+			"ical4j.validation.relaxed", "ical4j.validation.relaxed",
+			"com.liferay.calendar.service"
+		}
+
 	};
 
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {

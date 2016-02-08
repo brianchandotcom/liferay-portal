@@ -44,7 +44,18 @@ searchContainer.setTotal(total);
 List results = ListUtil.subList(entries, searchContainer.getStart(), searchContainer.getEnd());
 
 searchContainer.setResults(results);
+
+boolean blogsPortletFound = ParamUtil.getBoolean(request, "blogsPortletFound", true);
 %>
+
+<c:if test="<%= !blogsPortletFound %>">
+	<liferay-ui:alert
+		icon="exclamation-full"
+		message='<%= LanguageUtil.get(resourceBundle, "no-suitable-application-found-to-display-the-blogs-entry") %>'
+		timeout="0"
+		type="danger"
+	/>
+</c:if>
 
 <%@ include file="/blogs_aggregator/view_entries.jspf" %>
 

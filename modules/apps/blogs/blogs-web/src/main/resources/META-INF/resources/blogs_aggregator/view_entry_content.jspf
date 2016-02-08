@@ -15,105 +15,111 @@
 --%>
 
 <c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) %>">
-	<div class="entry-content">
+	<div class="entry">
 
 		<%
-		PortletURL showBlogEntryURL = renderResponse.createRenderURL();
+		PortletURL showErrorMessageURL = renderResponse.createRenderURL();
 
-		showBlogEntryURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
-		showBlogEntryURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+		showErrorMessageURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
+		showErrorMessageURL.setParameter("blogsPortletFound", String.valueOf(false));
 
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/blogs/find_entry?noSuchEntryRedirect=");
-		sb.append(HttpUtil.encodeURL(showBlogEntryURL.toString()));
+		sb.append(HttpUtil.encodeURL(showErrorMessageURL.toString()));
 		sb.append("&entryId=");
 		sb.append(entry.getEntryId());
 
 		String viewEntryURL = sb.toString();
-
-		String viewAllEntriesURL = viewEntryURL.concat("&showAllEntries=1");
 		%>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
-			<div class="entry-info">
-				<span class="entry-title"><a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></a></span>
-
-				<span class="entry-author icon-user"><liferay-ui:message key="written-by" /> <a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %></a></span>
-
-				<span class="entry-date icon-calendar"><liferay-ui:message key="on-date" /> <%= dateFormatDateTime.format(entry.getDisplayDate()) %></span>
-
-				<span class="entry-categories">
-					<liferay-ui:asset-categories-summary
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-					/>
-				</span>
-
-				<c:if test="<%= showTags %>">
-					<span class="entry-tags">
-						<liferay-ui:asset-tags-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
+			<div class="entry-body">
+				<c:choose>
+					<c:when test='<%= displayStyle.endsWith("image") %>'>
+						<liferay-ui:user-portrait
+							userId="<%= entry.getUserId() %>"
+							userName="<%= entry.getUserName() %>"
 						/>
-					</span>
-				</c:if>
+
+						<div class="entry-info text-muted ">
+							<small>
+								<strong><%= entry.getUserName() %></strong>
+								<span> - </span>
+								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
+								<%= dateFormatDate.format(entry.getDisplayDate()) %>
+							</small>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="entry-info text-muted ">
+							<small>
+								<strong><%= entry.getUserName() %></strong>
+								<span> - </span>
+								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
+								<%= dateFormatDate.format(entry.getDisplayDate()) %>
+							</small>
+						</div>
+					</c:otherwise>
+				</c:choose>
+
+				<div class="entry-title">
+					<h2>
+						<aui:a href="<%= viewEntryURL %>">
+							<%= HtmlUtil.escape(entry.getTitle()) %>
+						</aui:a>
+					</h2>
+				</div>
+			</div>
+		</c:if>
+
+		<c:if test='<%= !displayStyle.equals("title") %>'>
+			<div class="entry-body">
+				<c:choose>
+					<c:when test='<%= displayStyle.startsWith("abstract") %>'>
+
+						<%
+						String summary = entry.getDescription();
+
+						if (Validator.isNull(summary)) {
+							summary = entry.getContent();
+						}
+						%>
+
+						<p>
+							<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), 200) %>
+						</p>
+					</c:when>
+					<c:when test='<%= displayStyle.startsWith("quote") %>'>
+						<span class="quote">
+							<a href="<%= viewEntryURL %>">
+								&quot;<%= StringUtil.shorten(StringUtil.trim(HtmlUtil.stripHtml(entry.getContent())), 100, StringPool.BLANK) + StringPool.TRIPLE_PERIOD %> &quot;
+							</a>
+						</span>
+					</c:when>
+					<c:otherwise>
+						<%= entry.getContent() %>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<%
+			int commentsCount = BlogsUtil.getCommentsCount(entry);
+			%>
+
+			<div class="entry-footer">
+				<div class="entry-social">
+					<div class="comments">
+						<a href="<%= viewEntryURL %>">
+							<i class="icon-comment icon-monospaced"></i>
+							<span><%= String.valueOf(commentsCount) %></span>
+						</a>
+					</div>
+				</div>
 			</div>
 		</c:if>
 	</div>
-
-	<c:if test='<%= !displayStyle.equals("title") %>'>
-		<div class="abstract">
-			<c:if test='<%= displayStyle.endsWith("-image") %>'>
-				<a href="<%= viewAllEntriesURL %>">
-					<liferay-ui:user-portrait
-						imageCssClass="user-icon-lg"
-						userId="<%= entry.getUserId() %>"
-					/>
-				</a>
-			</c:if>
-			<c:choose>
-				<c:when test='<%= displayStyle.startsWith("abstract") %>'>
-					<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), 200, StringPool.BLANK) %>
-
-					<c:if test="<%= entry.isSmallImage() %>">
-						<div class="asset-small-image">
-							<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
-						</div>
-					</c:if>
-				</c:when>
-				<c:when test='<%= displayStyle.startsWith("quote") %>'>
-					<span class="quote">
-						<a href="<%= viewAllEntriesURL %>">
-							&quot;<%= StringUtil.shorten(StringUtil.trim(HtmlUtil.stripHtml(entry.getContent())), 100, StringPool.BLANK) + StringPool.TRIPLE_PERIOD %> &quot;
-
-							<span class="nobreak"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</span>
-						</a>
-					</span>
-				</c:when>
-				<c:otherwise>
-					<%= entry.getContent() %>
-				</c:otherwise>
-			</c:choose>
-		</div>
-
-		<div class="comments">
-			<c:choose>
-				<c:when test='<%= displayStyle.startsWith("abstract") %>'>
-					<a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</a>
-				</c:when>
-				<c:when test='<%= !displayStyle.startsWith("quote") %>'>
-
-					<%
-					int commentsCount = BlogsUtil.getCommentsCount(entry);
-					%>
-
-					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= commentsCount %> <liferay-ui:message key='<%= (commentsCount == 1) ? "comment" : "comments" %>' /></a>
-				</c:when>
-			</c:choose>
-		</div>
-	</c:if>
 
 	<div class="separator"><!-- --></div>
 </c:if>

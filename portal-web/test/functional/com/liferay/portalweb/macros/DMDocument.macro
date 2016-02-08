@@ -1154,6 +1154,8 @@
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>
+				<var name="key_dmFolderName" value="${dmFolderName}" />
+
 				<execute function="AssertClick" locator1="DocumentsAndMedia#CHOOSE_FOLDER_BUTTON" value1="Choose" />
 			</else>
 		</if>

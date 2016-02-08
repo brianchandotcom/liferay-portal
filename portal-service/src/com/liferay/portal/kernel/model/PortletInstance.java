@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,6 +41,17 @@ public class PortletInstance {
 			_getInstanceId(portletInstanceKey));
 	}
 
+	public static PortletInstance fromPortletNameAndFullInstanceId(
+		String portletId, String fullInstanceId) {
+
+		FullInstanceIdEncoder fullInstanceIdEncoder =
+			_buildFullInstanceIdEncoder(fullInstanceId);
+
+		return new PortletInstance(
+			portletId, fullInstanceIdEncoder.getUserId(),
+			fullInstanceIdEncoder.getInstanceId());
+	}
+
 	public PortletInstance(String portletName) {
 		this(portletName, StringUtil.randomString(12));
 	}
@@ -57,6 +70,13 @@ public class PortletInstance {
 
 	public PortletInstance(String portletName, String instanceId) {
 		this(portletName, 0, instanceId);
+	}
+
+	public String getFullInstanceId() {
+		FullInstanceIdEncoder fullInstanceIdEncoder = new FullInstanceIdEncoder(
+			_instanceId, _userId);
+
+		return fullInstanceIdEncoder.encode();
 	}
 
 	public String getInstanceId() {
@@ -112,6 +132,58 @@ public class PortletInstance {
 	@Override
 	public String toString() {
 		return getPortletInstanceKey();
+	}
+
+	private static FullInstanceIdEncoder _buildFullInstanceIdEncoder(
+		String fullInstanceId) {
+
+		if (fullInstanceId == null) {
+			throw new InvalidParameterException(
+				"The fullInstanceId must not be null.");
+		}
+
+		if (fullInstanceId.isEmpty()) {
+			return new FullInstanceIdEncoder(null, 0);
+		}
+
+		int slashCount = StringUtil.count(fullInstanceId, StringPool.SLASH);
+
+		if (slashCount > 0) {
+			throw new InvalidParameterException(
+				"The fullInstanceId must not contain slashes.");
+		}
+
+		int underlineCount = StringUtil.count(
+			fullInstanceId, StringPool.UNDERLINE);
+
+		if (underlineCount > 1) {
+			throw new InvalidParameterException(
+				"The fullInstanceId must only contain one underscore " +
+					"separating the userId from the instanceId.");
+		}
+
+		if (underlineCount == 1) {
+			int index = fullInstanceId.indexOf(CharPool.UNDERLINE);
+
+			long userId = GetterUtil.getLong(
+				fullInstanceId.substring(0, index), -1);
+
+			if (userId == -1) {
+				throw new InvalidParameterException(
+					"The fullInstanceId's userId must be a valid number.");
+			}
+
+			String instanceId = null;
+
+			if (index < (fullInstanceId.length() - 1)) {
+				instanceId = fullInstanceId.substring(index + 1);
+			}
+
+			return new FullInstanceIdEncoder(instanceId, userId);
+		}
+		else {
+			return new FullInstanceIdEncoder(fullInstanceId, 0);
+		}
 	}
 
 	private static String _getInstanceId(String portletInstanceKey) {
@@ -178,5 +250,53 @@ public class PortletInstance {
 	private final String _instanceId;
 	private final String _portletName;
 	private final long _userId;
+
+	private static final class FullInstanceIdEncoder {
+
+		public FullInstanceIdEncoder() {
+			this(null, 0);
+		}
+
+		public FullInstanceIdEncoder(String instanceId, long userId) {
+			this._instanceId = instanceId;
+			this._userId = userId;
+		}
+
+		public String encode() {
+			if ((_userId <= 0) && Validator.isBlank(_instanceId)) {
+				return null;
+			}
+
+			StringBundler sb = new StringBundler(3);
+
+			if (_userId > 0) {
+				sb.append(_userId);
+				sb.append(StringPool.UNDERLINE);
+			}
+
+			if (_instanceId != null) {
+				sb.append(_instanceId);
+			}
+
+			return sb.toString();
+		}
+
+		public String getInstanceId() {
+			return _instanceId;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		@Override
+		public String toString() {
+			return encode();
+		}
+
+		private String _instanceId;
+		private long _userId;
+
+	}
 
 }

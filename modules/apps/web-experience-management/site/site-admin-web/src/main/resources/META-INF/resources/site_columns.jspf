@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="text-strong"
 	name="name"
 	orderable="<%= true %>"
 >
@@ -89,7 +90,6 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="membership-type"
 	value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 />

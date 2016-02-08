@@ -95,7 +95,7 @@ else if (group != null) {
 
 <c:choose>
 	<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
-		<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
+		<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" placeholder="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
 	</c:when>
 	<c:when test="<%= (liveGroup == null) || (!liveGroup.isCompany() && !PortalUtil.isSystemGroup(liveGroup.getGroupKey())) %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />

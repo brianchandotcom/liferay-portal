@@ -31,14 +31,18 @@ PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
 
 pageContext.setAttribute("searchURL", searchURL);
 
+PortletURL mainURL = renderResponse.createRenderURL();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sites"), mainURL.toString());
+
 if (group != null) {
 	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+
+	renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
 }
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item href="<%= mainURL.toString() %>" label="sites" selected="<%= true %>" />
 	</aui:nav>

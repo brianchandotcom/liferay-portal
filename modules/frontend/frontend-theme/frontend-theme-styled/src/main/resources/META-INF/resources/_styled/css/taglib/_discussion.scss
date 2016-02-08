@@ -1,11 +1,5 @@
 .taglib-discussion {
 	.lfr-discussion {
-		border-top-color: transparentize(#B0B4BB, 0.5);
-
-		&.depth-0 {
-			border-top-color: #B0B4BB;
-		}
-
 		.lfr-discussion-form-edit .alloy-editor-placeholder {
 			border-left-color: #DBDDE1;
 		}

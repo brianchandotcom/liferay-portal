@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.portlet.configuration.icon.facebook
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
--include: ../../../../marketplace/web-content-management/bnd.bnd
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

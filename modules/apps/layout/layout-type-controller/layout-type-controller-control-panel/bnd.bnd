@@ -4,4 +4,4 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /layout-type-controller-control-panel
--include: ../../../../marketplace/web-content-management/bnd.bnd
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

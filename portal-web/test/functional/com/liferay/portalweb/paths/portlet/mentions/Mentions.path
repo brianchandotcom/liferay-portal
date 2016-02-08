@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>MENTIONS_COMMENT_TAG_LINK</td>
-	<td>//div[contains(@id,'discussionMessage')]/p[contains(.,'${key_mentionsUserScreenName}')]/a</td>
+	<td>//div[contains(@id,'discussionMessage')]//a[contains(.,'${key_mentionsUserScreenName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,7 +22,8 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
  * @author Lino Alves
  */
 @ExtendedObjectClassDefinition(
-	category = "productivity", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "productivity",
+	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",

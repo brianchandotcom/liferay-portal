@@ -68,7 +68,7 @@ AUI.add(
 			showLoadingFeedback: function() {
 				var instance = this;
 
-				instance._showFeedback('spinner');
+				instance._showFeedback('spinner icon-spin');
 			},
 
 			showSuccessFeedback: function() {

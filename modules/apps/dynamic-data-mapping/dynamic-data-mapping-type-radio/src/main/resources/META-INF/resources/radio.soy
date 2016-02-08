@@ -12,7 +12,7 @@
  * @param readOnly
  * @param required
  * @param showLabel
- * @param tip 
+ * @param tip
  * @param visible
  */
 {template .radio}
@@ -37,7 +37,7 @@
 					<div class="radio">
 				{/if}
 
-				<label class="radio-default{$inline ? ' radio-inline' : ''}" for="{$option.value}">
+				<label class="radio-default{$inline ? ' radio-inline' : ''} radio-option-{$option.value}" for="{$option.value}">
 					<input class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
 				</label>
 

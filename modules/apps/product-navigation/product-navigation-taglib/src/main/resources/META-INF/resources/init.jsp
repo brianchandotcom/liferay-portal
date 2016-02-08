@@ -25,7 +25,7 @@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
 <%@ page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory" %><%@
 page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry" %><%@
-page import="com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry" %><%@
+page import="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.List" %>

@@ -38,8 +38,10 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = ControlMenuEntryRegistry.class)
-public class ControlMenuEntryRegistry {
+@Component(
+	immediate = true, service = ProductNavigationControlMenuEntryRegistry.class
+)
+public class ProductNavigationControlMenuEntryRegistry {
 
 	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
 		ProductNavigationControlMenuCategory controlMenuCategory) {
@@ -91,7 +93,7 @@ public class ControlMenuEntryRegistry {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ProductNavigationControlMenuEntry.class,
 			"(control.menu.category.key=*)",
-			new ControlMenuEntryServiceReferenceMapper(),
+			new ProductNavigationControlMenuEntryServiceReferenceMapper(),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator("service.ranking")));
 	}
@@ -102,7 +104,7 @@ public class ControlMenuEntryRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ControlMenuEntryRegistry.class);
+		ProductNavigationControlMenuEntryRegistry.class);
 
 	private ServiceTrackerMap<String, List<ProductNavigationControlMenuEntry>>
 		_serviceTrackerMap;

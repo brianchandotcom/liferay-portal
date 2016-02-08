@@ -49,9 +49,9 @@ page import="com.liferay.portal.ldap.configuration.LDAPServerConfiguration" %><%
 page import="com.liferay.portal.ldap.constants.LDAPConstants" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration" %><%@
-page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.ldap.util.LDAPUtil" %><%@
 page import="com.liferay.portal.ldap.validator.LDAPFilterException" %><%@
+page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@

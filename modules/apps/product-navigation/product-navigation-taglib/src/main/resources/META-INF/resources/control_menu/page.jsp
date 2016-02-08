@@ -81,7 +81,7 @@ ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry = (ProductNav
 		</div>
 	</div>
 
-	<aui:script use="liferay-control-menu">
+	<aui:script use="liferay-product-navigation-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 	</aui:script>
 </c:if>

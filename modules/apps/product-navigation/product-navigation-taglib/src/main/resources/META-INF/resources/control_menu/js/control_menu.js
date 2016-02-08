@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu',
+	'liferay-product-navigation-control-menu',
 	function(A) {
 		var STR_ADD_PANEL = 'addPanel';
 

@@ -56,7 +56,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</liferay-util:include>
 
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 	</liferay-portlet:renderURL>
 
 	<aui:nav-bar-search>
@@ -128,14 +128,13 @@ if (Validator.isNotNull(keywords)) {
 	searchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
 }
 else if (entriesNavigation.equals("all")) {
-	searchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId));
-
 	int status = WorkflowConstants.STATUS_APPROVED;
 
 	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 		status = WorkflowConstants.STATUS_ANY;
 	}
 
+	searchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId, status));
 	searchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (entriesNavigation.equals("recent")) {

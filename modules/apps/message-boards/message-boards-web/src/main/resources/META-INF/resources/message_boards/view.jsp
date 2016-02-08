@@ -260,13 +260,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			entriesSearchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
 		}
 		else {
-			entriesSearchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId));
-
 			int status = WorkflowConstants.STATUS_APPROVED;
 
 			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 				status = WorkflowConstants.STATUS_ANY;
 			}
+
+			entriesSearchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId, status));
 
 			entriesSearchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd()));
 		}

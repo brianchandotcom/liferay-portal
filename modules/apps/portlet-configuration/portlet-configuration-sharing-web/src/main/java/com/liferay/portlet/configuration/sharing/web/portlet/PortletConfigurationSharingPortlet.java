@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_SHARING,
+		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_CONFIGURATION_SHARING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supports.mime-type=text/html"
 	},

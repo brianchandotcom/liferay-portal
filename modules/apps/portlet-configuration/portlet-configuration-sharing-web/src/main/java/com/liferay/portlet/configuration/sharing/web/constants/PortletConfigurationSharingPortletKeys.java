@@ -19,7 +19,8 @@ package com.liferay.portlet.configuration.sharing.web.constants;
  */
 public class PortletConfigurationSharingPortletKeys {
 
-	public static final String PORTLET_SHARING =
-		"com_liferay_portlet_sharing_web_portlet_PortletSharingPortlet";
+	public static final String PORTLET_CONFIGURATION_SHARING =
+		"com_liferay_portlet_configuration_sharing_web_portlet_" +
+			"PortletConfigurationSharingPortlet";
 
 }

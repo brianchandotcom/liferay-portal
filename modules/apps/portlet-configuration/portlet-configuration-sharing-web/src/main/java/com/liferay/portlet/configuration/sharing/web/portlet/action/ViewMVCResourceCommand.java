@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_SHARING,
+		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_CONFIGURATION_SHARING,
 		"mvc.command.name=/portlet_sharing/view"
 	},
 	service = MVCResourceCommand.class

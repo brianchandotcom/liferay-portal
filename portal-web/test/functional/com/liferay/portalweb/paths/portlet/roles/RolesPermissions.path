@@ -533,7 +533,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@value,'blogsADD_ENTRY')]</td>
+	<td>//input[@type='checkbox' and contains(@value,'blogs.kernelADD_ENTRY')]</td>
 	<td></td>
 </tr>
 <tr>

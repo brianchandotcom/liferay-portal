@@ -22,4 +22,4 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="css" />
 
-<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= layoutSet.getCss() %>" />
+<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= layoutSet.getCss() %>" />

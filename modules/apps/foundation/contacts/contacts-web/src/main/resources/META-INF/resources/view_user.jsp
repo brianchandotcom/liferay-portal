@@ -160,7 +160,7 @@ request.setAttribute("view_user.jsp-user", user2);
 			<div class="user-information" id="<portlet:namespace />userInformation">
 				<aui:layout>
 					<c:if test="<%= showUsersInformation %>">
-						<aui:column columnWidth="<%= showSites ? 80 : 100 %>" cssClass="user-information-column-1">
+						<aui:col columnWidth="<%= showSites ? 80 : 100 %>" cssClass="user-information-column-1">
 							<div class="user-information-title">
 								<liferay-ui:message key="about" />
 							</div>
@@ -198,11 +198,11 @@ request.setAttribute("view_user.jsp-user", user2);
 							}
 							%>
 
-						</aui:column>
+						</aui:col>
 					</c:if>
 
 					<c:if test="<%= showSites || showTags %>">
-						<aui:column columnWidth="<%= showUsersInformation ? 20 : 100 %>" cssClass="user-information-column-2">
+						<aui:col columnWidth="<%= showUsersInformation ? 20 : 100 %>" cssClass="user-information-column-2">
 							<c:if test="<%= showSites %>">
 
 								<%
@@ -311,7 +311,7 @@ request.setAttribute("view_user.jsp-user", user2);
 									</c:otherwise>
 								</c:choose>
 							</c:if>
-						</aui:column>
+						</aui:col>
 					</c:if>
 				</aui:layout>
 			</div>

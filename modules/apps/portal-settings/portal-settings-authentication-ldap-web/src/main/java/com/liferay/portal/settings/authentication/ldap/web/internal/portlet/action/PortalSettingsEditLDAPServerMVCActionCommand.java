@@ -15,10 +15,6 @@
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
-import com.liferay.portal.kernel.ldap.LDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

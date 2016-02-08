@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
@@ -175,10 +174,8 @@ public class FileShortcutStagedModelDataHandler
 		fileShortcutElement.addAttribute(
 			"file-entry-uuid", fileEntry.getUuid());
 
-		if (Validator.isNotNull(fileEntryLiveGroupId)) {
-			fileShortcutElement.addAttribute(
-				"file-entry-live-group-id", fileEntryLiveGroupId);
-		}
+		fileShortcutElement.addAttribute(
+			"file-entry-live-group-id", fileEntryLiveGroupId);
 
 		portletDataContext.addClassedModel(
 			fileShortcutElement,

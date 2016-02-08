@@ -16,8 +16,8 @@ package com.liferay.product.navigation.taglib.servlet.taglib;
 
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.util.ControlMenuCategoryRegistry;
-import com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
 import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -59,8 +59,9 @@ public class ControlMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		ControlMenuCategoryRegistry controlMenuCategoryRegistry =
-			ServletContextUtil.getControlMenuCategoryRegistry();
+		ProductNavigationControlMenuCategoryRegistry
+			controlMenuCategoryRegistry =
+				ServletContextUtil.getControlMenuCategoryRegistry();
 
 		List<ProductNavigationControlMenuCategory> controlMenuCategories =
 			controlMenuCategoryRegistry.getControlMenuCategories(
@@ -70,7 +71,7 @@ public class ControlMenuTag extends IncludeTag {
 			"liferay-product-navigation:control-menu:control-menu-categories",
 			controlMenuCategories);
 
-		ControlMenuEntryRegistry controlMenuEntryRegistry =
+		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry =
 			ServletContextUtil.getControlMenuEntryRegistry();
 
 		request.setAttribute(

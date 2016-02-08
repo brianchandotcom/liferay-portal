@@ -498,9 +498,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		test.dependsOn(closure);
 
-		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-		test.jvmArgs("-Dliferay.mode=test");
-		test.jvmArgs("-Duser.timezone=GMT");
+		test.jvmArgs(
+			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
+			"-Duser.timezone=GMT");
 
 		// GRADLE-2697
 
@@ -535,7 +535,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	private int _updateStartedAppServerStopCounters(
+	private static int _updateStartedAppServerStopCounters(
 		File binDir, boolean increment) {
 
 		int originalCounter = 0;

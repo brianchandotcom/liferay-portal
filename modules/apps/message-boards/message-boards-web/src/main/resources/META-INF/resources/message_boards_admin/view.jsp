@@ -98,23 +98,10 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >
-
-	<%
-	PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-	if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-	}
-	else {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-		displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
-	}
-	%>
-
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= displayStyleURL %>"
+			portletURL="<%= searchContainer.getIteratorURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

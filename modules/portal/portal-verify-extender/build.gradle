@@ -1,9 +1,7 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	// @formatter:on
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile project(":core:osgi-service-tracker-collections")
 	compile project(":portal:portal-metatype")

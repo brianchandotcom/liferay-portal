@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=200"
 	},
 	service = ProductNavigationControlMenuEntry.class

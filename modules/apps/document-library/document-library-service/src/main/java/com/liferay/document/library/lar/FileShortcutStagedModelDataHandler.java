@@ -156,26 +156,20 @@ public class FileShortcutStagedModelDataHandler
 		Element fileShortcutElement = portletDataContext.getExportDataElement(
 			fileShortcut);
 
-		long fileShortcutGroupId = fileShortcut.getGroupId();
+		String fileEntryLiveGroupId = String.valueOf(fileEntry.getGroupId());
 
 		Group fileShortcutGroup = _groupLocalService.getGroup(
-			fileShortcutGroupId);
-
-		long fileEntryGroupId = fileEntry.getGroupId();
-
-		Group fileEntryGroup = _groupLocalService.getGroup(fileEntryGroupId);
-
-		String fileEntryLiveGroupId = null;
+			fileShortcut.getGroupId());
 
 		if (fileShortcutGroup.isStagedRemotely()) {
+			Group fileEntryGroup = _groupLocalService.getGroup(
+				fileEntry.getGroupId());
+
 			UnicodeProperties typeSettingsProperties =
 				fileEntryGroup.getTypeSettingsProperties();
 
 			fileEntryLiveGroupId = typeSettingsProperties.getProperty(
 				"remoteGroupId");
-		}
-		else {
-			fileEntryLiveGroupId = String.valueOf(fileEntryGroupId);
 		}
 
 		fileShortcutElement.addAttribute(

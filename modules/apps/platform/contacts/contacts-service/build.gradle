@@ -1,5 +1,16 @@
+buildService {
+	apiDir = "../contacts-api/src/main/java"
+	autoNamespaceTables = true
+}
+
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compile project(":apps:platform:contacts:contacts-api")
+
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: liferay.portalVersion
+	provided project(":apps:platform:portal:portal-upgrade")
 }
 
 liferay {

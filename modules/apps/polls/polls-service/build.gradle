@@ -6,10 +6,8 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.3"
-	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	// @formatter:on
 	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")

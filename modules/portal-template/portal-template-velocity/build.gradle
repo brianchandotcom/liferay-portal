@@ -6,10 +6,8 @@ configurations {
 
 dependencies {
 	provided group: "commons-collections", name: "commons-collections", version: "3.2.1"
-	// @formatter:off
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	// @formatter:on
 	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.apache.velocity", name: "velocity", version: "1.6.4"

@@ -25,7 +25,7 @@
 
 	<!-- Begin fragment <%= sectionId %> -->
 
-	<aui:fieldset>
+	<aui:fieldset id="<%= _getSectionId(section) %>">
 		<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 	</aui:fieldset>
 
@@ -41,7 +41,7 @@
 
 		<!-- Begin fragment <%= sectionId %> -->
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= section %>">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(section) %>" label="<%= section %>">
 			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 		</aui:fieldset>
 

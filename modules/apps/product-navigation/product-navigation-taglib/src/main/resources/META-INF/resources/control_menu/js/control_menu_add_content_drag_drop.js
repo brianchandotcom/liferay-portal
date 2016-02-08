@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu-add-content-drag-drop',
+	'liferay-product-navigation-control-menu-add-content-drag-drop',
 	function(A) {
 		var DDM = A.DD.DDM;
 
@@ -219,6 +219,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd', 'liferay-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
+		requires: ['aui-base', 'dd', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
 	}
 );

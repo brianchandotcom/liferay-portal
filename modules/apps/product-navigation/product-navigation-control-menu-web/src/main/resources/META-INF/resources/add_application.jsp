@@ -175,7 +175,7 @@ refererURL.setParameter("updateLayout", "true");
 	</div>
 </aui:form>
 
-<aui:script use="liferay-control-menu-add-application">
+<aui:script use="liferay-product-navigation-control-menu-add-application">
 	var ControlMenu = Liferay.ControlMenu;
 
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');

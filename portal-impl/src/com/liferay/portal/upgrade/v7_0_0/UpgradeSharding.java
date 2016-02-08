@@ -83,9 +83,9 @@ public class UpgradeSharding extends UpgradeProcess {
 						"from: " + StringUtil.merge(shardNames, ", ") + ".");
 		}
 
-		for (String shardName : shardNames) {
-			if (!shardName.equals(defaultShardName)) {
-				copyControlTables(shardName);
+		for (String uniqueShardName : uniqueShardNames) {
+			if (!uniqueShardName.equals(defaultShardName)) {
+				copyControlTables(uniqueShardName);
 			}
 		}
 	}

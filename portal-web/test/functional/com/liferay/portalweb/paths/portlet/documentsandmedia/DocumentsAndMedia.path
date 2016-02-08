@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
+	<td>//h4[contains(.,'${key_dmDocumentVersionNumber}')]/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_TITLE</td>
 	<td>//span[contains(@class,'header-toolbar-title')]</td>
 	<td></td>

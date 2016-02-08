@@ -31,4 +31,11 @@ else if (result instanceof MBCategory) {
 else if (result instanceof MBThread) {
 	thread = (MBThread)result;
 }
+else if (result instanceof SearchResult) {
+	SearchResult searchResult = (SearchResult)result;
+
+	MBMessage message = MBMessageLocalServiceUtil.getMessage(searchResult.getClassPK());
+
+	thread = message.getThread();
+}
 %>

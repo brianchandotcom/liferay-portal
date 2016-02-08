@@ -46,6 +46,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+if (Validator.isNotNull(keywords)) {
+	portletURL.setParameter("keywords", keywords);
+}
+
 request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
 
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
@@ -76,7 +82,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/message_boards/view_threads.jspf" %>
 
 	</c:when>
-	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
+		<liferay-portlet:renderURL varImpl="backURL">
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+		</liferay-portlet:renderURL>
+
+		<c:if test="<%= Validator.isNotNull(keywords) %>">
+			<liferay-ui:header
+				backURL="<%= backURL.toString() %>"
+				title="search"
+			/>
+		</c:if>
 
 		<%
 		boolean showAddCategoryButton = MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
@@ -196,19 +212,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				parentCategoryId = parentCategory.getCategoryId();
 				parentCategoryName = parentCategory.getName();
 			}
-			%>
 
-			<portlet:renderURL var="backURL">
-				<c:choose>
-					<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-					</c:when>
-					<c:otherwise>
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-					</c:otherwise>
-				</c:choose>
-			</portlet:renderURL>
+			if (parentCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+				backURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+				backURL.setParameter("mbCategoryId", String.valueOf(parentCategoryId));
+			}
+			%>
 
 			<liferay-ui:header
 				backLabel="<%= parentCategoryName %>"
@@ -219,23 +228,50 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</c:if>
 
 		<%
-		int entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
-
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
-		entriesSearchContainer.setId("mbEntries");
+		if (Validator.isNotNull(keywords)) {
+			long searchCategoryId = ParamUtil.getLong(request, "searchCategoryId");
 
-		entriesSearchContainer.setTotal(entriesTotal);
+			long[] categoryIdsArray = null;
 
-		int status = WorkflowConstants.STATUS_APPROVED;
+			List categoryIds = new ArrayList();
 
-		if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-			status = WorkflowConstants.STATUS_ANY;
+			categoryIds.add(Long.valueOf(searchCategoryId));
+
+			MBCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryId);
+
+			categoryIdsArray = StringUtil.split(StringUtil.merge(categoryIds), 0L);
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setCategoryIds(categoryIdsArray);
+			searchContext.setEnd(entriesSearchContainer.getEnd());
+			searchContext.setIncludeAttachments(true);
+			searchContext.setKeywords(keywords);
+			searchContext.setStart(entriesSearchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			entriesSearchContainer.setTotal(hits.getLength());
+			entriesSearchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
+		}
+		else {
+			entriesSearchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId));
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
+			entriesSearchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd()));
 		}
 
-		List entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd());
-
-		entriesSearchContainer.setResults(entriesResults);
+		entriesSearchContainer.setId("mbEntries");
 
 		request.setAttribute("view.jsp-displayStyle", "descriptive");
 		request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);

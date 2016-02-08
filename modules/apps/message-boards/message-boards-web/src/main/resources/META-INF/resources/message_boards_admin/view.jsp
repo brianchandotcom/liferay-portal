@@ -31,6 +31,12 @@ else {
 	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 }
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+if (Validator.isNotNull(keywords)) {
+	portletURL.setParameter("keywords", keywords);
+}
+
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
@@ -79,8 +85,6 @@ else {
 
 String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
 
-int entriesTotal = 0;
-
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
 Calendar calendar = Calendar.getInstance();
@@ -94,35 +98,54 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 searchContainer.setId("mbEntries");
 searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
-if (entriesNavigation.equals("all")) {
-	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
+if (Validator.isNotNull(keywords)) {
+	long searchCategoryId = ParamUtil.getLong(request, "searchCategoryId");
+
+	long[] categoryIdsArray = null;
+
+	List categoryIds = new ArrayList();
+
+	categoryIds.add(Long.valueOf(searchCategoryId));
+
+	MBCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryId);
+
+	categoryIdsArray = StringUtil.split(StringUtil.merge(categoryIds), 0L);
+
+	Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+	searchContext.setAttribute("paginationType", "more");
+	searchContext.setCategoryIds(categoryIdsArray);
+	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setIncludeAttachments(true);
+	searchContext.setKeywords(keywords);
+	searchContext.setStart(searchContainer.getStart());
+
+	Hits hits = indexer.search(searchContext);
+
+	searchContainer.setTotal(hits.getLength());
+	searchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
+}
+else if (entriesNavigation.equals("all")) {
+	searchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId));
+
+	int status = WorkflowConstants.STATUS_APPROVED;
+
+	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+		status = WorkflowConstants.STATUS_ANY;
+	}
+
+	searchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (entriesNavigation.equals("recent")) {
-	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+	searchContainer.setTotal(MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED));
+	searchContainer.setResults(MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()));
 }
-
-searchContainer.setTotal(entriesTotal);
-
-int status = WorkflowConstants.STATUS_APPROVED;
-
-if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-	status = WorkflowConstants.STATUS_ANY;
-}
-
-List entriesResults = null;
-
-if (entriesNavigation.equals("all")) {
-	entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (entriesNavigation.equals("recent")) {
-	entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
-}
-
-searchContainer.setResults(entriesResults);
 %>
 
 <liferay-frontend:management-bar
-	disabled="<%= entriesTotal == 0 %>"
+	disabled="<%= searchContainer.getTotal() == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >

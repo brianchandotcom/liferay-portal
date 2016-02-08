@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 
 import javax.servlet.ServletContext;
@@ -37,9 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 		"control.menu.category.key=" + ControlMenuCategoryKeys.SITES,
 		"service.ranking:Integer=100"
 	},
-	service = ControlMenuEntry.class
+	service = ProductNavigationControlMenuEntry.class
 )
-public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
+public class ProductMenuControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry {
 
 	@Override
 	public String getBodyJspPath() {

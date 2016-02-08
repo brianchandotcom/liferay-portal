@@ -96,7 +96,7 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 	}
 
 	private static final UUID _UUID = UUID.fromString(
-		"7099F1F8-ED73-47D8-9CDC-ED292BF7779F");
+		"A91E44F1-686A-4FC5-8877-43C2532543D3");
 
 	private final WikiNodeInfoPanelRequestHelper
 		_wikiNodeInfoPanelRequestHelper;

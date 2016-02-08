@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
+<%
+LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+%>
 
-<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="css" />
 
-<aui:input name="devices" type="hidden" value="regular" />
-
-<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= layoutSet.getCss() %>" />

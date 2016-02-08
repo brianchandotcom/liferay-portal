@@ -14,13 +14,6 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -30,13 +23,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=180"},
+	property = {"service.ranking:Integer=190"},
 	service = FormNavigatorEntry.class
 )
-public class LayoutSetLogoFormNavigatorEntry
+public class LayoutSetCSSFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
 
 	@Override
@@ -46,25 +39,7 @@ public class LayoutSetLogoFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "logo";
-	}
-
-	@Override
-	public boolean isVisible(User user, LayoutSet layoutSet) {
-		long companyId = layoutSet.getCompanyId();
-
-		try {
-			Company company = _companyLocalService.getCompany(companyId);
-
-			if (!company.isSiteLogo()) {
-				return false;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return true;
+		return "css";
 	}
 
 	@Override
@@ -78,19 +53,7 @@ public class LayoutSetLogoFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/layout_set/logo.jsp";
+		return "/layout_set/css.jsp";
 	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetLogoFormNavigatorEntry.class);
-
-	private CompanyLocalService _companyLocalService;
 
 }

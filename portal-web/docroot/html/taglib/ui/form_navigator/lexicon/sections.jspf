@@ -24,7 +24,7 @@
 
 	<!-- Begin fragment <%= sectionId %> -->
 
-	<aui:fieldset>
+	<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
 
 		<%
 		PortalIncludeUtil.include(
@@ -57,7 +57,7 @@
 
 		<!-- Begin fragment <%= sectionId %> -->
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
 
 			<%
 			PortalIncludeUtil.include(

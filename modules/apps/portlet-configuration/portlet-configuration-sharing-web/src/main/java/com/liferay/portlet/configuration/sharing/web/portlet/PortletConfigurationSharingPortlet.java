@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.sharing.web.portlet;
+package com.liferay.portlet.configuration.sharing.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portlet.sharing.web.constants.PortletSharingPortletKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.icon=/icons/portlet_sharing.png",
+		"com.liferay.portlet.icon=/icons/portlet_configuration_sharing.png",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletSharingPortletKeys.PORTLET_SHARING,
+		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_CONFIGURATION_SHARING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class PortletSharingPortlet extends MVCPortlet {
+public class PortletConfigurationSharingPortlet extends MVCPortlet {
 }

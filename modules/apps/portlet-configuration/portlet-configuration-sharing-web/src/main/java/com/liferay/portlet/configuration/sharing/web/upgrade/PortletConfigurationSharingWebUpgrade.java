@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.sharing.web.upgrade;
+package com.liferay.portlet.configuration.sharing.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portlet.sharing.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portlet.configuration.sharing.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,16 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class PortletSharingWebUpgrade implements UpgradeStepRegistrator {
+public class PortletConfigurationSharingWebUpgrade
+	implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portlet.sharing.web", "0.0.0", "1.0.0",
+			"com.liferay.portlet.configuration.sharing.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.portlet.sharing.web", "0.0.1", "1.0.0",
+			"com.liferay.portlet.configuration.sharing.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
 	}
 

@@ -18,7 +18,7 @@
 
 <%
 List<ProductNavigationControlMenuCategory> controlMenuCategories = (List<ProductNavigationControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
-ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
+ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry = (ProductNavigationControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">

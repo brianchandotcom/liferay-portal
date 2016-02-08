@@ -24,8 +24,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -47,10 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=300"
 	},
-	service = ControlMenuEntry.class
+	service = ProductNavigationControlMenuEntry.class
 )
 public class InformationMessagesControlMenuEntry
-	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
+	extends BaseJSPProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {

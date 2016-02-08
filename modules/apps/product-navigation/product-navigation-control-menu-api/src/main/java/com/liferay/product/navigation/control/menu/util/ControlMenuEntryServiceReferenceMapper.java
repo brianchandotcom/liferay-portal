@@ -18,7 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import org.osgi.framework.ServiceReference;
 
@@ -26,11 +26,12 @@ import org.osgi.framework.ServiceReference;
  * @author Julio Camarero
  */
 public class ControlMenuEntryServiceReferenceMapper
-	implements ServiceReferenceMapper<String, ControlMenuEntry> {
+	implements ServiceReferenceMapper
+		<String, ProductNavigationControlMenuEntry> {
 
 	@Override
 	public void map(
-		ServiceReference<ControlMenuEntry> serviceReference,
+		ServiceReference<ProductNavigationControlMenuEntry> serviceReference,
 		Emitter<String> emitter) {
 
 		String controlMenuCategoryKey = (String)serviceReference.getProperty(

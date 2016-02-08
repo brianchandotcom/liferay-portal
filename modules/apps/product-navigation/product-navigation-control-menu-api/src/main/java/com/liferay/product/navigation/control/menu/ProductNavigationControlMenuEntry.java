@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  */
-public interface ControlMenuEntry {
+public interface ProductNavigationControlMenuEntry {
 
 	public Map<String, Object> getData(HttpServletRequest request);
 

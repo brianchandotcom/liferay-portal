@@ -34,9 +34,9 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 						<ul class="control-menu-nav">
 
 							<%
-							List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+							List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-							for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+							for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
 								if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
 									continue;
 								}
@@ -70,9 +70,9 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 
 			<%
 			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
-				List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+				List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-				for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+				for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
 					controlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
 				}
 			}

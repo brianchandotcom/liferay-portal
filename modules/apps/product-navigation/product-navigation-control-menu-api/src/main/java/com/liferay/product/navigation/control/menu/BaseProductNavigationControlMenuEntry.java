@@ -30,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  */
-public abstract class BaseControlMenuEntry implements ControlMenuEntry {
+public abstract class BaseProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -38,11 +39,12 @@ public abstract class BaseControlMenuEntry implements ControlMenuEntry {
 			return true;
 		}
 
-		if (!(obj instanceof ControlMenuEntry)) {
+		if (!(obj instanceof ProductNavigationControlMenuEntry)) {
 			return false;
 		}
 
-		ControlMenuEntry controlMenuEntry = (ControlMenuEntry)obj;
+		ProductNavigationControlMenuEntry controlMenuEntry =
+			(ProductNavigationControlMenuEntry)obj;
 
 		if (Validator.equals(getKey(), controlMenuEntry.getKey())) {
 			return true;

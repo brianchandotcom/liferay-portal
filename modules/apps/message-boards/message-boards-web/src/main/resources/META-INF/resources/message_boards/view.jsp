@@ -189,7 +189,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 		entriesSearchContainer.setId("mbEntries");
-		entriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
 		entriesSearchContainer.setTotal(entriesTotal);
 
@@ -260,7 +259,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, entriesEmptyResultsMessage);
 
 		entriesSearchContainer.setId("mbEntries");
-		entriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
 		entriesSearchContainer.setTotal(entriesTotal);
 

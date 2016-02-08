@@ -179,20 +179,36 @@ if (groupThreadsUserId > 0) {
 						<liferay-ui:search-container-column-user
 							cssClass="user-icon-lg"
 							showDetails="<%= false %>"
-							userId="<%= message.getUserId() %>"
+							userId="<%= thread.getLastPostByUserId() %>"
 						/>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<c:choose>
+								<c:when test="<%= thread.getMessageCount() == 1 %>">
 
-							<%
-							Date modifiedDate = message.getModifiedDate();
+									<%
+									Date modifiedDate = message.getModifiedDate();
 
-							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-							%>
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+									%>
 
-							<h5 class="text-default">
-								<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
-							</h5>
+									<h5 class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</h5>
+								</c:when>
+								<c:otherwise>
+
+									<%
+									Date lastPostDate = thread.getLastPostDate();
+
+									String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
+									%>
+
+									<h5 class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK), lastPostDateDescription} %>" key="x-replied-x-ago" />
+									</h5>
+								</c:otherwise>
+							</c:choose>
 
 							<h4>
 								<aui:a href="<%= rowURL.toString() %>">

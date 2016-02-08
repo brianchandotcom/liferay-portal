@@ -125,6 +125,12 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						</span>
 					</c:if>
 
+					<c:if test="<%= !message.isApproved() %>">
+						<span class="h5 text-default">
+							<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+						</span>
+					</c:if>
+
 					<c:if test="<%= (messageUser != null) && (user.getUserId() != messageUser.getUserId()) && !PortalUtil.isGroupAdmin(messageUser, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 						<br />
 

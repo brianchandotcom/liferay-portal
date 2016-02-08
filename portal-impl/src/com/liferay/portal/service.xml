@@ -2758,7 +2758,6 @@
 		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
 		<column name="addedByLDAPImport" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 

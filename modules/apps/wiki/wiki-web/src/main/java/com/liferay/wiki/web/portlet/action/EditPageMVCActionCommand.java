@@ -224,9 +224,6 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 					throw e;
 				}
 			}
-
-			actionResponse.setRenderParameter(
-				"mvcRenderCommandName", "/wiki/edit_page");
 		}
 	}
 

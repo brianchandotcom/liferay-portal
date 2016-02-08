@@ -23,38 +23,42 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 %>
 
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
-	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
+	<div class="row">
+		<div class="col-md-12">
+			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
 
-		<%
-		Map<String, Object> data = new HashMap<String, Object>();
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("qa-id", "staging");
-		%>
+				data.put("qa-id", "staging");
+				%>
 
-		<div class="pull-right staging-links">
-			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
-				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" />
-			</span>
+				<div class="pull-right staging-links">
+					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
+						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" />
+					</span>
 
-			<span class="links-separator"> |</span>
+					<span class="links-separator"> |</span>
 
-			<%
-			data.put("qa-id", "live");
-			%>
+					<%
+					data.put("qa-id", "live");
+					%>
 
-			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
-				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
-			</span>
+					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
+						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
+					</span>
+				</div>
+			</c:if>
+
+			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
+				<aui:a
+					cssClass="goto-link list-group-heading"
+					href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
+					label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
+				/>
+			</c:if>
 		</div>
-	</c:if>
-
-	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
-		<aui:a
-			cssClass="goto-link list-group-heading"
-			href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
-			label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
-		/>
-	</c:if>
+	</div>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
 		<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />

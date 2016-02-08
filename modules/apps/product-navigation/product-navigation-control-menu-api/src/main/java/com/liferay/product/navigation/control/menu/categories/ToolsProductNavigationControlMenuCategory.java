@@ -14,8 +14,8 @@
 
 package com.liferay.product.navigation.control.menu.categories;
 
-import com.liferay.product.navigation.control.menu.ControlMenuCategory;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,16 +27,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.ROOT,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.ROOT,
 		"service.ranking:Integer=200"
 	},
-	service = ControlMenuCategory.class
+	service = ProductNavigationControlMenuCategory.class
 )
-public class ToolsControlMenuCategory implements ControlMenuCategory {
+public class ToolsProductNavigationControlMenuCategory
+	implements ProductNavigationControlMenuCategory {
 
 	@Override
 	public String getKey() {
-		return ControlMenuCategoryKeys.TOOLS;
+		return ProductNavigationControlMenuCategoryKeys.TOOLS;
 	}
 
 	@Override

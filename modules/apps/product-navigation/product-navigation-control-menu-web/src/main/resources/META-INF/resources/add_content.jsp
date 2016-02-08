@@ -44,7 +44,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	</div>
 </aui:form>
 
-<aui:script use="liferay-control-menu-add-content">
+<aui:script use="liferay-product-navigation-control-menu-add-content">
 	var ControlMenu = Liferay.ControlMenu;
 
 	var searchContent = A.one('#<portlet:namespace />searchContent');

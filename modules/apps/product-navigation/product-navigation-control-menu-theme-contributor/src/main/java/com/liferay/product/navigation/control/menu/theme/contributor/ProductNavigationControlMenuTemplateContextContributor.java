@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"type=" + TemplateContextContributor.TYPE_THEME},
 	service = TemplateContextContributor.class
 )
-public class ControlMenuTemplateContextContributor
+public class ProductNavigationControlMenuTemplateContextContributor
 	implements TemplateContextContributor {
 
 	@Override

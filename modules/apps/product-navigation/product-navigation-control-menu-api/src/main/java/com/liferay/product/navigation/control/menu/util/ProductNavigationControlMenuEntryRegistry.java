@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.product.navigation.control.menu.ControlMenuCategory;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,13 +38,15 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = ControlMenuEntryRegistry.class)
-public class ControlMenuEntryRegistry {
+@Component(
+	immediate = true, service = ProductNavigationControlMenuEntryRegistry.class
+)
+public class ProductNavigationControlMenuEntryRegistry {
 
-	public List<ControlMenuEntry> getControlMenuEntries(
-		ControlMenuCategory controlMenuCategory) {
+	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
+		ProductNavigationControlMenuCategory controlMenuCategory) {
 
-		List<ControlMenuEntry> controlMenuEntries =
+		List<ProductNavigationControlMenuEntry> controlMenuEntries =
 			_serviceTrackerMap.getService(controlMenuCategory.getKey());
 
 		if (controlMenuEntries == null) {
@@ -54,12 +56,12 @@ public class ControlMenuEntryRegistry {
 		return controlMenuEntries;
 	}
 
-	public List<ControlMenuEntry> getControlMenuEntries(
-		ControlMenuCategory controlMenuCategory,
+	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
+		ProductNavigationControlMenuCategory controlMenuCategory,
 		final HttpServletRequest request) {
 
-		List<ControlMenuEntry> controlMenuEntries = getControlMenuEntries(
-			controlMenuCategory);
+		List<ProductNavigationControlMenuEntry> controlMenuEntries =
+			getControlMenuEntries(controlMenuCategory);
 
 		if (controlMenuEntries.isEmpty()) {
 			return controlMenuEntries;
@@ -67,10 +69,12 @@ public class ControlMenuEntryRegistry {
 
 		return ListUtil.filter(
 			controlMenuEntries,
-			new PredicateFilter<ControlMenuEntry>() {
+			new PredicateFilter<ProductNavigationControlMenuEntry>() {
 
 				@Override
-				public boolean filter(ControlMenuEntry controlMenuEntry) {
+				public boolean filter(
+					ProductNavigationControlMenuEntry controlMenuEntry) {
+
 					try {
 						return controlMenuEntry.isShow(request);
 					}
@@ -87,9 +91,9 @@ public class ControlMenuEntryRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ControlMenuEntry.class,
+			bundleContext, ProductNavigationControlMenuEntry.class,
 			"(control.menu.category.key=*)",
-			new ControlMenuEntryServiceReferenceMapper(),
+			new ProductNavigationControlMenuEntryServiceReferenceMapper(),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator("service.ranking")));
 	}
@@ -100,9 +104,9 @@ public class ControlMenuEntryRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ControlMenuEntryRegistry.class);
+		ProductNavigationControlMenuEntryRegistry.class);
 
-	private ServiceTrackerMap<String, List<ControlMenuEntry>>
+	private ServiceTrackerMap<String, List<ProductNavigationControlMenuEntry>>
 		_serviceTrackerMap;
 
 }

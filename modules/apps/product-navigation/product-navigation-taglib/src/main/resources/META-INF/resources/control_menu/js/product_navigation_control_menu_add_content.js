@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu-add-content',
+	'liferay-product-navigation-control-menu-add-content',
 	function(A) {
 		var ControlMenu = Liferay.ControlMenu;
 
@@ -108,6 +108,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-search']
+		requires: ['aui-parse-content', 'aui-io-request', 'liferay-product-navigation-control-menu', 'liferay-product-navigation-control-menu-add-base', 'liferay-product-navigation-control-menu-add-content-search']
 	}
 );

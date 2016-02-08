@@ -14,8 +14,8 @@
 
 package com.liferay.product.navigation.taglib.servlet;
 
-import com.liferay.product.navigation.control.menu.util.ControlMenuCategoryRegistry;
-import com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
 
 import javax.servlet.ServletContext;
 
@@ -36,13 +36,15 @@ public class ServletContextUtil {
 		return servletContext.getContextPath();
 	}
 
-	public static final ControlMenuCategoryRegistry
+	public static final ProductNavigationControlMenuCategoryRegistry
 		getControlMenuCategoryRegistry() {
 
 		return _instance._getControlMenuCategoryRegistry();
 	}
 
-	public static final ControlMenuEntryRegistry getControlMenuEntryRegistry() {
+	public static final ProductNavigationControlMenuEntryRegistry
+		getControlMenuEntryRegistry() {
+
 		return _instance._getControlMenuEntryRegistry();
 	}
 
@@ -62,14 +64,15 @@ public class ServletContextUtil {
 
 	@Reference(unbind = "-")
 	protected void setControlMenuCategoryRegistry(
-		ControlMenuCategoryRegistry controlMenuCategoryRegistry) {
+		ProductNavigationControlMenuCategoryRegistry
+			controlMenuCategoryRegistry) {
 
 		_controlMenuCategoryRegistry = controlMenuCategoryRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setControlMenuEntryRegistry(
-		ControlMenuEntryRegistry controlMenuEntryRegistry) {
+		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry) {
 
 		_controlMenuEntryRegistry = controlMenuEntryRegistry;
 	}
@@ -82,11 +85,15 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ControlMenuCategoryRegistry _getControlMenuCategoryRegistry() {
+	private ProductNavigationControlMenuCategoryRegistry
+		_getControlMenuCategoryRegistry() {
+
 		return _controlMenuCategoryRegistry;
 	}
 
-	private ControlMenuEntryRegistry _getControlMenuEntryRegistry() {
+	private ProductNavigationControlMenuEntryRegistry
+		_getControlMenuEntryRegistry() {
+
 		return _controlMenuEntryRegistry;
 	}
 
@@ -96,8 +103,9 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
-	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
+	private ProductNavigationControlMenuCategoryRegistry
+		_controlMenuCategoryRegistry;
+	private ProductNavigationControlMenuEntryRegistry _controlMenuEntryRegistry;
 	private ServletContext _servletContext;
 
 }

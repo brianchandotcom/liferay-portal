@@ -32,8 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  */
-public abstract class BaseJSPControlMenuEntry
-	extends BaseControlMenuEntry implements ControlMenuEntry {
+public abstract class BaseJSPProductNavigationControlMenuEntry
+	extends BaseProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	public String getBodyJspPath() {
 		return StringPool.BLANK;
@@ -96,7 +97,7 @@ public abstract class BaseJSPControlMenuEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseJSPControlMenuEntry.class);
+		BaseJSPProductNavigationControlMenuEntry.class);
 
 	private ServletContext _servletContext;
 

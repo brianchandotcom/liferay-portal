@@ -66,3 +66,13 @@ body.portlet {
 		padding-left: 25px;
 	}
 }
+
+.portlet {
+	.visible-interaction {
+		display: none;
+	}
+
+	&:hover .visible-interaction {
+		display: inherit;
+	}
+}

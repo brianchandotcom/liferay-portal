@@ -349,10 +349,23 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		%>
 
 		<c:if test="<%= (folder != null) && hasDeletePermission %>">
+
+			<%
+			String mvcRenderCommandName = "/image_gallery_display/view";
+
+			if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+				mvcRenderCommandName = "/document_library/view";
+
+				if (folder.getParentFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					mvcRenderCommandName = "/document_library/view_folder";
+				}
+			}
+			%>
+
 			<c:choose>
 				<c:when test="<%= !folder.isMountPoint() %>">
 					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+						<portlet:param name="mvcRenderCommandName" value="<%= mvcRenderCommandName %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 					</portlet:renderURL>
 
@@ -366,7 +379,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				</c:when>
 				<c:otherwise>
 					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+						<portlet:param name="mvcRenderCommandName" value="<%= mvcRenderCommandName %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 					</portlet:renderURL>
 

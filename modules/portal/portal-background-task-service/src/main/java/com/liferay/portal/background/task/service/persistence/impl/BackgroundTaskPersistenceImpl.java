@@ -2128,50 +2128,50 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	/**
-	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63;.
+	 * Returns all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @return the matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T(long groupId,
+	public List<BackgroundTask> findByG_T(long[] groupIds,
 		String[] taskExecutorClassNames) {
-		return findByG_T(groupId, taskExecutorClassNames, QueryUtil.ALL_POS,
+		return findByG_T(groupIds, taskExecutorClassNames, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63;.
+	 * Returns a range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @return the range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T(long groupId,
+	public List<BackgroundTask> findByG_T(long[] groupIds,
 		String[] taskExecutorClassNames, int start, int end) {
-		return findByG_T(groupId, taskExecutorClassNames, start, end, null);
+		return findByG_T(groupIds, taskExecutorClassNames, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63;.
+	 * Returns an ordered range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
@@ -2179,10 +2179,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * @return the ordered range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T(long groupId,
+	public List<BackgroundTask> findByG_T(long[] groupIds,
 		String[] taskExecutorClassNames, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
-		return findByG_T(groupId, taskExecutorClassNames, start, end,
+		return findByG_T(groupIds, taskExecutorClassNames, start, end,
 			orderByComparator, true);
 	}
 
@@ -2202,10 +2202,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * @return the ordered range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T(long groupId,
+	public List<BackgroundTask> findByG_T(long[] groupIds,
 		String[] taskExecutorClassNames, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
@@ -2216,9 +2225,9 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
-		if (taskExecutorClassNames.length == 1) {
-			return findByG_T(groupId, taskExecutorClassNames[0], start, end,
-				orderByComparator);
+		if ((groupIds.length == 1) && (taskExecutorClassNames.length == 1)) {
+			return findByG_T(groupIds[0], taskExecutorClassNames[0], start,
+				end, orderByComparator);
 		}
 
 		boolean pagination = true;
@@ -2228,12 +2237,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				(orderByComparator == null)) {
 			pagination = false;
 			finderArgs = new Object[] {
-					groupId, StringUtil.merge(taskExecutorClassNames)
+					StringUtil.merge(groupIds),
+					StringUtil.merge(taskExecutorClassNames)
 				};
 		}
 		else {
 			finderArgs = new Object[] {
-					groupId, StringUtil.merge(taskExecutorClassNames),
+					StringUtil.merge(groupIds),
+					StringUtil.merge(taskExecutorClassNames),
 					
 					start, end, orderByComparator
 				};
@@ -2247,7 +2258,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BackgroundTask backgroundTask : list) {
-					if ((groupId != backgroundTask.getGroupId()) ||
+					if (!ArrayUtil.contains(groupIds,
+								backgroundTask.getGroupId()) ||
 							!ArrayUtil.contains(taskExecutorClassNames,
 								backgroundTask.getTaskExecutorClassName())) {
 						list = null;
@@ -2263,7 +2275,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			query.append(_SQL_SELECT_BACKGROUNDTASK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_T_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
 
 			if (taskExecutorClassNames.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
@@ -2311,8 +2335,6 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
 
 				for (String taskExecutorClassName : taskExecutorClassNames) {
 					if ((taskExecutorClassName != null) &&
@@ -2439,14 +2461,23 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	/**
-	 * Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = any &#63;.
+	 * Returns the number of background tasks where groupId = any &#63; and taskExecutorClassName = any &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @return the number of matching background tasks
 	 */
 	@Override
-	public int countByG_T(long groupId, String[] taskExecutorClassNames) {
+	public int countByG_T(long[] groupIds, String[] taskExecutorClassNames) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
@@ -2458,7 +2489,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 
 		Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(taskExecutorClassNames)
+				StringUtil.merge(groupIds),
+				StringUtil.merge(taskExecutorClassNames)
 			};
 
 		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
@@ -2469,7 +2501,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			query.append(_SQL_COUNT_BACKGROUNDTASK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_T_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
 
 			if (taskExecutorClassNames.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
@@ -2509,8 +2553,6 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
-
 				for (String taskExecutorClassName : taskExecutorClassNames) {
 					if ((taskExecutorClassName != null) &&
 							!taskExecutorClassName.isEmpty()) {
@@ -2538,6 +2580,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "backgroundTask.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_GROUPID_7 = "backgroundTask.groupId IN (";
 	private static final String _FINDER_COLUMN_G_T_TASKEXECUTORCLASSNAME_1 = "backgroundTask.taskExecutorClassName IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TASKEXECUTORCLASSNAME_2 = "backgroundTask.taskExecutorClassName = ?";
 	private static final String _FINDER_COLUMN_G_T_TASKEXECUTORCLASSNAME_3 = "(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '')";
@@ -5624,32 +5667,32 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	/**
-	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
+	 * Returns all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param completed the completed
 	 * @return the matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T_C(long groupId,
+	public List<BackgroundTask> findByG_T_C(long[] groupIds,
 		String[] taskExecutorClassNames, boolean completed) {
-		return findByG_T_C(groupId, taskExecutorClassNames, completed,
+		return findByG_T_C(groupIds, taskExecutorClassNames, completed,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
+	 * Returns a range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param completed the completed
 	 * @param start the lower bound of the range of background tasks
@@ -5657,20 +5700,20 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * @return the range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T_C(long groupId,
+	public List<BackgroundTask> findByG_T_C(long[] groupIds,
 		String[] taskExecutorClassNames, boolean completed, int start, int end) {
-		return findByG_T_C(groupId, taskExecutorClassNames, completed, start,
+		return findByG_T_C(groupIds, taskExecutorClassNames, completed, start,
 			end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
+	 * Returns an ordered range of all the background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param completed the completed
 	 * @param start the lower bound of the range of background tasks
@@ -5679,10 +5722,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * @return the ordered range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T_C(long groupId,
+	public List<BackgroundTask> findByG_T_C(long[] groupIds,
 		String[] taskExecutorClassNames, boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
-		return findByG_T_C(groupId, taskExecutorClassNames, completed, start,
+		return findByG_T_C(groupIds, taskExecutorClassNames, completed, start,
 			end, orderByComparator, true);
 	}
 
@@ -5703,10 +5746,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 * @return the ordered range of matching background tasks
 	 */
 	@Override
-	public List<BackgroundTask> findByG_T_C(long groupId,
+	public List<BackgroundTask> findByG_T_C(long[] groupIds,
 		String[] taskExecutorClassNames, boolean completed, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
@@ -5717,9 +5769,9 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			Arrays.sort(taskExecutorClassNames, NULL_SAFE_STRING_COMPARATOR);
 		}
 
-		if (taskExecutorClassNames.length == 1) {
-			return findByG_T_C(groupId, taskExecutorClassNames[0], completed,
-				start, end, orderByComparator);
+		if ((groupIds.length == 1) && (taskExecutorClassNames.length == 1)) {
+			return findByG_T_C(groupIds[0], taskExecutorClassNames[0],
+				completed, start, end, orderByComparator);
 		}
 
 		boolean pagination = true;
@@ -5729,12 +5781,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				(orderByComparator == null)) {
 			pagination = false;
 			finderArgs = new Object[] {
-					groupId, StringUtil.merge(taskExecutorClassNames), completed
+					StringUtil.merge(groupIds),
+					StringUtil.merge(taskExecutorClassNames), completed
 				};
 		}
 		else {
 			finderArgs = new Object[] {
-					groupId, StringUtil.merge(taskExecutorClassNames), completed,
+					StringUtil.merge(groupIds),
+					StringUtil.merge(taskExecutorClassNames), completed,
 					
 					start, end, orderByComparator
 				};
@@ -5748,7 +5802,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BackgroundTask backgroundTask : list) {
-					if ((groupId != backgroundTask.getGroupId()) ||
+					if (!ArrayUtil.contains(groupIds,
+								backgroundTask.getGroupId()) ||
 							!ArrayUtil.contains(taskExecutorClassNames,
 								backgroundTask.getTaskExecutorClassName()) ||
 							(completed != backgroundTask.getCompleted())) {
@@ -5765,7 +5820,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			query.append(_SQL_SELECT_BACKGROUNDTASK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_T_C_GROUPID_2);
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_T_C_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
 
 			if (taskExecutorClassNames.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
@@ -5817,8 +5884,6 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
 
 				for (String taskExecutorClassName : taskExecutorClassNames) {
 					if ((taskExecutorClassName != null) &&
@@ -5957,16 +6022,25 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	/**
-	 * Returns the number of background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
+	 * Returns the number of background tasks where groupId = any &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param taskExecutorClassNames the task executor class names
 	 * @param completed the completed
 	 * @return the number of matching background tasks
 	 */
 	@Override
-	public int countByG_T_C(long groupId, String[] taskExecutorClassNames,
+	public int countByG_T_C(long[] groupIds, String[] taskExecutorClassNames,
 		boolean completed) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.unique(groupIds);
+
+			Arrays.sort(groupIds);
+		}
+
 		if (taskExecutorClassNames == null) {
 			taskExecutorClassNames = new String[0];
 		}
@@ -5978,7 +6052,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 
 		Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(taskExecutorClassNames), completed
+				StringUtil.merge(groupIds),
+				StringUtil.merge(taskExecutorClassNames), completed
 			};
 
 		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_C,
@@ -5989,7 +6064,19 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			query.append(_SQL_COUNT_BACKGROUNDTASK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_T_C_GROUPID_2);
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_T_C_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
 
 			if (taskExecutorClassNames.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
@@ -6033,8 +6120,6 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
-
 				for (String taskExecutorClassName : taskExecutorClassNames) {
 					if ((taskExecutorClassName != null) &&
 							!taskExecutorClassName.isEmpty()) {
@@ -6064,6 +6149,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	}
 
 	private static final String _FINDER_COLUMN_G_T_C_GROUPID_2 = "backgroundTask.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_C_GROUPID_7 = "backgroundTask.groupId IN (";
 	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_1 = "backgroundTask.taskExecutorClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_2 = "backgroundTask.taskExecutorClassName = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_3 = "(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";

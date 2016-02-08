@@ -23,14 +23,46 @@ if (liveGroup == null) {
 	liveGroup = group;
 	liveGroupId = groupId;
 }
+
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String navigation = ParamUtil.getString(request, "navigation", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
+	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
+}
+
+String searchContainerId = "exportLayoutProcesses";
 %>
 
 <liferay-util:include page="/export/navigation.jsp" servletContext="<%= application %>" />
+
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="mvcRenderCommandName" value="exportLayoutsView" />
+	<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+	<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+	<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+	<liferay-util:param name="navigation" value="<%= navigation %>" />
+	<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+	<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+</liferay-util:include>
 
 <div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
 	<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+		<liferay-util:param name="navigation" value="<%= navigation %>" />
+		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 	</liferay-util:include>
 </div>
 
@@ -46,6 +78,11 @@ if (liveGroup == null) {
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
+		<portlet:param name="orderByType" value="<%= orderByType %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

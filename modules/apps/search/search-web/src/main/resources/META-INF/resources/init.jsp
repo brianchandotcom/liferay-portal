@@ -88,6 +88,7 @@ page import="com.liferay.search.facet.SearchFacet" %><%@
 page import="com.liferay.search.facet.util.SearchFacetTracker" %><%@
 page import="com.liferay.search.facet.util.comparator.SearchFacetComparator" %><%@
 page import="com.liferay.search.web.constants.SearchPortletKeys" %><%@
+page import="com.liferay.search.web.constants.SearchPortletParameterNames" %><%@
 page import="com.liferay.search.web.display.context.SearchDisplayContext" %><%@
 page import="com.liferay.search.web.facet.AssetEntriesSearchFacet" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@

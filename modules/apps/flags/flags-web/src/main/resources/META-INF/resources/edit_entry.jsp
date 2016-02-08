@@ -42,7 +42,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			<aui:select label="reason-for-the-report" name="reason">
 
 				<%
-				for (String reason : PropsValues.FLAGS_REASONS) {
+				for (String reason : flagsGroupServiceConfiguration.reasons()) {
 				%>
 
 					<aui:option label="<%= reason %>" />
@@ -128,7 +128,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		var errorMessage = (errorMessageNode && errorMessageNode.html()) || '';
 
 		A.io.request(
-			'<liferay-portlet:actionURL portletName="<%= PageFlagsPortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/flags/edit_entry" /></liferay-portlet:actionURL>',
+			'<liferay-portlet:actionURL name="/flags/edit_entry" portletName="<%= PageFlagsPortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/flags/edit_entry" /></liferay-portlet:actionURL>',
 			{
 				data: data,
 				on: {

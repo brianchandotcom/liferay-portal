@@ -115,7 +115,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 					Map<String, Object> map = new HashMap<>();
 
 					File appServerDir = new File(
-						workspaceExtension.getHomeDir(), "tomcat-7.0.62");
+						workspaceExtension.getHomeDir(), "tomcat-8.0.30");
 
 					map.put("appServerPath", appServerDir.getAbsolutePath());
 

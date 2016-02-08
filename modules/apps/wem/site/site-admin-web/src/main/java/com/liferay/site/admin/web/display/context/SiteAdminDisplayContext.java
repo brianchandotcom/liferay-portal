@@ -135,7 +135,7 @@ public class SiteAdminDisplayContext {
 
 	public String getKeywords() {
 		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_request, "keywords", "list");
+			_keywords = ParamUtil.getString(_request, "keywords");
 		}
 
 		return _keywords;

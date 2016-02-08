@@ -3708,3 +3708,26 @@ in those methods related to WAP.
 #### Why was this change made?
 
 This change was made because WAP is an obsolete functionality.
+
+---------------------------------------
+
+### The aui:layout taglib has been removed with no direct replacement
+- **Date:** 2015-Feb-8
+- **JIRA Ticket:** LPS-62935
+
+#### What changed?
+
+The `aui:layout` taglib has been removed with no direct replacement.
+
+#### Who is affected?
+
+Plugins or templates that are using the `aui:layout` tag need
+to remove their usage of the tag.
+
+#### How should I update my code?
+
+There is no direct replacement. You should removeany usages of the `aui:layout` tag.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to remove deprecated taglibs.

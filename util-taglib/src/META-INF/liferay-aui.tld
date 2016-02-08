@@ -1091,20 +1091,6 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Deprecated as of 6.2, with no replacement.]]></description>
-		<name>layout</name>
-		<tag-class>com.liferay.taglib.aui.LayoutTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[A CSS class for styling the component]]></description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
 		<description><![CDATA[Creates a configurable model context object that can be used as a model for other components.]]></description>
 		<name>model-context</name>
 		<tag-class>com.liferay.taglib.aui.ModelContextTag</tag-class>

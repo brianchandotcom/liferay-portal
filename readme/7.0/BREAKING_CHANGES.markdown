@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `637216c`.*
+*This document has been reviewed through commit `8e34a45`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3676,42 +3676,34 @@ code.
 
 ---------------------------------------
 
-### The wap functionality has been removed
+### Removed the WAP Functionality
 - **Date:** 2016-Feb-05
 - **JIRA Ticket:** LPS-62920
 
 #### What changed?
 
-The functionality was removed.
+The WAP functionality has been removed.
 
 #### Who is affected?
 
-Everyone that uses this functionality.
+This affects developers that use the WAP functionality.
 
 #### How should I update my code?
 
-If you are using any of this methods(updateLookAndFeel) of
-LayoutLocalServiceUtil you need to removed the parameters related with wap
+If you are using any of the following methods, you need to remove the parameters
+in those methods related to WAP.
 
-If you are using any of this methods(addLayoutRevision, updateLayoutRevision) of
-LayoutRevisionLocalServiceUtil you need to removed the parameters related with
-wap
-
-If you are using any of this methods(addLayoutRevision) of
-LayoutRevisionServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutSetLocalServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutSetServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(getColorScheme, getControlPanelThemes,
-getPageThemes, getTheme) of ThemeLocalServiceUtil you need to removed the
-parameters related with wap
+- `LayoutLocalServiceUtil.updateLookAndFeel`
+- `LayoutRevisionLocalServiceUtil.addLayoutRevision`
+- `LayoutRevisionLocalServiceUtil.updateLayoutRevision`
+- `LayoutRevisionServiceUtil.addLayoutRevision`
+- `LayoutServiceUtil.updateLookAndFeel`
+- `LayoutSetLocalServiceUtil.updateLookAndFeel`
+- `LayoutSetServiceUtil.updateLookAndFeel`
+- `ThemeLocalServiceUtil.getColorScheme`
+- `ThemeLocalServiceUtil.getControlPanelThemes`
+- `ThemeLocalServiceUtil.getPageThemes`
+- `ThemeLocalServiceUtil.getTheme`
 
 #### Why was this change made?
 

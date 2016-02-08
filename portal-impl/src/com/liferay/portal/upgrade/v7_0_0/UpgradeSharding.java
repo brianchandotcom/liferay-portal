@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
@@ -65,7 +66,17 @@ public class UpgradeSharding extends UpgradeProcess {
 	protected void copyControlTables(List<String> shardNames) throws Exception {
 		String defaultShardName = PropsUtil.get("shard.default.name");
 
-		if (Validator.isNull(defaultShardName)) {
+		List<String> uniqueShardNames = ListUtil.unique(shardNames);
+
+		boolean defaultPartitioningEnabled = false;
+
+		if (uniqueShardNames.size() < shardNames.size()) {
+			defaultPartitioningEnabled = true;
+		}
+
+		if ((!defaultPartitioningEnabled) &&
+			 Validator.isNull(defaultShardName)) {
+
 			throw new RuntimeException(
 				"The property \"shard.default.name\" is not set in " +
 					"portal.properties. Please specify a default shard name " +

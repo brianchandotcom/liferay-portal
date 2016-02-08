@@ -14,7 +14,6 @@
 
 package com.liferay.staging.bar.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,7 +27,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.WindowState;
 
 /**
  * @author Mate Thurzo
@@ -60,11 +58,7 @@ public class ActionUtil {
 		String redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(actionRequest, "redirect"));
 
-		WindowState windowState = actionRequest.getWindowState();
-
-		if (windowState.equals(LiferayWindowState.POP_UP)) {
-			actionResponse.sendRedirect(redirect);
-		}
+		actionResponse.sendRedirect(redirect);
 	}
 
 }

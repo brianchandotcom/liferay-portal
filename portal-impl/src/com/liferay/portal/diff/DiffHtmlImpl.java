@@ -75,66 +75,80 @@ public class DiffHtmlImpl implements DiffHtml {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		SAXTransformerFactory saxTransformerFactory =
-			(SAXTransformerFactory)TransformerFactory.newInstance();
+		Thread currentThread = Thread.currentThread();
 
-		TransformerHandler tranformHandler =
-			saxTransformerFactory.newTransformerHandler();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		tranformHandler.setResult(new StreamResult(unsyncStringWriter));
+		currentThread.setContextClassLoader(
+			DiffHtmlImpl.class.getClassLoader());
 
-		XslFilter xslFilter = new XslFilter();
+		try {
+			SAXTransformerFactory saxTransformerFactory =
+				(SAXTransformerFactory)TransformerFactory.newInstance();
 
-		ContentHandler contentHandler = xslFilter.xsl(
-			tranformHandler,
-			"com/liferay/portal/util/dependencies/diff_html.xsl");
+			TransformerHandler tranformHandler =
+				saxTransformerFactory.newTransformerHandler();
 
-		HtmlCleaner htmlCleaner = new HtmlCleaner();
+			tranformHandler.setResult(new StreamResult(unsyncStringWriter));
 
-		DomTreeBuilder oldDomTreeBuilder = new DomTreeBuilder();
+			XslFilter xslFilter = new XslFilter();
 
-		htmlCleaner.cleanAndParse(oldSource, oldDomTreeBuilder);
+			ContentHandler contentHandler = xslFilter.xsl(
+				tranformHandler,
+				"com/liferay/portal/util/dependencies/diff_html.xsl");
 
-		Locale locale = LocaleUtil.getDefault();
+			HtmlCleaner htmlCleaner = new HtmlCleaner();
 
-		TextNodeComparator leftTextNodeComparator = new TextNodeComparator(
-			oldDomTreeBuilder, locale);
+			DomTreeBuilder oldDomTreeBuilder = new DomTreeBuilder();
 
-		DomTreeBuilder newDomTreeBuilder = new DomTreeBuilder();
+			htmlCleaner.cleanAndParse(oldSource, oldDomTreeBuilder);
 
-		htmlCleaner.cleanAndParse(newSource, newDomTreeBuilder);
+			Locale locale = LocaleUtil.getDefault();
 
-		TextNodeComparator rightTextNodeComparator = new TextNodeComparator(
-			newDomTreeBuilder, locale);
+			TextNodeComparator leftTextNodeComparator =
+				new TextNodeComparator(oldDomTreeBuilder, locale);
 
-		contentHandler.startDocument();
-		contentHandler.startElement(
-			StringPool.BLANK, _DIFF_REPORT, _DIFF_REPORT, new AttributesImpl());
-		contentHandler.startElement(
-			StringPool.BLANK, _DIFF, _DIFF, new AttributesImpl());
+			DomTreeBuilder newDomTreeBuilder = new DomTreeBuilder();
 
-		HtmlSaxDiffOutput htmlSaxDiffOutput = new HtmlSaxDiffOutput(
-			contentHandler, _DIFF);
+			htmlCleaner.cleanAndParse(newSource, newDomTreeBuilder);
 
-		HTMLDiffer htmlDiffer = new HTMLDiffer(htmlSaxDiffOutput);
+			TextNodeComparator rightTextNodeComparator =
+				new TextNodeComparator(newDomTreeBuilder, locale);
 
-		htmlDiffer.diff(leftTextNodeComparator, rightTextNodeComparator);
+			contentHandler.startDocument();
+			contentHandler.startElement(
+				StringPool.BLANK, _DIFF_REPORT, _DIFF_REPORT,
+				new AttributesImpl());
+			contentHandler.startElement(
+				StringPool.BLANK, _DIFF, _DIFF, new AttributesImpl());
 
-		contentHandler.endElement(StringPool.BLANK, _DIFF, _DIFF);
-		contentHandler.endElement(StringPool.BLANK, _DIFF_REPORT, _DIFF_REPORT);
-		contentHandler.endDocument();
+			HtmlSaxDiffOutput htmlSaxDiffOutput =
+				new HtmlSaxDiffOutput(contentHandler, _DIFF);
 
-		unsyncStringWriter.flush();
+			HTMLDiffer htmlDiffer = new HTMLDiffer(htmlSaxDiffOutput);
 
-		String string = unsyncStringWriter.toString();
+			htmlDiffer.diff(leftTextNodeComparator, rightTextNodeComparator);
 
-		if (string.startsWith("<?xml")) {
-			int index = string.indexOf("?>");
+			contentHandler.endElement(StringPool.BLANK, _DIFF, _DIFF);
+			contentHandler.endElement(
+				StringPool.BLANK, _DIFF_REPORT, _DIFF_REPORT);
+			contentHandler.endDocument();
 
-			string = string.substring(index + 2);
+			unsyncStringWriter.flush();
+
+			String string = unsyncStringWriter.toString();
+
+			if (string.startsWith("<?xml")) {
+				int index = string.indexOf("?>");
+
+				string = string.substring(index + 2);
+			}
+
+			return string;
 		}
-
-		return string;
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override

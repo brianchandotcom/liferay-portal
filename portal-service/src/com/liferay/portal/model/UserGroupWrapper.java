@@ -70,7 +70,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -148,12 +147,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
 		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
 	}
 
 	@Override
@@ -221,16 +214,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroup.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this user group.
-	*
-	* @return the last publish date of this user group
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _userGroup.getLastPublishDate();
 	}
 
 	/**
@@ -455,16 +438,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_userGroup.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	/**
-	* Sets the last publish date of this user group.
-	*
-	* @param lastPublishDate the last publish date of this user group
-	*/
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_userGroup.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

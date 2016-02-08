@@ -46,7 +46,6 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setAddedByLDAPImport(model.getAddedByLDAPImport());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -199,14 +198,6 @@ public class UserGroupSoap implements Serializable {
 		_addedByLDAPImport = addedByLDAPImport;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _userGroupId;
@@ -219,5 +210,4 @@ public class UserGroupSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _addedByLDAPImport;
-	private Date _lastPublishDate;
 }

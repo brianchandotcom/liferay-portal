@@ -140,8 +140,6 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setAddedByLDAPImport(RandomTestUtil.randomBoolean());
 
-		newUserGroup.setLastPublishDate(RandomTestUtil.nextDate());
-
 		_userGroups.add(_persistence.update(newUserGroup));
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
@@ -170,9 +168,6 @@ public class UserGroupPersistenceTest {
 			newUserGroup.getDescription());
 		Assert.assertEquals(existingUserGroup.getAddedByLDAPImport(),
 			newUserGroup.getAddedByLDAPImport());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingUserGroup.getLastPublishDate()),
-			Time.getShortTimestamp(newUserGroup.getLastPublishDate()));
 	}
 
 	@Test
@@ -244,8 +239,7 @@ public class UserGroupPersistenceTest {
 			true, "uuid", true, "userGroupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentUserGroupId", true, "name", true,
-			"description", true, "addedByLDAPImport", true, "lastPublishDate",
-			true);
+			"description", true, "addedByLDAPImport", true);
 	}
 
 	@Test
@@ -482,8 +476,6 @@ public class UserGroupPersistenceTest {
 		userGroup.setDescription(RandomTestUtil.randomString());
 
 		userGroup.setAddedByLDAPImport(RandomTestUtil.randomBoolean());
-
-		userGroup.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_userGroups.add(_persistence.update(userGroup));
 

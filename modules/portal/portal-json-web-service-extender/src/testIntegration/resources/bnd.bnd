@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal JSON Web Service Extender
-Bundle-SymbolicName: com.liferay.portal.json.web.service.extender
-Bundle-Version: 1.0.0
-Include-Resource:\
-	../../classes,\
-	com/liferay/portal/json/web/service/extender/test/TestWebService.class=../../test-classes/integration/com/liferay/portal/json/web/service/extender/test/TestWebService.class
-Private-Package: com.liferay.portal.json.web.service.extender.internal

@@ -16,19 +16,9 @@ package com.liferay.portal.json.web.service.extender.test;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true,
-	property = {
-		"json.web.service.context.name=test",
-		"json.web.service.context.path=webservice"
-	},
-	service = Object.class
-)
 @JSONWebService
 public class TestWebService {
 

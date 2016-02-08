@@ -56,6 +56,11 @@ public class DLGroupServiceSettings {
 		return new DLGroupServiceSettings(parameterMapSettings);
 	}
 
+	public static void registerSettingsMetadata() {
+		SettingsFactoryUtil.registerSettingsMetadata(
+			DLGroupServiceSettings.class, null, _getFallbackKeys());
+	}
+
 	public DLGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}

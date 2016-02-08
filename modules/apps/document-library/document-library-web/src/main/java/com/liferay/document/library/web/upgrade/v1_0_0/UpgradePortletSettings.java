@@ -15,8 +15,10 @@
 package com.liferay.document.library.web.upgrade.v1_0_0;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 /**
@@ -31,6 +33,9 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DLPortletInstanceSettings.registerSettingsMetadata();
+		DLGroupServiceSettings.registerSettingsMetadata();
+
 		upgradeMainPortlet(
 			DLPortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);

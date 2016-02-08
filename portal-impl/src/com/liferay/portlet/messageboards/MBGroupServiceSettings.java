@@ -61,6 +61,11 @@ public class MBGroupServiceSettings {
 		return new MBGroupServiceSettings(parameterMapSettings);
 	}
 
+	public static void registerSettingsMetadata() {
+		SettingsFactoryUtil.registerSettingsMetadata(
+			MBGroupServiceSettings.class, null, _getFallbackKeys());
+	}
+
 	public MBGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}

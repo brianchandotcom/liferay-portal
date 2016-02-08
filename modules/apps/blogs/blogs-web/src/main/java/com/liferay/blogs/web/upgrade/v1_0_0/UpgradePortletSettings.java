@@ -17,6 +17,7 @@ package com.liferay.blogs.web.upgrade.v1_0_0;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 /**
@@ -31,6 +32,8 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		BlogsGroupServiceSettings.registerSettingsMetadata();
+
 		upgradeMainPortlet(
 			BlogsPortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);

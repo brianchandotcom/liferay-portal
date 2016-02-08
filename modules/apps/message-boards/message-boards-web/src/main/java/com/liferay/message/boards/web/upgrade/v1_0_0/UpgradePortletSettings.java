@@ -18,6 +18,7 @@ import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 
 /**
  * @author Sergio González
@@ -31,6 +32,8 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		MBGroupServiceSettings.registerSettingsMetadata();
+
 		upgradeMainPortlet(
 			MBPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);

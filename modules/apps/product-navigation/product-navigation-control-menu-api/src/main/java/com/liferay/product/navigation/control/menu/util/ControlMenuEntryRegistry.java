@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.product.navigation.control.menu.ControlMenuCategory;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import java.util.Collections;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ControlMenuEntryRegistry {
 
 	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
-		ControlMenuCategory controlMenuCategory) {
+		ProductNavigationControlMenuCategory controlMenuCategory) {
 
 		List<ProductNavigationControlMenuEntry> controlMenuEntries =
 			_serviceTrackerMap.getService(controlMenuCategory.getKey());
@@ -55,7 +55,7 @@ public class ControlMenuEntryRegistry {
 	}
 
 	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
-		ControlMenuCategory controlMenuCategory,
+		ProductNavigationControlMenuCategory controlMenuCategory,
 		final HttpServletRequest request) {
 
 		List<ProductNavigationControlMenuEntry> controlMenuEntries =

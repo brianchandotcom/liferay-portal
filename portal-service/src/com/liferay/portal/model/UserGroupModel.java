@@ -270,20 +270,6 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
 
-	/**
-	 * Returns the last publish date of this user group.
-	 *
-	 * @return the last publish date of this user group
-	 */
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this user group.
-	 *
-	 * @param lastPublishDate the last publish date of this user group
-	 */
-	public void setLastPublishDate(Date lastPublishDate);
-
 	@Override
 	public boolean isNew();
 

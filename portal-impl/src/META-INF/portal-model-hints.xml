@@ -1683,7 +1683,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="addedByLDAPImport" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />

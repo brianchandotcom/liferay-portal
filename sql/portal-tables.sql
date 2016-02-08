@@ -1604,8 +1604,7 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	addedByLDAPImport BOOLEAN,
-	lastPublishDate DATE null
+	addedByLDAPImport BOOLEAN
 );
 
 create table UserGroupGroupRole (

@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
-import com.liferay.portal.kernel.security.ldap.Modifications;
-import com.liferay.portal.kernel.security.ldap.PortalLDAP;
-import com.liferay.portal.kernel.security.ldap.PortalToLDAPConverter;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -38,10 +35,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.GroupConverterKeys;
+import com.liferay.portal.ldap.PortalLDAP;
 import com.liferay.portal.ldap.UserConverterKeys;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.ldap.exportimport.Modifications;
+import com.liferay.portal.ldap.exportimport.PortalToLDAPConverter;
 
 import java.io.Serializable;
 

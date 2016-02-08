@@ -1483,7 +1483,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
@@ -2138,7 +2138,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 

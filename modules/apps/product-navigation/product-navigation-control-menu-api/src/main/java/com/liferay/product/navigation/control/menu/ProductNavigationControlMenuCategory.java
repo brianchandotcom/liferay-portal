@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
-public interface ControlMenuCategory {
+public interface ProductNavigationControlMenuCategory {
 
 	public String getKey();
 

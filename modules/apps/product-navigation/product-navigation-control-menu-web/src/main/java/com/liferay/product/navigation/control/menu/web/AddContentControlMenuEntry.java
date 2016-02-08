@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
 		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class

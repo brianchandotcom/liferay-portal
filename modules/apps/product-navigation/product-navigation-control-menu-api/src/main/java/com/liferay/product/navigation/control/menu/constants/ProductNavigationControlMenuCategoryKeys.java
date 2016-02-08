@@ -17,7 +17,7 @@ package com.liferay.product.navigation.control.menu.constants;
 /**
  * @author Julio Camarero
  */
-public interface ControlMenuCategoryKeys {
+public interface ProductNavigationControlMenuCategoryKeys {
 
 	public static final String ROOT = "root";
 

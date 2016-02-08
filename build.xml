@@ -599,7 +599,47 @@
 	</target>
 
 	<target name="javadoc">
-		<property name="doc.java.dir" value="${doc.dir}/javadocs" />
+		<remake-dir dir="${doc.dir}/javadocs" />
+
+		<antcall target="javadoc-portal-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="portal-impl" />
+		</antcall>
+
+		<antcall target="javadoc-portal-cmd">
+			<param name="generated.description" value="ServiceBuilder generated this class. Modifications in this class will be overwritten the next time it is generated." />
+			<param name="module.dir" value="portal-service" />
+		</antcall>
+
+		<antcall target="javadoc-portal-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="portal-test" />
+		</antcall>
+
+		<antcall target="javadoc-portal-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="portal-test-internal" />
+		</antcall>
+
+		<antcall target="javadoc-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="util-bridges" />
+		</antcall>
+
+		<antcall target="javadoc-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="util-java" />
+		</antcall>
+
+		<antcall target="javadoc-cmd">
+			<param name="generated.description" value="" />
+			<param name="module.dir" value="util-slf4j" />
+		</antcall>
+
+	</target>
+
+	<target name="javadoc-cmd">
+		<property name="doc.java.dir" value="${doc.dir}/javadocs/${module.dir}" />
 
 		<mkdir dir="${doc.java.dir}" />
 
@@ -607,43 +647,33 @@
 			breakiterator="yes"
 			classpathref="project.classpath"
 			destdir="${doc.java.dir}"
-			doctitle="Liferay ${lp.version} portal-service API Documentation"
+			doctitle="Liferay ${lp.version} ${module.dir} API"
 			encoding="UTF-8"
-			header="&lt;b&gt;Liferay ${lp.version}&lt;/b&gt;"
+			header="&lt;b&gt;Liferay ${lp.version} ${module.dir}&lt;/b&gt;"
 			maxmemory="2048m"
 			noqualifier="java.*"
-			overview="portal-service/src/portal-service-overview.html"
+			overview="${module.dir}/src/overview.html"
 			stylesheetfile="${project.dir}/tools/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
-			windowtitle="Liferay ${lp.version} portal-service API"
+			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
 			<doclet name="com.liferay.tools.doclets.standard.Standard" path="${project.dir}/lib/development/liferay-doclet.jar">
 				<param name="-linksource" />
 			</doclet>
-
-			<group title="Portal Services" packages="com.liferay.portal*:com.liferay.counter*:com.liferay.documentlibrary*:com.liferay.mail*" />
-			<group title="Portal Kernel" packages="com.liferay.portal.kernel*" />
-			<group title="Portlet Services" packages="com.liferay.portlet*" />
-			<group title="Portlet Bridges" packages="com.liferay.util.bridges*" />
 
 			<link href="http://docs.liferay.com/portlet-api/2.0/javadocs" />
 			<link href="http://java.sun.com/javase/6/docs/api" />
 			<link href="http://docs.liferay.com/portal/${lp.version.major}/javadocs" />
 
-			<packageset dir="portal-service/src" />
-			<packageset dir="portal-test/src" />
-			<packageset dir="portal-test-internal/src" />
-			<packageset dir="util-bridges/src" />
-			<packageset dir="util-java/src" />
-			<packageset dir="util-slf4j/src" />
+			<packageset dir="${module.dir}/src" />
 
-			<tag name="generated" description="" />
+			<tag name="generated" description="{$generated.description}" />
 		</javadoc>
 	</target>
 
-	<target name="javadoc-all">
-		<property name="doc.java.dir" value="${doc.dir}/javadocs-all" />
+	<target name="javadoc-portal-cmd">
+		<property name="doc.java.dir" value="${doc.dir}/javadocs/${module.dir}" />
 
 		<mkdir dir="${doc.java.dir}" />
 
@@ -651,37 +681,32 @@
 			breakiterator="yes"
 			classpathref="project.classpath"
 			destdir="${doc.java.dir}"
-			doctitle="Liferay ${lp.version} portal-impl API Documentation"
+			doctitle="Liferay ${lp.version} ${module.dir} API"
 			encoding="UTF-8"
-			header="&lt;b&gt;Liferay ${lp.version}&lt;/b&gt;"
+			header="&lt;b&gt;Liferay ${lp.version} ${module.dir}&lt;/b&gt;"
 			maxmemory="2048m"
 			noqualifier="java.*"
-			overview="portal-impl/src/portal-impl-overview.html"
+			overview="${module.dir}/src/overview.html"
 			stylesheetfile="${project.dir}/tools/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
-			windowtitle="Liferay ${lp.version} portal-impl API"
+			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
 			<doclet name="com.liferay.tools.doclets.standard.Standard" path="${project.dir}/lib/development/liferay-doclet.jar">
 				<param name="-linksource" />
 			</doclet>
 
-			<group title="Portal Services" packages="com.liferay.portal.service*" />
+			<group title="Portal Services" packages="com.liferay.portal*:com.liferay.counter*:com.liferay.mail*" />
+			<group title="Portal Kernel" packages="com.liferay.portal.kernel*" />
 			<group title="Portlet Services" packages="com.liferay.portlet*" />
 
 			<link href="http://docs.liferay.com/portlet-api/2.0/javadocs" />
 			<link href="http://java.sun.com/javase/6/docs/api" />
+			<link href="http://docs.liferay.com/portal/${lp.version.major}/javadocs" />
 
-			<packageset dir="portal-impl/src" />
-			<packageset dir="portal-service/src" />
-			<packageset dir="portal-test/src" />
-			<packageset dir="portal-test-internal/src" />
-			<packageset dir="util-bridges/src" />
-			<packageset dir="util-java/src" />
-			<packageset dir="util-slf4j/src" />
-			<packageset dir="util-taglib/src" />
+			<packageset dir="${module.dir}/src" />
 
-			<tag name="generated" description="ServiceBuilder generated this class. Modifications in this class will be overwritten the next time it is generated." />
+			<tag name="generated" description="{$generated.description}" />
 		</javadoc>
 	</target>
 

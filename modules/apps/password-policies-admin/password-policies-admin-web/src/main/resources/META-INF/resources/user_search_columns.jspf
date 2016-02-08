@@ -15,7 +15,6 @@
 --%>
 
 <liferay-ui:user-search-container-results
-	useIndexer="<%= false %>"
 	userParams="<%= userParams %>"
 />
 

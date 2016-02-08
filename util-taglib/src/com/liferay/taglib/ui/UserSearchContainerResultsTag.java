@@ -54,7 +54,7 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 	protected void cleanUp() {
 		_searchContainer = null;
 		_searchTerms = null;
-		_useIndexer = true;
+		_useIndexer = false;
 		_userParams = null;
 	}
 
@@ -90,7 +90,7 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 
 	private SearchContainer<R> _searchContainer;
 	private DisplayTerms _searchTerms;
-	private boolean _useIndexer = true;
+	private boolean _useIndexer = false;
 	private LinkedHashMap<String, Object> _userParams;
 
 }

@@ -32,8 +32,6 @@
 		sb.append(entry.getEntryId());
 
 		String viewEntryURL = sb.toString();
-
-		String viewAllEntriesURL = viewEntryURL.concat("&showAllEntries=1");
 		%>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
@@ -95,7 +93,7 @@
 					</c:when>
 					<c:when test='<%= displayStyle.startsWith("quote") %>'>
 						<span class="quote">
-							<a href="<%= viewAllEntriesURL %>">
+							<a href="<%= viewEntryURL %>">
 								&quot;<%= StringUtil.shorten(StringUtil.trim(HtmlUtil.stripHtml(entry.getContent())), 100, StringPool.BLANK) + StringPool.TRIPLE_PERIOD %> &quot;
 							</a>
 						</span>

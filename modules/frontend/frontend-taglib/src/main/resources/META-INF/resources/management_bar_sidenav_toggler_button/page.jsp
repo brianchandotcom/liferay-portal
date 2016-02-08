@@ -16,6 +16,10 @@
 
 <%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
+<%
+	data.put("toggle", sidenavId);
+%>
+
 <liferay-frontend:management-bar-button
 	active="<%= false %>"
 	cssClass="<%= cssClass %>"
@@ -31,28 +35,30 @@
 <aui:script>
 	var sidenavSlider = $('#<%= sidenavId %>');
 
-	sidenavSlider.sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			toggler: '#<portlet:namespace /><%= id %>',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
+	if (!sidenavSlider.sideNavigation('instance')) {
+		sidenavSlider.sideNavigation(
+			{
+				gutter: 15,
+				position: 'right',
+				toggler: '[data-toggle="<%= sidenavId %>"]',
+				type: 'relative',
+				typeMobile: 'fixed',
+				width: 320
+			}
+		);
 
-	sidenavSlider.on(
-		'closed.lexicon.sidenav',
-		function(event) {
-			Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'closed');
-		}
-	);
+		sidenavSlider.on(
+			'closed.lexicon.sidenav',
+			function(event) {
+				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'closed');
+			}
+		);
 
-	sidenavSlider.on(
-		'open.lexicon.sidenav',
-		function(event) {
-			Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');
-		}
-	);
+		sidenavSlider.on(
+			'open.lexicon.sidenav',
+			function(event) {
+				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');
+			}
+		);
+	}
 </aui:script>

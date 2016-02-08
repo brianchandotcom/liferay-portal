@@ -2406,7 +2406,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected boolean isUsedTitle(long nodeId, String title) {
-		if (getPagesCount(nodeId, title, true) > 0) {
+		if (getPagesCount(nodeId, title) > 0) {
 			return true;
 		}
 		else {

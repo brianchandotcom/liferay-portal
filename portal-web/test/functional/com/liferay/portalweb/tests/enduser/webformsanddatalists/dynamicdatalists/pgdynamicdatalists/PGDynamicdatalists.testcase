@@ -1686,11 +1686,11 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#editPermissionsCP">
+		<execute macro="DDLNavigator#gotoDataDefinitionPermissions">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+		<execute macro="DDLDataDefinition#editPermissionsCP">
 			<var name="addOrRemoveViewPermission" value="Add" />
 			<var name="roleList" value="Guest" />
 		</execute>

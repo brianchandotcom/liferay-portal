@@ -109,7 +109,7 @@
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-control-menu">
+<aui:script use="liferay-product-navigation-control-menu">
 	A.one('#<portlet:namespace />closePanelAdd').on(
 		'click',
 		function(event) {

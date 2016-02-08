@@ -60,11 +60,7 @@ public class ActionUtil {
 		String redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(actionRequest, "redirect"));
 
-		WindowState windowState = actionRequest.getWindowState();
-
-		if (windowState.equals(LiferayWindowState.POP_UP)) {
-			actionResponse.sendRedirect(redirect);
-		}
+		actionResponse.sendRedirect(redirect);
 	}
 
 }

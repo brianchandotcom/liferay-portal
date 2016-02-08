@@ -30,15 +30,15 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input label="html-title" name="title" />
+<aui:input label="html-title" name="title" placeholder="title" />
 
 <h4><liferay-ui:message key="meta-tags" /></h4>
 
-<aui:input id="descriptionSEO" name="description" />
+<aui:input id="descriptionSEO" name="description" placeholder="description" />
 
-<aui:input name="keywords" />
+<aui:input name="keywords" placeholder="keywords" />
 
-<aui:input name="robots" />
+<aui:input name="robots" placeholder="robots" />
 
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
 	<h4><liferay-ui:message key="sitemap" /></h4>
@@ -60,7 +60,7 @@ if (selLayout != null) {
 	String sitemapPriority = layoutTypeSettings.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
 	%>
 
-	<aui:input helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" size="3" type="text" value="<%= sitemapPriority %>">
+	<aui:input helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value="<%= sitemapPriority %>">
 		<aui:validator name="number" />
 		<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 	</aui:input>

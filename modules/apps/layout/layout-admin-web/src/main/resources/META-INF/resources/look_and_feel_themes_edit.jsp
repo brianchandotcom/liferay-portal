@@ -31,78 +31,78 @@ else {
 	selTheme = selLayoutSet.getTheme();
 	selColorScheme = selLayoutSet.getColorScheme();
 }
+
+PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<div class="lfr-theme-list">
-	<div class="float-container lfr-current-theme" id="regularLookAndFeel">
-		<legend><liferay-ui:message key="current-theme" /></legend>
+<aui:input name="regularThemeId" type="hidden" value="<%= selTheme.getThemeId() %>" />
+<aui:input name="regularColorSchemeId" type="hidden" value="<%= selColorScheme.getColorSchemeId() %>" />
 
-		<div>
-			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="<portlet:namespace />regularselectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+<h5 class="text-default"><liferay-ui:message key="current-theme" /></h5>
 
-			<div class="theme-details">
-				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="regularSelTheme" label="<%= HtmlUtil.escape(selTheme.getName()) %>" name="regularThemeId" type="radio" value="<%= selTheme.getThemeId() %>" />
+<div class="card-horizontal main-content-card">
+	<div class="card-row card-row-padded">
+		<aui:row>
+			<aui:col span="<%= 2 %>">
+				<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+			</aui:col>
 
-				<dl class="theme-fields">
+			<aui:col span="<%= 10 %>">
+				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getName()) %>">
+					<h4><liferay-ui:message key="name" /></h4>
 
-					<%
-					PluginPackage selPluginPackage = selTheme.getPluginPackage();
-					%>
+					<p class="text-default">
+						<%= HtmlUtil.escape(selPluginPackage.getName()) %>
+					</p>
+				</c:if>
 
-					<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
-						<dt>
-							<liferay-ui:message key="description" />
-						</dt>
-						<dd>
-							<%= HtmlUtil.escape(selPluginPackage.getShortDescription()) %>
-						</dd>
-					</c:if>
+				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
+					<h4><liferay-ui:message key="author" /></h4>
 
-					<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
-						<dt>
-							<liferay-ui:message key="author" />
-						</dt>
-						<dd>
-							<a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></a>
-						</dd>
-					</c:if>
-				</dl>
-			</div>
-		</div>
+					<p class="text-default">
+						<a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></a>
+					</p>
+				</c:if>
+			</aui:col>
+		</aui:row>
+
+		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
+			<h4><liferay-ui:message key="description" /></h4>
+
+			<p class="text-default">
+				<%= HtmlUtil.escape(selPluginPackage.getShortDescription()) %>
+			</p>
+		</c:if>
 
 		<%
 		List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		%>
 
 		<c:if test="<%= !colorSchemes.isEmpty() %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="regularlayoutsAdminLookAndFeelColorsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "color-schemes-x", colorSchemes.size()) %>'>
-				<aui:fieldset cssCclass="color-schemes">
-					<div class="lfr-theme-list list-unstyled">
+			<h4><liferay-ui:message key="color-schemes" /></h4>
 
-						<%
-						for (int i = 0; i < colorSchemes.size(); i++) {
-							ColorScheme curColorScheme = colorSchemes.get(i);
+			<div class="lfr-theme-list list-unstyled">
 
-							String cssClass = StringPool.BLANK;
+				<%
+				for (int i = 0; i < colorSchemes.size(); i++) {
+					ColorScheme curColorScheme = colorSchemes.get(i);
 
-							if (selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId())) {
-								cssClass = "selected-color-scheme";
-							}
-						%>
+					String cssClass = StringPool.BLANK;
 
-						<div class="<%= cssClass %> theme-entry">
-							<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectColorScheme('#<portlet:namespace />regularColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
+					if (selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId())) {
+						cssClass = "selected-color-scheme";
+					}
+				%>
 
-							<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id="regularColorSchemeId" label="<%= HtmlUtil.escape(curColorScheme.getName()) %>" name="regularColorSchemeId" type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
-						</div>
+				<div class="<%= cssClass %> theme-entry">
+					<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectColorScheme('#<portlet:namespace />regularColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
+				</div>
 
-						<%
-						}
-						%>
+				<%
+				}
+				%>
 
-					</div>
-				</aui:fieldset>
-			</liferay-ui:panel>
+			</div>
 		</c:if>
 
 		<%
@@ -110,150 +110,59 @@ else {
 		%>
 
 		<c:if test="<%= !configurableSettings.isEmpty() %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="regularlayoutsAdminLookAndFeelSettingsPanel" persistState="<%= true %>" title="settings">
-				<aui:fieldset>
+			<h4><liferay-ui:message key="settings" /></h4>
 
-					<%
-					for (String name : configurableSettings.keySet()) {
-						ThemeSetting themeSetting = configurableSettings.get(name);
+			<%
+			for (String name : configurableSettings.keySet()) {
+				ThemeSetting themeSetting = configurableSettings.get(name);
 
-						String type = GetterUtil.getString(themeSetting.getType(), "text");
-						String value = StringPool.BLANK;
+				String type = GetterUtil.getString(themeSetting.getType(), "text");
+				String value = StringPool.BLANK;
 
-						if (selLayout != null) {
-							value = selLayout.getThemeSetting(name, "regular");
-						}
-						else {
-							value = selLayoutSet.getThemeSetting(name, "regular");
-						}
-
-						String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
-					%>
-
-						<c:choose>
-							<c:when test='<%= type.equals("checkbox") || type.equals("text") || type.equals("textarea") %>'>
-								<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
-							</c:when>
-							<c:when test='<%= type.equals("select") %>'>
-								<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">
-
-									<%
-									for (String option : themeSetting.getOptions()) {
-									%>
-
-										<aui:option label="<%= HtmlUtil.escape(option) %>" selected="<%= option.equals(value) %>" />
-
-									<%
-									}
-									%>
-
-								</aui:select>
-							</c:when>
-						</c:choose>
-
-						<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
-							<aui:script position="inline">
-								<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>
-							</aui:script>
-						</c:if>
-
-					<%
-					}
-					%>
-
-				</aui:fieldset>
-			</liferay-ui:panel>
-		</c:if>
-	</div>
-
-	<%
-	List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
-	%>
-
-	<div class="float-container lfr-available-themes" id="regularavailableThemes">
-		<legend>
-			<span class="header-title">
-				<liferay-ui:message arguments="<%= themes.size() - 1 %>" key="available-themes-x" translateArguments="<%= false %>" />
-			</span>
-
-			<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
-
-				<%
-				PortletURL marketplaceURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MARKETPLACE_STORE, PortletRequest.RENDER_PHASE);
-				%>
-
-				<aui:button-row>
-					<aui:button cssClass="btn-lg manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
-				</aui:button-row>
-			</c:if>
-		</legend>
-
-		<c:if test="<%= themes.size() > 1 %>">
-			<ul class="lfr-theme-list list-unstyled">
-
-				<%
-				for (int i = 0; i < themes.size(); i++) {
-					Theme curTheme = themes.get(i);
-
-					if (!selTheme.getThemeId().equals(curTheme.getThemeId())) {
-				%>
-
-						<li>
-							<div class="theme-entry">
-								<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />regularselectTheme('ThemeId<%= i %>', true);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(curTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curTheme.getName()) %>" />
-
-								<aui:input cssClass="theme-title" id="regularThemeId" label="<%= HtmlUtil.escape(curTheme.getName()) %>" name="regularThemeId" type="radio" value="<%= curTheme.getThemeId() %>" />
-							</div>
-						</li>
-
-				<%
-					}
+				if (selLayout != null) {
+					value = selLayout.getThemeSetting(name, "regular");
 				}
-				%>
+				else {
+					value = selLayoutSet.getThemeSetting(name, "regular");
+				}
 
-			</ul>
+				String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
+			%>
+
+				<c:choose>
+					<c:when test='<%= type.equals("checkbox") %>'>
+						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="toggle-switch" value="<%= value %>" />
+					</c:when>
+					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
+						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
+					</c:when>
+					<c:when test='<%= type.equals("select") %>'>
+						<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">
+
+							<%
+							for (String option : themeSetting.getOptions()) {
+							%>
+
+								<aui:option label="<%= HtmlUtil.escape(option) %>" selected="<%= option.equals(value) %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:when>
+				</c:choose>
+
+				<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
+					<aui:script position="inline">
+						<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>
+					</aui:script>
+				</c:if>
+
+			<%
+			}
+			%>
+
 		</c:if>
 	</div>
 </div>
-
-<aui:script sandbox="<%= true %>">
-	var colorSchemePanel = $('#regularlayoutsAdminLookAndFeelColorsPanel');
-
-	var toggleDisabled = function(disabled) {
-		colorSchemePanel.find('input[name=<portlet:namespace />regularColorSchemeId]').prop('disabled', disabled);
-	};
-
-	if (colorSchemePanel.length) {
-		$('#regularavailableThemes').find('input[name=<portlet:namespace />regularThemeId]').on(
-			'change',
-			function() {
-				toggleDisabled(true);
-			}
-		);
-
-		$('#regularLookAndFeel').find('#<portlet:namespace />regularSelTheme').on(
-			'change',
-			function() {
-				toggleDisabled(false);
-			}
-		);
-	}
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />regularselectColorScheme(id) {
-		var colorSchemeInput = AUI.$(id);
-
-		if (!colorSchemeInput.prop('disabled')) {
-			colorSchemeInput.prop('checked', true);
-		}
-	}
-
-	function <portlet:namespace />regularselectTheme(themeId, colorSchemesDisabled) {
-		var $ = AUI.$;
-
-		$('#<portlet:namespace />regular' + themeId).prop('checked', true);
-
-		$('#regularlayoutsAdminLookAndFeelColorsPanel').find('input[name=<portlet:namespace />regularColorSchemeId]').prop('disabled', colorSchemesDisabled);
-	}
-</aui:script>

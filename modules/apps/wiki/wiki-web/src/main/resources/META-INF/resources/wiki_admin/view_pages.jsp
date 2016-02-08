@@ -180,31 +180,31 @@ else {
 					modelVar="curPage"
 				>
 
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+					<%
+					PortletURL rowURL = renderResponse.createRenderURL();
 
-				if (!navigation.equals("draft-pages") || Validator.isNotNull(keywords)) {
-					rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("nodeName", curPage.getNode().getName());
-				}
-				else {
-					rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
-				}
+					if (!navigation.equals("draft-pages") || Validator.isNotNull(keywords)) {
+						rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
+						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("nodeName", curPage.getNode().getName());
+					}
+					else {
+						rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
+					}
 
-				rowURL.setParameter("title", curPage.getTitle());
-				%>
+					rowURL.setParameter("title", curPage.getTitle());
+					%>
 
-				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							icon="wiki-page"
-							toggleRowChecker="<%= true %>"
-						/>
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<liferay-ui:search-container-column-icon
+								icon="wiki-page"
+								toggleRowChecker="<%= true %>"
+							/>
 
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 								<%
 								Date modifiedDate = curPage.getModifiedDate();
@@ -245,10 +245,10 @@ else {
 								value="<%= curPage.getTitle() %>"
 							/>
 
-						<liferay-ui:search-container-column-status
-							name="status"
-							status="<%= curPage.getStatus() %>"
-						/>
+							<liferay-ui:search-container-column-status
+								name="status"
+								status="<%= curPage.getStatus() %>"
+							/>
 
 							<%
 							String revision = String.valueOf(curPage.getVersion());
@@ -258,20 +258,20 @@ else {
 							}
 							%>
 
-						<liferay-ui:search-container-column-text
-							name="revision"
-							value="<%= revision %>"
-						/>
+							<liferay-ui:search-container-column-text
+								name="revision"
+								value="<%= revision %>"
+							/>
 
-						<liferay-ui:search-container-column-text
-							name="user"
-							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
-						/>
+							<liferay-ui:search-container-column-text
+								name="user"
+								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
+							/>
 
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							value="<%= curPage.getModifiedDate() %>"
-						/>
+							<liferay-ui:search-container-column-date
+								name="modified-date"
+								value="<%= curPage.getModifiedDate() %>"
+							/>
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action"

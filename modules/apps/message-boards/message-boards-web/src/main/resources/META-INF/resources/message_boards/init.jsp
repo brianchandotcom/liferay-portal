@@ -42,6 +42,7 @@ page import="com.liferay.document.library.kernel.exception.FileNameException" %>
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.message.boards.display.context.MBHomeDisplayContext" %><%@
+page import="com.liferay.message.boards.display.context.MBListDisplayContext" %><%@
 page import="com.liferay.message.boards.kernel.constants.MBConstants" %><%@
 page import="com.liferay.message.boards.kernel.exception.BannedUserException" %><%@
 page import="com.liferay.message.boards.kernel.exception.CategoryNameException" %><%@

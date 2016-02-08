@@ -230,48 +230,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
-		if (Validator.isNotNull(keywords)) {
-			long searchCategoryId = ParamUtil.getLong(request, "searchCategoryId");
-
-			long[] categoryIdsArray = null;
-
-			List categoryIds = new ArrayList();
-
-			categoryIds.add(Long.valueOf(searchCategoryId));
-
-			MBCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryId);
-
-			categoryIdsArray = StringUtil.split(StringUtil.merge(categoryIds), 0L);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
-
-			SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-			searchContext.setAttribute("paginationType", "more");
-			searchContext.setCategoryIds(categoryIdsArray);
-			searchContext.setEnd(entriesSearchContainer.getEnd());
-			searchContext.setIncludeAttachments(true);
-			searchContext.setKeywords(keywords);
-			searchContext.setStart(entriesSearchContainer.getStart());
-
-			Hits hits = indexer.search(searchContext);
-
-			entriesSearchContainer.setTotal(hits.getLength());
-			entriesSearchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
-		}
-		else {
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			entriesSearchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId, status));
-
-			entriesSearchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd()));
-		}
-
 		entriesSearchContainer.setId("mbEntries");
+
+		MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
+
+		mbListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
 
 		request.setAttribute("view.jsp-displayStyle", "descriptive");
 		request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);

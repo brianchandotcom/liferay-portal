@@ -61,20 +61,21 @@ public class MBDisplayContextProvider {
 	}
 
 	public MBListDisplayContext getMbListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response,
+		long categoryId) {
 
 		Collection<MBDisplayContextFactory> mbDisplayContextFactories =
 			_mbDisplayContextFactories.values();
 
 		MBListDisplayContext mbListDisplayContext =
-			new DefaultMBListDisplayContext(request, response);
+			new DefaultMBListDisplayContext(request, response, categoryId);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
 				mbDisplayContextFactories) {
 
 			mbListDisplayContext =
 				mbDisplayContextFactory.getMBListDisplayContext(
-					mbListDisplayContext, request, response);
+					mbListDisplayContext, request, response, categoryId);
 		}
 
 		return mbListDisplayContext;

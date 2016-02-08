@@ -15,7 +15,31 @@
 package com.liferay.message.boards.web.display.context;
 
 import com.liferay.message.boards.display.context.MBListDisplayContext;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +51,12 @@ import javax.servlet.http.HttpServletResponse;
 public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	public DefaultMBListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response,
+		long categoryId) {
+
+		_request = request;
+
+		_categoryId = categoryId;
 	}
 
 	@Override
@@ -35,7 +64,104 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		return _UUID;
 	}
 
+	@Override
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation", "all");
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			long searchCategoryId = ParamUtil.getLong(
+				_request, "searchCategoryId");
+
+			long[] categoryIdsArray = null;
+
+			List categoryIds = new ArrayList();
+
+			categoryIds.add(Long.valueOf(searchCategoryId));
+
+			MBCategoryServiceUtil.getSubcategoryIds(
+				categoryIds, themeDisplay.getScopeGroupId(), searchCategoryId);
+
+			categoryIdsArray = StringUtil.split(
+				StringUtil.merge(categoryIds), 0L);
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				_request);
+
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setCategoryIds(categoryIdsArray);
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setIncludeAttachments(true);
+			searchContext.setKeywords(keywords);
+			searchContext.setStart(searchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			searchContainer.setTotal(hits.getLength());
+			searchContainer.setResults(
+				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
+		}
+		else if (entriesNavigation.equals("all")) {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (permissionChecker.isContentReviewer(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
+			searchContainer.setTotal(
+				MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+					themeDisplay.getScopeGroupId(), _categoryId, status));
+			searchContainer.setResults(
+				MBCategoryServiceUtil.getCategoriesAndThreads(
+					themeDisplay.getScopeGroupId(), _categoryId, status,
+					searchContainer.getStart(), searchContainer.getEnd()));
+		}
+		else if (entriesNavigation.equals("recent")) {
+			long groupThreadsUserId = ParamUtil.getLong(
+				_request, "groupThreadsUserId");
+
+			Calendar calendar = Calendar.getInstance();
+
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(
+					themeDisplay.getSiteGroupId());
+
+			int offset = GetterUtil.getInteger(
+				mbGroupServiceSettings.getRecentPostsDateOffset());
+
+			calendar.add(Calendar.DATE, -offset);
+
+			searchContainer.setTotal(
+				MBThreadServiceUtil.getGroupThreadsCount(
+					themeDisplay.getScopeGroupId(), groupThreadsUserId,
+					calendar.getTime(), WorkflowConstants.STATUS_APPROVED));
+			searchContainer.setResults(
+				MBThreadServiceUtil.getGroupThreads(
+					themeDisplay.getScopeGroupId(), groupThreadsUserId,
+					calendar.getTime(), WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd()));
+		}
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"c29b2669-a9ce-45e3-aa4e-9ec766a4ffad");
+
+	private final long _categoryId;
+	private final HttpServletRequest _request;
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.message.boards.display.context;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,13 @@ public class BaseMBListDisplayContext
 		HttpServletRequest request, HttpServletResponse response) {
 
 		super(uuid, parentDisplayContext, request, response);
+	}
+
+	@Override
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateResultsAndTotal(searchContainer);
 	}
 
 }

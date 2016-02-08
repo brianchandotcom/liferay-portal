@@ -83,64 +83,14 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
-
-long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-Calendar calendar = Calendar.getInstance();
-
-int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-calendar.add(Calendar.DATE, -offset);
-
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
 searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
-if (Validator.isNotNull(keywords)) {
-	long searchCategoryId = ParamUtil.getLong(request, "searchCategoryId");
+MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 
-	long[] categoryIdsArray = null;
-
-	List categoryIds = new ArrayList();
-
-	categoryIds.add(Long.valueOf(searchCategoryId));
-
-	MBCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryId);
-
-	categoryIdsArray = StringUtil.split(StringUtil.merge(categoryIds), 0L);
-
-	Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
-
-	SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-	searchContext.setAttribute("paginationType", "more");
-	searchContext.setCategoryIds(categoryIdsArray);
-	searchContext.setEnd(searchContainer.getEnd());
-	searchContext.setIncludeAttachments(true);
-	searchContext.setKeywords(keywords);
-	searchContext.setStart(searchContainer.getStart());
-
-	Hits hits = indexer.search(searchContext);
-
-	searchContainer.setTotal(hits.getLength());
-	searchContainer.setResults(SearchResultUtil.getSearchResults(hits, locale));
-}
-else if (entriesNavigation.equals("all")) {
-	int status = WorkflowConstants.STATUS_APPROVED;
-
-	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-		status = WorkflowConstants.STATUS_ANY;
-	}
-
-	searchContainer.setTotal(MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId, status));
-	searchContainer.setResults(MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (entriesNavigation.equals("recent")) {
-	searchContainer.setTotal(MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED));
-	searchContainer.setResults(MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()));
-}
+mbListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
 
 <liferay-frontend:management-bar

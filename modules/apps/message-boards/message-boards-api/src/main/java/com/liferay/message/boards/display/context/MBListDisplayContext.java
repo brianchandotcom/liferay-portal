@@ -14,8 +14,15 @@
 
 package com.liferay.message.boards.display.context;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Roberto Díaz
  */
 public interface MBListDisplayContext extends MBDisplayContext {
+
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException;
+
 }

@@ -6,8 +6,8 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.3"
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:calendar:calendar-api")

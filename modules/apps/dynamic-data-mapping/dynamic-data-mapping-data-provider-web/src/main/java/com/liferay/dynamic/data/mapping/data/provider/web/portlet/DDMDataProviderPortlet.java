@@ -21,8 +21,8 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.UserLocalService;
 
 import java.io.IOException;
 

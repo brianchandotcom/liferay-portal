@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
+import com.liferay.portal.kernel.model.ClusterGroup;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.model.ClusterGroup;
-import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
 
 import java.lang.reflect.Method;
 

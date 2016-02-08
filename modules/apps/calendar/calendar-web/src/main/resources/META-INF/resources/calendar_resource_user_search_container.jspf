@@ -37,7 +37,7 @@
 	%>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.User"
+		className="com.liferay.portal.kernel.model.User"
 		keyProperty="userId"
 		modelVar="user"
 	>

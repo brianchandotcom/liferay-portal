@@ -62,7 +62,7 @@ public class ShoppingOrderLocalServiceUtil {
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail, boolean updateInventory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.completeOrder(number, ppTxnId, ppPaymentStatus, ppPaymentGross,
@@ -99,8 +99,8 @@ public class ShoppingOrderLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -253,7 +253,7 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().getPayPalTxnIdOrder(ppTxnId);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -334,13 +334,13 @@ public class ShoppingOrderLocalServiceUtil {
 	public static void sendEmail(
 		com.liferay.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(order, emailType, serviceContext);
 	}
 
 	public static void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(orderId, emailType, serviceContext);
 	}

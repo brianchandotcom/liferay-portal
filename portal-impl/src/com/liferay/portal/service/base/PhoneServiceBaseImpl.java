@@ -20,16 +20,16 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.PhoneService;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
+import com.liferay.portal.kernel.service.persistence.PhonePersistence;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.Phone;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.PhoneService;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
-import com.liferay.portal.service.persistence.ListTypePersistence;
-import com.liferay.portal.service.persistence.PhonePersistence;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import javax.sql.DataSource;
 
@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.PhoneServiceImpl
- * @see com.liferay.portal.service.PhoneServiceUtil
+ * @see com.liferay.portal.kernel.service.PhoneServiceUtil
  * @generated
  */
 public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
@@ -50,7 +50,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.PhoneServiceUtil} to access the phone remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.PhoneServiceUtil} to access the phone remote service.
 	 */
 
 	/**
@@ -58,7 +58,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the phone local service
 	 */
-	public com.liferay.portal.service.PhoneLocalService getPhoneLocalService() {
+	public com.liferay.portal.kernel.service.PhoneLocalService getPhoneLocalService() {
 		return phoneLocalService;
 	}
 
@@ -68,7 +68,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param phoneLocalService the phone local service
 	 */
 	public void setPhoneLocalService(
-		com.liferay.portal.service.PhoneLocalService phoneLocalService) {
+		com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService) {
 		this.phoneLocalService = phoneLocalService;
 	}
 
@@ -132,7 +132,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -142,7 +142,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -151,7 +151,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -161,7 +161,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameService the class name remote service
 	 */
 	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
+		com.liferay.portal.kernel.service.ClassNameService classNameService) {
 		this.classNameService = classNameService;
 	}
 
@@ -189,7 +189,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the list type local service
 	 */
-	public com.liferay.portal.service.ListTypeLocalService getListTypeLocalService() {
+	public com.liferay.portal.kernel.service.ListTypeLocalService getListTypeLocalService() {
 		return listTypeLocalService;
 	}
 
@@ -199,7 +199,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param listTypeLocalService the list type local service
 	 */
 	public void setListTypeLocalService(
-		com.liferay.portal.service.ListTypeLocalService listTypeLocalService) {
+		com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService) {
 		this.listTypeLocalService = listTypeLocalService;
 	}
 
@@ -208,7 +208,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the list type remote service
 	 */
-	public com.liferay.portal.service.ListTypeService getListTypeService() {
+	public com.liferay.portal.kernel.service.ListTypeService getListTypeService() {
 		return listTypeService;
 	}
 
@@ -218,7 +218,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param listTypeService the list type remote service
 	 */
 	public void setListTypeService(
-		com.liferay.portal.service.ListTypeService listTypeService) {
+		com.liferay.portal.kernel.service.ListTypeService listTypeService) {
 		this.listTypeService = listTypeService;
 	}
 
@@ -245,7 +245,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -255,7 +255,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
@@ -264,7 +264,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user remote service
 	 */
-	public com.liferay.portal.service.UserService getUserService() {
+	public com.liferay.portal.kernel.service.UserService getUserService() {
 		return userService;
 	}
 
@@ -274,7 +274,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 * @param userService the user remote service
 	 */
 	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
+		com.liferay.portal.kernel.service.UserService userService) {
 		this.userService = userService;
 	}
 
@@ -362,30 +362,30 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.PhoneLocalService.class)
-	protected com.liferay.portal.service.PhoneLocalService phoneLocalService;
-	@BeanReference(type = com.liferay.portal.service.PhoneService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.PhoneLocalService.class)
+	protected com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PhoneService.class)
 	protected PhoneService phoneService;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ListTypeLocalService.class)
-	protected com.liferay.portal.service.ListTypeLocalService listTypeLocalService;
-	@BeanReference(type = com.liferay.portal.service.ListTypeService.class)
-	protected com.liferay.portal.service.ListTypeService listTypeService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ListTypeLocalService.class)
+	protected com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ListTypeService.class)
+	protected com.liferay.portal.kernel.service.ListTypeService listTypeService;
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	protected com.liferay.portal.kernel.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)

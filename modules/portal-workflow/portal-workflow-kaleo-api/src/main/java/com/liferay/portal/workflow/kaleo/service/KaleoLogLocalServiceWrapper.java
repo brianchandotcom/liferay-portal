@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link KaleoLogLocalService}.
@@ -38,7 +38,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
 		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction,
 		long startTime, long endTime, java.lang.String comment,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addActionExecutionKaleoLog(kaleoInstanceToken,
 			kaleoAction, startTime, endTime, comment, serviceContext);
@@ -61,7 +61,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
 		com.liferay.portal.workflow.kaleo.model.KaleoNode sourceKaleoNode,
 		com.liferay.portal.workflow.kaleo.model.KaleoNode targetKaleoNode,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addNodeEntryKaleoLog(kaleoInstanceToken,
 			sourceKaleoNode, targetKaleoNode, serviceContext);
@@ -71,7 +71,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addNodeExitKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
 		com.liferay.portal.workflow.kaleo.model.KaleoNode departingKaleoNode,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addNodeExitKaleoLog(kaleoInstanceToken,
 			departingKaleoNode, serviceContext);
@@ -83,7 +83,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		java.lang.String comment,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskAssignmentKaleoLog(previousKaleoTaskAssignmentInstances,
 			kaleoTaskInstanceToken, comment, workflowContext, serviceContext);
@@ -94,7 +94,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		java.lang.String comment,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskCompletionKaleoLog(kaleoTaskInstanceToken,
 			comment, workflowContext, serviceContext);
@@ -105,7 +105,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		java.lang.String comment,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addTaskUpdateKaleoLog(kaleoTaskInstanceToken,
 			comment, workflowContext, serviceContext);
@@ -114,7 +114,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addWorkflowInstanceEndKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addWorkflowInstanceEndKaleoLog(kaleoInstanceToken,
 			serviceContext);
@@ -123,7 +123,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoLog addWorkflowInstanceStartKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.addWorkflowInstanceStartKaleoLog(kaleoInstanceToken,
 			serviceContext);
@@ -186,8 +186,8 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.deletePersistedModel(persistedModel);
 	}
@@ -377,7 +377,7 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.getPersistedModel(primaryKeyObj);

@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

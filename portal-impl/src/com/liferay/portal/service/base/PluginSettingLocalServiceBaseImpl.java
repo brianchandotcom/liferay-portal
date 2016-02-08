@@ -29,21 +29,21 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PluginSettingLocalService;
+import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.PluginSetting;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.PluginSettingLocalService;
-import com.liferay.portal.service.persistence.PluginSettingPersistence;
-import com.liferay.portal.service.persistence.RoleFinder;
-import com.liferay.portal.service.persistence.RolePersistence;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.io.Serializable;
 
@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.PluginSettingLocalServiceImpl
- * @see com.liferay.portal.service.PluginSettingLocalServiceUtil
+ * @see com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -70,7 +70,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.PluginSettingLocalServiceUtil} to access the plugin setting local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil} to access the plugin setting local service.
 	 */
 
 	/**
@@ -229,7 +229,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PluginSettingLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PluginSetting.class);
 
@@ -242,7 +242,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PluginSettingLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(PluginSetting.class);
 
@@ -254,7 +254,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PluginSettingLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PluginSetting.class);
 
@@ -376,7 +376,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 *
 	 * @return the layout template local service
 	 */
-	public com.liferay.portal.service.LayoutTemplateLocalService getLayoutTemplateLocalService() {
+	public com.liferay.portal.kernel.service.LayoutTemplateLocalService getLayoutTemplateLocalService() {
 		return layoutTemplateLocalService;
 	}
 
@@ -386,7 +386,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @param layoutTemplateLocalService the layout template local service
 	 */
 	public void setLayoutTemplateLocalService(
-		com.liferay.portal.service.LayoutTemplateLocalService layoutTemplateLocalService) {
+		com.liferay.portal.kernel.service.LayoutTemplateLocalService layoutTemplateLocalService) {
 		this.layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
@@ -395,7 +395,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.service.RoleLocalService getRoleLocalService() {
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -405,7 +405,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @param roleLocalService the role local service
 	 */
 	public void setRoleLocalService(
-		com.liferay.portal.service.RoleLocalService roleLocalService) {
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -450,7 +450,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 *
 	 * @return the theme local service
 	 */
-	public com.liferay.portal.service.ThemeLocalService getThemeLocalService() {
+	public com.liferay.portal.kernel.service.ThemeLocalService getThemeLocalService() {
 		return themeLocalService;
 	}
 
@@ -460,7 +460,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @param themeLocalService the theme local service
 	 */
 	public void setThemeLocalService(
-		com.liferay.portal.service.ThemeLocalService themeLocalService) {
+		com.liferay.portal.kernel.service.ThemeLocalService themeLocalService) {
 		this.themeLocalService = themeLocalService;
 	}
 
@@ -469,7 +469,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -479,7 +479,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
@@ -520,13 +520,13 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.PluginSetting",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.PluginSetting",
 			pluginSettingLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.PluginSetting");
+			"com.liferay.portal.kernel.model.PluginSetting");
 	}
 
 	/**
@@ -571,24 +571,24 @@ public abstract class PluginSettingLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.PluginSettingLocalService.class)
 	protected PluginSettingLocalService pluginSettingLocalService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.LayoutTemplateLocalService.class)
-	protected com.liferay.portal.service.LayoutTemplateLocalService layoutTemplateLocalService;
-	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
-	protected com.liferay.portal.service.RoleLocalService roleLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.LayoutTemplateLocalService.class)
+	protected com.liferay.portal.kernel.service.LayoutTemplateLocalService layoutTemplateLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
-	@BeanReference(type = com.liferay.portal.service.ThemeLocalService.class)
-	protected com.liferay.portal.service.ThemeLocalService themeLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ThemeLocalService.class)
+	protected com.liferay.portal.kernel.service.ThemeLocalService themeLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)

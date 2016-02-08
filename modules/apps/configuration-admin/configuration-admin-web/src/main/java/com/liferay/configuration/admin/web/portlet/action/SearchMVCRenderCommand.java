@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.search.FieldNames;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.util.ArrayList;
 import java.util.List;

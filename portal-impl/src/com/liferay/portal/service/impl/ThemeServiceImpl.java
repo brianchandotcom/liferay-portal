@@ -17,7 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.model.Theme;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.service.base.ThemeServiceBaseImpl;
 
 import java.util.List;

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.util.Map;
 import java.util.Set;

@@ -689,7 +689,7 @@
 	<model name="com.liferay.portal.kernel.workflow.WorkflowTask">
 		<field name="dueDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.Account">
+	<model name="com.liferay.portal.kernel.model.Account">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -713,7 +713,7 @@
 		<field name="type" type="String" />
 		<field name="size" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.Address">
+	<model name="com.liferay.portal.kernel.model.Address">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -738,28 +738,28 @@
 		<field name="mailing" type="boolean" />
 		<field name="primary" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.BrowserTracker">
+	<model name="com.liferay.portal.kernel.model.BrowserTracker">
 		<field name="mvccVersion" type="long" />
 		<field name="browserTrackerId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="browserKey" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ClassName">
+	<model name="com.liferay.portal.kernel.model.ClassName">
 		<field name="mvccVersion" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="value" type="String">
 			<hint name="max-length">200</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.ClusterGroup">
+	<model name="com.liferay.portal.kernel.model.ClusterGroup">
 		<field name="mvccVersion" type="long" />
 		<field name="clusterGroupId" type="long" />
 		<field name="name" type="String" />
 		<field name="clusterNodeIds" type="String" />
 		<field name="wholeCluster" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.Company">
+	<model name="com.liferay.portal.kernel.model.Company">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -781,7 +781,7 @@
 		<field name="maxUsers" type="int" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.Contact">
+	<model name="com.liferay.portal.kernel.model.Contact">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -821,7 +821,7 @@
 		<field name="jobClass" type="String" />
 		<field name="hoursOfOperation" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.Country">
+	<model name="com.liferay.portal.kernel.model.Country">
 		<field name="mvccVersion" type="long" />
 		<field name="countryId" type="long" />
 		<field name="name" type="String" />
@@ -832,7 +832,7 @@
 		<field name="zipRequired" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.EmailAddress">
+	<model name="com.liferay.portal.kernel.model.EmailAddress">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="emailAddressId" type="long" />
@@ -850,7 +850,7 @@
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.Group">
+	<model name="com.liferay.portal.kernel.model.Group">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="groupId" type="long" />
@@ -888,7 +888,7 @@
 		<field name="inheritContent" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.Image">
+	<model name="com.liferay.portal.kernel.model.Image">
 		<field name="mvccVersion" type="long" />
 		<field name="imageId" type="long" />
 		<field name="companyId" type="long" />
@@ -898,7 +898,7 @@
 		<field name="width" type="int" />
 		<field name="size" type="int" />
 	</model>
-	<model name="com.liferay.portal.model.Layout">
+	<model name="com.liferay.portal.kernel.model.Layout">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="plid" type="long" />
@@ -953,7 +953,7 @@
 		<field name="sourcePrototypeLayoutUuid" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutBranch">
+	<model name="com.liferay.portal.kernel.model.LayoutBranch">
 		<field name="mvccVersion" type="long" />
 		<field name="layoutBranchId" type="long" />
 		<field name="groupId" type="long" />
@@ -971,7 +971,7 @@
 		</field>
 		<field name="master" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutFriendlyURL">
+	<model name="com.liferay.portal.kernel.model.LayoutFriendlyURL">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutFriendlyURLId" type="long" />
@@ -989,7 +989,7 @@
 		<field name="languageId" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutPrototype">
+	<model name="com.liferay.portal.kernel.model.LayoutPrototype">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPrototypeId" type="long" />
@@ -1009,7 +1009,7 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutRevision">
+	<model name="com.liferay.portal.kernel.model.LayoutRevision">
 		<field name="mvccVersion" type="long" />
 		<field name="layoutRevisionId" type="long" />
 		<field name="groupId" type="long" />
@@ -1051,7 +1051,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutSet">
+	<model name="com.liferay.portal.kernel.model.LayoutSet">
 		<field name="mvccVersion" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="groupId" type="long" />
@@ -1072,7 +1072,7 @@
 		<field name="layoutSetPrototypeUuid" type="String" />
 		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutSetBranch">
+	<model name="com.liferay.portal.kernel.model.LayoutSetBranch">
 		<field name="mvccVersion" type="long" />
 		<field name="layoutSetBranchId" type="long" />
 		<field name="groupId" type="long" />
@@ -1102,7 +1102,7 @@
 		<field name="layoutSetPrototypeUuid" type="String" />
 		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.LayoutSetPrototype">
+	<model name="com.liferay.portal.kernel.model.LayoutSetPrototype">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutSetPrototypeId" type="long" />
@@ -1123,13 +1123,13 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.ListType">
+	<model name="com.liferay.portal.kernel.model.ListType">
 		<field name="mvccVersion" type="long" />
 		<field name="listTypeId" type="long" />
 		<field name="name" type="String" />
 		<field name="type" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.MembershipRequest">
+	<model name="com.liferay.portal.kernel.model.MembershipRequest">
 		<field name="mvccVersion" type="long" />
 		<field name="membershipRequestId" type="long" />
 		<field name="groupId" type="long" />
@@ -1146,7 +1146,7 @@
 		<field name="replierUserId" type="long" />
 		<field name="statusId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.Organization">
+	<model name="com.liferay.portal.kernel.model.Organization">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="organizationId" type="long" />
@@ -1177,14 +1177,14 @@
 		</field>
 		<field name="logoId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.OrgGroupRole">
+	<model name="com.liferay.portal.kernel.model.OrgGroupRole">
 		<field name="mvccVersion" type="long" />
 		<field name="organizationId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
 		<field name="companyId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.OrgLabor">
+	<model name="com.liferay.portal.kernel.model.OrgLabor">
 		<field name="mvccVersion" type="long" />
 		<field name="orgLaborId" type="long" />
 		<field name="companyId" type="long" />
@@ -1205,7 +1205,7 @@
 		<field name="satOpen" type="int" />
 		<field name="satClose" type="int" />
 	</model>
-	<model name="com.liferay.portal.model.PasswordPolicy">
+	<model name="com.liferay.portal.kernel.model.PasswordPolicy">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="passwordPolicyId" type="long" />
@@ -1260,7 +1260,7 @@
 		<field name="resetFailureCount" type="long" />
 		<field name="resetTicketMaxAge" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.PasswordPolicyRel">
+	<model name="com.liferay.portal.kernel.model.PasswordPolicyRel">
 		<field name="mvccVersion" type="long" />
 		<field name="passwordPolicyRelId" type="long" />
 		<field name="companyId" type="long" />
@@ -1268,7 +1268,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.PasswordTracker">
+	<model name="com.liferay.portal.kernel.model.PasswordTracker">
 		<field name="mvccVersion" type="long" />
 		<field name="passwordTrackerId" type="long" />
 		<field name="companyId" type="long" />
@@ -1276,7 +1276,7 @@
 		<field name="createDate" type="Date" />
 		<field name="password" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.Phone">
+	<model name="com.liferay.portal.kernel.model.Phone">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="phoneId" type="long" />
@@ -1296,7 +1296,7 @@
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.PluginSetting">
+	<model name="com.liferay.portal.kernel.model.PluginSetting">
 		<field name="mvccVersion" type="long" />
 		<field name="pluginSettingId" type="long" />
 		<field name="companyId" type="long" />
@@ -1307,7 +1307,7 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.PortalPreferences">
+	<model name="com.liferay.portal.kernel.model.PortalPreferences">
 		<field name="mvccVersion" type="long" />
 		<field name="portalPreferencesId" type="long" />
 		<field name="ownerId" type="long" />
@@ -1316,7 +1316,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Portlet">
+	<model name="com.liferay.portal.kernel.model.Portlet">
 		<field name="mvccVersion" type="long" />
 		<field name="id" type="long" />
 		<field name="companyId" type="long" />
@@ -1328,7 +1328,7 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.PortletItem">
+	<model name="com.liferay.portal.kernel.model.PortletItem">
 		<field name="mvccVersion" type="long" />
 		<field name="portletItemId" type="long" />
 		<field name="groupId" type="long" />
@@ -1343,7 +1343,7 @@
 		</field>
 		<field name="classNameId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.PortletPreferences">
+	<model name="com.liferay.portal.kernel.model.PortletPreferences">
 		<field name="mvccVersion" type="long" />
 		<field name="portletPreferencesId" type="long" />
 		<field name="companyId" type="long" />
@@ -1357,7 +1357,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.RecentLayoutBranch">
+	<model name="com.liferay.portal.kernel.model.RecentLayoutBranch">
 		<field name="mvccVersion" type="long" />
 		<field name="recentLayoutBranchId" type="long" />
 		<field name="groupId" type="long" />
@@ -1367,7 +1367,7 @@
 		<field name="layoutSetBranchId" type="long" />
 		<field name="plid" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.RecentLayoutRevision">
+	<model name="com.liferay.portal.kernel.model.RecentLayoutRevision">
 		<field name="mvccVersion" type="long" />
 		<field name="recentLayoutRevisionId" type="long" />
 		<field name="groupId" type="long" />
@@ -1377,7 +1377,7 @@
 		<field name="layoutSetBranchId" type="long" />
 		<field name="plid" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.RecentLayoutSetBranch">
+	<model name="com.liferay.portal.kernel.model.RecentLayoutSetBranch">
 		<field name="mvccVersion" type="long" />
 		<field name="recentLayoutSetBranchId" type="long" />
 		<field name="groupId" type="long" />
@@ -1386,7 +1386,7 @@
 		<field name="layoutSetBranchId" type="long" />
 		<field name="layoutSetId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.Region">
+	<model name="com.liferay.portal.kernel.model.Region">
 		<field name="mvccVersion" type="long" />
 		<field name="regionId" type="long" />
 		<field name="countryId" type="long" />
@@ -1394,7 +1394,7 @@
 		<field name="name" type="String" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.Release">
+	<model name="com.liferay.portal.kernel.model.Release">
 		<field name="mvccVersion" type="long" />
 		<field name="releaseId" type="long" />
 		<field name="createDate" type="Date" />
@@ -1409,7 +1409,7 @@
 			<hint name="max-length">1024</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Repository">
+	<model name="com.liferay.portal.kernel.model.Repository">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="repositoryId" type="long" />
@@ -1433,7 +1433,7 @@
 		<field name="dlFolderId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.RepositoryEntry">
+	<model name="com.liferay.portal.kernel.model.RepositoryEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="repositoryEntryId" type="long" />
@@ -1450,7 +1450,7 @@
 		<field name="manualCheckInRequired" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceAction">
+	<model name="com.liferay.portal.kernel.model.ResourceAction">
 		<field name="mvccVersion" type="long" />
 		<field name="resourceActionId" type="long" />
 		<field name="name" type="String">
@@ -1459,7 +1459,7 @@
 		<field name="actionId" type="String" />
 		<field name="bitwiseValue" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceBlock">
+	<model name="com.liferay.portal.kernel.model.ResourceBlock">
 		<field name="mvccVersion" type="long" />
 		<field name="resourceBlockId" type="long" />
 		<field name="companyId" type="long" />
@@ -1468,7 +1468,7 @@
 		<field name="permissionsHash" type="String" />
 		<field name="referenceCount" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceBlockPermission">
+	<model name="com.liferay.portal.kernel.model.ResourceBlockPermission">
 		<field name="mvccVersion" type="long" />
 		<field name="resourceBlockPermissionId" type="long" />
 		<field name="companyId" type="long" />
@@ -1476,7 +1476,7 @@
 		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ResourcePermission">
+	<model name="com.liferay.portal.kernel.model.ResourcePermission">
 		<field name="mvccVersion" type="long" />
 		<field name="resourcePermissionId" type="long" />
 		<field name="companyId" type="long" />
@@ -1493,7 +1493,7 @@
 		<field name="actionIds" type="long" />
 		<field name="viewActionId" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceTypePermission">
+	<model name="com.liferay.portal.kernel.model.ResourceTypePermission">
 		<field name="mvccVersion" type="long" />
 		<field name="resourceTypePermissionId" type="long" />
 		<field name="companyId" type="long" />
@@ -1502,7 +1502,7 @@
 		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.Role">
+	<model name="com.liferay.portal.kernel.model.Role">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="roleId" type="long" />
@@ -1526,7 +1526,7 @@
 		<field name="type" type="int" />
 		<field name="subtype" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.ServiceComponent">
+	<model name="com.liferay.portal.kernel.model.ServiceComponent">
 		<field name="mvccVersion" type="long" />
 		<field name="serviceComponentId" type="long" />
 		<field name="buildNamespace" type="String" />
@@ -1536,7 +1536,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Subscription">
+	<model name="com.liferay.portal.kernel.model.Subscription">
 		<field name="mvccVersion" type="long" />
 		<field name="subscriptionId" type="long" />
 		<field name="groupId" type="long" />
@@ -1549,7 +1549,7 @@
 		<field name="classPK" type="long" />
 		<field name="frequency" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.SystemEvent">
+	<model name="com.liferay.portal.kernel.model.SystemEvent">
 		<field name="mvccVersion" type="long" />
 		<field name="systemEventId" type="long" />
 		<field name="groupId" type="long" />
@@ -1568,7 +1568,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Team">
+	<model name="com.liferay.portal.kernel.model.Team">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="teamId" type="long" />
@@ -1586,7 +1586,7 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.Ticket">
+	<model name="com.liferay.portal.kernel.model.Ticket">
 		<field name="mvccVersion" type="long" />
 		<field name="ticketId" type="long" />
 		<field name="companyId" type="long" />
@@ -1600,7 +1600,7 @@
 		</field>
 		<field name="expirationDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.User">
+	<model name="com.liferay.portal.kernel.model.User">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -1665,7 +1665,7 @@
 		<field name="emailAddressVerified" type="boolean" />
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.portal.model.UserGroup">
+	<model name="com.liferay.portal.kernel.model.UserGroup">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="userGroupId" type="long" />
@@ -1685,21 +1685,21 @@
 		<field name="addedByLDAPImport" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.UserGroupGroupRole">
+	<model name="com.liferay.portal.kernel.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />
 		<field name="userGroupId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
 		<field name="companyId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.UserGroupRole">
+	<model name="com.liferay.portal.kernel.model.UserGroupRole">
 		<field name="mvccVersion" type="long" />
 		<field name="userId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
 		<field name="companyId" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.UserIdMapper">
+	<model name="com.liferay.portal.kernel.model.UserIdMapper">
 		<field name="mvccVersion" type="long" />
 		<field name="userIdMapperId" type="long" />
 		<field name="companyId" type="long" />
@@ -1708,7 +1708,7 @@
 		<field name="description" type="String" />
 		<field name="externalUserId" type="String" />
 	</model>
-	<model name="com.liferay.portal.model.UserNotificationDelivery">
+	<model name="com.liferay.portal.kernel.model.UserNotificationDelivery">
 		<field name="mvccVersion" type="long" />
 		<field name="userNotificationDeliveryId" type="long" />
 		<field name="companyId" type="long" />
@@ -1721,7 +1721,7 @@
 		<field name="deliveryType" type="int" />
 		<field name="deliver" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.UserNotificationEvent">
+	<model name="com.liferay.portal.kernel.model.UserNotificationEvent">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="userNotificationEventId" type="long" />
@@ -1738,7 +1738,7 @@
 		<field name="actionRequired" type="boolean" />
 		<field name="archived" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.UserTracker">
+	<model name="com.liferay.portal.kernel.model.UserTracker">
 		<field name="mvccVersion" type="long" />
 		<field name="userTrackerId" type="long" />
 		<field name="companyId" type="long" />
@@ -1753,7 +1753,7 @@
 			<hint name="max-length">200</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.UserTrackerPath">
+	<model name="com.liferay.portal.kernel.model.UserTrackerPath">
 		<field name="mvccVersion" type="long" />
 		<field name="userTrackerPathId" type="long" />
 		<field name="companyId" type="long" />
@@ -1763,7 +1763,7 @@
 		</field>
 		<field name="pathDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.VirtualHost">
+	<model name="com.liferay.portal.kernel.model.VirtualHost">
 		<default-hints>
 			<hint name="display-width">210</hint>
 		</default-hints>
@@ -1775,7 +1775,7 @@
 			<validator name="required" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.WebDAVProps">
+	<model name="com.liferay.portal.kernel.model.WebDAVProps">
 		<field name="mvccVersion" type="long" />
 		<field name="webDavPropsId" type="long" />
 		<field name="companyId" type="long" />
@@ -1787,7 +1787,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Website">
+	<model name="com.liferay.portal.kernel.model.Website">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="websiteId" type="long" />
@@ -1807,7 +1807,7 @@
 		<field name="primary" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.model.WorkflowDefinitionLink">
+	<model name="com.liferay.portal.kernel.model.WorkflowDefinitionLink">
 		<field name="mvccVersion" type="long" />
 		<field name="workflowDefinitionLinkId" type="long" />
 		<field name="groupId" type="long" />
@@ -1822,7 +1822,7 @@
 		<field name="workflowDefinitionName" type="String" />
 		<field name="workflowDefinitionVersion" type="int" />
 	</model>
-	<model name="com.liferay.portal.model.WorkflowInstanceLink">
+	<model name="com.liferay.portal.kernel.model.WorkflowInstanceLink">
 		<field name="mvccVersion" type="long" />
 		<field name="workflowInstanceLinkId" type="long" />
 		<field name="groupId" type="long" />

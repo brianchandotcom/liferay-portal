@@ -14,7 +14,7 @@
 
 package com.liferay.social.networking.web.friends.social;
 
-import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.social.kernel.service.SocialRelationLocalService;

@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.UserGroupGroupRole;
-import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 
 /**
  * The extended model base implementation for the UserGroupGroupRole service. Represents a row in the &quot;UserGroupGroupRole&quot; database table, with each column mapped to a property of this class.

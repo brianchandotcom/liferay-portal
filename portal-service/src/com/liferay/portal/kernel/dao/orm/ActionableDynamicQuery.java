@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.service.BaseLocalService;
 
 /**
  * @author Brian Wing Shun Chan

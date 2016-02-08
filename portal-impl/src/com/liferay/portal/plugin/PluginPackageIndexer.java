@@ -14,6 +14,7 @@
 
 package com.liferay.portal.plugin;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;

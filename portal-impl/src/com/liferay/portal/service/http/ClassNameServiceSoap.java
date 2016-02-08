@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.ClassNameServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.ClassNameSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.ClassNameSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.ClassName}, that is translated to a
- * {@link com.liferay.portal.model.ClassNameSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.ClassName}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.ClassNameSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,18 +58,18 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ClassNameServiceHttp
- * @see com.liferay.portal.model.ClassNameSoap
+ * @see com.liferay.portal.kernel.model.ClassNameSoap
  * @see ClassNameServiceUtil
  * @generated
  */
 @ProviderType
 public class ClassNameServiceSoap {
-	public static com.liferay.portal.model.ClassNameSoap fetchClassName(
+	public static com.liferay.portal.kernel.model.ClassNameSoap fetchClassName(
 		java.lang.String value) throws RemoteException {
 		try {
-			com.liferay.portal.model.ClassName returnValue = ClassNameServiceUtil.fetchClassName(value);
+			com.liferay.portal.kernel.model.ClassName returnValue = ClassNameServiceUtil.fetchClassName(value);
 
-			return com.liferay.portal.model.ClassNameSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.ClassNameSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

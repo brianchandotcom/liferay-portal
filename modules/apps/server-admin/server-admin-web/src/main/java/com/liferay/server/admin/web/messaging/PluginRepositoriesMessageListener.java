@@ -19,12 +19,12 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
 

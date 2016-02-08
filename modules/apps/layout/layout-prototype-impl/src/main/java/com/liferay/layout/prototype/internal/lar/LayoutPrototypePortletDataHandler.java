@@ -23,10 +23,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.service.LayoutPrototypeLocalService;
 
 import java.util.List;
 

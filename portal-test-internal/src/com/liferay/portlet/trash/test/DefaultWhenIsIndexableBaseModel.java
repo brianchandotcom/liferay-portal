@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 
 /**

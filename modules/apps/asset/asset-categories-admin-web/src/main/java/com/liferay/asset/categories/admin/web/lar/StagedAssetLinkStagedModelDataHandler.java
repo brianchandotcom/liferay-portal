@@ -24,8 +24,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

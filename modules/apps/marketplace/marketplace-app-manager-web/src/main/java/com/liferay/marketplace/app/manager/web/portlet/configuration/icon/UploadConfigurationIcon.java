@@ -14,8 +14,8 @@
 
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
-import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
 

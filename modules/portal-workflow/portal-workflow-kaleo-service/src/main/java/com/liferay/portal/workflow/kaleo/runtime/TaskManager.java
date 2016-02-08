@@ -14,9 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.runtime;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 

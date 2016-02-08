@@ -14,21 +14,21 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.OrgLabor;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.service.AddressServiceUtil;
+import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
+import com.liferay.portal.kernel.service.OrgLaborServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.service.PhoneServiceUtil;
+import com.liferay.portal.kernel.service.WebsiteServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Address;
-import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.model.OrgLabor;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Phone;
-import com.liferay.portal.model.Website;
-import com.liferay.portal.service.AddressServiceUtil;
-import com.liferay.portal.service.EmailAddressServiceUtil;
-import com.liferay.portal.service.OrgLaborServiceUtil;
-import com.liferay.portal.service.OrganizationServiceUtil;
-import com.liferay.portal.service.PhoneServiceUtil;
-import com.liferay.portal.service.WebsiteServiceUtil;
 
 import javax.portlet.PortletRequest;
 

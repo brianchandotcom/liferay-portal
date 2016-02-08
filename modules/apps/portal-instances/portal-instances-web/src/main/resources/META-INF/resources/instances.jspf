@@ -25,7 +25,7 @@
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Company"
+		className="com.liferay.portal.kernel.model.Company"
 		modelVar="curCompany"
 	>
 

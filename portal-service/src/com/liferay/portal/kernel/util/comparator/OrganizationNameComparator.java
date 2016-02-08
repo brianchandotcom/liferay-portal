@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Organization;
 
 /**
  * @author Brian Wing Shun Chan

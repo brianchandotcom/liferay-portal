@@ -53,7 +53,7 @@ public class ShoppingItemLocalServiceUtil {
 		java.lang.String largeImageURL, java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addItem(userId, groupId, categoryId, sku, name,
@@ -132,8 +132,8 @@ public class ShoppingItemLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -322,7 +322,7 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -408,7 +408,7 @@ public class ShoppingItemLocalServiceUtil {
 		java.io.File largeImageFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateItem(userId, itemId, groupId, categoryId, sku, name,

@@ -276,7 +276,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.model.Role"
+				className="com.liferay.portal.kernel.model.Role"
 				escapedModel="<%= true %>"
 				keyProperty="roleId"
 				modelVar="role"

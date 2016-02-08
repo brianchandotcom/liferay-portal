@@ -15,13 +15,13 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupService;
-import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 
 /**
  * @author Iván Zaera

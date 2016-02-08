@@ -15,8 +15,8 @@
 package com.liferay.portlet.rolesadmin.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.RoleConstants;
 
 import javax.portlet.PortletRequest;
 

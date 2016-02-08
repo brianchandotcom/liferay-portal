@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.ThemeServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.ThemeServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.ThemeServiceUtil;
  */
 @ProviderType
 public class ThemeServiceHttp {
-	public static java.util.List<com.liferay.portal.model.Theme> getThemes(
+	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
 		HttpPrincipal httpPrincipal, long companyId) {
 		try {
 			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class,
@@ -71,7 +71,7 @@ public class ThemeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Theme>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Theme>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

@@ -15,8 +15,8 @@
 package com.liferay.invitation.web.portlet;
 
 import com.liferay.invitation.web.constants.InvitationPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 

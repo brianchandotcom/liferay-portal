@@ -16,7 +16,7 @@ package com.liferay.portal.atom;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Company;
+import com.liferay.portal.kernel.model.Company;
 
 import java.util.Date;
 import java.util.List;

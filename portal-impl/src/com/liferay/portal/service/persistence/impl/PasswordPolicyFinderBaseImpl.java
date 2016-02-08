@@ -15,9 +15,9 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
 
 import java.util.Set;
 

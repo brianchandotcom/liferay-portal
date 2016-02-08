@@ -79,7 +79,7 @@ teamSearch.setTotal(teamsCount);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.TeamModel"
+			className="com.liferay.portal.kernel.model.TeamModel"
 			keyProperty="teamId"
 			modelVar="curTeam"
 			rowVar="row"

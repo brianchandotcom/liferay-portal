@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link KaleoNodeLocalService}.
@@ -37,7 +37,7 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	public com.liferay.portal.workflow.kaleo.model.KaleoNode addKaleoNode(
 		long kaleoDefinitionId,
 		com.liferay.portal.workflow.kaleo.definition.Node node,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.addKaleoNode(kaleoDefinitionId, node,
 			serviceContext);
@@ -107,8 +107,8 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.deletePersistedModel(persistedModel);
 	}
@@ -271,7 +271,7 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.getPersistedModel(primaryKeyObj);

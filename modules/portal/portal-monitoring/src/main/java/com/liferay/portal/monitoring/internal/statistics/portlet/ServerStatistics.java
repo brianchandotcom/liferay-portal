@@ -14,10 +14,10 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portlet;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.HashSet;
 import java.util.Map;

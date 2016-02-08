@@ -16,7 +16,7 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link JournalFolderService}.
@@ -37,7 +37,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	public com.liferay.journal.model.JournalFolder addFolder(long groupId,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderService.addFolder(groupId, parentFolderId, name,
 			description, serviceContext);
@@ -213,7 +213,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	@Override
 	public com.liferay.journal.model.JournalFolder moveFolder(long folderId,
 		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderService.moveFolder(folderId, parentFolderId,
 			serviceContext);
@@ -222,7 +222,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	@Override
 	public com.liferay.journal.model.JournalFolder moveFolderFromTrash(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderService.moveFolderFromTrash(folderId,
 			parentFolderId, serviceContext);
@@ -258,7 +258,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
 		int restrictionType, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderService.updateFolder(groupId, folderId,
 			parentFolderId, name, description, ddmStructureIds,
@@ -269,7 +269,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	public com.liferay.journal.model.JournalFolder updateFolder(long groupId,
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderService.updateFolder(groupId, folderId,
 			parentFolderId, name, description, mergeWithParentFolder,

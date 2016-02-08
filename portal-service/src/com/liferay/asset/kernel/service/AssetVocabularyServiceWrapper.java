@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetVocabularyService}.
@@ -36,7 +36,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
 		long groupId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyService.addVocabulary(groupId, title,
 			serviceContext);
@@ -48,7 +48,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyService.addVocabulary(groupId, title, titleMap,
 			descriptionMap, settings, serviceContext);
@@ -57,7 +57,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> deleteVocabularies(
 		long[] vocabularyIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyService.deleteVocabularies(vocabularyIds,
 			serviceContext);
@@ -239,7 +239,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyService.updateVocabulary(vocabularyId, title,
 			titleMap, descriptionMap, settings, serviceContext);

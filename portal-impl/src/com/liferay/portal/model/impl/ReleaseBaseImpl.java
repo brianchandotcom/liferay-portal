@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Release;
-import com.liferay.portal.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Release service. Represents a row in the &quot;Release_&quot; database table, with each column mapped to a property of this class.

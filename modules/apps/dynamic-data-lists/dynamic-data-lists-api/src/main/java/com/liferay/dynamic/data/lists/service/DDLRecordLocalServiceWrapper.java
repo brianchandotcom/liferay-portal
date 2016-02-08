@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDLRecordLocalService}.
@@ -49,7 +49,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.addRecord(userId, groupId, recordSetId,
 			displayIndex, ddmFormValues, serviceContext);
@@ -59,7 +59,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.addRecord(userId, groupId, recordSetId,
 			displayIndex, fields, serviceContext);
@@ -69,7 +69,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.addRecord(userId, groupId, recordSetId,
 			displayIndex, fieldsMap, serviceContext);
@@ -117,8 +117,8 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.deletePersistedModel(persistedModel);
 	}
@@ -139,7 +139,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.deleteRecordLocale(recordId, locale,
 			serviceContext);
@@ -418,7 +418,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.getPersistedModel(primaryKeyObj);
@@ -510,7 +510,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public void revertRecord(long userId, long recordId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordLocalService.revertRecord(userId, recordId, version,
 			serviceContext);
@@ -524,7 +524,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public void revertRecordVersion(long userId, long recordId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordLocalService.revertRecordVersion(userId, recordId, version,
 			serviceContext);
@@ -570,7 +570,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		long userId, long recordId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.updateRecord(userId, recordId,
 			displayIndex, fieldsMap, mergeFields, serviceContext);
@@ -580,7 +580,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.updateRecord(userId, recordId,
 			majorVersion, displayIndex, ddmFormValues, serviceContext);
@@ -591,7 +591,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		long userId, long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
 		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.updateRecord(userId, recordId,
 			majorVersion, displayIndex, fields, mergeFields, serviceContext);
@@ -600,7 +600,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateStatus(
 		long userId, long recordVersionId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.updateStatus(userId, recordVersionId,
 			status, serviceContext);

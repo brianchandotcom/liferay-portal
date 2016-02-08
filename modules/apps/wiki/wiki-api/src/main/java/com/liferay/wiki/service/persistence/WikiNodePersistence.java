@@ -16,7 +16,7 @@ package com.liferay.wiki.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;

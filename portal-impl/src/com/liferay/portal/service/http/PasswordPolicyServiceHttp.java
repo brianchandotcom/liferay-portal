@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.PasswordPolicyServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.PasswordPolicyServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.PasswordPolicyServiceUtil;
  */
 @ProviderType
 public class PasswordPolicyServiceHttp {
-	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
+	public static com.liferay.portal.kernel.model.PasswordPolicy addPasswordPolicy(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description, boolean changeable,
 		boolean changeRequired, long minAge, boolean checkSyntax,
@@ -64,7 +64,7 @@ public class PasswordPolicyServiceHttp {
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
@@ -92,7 +92,7 @@ public class PasswordPolicyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.PasswordPolicy)returnObj;
+			return (com.liferay.portal.kernel.model.PasswordPolicy)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -129,7 +129,7 @@ public class PasswordPolicyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+	public static com.liferay.portal.kernel.model.PasswordPolicy fetchPasswordPolicy(
 		HttpPrincipal httpPrincipal, long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -152,7 +152,7 @@ public class PasswordPolicyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.PasswordPolicy)returnObj;
+			return (com.liferay.portal.kernel.model.PasswordPolicy)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -161,7 +161,7 @@ public class PasswordPolicyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
+	public static com.liferay.portal.kernel.model.PasswordPolicy updatePasswordPolicy(
 		HttpPrincipal httpPrincipal, long passwordPolicyId,
 		java.lang.String name, java.lang.String description,
 		boolean changeable, boolean changeRequired, long minAge,
@@ -171,7 +171,7 @@ public class PasswordPolicyServiceHttp {
 		int historyCount, boolean expireable, long maxAge, long warningTime,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
@@ -199,7 +199,7 @@ public class PasswordPolicyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.PasswordPolicy)returnObj;
+			return (com.liferay.portal.kernel.model.PasswordPolicy)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -216,7 +216,7 @@ public class PasswordPolicyServiceHttp {
 			java.lang.String.class, boolean.class, int.class, boolean.class,
 			long.class, long.class, int.class, boolean.class, int.class,
 			long.class, long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deletePasswordPolicyParameterTypes1 = new Class[] {
 			long.class
@@ -231,6 +231,6 @@ public class PasswordPolicyServiceHttp {
 			int.class, java.lang.String.class, boolean.class, int.class,
 			boolean.class, long.class, long.class, int.class, boolean.class,
 			int.class, long.class, long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

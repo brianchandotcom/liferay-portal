@@ -18,9 +18,9 @@ import com.liferay.polls.exception.QuestionChoiceException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.security.ldap;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.exportimport.UserImporter;
-import com.liferay.portal.model.User;
 
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapContext;

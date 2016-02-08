@@ -16,7 +16,7 @@ package com.liferay.exportimport.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ExportImportConfigurationLocalService}.
@@ -69,7 +69,7 @@ public class ExportImportConfigurationLocalServiceWrapper
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
 			groupId, name, description, type, settingsMap, serviceContext);
@@ -80,7 +80,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
 			groupId, name, description, type, settingsMap, status,
@@ -134,8 +135,8 @@ public class ExportImportConfigurationLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.deletePersistedModel(persistedModel);
 	}
@@ -363,7 +364,7 @@ public class ExportImportConfigurationLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.getPersistedModel(primaryKeyObj);
@@ -421,7 +422,7 @@ public class ExportImportConfigurationLocalServiceWrapper
 		long userId, long exportImportConfigurationId, java.lang.String name,
 		java.lang.String description,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationLocalService.updateExportImportConfiguration(userId,
 			exportImportConfigurationId, name, description, settingsMap,

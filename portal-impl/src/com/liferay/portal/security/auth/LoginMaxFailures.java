@@ -16,8 +16,8 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Map;
 

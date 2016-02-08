@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
-import com.liferay.portal.service.RepositoryLocalService;
 
 /**
  * @author Adolfo Pérez
@@ -53,7 +53,7 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 	}
 
 	protected String getRepositoryClassName(long repositoryId) {
-		com.liferay.portal.model.Repository repository =
+		com.liferay.portal.kernel.model.Repository repository =
 			_repositoryLocalService.fetchRepository(repositoryId);
 
 		if (repository != null) {

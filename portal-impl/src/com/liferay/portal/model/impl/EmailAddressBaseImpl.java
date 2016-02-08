@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.service.EmailAddressLocalServiceUtil;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 
 /**
  * The extended model base implementation for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.

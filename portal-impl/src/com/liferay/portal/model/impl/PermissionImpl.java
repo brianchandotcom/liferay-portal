@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Permission;
+import com.liferay.portal.kernel.model.Permission;
 
 import java.io.Serializable;
 

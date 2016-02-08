@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLAppHelperLocalService}.
@@ -36,7 +36,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Override
 	public void addFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.addFolder(userId, folder, serviceContext);
 	}
@@ -47,7 +47,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.cancelCheckOut(userId, fileEntry,
 			sourceFileVersion, destinationFileVersion, draftFileVersion,
@@ -145,7 +145,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFileEntryFromTrash(userId,
 			fileEntry, newFolderId, serviceContext);
@@ -171,7 +171,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFileShortcutFromTrash(userId,
 			fileShortcut, newFolderId, serviceContext);
@@ -197,7 +197,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
 		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFolderFromTrash(userId, folder,
 			parentFolderId, serviceContext);
@@ -319,7 +319,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.updateFileEntry(userId, fileEntry,
 			sourceFileVersion, destinationFileVersion, serviceContext);
@@ -328,7 +328,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	@Override
 	public void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.updateFolder(userId, folder, serviceContext);
 	}
@@ -338,7 +338,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
 		int oldStatus, int newStatus,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.updateStatus(userId, fileEntry,

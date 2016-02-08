@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -263,7 +263,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_ddmStructureLink.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -318,7 +318,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel() {
 		return _ddmStructureLink.toCacheModel();
 	}
 

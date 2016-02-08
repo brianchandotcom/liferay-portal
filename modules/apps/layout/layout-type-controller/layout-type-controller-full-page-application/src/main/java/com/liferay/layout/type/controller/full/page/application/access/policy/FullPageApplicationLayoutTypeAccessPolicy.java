@@ -15,8 +15,8 @@
 package com.liferay.layout.type.controller.full.page.application.access.policy;
 
 import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
+import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
-import com.liferay.portal.model.LayoutTypeAccessPolicy;
 
 import org.osgi.service.component.annotations.Component;
 

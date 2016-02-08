@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.lists.helper;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Marcellus Tavares

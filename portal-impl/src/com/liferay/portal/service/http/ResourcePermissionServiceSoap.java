@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.ResourcePermissionSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.ResourcePermissionSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.ResourcePermission}, that is translated to a
- * {@link com.liferay.portal.model.ResourcePermissionSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.ResourcePermission}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.ResourcePermissionSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,7 +58,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ResourcePermissionServiceHttp
- * @see com.liferay.portal.model.ResourcePermissionSoap
+ * @see com.liferay.portal.kernel.model.ResourcePermissionSoap
  * @see ResourcePermissionServiceUtil
  * @generated
  */

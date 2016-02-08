@@ -21,9 +21,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalService;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.List;

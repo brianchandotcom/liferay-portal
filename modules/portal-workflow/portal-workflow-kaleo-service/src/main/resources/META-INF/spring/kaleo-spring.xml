@@ -153,13 +153,13 @@
 	<bean id="com.liferay.portal.workflow.kaleo.runtime.assignment.CompositeTaskAssignmentSelector" class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.CompositeTaskAssignmentSelector">
 		<property name="taskAssignmentSelectors">
 			<util:map>
-				<entry key="com.liferay.portal.model.ResourceAction">
+				<entry key="com.liferay.portal.kernel.model.ResourceAction">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.ResourceActionTaskAssignmentSelector" />
 				</entry>
-				<entry key="com.liferay.portal.model.Role">
+				<entry key="com.liferay.portal.kernel.model.Role">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.GroupAwareRoleTaskAssignmentSelector" />
 				</entry>
-				<entry key="com.liferay.portal.model.User">
+				<entry key="com.liferay.portal.kernel.model.User">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.DefaultTaskAssignmentSelector" />
 				</entry>
 				<entry key="SCRIPT" value-ref="com.liferay.portal.workflow.kaleo.runtime.assignment.MultiLanguageTaskAssignmentSelector" />

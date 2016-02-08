@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroup;
 
 import java.io.Serializable;
 

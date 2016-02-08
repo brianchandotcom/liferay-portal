@@ -16,10 +16,10 @@ package com.liferay.layout.type.controller.shared.portlet.controller;
 
 import com.liferay.layout.type.controller.shared.portlet.constants.SharedPortletLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;

@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso.token.internal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConstants;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 

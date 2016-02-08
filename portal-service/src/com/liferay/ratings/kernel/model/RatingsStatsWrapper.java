@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -301,7 +301,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_ratingsStats.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -366,7 +366,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.ratings.kernel.model.RatingsStats> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.ratings.kernel.model.RatingsStats> toCacheModel() {
 		return _ratingsStats.toCacheModel();
 	}
 

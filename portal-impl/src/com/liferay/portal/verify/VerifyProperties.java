@@ -1905,11 +1905,11 @@ public class VerifyProperties extends VerifyProcess {
 				"configuration.jsp"
 		},
 		new String[] {
-			"field.editable.com.liferay.portal.model.User.emailAddress",
+			"field.editable.com.liferay.portal.kernel.model.User.emailAddress",
 			"field.editable.user.types"
 		},
 		new String[] {
-			"field.editable.com.liferay.portal.model.User.screenName",
+			"field.editable.com.liferay.portal.kernel.model.User.screenName",
 			"field.editable.user.types"
 		},
 		new String[] {"icon.menu.max.display.items", "menu.max.display.items"},

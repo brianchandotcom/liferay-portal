@@ -14,7 +14,7 @@
 
 package com.liferay.application.list;
 
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.model.Group;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -16,10 +16,10 @@ package com.liferay.notifications.web.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.UserNotificationEventLocalService;
 
 import java.util.List;
 

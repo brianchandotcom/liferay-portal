@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetTagLocalService}.
@@ -80,7 +80,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetTag addTag(long userId,
 		long groupId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.addTag(userId, groupId, name,
 			serviceContext);
@@ -103,7 +103,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> checkTags(
-		long userId, com.liferay.portal.model.Group group,
+		long userId, com.liferay.portal.kernel.model.Group group,
 		java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.checkTags(userId, group, names);
@@ -221,8 +221,8 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.deletePersistedModel(persistedModel);
 	}
@@ -576,7 +576,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.getPersistedModel(primaryKeyObj);
@@ -853,7 +853,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetTag updateTag(long userId,
 		long tagId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.updateTag(userId, tagId, name,
 			serviceContext);

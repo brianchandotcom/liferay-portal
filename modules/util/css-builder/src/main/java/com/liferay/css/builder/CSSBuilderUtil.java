@@ -14,9 +14,9 @@
 
 package com.liferay.css.builder;
 
+import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.ModelHintsConstants;
 
 import java.io.File;
 

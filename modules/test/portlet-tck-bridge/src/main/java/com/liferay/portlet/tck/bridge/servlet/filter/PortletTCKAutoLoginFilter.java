@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.tck.bridge.servlet.filter;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.Filter;

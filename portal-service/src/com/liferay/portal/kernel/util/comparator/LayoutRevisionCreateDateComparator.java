@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.LayoutRevision;
 
 /**
  * @author Julio Camarero

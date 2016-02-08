@@ -76,7 +76,7 @@ public class AssetCategoryServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long vocabularyId,
 		java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -99,7 +99,7 @@ public class AssetCategoryServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetCategorySoap addCategory(
 		long groupId, java.lang.String title, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(groupId,
@@ -132,7 +132,7 @@ public class AssetCategoryServiceSoap {
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetCategorySoap[] deleteCategories(
 		long[] categoryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.asset.kernel.model.AssetCategory> returnValue =
@@ -439,7 +439,7 @@ public class AssetCategoryServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetCategorySoap moveCategory(
 		long categoryId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetCategory returnValue = AssetCategoryServiceUtil.moveCategory(categoryId,
@@ -610,7 +610,7 @@ public class AssetCategoryServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long vocabularyId,
 		java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,

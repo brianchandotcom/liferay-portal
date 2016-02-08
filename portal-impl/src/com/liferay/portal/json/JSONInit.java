@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONTransformer;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
 
 import java.io.File;
 import java.io.InputStream;

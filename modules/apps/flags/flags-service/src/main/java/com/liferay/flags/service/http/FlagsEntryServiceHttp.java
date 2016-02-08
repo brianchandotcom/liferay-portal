@@ -60,7 +60,7 @@ public class FlagsEntryServiceHttp {
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
 		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		try {
 			MethodKey methodKey = new MethodKey(FlagsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
@@ -88,6 +88,6 @@ public class FlagsEntryServiceHttp {
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

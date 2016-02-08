@@ -16,7 +16,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -26,20 +25,21 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.Country;
-import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.CountryImpl;
 import com.liferay.portal.model.impl.CountryModelImpl;
-import com.liferay.portal.service.persistence.CountryPersistence;
 
 import java.io.Serializable;
 
@@ -60,7 +60,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see CountryPersistence
- * @see com.liferay.portal.service.persistence.CountryUtil
+ * @see com.liferay.portal.kernel.service.persistence.CountryUtil
  * @generated
  */
 @ProviderType
@@ -1654,7 +1654,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	/**
-	 * Returns the country with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
+	 * Returns the country with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the country
 	 * @return the country

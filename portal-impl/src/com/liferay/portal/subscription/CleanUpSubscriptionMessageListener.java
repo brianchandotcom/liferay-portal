@@ -16,7 +16,7 @@ package com.liferay.portal.subscription;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 
 /**
  * @author Raymond Augé

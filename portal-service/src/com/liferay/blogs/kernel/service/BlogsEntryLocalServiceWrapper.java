@@ -16,7 +16,7 @@ package com.liferay.blogs.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link BlogsEntryLocalService}.
@@ -63,7 +63,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
 		java.util.Date displayDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, content,
 			displayDate, serviceContext);
@@ -72,7 +72,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, content,
 			serviceContext);
@@ -94,7 +94,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, description,
 			content, displayDateMonth, displayDateDay, displayDateYear,
@@ -112,7 +112,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, subtitle,
 			description, content, displayDate, allowPingbacks, allowTrackbacks,
@@ -130,7 +130,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addEntry(userId, title, subtitle,
 			description, content, displayDateMonth, displayDateDay,
@@ -254,8 +254,8 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -596,7 +596,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.getPersistedModel(primaryKeyObj);
@@ -689,7 +689,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateEntry(long userId,
 		long entryId, java.lang.String title, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
 			content, serviceContext);
@@ -711,7 +711,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
 			description, content, displayDateMonth, displayDateDay,
@@ -730,7 +730,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
 			subtitle, description, content, displayDate, allowPingbacks,
@@ -748,7 +748,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
 			subtitle, description, content, displayDateMonth, displayDateDay,
@@ -782,7 +782,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateStatus(long userId,
 		long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateStatus(userId, entryId, status,
 			serviceContext);
@@ -791,7 +791,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateStatus(long userId,
 		long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateStatus(userId, entryId, status,

@@ -27,9 +27,9 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.service.ResourceActionLocalService;
-import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.HashMap;

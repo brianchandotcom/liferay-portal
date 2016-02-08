@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Date;
 import java.util.HashMap;

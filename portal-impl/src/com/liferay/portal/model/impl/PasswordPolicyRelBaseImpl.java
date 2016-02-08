@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
+import com.liferay.portal.kernel.model.PasswordPolicyRel;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 
 /**
  * The extended model base implementation for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.

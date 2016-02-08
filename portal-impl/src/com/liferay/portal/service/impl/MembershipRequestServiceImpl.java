@@ -15,10 +15,10 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.MembershipRequestServiceBaseImpl;
 
 /**

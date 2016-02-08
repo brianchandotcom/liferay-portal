@@ -69,7 +69,7 @@ public class DDLRecordServiceSoap {
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecord returnValue = DDLRecordServiceUtil.addRecord(groupId,
@@ -87,7 +87,7 @@ public class DDLRecordServiceSoap {
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecord returnValue = DDLRecordServiceUtil.addRecord(groupId,
@@ -115,7 +115,7 @@ public class DDLRecordServiceSoap {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap deleteRecordLocale(
 		long recordId, String locale,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecord returnValue = DDLRecordServiceUtil.deleteRecordLocale(recordId,
@@ -145,7 +145,7 @@ public class DDLRecordServiceSoap {
 	}
 
 	public static void revertRecord(long recordId, java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DDLRecordServiceUtil.revertRecord(recordId, version, serviceContext);
@@ -164,7 +164,7 @@ public class DDLRecordServiceSoap {
 	@Deprecated
 	public static void revertRecordVersion(long recordId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DDLRecordServiceUtil.revertRecordVersion(recordId, version,
@@ -180,7 +180,7 @@ public class DDLRecordServiceSoap {
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecord returnValue = DDLRecordServiceUtil.updateRecord(recordId,
@@ -199,7 +199,7 @@ public class DDLRecordServiceSoap {
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
 		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecord returnValue = DDLRecordServiceUtil.updateRecord(recordId,

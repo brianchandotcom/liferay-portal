@@ -69,7 +69,7 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portal.model.UserTracker"
+					className="com.liferay.portal.kernel.model.UserTracker"
 					keyProperty="userTrackerId"
 					modelVar="userTracker"
 				>

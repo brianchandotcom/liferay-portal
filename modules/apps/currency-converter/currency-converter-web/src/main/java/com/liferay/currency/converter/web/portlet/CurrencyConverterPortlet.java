@@ -17,8 +17,8 @@ package com.liferay.currency.converter.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import java.io.IOException;
 

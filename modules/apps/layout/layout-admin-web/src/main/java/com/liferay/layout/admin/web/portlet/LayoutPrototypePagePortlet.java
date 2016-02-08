@@ -20,17 +20,17 @@ import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.GroupService;
-import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.service.LayoutPrototypeLocalService;
-import com.liferay.portal.service.LayoutPrototypeService;
-import com.liferay.portal.service.LayoutRevisionLocalService;
-import com.liferay.portal.service.LayoutService;
-import com.liferay.portal.service.LayoutSetLocalService;
-import com.liferay.portal.service.LayoutSetService;
-import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 
 import javax.portlet.Portlet;
 

@@ -17,8 +17,8 @@ package com.liferay.portal.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.RecentLayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
 import com.liferay.portal.service.base.RecentLayoutSetBranchLocalServiceBaseImpl;
 
 /**

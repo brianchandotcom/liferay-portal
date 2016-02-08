@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.UserTrackerPath;
-import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
+import com.liferay.portal.kernel.model.UserTrackerPath;
+import com.liferay.portal.kernel.service.UserTrackerPathLocalServiceUtil;
 
 /**
  * The extended model base implementation for the UserTrackerPath service. Represents a row in the &quot;UserTrackerPath&quot; database table, with each column mapped to a property of this class.

@@ -15,7 +15,7 @@
 package com.liferay.asset.kernel.model.adapter;
 
 import com.liferay.asset.kernel.model.AssetLink;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 
 /**
  * @author Mate Thurzo

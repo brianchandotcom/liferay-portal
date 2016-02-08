@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.model.Theme;
+import com.liferay.portal.kernel.model.Theme;
 
 /**
  * @author Harrison Schueler

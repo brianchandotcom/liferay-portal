@@ -17,10 +17,10 @@ package com.liferay.portal.kernel.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Portlet;
 
 import java.util.Collection;
 

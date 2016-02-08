@@ -15,14 +15,14 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutBranchPermissionUtil;
-import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutBranchServiceBaseImpl;
 
 /**

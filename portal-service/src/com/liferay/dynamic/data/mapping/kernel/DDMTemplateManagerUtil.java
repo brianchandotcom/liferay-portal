@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 

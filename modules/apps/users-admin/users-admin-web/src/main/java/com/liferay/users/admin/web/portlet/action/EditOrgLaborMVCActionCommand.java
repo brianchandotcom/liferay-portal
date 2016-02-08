@@ -14,15 +14,15 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.exception.NoSuchListTypeException;
-import com.liferay.portal.exception.NoSuchOrgLaborException;
+import com.liferay.portal.kernel.exception.NoSuchListTypeException;
+import com.liferay.portal.kernel.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.service.OrgLaborService;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;

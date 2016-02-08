@@ -17,9 +17,9 @@ package com.liferay.journal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.TreeModel;
 
 /**
  * The extended model interface for the JournalArticle service. Represents a row in the &quot;JournalArticle&quot; database table, with each column mapped to a property of this class.
@@ -102,7 +102,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public com.liferay.journal.model.JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.model.Layout getLayout();
+	public com.liferay.portal.kernel.model.Layout getLayout();
 
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;

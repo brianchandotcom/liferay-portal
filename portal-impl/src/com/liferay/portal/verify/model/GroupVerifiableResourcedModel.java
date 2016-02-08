@@ -14,8 +14,8 @@
 
 package com.liferay.portal.verify.model;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portal.model.Group;
 
 /**
  * @author Tomas Polesovsky

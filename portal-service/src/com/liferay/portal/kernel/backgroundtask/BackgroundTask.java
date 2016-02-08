@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.model.BaseModel;
 
 import java.io.File;
 import java.io.InputStream;

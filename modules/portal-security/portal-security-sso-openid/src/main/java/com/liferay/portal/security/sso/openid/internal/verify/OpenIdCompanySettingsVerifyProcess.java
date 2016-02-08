@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.internal.verify;
 
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.openid.constants.LegacyOpenIdPropsKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConfigurationKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 

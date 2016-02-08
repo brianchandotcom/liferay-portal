@@ -17,9 +17,9 @@ package com.liferay.blogs.web.upgrade;
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

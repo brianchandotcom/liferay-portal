@@ -49,7 +49,7 @@ public class DDMStructureServiceUtil {
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(groupId, parentStructureId, classNameId,
@@ -92,7 +92,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd, java.lang.String storageType, int type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(groupId, parentStructureId, classNameId,
@@ -107,7 +107,7 @@ public class DDMStructureServiceUtil {
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, classNameId, nameMap,
@@ -140,7 +140,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, classNameId, nameMap,
@@ -155,7 +155,7 @@ public class DDMStructureServiceUtil {
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, parentStructureKey,
@@ -201,7 +201,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd, java.lang.String storageType, int type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, parentStructureKey,
@@ -227,7 +227,7 @@ public class DDMStructureServiceUtil {
 		long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .copyStructure(structureId, nameMap, descriptionMap,
@@ -236,7 +236,7 @@ public class DDMStructureServiceUtil {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure copyStructure(
 		long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyStructure(structureId, serviceContext);
 	}
@@ -366,7 +366,7 @@ public class DDMStructureServiceUtil {
 
 	public static void revertStructure(long structureId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertStructure(structureId, version, serviceContext);
 	}
@@ -505,7 +505,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(groupId, parentStructureId, classNameId,
@@ -541,7 +541,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String definition,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(groupId, parentStructureId, classNameId,
@@ -554,7 +554,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(structureId, parentStructureId, nameMap,
@@ -583,7 +583,7 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String definition,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(structureId, parentStructureId, nameMap,

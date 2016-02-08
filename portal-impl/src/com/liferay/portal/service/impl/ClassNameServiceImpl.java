@@ -15,7 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.model.ClassName;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.service.base.ClassNameServiceBaseImpl;
 
 /**

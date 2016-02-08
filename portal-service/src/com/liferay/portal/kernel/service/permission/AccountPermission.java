@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.model.Account;
 
 /**
  * @author Brian Wing Shun Chan

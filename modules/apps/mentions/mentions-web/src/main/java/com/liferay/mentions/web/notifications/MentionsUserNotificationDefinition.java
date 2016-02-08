@@ -16,9 +16,9 @@ package com.liferay.mentions.web.notifications;
 
 import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.web.constants.MentionsPortletKeys;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.portal.model.UserNotificationDeliveryConstants;
 
 import org.osgi.service.component.annotations.Component;
 

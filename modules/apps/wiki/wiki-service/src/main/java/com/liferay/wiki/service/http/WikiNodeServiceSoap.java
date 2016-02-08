@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class WikiNodeServiceSoap {
 	public static com.liferay.wiki.model.WikiNodeSoap addNode(
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiNode returnValue = WikiNodeServiceUtil.addNode(name,
@@ -275,7 +275,7 @@ public class WikiNodeServiceSoap {
 
 	public static com.liferay.wiki.model.WikiNodeSoap updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiNode returnValue = WikiNodeServiceUtil.updateNode(nodeId,

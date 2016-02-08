@@ -16,9 +16,9 @@ package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.product.navigation.control.menu.BaseControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;

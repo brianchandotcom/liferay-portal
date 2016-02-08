@@ -16,8 +16,8 @@ package com.liferay.portal.convert.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.model.EventDefinition;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.model.EventDefinition;
-import com.liferay.portal.model.PortletApp;
 
 import java.util.HashSet;
 import java.util.Set;

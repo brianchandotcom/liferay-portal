@@ -14,9 +14,9 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.model.Group;
 
 /**
  * @author Sergio González

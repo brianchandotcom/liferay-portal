@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.assignment;
 
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 

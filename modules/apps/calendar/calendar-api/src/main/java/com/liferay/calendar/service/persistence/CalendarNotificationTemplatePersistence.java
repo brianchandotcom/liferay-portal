@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.calendar.exception.NoSuchNotificationTemplateException;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the calendar notification template service.

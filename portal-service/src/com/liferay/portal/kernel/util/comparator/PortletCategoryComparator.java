@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletCategory;
 
 import java.io.Serializable;
 

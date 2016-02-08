@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.image;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;

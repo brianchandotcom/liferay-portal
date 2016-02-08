@@ -71,7 +71,7 @@ public class CalendarNotificationTemplateServiceSoap {
 		java.lang.String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.calendar.model.CalendarNotificationTemplate returnValue = CalendarNotificationTemplateServiceUtil.addCalendarNotificationTemplate(calendarId,
@@ -91,7 +91,7 @@ public class CalendarNotificationTemplateServiceSoap {
 		long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.calendar.model.CalendarNotificationTemplate returnValue = CalendarNotificationTemplateServiceUtil.updateCalendarNotificationTemplate(calendarNotificationTemplateId,

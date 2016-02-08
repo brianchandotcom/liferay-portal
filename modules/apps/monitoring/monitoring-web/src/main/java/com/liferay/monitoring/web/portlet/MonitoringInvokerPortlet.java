@@ -139,7 +139,7 @@ public class MonitoringInvokerPortlet
 
 		_invokerPortlet.init(liferayPortletConfig);
 
-		com.liferay.portal.model.Portlet portletModel =
+		com.liferay.portal.kernel.model.Portlet portletModel =
 			liferayPortletConfig.getPortlet();
 
 		_actionTimeout = portletModel.getActionTimeout();

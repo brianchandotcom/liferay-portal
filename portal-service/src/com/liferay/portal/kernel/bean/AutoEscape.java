@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * bean is wrapped with {@link AutoEscapeBeanHandler}.
  *
  * <p>
- * For a usage example, see {@link com.liferay.portal.model.UserModel}.
+ * For a usage example, see {@link com.liferay.portal.kernel.model.UserModel}.
  * </p>
  *
  * @author Shuyang Zhou

@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Address;
-import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Address service. Represents a row in the &quot;Address&quot; database table, with each column mapped to a property of this class.

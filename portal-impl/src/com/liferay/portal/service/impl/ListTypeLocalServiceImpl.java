@@ -16,10 +16,10 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.exception.NoSuchListTypeException;
+import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.ClassName;
-import com.liferay.portal.model.ListType;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.service.base.ListTypeLocalServiceBaseImpl;
 
 import java.util.List;

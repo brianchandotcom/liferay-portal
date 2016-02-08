@@ -101,7 +101,7 @@ public class DDMTemplateServiceSoap {
 		java.lang.String[] descriptionMapValues, java.lang.String type,
 		java.lang.String mode, java.lang.String language,
 		java.lang.String script,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -142,7 +142,7 @@ public class DDMTemplateServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -164,7 +164,7 @@ public class DDMTemplateServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap copyTemplate(
 		long templateId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.copyTemplate(templateId,
@@ -201,7 +201,7 @@ public class DDMTemplateServiceSoap {
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] copyTemplates(
 		long classNameId, long oldClassPK, long resourceClassNameId,
 		long newClassPK, java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
@@ -546,7 +546,7 @@ public class DDMTemplateServiceSoap {
 
 	public static void revertTemplate(long templateId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DDMTemplateServiceUtil.revertTemplate(templateId, version,
@@ -1008,7 +1008,7 @@ public class DDMTemplateServiceSoap {
 		java.lang.String[] descriptionMapValues, java.lang.String type,
 		java.lang.String mode, java.lang.String language,
 		java.lang.String script, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

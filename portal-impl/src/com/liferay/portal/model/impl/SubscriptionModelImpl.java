@@ -21,19 +21,19 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.SubscriptionModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.Subscription;
-import com.liferay.portal.model.SubscriptionModel;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -102,13 +102,13 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.Subscription"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.Subscription"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.Subscription"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Subscription"),
 			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
@@ -117,7 +117,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final long USERID_COLUMN_BITMASK = 16L;
 	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.Subscription"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.Subscription"));
 
 	public SubscriptionModelImpl() {
 	}
@@ -685,7 +685,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.Subscription");
+		sb.append("com.liferay.portal.kernel.model.Subscription");
 		sb.append("</model-name>");
 
 		sb.append(

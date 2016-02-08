@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.trash.test;
 
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.List;
 

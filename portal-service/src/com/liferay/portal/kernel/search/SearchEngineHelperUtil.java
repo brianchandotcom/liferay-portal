@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.util.Collection;
 import java.util.Set;

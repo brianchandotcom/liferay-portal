@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLFileEntryTypeService}.
@@ -39,7 +39,7 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeService.addFileEntryType(groupId,
 			fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
@@ -50,7 +50,7 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 	public com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
 		long groupId, java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeService.addFileEntryType(groupId, name,
 			description, ddmStructureIds, serviceContext);
@@ -124,7 +124,7 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 	public void updateFileEntryType(long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, name,
 			description, ddmStructureIds, serviceContext);
@@ -135,7 +135,7 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, nameMap,
 			descriptionMap, ddmStructureIds, serviceContext);

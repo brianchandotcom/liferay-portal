@@ -14,15 +14,15 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.security.pwd.BasicToolkit;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.util.PropsUtil;
 
 /**

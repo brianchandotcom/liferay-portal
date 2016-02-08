@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
 

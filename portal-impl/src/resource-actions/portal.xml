@@ -48,7 +48,7 @@
 		</permissions>
 	</portlet-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.model.Group</model-name>
+		<model-name>com.liferay.portal.kernel.model.Group</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 			<portlet-name>com_liferay_site_admin_web_portlet_SiteAdminPortlet</portlet-name>
@@ -114,7 +114,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.model.LayoutBranch</model-name>
+		<model-name>com.liferay.portal.kernel.model.LayoutBranch</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
@@ -135,7 +135,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.model.LayoutSetBranch</model-name>
+		<model-name>com.liferay.portal.kernel.model.LayoutSetBranch</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
@@ -158,7 +158,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource portal="true">
-		<model-name>com.liferay.portal.model.LayoutPrototype</model-name>
+		<model-name>com.liferay.portal.kernel.model.LayoutPrototype</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet</portlet-name>
 		</portlet-ref>
@@ -182,7 +182,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource portal="true">
-		<model-name>com.liferay.portal.model.LayoutSetPrototype</model-name>
+		<model-name>com.liferay.portal.kernel.model.LayoutSetPrototype</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet</portlet-name>
 		</portlet-ref>
@@ -206,7 +206,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource organization="true" portal="true">
-		<model-name>com.liferay.portal.model.Organization</model-name>
+		<model-name>com.liferay.portal.kernel.model.Organization</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_users_admin_web_portlet_UsersAdminPortlet</portlet-name>
 		</portlet-ref>
@@ -243,7 +243,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource organization="true" portal="true">
-		<model-name>com.liferay.portal.model.PasswordPolicy</model-name>
+		<model-name>com.liferay.portal.kernel.model.PasswordPolicy</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet</portlet-name>
 		</portlet-ref>
@@ -268,7 +268,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource portal="true">
-		<model-name>com.liferay.portal.model.Role</model-name>
+		<model-name>com.liferay.portal.kernel.model.Role</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_roles_admin_web_portlet_RolesAdminPortlet</portlet-name>
 		</portlet-ref>
@@ -297,7 +297,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource organization="true" portal="true">
-		<model-name>com.liferay.portal.model.User</model-name>
+		<model-name>com.liferay.portal.kernel.model.User</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_users_admin_web_portlet_UsersAdminPortlet</portlet-name>
 		</portlet-ref>
@@ -322,7 +322,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource portal="true">
-		<model-name>com.liferay.portal.model.UserGroup</model-name>
+		<model-name>com.liferay.portal.kernel.model.UserGroup</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet</portlet-name>
 		</portlet-ref>

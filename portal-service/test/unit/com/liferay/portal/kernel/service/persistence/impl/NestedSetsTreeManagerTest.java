@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.NestedSetsTreeNodeModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;

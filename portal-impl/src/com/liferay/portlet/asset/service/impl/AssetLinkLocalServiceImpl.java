@@ -38,9 +38,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.service.base.AssetLinkLocalServiceBaseImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 

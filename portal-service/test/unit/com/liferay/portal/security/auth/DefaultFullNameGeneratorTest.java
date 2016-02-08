@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator;
-import com.liferay.portal.model.UserConstants;
 
 import org.junit.Assert;
 import org.junit.Test;

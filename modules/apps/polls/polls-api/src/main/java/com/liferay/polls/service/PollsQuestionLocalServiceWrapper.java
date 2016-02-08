@@ -16,7 +16,7 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PollsQuestionLocalService}.
@@ -53,7 +53,7 @@ public class PollsQuestionLocalServiceWrapper
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.addQuestion(userId, titleMap,
 			descriptionMap, expirationDateMonth, expirationDateDay,
@@ -111,8 +111,8 @@ public class PollsQuestionLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.deletePersistedModel(persistedModel);
 	}
@@ -293,7 +293,7 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.getPersistedModel(primaryKeyObj);
@@ -431,7 +431,7 @@ public class PollsQuestionLocalServiceWrapper
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.updateQuestion(userId, questionId,
 			titleMap, descriptionMap, expirationDateMonth, expirationDateDay,

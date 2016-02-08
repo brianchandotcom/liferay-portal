@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.spring.aop;
 
-import com.liferay.portal.service.RetryAcceptor;
+import com.liferay.portal.kernel.service.RetryAcceptor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

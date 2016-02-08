@@ -14,10 +14,10 @@
 
 package com.liferay.portal.deploy.hot.bundle.servicewrapperregistry;
 
-import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.service.EmailAddressLocalService;
-import com.liferay.portal.service.EmailAddressLocalServiceWrapper;
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 import org.osgi.service.component.annotations.Component;
 

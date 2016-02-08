@@ -15,22 +15,22 @@
 package com.liferay.password.policies.admin.web.portlet;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.portal.exception.DuplicatePasswordPolicyException;
-import com.liferay.portal.exception.NoSuchPasswordPolicyException;
-import com.liferay.portal.exception.PasswordPolicyNameException;
-import com.liferay.portal.exception.RequiredPasswordPolicyException;
+import com.liferay.portal.kernel.exception.DuplicatePasswordPolicyException;
+import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
+import com.liferay.portal.kernel.exception.PasswordPolicyNameException;
+import com.liferay.portal.kernel.exception.RequiredPasswordPolicyException;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.PasswordPolicyService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.service.OrganizationService;
-import com.liferay.portal.service.PasswordPolicyService;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserService;
 
 import java.io.IOException;
 

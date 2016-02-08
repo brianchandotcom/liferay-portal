@@ -43,7 +43,7 @@ public class WikiNodeServiceUtil {
 	 */
 	public static com.liferay.wiki.model.WikiNode addNode(
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addNode(name, description, serviceContext);
 	}
@@ -138,7 +138,7 @@ public class WikiNodeServiceUtil {
 
 	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateNode(nodeId, name, description, serviceContext);
 	}

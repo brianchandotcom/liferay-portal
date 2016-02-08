@@ -14,8 +14,8 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;

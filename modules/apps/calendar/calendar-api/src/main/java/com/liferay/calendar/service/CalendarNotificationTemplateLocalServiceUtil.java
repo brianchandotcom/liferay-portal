@@ -60,7 +60,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		java.lang.String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCalendarNotificationTemplate(userId, calendarId,
@@ -113,8 +113,8 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -335,7 +335,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -357,7 +357,7 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCalendarNotificationTemplate(calendarNotificationTemplateId,

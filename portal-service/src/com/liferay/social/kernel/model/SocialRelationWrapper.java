@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -266,7 +266,7 @@ public class SocialRelationWrapper implements SocialRelation,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_socialRelation.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -351,7 +351,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.social.kernel.model.SocialRelation> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.kernel.model.SocialRelation> toCacheModel() {
 		return _socialRelation.toCacheModel();
 	}
 

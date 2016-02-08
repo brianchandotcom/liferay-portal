@@ -14,13 +14,17 @@
 
 package com.liferay.portal.service.persistence.test;
 
-import com.liferay.portal.exception.NoSuchMembershipRequestException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.NoSuchMembershipRequestException;
+import com.liferay.portal.kernel.model.MembershipRequest;
+import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence;
+import com.liferay.portal.kernel.service.persistence.MembershipRequestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,10 +33,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
-import com.liferay.portal.service.persistence.MembershipRequestPersistence;
-import com.liferay.portal.service.persistence.MembershipRequestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 

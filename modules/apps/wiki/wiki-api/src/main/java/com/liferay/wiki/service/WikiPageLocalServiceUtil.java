@@ -44,7 +44,7 @@ public class WikiPageLocalServiceUtil {
 	public static com.liferay.wiki.model.WikiPage addPage(long userId,
 		long nodeId, java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPage(userId, nodeId, title, content, summary, minorEdit,
@@ -56,7 +56,7 @@ public class WikiPageLocalServiceUtil {
 		java.lang.String content, java.lang.String summary, boolean minorEdit,
 		java.lang.String format, boolean head, java.lang.String parentTitle,
 		java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPage(userId, nodeId, title, version, content, summary,
@@ -155,7 +155,7 @@ public class WikiPageLocalServiceUtil {
 
 	public static com.liferay.wiki.model.WikiPage changeParent(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .changeParent(userId, nodeId, title, newParentTitle,
@@ -209,8 +209,8 @@ public class WikiPageLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -646,7 +646,7 @@ public class WikiPageLocalServiceUtil {
 		return getService().getPagesCount(userId, nodeId, status);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -782,7 +782,7 @@ public class WikiPageLocalServiceUtil {
 	@Deprecated
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().movePage(userId, nodeId, title, newTitle, serviceContext);
 	}
@@ -812,7 +812,7 @@ public class WikiPageLocalServiceUtil {
 	public static com.liferay.wiki.model.WikiPage movePageFromTrash(
 		long userId, long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .movePageFromTrash(userId, nodeId, title, newParentTitle,
@@ -839,14 +839,14 @@ public class WikiPageLocalServiceUtil {
 
 	public static void renamePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().renamePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
 	public static void renamePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle, boolean strict,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
@@ -867,7 +867,7 @@ public class WikiPageLocalServiceUtil {
 
 	public static com.liferay.wiki.model.WikiPage revertPage(long userId,
 		long nodeId, java.lang.String title, double version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .revertPage(userId, nodeId, title, version, serviceContext);
@@ -900,7 +900,7 @@ public class WikiPageLocalServiceUtil {
 		java.lang.String content, java.lang.String summary, boolean minorEdit,
 		java.lang.String format, java.lang.String parentTitle,
 		java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePage(userId, nodeId, title, version, content,
@@ -915,14 +915,14 @@ public class WikiPageLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		com.liferay.wiki.model.WikiPage page, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, page, status, serviceContext);
 	}
 
 	public static com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		com.liferay.wiki.model.WikiPage page, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -932,7 +932,7 @@ public class WikiPageLocalServiceUtil {
 
 	public static com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		long resourcePrimKey, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, resourcePrimKey, status, serviceContext);

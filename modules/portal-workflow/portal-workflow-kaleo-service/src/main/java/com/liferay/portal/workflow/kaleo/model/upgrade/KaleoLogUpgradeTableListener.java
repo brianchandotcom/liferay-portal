@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.model.upgrade;
 
+import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.model.ServiceComponent;
 
 import java.util.Map;
 

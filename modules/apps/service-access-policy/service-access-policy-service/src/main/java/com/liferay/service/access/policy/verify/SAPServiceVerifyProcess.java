@@ -17,8 +17,8 @@ package com.liferay.service.access.policy.verify;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 

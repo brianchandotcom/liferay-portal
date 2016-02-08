@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.ContactServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.ContactServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.ContactServiceUtil;
  */
 @ProviderType
 public class ContactServiceHttp {
-	public static com.liferay.portal.model.Contact getContact(
+	public static com.liferay.portal.kernel.model.Contact getContact(
 		HttpPrincipal httpPrincipal, long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -76,7 +76,7 @@ public class ContactServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Contact)returnObj;
+			return (com.liferay.portal.kernel.model.Contact)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -85,10 +85,10 @@ public class ContactServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Contact> getContacts(
+	public static java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
 		HttpPrincipal httpPrincipal, long classNameId, long classPK, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
@@ -110,7 +110,7 @@ public class ContactServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Contact>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Contact>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

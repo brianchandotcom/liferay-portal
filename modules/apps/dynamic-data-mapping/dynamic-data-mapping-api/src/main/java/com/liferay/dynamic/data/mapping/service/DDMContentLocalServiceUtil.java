@@ -44,7 +44,7 @@ public class DDMContentLocalServiceUtil {
 	public static com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, java.lang.String data,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addContent(userId, groupId, name, description, data,
@@ -109,8 +109,8 @@ public class DDMContentLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -338,7 +338,7 @@ public class DDMContentLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -347,7 +347,7 @@ public class DDMContentLocalServiceUtil {
 	public static com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
 		java.lang.String data,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContent(contentId, name, description, data,

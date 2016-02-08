@@ -22,13 +22,13 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan

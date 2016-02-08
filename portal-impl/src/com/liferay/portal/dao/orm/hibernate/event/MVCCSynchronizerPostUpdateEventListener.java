@@ -15,8 +15,8 @@
 package com.liferay.portal.dao.orm.hibernate.event;
 
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import org.hibernate.event.PostUpdateEvent;
 import org.hibernate.event.PostUpdateEventListener;

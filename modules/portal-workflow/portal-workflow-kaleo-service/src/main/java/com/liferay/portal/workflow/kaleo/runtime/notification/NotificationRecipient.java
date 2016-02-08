@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.notification;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 
 import java.io.UnsupportedEncodingException;

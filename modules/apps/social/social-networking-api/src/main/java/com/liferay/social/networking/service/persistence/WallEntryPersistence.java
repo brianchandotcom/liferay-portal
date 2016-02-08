@@ -16,7 +16,7 @@ package com.liferay.social.networking.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import com.liferay.social.networking.exception.NoSuchWallEntryException;
 import com.liferay.social.networking.model.WallEntry;

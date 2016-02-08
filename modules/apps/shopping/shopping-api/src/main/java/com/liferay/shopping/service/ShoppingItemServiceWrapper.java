@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingItemService}.
@@ -45,7 +45,7 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 		java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemService.addItem(groupId, categoryId, sku, name,
 			description, properties, fieldsQuantities, requiresShipping,
@@ -122,7 +122,7 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 		java.lang.String largeImageURL, java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemService.updateItem(itemId, groupId, categoryId,
 			sku, name, description, properties, fieldsQuantities,

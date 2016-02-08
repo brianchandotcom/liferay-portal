@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.WebsiteServiceUtil;
+import com.liferay.portal.kernel.service.WebsiteServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.WebsiteSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.WebsiteSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.Website}, that is translated to a
- * {@link com.liferay.portal.model.WebsiteSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.Website}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.WebsiteSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,22 +58,22 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see WebsiteServiceHttp
- * @see com.liferay.portal.model.WebsiteSoap
+ * @see com.liferay.portal.kernel.model.WebsiteSoap
  * @see WebsiteServiceUtil
  * @generated
  */
 @ProviderType
 public class WebsiteServiceSoap {
-	public static com.liferay.portal.model.WebsiteSoap addWebsite(
+	public static com.liferay.portal.kernel.model.WebsiteSoap addWebsite(
 		java.lang.String className, long classPK, java.lang.String url,
 		long typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Website returnValue = WebsiteServiceUtil.addWebsite(className,
+			com.liferay.portal.kernel.model.Website returnValue = WebsiteServiceUtil.addWebsite(className,
 					classPK, url, typeId, primary, serviceContext);
 
-			return com.liferay.portal.model.WebsiteSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.WebsiteSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,12 +93,12 @@ public class WebsiteServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.WebsiteSoap getWebsite(
+	public static com.liferay.portal.kernel.model.WebsiteSoap getWebsite(
 		long websiteId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Website returnValue = WebsiteServiceUtil.getWebsite(websiteId);
+			com.liferay.portal.kernel.model.Website returnValue = WebsiteServiceUtil.getWebsite(websiteId);
 
-			return com.liferay.portal.model.WebsiteSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.WebsiteSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -107,13 +107,13 @@ public class WebsiteServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.WebsiteSoap[] getWebsites(
+	public static com.liferay.portal.kernel.model.WebsiteSoap[] getWebsites(
 		java.lang.String className, long classPK) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Website> returnValue = WebsiteServiceUtil.getWebsites(className,
+			java.util.List<com.liferay.portal.kernel.model.Website> returnValue = WebsiteServiceUtil.getWebsites(className,
 					classPK);
 
-			return com.liferay.portal.model.WebsiteSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.WebsiteSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -122,14 +122,14 @@ public class WebsiteServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.WebsiteSoap updateWebsite(
+	public static com.liferay.portal.kernel.model.WebsiteSoap updateWebsite(
 		long websiteId, java.lang.String url, long typeId, boolean primary)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Website returnValue = WebsiteServiceUtil.updateWebsite(websiteId,
+			com.liferay.portal.kernel.model.Website returnValue = WebsiteServiceUtil.updateWebsite(websiteId,
 					url, typeId, primary);
 
-			return com.liferay.portal.model.WebsiteSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.WebsiteSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

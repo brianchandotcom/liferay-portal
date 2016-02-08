@@ -59,7 +59,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.model.LayoutSetBranch"
+				className="com.liferay.portal.kernel.model.LayoutSetBranch"
 				escapedModel="<%= true %>"
 				keyProperty="layoutSetBranchId"
 				modelVar="curLayoutSetBranch"

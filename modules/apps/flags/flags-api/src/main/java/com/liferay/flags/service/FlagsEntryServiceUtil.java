@@ -45,7 +45,7 @@ public class FlagsEntryServiceUtil {
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
 		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		getService()
 			.addEntry(className, classPK, reporterEmailAddress, reportedUserId,
 			contentTitle, contentURL, reason, serviceContext);

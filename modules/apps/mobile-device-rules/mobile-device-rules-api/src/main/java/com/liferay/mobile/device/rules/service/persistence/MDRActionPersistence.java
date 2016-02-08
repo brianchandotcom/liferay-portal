@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.mobile.device.rules.exception.NoSuchActionException;
 import com.liferay.mobile.device.rules.model.MDRAction;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the m d r action service.

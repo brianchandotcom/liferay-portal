@@ -15,6 +15,7 @@
 package com.liferay.product.navigation.control.menu.web.portlet;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 

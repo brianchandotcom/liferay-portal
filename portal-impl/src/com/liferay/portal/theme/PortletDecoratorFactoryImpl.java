@@ -14,9 +14,9 @@
 
 package com.liferay.portal.theme;
 
+import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.theme.PortletDecoratorFactory;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.PortletDecorator;
 import com.liferay.portal.model.impl.PortletDecoratorImpl;
 import com.liferay.portal.util.PropsValues;
 

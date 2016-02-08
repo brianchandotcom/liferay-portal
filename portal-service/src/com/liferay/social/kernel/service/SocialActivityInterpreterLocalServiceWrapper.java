@@ -16,7 +16,7 @@ package com.liferay.social.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link SocialActivityInterpreterLocalService}.
@@ -98,7 +98,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	public com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
 		java.lang.String selector,
 		com.liferay.social.kernel.model.SocialActivity activity,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,
 			activity, serviceContext);
 	}
@@ -107,7 +107,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	public com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
 		java.lang.String selector,
 		com.liferay.social.kernel.model.SocialActivitySet activitySet,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,
 			activitySet, serviceContext);
 	}

@@ -15,10 +15,10 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.List;

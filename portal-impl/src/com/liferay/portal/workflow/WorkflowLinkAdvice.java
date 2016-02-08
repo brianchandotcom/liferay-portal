@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow;
 
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;

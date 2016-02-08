@@ -21,8 +21,8 @@
 		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
-	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
-	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil">
-		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.service.PersistedModelLocalServiceRegistry" />
+	<bean id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
+	<bean id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
+		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
 	</bean>
 </beans>

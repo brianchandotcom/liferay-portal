@@ -89,7 +89,7 @@ public class DLAppServiceSoap {
 		long repositoryId, long folderId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.addFileEntry(repositoryId,
@@ -120,7 +120,7 @@ public class DLAppServiceSoap {
 	public static com.liferay.portal.kernel.repository.model.FolderSoap addFolder(
 		long repositoryId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.addFolder(repositoryId,
@@ -191,7 +191,7 @@ public class DLAppServiceSoap {
 	*/
 	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DLAppServiceUtil.checkInFileEntry(fileEntryId, majorVersion,
@@ -228,7 +228,7 @@ public class DLAppServiceSoap {
 	*/
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid,
@@ -261,7 +261,7 @@ public class DLAppServiceSoap {
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	*/
 	public static void checkOutFileEntry(long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
@@ -300,7 +300,7 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.checkOutFileEntry(fileEntryId,
@@ -329,7 +329,7 @@ public class DLAppServiceSoap {
 	public static com.liferay.portal.kernel.repository.model.FolderSoap copyFolder(
 		long repositoryId, long sourceFolderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.copyFolder(repositoryId,
@@ -1848,7 +1848,7 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap moveFileEntry(
 		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.moveFileEntry(fileEntryId,
@@ -1873,7 +1873,7 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.moveFolder(folderId,
@@ -1952,7 +1952,7 @@ public class DLAppServiceSoap {
 	*/
 	public static void revertFileEntry(long fileEntryId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			DLAppServiceUtil.revertFileEntry(fileEntryId, version,
@@ -2120,7 +2120,7 @@ public class DLAppServiceSoap {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLAppServiceUtil.updateFileEntry(fileEntryId,
@@ -2158,7 +2158,7 @@ public class DLAppServiceSoap {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FolderSoap updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.updateFolder(folderId,

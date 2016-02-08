@@ -42,7 +42,8 @@ public class PollsVoteServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.polls.service.impl.PollsVoteServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.polls.model.PollsVote addVote(long questionId,
-		long choiceId, com.liferay.portal.service.ServiceContext serviceContext)
+		long choiceId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addVote(questionId, choiceId, serviceContext);
 	}

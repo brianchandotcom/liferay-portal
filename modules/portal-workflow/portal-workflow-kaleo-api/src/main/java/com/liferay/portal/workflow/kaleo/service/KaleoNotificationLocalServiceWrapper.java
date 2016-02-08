@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link KaleoNotificationLocalService}.
@@ -39,7 +39,7 @@ public class KaleoNotificationLocalServiceWrapper
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		long kaleoDefinitionId, java.lang.String kaleoNodeName,
 		com.liferay.portal.workflow.kaleo.definition.Notification notification,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNotificationLocalService.addKaleoNotification(kaleoClassName,
 			kaleoClassPK, kaleoDefinitionId, kaleoNodeName, notification,
@@ -110,8 +110,8 @@ public class KaleoNotificationLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNotificationLocalService.deletePersistedModel(persistedModel);
 	}
@@ -285,7 +285,7 @@ public class KaleoNotificationLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNotificationLocalService.getPersistedModel(primaryKeyObj);

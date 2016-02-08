@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the m d r rule group service.

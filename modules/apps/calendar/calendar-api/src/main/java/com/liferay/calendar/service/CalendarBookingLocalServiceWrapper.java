@@ -16,7 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CalendarBookingLocalService}.
@@ -56,7 +56,7 @@ public class CalendarBookingLocalServiceWrapper
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.addCalendarBooking(userId,
 			calendarId, childCalendarIds, parentCalendarBookingId, titleMap,
@@ -147,8 +147,8 @@ public class CalendarBookingLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.deletePersistedModel(persistedModel);
 	}
@@ -465,7 +465,7 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.getPersistedModel(primaryKeyObj);
@@ -575,7 +575,7 @@ public class CalendarBookingLocalServiceWrapper
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateCalendarBooking(userId,
 			calendarBookingId, calendarId, childCalendarIds, titleMap,
@@ -593,7 +593,7 @@ public class CalendarBookingLocalServiceWrapper
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateCalendarBooking(userId,
 			calendarBookingId, calendarId, titleMap, descriptionMap, location,
@@ -612,7 +612,7 @@ public class CalendarBookingLocalServiceWrapper
 		boolean allDay, java.lang.String recurrence, boolean allFollowing,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateCalendarBookingInstance(userId,
 			calendarBookingId, instanceIndex, calendarId, childCalendarIds,
@@ -631,7 +631,7 @@ public class CalendarBookingLocalServiceWrapper
 		boolean allDay, java.lang.String recurrence, boolean allFollowing,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateCalendarBookingInstance(userId,
 			calendarBookingId, instanceIndex, calendarId, titleMap,
@@ -644,7 +644,7 @@ public class CalendarBookingLocalServiceWrapper
 	public com.liferay.calendar.model.CalendarBooking updateStatus(
 		long userId,
 		com.liferay.calendar.model.CalendarBooking calendarBooking, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateStatus(userId,
 			calendarBooking, status, serviceContext);
@@ -653,7 +653,7 @@ public class CalendarBookingLocalServiceWrapper
 	@Override
 	public com.liferay.calendar.model.CalendarBooking updateStatus(
 		long userId, long calendarBookingId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingLocalService.updateStatus(userId,
 			calendarBookingId, status, serviceContext);

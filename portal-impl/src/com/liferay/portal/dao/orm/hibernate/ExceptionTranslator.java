@@ -16,7 +16,7 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import org.hibernate.Session;
 

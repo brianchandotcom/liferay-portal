@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Map;

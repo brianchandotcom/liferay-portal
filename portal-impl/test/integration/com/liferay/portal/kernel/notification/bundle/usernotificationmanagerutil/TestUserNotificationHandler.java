@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.notification.bundle.usernotificationmanagerutil;
 
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import org.osgi.service.component.annotations.Component;
 

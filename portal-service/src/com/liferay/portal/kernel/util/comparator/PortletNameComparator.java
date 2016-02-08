@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Portlet;
 
 import java.util.Comparator;
 

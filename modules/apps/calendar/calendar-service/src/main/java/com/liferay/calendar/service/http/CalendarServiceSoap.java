@@ -77,7 +77,7 @@ public class CalendarServiceSoap {
 		java.lang.String[] descriptionMapValues, java.lang.String timeZoneId,
 		int color, boolean defaultCalendar, boolean enableComments,
 		boolean enableRatings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -367,7 +367,7 @@ public class CalendarServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, int color,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -394,7 +394,7 @@ public class CalendarServiceSoap {
 		java.lang.String[] descriptionMapValues, java.lang.String timeZoneId,
 		int color, boolean defaultCalendar, boolean enableComments,
 		boolean enableRatings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -418,7 +418,7 @@ public class CalendarServiceSoap {
 
 	public static com.liferay.calendar.model.CalendarSoap updateColor(
 		long calendarId, int color,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.calendar.model.Calendar returnValue = CalendarServiceUtil.updateColor(calendarId,

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.RemotePluginPackageRepository;
 import com.liferay.portal.kernel.plugin.Screenshot;
 import com.liferay.portal.kernel.plugin.Version;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.Date;

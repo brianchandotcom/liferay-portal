@@ -14,8 +14,8 @@
 
 package com.liferay.portal.util.bundle.layouttypecontrollertracker;
 
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -294,7 +294,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlContent.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -379,7 +379,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.document.library.kernel.model.DLContent> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLContent> toCacheModel() {
 		return _dlContent.toCacheModel();
 	}
 

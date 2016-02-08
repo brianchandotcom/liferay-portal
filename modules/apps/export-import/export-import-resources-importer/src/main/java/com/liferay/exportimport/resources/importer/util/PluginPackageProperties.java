@@ -14,12 +14,12 @@
 
 package com.liferay.exportimport.resources.importer.util;
 
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.LayoutSetPrototype;
 
 import java.io.IOException;
 import java.io.InputStream;

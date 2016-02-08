@@ -67,6 +67,11 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/CacheField.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/ModelHints.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/ModelHintsCallback.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/ModelHintsConstants.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/ModelHintsUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/plugin/Version.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
@@ -109,11 +114,6 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator_IW.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/CacheField.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHints.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsCallback.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsConstants.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class

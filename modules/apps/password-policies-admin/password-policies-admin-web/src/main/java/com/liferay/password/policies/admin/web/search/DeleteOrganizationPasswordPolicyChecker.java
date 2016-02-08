@@ -17,10 +17,10 @@ package com.liferay.password.policies.admin.web.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.PasswordPolicyRel;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 

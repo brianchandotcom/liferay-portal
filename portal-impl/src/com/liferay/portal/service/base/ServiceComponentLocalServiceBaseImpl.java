@@ -29,18 +29,18 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.ServiceComponentLocalService;
+import com.liferay.portal.kernel.service.persistence.ServiceComponentFinder;
+import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.ServiceComponent;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.ServiceComponentLocalService;
-import com.liferay.portal.service.persistence.ServiceComponentFinder;
-import com.liferay.portal.service.persistence.ServiceComponentPersistence;
 
 import java.io.Serializable;
 
@@ -57,7 +57,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl
- * @see com.liferay.portal.service.ServiceComponentLocalServiceUtil
+ * @see com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -67,7 +67,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.ServiceComponentLocalServiceUtil} to access the service component local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil} to access the service component local service.
 	 */
 
 	/**
@@ -228,7 +228,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -241,7 +241,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -253,7 +253,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -391,13 +391,13 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.ServiceComponent",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.ServiceComponent",
 			serviceComponentLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.ServiceComponent");
+			"com.liferay.portal.kernel.model.ServiceComponent");
 	}
 
 	/**
@@ -442,7 +442,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ServiceComponentLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.ServiceComponentLocalService.class)
 	protected ServiceComponentLocalService serviceComponentLocalService;
 	@BeanReference(type = ServiceComponentPersistence.class)
 	protected ServiceComponentPersistence serviceComponentPersistence;

@@ -16,7 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.OrgGroupRole;
+import com.liferay.portal.kernel.model.OrgGroupRole;
 
 /**
  * The extended model base implementation for the OrgGroupRole service. Represents a row in the &quot;OrgGroupRole&quot; database table, with each column mapped to a property of this class.

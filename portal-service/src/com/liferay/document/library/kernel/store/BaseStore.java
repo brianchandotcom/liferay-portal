@@ -46,7 +46,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param dirName the directory's name
 	 */
 	@Override
@@ -58,7 +58,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param bytes the files's data
 	 */
@@ -87,7 +87,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param file Name the file name
 	 */
@@ -123,7 +123,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param is the files's data
 	 */
@@ -152,7 +152,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the original's file name
 	 * @param fromVersionLabel the original file's version label
 	 * @param toVersionLabel the new version label
@@ -178,7 +178,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param dirName the directory's name
 	 */
 	@Override
@@ -191,7 +191,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file's name
 	 */
 	@Override
@@ -203,7 +203,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file's name
 	 * @param versionLabel the file's version label
 	 */
@@ -225,7 +225,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the {@link File} object with the file's name
 	 */
@@ -254,7 +254,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link File} object with the file's name
@@ -274,7 +274,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the byte array with the file's name
 	 */
@@ -302,7 +302,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the byte array with the file's name
@@ -333,7 +333,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the {@link InputStream} object with the file's name
 	 */
@@ -351,7 +351,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link InputStream} object with the file's name
@@ -367,7 +367,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return Returns all files of the directory
 	 */
@@ -380,7 +380,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the size of the file
 	 */
@@ -394,7 +394,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return <code>true</code> if the directory exists; <code>false</code>
 	 *         otherwise
@@ -408,7 +408,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
@@ -423,7 +423,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return <code>true</code> if the file exists; <code>false</code>
@@ -464,7 +464,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param versionLabel the file's new version label
 	 * @param bytes the new file's data
@@ -495,7 +495,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param versionLabel the file's new version label
 	 * @param file Name the file name
@@ -534,7 +534,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
 	 * @param versionLabel the file's new version label
 	 * @param is the new file's data
@@ -552,7 +552,7 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param companyId the primary key of the company
 	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file's name
 	 * @param fromVersionLabel the file's version label
 	 * @param toVersionLabel the file's new version label

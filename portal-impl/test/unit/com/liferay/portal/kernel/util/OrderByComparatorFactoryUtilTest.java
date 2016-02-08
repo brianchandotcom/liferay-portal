@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.model.impl.EmailAddressImpl;
 import com.liferay.portal.model.impl.EmailAddressModelImpl;
 

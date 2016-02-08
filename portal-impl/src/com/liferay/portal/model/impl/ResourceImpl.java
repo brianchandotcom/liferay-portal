@@ -14,8 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.model.Resource;
 
 /**
  * @author Brian Wing Shun Chan

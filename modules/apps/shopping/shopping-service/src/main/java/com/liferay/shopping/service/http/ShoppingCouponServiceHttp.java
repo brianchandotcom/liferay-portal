@@ -64,7 +64,7 @@ public class ShoppingCouponServiceHttp {
 		boolean neverExpire, boolean active, java.lang.String limitCategories,
 		java.lang.String limitSkus, double minOrder, double discount,
 		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
@@ -202,7 +202,7 @@ public class ShoppingCouponServiceHttp {
 		int endDateMinute, boolean neverExpire, boolean active,
 		java.lang.String limitCategories, java.lang.String limitSkus,
 		double minOrder, double discount, java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
@@ -245,7 +245,7 @@ public class ShoppingCouponServiceHttp {
 			boolean.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, double.class, double.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCouponParameterTypes1 = new Class[] {
 			long.class, long.class
@@ -263,6 +263,6 @@ public class ShoppingCouponServiceHttp {
 			int.class, int.class, int.class, int.class, boolean.class,
 			boolean.class, java.lang.String.class, java.lang.String.class,
 			double.class, double.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

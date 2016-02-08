@@ -45,7 +45,7 @@ public class ShoppingOrderServiceUtil {
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.completeOrder(groupId, number, ppTxnId, ppPaymentStatus,
@@ -74,7 +74,7 @@ public class ShoppingOrderServiceUtil {
 
 	public static void sendEmail(long groupId, long orderId,
 		java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(groupId, orderId, emailType, serviceContext);
 	}

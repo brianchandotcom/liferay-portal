@@ -70,7 +70,7 @@ public class DLFolderServiceSoap {
 		long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.addFolder(groupId,
@@ -467,7 +467,7 @@ public class DLFolderServiceSoap {
 
 	public static com.liferay.document.library.kernel.model.DLFolderSoap moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.moveFolder(folderId,
@@ -528,7 +528,7 @@ public class DLFolderServiceSoap {
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		Long[] fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
@@ -555,7 +555,7 @@ public class DLFolderServiceSoap {
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
@@ -576,7 +576,7 @@ public class DLFolderServiceSoap {
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
 		int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,

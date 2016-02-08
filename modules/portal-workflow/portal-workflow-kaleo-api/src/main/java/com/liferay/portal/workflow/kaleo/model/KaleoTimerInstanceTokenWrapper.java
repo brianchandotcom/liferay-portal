@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -599,7 +599,7 @@ public class KaleoTimerInstanceTokenWrapper implements KaleoTimerInstanceToken,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_kaleoTimerInstanceToken.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -784,7 +784,7 @@ public class KaleoTimerInstanceTokenWrapper implements KaleoTimerInstanceToken,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken> toCacheModel() {
 		return _kaleoTimerInstanceToken.toCacheModel();
 	}
 

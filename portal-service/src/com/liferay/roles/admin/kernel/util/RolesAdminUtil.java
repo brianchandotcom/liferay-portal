@@ -14,8 +14,8 @@
 
 package com.liferay.roles.admin.kernel.util;
 
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.model.Role;
 
 /**
  * @author Brian Wing Shun Chan

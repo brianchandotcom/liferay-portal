@@ -6,9 +6,9 @@ import ${apiPackagePath}.model.${entity.name};
 	import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 	import com.liferay.portal.kernel.exception.PortalException;
+	import com.liferay.portal.kernel.model.TreeModel;
 	import com.liferay.portal.kernel.util.StringBundler;
 	import com.liferay.portal.kernel.util.StringPool;
-	import com.liferay.portal.model.TreeModel;
 
 	import java.util.ArrayList;
 	import java.util.List;

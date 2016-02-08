@@ -27,14 +27,18 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
-page import="com.liferay.portal.exception.NoSuchLayoutPrototypeException" %><%@
-page import="com.liferay.portal.exception.RequiredLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.LayoutPrototype" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
@@ -46,11 +50,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator" %><%@
-page import="com.liferay.portal.model.Group" %><%@
-page import="com.liferay.portal.model.LayoutPrototype" %><%@
 page import="com.liferay.portal.model.impl.LayoutPrototypeImpl" %><%@
-page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.LayoutPrototypeServiceUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 

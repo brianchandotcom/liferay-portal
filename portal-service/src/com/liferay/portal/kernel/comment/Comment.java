@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.Date;
 

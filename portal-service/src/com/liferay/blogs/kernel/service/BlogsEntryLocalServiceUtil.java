@@ -66,7 +66,7 @@ public class BlogsEntryLocalServiceUtil {
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String content,
 		java.util.Date displayDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(userId, title, content, displayDate, serviceContext);
@@ -74,7 +74,7 @@ public class BlogsEntryLocalServiceUtil {
 
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addEntry(userId, title, content, serviceContext);
 	}
@@ -94,7 +94,7 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(userId, title, description, content,
@@ -112,7 +112,7 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(userId, title, subtitle, description, content,
@@ -130,7 +130,7 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(userId, title, subtitle, description, content,
@@ -242,8 +242,8 @@ public class BlogsEntryLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -554,7 +554,7 @@ public class BlogsEntryLocalServiceUtil {
 			queryDefinition);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -640,7 +640,7 @@ public class BlogsEntryLocalServiceUtil {
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
 		java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, entryId, title, content, serviceContext);
@@ -662,7 +662,7 @@ public class BlogsEntryLocalServiceUtil {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, entryId, title, description, content,
@@ -680,7 +680,7 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, entryId, title, subtitle, description,
@@ -698,7 +698,7 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, entryId, title, subtitle, description,
@@ -730,14 +730,14 @@ public class BlogsEntryLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateStatus(
 		long userId, long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, entryId, status, serviceContext);
 	}
 
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateStatus(
 		long userId, long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

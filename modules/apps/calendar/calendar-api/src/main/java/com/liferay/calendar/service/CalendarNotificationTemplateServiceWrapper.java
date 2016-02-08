@@ -16,7 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CalendarNotificationTemplateService}.
@@ -41,7 +41,7 @@ public class CalendarNotificationTemplateServiceWrapper
 		java.lang.String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateService.addCalendarNotificationTemplate(calendarId,
 			notificationType, notificationTypeSettings,
@@ -63,7 +63,7 @@ public class CalendarNotificationTemplateServiceWrapper
 		long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateService.updateCalendarNotificationTemplate(calendarNotificationTemplateId,
 			notificationTypeSettings, subject, body, serviceContext);

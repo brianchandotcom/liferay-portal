@@ -21,16 +21,16 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.PluginSetting;
+import com.liferay.portal.kernel.model.PluginSettingModel;
+import com.liferay.portal.kernel.model.PluginSettingSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.PluginSetting;
-import com.liferay.portal.model.PluginSettingModel;
-import com.liferay.portal.model.PluginSettingSoap;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -93,13 +93,13 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.PluginSetting"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.PluginSetting"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.PluginSetting"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.PluginSetting"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long PLUGINID_COLUMN_BITMASK = 2L;
@@ -151,7 +151,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.PluginSetting"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.PluginSetting"));
 
 	public PluginSettingModelImpl() {
 	}
@@ -556,7 +556,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.PluginSetting");
+		sb.append("com.liferay.portal.kernel.model.PluginSetting");
 		sb.append("</model-name>");
 
 		sb.append(

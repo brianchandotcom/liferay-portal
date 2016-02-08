@@ -17,16 +17,16 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Account;
-import com.liferay.portal.model.Address;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.model.Phone;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.Website;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
@@ -168,7 +168,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *
 	 * This method is called by {@link
 	 * com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	 * through {@link com.liferay.portal.service.CompanyService}.
+	 * through {@link com.liferay.portal.kernel.service.CompanyService}.
 	 *
 	 * @param companyId the primary key of the company
 	 * @param keys the company's preferences keys to be remove

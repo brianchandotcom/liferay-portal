@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import com.liferay.portal.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Leonardo Barros

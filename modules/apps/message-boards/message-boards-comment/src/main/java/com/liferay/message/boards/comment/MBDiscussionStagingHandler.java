@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import java.util.List;

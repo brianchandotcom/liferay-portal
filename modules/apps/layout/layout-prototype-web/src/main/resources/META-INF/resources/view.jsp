@@ -113,7 +113,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.LayoutPrototype"
+			className="com.liferay.portal.kernel.model.LayoutPrototype"
 			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="layoutPrototypeId"

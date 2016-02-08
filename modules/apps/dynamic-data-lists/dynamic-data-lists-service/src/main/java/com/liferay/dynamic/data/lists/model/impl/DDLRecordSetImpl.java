@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.CacheField;
+import com.liferay.portal.kernel.model.CacheField;
 
 import java.util.List;
 

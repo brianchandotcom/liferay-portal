@@ -69,7 +69,7 @@ public class WikiPageServiceSoap {
 	public static com.liferay.wiki.model.WikiPageSoap addPage(long nodeId,
 		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
@@ -88,7 +88,7 @@ public class WikiPageServiceSoap {
 		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.addPage(nodeId,
@@ -124,7 +124,7 @@ public class WikiPageServiceSoap {
 
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			WikiPageServiceUtil.changeParent(nodeId, title, newParentTitle,
@@ -605,7 +605,7 @@ public class WikiPageServiceSoap {
 
 	public static void renamePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			WikiPageServiceUtil.renamePage(nodeId, title, newTitle,
@@ -646,7 +646,7 @@ public class WikiPageServiceSoap {
 
 	public static com.liferay.wiki.model.WikiPageSoap revertPage(long nodeId,
 		java.lang.String title, double version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.revertPage(nodeId,
@@ -689,7 +689,7 @@ public class WikiPageServiceSoap {
 		java.lang.String title, double version, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.updatePage(nodeId,

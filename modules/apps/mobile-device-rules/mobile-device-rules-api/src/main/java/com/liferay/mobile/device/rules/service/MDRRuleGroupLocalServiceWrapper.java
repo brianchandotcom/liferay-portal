@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MDRRuleGroupLocalService}.
@@ -50,7 +50,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.addRuleGroup(groupId, nameMap,
 			descriptionMap, serviceContext);
@@ -59,7 +59,8 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
+		long groupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroup, groupId,
 			serviceContext);
@@ -68,7 +69,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroupId, groupId,
 			serviceContext);
@@ -116,8 +117,8 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.deletePersistedModel(persistedModel);
 	}
@@ -365,7 +366,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.getPersistedModel(primaryKeyObj);
@@ -480,7 +481,7 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupLocalService.updateRuleGroup(ruleGroupId, nameMap,
 			descriptionMap, serviceContext);

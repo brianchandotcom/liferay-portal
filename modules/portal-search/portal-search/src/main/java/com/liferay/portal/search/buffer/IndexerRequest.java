@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.buffer;
 
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ClassedModel;
 
 import java.lang.reflect.Method;
 

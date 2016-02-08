@@ -69,7 +69,7 @@ public class ShoppingCategoryServiceSoap {
 	public static com.liferay.shopping.model.ShoppingCategorySoap addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.shopping.model.ShoppingCategory returnValue = ShoppingCategoryServiceUtil.addCategory(parentCategoryId,
@@ -188,7 +188,7 @@ public class ShoppingCategoryServiceSoap {
 	public static com.liferay.shopping.model.ShoppingCategorySoap updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.shopping.model.ShoppingCategory returnValue = ShoppingCategoryServiceUtil.updateCategory(categoryId,

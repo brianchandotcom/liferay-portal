@@ -15,12 +15,12 @@
 package com.liferay.portal.json.transformer;
 
 import com.liferay.portal.kernel.json.JSONContext;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 
 /**
  * @author Igor Spasic

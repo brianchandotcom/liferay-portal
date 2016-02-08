@@ -14,14 +14,14 @@
 
 package com.liferay.roles.admin.internal.lar;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.ResourceTypePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
  * @author Michael C. Han

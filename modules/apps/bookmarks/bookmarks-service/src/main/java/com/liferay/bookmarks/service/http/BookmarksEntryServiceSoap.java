@@ -69,7 +69,7 @@ public class BookmarksEntryServiceSoap {
 	public static com.liferay.bookmarks.model.BookmarksEntrySoap addEntry(
 		long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.bookmarks.model.BookmarksEntry returnValue = BookmarksEntryServiceUtil.addEntry(groupId,
@@ -393,7 +393,7 @@ public class BookmarksEntryServiceSoap {
 	public static com.liferay.bookmarks.model.BookmarksEntrySoap updateEntry(
 		long entryId, long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.bookmarks.model.BookmarksEntry returnValue = BookmarksEntryServiceUtil.updateEntry(entryId,

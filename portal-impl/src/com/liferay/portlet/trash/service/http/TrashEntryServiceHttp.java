@@ -261,7 +261,7 @@ public class TrashEntryServiceHttp {
 	public static void moveEntry(HttpPrincipal httpPrincipal,
 		java.lang.String className, long classPK,
 		long destinationContainerModelId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
@@ -443,7 +443,7 @@ public class TrashEntryServiceHttp {
 		};
 	private static final Class<?>[] _moveEntryParameterTypes7 = new Class[] {
 			java.lang.String.class, long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _restoreEntryParameterTypes8 = new Class[] {
 			long.class

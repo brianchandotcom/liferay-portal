@@ -81,7 +81,7 @@ public class AssetTagLocalServiceUtil {
 	*/
 	public static com.liferay.asset.kernel.model.AssetTag addTag(long userId,
 		long groupId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTag(userId, groupId, name, serviceContext);
 	}
@@ -102,7 +102,7 @@ public class AssetTagLocalServiceUtil {
 	matching the names that don't already exist in the group
 	*/
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> checkTags(
-		long userId, com.liferay.portal.model.Group group,
+		long userId, com.liferay.portal.kernel.model.Group group,
 		java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().checkTags(userId, group, names);
@@ -209,8 +209,8 @@ public class AssetTagLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -534,7 +534,7 @@ public class AssetTagLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -787,7 +787,7 @@ public class AssetTagLocalServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetTag updateTag(
 		long userId, long tagId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTag(userId, tagId, name, serviceContext);
 	}

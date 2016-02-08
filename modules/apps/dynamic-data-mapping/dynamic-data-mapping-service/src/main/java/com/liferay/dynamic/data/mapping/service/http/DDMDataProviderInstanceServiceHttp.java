@@ -61,7 +61,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
@@ -308,7 +308,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
@@ -346,7 +346,7 @@ public class DDMDataProviderInstanceServiceHttp {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteDataProviderInstanceParameterTypes1 = new Class[] {
 			long.class
@@ -376,6 +376,6 @@ public class DDMDataProviderInstanceServiceHttp {
 	private static final Class<?>[] _updateDataProviderInstanceParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

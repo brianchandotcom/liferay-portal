@@ -44,7 +44,7 @@ public class JournalFolderServiceUtil {
 	public static com.liferay.journal.model.JournalFolder addFolder(
 		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFolder(groupId, parentFolderId, name, description,
@@ -196,14 +196,14 @@ public class JournalFolderServiceUtil {
 
 	public static com.liferay.journal.model.JournalFolder moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveFolder(folderId, parentFolderId, serviceContext);
 	}
 
 	public static com.liferay.journal.model.JournalFolder moveFolderFromTrash(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFolderFromTrash(folderId, parentFolderId, serviceContext);
@@ -235,7 +235,7 @@ public class JournalFolderServiceUtil {
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFolder(groupId, folderId, parentFolderId, name,
@@ -247,7 +247,7 @@ public class JournalFolderServiceUtil {
 		long groupId, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFolder(groupId, folderId, parentFolderId, name,

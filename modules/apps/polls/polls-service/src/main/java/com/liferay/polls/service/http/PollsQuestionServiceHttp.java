@@ -62,7 +62,7 @@ public class PollsQuestionServiceHttp {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
@@ -162,7 +162,7 @@ public class PollsQuestionServiceHttp {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
@@ -199,7 +199,7 @@ public class PollsQuestionServiceHttp {
 	private static final Class<?>[] _addQuestionParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteQuestionParameterTypes1 = new Class[] {
 			long.class
@@ -211,6 +211,6 @@ public class PollsQuestionServiceHttp {
 			long.class, java.util.Map.class, java.util.Map.class, int.class,
 			int.class, int.class, int.class, int.class, boolean.class,
 			java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

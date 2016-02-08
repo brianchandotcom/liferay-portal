@@ -20,17 +20,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.PasswordPolicyService;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
+import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
+import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.PasswordPolicyService;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
-import com.liferay.portal.service.persistence.PasswordPolicyFinder;
-import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
-import com.liferay.portal.service.persistence.PasswordPolicyRelPersistence;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import javax.sql.DataSource;
 
@@ -43,7 +43,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.PasswordPolicyServiceImpl
- * @see com.liferay.portal.service.PasswordPolicyServiceUtil
+ * @see com.liferay.portal.kernel.service.PasswordPolicyServiceUtil
  * @generated
  */
 public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
@@ -51,7 +51,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.PasswordPolicyServiceUtil} to access the password policy remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.PasswordPolicyServiceUtil} to access the password policy remote service.
 	 */
 
 	/**
@@ -59,7 +59,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the password policy local service
 	 */
-	public com.liferay.portal.service.PasswordPolicyLocalService getPasswordPolicyLocalService() {
+	public com.liferay.portal.kernel.service.PasswordPolicyLocalService getPasswordPolicyLocalService() {
 		return passwordPolicyLocalService;
 	}
 
@@ -69,7 +69,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param passwordPolicyLocalService the password policy local service
 	 */
 	public void setPasswordPolicyLocalService(
-		com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService) {
+		com.liferay.portal.kernel.service.PasswordPolicyLocalService passwordPolicyLocalService) {
 		this.passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
@@ -154,7 +154,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -164,7 +164,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -173,7 +173,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
+	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -183,7 +183,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameService the class name remote service
 	 */
 	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
+		com.liferay.portal.kernel.service.ClassNameService classNameService) {
 		this.classNameService = classNameService;
 	}
 
@@ -211,7 +211,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the password policy rel local service
 	 */
-	public com.liferay.portal.service.PasswordPolicyRelLocalService getPasswordPolicyRelLocalService() {
+	public com.liferay.portal.kernel.service.PasswordPolicyRelLocalService getPasswordPolicyRelLocalService() {
 		return passwordPolicyRelLocalService;
 	}
 
@@ -221,7 +221,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param passwordPolicyRelLocalService the password policy rel local service
 	 */
 	public void setPasswordPolicyRelLocalService(
-		com.liferay.portal.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
+		com.liferay.portal.kernel.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
 		this.passwordPolicyRelLocalService = passwordPolicyRelLocalService;
 	}
 
@@ -249,7 +249,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -259,7 +259,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -268,7 +268,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -278,7 +278,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
@@ -287,7 +287,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user remote service
 	 */
-	public com.liferay.portal.service.UserService getUserService() {
+	public com.liferay.portal.kernel.service.UserService getUserService() {
 		return userService;
 	}
 
@@ -297,7 +297,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param userService the user remote service
 	 */
 	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
+		com.liferay.portal.kernel.service.UserService userService) {
 		this.userService = userService;
 	}
 
@@ -385,9 +385,9 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.PasswordPolicyLocalService.class)
-	protected com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService;
-	@BeanReference(type = com.liferay.portal.service.PasswordPolicyService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyLocalService.class)
+	protected com.liferay.portal.kernel.service.PasswordPolicyLocalService passwordPolicyLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyService.class)
 	protected PasswordPolicyService passwordPolicyService;
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;
@@ -395,22 +395,22 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	protected PasswordPolicyFinder passwordPolicyFinder;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.PasswordPolicyRelLocalService.class)
-	protected com.liferay.portal.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyRelLocalService.class)
+	protected com.liferay.portal.kernel.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService;
 	@BeanReference(type = PasswordPolicyRelPersistence.class)
 	protected PasswordPolicyRelPersistence passwordPolicyRelPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	protected com.liferay.portal.kernel.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)

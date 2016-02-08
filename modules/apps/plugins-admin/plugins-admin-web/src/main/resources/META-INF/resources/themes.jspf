@@ -38,7 +38,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Theme"
+		className="com.liferay.portal.kernel.model.Theme"
 		modelVar="curTheme"
 	>
 

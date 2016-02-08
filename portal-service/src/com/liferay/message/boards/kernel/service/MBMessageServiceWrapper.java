@@ -16,7 +16,7 @@ package com.liferay.message.boards.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MBMessageService}.
@@ -36,7 +36,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	public com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK, long threadId,
 		long parentMessageId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addDiscussionMessage(groupId, className,
 			classPK, threadId, parentMessageId, subject, body, serviceContext);
@@ -45,7 +45,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addMessage(categoryId, subject, body,
 			serviceContext);
@@ -57,7 +57,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.lang.String body, java.lang.String format,
 		java.lang.String fileName, java.io.File file, boolean anonymous,
 		double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			java.io.FileNotFoundException {
 		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
@@ -71,7 +71,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
@@ -84,7 +84,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addMessage(parentMessageId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
@@ -311,7 +311,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	public com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK, long messageId,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.updateDiscussionMessage(className, classPK,
 			messageId, subject, body, serviceContext);
@@ -323,7 +323,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.updateMessage(messageId, subject, body,
 			inputStreamOVPs, existingFiles, priority, allowPingbacks,

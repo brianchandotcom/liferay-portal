@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.ResourceTypePermission;
+import com.liferay.portal.kernel.model.Role;
 
 /**
  * @author Michael C. Han

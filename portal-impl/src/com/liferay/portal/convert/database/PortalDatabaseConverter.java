@@ -16,9 +16,9 @@ package com.liferay.portal.convert.database;
 
 import com.liferay.portal.convert.util.HibernateModelUtil;
 import com.liferay.portal.convert.util.ModelMigrator;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

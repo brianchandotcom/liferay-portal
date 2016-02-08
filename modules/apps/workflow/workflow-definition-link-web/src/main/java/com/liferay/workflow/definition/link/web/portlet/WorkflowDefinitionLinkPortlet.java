@@ -16,8 +16,8 @@ package com.liferay.workflow.definition.link.web.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.workflow.definition.link.web.display.context.WorkflowDefinitionLinkDisplayContext;
 import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 

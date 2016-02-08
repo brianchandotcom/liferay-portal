@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.portletconfiguration.util;
 
-import com.liferay.portal.model.PublicRenderParameter;
+import com.liferay.portal.kernel.model.PublicRenderParameter;
 
 import java.util.Comparator;
 

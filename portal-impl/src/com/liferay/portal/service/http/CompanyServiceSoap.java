@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.CompanyServiceUtil;
+import com.liferay.portal.kernel.service.CompanyServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.CompanySoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.CompanySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.Company}, that is translated to a
- * {@link com.liferay.portal.model.CompanySoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.Company}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.CompanySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,7 +58,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see CompanyServiceHttp
- * @see com.liferay.portal.model.CompanySoap
+ * @see com.liferay.portal.kernel.model.CompanySoap
  * @see CompanyServiceUtil
  * @generated
  */
@@ -76,15 +76,15 @@ public class CompanyServiceSoap {
 	* @param active whether the company is active
 	* @return the company
 	*/
-	public static com.liferay.portal.model.CompanySoap addCompany(
+	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
 		java.lang.String webId, java.lang.String virtualHost,
 		java.lang.String mx, boolean system, int maxUsers, boolean active)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.addCompany(webId,
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.addCompany(webId,
 					virtualHost, mx, system, maxUsers, active);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,12 +93,12 @@ public class CompanyServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.CompanySoap deleteCompany(
+	public static com.liferay.portal.kernel.model.CompanySoap deleteCompany(
 		long companyId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.deleteCompany(companyId);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.deleteCompany(companyId);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -129,12 +129,12 @@ public class CompanyServiceSoap {
 	* @param companyId the primary key of the company
 	* @return Returns the company with the primary key
 	*/
-	public static com.liferay.portal.model.CompanySoap getCompanyById(
+	public static com.liferay.portal.kernel.model.CompanySoap getCompanyById(
 		long companyId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.getCompanyById(companyId);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyById(companyId);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -149,12 +149,12 @@ public class CompanyServiceSoap {
 	* @param logoId the ID of the company's logo
 	* @return Returns the company with the logo
 	*/
-	public static com.liferay.portal.model.CompanySoap getCompanyByLogoId(
+	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByLogoId(
 		long logoId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.getCompanyByLogoId(logoId);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByLogoId(logoId);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,12 +169,12 @@ public class CompanyServiceSoap {
 	* @param mx the company's mail domain
 	* @return Returns the company with the mail domain
 	*/
-	public static com.liferay.portal.model.CompanySoap getCompanyByMx(
+	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByMx(
 		java.lang.String mx) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.getCompanyByMx(mx);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByMx(mx);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -189,12 +189,12 @@ public class CompanyServiceSoap {
 	* @param virtualHost the company's virtual host name
 	* @return Returns the company with the virtual host name
 	*/
-	public static com.liferay.portal.model.CompanySoap getCompanyByVirtualHost(
+	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByVirtualHost(
 		java.lang.String virtualHost) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.getCompanyByVirtualHost(virtualHost);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByVirtualHost(virtualHost);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -209,12 +209,12 @@ public class CompanyServiceSoap {
 	* @param webId the company's web domain
 	* @return Returns the company with the web domain
 	*/
-	public static com.liferay.portal.model.CompanySoap getCompanyByWebId(
+	public static com.liferay.portal.kernel.model.CompanySoap getCompanyByWebId(
 		java.lang.String webId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.getCompanyByWebId(webId);
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.getCompanyByWebId(webId);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -228,7 +228,7 @@ public class CompanyServiceSoap {
 	*
 	* This method is called by {@link
 	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link com.liferay.portal.service.CompanyService}.
+	* through {@link com.liferay.portal.kernel.service.CompanyService}.
 	*
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
@@ -256,14 +256,14 @@ public class CompanyServiceSoap {
 	* @param active whether the company is active
 	* @return the company with the primary key
 	*/
-	public static com.liferay.portal.model.CompanySoap updateCompany(
+	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
 		int maxUsers, boolean active) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, maxUsers, active);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -298,7 +298,7 @@ public class CompanyServiceSoap {
 	* @param size the company's account size (optionally <code>null</code>)
 	* @return the the company with the primary key
 	*/
-	public static com.liferay.portal.model.CompanySoap updateCompany(
+	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, boolean logo, byte[] logoBytes,
 		java.lang.String name, java.lang.String legalName,
@@ -307,12 +307,12 @@ public class CompanyServiceSoap {
 		java.lang.String industry, java.lang.String type, java.lang.String size)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, homeURL, logo, logoBytes, name, legalName,
 					legalId, legalType, sicCode, tickerSymbol, industry, type,
 					size);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -352,7 +352,7 @@ public class CompanyServiceSoap {
 	String, String, String, String, String, String)}
 	*/
 	@Deprecated
-	public static com.liferay.portal.model.CompanySoap updateCompany(
+	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
 		java.lang.String legalName, java.lang.String legalId,
@@ -360,11 +360,11 @@ public class CompanyServiceSoap {
 		java.lang.String tickerSymbol, java.lang.String industry,
 		java.lang.String type, java.lang.String size) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateCompany(companyId,
 					virtualHost, mx, homeURL, name, legalName, legalId,
 					legalType, sicCode, tickerSymbol, industry, type, size);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -400,13 +400,13 @@ public class CompanyServiceSoap {
 	* @param bytes the bytes of the company's logo image
 	* @return the company with the primary key
 	*/
-	public static com.liferay.portal.model.CompanySoap updateLogo(
+	public static com.liferay.portal.kernel.model.CompanySoap updateLogo(
 		long companyId, byte[] bytes) throws RemoteException {
 		try {
-			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.updateLogo(companyId,
+			com.liferay.portal.kernel.model.Company returnValue = CompanyServiceUtil.updateLogo(companyId,
 					bytes);
 
-			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

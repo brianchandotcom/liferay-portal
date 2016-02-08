@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLTrashLocalService}.
@@ -45,7 +45,7 @@ public class DLTrashLocalServiceWrapper implements DLTrashLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId, long repositoryId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlTrashLocalService.moveFileEntryFromTrash(userId,
 			repositoryId, fileEntryId, newFolderId, serviceContext);

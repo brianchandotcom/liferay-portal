@@ -29,17 +29,17 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.BrowserTracker;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.BrowserTrackerLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.BrowserTracker;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.BrowserTrackerLocalService;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.persistence.BrowserTrackerPersistence;
 
 import java.io.Serializable;
 
@@ -56,7 +56,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl
- * @see com.liferay.portal.service.BrowserTrackerLocalServiceUtil
+ * @see com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -66,7 +66,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.BrowserTrackerLocalServiceUtil} to access the browser tracker local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil} to access the browser tracker local service.
 	 */
 
 	/**
@@ -225,7 +225,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BrowserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BrowserTracker.class);
 
@@ -238,7 +238,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BrowserTrackerLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BrowserTracker.class);
 
@@ -250,7 +250,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BrowserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BrowserTracker.class);
 
@@ -368,13 +368,13 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.BrowserTracker",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.BrowserTracker",
 			browserTrackerLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.BrowserTracker");
+			"com.liferay.portal.kernel.model.BrowserTracker");
 	}
 
 	/**
@@ -419,7 +419,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.BrowserTrackerLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.BrowserTrackerLocalService.class)
 	protected BrowserTrackerLocalService browserTrackerLocalService;
 	@BeanReference(type = BrowserTrackerPersistence.class)
 	protected BrowserTrackerPersistence browserTrackerPersistence;

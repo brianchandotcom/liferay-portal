@@ -58,7 +58,7 @@ public class ShoppingCategoryServiceHttp {
 	public static com.liferay.shopping.model.ShoppingCategory addCategory(
 		HttpPrincipal httpPrincipal, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
@@ -315,7 +315,7 @@ public class ShoppingCategoryServiceHttp {
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
@@ -350,7 +350,7 @@ public class ShoppingCategoryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCategoryServiceHttp.class);
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoryParameterTypes1 = new Class[] {
 			long.class
@@ -380,6 +380,6 @@ public class ShoppingCategoryServiceHttp {
 	private static final Class<?>[] _updateCategoryParameterTypes9 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

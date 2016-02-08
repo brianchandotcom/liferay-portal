@@ -58,7 +58,7 @@ public class WikiNodeServiceHttp {
 	public static com.liferay.wiki.model.WikiNode addNode(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class,
@@ -519,7 +519,7 @@ public class WikiNodeServiceHttp {
 	public static com.liferay.wiki.model.WikiNode updateNode(
 		HttpPrincipal httpPrincipal, long nodeId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class,
@@ -553,7 +553,7 @@ public class WikiNodeServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(WikiNodeServiceHttp.class);
 	private static final Class<?>[] _addNodeParameterTypes0 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteNodeParameterTypes1 = new Class[] {
 			long.class
@@ -604,6 +604,6 @@ public class WikiNodeServiceHttp {
 		};
 	private static final Class<?>[] _updateNodeParameterTypes16 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

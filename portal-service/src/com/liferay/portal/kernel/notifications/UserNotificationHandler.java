@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Jonathan Lee

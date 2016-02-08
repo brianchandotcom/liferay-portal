@@ -69,7 +69,7 @@ public class JournalFolderServiceSoap {
 	public static com.liferay.journal.model.JournalFolderSoap addFolder(
 		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.addFolder(groupId,
@@ -383,7 +383,7 @@ public class JournalFolderServiceSoap {
 
 	public static com.liferay.journal.model.JournalFolderSoap moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.moveFolder(folderId,
@@ -400,7 +400,7 @@ public class JournalFolderServiceSoap {
 
 	public static com.liferay.journal.model.JournalFolderSoap moveFolderFromTrash(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.moveFolderFromTrash(folderId,
@@ -469,7 +469,7 @@ public class JournalFolderServiceSoap {
 		long groupId, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.updateFolder(groupId,
@@ -490,7 +490,7 @@ public class JournalFolderServiceSoap {
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.updateFolder(groupId,

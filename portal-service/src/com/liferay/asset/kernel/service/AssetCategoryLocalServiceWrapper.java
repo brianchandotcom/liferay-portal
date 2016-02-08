@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetCategoryLocalService}.
@@ -78,7 +78,7 @@ public class AssetCategoryLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.addCategory(userId, groupId,
 			parentCategoryId, titleMap, descriptionMap, vocabularyId,
@@ -88,7 +88,7 @@ public class AssetCategoryLocalServiceWrapper
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategory addCategory(
 		long userId, long groupId, java.lang.String title, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.addCategory(userId, groupId, title,
 			vocabularyId, serviceContext);
@@ -221,8 +221,8 @@ public class AssetCategoryLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -581,7 +581,7 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.getPersistedModel(primaryKeyObj);
@@ -649,7 +649,7 @@ public class AssetCategoryLocalServiceWrapper
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategory moveCategory(
 		long categoryId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.moveCategory(categoryId,
 			parentCategoryId, vocabularyId, serviceContext);
@@ -729,7 +729,7 @@ public class AssetCategoryLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.updateCategory(userId, categoryId,
 			parentCategoryId, titleMap, descriptionMap, vocabularyId,

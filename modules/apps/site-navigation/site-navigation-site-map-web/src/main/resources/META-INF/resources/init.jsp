@@ -22,11 +22,11 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.model.LayoutSet" %><%@
+page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.model.Layout" %><%@
-page import="com.liferay.portal.model.LayoutSet" %><%@
-page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.site.map.web.display.context.SiteNavigationSiteMapDisplayContext" %>

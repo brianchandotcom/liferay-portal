@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.exportimport.staging;
 
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.model.Layout;
 
 import java.util.HashMap;
 import java.util.Map;

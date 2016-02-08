@@ -15,14 +15,14 @@
 package com.liferay.staging.taglib.servlet.taglib;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.staging.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 

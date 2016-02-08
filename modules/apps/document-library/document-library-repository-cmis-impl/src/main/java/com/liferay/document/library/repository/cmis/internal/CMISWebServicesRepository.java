@@ -17,7 +17,7 @@ package com.liferay.document.library.repository.cmis.internal;
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.Session;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
-import com.liferay.portal.exception.InvalidRepositoryException;
+import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;

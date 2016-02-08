@@ -51,7 +51,7 @@ public class MBCategoryServiceUtil {
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCategory(parentCategoryId, name, description,
@@ -64,7 +64,7 @@ public class MBCategoryServiceUtil {
 	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCategory(userId, parentCategoryId, name, description,
@@ -270,7 +270,7 @@ public class MBCategoryServiceUtil {
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCategory(categoryId, parentCategoryId, name,

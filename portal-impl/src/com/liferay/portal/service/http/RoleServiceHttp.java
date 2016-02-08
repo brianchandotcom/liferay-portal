@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.RoleServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,13 +54,13 @@ import com.liferay.portal.service.RoleServiceUtil;
  */
 @ProviderType
 public class RoleServiceHttp {
-	public static com.liferay.portal.model.Role addRole(
+	public static com.liferay.portal.kernel.model.Role addRole(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int type, java.lang.String subtype,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
@@ -83,7 +83,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Role)returnObj;
+			return (com.liferay.portal.kernel.model.Role)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -146,7 +146,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Role fetchRole(
+	public static com.liferay.portal.kernel.model.Role fetchRole(
 		HttpPrincipal httpPrincipal, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -168,7 +168,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Role)returnObj;
+			return (com.liferay.portal.kernel.model.Role)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -177,7 +177,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getGroupRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getGroupRoles(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -199,7 +199,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -208,7 +208,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Role getRole(
+	public static com.liferay.portal.kernel.model.Role getRole(
 		HttpPrincipal httpPrincipal, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -230,7 +230,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Role)returnObj;
+			return (com.liferay.portal.kernel.model.Role)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -239,7 +239,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Role getRole(
+	public static com.liferay.portal.kernel.model.Role getRole(
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -262,7 +262,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Role)returnObj;
+			return (com.liferay.portal.kernel.model.Role)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -271,7 +271,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		HttpPrincipal httpPrincipal, int type, java.lang.String subtype)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -294,7 +294,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -303,7 +303,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		HttpPrincipal httpPrincipal, long companyId, int[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -326,7 +326,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -335,7 +335,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserGroupGroupRoles(
 		HttpPrincipal httpPrincipal, long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -359,7 +359,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -368,7 +368,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getUserGroupRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserGroupRoles(
 		HttpPrincipal httpPrincipal, long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -391,7 +391,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -400,9 +400,9 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
 		HttpPrincipal httpPrincipal, long userId,
-		java.util.List<com.liferay.portal.model.Group> groups)
+		java.util.List<com.liferay.portal.kernel.model.Group> groups)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
@@ -424,7 +424,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -433,7 +433,7 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> getUserRoles(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserRoles(
 		HttpPrincipal httpPrincipal, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -455,7 +455,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -528,12 +528,12 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Role> search(
+	public static java.util.List<com.liferay.portal.kernel.model.Role> search(
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String keywords,
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Role> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"search", _searchParameterTypes15);
@@ -550,7 +550,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Role>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -615,12 +615,12 @@ public class RoleServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Role updateRole(
+	public static com.liferay.portal.kernel.model.Role updateRole(
 		HttpPrincipal httpPrincipal, long roleId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String subtype,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
@@ -642,7 +642,7 @@ public class RoleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Role)returnObj;
+			return (com.liferay.portal.kernel.model.Role)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -656,7 +656,7 @@ public class RoleServiceHttp {
 			java.lang.String.class, long.class, java.lang.String.class,
 			java.util.Map.class, java.util.Map.class, int.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addUserRolesParameterTypes1 = new Class[] {
 			long.class, long[].class
@@ -715,6 +715,6 @@ public class RoleServiceHttp {
 	private static final Class<?>[] _updateRoleParameterTypes18 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

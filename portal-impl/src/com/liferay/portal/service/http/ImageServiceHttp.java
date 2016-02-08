@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.ImageServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.ImageServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.ImageServiceUtil;
  */
 @ProviderType
 public class ImageServiceHttp {
-	public static com.liferay.portal.model.Image getImage(
+	public static com.liferay.portal.kernel.model.Image getImage(
 		HttpPrincipal httpPrincipal, long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -76,7 +76,7 @@ public class ImageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Image)returnObj;
+			return (com.liferay.portal.kernel.model.Image)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

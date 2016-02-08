@@ -47,7 +47,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.util.Collection<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> kaleoTaskAssignments,
 		java.util.Date dueDate,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addKaleoTaskInstanceToken(kaleoInstanceTokenId,
@@ -70,7 +70,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		long kaleoTaskInstanceTokenId, java.lang.String assigneeClassName,
 		long assigneeClassPK,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .assignKaleoTaskInstanceToken(kaleoTaskInstanceTokenId,
@@ -79,7 +79,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
 		long kaleoTaskInstanceTokenId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .completeKaleoTaskInstanceToken(kaleoTaskInstanceTokenId,
@@ -141,8 +141,8 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -265,7 +265,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.lang.String assigneeClassName, long assigneeClassPK,
 		java.lang.Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokens(assigneeClassName,
 			assigneeClassPK, completed, start, end, orderByComparator,
@@ -275,7 +275,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		java.lang.Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokens(completed, start, end,
 			orderByComparator, serviceContext);
@@ -284,7 +284,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> getKaleoTaskInstanceTokens(
 		long kaleoInstanceId, java.lang.Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokens(kaleoInstanceId, completed,
 			start, end, orderByComparator, serviceContext);
@@ -301,7 +301,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.util.List<java.lang.Long> roleIds, java.lang.Boolean completed,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokens(roleIds, completed, start, end,
 			orderByComparator, serviceContext);
@@ -335,7 +335,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	public static int getKaleoTaskInstanceTokensCount(
 		java.lang.String assigneeClassName, long assigneeClassPK,
 		java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokensCount(assigneeClassName,
 			assigneeClassPK, completed, serviceContext);
@@ -343,14 +343,14 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static int getKaleoTaskInstanceTokensCount(
 		java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokensCount(completed, serviceContext);
 	}
 
 	public static int getKaleoTaskInstanceTokensCount(long kaleoInstanceId,
 		java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokensCount(kaleoInstanceId, completed,
 			serviceContext);
@@ -358,7 +358,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static int getKaleoTaskInstanceTokensCount(
 		java.util.List<java.lang.Long> roleIds, java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoTaskInstanceTokensCount(roleIds, completed,
 			serviceContext);
@@ -373,7 +373,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -382,7 +382,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> getSubmittingUserKaleoTaskInstanceTokens(
 		long userId, java.lang.Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getSubmittingUserKaleoTaskInstanceTokens(userId, completed,
 			start, end, orderByComparator, serviceContext);
@@ -390,7 +390,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static int getSubmittingUserKaleoTaskInstanceTokensCount(
 		long userId, java.lang.Boolean completed,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getSubmittingUserKaleoTaskInstanceTokensCount(userId,
 			completed, serviceContext);
@@ -401,7 +401,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .search(keywords, assetTypes, completed, searchByUserRoles,
 			start, end, orderByComparator, serviceContext);
@@ -411,7 +411,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.lang.String keywords, java.lang.Boolean completed,
 		java.lang.Boolean searchByUserRoles, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .search(keywords, completed, searchByUserRoles, start, end,
 			orderByComparator, serviceContext);
@@ -424,7 +424,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.lang.Boolean searchByUserRoles, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .search(taskName, assetType, assetPrimaryKeys, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator, start, end,
@@ -438,7 +438,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.lang.Boolean searchByUserRoles, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .search(taskName, assetTypes, assetPrimaryKeys, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator, start, end,
@@ -448,7 +448,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	public static int searchCount(java.lang.String keywords,
 		java.lang.String[] assetTypes, java.lang.Boolean completed,
 		java.lang.Boolean searchByUserRoles,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .searchCount(keywords, assetTypes, completed,
 			searchByUserRoles, serviceContext);
@@ -456,7 +456,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static int searchCount(java.lang.String keywords,
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .searchCount(keywords, completed, searchByUserRoles,
 			serviceContext);
@@ -467,7 +467,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.util.Date dueDateGT, java.util.Date dueDateLT,
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
 		boolean andOperator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .searchCount(taskName, assetType, assetPrimaryKeys,
 			dueDateGT, dueDateLT, completed, searchByUserRoles, andOperator,
@@ -479,7 +479,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		java.util.Date dueDateGT, java.util.Date dueDateLT,
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
 		boolean andOperator,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .searchCount(taskName, assetTypes, assetPrimaryKeys,
 			dueDateGT, dueDateLT, completed, searchByUserRoles, andOperator,
@@ -488,7 +488,7 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken updateDueDate(
 		long kaleoTaskInstanceTokenId, java.util.Date dueDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDueDate(kaleoTaskInstanceTokenId, dueDate,

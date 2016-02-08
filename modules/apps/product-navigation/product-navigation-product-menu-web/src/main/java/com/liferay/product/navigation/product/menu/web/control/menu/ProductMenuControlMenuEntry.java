@@ -15,9 +15,9 @@
 package com.liferay.product.navigation.product.menu.web.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
 import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;

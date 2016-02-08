@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.theme;
 
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.kernel.model.Layout;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

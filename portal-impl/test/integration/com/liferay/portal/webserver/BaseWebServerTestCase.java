@@ -14,12 +14,12 @@
 
 package com.liferay.portal.webserver;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
 
 import java.util.HashMap;

@@ -22,19 +22,19 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MembershipRequest;
+import com.liferay.portal.kernel.model.MembershipRequestModel;
+import com.liferay.portal.kernel.model.MembershipRequestSoap;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.model.MembershipRequestModel;
-import com.liferay.portal.model.MembershipRequestSoap;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -106,13 +106,13 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.MembershipRequest"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.MembershipRequest"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.MembershipRequest"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.MembershipRequest"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.MembershipRequest"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.MembershipRequest"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long STATUSID_COLUMN_BITMASK = 2L;
@@ -169,7 +169,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.MembershipRequest"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.MembershipRequest"));
 
 	public MembershipRequestModelImpl() {
 	}
@@ -707,7 +707,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.MembershipRequest");
+		sb.append("com.liferay.portal.kernel.model.MembershipRequest");
 		sb.append("</model-name>");
 
 		sb.append(

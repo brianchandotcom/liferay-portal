@@ -16,7 +16,7 @@ package com.liferay.message.boards.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MBCategoryLocalService}.
@@ -45,7 +45,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean allowAnonymous,
 		boolean mailingListActive,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.addCategory(userId, parentCategoryId,
 			name, description, displayStyle, emailAddress, inProtocol,
@@ -59,7 +59,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.addCategory(userId, parentCategoryId,
 			name, description, serviceContext);
@@ -179,8 +179,8 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -565,7 +565,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getPersistedModel(primaryKeyObj);
@@ -651,7 +651,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean allowAnonymous,
 		boolean mailingListActive, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.updateCategory(categoryId,
 			parentCategoryId, name, description, displayStyle, emailAddress,

@@ -47,7 +47,7 @@ public class DLFileEntryServiceUtil {
 		java.lang.String changeLog, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntry(groupId, repositoryId, folderId,
@@ -63,14 +63,14 @@ public class DLFileEntryServiceUtil {
 
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 	}
 
 	public static void checkInFileEntry(long fileEntryId, boolean major,
 		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.checkInFileEntry(fileEntryId, major, changeLog, serviceContext);
@@ -78,7 +78,7 @@ public class DLFileEntryServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .checkOutFileEntry(fileEntryId, owner, expirationTime,
@@ -87,14 +87,14 @@ public class DLFileEntryServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
 		long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().checkOutFileEntry(fileEntryId, serviceContext);
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry copyFileEntry(
 		long groupId, long repositoryId, long fileEntryId, long destFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .copyFileEntry(groupId, repositoryId, fileEntryId,
@@ -291,14 +291,14 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static boolean isKeepFileVersionLabel(long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isKeepFileVersionLabel(fileEntryId, serviceContext);
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry moveFileEntry(
 		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntry(fileEntryId, newFolderId, serviceContext);
@@ -313,7 +313,7 @@ public class DLFileEntryServiceUtil {
 
 	public static void revertFileEntry(long fileEntryId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertFileEntry(fileEntryId, version, serviceContext);
 	}
@@ -340,7 +340,7 @@ public class DLFileEntryServiceUtil {
 		boolean majorVersion, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
@@ -350,7 +350,7 @@ public class DLFileEntryServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry updateStatus(
 		long userId, long fileVersionId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

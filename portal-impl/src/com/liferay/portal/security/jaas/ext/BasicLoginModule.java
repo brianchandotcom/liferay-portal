@@ -16,12 +16,12 @@ package com.liferay.portal.security.jaas.ext;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.security.jaas.JAASHelper;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.IOException;
 

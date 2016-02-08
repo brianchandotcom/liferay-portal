@@ -438,7 +438,7 @@
 		<property name="threadLocalSources">
 			<list>
 				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
-					<constructor-arg name="key" value="com.liferay.portal.service.ServiceContextThreadLocal" />
+					<constructor-arg name="key" value="com.liferay.portal.kernel.service.ServiceContextThreadLocal" />
 					<constructor-arg name="value" value="_serviceContextThreadLocal" />
 				</bean>
 				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
@@ -506,7 +506,7 @@
 	</bean>
 	<bean id="com.liferay.portal.service.permission.GroupPermissionImpl" class="com.liferay.portal.service.permission.GroupPermissionImpl" />
 	<bean id="com.liferay.portal.service.permission.UserPermissionImpl" class="com.liferay.portal.service.permission.UserPermissionImpl" />
-	<bean id="com.liferay.portal.service.persistence.BatchSessionUtil" class="com.liferay.portal.service.persistence.BatchSessionUtil">
+	<bean id="com.liferay.portal.kernel.service.persistence.BatchSessionUtil" class="com.liferay.portal.kernel.service.persistence.BatchSessionUtil">
 		<property name="batchSession">
 			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
 		</property>

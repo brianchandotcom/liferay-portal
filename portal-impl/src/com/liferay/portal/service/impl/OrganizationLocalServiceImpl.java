@@ -14,15 +14,29 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.DuplicateOrganizationException;
-import com.liferay.portal.exception.OrganizationNameException;
-import com.liferay.portal.exception.OrganizationParentException;
-import com.liferay.portal.exception.OrganizationTypeException;
-import com.liferay.portal.exception.RequiredOrganizationException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
+import com.liferay.portal.kernel.exception.OrganizationNameException;
+import com.liferay.portal.kernel.exception.OrganizationParentException;
+import com.liferay.portal.kernel.exception.OrganizationTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredOrganizationException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -31,6 +45,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,23 +63,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Country;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.ListTypeConstants;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.model.Region;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -581,7 +581,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  end the upper bound of the range of organizations to return (not
 	 *         inclusive)
 	 * @return the range of organizations belonging to the parent organization
-	 * @see    com.liferay.portal.service.persistence.OrganizationPersistence#findByC_P(
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationPersistence#findByC_P(
 	 *         long, long, int, int)
 	 */
 	@Override
@@ -913,7 +913,7 @@ public class OrganizationLocalServiceImpl
 	 *         considered in the determination
 	 * @return <code>true</code> if the user has access to the organization;
 	 *         <code>false</code> otherwise
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public boolean hasUserOrganization(
@@ -1078,12 +1078,12 @@ public class OrganizationLocalServiceImpl
 	 * @param  countryId the primary key of the organization's country
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder params. For more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @param  start the lower bound of the range of organizations to return
 	 * @param  end the upper bound of the range of organizations to return (not
 	 *         inclusive)
 	 * @return the matching organizations ordered by name
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public List<Organization> search(
@@ -1126,14 +1126,14 @@ public class OrganizationLocalServiceImpl
 	 * @param  countryId the primary key of the organization's country
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder params. For more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @param  start the lower bound of the range of organizations to return
 	 * @param  end the upper bound of the range of organizations to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the organizations (optionally
 	 *         <code>null</code>)
 	 * @return the matching organizations ordered by comparator <code>obc</code>
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public List<Organization> search(
@@ -1185,7 +1185,7 @@ public class OrganizationLocalServiceImpl
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field. For example, &quot;organizations with the name
 	 *         'Employees' and city 'Chicago'&quot; vs &quot;organizations with
@@ -1194,7 +1194,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  end the upper bound of the range of organizations to return (not
 	 *         inclusive)
 	 * @return the matching organizations ordered by name
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public List<Organization> search(
@@ -1241,7 +1241,7 @@ public class OrganizationLocalServiceImpl
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field. For example, &quot;organizations with the name
 	 *         'Employees' and city 'Chicago'&quot; vs &quot;organizations with
@@ -1252,7 +1252,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  obc the comparator to order the organizations (optionally
 	 *         <code>null</code>)
 	 * @return the matching organizations ordered by comparator <code>obc</code>
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public List<Organization> search(
@@ -1353,9 +1353,9 @@ public class OrganizationLocalServiceImpl
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @return the number of matching organizations
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public int searchCount(
@@ -1435,13 +1435,13 @@ public class OrganizationLocalServiceImpl
 	 *         (optionally <code>null</code>)
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.OrganizationFinder}
+	 *         com.liferay.portal.kernel.service.persistence.OrganizationFinder}
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field. For example, &quot;organizations with the name
 	 *         'Employees' and city 'Chicago'&quot; vs &quot;organizations with
 	 *         the name 'Employees' or the city 'Chicago'&quot;.
 	 * @return the number of matching organizations
-	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.OrganizationFinder
 	 */
 	@Override
 	public int searchCount(

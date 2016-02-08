@@ -125,7 +125,7 @@ public class JournalArticleServiceUtil {
 		int reviewDateDay, int reviewDateYear, int reviewDateHour,
 		int reviewDateMinute, boolean neverReview, boolean indexable,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addArticle(groupId, folderId, classNameId, classPK,
@@ -230,7 +230,7 @@ public class JournalArticleServiceUtil {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallFile, java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addArticle(groupId, folderId, classNameId, classPK,
@@ -280,7 +280,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteArticle(groupId, articleId, articleURL, serviceContext);
@@ -301,7 +301,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		double version, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteArticle(groupId, articleId, version, articleURL,
@@ -328,7 +328,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static void expireArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.expireArticle(groupId, articleId, articleURL, serviceContext);
@@ -355,7 +355,7 @@ public class JournalArticleServiceUtil {
 	public static com.liferay.journal.model.JournalArticle expireArticle(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .expireArticle(groupId, articleId, version, articleURL,
@@ -1119,7 +1119,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static void moveArticle(long groupId, java.lang.String articleId,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().moveArticle(groupId, articleId, newFolderId, serviceContext);
 	}
@@ -1144,7 +1144,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static com.liferay.journal.model.JournalArticle moveArticleFromTrash(
 		long groupId, java.lang.String articleId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveArticleFromTrash(groupId, articleId, newFolderId,
@@ -1171,7 +1171,7 @@ public class JournalArticleServiceUtil {
 	*/
 	public static com.liferay.journal.model.JournalArticle moveArticleFromTrash(
 		long groupId, long resourcePrimKey, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveArticleFromTrash(groupId, resourcePrimKey, newFolderId,
@@ -1754,7 +1754,7 @@ public class JournalArticleServiceUtil {
 	public static com.liferay.journal.model.JournalArticle updateArticle(
 		long groupId, long folderId, java.lang.String articleId,
 		double version, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateArticle(groupId, folderId, articleId, version,
@@ -1852,7 +1852,7 @@ public class JournalArticleServiceUtil {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallFile, java.util.Map<java.lang.String, byte[]> images,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateArticle(groupId, folderId, articleId, version,
@@ -1901,7 +1901,7 @@ public class JournalArticleServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String layoutUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateArticle(userId, groupId, folderId, articleId,
@@ -1931,7 +1931,7 @@ public class JournalArticleServiceUtil {
 		java.util.Locale locale, java.lang.String title,
 		java.lang.String description, java.lang.String content,
 		java.util.Map<java.lang.String, byte[]> images,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateArticleTranslation(groupId, articleId, version,
@@ -1976,7 +1976,7 @@ public class JournalArticleServiceUtil {
 	public static com.liferay.journal.model.JournalArticle updateStatus(
 		long groupId, java.lang.String articleId, double version, int status,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(groupId, articleId, version, status,

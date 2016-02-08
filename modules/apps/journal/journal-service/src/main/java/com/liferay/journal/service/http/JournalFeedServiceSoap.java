@@ -74,7 +74,7 @@ public class JournalFeedServiceSoap {
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFeed returnValue = JournalFeedServiceUtil.addFeed(groupId,
@@ -153,7 +153,7 @@ public class JournalFeedServiceSoap {
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalFeed returnValue = JournalFeedServiceUtil.updateFeed(groupId,

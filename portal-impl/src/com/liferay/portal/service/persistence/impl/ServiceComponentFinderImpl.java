@@ -17,9 +17,9 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.ServiceComponent;
+import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.service.persistence.ServiceComponentFinder;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
-import com.liferay.portal.service.persistence.ServiceComponentFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;

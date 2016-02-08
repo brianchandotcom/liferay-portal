@@ -58,7 +58,7 @@ public class MBCategoryServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		HttpPrincipal httpPrincipal, long userId, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -100,7 +100,7 @@ public class MBCategoryServiceHttp {
 		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
 		java.lang.String outUserName, java.lang.String outPassword,
 		boolean mailingListActive, boolean allowAnonymousEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -1057,7 +1057,7 @@ public class MBCategoryServiceHttp {
 		java.lang.String outUserName, java.lang.String outPassword,
 		boolean mailingListActive, boolean allowAnonymousEmail,
 		boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
@@ -1098,7 +1098,7 @@ public class MBCategoryServiceHttp {
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCategoryParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -1108,7 +1108,8 @@ public class MBCategoryServiceHttp {
 			int.class, java.lang.String.class, boolean.class,
 			java.lang.String.class, int.class, boolean.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,
-			boolean.class, com.liferay.portal.service.ServiceContext.class
+			boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoryParameterTypes2 = new Class[] {
 			long.class, boolean.class
@@ -1213,6 +1214,6 @@ public class MBCategoryServiceHttp {
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			int.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, boolean.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

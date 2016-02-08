@@ -55,7 +55,7 @@ public class DLFileShortcutLocalServiceUtil {
 	public static com.liferay.document.library.kernel.model.DLFileShortcut addFileShortcut(
 		long userId, long groupId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileShortcut(userId, groupId, repositoryId, folderId,
@@ -158,8 +158,8 @@ public class DLFileShortcutLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -396,7 +396,7 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -434,7 +434,7 @@ public class DLFileShortcutLocalServiceUtil {
 	public static com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileShortcut(userId, fileShortcutId, repositoryId,
@@ -452,7 +452,8 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	public static void updateStatus(long userId, long fileShortcutId,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateStatus(userId, fileShortcutId, status, serviceContext);
 	}

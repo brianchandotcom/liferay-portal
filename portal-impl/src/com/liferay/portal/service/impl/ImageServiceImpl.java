@@ -15,7 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Image;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.service.base.ImageServiceBaseImpl;
 
 /**

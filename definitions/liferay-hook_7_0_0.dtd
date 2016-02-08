@@ -50,9 +50,9 @@ dl.repository.impl
 dl.store.antivirus.impl
 dl.store.impl
 dockbar.add.portlets
-field.enable.com.liferay.portal.model.Contact.birthday
-field.enable.com.liferay.portal.model.Contact.male
-field.enable.com.liferay.portal.model.Organization.status
+field.enable.com.liferay.portal.kernel.model.Contact.birthday
+field.enable.com.liferay.portal.kernel.model.Contact.male
+field.enable.com.liferay.portal.kernel.model.Organization.status
 hot.deploy.listeners
 javascript.fast.load
 journal.article.form.add

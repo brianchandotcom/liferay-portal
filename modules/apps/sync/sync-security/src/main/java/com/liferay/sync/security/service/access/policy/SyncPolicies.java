@@ -15,12 +15,12 @@
 package com.liferay.sync.security.service.access.policy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalService;
 import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 

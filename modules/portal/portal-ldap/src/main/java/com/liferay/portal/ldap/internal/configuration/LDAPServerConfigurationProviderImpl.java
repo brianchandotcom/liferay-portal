@@ -17,6 +17,7 @@ package com.liferay.portal.ldap.internal.configuration;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.ldap.configuration.BaseConfigurationProvider;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.io.IOException;
 

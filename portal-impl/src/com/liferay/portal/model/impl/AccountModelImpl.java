@@ -22,18 +22,18 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.AccountModel;
+import com.liferay.portal.kernel.model.AccountSoap;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Account;
-import com.liferay.portal.model.AccountModel;
-import com.liferay.portal.model.AccountSoap;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -117,10 +117,10 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.Account"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Account"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.Account"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Account"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
 
@@ -179,7 +179,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.Account"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.Account"));
 
 	public AccountModelImpl() {
 	}
@@ -878,7 +878,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.Account");
+		sb.append("com.liferay.portal.kernel.model.Account");
 		sb.append("</model-name>");
 
 		sb.append(

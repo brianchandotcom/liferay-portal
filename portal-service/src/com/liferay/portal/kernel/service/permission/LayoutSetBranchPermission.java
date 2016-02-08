@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.model.LayoutSetBranch;
 
 /**
  * @author Charles May

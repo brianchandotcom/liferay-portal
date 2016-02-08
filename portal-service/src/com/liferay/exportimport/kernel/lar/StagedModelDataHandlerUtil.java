@@ -17,13 +17,13 @@ package com.liferay.exportimport.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.List;

@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.web.notifications;
 
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

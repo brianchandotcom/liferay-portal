@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingOrderService}.
@@ -38,7 +38,7 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderService.completeOrder(groupId, number, ppTxnId,
 			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
@@ -71,7 +71,7 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 	@Override
 	public void sendEmail(long groupId, long orderId,
 		java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderService.sendEmail(groupId, orderId, emailType,
 			serviceContext);

@@ -14,7 +14,7 @@
 
 package com.liferay.roles.admin.kernel.util;
 
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.Role;
 
 /**
  * @author Brian Wing Shun Chan

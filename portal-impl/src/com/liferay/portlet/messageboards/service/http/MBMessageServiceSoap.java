@@ -68,7 +68,7 @@ public class MBMessageServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBMessageSoap addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK, long threadId,
 		long parentMessageId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addDiscussionMessage(groupId,
@@ -89,7 +89,7 @@ public class MBMessageServiceSoap {
 		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(groupId,
@@ -107,7 +107,7 @@ public class MBMessageServiceSoap {
 
 	public static com.liferay.message.boards.kernel.model.MBMessageSoap addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(categoryId,
@@ -127,7 +127,7 @@ public class MBMessageServiceSoap {
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(parentMessageId,
@@ -383,7 +383,7 @@ public class MBMessageServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBMessageSoap updateDiscussionMessage(
 		java.lang.String className, long classPK, long messageId,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.updateDiscussionMessage(className,
@@ -403,7 +403,7 @@ public class MBMessageServiceSoap {
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBMessage returnValue = MBMessageServiceUtil.updateMessage(messageId,

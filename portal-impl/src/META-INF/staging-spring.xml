@@ -15,8 +15,8 @@
 	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" />
 	<aop:config proxy-target-class="false">
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutLocalService)" />
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.kernel.service.LayoutLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.kernel.service.LayoutSetLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.kernel.service.PortletPreferencesLocalService)" />
 	</aop:config>
 </beans>

@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.model.LayoutTemplate;
+import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

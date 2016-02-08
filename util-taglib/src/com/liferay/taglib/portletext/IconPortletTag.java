@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.ui.IconTag;
 

@@ -29,7 +29,7 @@ public class BundlePortletBagFactory extends PortletBagFactory {
 
 	@Override
 	protected Portlet getPortletInstance(
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		return _portlet;
 	}

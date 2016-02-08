@@ -67,7 +67,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Role"
+		className="com.liferay.portal.kernel.model.Role"
 		keyProperty="roleId"
 		modelVar="role"
 	>
@@ -159,7 +159,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Group"
+		className="com.liferay.portal.kernel.model.Group"
 		keyProperty="groupId"
 		modelVar="group"
 		rowIdProperty="friendlyURL"
@@ -208,7 +208,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.UserGroupRole"
+			className="com.liferay.portal.kernel.model.UserGroupRole"
 			keyProperty="roleId"
 			modelVar="userGroupRole"
 		>
@@ -379,7 +379,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.model.UserGroupRole"
+				className="com.liferay.portal.kernel.model.UserGroupRole"
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
@@ -546,7 +546,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.UserGroupGroupRole"
+			className="com.liferay.portal.kernel.model.UserGroupGroupRole"
 			keyProperty="roleId"
 			modelVar="userGroupGroupRole"
 		>

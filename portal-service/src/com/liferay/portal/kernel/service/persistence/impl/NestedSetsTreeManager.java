@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.NestedSetsTreeNodeModel;
 
 import java.util.List;
 

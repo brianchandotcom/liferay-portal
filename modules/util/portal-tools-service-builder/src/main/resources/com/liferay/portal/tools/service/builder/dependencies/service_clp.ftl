@@ -2,7 +2,7 @@ package ${apiPackagePath}.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.Invokable${sessionTypeName}Service;
+import com.liferay.portal.kernel.service.Invokable${sessionTypeName}Service;
 
 /**
  * @author ${author}

@@ -24,10 +24,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.service.PasswordPolicyLocalService;
 
 import java.util.List;
 

@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.messageboards.model;
 
-import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.util.PropsValues;
 
 /**

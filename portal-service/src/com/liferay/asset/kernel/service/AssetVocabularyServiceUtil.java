@@ -42,7 +42,7 @@ public class AssetVocabularyServiceUtil {
 	 */
 	public static com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
 		long groupId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addVocabulary(groupId, title, serviceContext);
 	}
@@ -52,7 +52,7 @@ public class AssetVocabularyServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addVocabulary(groupId, title, titleMap, descriptionMap,
@@ -61,7 +61,7 @@ public class AssetVocabularyServiceUtil {
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> deleteVocabularies(
 		long[] vocabularyIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteVocabularies(vocabularyIds, serviceContext);
 	}
@@ -222,7 +222,7 @@ public class AssetVocabularyServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateVocabulary(vocabularyId, title, titleMap,

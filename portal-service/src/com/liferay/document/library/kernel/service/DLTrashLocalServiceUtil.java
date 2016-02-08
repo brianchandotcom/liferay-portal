@@ -52,7 +52,7 @@ public class DLTrashLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId, long repositoryId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntryFromTrash(userId, repositoryId, fileEntryId,

@@ -58,7 +58,7 @@ public class BookmarksFolderServiceHttp {
 	public static com.liferay.bookmarks.model.BookmarksFolder addFolder(
 		HttpPrincipal httpPrincipal, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -795,7 +795,7 @@ public class BookmarksFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -830,7 +830,7 @@ public class BookmarksFolderServiceHttp {
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
@@ -864,7 +864,7 @@ public class BookmarksFolderServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(BookmarksFolderServiceHttp.class);
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {
 			long.class
@@ -944,11 +944,11 @@ public class BookmarksFolderServiceHttp {
 	private static final Class<?>[] _updateFolderParameterTypes26 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes27 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

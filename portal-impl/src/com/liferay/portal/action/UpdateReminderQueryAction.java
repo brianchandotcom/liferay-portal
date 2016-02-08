@@ -14,16 +14,16 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.exception.NoSuchUserException;
-import com.liferay.portal.exception.UserReminderQueryException;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 

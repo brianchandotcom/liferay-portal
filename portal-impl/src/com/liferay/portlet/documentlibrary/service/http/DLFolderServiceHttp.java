@@ -59,7 +59,7 @@ public class DLFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
 		boolean mountPoint, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -1023,7 +1023,7 @@ public class DLFolderServiceHttp {
 
 	public static com.liferay.document.library.kernel.model.DLFolder moveFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -1148,7 +1148,7 @@ public class DLFolderServiceHttp {
 		java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -1186,7 +1186,7 @@ public class DLFolderServiceHttp {
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -1222,7 +1222,7 @@ public class DLFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
@@ -1291,7 +1291,7 @@ public class DLFolderServiceHttp {
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
 			long.class, long.class, boolean.class, long.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {
 			long.class
@@ -1392,7 +1392,7 @@ public class DLFolderServiceHttp {
 		};
 	private static final Class<?>[] _moveFolderParameterTypes30 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _refreshFolderLockParameterTypes31 = new Class[] {
 			java.lang.String.class, long.class, long.class
@@ -1407,17 +1407,17 @@ public class DLFolderServiceHttp {
 	private static final Class<?>[] _updateFolderParameterTypes34 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, java.util.List.class, int.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes35 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long.class, java.util.List.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes36 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long.class, java.util.List.class, int.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyInheritableLockParameterTypes37 = new Class[] {
 			long.class, java.lang.String.class

@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

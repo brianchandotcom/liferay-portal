@@ -15,10 +15,10 @@
 package com.liferay.site.teams.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.comparator.TeamNameComparator;
-import com.liferay.portal.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -44,7 +44,7 @@ public class ShoppingCategoryServiceUtil {
 	public static com.liferay.shopping.model.ShoppingCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCategory(parentCategoryId, name, description,
@@ -105,7 +105,7 @@ public class ShoppingCategoryServiceUtil {
 	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCategory(categoryId, parentCategoryId, name,

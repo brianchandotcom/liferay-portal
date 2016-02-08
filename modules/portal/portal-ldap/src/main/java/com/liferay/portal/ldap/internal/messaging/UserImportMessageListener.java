@@ -17,15 +17,15 @@ package com.liferay.portal.ldap.internal.messaging;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.ldap.LDAPUserImporter;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
 
 import java.util.List;
 

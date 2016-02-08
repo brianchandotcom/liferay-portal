@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMContentLocalService}.
@@ -37,7 +37,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	public com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, java.lang.String data,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.addContent(userId, groupId, name,
 			description, data, serviceContext);
@@ -108,8 +108,8 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.deletePersistedModel(persistedModel);
 	}
@@ -364,7 +364,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.getPersistedModel(primaryKeyObj);
@@ -374,7 +374,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	public com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
 		java.lang.String data,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.updateContent(contentId, name,
 			description, data, serviceContext);

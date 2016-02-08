@@ -81,7 +81,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntryType(userId, groupId, fileEntryTypeKey,
@@ -91,7 +91,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 	public static com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntryType(userId, groupId, name, description,
@@ -182,8 +182,8 @@ public class DLFileEntryTypeLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -465,7 +465,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -524,7 +524,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry updateFileEntryFileEntryType(
 		com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntryFileEntryType(dlFileEntry, serviceContext);
@@ -533,7 +533,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 	public static void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntryType(userId, fileEntryTypeId, name, description,
@@ -544,7 +544,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntryType(userId, fileEntryTypeId, nameMap,
@@ -555,7 +555,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 		com.liferay.document.library.kernel.model.DLFolder dlFolder,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		long defaultFileEntryTypeId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		getService()
 			.updateFolderFileEntryTypes(dlFolder, fileEntryTypeIds,
 			defaultFileEntryTypeId, serviceContext);

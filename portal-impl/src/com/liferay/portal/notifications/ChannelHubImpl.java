@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.notifications.ChannelHub;
 import com.liferay.portal.kernel.notifications.ChannelListener;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UnknownChannelException;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;

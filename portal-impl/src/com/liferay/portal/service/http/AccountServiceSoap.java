@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.AccountServiceUtil} service utility. The
+ * {@link com.liferay.portal.kernel.service.AccountServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -26,10 +26,10 @@ import aQute.bnd.annotation.ProviderType;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.AccountSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.AccountSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.Account}, that is translated to a
- * {@link com.liferay.portal.model.AccountSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.Account}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.AccountSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -52,8 +52,8 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see AccountServiceHttp
- * @see com.liferay.portal.model.AccountSoap
- * @see com.liferay.portal.service.AccountServiceUtil
+ * @see com.liferay.portal.kernel.model.AccountSoap
+ * @see com.liferay.portal.kernel.service.AccountServiceUtil
  * @generated
  */
 @ProviderType

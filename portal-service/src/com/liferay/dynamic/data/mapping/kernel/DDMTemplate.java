@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.util.Date;
 import java.util.Locale;

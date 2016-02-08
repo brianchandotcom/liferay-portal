@@ -14,8 +14,8 @@
 
 package com.liferay.portal.sharepoint.dws;
 
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Role;
 
 /**
  * @author Bruno Farache

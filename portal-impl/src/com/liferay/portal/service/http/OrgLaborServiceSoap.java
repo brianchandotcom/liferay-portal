@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.OrgLaborServiceUtil;
+import com.liferay.portal.kernel.service.OrgLaborServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.OrgLaborSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.OrgLaborSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.OrgLabor}, that is translated to a
- * {@link com.liferay.portal.model.OrgLaborSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.OrgLabor}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.OrgLaborSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,24 +58,24 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see OrgLaborServiceHttp
- * @see com.liferay.portal.model.OrgLaborSoap
+ * @see com.liferay.portal.kernel.model.OrgLaborSoap
  * @see OrgLaborServiceUtil
  * @generated
  */
 @ProviderType
 public class OrgLaborServiceSoap {
-	public static com.liferay.portal.model.OrgLaborSoap addOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLaborSoap addOrgLabor(
 		long organizationId, long typeId, int sunOpen, int sunClose,
 		int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 		int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 		int satOpen, int satClose) throws RemoteException {
 		try {
-			com.liferay.portal.model.OrgLabor returnValue = OrgLaborServiceUtil.addOrgLabor(organizationId,
+			com.liferay.portal.kernel.model.OrgLabor returnValue = OrgLaborServiceUtil.addOrgLabor(organizationId,
 					typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
 					tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen,
 					friClose, satOpen, satClose);
 
-			return com.liferay.portal.model.OrgLaborSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrgLaborSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -96,12 +96,12 @@ public class OrgLaborServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.OrgLaborSoap getOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLaborSoap getOrgLabor(
 		long orgLaborId) throws RemoteException {
 		try {
-			com.liferay.portal.model.OrgLabor returnValue = OrgLaborServiceUtil.getOrgLabor(orgLaborId);
+			com.liferay.portal.kernel.model.OrgLabor returnValue = OrgLaborServiceUtil.getOrgLabor(orgLaborId);
 
-			return com.liferay.portal.model.OrgLaborSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrgLaborSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -110,12 +110,13 @@ public class OrgLaborServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.OrgLaborSoap[] getOrgLabors(
+	public static com.liferay.portal.kernel.model.OrgLaborSoap[] getOrgLabors(
 		long organizationId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.OrgLabor> returnValue = OrgLaborServiceUtil.getOrgLabors(organizationId);
+			java.util.List<com.liferay.portal.kernel.model.OrgLabor> returnValue =
+				OrgLaborServiceUtil.getOrgLabors(organizationId);
 
-			return com.liferay.portal.model.OrgLaborSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.OrgLaborSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -124,18 +125,18 @@ public class OrgLaborServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.OrgLaborSoap updateOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLaborSoap updateOrgLabor(
 		long orgLaborId, long typeId, int sunOpen, int sunClose, int monOpen,
 		int monClose, int tueOpen, int tueClose, int wedOpen, int wedClose,
 		int thuOpen, int thuClose, int friOpen, int friClose, int satOpen,
 		int satClose) throws RemoteException {
 		try {
-			com.liferay.portal.model.OrgLabor returnValue = OrgLaborServiceUtil.updateOrgLabor(orgLaborId,
+			com.liferay.portal.kernel.model.OrgLabor returnValue = OrgLaborServiceUtil.updateOrgLabor(orgLaborId,
 					typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
 					tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen,
 					friClose, satOpen, satClose);
 
-			return com.liferay.portal.model.OrgLaborSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrgLaborSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

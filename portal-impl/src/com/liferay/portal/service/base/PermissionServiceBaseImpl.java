@@ -21,20 +21,20 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockFinder;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.TeamFinder;
+import com.liferay.portal.kernel.service.persistence.TeamPersistence;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.PermissionService;
-import com.liferay.portal.service.persistence.ResourceBlockFinder;
-import com.liferay.portal.service.persistence.ResourceBlockPersistence;
-import com.liferay.portal.service.persistence.ResourcePermissionFinder;
-import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
-import com.liferay.portal.service.persistence.RoleFinder;
-import com.liferay.portal.service.persistence.RolePersistence;
-import com.liferay.portal.service.persistence.TeamFinder;
-import com.liferay.portal.service.persistence.TeamPersistence;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import javax.sql.DataSource;
 
@@ -47,7 +47,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.PermissionServiceImpl
- * @see com.liferay.portal.service.PermissionServiceUtil
+ * @see com.liferay.portal.kernel.service.PermissionServiceUtil
  * @generated
  */
 public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
@@ -55,7 +55,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.PermissionServiceUtil} to access the permission remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.PermissionServiceUtil} to access the permission remote service.
 	 */
 
 	/**
@@ -100,7 +100,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource block local service
 	 */
-	public com.liferay.portal.service.ResourceBlockLocalService getResourceBlockLocalService() {
+	public com.liferay.portal.kernel.service.ResourceBlockLocalService getResourceBlockLocalService() {
 		return resourceBlockLocalService;
 	}
 
@@ -110,7 +110,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceBlockLocalService the resource block local service
 	 */
 	public void setResourceBlockLocalService(
-		com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService) {
+		com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService) {
 		this.resourceBlockLocalService = resourceBlockLocalService;
 	}
 
@@ -119,7 +119,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource block remote service
 	 */
-	public com.liferay.portal.service.ResourceBlockService getResourceBlockService() {
+	public com.liferay.portal.kernel.service.ResourceBlockService getResourceBlockService() {
 		return resourceBlockService;
 	}
 
@@ -129,7 +129,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceBlockService the resource block remote service
 	 */
 	public void setResourceBlockService(
-		com.liferay.portal.service.ResourceBlockService resourceBlockService) {
+		com.liferay.portal.kernel.service.ResourceBlockService resourceBlockService) {
 		this.resourceBlockService = resourceBlockService;
 	}
 
@@ -175,7 +175,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource permission local service
 	 */
-	public com.liferay.portal.service.ResourcePermissionLocalService getResourcePermissionLocalService() {
+	public com.liferay.portal.kernel.service.ResourcePermissionLocalService getResourcePermissionLocalService() {
 		return resourcePermissionLocalService;
 	}
 
@@ -185,7 +185,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourcePermissionLocalService the resource permission local service
 	 */
 	public void setResourcePermissionLocalService(
-		com.liferay.portal.service.ResourcePermissionLocalService resourcePermissionLocalService) {
+		com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService) {
 		this.resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
@@ -194,7 +194,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource permission remote service
 	 */
-	public com.liferay.portal.service.ResourcePermissionService getResourcePermissionService() {
+	public com.liferay.portal.kernel.service.ResourcePermissionService getResourcePermissionService() {
 		return resourcePermissionService;
 	}
 
@@ -204,7 +204,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourcePermissionService the resource permission remote service
 	 */
 	public void setResourcePermissionService(
-		com.liferay.portal.service.ResourcePermissionService resourcePermissionService) {
+		com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService) {
 		this.resourcePermissionService = resourcePermissionService;
 	}
 
@@ -251,7 +251,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.service.RoleLocalService getRoleLocalService() {
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -261,7 +261,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param roleLocalService the role local service
 	 */
 	public void setRoleLocalService(
-		com.liferay.portal.service.RoleLocalService roleLocalService) {
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -270,7 +270,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the role remote service
 	 */
-	public com.liferay.portal.service.RoleService getRoleService() {
+	public com.liferay.portal.kernel.service.RoleService getRoleService() {
 		return roleService;
 	}
 
@@ -280,7 +280,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param roleService the role remote service
 	 */
 	public void setRoleService(
-		com.liferay.portal.service.RoleService roleService) {
+		com.liferay.portal.kernel.service.RoleService roleService) {
 		this.roleService = roleService;
 	}
 
@@ -325,7 +325,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the team local service
 	 */
-	public com.liferay.portal.service.TeamLocalService getTeamLocalService() {
+	public com.liferay.portal.kernel.service.TeamLocalService getTeamLocalService() {
 		return teamLocalService;
 	}
 
@@ -335,7 +335,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param teamLocalService the team local service
 	 */
 	public void setTeamLocalService(
-		com.liferay.portal.service.TeamLocalService teamLocalService) {
+		com.liferay.portal.kernel.service.TeamLocalService teamLocalService) {
 		this.teamLocalService = teamLocalService;
 	}
 
@@ -344,7 +344,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the team remote service
 	 */
-	public com.liferay.portal.service.TeamService getTeamService() {
+	public com.liferay.portal.kernel.service.TeamService getTeamService() {
 		return teamService;
 	}
 
@@ -354,7 +354,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param teamService the team remote service
 	 */
 	public void setTeamService(
-		com.liferay.portal.service.TeamService teamService) {
+		com.liferay.portal.kernel.service.TeamService teamService) {
 		this.teamService = teamService;
 	}
 
@@ -399,7 +399,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -409,7 +409,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
@@ -418,7 +418,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user remote service
 	 */
-	public com.liferay.portal.service.UserService getUserService() {
+	public com.liferay.portal.kernel.service.UserService getUserService() {
 		return userService;
 	}
 
@@ -428,7 +428,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param userService the user remote service
 	 */
 	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
+		com.liferay.portal.kernel.service.UserService userService) {
 		this.userService = userService;
 	}
 
@@ -508,46 +508,46 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.PermissionService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.PermissionService.class)
 	protected PermissionService permissionService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceBlockLocalService.class)
-	protected com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceBlockService.class)
-	protected com.liferay.portal.service.ResourceBlockService resourceBlockService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockService.class)
+	protected com.liferay.portal.kernel.service.ResourceBlockService resourceBlockService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
 	@BeanReference(type = ResourceBlockFinder.class)
 	protected ResourceBlockFinder resourceBlockFinder;
-	@BeanReference(type = com.liferay.portal.service.ResourcePermissionLocalService.class)
-	protected com.liferay.portal.service.ResourcePermissionLocalService resourcePermissionLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourcePermissionService.class)
-	protected com.liferay.portal.service.ResourcePermissionService resourcePermissionService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
-	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
-	protected com.liferay.portal.service.RoleLocalService roleLocalService;
-	@BeanReference(type = com.liferay.portal.service.RoleService.class)
-	protected com.liferay.portal.service.RoleService roleService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleService.class)
+	protected com.liferay.portal.kernel.service.RoleService roleService;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
-	@BeanReference(type = com.liferay.portal.service.TeamLocalService.class)
-	protected com.liferay.portal.service.TeamLocalService teamLocalService;
-	@BeanReference(type = com.liferay.portal.service.TeamService.class)
-	protected com.liferay.portal.service.TeamService teamService;
+	@BeanReference(type = com.liferay.portal.kernel.service.TeamLocalService.class)
+	protected com.liferay.portal.kernel.service.TeamLocalService teamLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.TeamService.class)
+	protected com.liferay.portal.kernel.service.TeamService teamService;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
 	@BeanReference(type = TeamFinder.class)
 	protected TeamFinder teamFinder;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	protected com.liferay.portal.kernel.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)

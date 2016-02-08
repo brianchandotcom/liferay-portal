@@ -15,8 +15,8 @@
 package com.liferay.expando.kernel.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 

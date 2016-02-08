@@ -15,12 +15,12 @@
 package com.liferay.notifications.web.poller;
 
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.poller.BasePollerProcessor;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
-import com.liferay.portal.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

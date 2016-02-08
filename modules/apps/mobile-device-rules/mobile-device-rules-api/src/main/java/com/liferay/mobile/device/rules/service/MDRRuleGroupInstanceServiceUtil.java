@@ -44,7 +44,7 @@ public class MDRRuleGroupInstanceServiceUtil {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId, int priority,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleGroupInstance(groupId, className, classPK,
@@ -54,7 +54,7 @@ public class MDRRuleGroupInstanceServiceUtil {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleGroupInstance(groupId, className, classPK,

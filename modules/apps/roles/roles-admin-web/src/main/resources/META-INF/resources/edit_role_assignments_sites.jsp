@@ -63,7 +63,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Group"
+		className="com.liferay.portal.kernel.model.Group"
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
 		modelVar="group"

@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMDataProviderInstanceLocalService}.
@@ -53,7 +53,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(userId,
 			groupId, nameMap, descriptionMap, ddmFormValues, type,
@@ -115,8 +115,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.deletePersistedModel(persistedModel);
 	}
@@ -363,7 +363,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.getPersistedModel(primaryKeyObj);
@@ -419,7 +419,7 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(userId,
 			dataProviderInstanceId, nameMap, descriptionMap, ddmFormValues,

@@ -33,8 +33,8 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyCom
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 

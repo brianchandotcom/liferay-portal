@@ -23,9 +23,9 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Calendar;
 import java.util.Date;

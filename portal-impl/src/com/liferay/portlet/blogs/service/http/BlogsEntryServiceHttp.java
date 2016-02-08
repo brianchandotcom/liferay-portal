@@ -64,7 +64,7 @@ public class BlogsEntryServiceHttp {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
@@ -108,7 +108,7 @@ public class BlogsEntryServiceHttp {
 		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
@@ -874,7 +874,7 @@ public class BlogsEntryServiceHttp {
 		boolean smallImage, java.lang.String smallImageURL,
 		java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
@@ -918,7 +918,7 @@ public class BlogsEntryServiceHttp {
 		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
@@ -960,7 +960,7 @@ public class BlogsEntryServiceHttp {
 			int.class, boolean.class, boolean.class, java.lang.String[].class,
 			boolean.class, java.lang.String.class, java.lang.String.class,
 			java.io.InputStream.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
@@ -969,7 +969,7 @@ public class BlogsEntryServiceHttp {
 			java.lang.String[].class, java.lang.String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
 			long.class
@@ -1061,7 +1061,7 @@ public class BlogsEntryServiceHttp {
 			int.class, boolean.class, boolean.class, java.lang.String[].class,
 			boolean.class, java.lang.String.class, java.lang.String.class,
 			java.io.InputStream.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes27 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -1070,6 +1070,6 @@ public class BlogsEntryServiceHttp {
 			java.lang.String[].class, java.lang.String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

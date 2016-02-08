@@ -52,7 +52,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.UserGroup"
+		className="com.liferay.portal.kernel.model.UserGroup"
 		escapedModel="<%= true %>"
 		keyProperty="userGroupId"
 		modelVar="userGroup"

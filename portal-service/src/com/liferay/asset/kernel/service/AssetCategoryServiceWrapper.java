@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetCategoryService}.
@@ -39,7 +39,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.addCategory(groupId, parentCategoryId,
 			titleMap, descriptionMap, vocabularyId, categoryProperties,
@@ -49,7 +49,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategory addCategory(
 		long groupId, java.lang.String title, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.addCategory(groupId, title, vocabularyId,
 			serviceContext);
@@ -68,7 +68,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> deleteCategories(
 		long[] categoryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.deleteCategories(categoryIds,
 			serviceContext);
@@ -225,7 +225,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetCategory moveCategory(
 		long categoryId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.moveCategory(categoryId, parentCategoryId,
 			vocabularyId, serviceContext);
@@ -318,7 +318,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.updateCategory(categoryId,
 			parentCategoryId, titleMap, descriptionMap, vocabularyId,

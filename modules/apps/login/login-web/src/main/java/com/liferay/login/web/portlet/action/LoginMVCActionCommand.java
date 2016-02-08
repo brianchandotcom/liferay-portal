@@ -15,17 +15,18 @@
 package com.liferay.login.web.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.CookieNotSupportedException;
-import com.liferay.portal.exception.CompanyMaxUsersException;
-import com.liferay.portal.exception.NoSuchUserException;
-import com.liferay.portal.exception.PasswordExpiredException;
-import com.liferay.portal.exception.UserEmailAddressException;
-import com.liferay.portal.exception.UserIdException;
-import com.liferay.portal.exception.UserLockoutException;
-import com.liferay.portal.exception.UserPasswordException;
-import com.liferay.portal.exception.UserScreenNameException;
+import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
+import com.liferay.portal.kernel.exception.CookieNotSupportedException;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PasswordExpiredException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserIdException;
+import com.liferay.portal.kernel.exception.UserLockoutException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLImpl;
 

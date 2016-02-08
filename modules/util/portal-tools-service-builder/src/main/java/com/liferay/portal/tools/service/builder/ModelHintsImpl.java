@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import com.liferay.portal.kernel.model.ModelHintsCallback;
 import com.liferay.portal.model.BaseModelHintsImpl;
-import com.liferay.portal.model.ModelHintsCallback;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import org.dom4j.io.SAXReader;

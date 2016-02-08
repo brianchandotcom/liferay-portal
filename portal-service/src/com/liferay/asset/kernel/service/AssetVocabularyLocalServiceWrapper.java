@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetVocabularyLocalService}.
@@ -56,7 +56,7 @@ public class AssetVocabularyLocalServiceWrapper
 	@Override
 	public com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
 		long userId, long groupId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.addVocabulary(userId, groupId,
 			title, serviceContext);
@@ -68,7 +68,7 @@ public class AssetVocabularyLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.addVocabulary(userId, groupId,
 			title, titleMap, descriptionMap, settings, serviceContext);
@@ -134,8 +134,8 @@ public class AssetVocabularyLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.deletePersistedModel(persistedModel);
 	}
@@ -448,7 +448,7 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.getPersistedModel(primaryKeyObj);
@@ -510,7 +510,7 @@ public class AssetVocabularyLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.updateVocabulary(vocabularyId,
 			title, titleMap, descriptionMap, settings, serviceContext);

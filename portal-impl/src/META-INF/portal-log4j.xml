@@ -404,7 +404,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.model.Image">
+	<category name="com.liferay.portal.kernel.model.Image">
 		<priority value="ERROR" />
 	</category>
 

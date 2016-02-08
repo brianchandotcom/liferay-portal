@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.OrganizationSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.OrganizationSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.Organization}, that is translated to a
- * {@link com.liferay.portal.model.OrganizationSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.Organization}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.OrganizationSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,7 +58,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see OrganizationServiceHttp
- * @see com.liferay.portal.model.OrganizationSoap
+ * @see com.liferay.portal.kernel.model.OrganizationSoap
  * @see OrganizationServiceUtil
  * @generated
  */
@@ -111,19 +111,19 @@ public class OrganizationServiceSoap {
 	and expando bridge attributes for the organization.
 	* @return the organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap addOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
-		com.liferay.portal.model.AddressSoap[] addresses,
-		com.liferay.portal.model.EmailAddressSoap[] emailAddresses,
-		com.liferay.portal.model.OrgLaborSoap[] orgLabors,
-		com.liferay.portal.model.PhoneSoap[] phones,
-		com.liferay.portal.model.WebsiteSoap[] websites,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.AddressSoap[] addresses,
+		com.liferay.portal.kernel.model.EmailAddressSoap[] emailAddresses,
+		com.liferay.portal.kernel.model.OrgLaborSoap[] orgLabors,
+		com.liferay.portal.kernel.model.PhoneSoap[] phones,
+		com.liferay.portal.kernel.model.WebsiteSoap[] websites,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.addOrganization(parentOrganizationId,
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.addOrganization(parentOrganizationId,
 					name, type, regionId, countryId, statusId, comments, site,
 					com.liferay.portal.model.impl.AddressModelImpl.toModels(
 						addresses),
@@ -136,7 +136,7 @@ public class OrganizationServiceSoap {
 					com.liferay.portal.model.impl.WebsiteModelImpl.toModels(
 						websites), serviceContext);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -168,18 +168,18 @@ public class OrganizationServiceSoap {
 	and expando bridge attributes for the organization.
 	* @return the organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap addOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.addOrganization(parentOrganizationId,
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.addOrganization(parentOrganizationId,
 					name, type, regionId, countryId, statusId, comments, site,
 					serviceContext);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -251,12 +251,12 @@ public class OrganizationServiceSoap {
 	organization with the primary key could not be found or if the
 	user did not have permission to view the organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap fetchOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap fetchOrganization(
 		long organizationId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.fetchOrganization(organizationId);
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.fetchOrganization(organizationId);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -271,12 +271,12 @@ public class OrganizationServiceSoap {
 	* @param organizationId the primary key of the organization
 	* @return the organization with the primary key
 	*/
-	public static com.liferay.portal.model.OrganizationSoap getOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap getOrganization(
 		long organizationId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.getOrganization(organizationId);
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.getOrganization(organizationId);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -316,13 +316,14 @@ public class OrganizationServiceSoap {
 	organization
 	* @return the organizations belonging to the parent organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap[] getOrganizations(
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getOrganizations(
 		long companyId, long parentOrganizationId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Organization> returnValue = OrganizationServiceUtil.getOrganizations(companyId,
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getOrganizations(companyId,
 					parentOrganizationId);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -353,14 +354,15 @@ public class OrganizationServiceSoap {
 	inclusive)
 	* @return the range of organizations belonging to the parent organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap[] getOrganizations(
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getOrganizations(
 		long companyId, long parentOrganizationId, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Organization> returnValue = OrganizationServiceUtil.getOrganizations(companyId,
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getOrganizations(companyId,
 					parentOrganizationId, start, end);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -405,12 +407,13 @@ public class OrganizationServiceSoap {
 	* @param userId the primary key of the user
 	* @return the organizations with which the user is explicitly associated
 	*/
-	public static com.liferay.portal.model.OrganizationSoap[] getUserOrganizations(
+	public static com.liferay.portal.kernel.model.OrganizationSoap[] getUserOrganizations(
 		long userId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Organization> returnValue = OrganizationServiceUtil.getUserOrganizations(userId);
+			java.util.List<com.liferay.portal.kernel.model.Organization> returnValue =
+				OrganizationServiceUtil.getUserOrganizations(userId);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -504,19 +507,19 @@ public class OrganizationServiceSoap {
 	for the organization.
 	* @return the organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean logo, byte[] logoBytes,
-		boolean site, com.liferay.portal.model.AddressSoap[] addresses,
-		com.liferay.portal.model.EmailAddressSoap[] emailAddresses,
-		com.liferay.portal.model.OrgLaborSoap[] orgLabors,
-		com.liferay.portal.model.PhoneSoap[] phones,
-		com.liferay.portal.model.WebsiteSoap[] websites,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean site, com.liferay.portal.kernel.model.AddressSoap[] addresses,
+		com.liferay.portal.kernel.model.EmailAddressSoap[] emailAddresses,
+		com.liferay.portal.kernel.model.OrgLaborSoap[] orgLabors,
+		com.liferay.portal.kernel.model.PhoneSoap[] phones,
+		com.liferay.portal.kernel.model.WebsiteSoap[] websites,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
 					parentOrganizationId, name, type, regionId, countryId,
 					statusId, comments, logo, logoBytes, site,
 					com.liferay.portal.model.impl.AddressModelImpl.toModels(
@@ -530,7 +533,7 @@ public class OrganizationServiceSoap {
 					com.liferay.portal.model.impl.WebsiteModelImpl.toModels(
 						websites), serviceContext);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -569,19 +572,19 @@ public class OrganizationServiceSoap {
 	ServiceContext)}
 	*/
 	@Deprecated
-	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
-		com.liferay.portal.model.AddressSoap[] addresses,
-		com.liferay.portal.model.EmailAddressSoap[] emailAddresses,
-		com.liferay.portal.model.OrgLaborSoap[] orgLabors,
-		com.liferay.portal.model.PhoneSoap[] phones,
-		com.liferay.portal.model.WebsiteSoap[] websites,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.AddressSoap[] addresses,
+		com.liferay.portal.kernel.model.EmailAddressSoap[] emailAddresses,
+		com.liferay.portal.kernel.model.OrgLaborSoap[] orgLabors,
+		com.liferay.portal.kernel.model.PhoneSoap[] phones,
+		com.liferay.portal.kernel.model.WebsiteSoap[] websites,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
 					parentOrganizationId, name, type, regionId, countryId,
 					statusId, comments, site,
 					com.liferay.portal.model.impl.AddressModelImpl.toModels(
@@ -595,7 +598,7 @@ public class OrganizationServiceSoap {
 					com.liferay.portal.model.impl.WebsiteModelImpl.toModels(
 						websites), serviceContext);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -624,18 +627,18 @@ public class OrganizationServiceSoap {
 	for the organization.
 	* @return the organization
 	*/
-	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
+	public static com.liferay.portal.kernel.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
+			com.liferay.portal.kernel.model.Organization returnValue = OrganizationServiceUtil.updateOrganization(organizationId,
 					parentOrganizationId, name, type, regionId, countryId,
 					statusId, comments, site, serviceContext);
 
-			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.OrganizationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

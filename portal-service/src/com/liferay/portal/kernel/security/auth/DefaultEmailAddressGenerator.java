@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.security.auth;
 
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.UserConstants;
 
 /**
  * @author Wesley Gong

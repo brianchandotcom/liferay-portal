@@ -15,10 +15,10 @@
 package com.liferay.roles.selector.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleService;
+import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.UserGroupGroupRoleService;
-import com.liferay.portal.service.UserGroupRoleService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

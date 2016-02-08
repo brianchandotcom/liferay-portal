@@ -14,8 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
-import com.liferay.portal.model.ResourcePermission;
 
 import java.util.HashMap;
 import java.util.List;

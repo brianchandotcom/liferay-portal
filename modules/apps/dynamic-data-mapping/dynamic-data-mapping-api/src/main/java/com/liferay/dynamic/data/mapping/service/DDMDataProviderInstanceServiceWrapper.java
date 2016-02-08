@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMDataProviderInstanceService}.
@@ -41,7 +41,7 @@ public class DDMDataProviderInstanceServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceService.addDataProviderInstance(groupId,
 			nameMap, descriptionMap, ddmFormValues, type, serviceContext);
@@ -115,7 +115,7 @@ public class DDMDataProviderInstanceServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceService.updateDataProviderInstance(dataProviderInstanceId,
 			nameMap, descriptionMap, ddmFormValues, serviceContext);

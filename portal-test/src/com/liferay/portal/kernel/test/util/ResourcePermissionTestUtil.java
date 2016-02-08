@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 
 /**
  * @author Alberto Chaparro

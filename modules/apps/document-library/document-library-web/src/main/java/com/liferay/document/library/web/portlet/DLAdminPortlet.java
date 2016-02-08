@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.portlet;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 

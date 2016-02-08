@@ -14,7 +14,7 @@
 
 package com.liferay.flags.messaging;
 
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 

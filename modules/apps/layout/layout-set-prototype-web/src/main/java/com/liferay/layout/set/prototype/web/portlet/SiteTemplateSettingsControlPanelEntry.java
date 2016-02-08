@@ -15,11 +15,11 @@
 package com.liferay.layout.set.prototype.web.portlet;
 
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 

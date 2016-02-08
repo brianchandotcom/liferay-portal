@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient;
 
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;

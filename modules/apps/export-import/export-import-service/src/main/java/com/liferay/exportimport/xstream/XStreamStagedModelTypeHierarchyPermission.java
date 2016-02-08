@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.xstream;
 
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 
 import com.thoughtworks.xstream.security.TypePermission;
 

@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.PluginSettingServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.PluginSettingServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.PluginSettingServiceUtil;
  */
 @ProviderType
 public class PluginSettingServiceHttp {
-	public static com.liferay.portal.model.PluginSetting updatePluginSetting(
+	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String pluginId,
 		java.lang.String pluginType, java.lang.String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -78,7 +78,7 @@ public class PluginSettingServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.PluginSetting)returnObj;
+			return (com.liferay.portal.kernel.model.PluginSetting)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

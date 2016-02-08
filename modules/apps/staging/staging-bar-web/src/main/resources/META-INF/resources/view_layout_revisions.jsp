@@ -83,7 +83,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						/>
 
 						<liferay-ui:search-container-row
-							className="com.liferay.portal.model.LayoutRevision"
+							className="com.liferay.portal.kernel.model.LayoutRevision"
 							escapedModel="<%= true %>"
 							keyProperty="layoutRevisionId"
 							modelVar="curLayoutRevision"

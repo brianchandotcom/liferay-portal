@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.ListTypeServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.ListTypeServiceUtil;
  */
 @ProviderType
 public class ListTypeServiceHttp {
-	public static com.liferay.portal.model.ListType getListType(
+	public static com.liferay.portal.kernel.model.ListType getListType(
 		HttpPrincipal httpPrincipal, long listTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -77,7 +77,7 @@ public class ListTypeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.ListType)returnObj;
+			return (com.liferay.portal.kernel.model.ListType)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -86,7 +86,7 @@ public class ListTypeServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.ListType> getListTypes(
+	public static java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
 		HttpPrincipal httpPrincipal, java.lang.String type) {
 		try {
 			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
@@ -103,7 +103,7 @@ public class ListTypeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.ListType>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.ListType>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

@@ -15,17 +15,17 @@
 package com.liferay.portal.subscription.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.model.Subscription;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.class.name=com.liferay.portal.model.Subscription",
+	property = "model.class.name=com.liferay.portal.kernel.model.Subscription",
 	service = SocialActivityManager.class
 )
 public class SubscriptionSocialActivityManager

@@ -15,8 +15,8 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Repository;
 
 /**
  * @author Alexander Chow

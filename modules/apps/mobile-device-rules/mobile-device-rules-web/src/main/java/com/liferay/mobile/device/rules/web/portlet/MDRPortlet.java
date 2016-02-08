@@ -15,9 +15,9 @@
 package com.liferay.mobile.device.rules.web.portlet;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.Release;
 
 import java.io.IOException;
 

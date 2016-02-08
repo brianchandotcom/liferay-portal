@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.message.boards.kernel.exception.NoSuchDiscussionException;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the message boards discussion service.

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.security.exportimport;
 
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.Serializable;
 

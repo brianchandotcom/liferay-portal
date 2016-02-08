@@ -60,7 +60,7 @@ public class AssetCategoryServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -95,7 +95,7 @@ public class AssetCategoryServiceHttp {
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
 		long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -156,7 +156,7 @@ public class AssetCategoryServiceHttp {
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> deleteCategories(
 		HttpPrincipal httpPrincipal, long[] categoryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -753,7 +753,7 @@ public class AssetCategoryServiceHttp {
 	public static com.liferay.asset.kernel.model.AssetCategory moveCategory(
 		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
 		long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -1092,7 +1092,7 @@ public class AssetCategoryServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
@@ -1128,17 +1128,17 @@ public class AssetCategoryServiceHttp {
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCategoryParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoriesParameterTypes2 = new Class[] {
 			long[].class
 		};
 	private static final Class<?>[] _deleteCategoriesParameterTypes3 = new Class[] {
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoryParameterTypes4 = new Class[] {
 			long.class
@@ -1203,7 +1203,7 @@ public class AssetCategoryServiceHttp {
 		new Class[] { long.class, long.class };
 	private static final Class<?>[] _moveCategoryParameterTypes22 = new Class[] {
 			long.class, long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _searchParameterTypes23 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
@@ -1243,6 +1243,6 @@ public class AssetCategoryServiceHttp {
 	private static final Class<?>[] _updateCategoryParameterTypes32 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

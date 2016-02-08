@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMStorageLinkLocalService}.
@@ -49,7 +49,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStorageLink addStorageLink(
 		long classNameId, long classPK, long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _ddmStorageLinkLocalService.addStorageLink(classNameId, classPK,
 			structureId, serviceContext);
 	}
@@ -101,8 +101,8 @@ public class DDMStorageLinkLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLinkLocalService.deletePersistedModel(persistedModel);
 	}
@@ -313,7 +313,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLinkLocalService.getPersistedModel(primaryKeyObj);

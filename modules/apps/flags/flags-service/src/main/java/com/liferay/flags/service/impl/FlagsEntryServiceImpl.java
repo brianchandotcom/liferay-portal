@@ -18,7 +18,7 @@ import com.liferay.flags.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Julio Camarero

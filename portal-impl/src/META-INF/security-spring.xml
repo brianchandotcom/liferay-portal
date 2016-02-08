@@ -106,7 +106,7 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
+	<bean id="com.liferay.portal.kernel.model.ModelHintsUtil" class="com.liferay.portal.kernel.model.ModelHintsUtil">
 		<property name="modelHints">
 			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>

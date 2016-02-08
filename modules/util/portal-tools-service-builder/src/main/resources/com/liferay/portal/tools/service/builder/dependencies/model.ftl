@@ -8,27 +8,27 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.AttachedModel;
+import com.liferay.portal.kernel.model.AuditedModel;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ResourcedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.TypedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.model.AttachedModel;
-import com.liferay.portal.model.AuditedModel;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ContainerModel;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.LocalizedModel;
-import com.liferay.portal.model.MVCCModel;
-import com.liferay.portal.model.ResourcedModel;
-import com.liferay.portal.model.ShardedModel;
-import com.liferay.portal.model.TrashedModel;
-import com.liferay.portal.model.TypedModel;
-import com.liferay.portal.model.StagedAuditedModel;
-import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.WorkflowedModel;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
@@ -532,7 +532,7 @@ public interface ${entity.name}Model extends
 	</#if>
 
 	<#--
-	Copy methods from com.liferay.portal.model.BaseModel and java.lang.Object to
+	Copy methods from com.liferay.portal.kernel.model.BaseModel and java.lang.Object to
 	correctly generate wrappers.
 	-->
 

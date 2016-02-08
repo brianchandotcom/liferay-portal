@@ -42,7 +42,7 @@ public class AssetTagServiceUtil {
 	 */
 	public static com.liferay.asset.kernel.model.AssetTag addTag(long groupId,
 		java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTag(groupId, name, serviceContext);
 	}
@@ -171,7 +171,7 @@ public class AssetTagServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetTag updateTag(
 		long tagId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTag(tagId, name, serviceContext);
 	}

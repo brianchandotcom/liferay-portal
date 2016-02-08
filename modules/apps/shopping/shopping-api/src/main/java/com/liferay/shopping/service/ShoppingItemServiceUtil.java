@@ -53,7 +53,7 @@ public class ShoppingItemServiceUtil {
 		java.lang.String largeImageURL, java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addItem(groupId, categoryId, sku, name, description,
@@ -121,7 +121,7 @@ public class ShoppingItemServiceUtil {
 		java.lang.String largeImageURL, java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateItem(itemId, groupId, categoryId, sku, name,

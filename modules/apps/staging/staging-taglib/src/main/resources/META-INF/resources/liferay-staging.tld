@@ -218,7 +218,7 @@
 			<name>stagedModel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.model.StagedModel</type>
+			<type>com.liferay.portal.kernel.model.StagedModel</type>
 		</attribute>
 	</tag>
 </taglib>

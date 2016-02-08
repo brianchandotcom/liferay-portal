@@ -24,18 +24,18 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserModel;
+import com.liferay.portal.kernel.model.UserSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserModel;
-import com.liferay.portal.model.UserSoap;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -168,13 +168,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.User"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.User"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.User"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.User"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.User"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.User"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long CONTACTID_COLUMN_BITMASK = 2L;
@@ -316,7 +316,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_UserGroups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.User"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.User"));
 
 	public UserModelImpl() {
 	}
@@ -1967,7 +1967,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		StringBundler sb = new StringBundler(130);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.User");
+		sb.append("com.liferay.portal.kernel.model.User");
 		sb.append("</model-name>");
 
 		sb.append(

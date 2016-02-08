@@ -17,12 +17,12 @@ package com.liferay.layout.admin.web.servlet.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.CompanyLocalService;
 
 import javax.servlet.ServletContext;
 

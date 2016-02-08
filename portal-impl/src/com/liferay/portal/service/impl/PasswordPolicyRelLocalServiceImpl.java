@@ -14,11 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PasswordPolicyRel;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.service.base.PasswordPolicyRelLocalServiceBaseImpl;
 
 import java.util.List;

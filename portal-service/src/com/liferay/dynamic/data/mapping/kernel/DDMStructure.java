@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.util.List;
 import java.util.Locale;

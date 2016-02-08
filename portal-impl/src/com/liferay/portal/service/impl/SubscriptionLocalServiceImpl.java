@@ -18,11 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.SubscriptionConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Subscription;
-import com.liferay.portal.model.SubscriptionConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 

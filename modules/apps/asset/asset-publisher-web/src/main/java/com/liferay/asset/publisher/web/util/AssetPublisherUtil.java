@@ -43,6 +43,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletInstance;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -50,6 +57,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -76,17 +87,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.PortletInstance;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.service.PortletPreferencesLocalService;
-import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
@@ -312,11 +312,11 @@ public class AssetPublisherUtil {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod
-				<com.liferay.portal.model.PortletPreferences>() {
+				<com.liferay.portal.kernel.model.PortletPreferences>() {
 
 				@Override
 				public void performAction(
-						com.liferay.portal.model.PortletPreferences
+						com.liferay.portal.kernel.model.PortletPreferences
 							portletPreferences)
 					throws PortalException {
 
@@ -1196,9 +1196,10 @@ public class AssetPublisherUtil {
 			long ownerId, int ownerType, long plid, String portletId)
 		throws PortalException {
 
-		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
-			_portletPreferencesLocalService.getPortletPreferences(
-				ownerId, ownerType, plid, portletId);
+		com.liferay.portal.kernel.model.PortletPreferences
+			portletPreferencesModel =
+				_portletPreferencesLocalService.getPortletPreferences(
+					ownerId, ownerType, plid, portletId);
 
 		return portletPreferencesModel.getPortletPreferencesId();
 	}
@@ -1275,7 +1276,7 @@ public class AssetPublisherUtil {
 
 		return _subscriptionLocalService.isSubscribed(
 			companyId, userId,
-			com.liferay.portal.model.PortletPreferences.class.getName(),
+			com.liferay.portal.kernel.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
 	}
 
@@ -1321,7 +1322,7 @@ public class AssetPublisherUtil {
 		subscriptionSender.setReplyToAddress(fromAddress);
 
 		subscriptionSender.addPersistedSubscribers(
-			com.liferay.portal.model.PortletPreferences.class.getName(),
+			com.liferay.portal.kernel.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
 
 		subscriptionSender.flushNotificationsAsync();
@@ -1398,7 +1399,7 @@ public class AssetPublisherUtil {
 
 		_subscriptionLocalService.addSubscription(
 			permissionChecker.getUserId(), groupId,
-			com.liferay.portal.model.PortletPreferences.class.getName(),
+			com.liferay.portal.kernel.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
 	}
 
@@ -1422,7 +1423,7 @@ public class AssetPublisherUtil {
 
 		_subscriptionLocalService.deleteSubscription(
 			permissionChecker.getUserId(),
-			com.liferay.portal.model.PortletPreferences.class.getName(),
+			com.liferay.portal.kernel.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
 	}
 
@@ -1719,7 +1720,7 @@ public class AssetPublisherUtil {
 	}
 
 	private static void _checkAssetEntries(
-			com.liferay.portal.model.PortletPreferences
+			com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesModel)
 		throws PortalException {
 

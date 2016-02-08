@@ -18,7 +18,7 @@ import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
-import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

@@ -16,7 +16,7 @@ package com.liferay.exportimport.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link StagingLocalService}.
@@ -34,9 +34,9 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void checkDefaultLayoutSetBranches(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate, boolean remote,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.Group liveGroup,
+		boolean branchingPublic, boolean branchingPrivate, boolean remote,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.checkDefaultLayoutSetBranches(userId, liveGroup,
 			branchingPublic, branchingPrivate, remote, serviceContext);
@@ -57,16 +57,17 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	@Override
-	public void disableStaging(com.liferay.portal.model.Group liveGroup,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void disableStaging(
+		com.liferay.portal.kernel.model.Group liveGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.disableStaging(liveGroup, serviceContext);
 	}
 
 	@Override
 	public void disableStaging(javax.portlet.PortletRequest portletRequest,
-		com.liferay.portal.model.Group liveGroup,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.Group liveGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.disableStaging(portletRequest, liveGroup,
 			serviceContext);
@@ -74,9 +75,9 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void enableLocalStaging(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.Group liveGroup,
+		boolean branchingPublic, boolean branchingPrivate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.enableLocalStaging(userId, liveGroup,
 			branchingPublic, branchingPrivate, serviceContext);
@@ -84,11 +85,12 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void enableRemoteStaging(long userId,
-		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
-		boolean branchingPrivate, java.lang.String remoteAddress,
-		int remotePort, java.lang.String remotePathContext,
-		boolean secureConnection, long remoteGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.model.Group stagingGroup,
+		boolean branchingPublic, boolean branchingPrivate,
+		java.lang.String remoteAddress, int remotePort,
+		java.lang.String remotePathContext, boolean secureConnection,
+		long remoteGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.enableRemoteStaging(userId, stagingGroup,
 			branchingPublic, branchingPrivate, remoteAddress, remotePort,

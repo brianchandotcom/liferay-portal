@@ -14,12 +14,12 @@
 
 package com.liferay.service.access.policy.model.listener;
 
-import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 

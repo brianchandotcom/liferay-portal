@@ -16,7 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.model.CountryConstants;
+import com.liferay.portal.kernel.model.CountryConstants;
 
 import java.util.Locale;
 

@@ -68,7 +68,7 @@ public class ShoppingItemServiceHttp {
 		java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
@@ -318,7 +318,7 @@ public class ShoppingItemServiceHttp {
 		java.io.File largeFile,
 		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
@@ -364,7 +364,7 @@ public class ShoppingItemServiceHttp {
 			java.lang.String.class, java.io.File.class, boolean.class,
 			java.lang.String.class, java.io.File.class, java.util.List.class,
 			java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteItemParameterTypes1 = new Class[] {
 			long.class
@@ -397,6 +397,6 @@ public class ShoppingItemServiceHttp {
 			java.lang.String.class, java.io.File.class, boolean.class,
 			java.lang.String.class, java.io.File.class, java.util.List.class,
 			java.util.List.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

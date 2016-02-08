@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.CompanyServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.CompanyServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.CompanyServiceUtil;
  */
 @ProviderType
 public class CompanyServiceHttp {
-	public static com.liferay.portal.model.Company addCompany(
+	public static com.liferay.portal.kernel.model.Company addCompany(
 		HttpPrincipal httpPrincipal, java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx, boolean system,
 		int maxUsers, boolean active)
@@ -79,7 +79,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,7 +88,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company deleteCompany(
+	public static com.liferay.portal.kernel.model.Company deleteCompany(
 		HttpPrincipal httpPrincipal, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -110,7 +110,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -145,7 +145,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company getCompanyById(
+	public static com.liferay.portal.kernel.model.Company getCompanyById(
 		HttpPrincipal httpPrincipal, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -167,7 +167,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -176,7 +176,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company getCompanyByLogoId(
+	public static com.liferay.portal.kernel.model.Company getCompanyByLogoId(
 		HttpPrincipal httpPrincipal, long logoId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -198,7 +198,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -207,7 +207,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company getCompanyByMx(
+	public static com.liferay.portal.kernel.model.Company getCompanyByMx(
 		HttpPrincipal httpPrincipal, java.lang.String mx)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -229,7 +229,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -238,7 +238,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company getCompanyByVirtualHost(
+	public static com.liferay.portal.kernel.model.Company getCompanyByVirtualHost(
 		HttpPrincipal httpPrincipal, java.lang.String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -262,7 +262,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -271,7 +271,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company getCompanyByWebId(
+	public static com.liferay.portal.kernel.model.Company getCompanyByWebId(
 		HttpPrincipal httpPrincipal, java.lang.String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -293,7 +293,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -330,7 +330,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateCompany(
+	public static com.liferay.portal.kernel.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
 		boolean active)
@@ -355,7 +355,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -364,7 +364,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateCompany(
+	public static com.liferay.portal.kernel.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, boolean logo, byte[] logoBytes,
@@ -395,7 +395,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -404,7 +404,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateCompany(
+	public static com.liferay.portal.kernel.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, boolean logo, byte[] logoBytes,
@@ -414,10 +414,10 @@ public class CompanyServiceHttp {
 		java.lang.String industry, java.lang.String type,
 		java.lang.String size, java.lang.String languageId,
 		java.lang.String timeZoneId,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
+		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
+		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
+		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -443,7 +443,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -452,7 +452,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateCompany(
+	public static com.liferay.portal.kernel.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -483,7 +483,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -492,7 +492,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateCompany(
+	public static com.liferay.portal.kernel.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -501,10 +501,10 @@ public class CompanyServiceHttp {
 		java.lang.String tickerSymbol, java.lang.String industry,
 		java.lang.String type, java.lang.String size,
 		java.lang.String languageId, java.lang.String timeZoneId,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
+		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
+		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
+		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -530,7 +530,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -567,7 +567,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateLogo(
+	public static com.liferay.portal.kernel.model.Company updateLogo(
 		HttpPrincipal httpPrincipal, long companyId, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -590,7 +590,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -599,7 +599,7 @@ public class CompanyServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Company updateLogo(
+	public static com.liferay.portal.kernel.model.Company updateLogo(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -623,7 +623,7 @@ public class CompanyServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Company)returnObj;
+			return (com.liferay.portal.kernel.model.Company)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

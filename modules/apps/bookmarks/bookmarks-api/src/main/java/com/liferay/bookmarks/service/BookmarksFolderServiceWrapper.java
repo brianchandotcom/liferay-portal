@@ -16,7 +16,7 @@ package com.liferay.bookmarks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link BookmarksFolderService}.
@@ -37,7 +37,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public com.liferay.bookmarks.model.BookmarksFolder addFolder(
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.addFolder(parentFolderId, name,
 			description, serviceContext);
@@ -228,7 +228,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,
 			name, description, mergeWithParentFolder, serviceContext);
@@ -238,7 +238,7 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,
 			name, description, serviceContext);

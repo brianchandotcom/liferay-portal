@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portal_LayoutSetService" provider="java:RPC" style="rpc" use="encoded">
-		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:LayoutSetSoap" type="java:com.liferay.portal.model.LayoutSetSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.kernel.portal.liferay.com" qname="ns:LayoutSetSoap" type="java:com.liferay.portal.kernel.model.LayoutSetSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="updateLayoutSetPrototypeLinkEnabled" qname="operNS:updateLayoutSetPrototypeLinkEnabled" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
@@ -15,26 +15,26 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="logo" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="bytes" type="tns:base64Binary"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="updateLookAndFeel" qname="operNS:updateLookAndFeel" returnQName="updateLookAndFeelReturn" returnType="rtns:LayoutSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateLookAndFeel" qname="operNS:updateLookAndFeel" returnQName="updateLookAndFeelReturn" returnType="rtns:LayoutSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="themeId" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="colorSchemeId" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="css" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="updateSettings" qname="operNS:updateSettings" returnQName="updateSettingsReturn" returnType="rtns:LayoutSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateSettings" qname="operNS:updateSettings" returnQName="updateSettingsReturn" returnType="rtns:LayoutSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="settings" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="updateVirtualHost" qname="operNS:updateVirtualHost" returnQName="updateVirtualHostReturn" returnType="rtns:LayoutSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateVirtualHost" qname="operNS:updateVirtualHost" returnQName="updateVirtualHostReturn" returnType="rtns:LayoutSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="virtualHost" type="tns:string"></parameter>
 		</operation>
 		<parameter name="allowedMethods" value="updateLayoutSetPrototypeLinkEnabled updateLogo updateLookAndFeel updateSettings updateVirtualHost" />
 		<parameter name="className" value="com.liferay.portal.service.http.LayoutSetServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.kernel.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="LayoutSetServiceSoap" />
 		<parameter name="wsdlServiceElement" value="LayoutSetServiceSoapService" />

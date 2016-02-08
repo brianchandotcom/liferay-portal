@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.model.ColorScheme;
 
 /**
  * @author Vilmos Papp

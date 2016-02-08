@@ -24,24 +24,24 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.exception.CompanyMxException" %><%@
-page import="com.liferay.portal.exception.CompanyVirtualHostException" %><%@
-page import="com.liferay.portal.exception.CompanyWebIdException" %><%@
-page import="com.liferay.portal.exception.RequiredCompanyException" %><%@
-page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.exception.CompanyMxException" %><%@
+page import="com.liferay.portal.kernel.exception.CompanyVirtualHostException" %><%@
+page import="com.liferay.portal.kernel.exception.CompanyWebIdException" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredCompanyException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Company" %><%@
+page import="com.liferay.portal.kernel.model.VirtualHost" %><%@
+page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portal.model.Company" %><%@
-page import="com.liferay.portal.model.VirtualHost" %><%@
-page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.VirtualHostLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalInstances" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

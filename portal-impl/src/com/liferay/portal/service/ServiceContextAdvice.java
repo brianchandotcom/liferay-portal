@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.Method;

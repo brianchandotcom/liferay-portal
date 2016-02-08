@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -72,6 +73,9 @@ import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPo
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pwd.Toolkit;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.servlet.LiferayFilterTracker;
@@ -104,15 +108,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.language.LiferayResourceBundle;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
-import com.liferay.portal.service.ReleaseLocalServiceUtil;
-import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -189,9 +189,9 @@ public class HookHotDeployListener
 		"dl.file.entry.open.in.ms.office.manual.check.in.required",
 		"dl.file.entry.processors", "dl.repository.impl",
 		"dl.store.antivirus.impl", "dl.store.impl", "dockbar.add.portlets",
-		"field.enable.com.liferay.portal.model.Contact.birthday",
-		"field.enable.com.liferay.portal.model.Contact.male",
-		"field.enable.com.liferay.portal.model.Organization.status",
+		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
+		"field.enable.com.liferay.portal.kernel.model.Contact.male",
+		"field.enable.com.liferay.portal.kernel.model.Organization.status",
 		"hot.deploy.listeners", "javascript.fast.load",
 		"journal.article.form.add", "journal.article.form.translate",
 		"journal.article.form.update", "layout.form.add", "layout.form.update",
@@ -2330,9 +2330,9 @@ public class HookHotDeployListener
 		"auth.forward.by.last.path", "captcha.check.portal.create_account",
 		"dl.file.entry.drafts.enabled",
 		"dl.file.entry.open.in.ms.office.manual.check.in.required",
-		"field.enable.com.liferay.portal.model.Contact.birthday",
-		"field.enable.com.liferay.portal.model.Contact.male",
-		"field.enable.com.liferay.portal.model.Organization.status",
+		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
+		"field.enable.com.liferay.portal.kernel.model.Contact.male",
+		"field.enable.com.liferay.portal.kernel.model.Organization.status",
 		"javascript.fast.load", "layout.template.cache.enabled",
 		"layout.user.private.layouts.auto.create",
 		"layout.user.private.layouts.enabled",

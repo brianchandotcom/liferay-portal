@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLFolderService}.
@@ -37,7 +37,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.addFolder(groupId, repositoryId, mountPoint,
 			parentFolderId, name, description, serviceContext);
@@ -281,7 +281,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.moveFolder(folderId, parentFolderId,
 			serviceContext);
@@ -320,7 +320,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
@@ -332,7 +332,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
@@ -344,7 +344,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.updateFolder(folderId, parentFolderId, name,
 			description, defaultFileEntryTypeId, fileEntryTypeIds,

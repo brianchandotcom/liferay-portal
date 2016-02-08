@@ -29,24 +29,24 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockFinder;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder;
+import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.ResourceBlock;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.ResourceBlockLocalService;
-import com.liferay.portal.service.persistence.ResourceActionPersistence;
-import com.liferay.portal.service.persistence.ResourceBlockFinder;
-import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
-import com.liferay.portal.service.persistence.ResourceBlockPersistence;
-import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
-import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
-import com.liferay.portal.service.persistence.RoleFinder;
-import com.liferay.portal.service.persistence.RolePersistence;
 
 import java.io.Serializable;
 
@@ -63,7 +63,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl
- * @see com.liferay.portal.service.ResourceBlockLocalServiceUtil
+ * @see com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -73,7 +73,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.ResourceBlockLocalServiceUtil} to access the resource block local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil} to access the resource block local service.
 	 */
 
 	/**
@@ -232,7 +232,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ResourceBlockLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceBlock.class);
 
@@ -245,7 +245,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ResourceBlockLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ResourceBlock.class);
 
@@ -257,7 +257,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ResourceBlockLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceBlock.class);
 
@@ -397,7 +397,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -407,7 +407,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -416,7 +416,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the resource action local service
 	 */
-	public com.liferay.portal.service.ResourceActionLocalService getResourceActionLocalService() {
+	public com.liferay.portal.kernel.service.ResourceActionLocalService getResourceActionLocalService() {
 		return resourceActionLocalService;
 	}
 
@@ -426,7 +426,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceActionLocalService the resource action local service
 	 */
 	public void setResourceActionLocalService(
-		com.liferay.portal.service.ResourceActionLocalService resourceActionLocalService) {
+		com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService) {
 		this.resourceActionLocalService = resourceActionLocalService;
 	}
 
@@ -454,7 +454,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the resource block permission local service
 	 */
-	public com.liferay.portal.service.ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+	public com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
 		return resourceBlockPermissionLocalService;
 	}
 
@@ -464,7 +464,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceBlockPermissionLocalService the resource block permission local service
 	 */
 	public void setResourceBlockPermissionLocalService(
-		com.liferay.portal.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
+		com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
 		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
 	}
 
@@ -492,7 +492,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the resource type permission local service
 	 */
-	public com.liferay.portal.service.ResourceTypePermissionLocalService getResourceTypePermissionLocalService() {
+	public com.liferay.portal.kernel.service.ResourceTypePermissionLocalService getResourceTypePermissionLocalService() {
 		return resourceTypePermissionLocalService;
 	}
 
@@ -502,7 +502,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceTypePermissionLocalService the resource type permission local service
 	 */
 	public void setResourceTypePermissionLocalService(
-		com.liferay.portal.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
+		com.liferay.portal.kernel.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
 		this.resourceTypePermissionLocalService = resourceTypePermissionLocalService;
 	}
 
@@ -549,7 +549,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.service.RoleLocalService getRoleLocalService() {
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -559,7 +559,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param roleLocalService the role local service
 	 */
 	public void setRoleLocalService(
-		com.liferay.portal.service.RoleLocalService roleLocalService) {
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -600,13 +600,13 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.ResourceBlock",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.ResourceBlock",
 			resourceBlockLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.ResourceBlock");
+			"com.liferay.portal.kernel.model.ResourceBlock");
 	}
 
 	/**
@@ -651,7 +651,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ResourceBlockLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
 	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
@@ -659,24 +659,24 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	protected ResourceBlockFinder resourceBlockFinder;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceActionLocalService.class)
-	protected com.liferay.portal.service.ResourceActionLocalService resourceActionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceActionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceBlockPermissionLocalService.class)
-	protected com.liferay.portal.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)
 	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceTypePermissionLocalService.class)
-	protected com.liferay.portal.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceTypePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService;
 	@BeanReference(type = ResourceTypePermissionPersistence.class)
 	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = ResourceTypePermissionFinder.class)
 	protected ResourceTypePermissionFinder resourceTypePermissionFinder;
-	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
-	protected com.liferay.portal.service.RoleLocalService roleLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)

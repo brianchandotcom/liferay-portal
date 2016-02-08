@@ -16,7 +16,7 @@ package com.liferay.portal.background.task.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link BackgroundTaskLocalService}.
@@ -52,7 +52,7 @@ public class BackgroundTaskLocalServiceWrapper
 		java.lang.String[] servletContextNames,
 		java.lang.Class<?> taskExecutorClass,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTaskLocalService.addBackgroundTask(userId, groupId,
 			name, servletContextNames, taskExecutorClass, taskContextMap,
@@ -64,7 +64,7 @@ public class BackgroundTaskLocalServiceWrapper
 		long userId, long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTaskLocalService.addBackgroundTask(userId, groupId,
 			name, taskExecutorClassName, taskContextMap, serviceContext);
@@ -90,7 +90,8 @@ public class BackgroundTaskLocalServiceWrapper
 	public com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext) {
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
 			taskContextMap, status, serviceContext);
 	}
@@ -100,7 +101,7 @@ public class BackgroundTaskLocalServiceWrapper
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
 			taskContextMap, status, statusMessage, serviceContext);
 	}
@@ -180,8 +181,8 @@ public class BackgroundTaskLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTaskLocalService.deletePersistedModel(persistedModel);
 	}
@@ -525,7 +526,7 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTaskLocalService.getPersistedModel(primaryKeyObj);

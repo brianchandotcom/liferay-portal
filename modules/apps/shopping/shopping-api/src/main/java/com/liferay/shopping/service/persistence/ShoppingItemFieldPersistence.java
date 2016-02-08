@@ -16,7 +16,7 @@ package com.liferay.shopping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import com.liferay.shopping.exception.NoSuchItemFieldException;
 import com.liferay.shopping.model.ShoppingItemField;

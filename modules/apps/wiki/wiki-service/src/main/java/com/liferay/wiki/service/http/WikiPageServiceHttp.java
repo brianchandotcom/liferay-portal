@@ -58,7 +58,7 @@ public class WikiPageServiceHttp {
 	public static com.liferay.wiki.model.WikiPage addPage(
 		HttpPrincipal httpPrincipal, long nodeId, java.lang.String title,
 		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -94,7 +94,7 @@ public class WikiPageServiceHttp {
 		java.lang.String content, java.lang.String summary, boolean minorEdit,
 		java.lang.String format, java.lang.String parentTitle,
 		java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -293,7 +293,7 @@ public class WikiPageServiceHttp {
 
 	public static void changeParent(HttpPrincipal httpPrincipal, long nodeId,
 		java.lang.String title, java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -1311,7 +1311,7 @@ public class WikiPageServiceHttp {
 
 	public static void renamePage(HttpPrincipal httpPrincipal, long nodeId,
 		java.lang.String title, java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -1399,7 +1399,8 @@ public class WikiPageServiceHttp {
 
 	public static com.liferay.wiki.model.WikiPage revertPage(
 		HttpPrincipal httpPrincipal, long nodeId, java.lang.String title,
-		double version, com.liferay.portal.service.ServiceContext serviceContext)
+		double version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -1491,7 +1492,7 @@ public class WikiPageServiceHttp {
 		double version, java.lang.String content, java.lang.String summary,
 		boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiPageServiceUtil.class,
@@ -1527,13 +1528,13 @@ public class WikiPageServiceHttp {
 	private static final Class<?>[] _addPageParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addPageParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addPageAttachmentParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -1556,7 +1557,7 @@ public class WikiPageServiceHttp {
 		};
 	private static final Class<?>[] _changeParentParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyPageAttachmentsParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, long.class,
@@ -1663,7 +1664,7 @@ public class WikiPageServiceHttp {
 		};
 	private static final Class<?>[] _renamePageParameterTypes39 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _restorePageAttachmentFromTrashParameterTypes40 =
 		new Class[] { long.class, java.lang.String.class, java.lang.String.class };
@@ -1672,7 +1673,7 @@ public class WikiPageServiceHttp {
 		};
 	private static final Class<?>[] _revertPageParameterTypes42 = new Class[] {
 			long.class, java.lang.String.class, double.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _subscribePageParameterTypes43 = new Class[] {
 			long.class, java.lang.String.class
@@ -1685,6 +1686,6 @@ public class WikiPageServiceHttp {
 			java.lang.String.class, java.lang.String.class, boolean.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

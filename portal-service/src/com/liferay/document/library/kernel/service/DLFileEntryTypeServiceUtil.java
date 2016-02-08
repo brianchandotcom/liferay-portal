@@ -45,7 +45,7 @@ public class DLFileEntryTypeServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntryType(groupId, fileEntryTypeKey, nameMap,
@@ -55,7 +55,7 @@ public class DLFileEntryTypeServiceUtil {
 	public static com.liferay.document.library.kernel.model.DLFileEntryType addFileEntryType(
 		long groupId, java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntryType(groupId, name, description,
@@ -122,7 +122,7 @@ public class DLFileEntryTypeServiceUtil {
 	public static void updateFileEntryType(long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntryType(fileEntryTypeId, name, description,
@@ -133,7 +133,7 @@ public class DLFileEntryTypeServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntryType(fileEntryTypeId, nameMap, descriptionMap,

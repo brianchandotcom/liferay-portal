@@ -75,7 +75,7 @@ public class AssetVocabularyServiceSoap {
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -97,7 +97,7 @@ public class AssetVocabularyServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetVocabularySoap addVocabulary(
 		long groupId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.addVocabulary(groupId,
@@ -114,7 +114,7 @@ public class AssetVocabularyServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetVocabularySoap[] deleteVocabularies(
 		long[] vocabularyIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> returnValue =
@@ -475,7 +475,7 @@ public class AssetVocabularyServiceSoap {
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,

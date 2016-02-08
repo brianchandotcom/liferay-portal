@@ -1147,10 +1147,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java">
 			<replacetoken><![CDATA[import com.liferay.portal.security.pacl.test.util.TestPACLUtil;]]></replacetoken>
-			<replacevalue><![CDATA[import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.PortalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+			<replacevalue><![CDATA[import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.PortalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.HashMap;]]></replacevalue>
 		</replace>
@@ -1287,8 +1287,8 @@ security-manager-hook-custom-jsp-dir-enabled=false</replacevalue>
 		<replaceregexp
 			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="(security-manager-services\[portal\]=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.service.ResourceLocalService)"
-			replace="\1\2\3com.liferay.portal.service.PortletPreferencesLocalService#getStrictPreferences\3com.liferay.portal.service.UserLocalService#getDefaultUser\3"
+			match="(security-manager-services\[portal\]=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.kernel.service.ResourceLocalService)"
+			replace="\1\2\3com.liferay.portal.kernel.service.PortletPreferencesLocalService#getStrictPreferences\3com.liferay.portal.kernel.service.UserLocalService#getDefaultUser\3"
 		/>
 
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">

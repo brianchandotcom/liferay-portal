@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.RecentLayoutRevision;
-import com.liferay.portal.service.RecentLayoutRevisionLocalServiceUtil;
+import com.liferay.portal.kernel.model.RecentLayoutRevision;
+import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalServiceUtil;
 
 /**
  * The extended model base implementation for the RecentLayoutRevision service. Represents a row in the &quot;RecentLayoutRevision&quot; database table, with each column mapped to a property of this class.

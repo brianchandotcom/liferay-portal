@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 
 import java.io.Serializable;

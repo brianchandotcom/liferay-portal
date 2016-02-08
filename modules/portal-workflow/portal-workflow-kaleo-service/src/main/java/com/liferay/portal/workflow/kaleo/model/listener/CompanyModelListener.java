@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.model.listener;
 
-import com.liferay.portal.exception.ModelListenerException;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Component;

@@ -15,9 +15,9 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.Ticket;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.TicketLocalServiceBaseImpl;
 
 import java.util.Date;

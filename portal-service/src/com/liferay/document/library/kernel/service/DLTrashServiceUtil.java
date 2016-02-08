@@ -60,7 +60,7 @@ public class DLTrashServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntryFromTrash(fileEntryId, newFolderId,
@@ -89,7 +89,7 @@ public class DLTrashServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long fileShortcutId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileShortcutFromTrash(fileShortcutId, newFolderId,
@@ -119,7 +119,7 @@ public class DLTrashServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFolderFromTrash(folderId, parentFolderId, serviceContext);

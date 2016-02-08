@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.DefaultScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 

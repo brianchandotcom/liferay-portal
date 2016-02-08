@@ -16,7 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Country;
+import com.liferay.portal.kernel.model.Country;
 
 /**
  * The extended model base implementation for the Country service. Represents a row in the &quot;Country&quot; database table, with each column mapped to a property of this class.

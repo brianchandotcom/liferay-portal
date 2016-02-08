@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMTemplateLocalService}.
@@ -78,7 +78,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
 			classNameId, classPK, resourceClassNameId, nameMap, descriptionMap,
@@ -128,7 +128,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
 			classNameId, classPK, resourceClassNameId, templateKey, nameMap,
@@ -189,7 +189,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		long userId, long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.copyTemplate(userId, templateId,
 			nameMap, descriptionMap, serviceContext);
@@ -198,7 +198,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		long userId, long templateId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.copyTemplate(userId, templateId,
 			serviceContext);
@@ -226,7 +226,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		long userId, long classNameId, long oldClassPK, long newClassPK,
 		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.copyTemplates(userId, classNameId,
 			oldClassPK, newClassPK, type, serviceContext);
@@ -274,8 +274,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.deletePersistedModel(persistedModel);
 	}
@@ -606,7 +606,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.getPersistedModel(primaryKeyObj);
@@ -912,7 +912,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	@Override
 	public void revertTemplate(long userId, long templateId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmTemplateLocalService.revertTemplate(userId, templateId, version,
 			serviceContext);
@@ -1334,7 +1334,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.updateTemplate(userId, templateId,
 			classPK, nameMap, descriptionMap, type, mode, language, script,
@@ -1377,7 +1377,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.updateTemplate(userId, templateId,
 			classPK, nameMap, descriptionMap, type, mode, language, script,

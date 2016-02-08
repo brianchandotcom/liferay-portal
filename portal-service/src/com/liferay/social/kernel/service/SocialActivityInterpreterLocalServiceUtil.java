@@ -99,14 +99,14 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	public static com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
 		java.lang.String selector,
 		com.liferay.social.kernel.model.SocialActivity activity,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activity, serviceContext);
 	}
 
 	public static com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
 		java.lang.String selector,
 		com.liferay.social.kernel.model.SocialActivitySet activitySet,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activitySet, serviceContext);
 	}
 

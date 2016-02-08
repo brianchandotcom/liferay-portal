@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.UserGroupRoleServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.UserGroupRoleSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.UserGroupRoleSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.UserGroupRole}, that is translated to a
- * {@link com.liferay.portal.model.UserGroupRoleSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.UserGroupRole}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.UserGroupRoleSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,7 +58,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see UserGroupRoleServiceHttp
- * @see com.liferay.portal.model.UserGroupRoleSoap
+ * @see com.liferay.portal.kernel.model.UserGroupRoleSoap
  * @see UserGroupRoleServiceUtil
  * @generated
  */

@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.ArrayList;
 import java.util.Date;

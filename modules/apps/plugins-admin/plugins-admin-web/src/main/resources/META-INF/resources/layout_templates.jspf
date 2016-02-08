@@ -38,7 +38,7 @@ List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.LayoutTemplate"
+		className="com.liferay.portal.kernel.model.LayoutTemplate"
 		modelVar="layoutTemplate"
 	>
 

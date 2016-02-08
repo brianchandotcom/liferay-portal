@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.PermissionServiceUtil;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 
 import java.rmi.RemoteException;
 

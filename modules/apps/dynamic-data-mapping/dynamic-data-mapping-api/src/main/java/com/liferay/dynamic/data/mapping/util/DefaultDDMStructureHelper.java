@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
 

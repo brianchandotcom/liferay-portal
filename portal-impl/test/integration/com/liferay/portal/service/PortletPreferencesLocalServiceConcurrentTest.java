@@ -15,6 +15,9 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,10 +25,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl;
 import com.liferay.portal.service.impl.SynchronousInvocationHandler;
-import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
@@ -238,7 +239,8 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 	}
 
 	@DeleteAfterTestRun
-	private com.liferay.portal.model.PortletPreferences _portletPreferences;
+	private com.liferay.portal.kernel.model.PortletPreferences
+		_portletPreferences;
 
 	private int _threadCount;
 

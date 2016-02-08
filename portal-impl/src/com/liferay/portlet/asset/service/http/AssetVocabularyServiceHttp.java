@@ -60,7 +60,7 @@ public class AssetVocabularyServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -93,7 +93,7 @@ public class AssetVocabularyServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary addVocabulary(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -126,7 +126,7 @@ public class AssetVocabularyServiceHttp {
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> deleteVocabularies(
 		HttpPrincipal httpPrincipal, long[] vocabularyIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -809,7 +809,7 @@ public class AssetVocabularyServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -845,14 +845,14 @@ public class AssetVocabularyServiceHttp {
 	private static final Class<?>[] _addVocabularyParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addVocabularyParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteVocabulariesParameterTypes2 = new Class[] {
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteVocabularyParameterTypes3 = new Class[] {
 			long.class
@@ -930,6 +930,6 @@ public class AssetVocabularyServiceHttp {
 	private static final Class<?>[] _updateVocabularyParameterTypes24 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

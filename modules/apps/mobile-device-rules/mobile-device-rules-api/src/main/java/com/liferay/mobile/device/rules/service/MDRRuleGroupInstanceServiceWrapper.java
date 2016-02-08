@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MDRRuleGroupInstanceService}.
@@ -38,7 +38,7 @@ public class MDRRuleGroupInstanceServiceWrapper
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId, int priority,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, priority, serviceContext);
@@ -48,7 +48,7 @@ public class MDRRuleGroupInstanceServiceWrapper
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, serviceContext);

@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLFileShortcutLocalService}.
@@ -50,7 +50,7 @@ public class DLFileShortcutLocalServiceWrapper
 	public com.liferay.document.library.kernel.model.DLFileShortcut addFileShortcut(
 		long userId, long groupId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.addFileShortcut(userId, groupId,
 			repositoryId, folderId, toFileEntryId, serviceContext);
@@ -165,8 +165,8 @@ public class DLFileShortcutLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.deletePersistedModel(persistedModel);
 	}
@@ -430,7 +430,7 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.getPersistedModel(primaryKeyObj);
@@ -473,7 +473,7 @@ public class DLFileShortcutLocalServiceWrapper
 	public com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.updateFileShortcut(userId,
 			fileShortcutId, repositoryId, folderId, toFileEntryId,
@@ -494,7 +494,7 @@ public class DLFileShortcutLocalServiceWrapper
 
 	@Override
 	public void updateStatus(long userId, long fileShortcutId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileShortcutLocalService.updateStatus(userId, fileShortcutId,
 			status, serviceContext);

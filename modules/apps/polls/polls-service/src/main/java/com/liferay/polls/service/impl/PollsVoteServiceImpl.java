@@ -21,7 +21,7 @@ import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Brian Wing Shun Chan

@@ -20,9 +20,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -398,14 +398,14 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.LocaleException {
+		throws com.liferay.portal.kernel.exception.LocaleException {
 		_ddmContent.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.LocaleException {
+		throws com.liferay.portal.kernel.exception.LocaleException {
 		_ddmContent.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
@@ -466,7 +466,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_ddmContent.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -622,7 +622,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMContent> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMContent> toCacheModel() {
 		return _ddmContent.toCacheModel();
 	}
 

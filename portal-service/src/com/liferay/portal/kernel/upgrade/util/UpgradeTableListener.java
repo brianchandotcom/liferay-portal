@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
-import com.liferay.portal.model.ServiceComponent;
+import com.liferay.portal.kernel.model.ServiceComponent;
 
 /**
  * @author Brian Wing Shun Chan

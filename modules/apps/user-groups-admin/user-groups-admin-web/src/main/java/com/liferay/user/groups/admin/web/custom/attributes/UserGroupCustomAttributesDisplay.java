@@ -16,7 +16,7 @@ package com.liferay.user.groups.admin.web.custom.attributes;
 
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
-import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

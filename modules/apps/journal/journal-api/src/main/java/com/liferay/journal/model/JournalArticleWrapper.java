@@ -20,9 +20,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -629,7 +629,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public com.liferay.portal.model.Layout getLayout() {
+	public com.liferay.portal.kernel.model.Layout getLayout() {
 		return _journalArticle.getLayout();
 	}
 
@@ -1146,14 +1146,14 @@ public class JournalArticleWrapper implements JournalArticle,
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.LocaleException {
+		throws com.liferay.portal.kernel.exception.LocaleException {
 		_journalArticle.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.LocaleException {
+		throws com.liferay.portal.kernel.exception.LocaleException {
 		_journalArticle.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
@@ -1333,7 +1333,7 @@ public class JournalArticleWrapper implements JournalArticle,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_journalArticle.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -1702,7 +1702,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.journal.model.JournalArticle> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalArticle> toCacheModel() {
 		return _journalArticle.toCacheModel();
 	}
 

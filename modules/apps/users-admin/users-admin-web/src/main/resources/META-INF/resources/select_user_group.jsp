@@ -99,7 +99,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.UserGroup"
+			className="com.liferay.portal.kernel.model.UserGroup"
 			escapedModel="<%= false %>"
 			keyProperty="userGroupId"
 			modelVar="userGroup"

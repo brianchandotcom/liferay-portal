@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.permission;
 
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermission;
-import com.liferay.portal.model.PasswordPolicy;
 
 /**
  * @author Brian Wing Shun Chan

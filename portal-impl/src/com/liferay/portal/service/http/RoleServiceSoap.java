@@ -18,8 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.service.RoleServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -36,10 +36,10 @@ import java.util.Map;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.RoleSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.RoleSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.Role}, that is translated to a
- * {@link com.liferay.portal.model.RoleSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.Role}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.RoleSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -62,7 +62,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see RoleServiceHttp
- * @see com.liferay.portal.model.RoleSoap
+ * @see com.liferay.portal.kernel.model.RoleSoap
  * @see RoleServiceUtil
  * @generated
  */
@@ -86,14 +86,14 @@ public class RoleServiceSoap {
 	role.
 	* @return the role
 	*/
-	public static com.liferay.portal.model.RoleSoap addRole(
+	public static com.liferay.portal.kernel.model.RoleSoap addRole(
 		java.lang.String className, long classPK, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, int type,
 		java.lang.String subtype,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -101,11 +101,11 @@ public class RoleServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.addRole(className,
+			com.liferay.portal.kernel.model.Role returnValue = RoleServiceUtil.addRole(className,
 					classPK, name, titleMap, descriptionMap, type, subtype,
 					serviceContext);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -149,12 +149,12 @@ public class RoleServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.RoleSoap fetchRole(long roleId)
-		throws RemoteException {
+	public static com.liferay.portal.kernel.model.RoleSoap fetchRole(
+		long roleId) throws RemoteException {
 		try {
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.fetchRole(roleId);
+			com.liferay.portal.kernel.model.Role returnValue = RoleServiceUtil.fetchRole(roleId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,12 +169,12 @@ public class RoleServiceSoap {
 	* @param groupId the primary key of the group
 	* @return the roles associated with the group
 	*/
-	public static com.liferay.portal.model.RoleSoap[] getGroupRoles(
+	public static com.liferay.portal.kernel.model.RoleSoap[] getGroupRoles(
 		long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getGroupRoles(groupId);
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getGroupRoles(groupId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -189,12 +189,12 @@ public class RoleServiceSoap {
 	* @param roleId the primary key of the role
 	* @return the role with the primary key
 	*/
-	public static com.liferay.portal.model.RoleSoap getRole(long roleId)
+	public static com.liferay.portal.kernel.model.RoleSoap getRole(long roleId)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.getRole(roleId);
+			com.liferay.portal.kernel.model.Role returnValue = RoleServiceUtil.getRole(roleId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -215,13 +215,13 @@ public class RoleServiceSoap {
 	* @param name the role's name
 	* @return the role with the name
 	*/
-	public static com.liferay.portal.model.RoleSoap getRole(long companyId,
-		java.lang.String name) throws RemoteException {
+	public static com.liferay.portal.kernel.model.RoleSoap getRole(
+		long companyId, java.lang.String name) throws RemoteException {
 		try {
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.getRole(companyId,
+			com.liferay.portal.kernel.model.Role returnValue = RoleServiceUtil.getRole(companyId,
 					name);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -230,13 +230,13 @@ public class RoleServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.RoleSoap[] getRoles(int type,
-		java.lang.String subtype) throws RemoteException {
+	public static com.liferay.portal.kernel.model.RoleSoap[] getRoles(
+		int type, java.lang.String subtype) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getRoles(type,
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getRoles(type,
 					subtype);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -245,13 +245,13 @@ public class RoleServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.RoleSoap[] getRoles(long companyId,
-		int[] types) throws RemoteException {
+	public static com.liferay.portal.kernel.model.RoleSoap[] getRoles(
+		long companyId, int[] types) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getRoles(companyId,
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getRoles(companyId,
 					types);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -267,13 +267,13 @@ public class RoleServiceSoap {
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
 	*/
-	public static com.liferay.portal.model.RoleSoap[] getUserGroupGroupRoles(
+	public static com.liferay.portal.kernel.model.RoleSoap[] getUserGroupGroupRoles(
 		long userId, long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getUserGroupGroupRoles(userId,
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getUserGroupGroupRoles(userId,
 					groupId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -289,13 +289,13 @@ public class RoleServiceSoap {
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
 	*/
-	public static com.liferay.portal.model.RoleSoap[] getUserGroupRoles(
+	public static com.liferay.portal.kernel.model.RoleSoap[] getUserGroupRoles(
 		long userId, long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getUserGroupRoles(userId,
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getUserGroupRoles(userId,
 					groupId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -311,15 +311,15 @@ public class RoleServiceSoap {
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
 	*/
-	public static com.liferay.portal.model.RoleSoap[] getUserRelatedRoles(
-		long userId, com.liferay.portal.model.GroupSoap[] groups)
+	public static com.liferay.portal.kernel.model.RoleSoap[] getUserRelatedRoles(
+		long userId, com.liferay.portal.kernel.model.GroupSoap[] groups)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getUserRelatedRoles(userId,
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getUserRelatedRoles(userId,
 					com.liferay.portal.model.impl.GroupModelImpl.toModels(
 						groups));
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -334,12 +334,12 @@ public class RoleServiceSoap {
 	* @param userId the primary key of the user
 	* @return the roles associated with the user
 	*/
-	public static com.liferay.portal.model.RoleSoap[] getUserRoles(long userId)
-		throws RemoteException {
+	public static com.liferay.portal.kernel.model.RoleSoap[] getUserRoles(
+		long userId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getUserRoles(userId);
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getUserRoles(userId);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -436,12 +436,13 @@ public class RoleServiceSoap {
 	role.
 	* @return the role with the primary key
 	*/
-	public static com.liferay.portal.model.RoleSoap updateRole(long roleId,
-		java.lang.String name, java.lang.String[] titleMapLanguageIds,
+	public static com.liferay.portal.kernel.model.RoleSoap updateRole(
+		long roleId, java.lang.String name,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String subtype,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -449,10 +450,10 @@ public class RoleServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.updateRole(roleId,
+			com.liferay.portal.kernel.model.Role returnValue = RoleServiceUtil.updateRole(roleId,
 					name, titleMap, descriptionMap, subtype, serviceContext);
 
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -16,7 +16,7 @@ package com.liferay.message.boards.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MBCategoryService}.
@@ -44,7 +44,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.addCategory(parentCategoryId, name,
 			description, displayStyle, emailAddress, inProtocol, inServerName,
@@ -58,7 +58,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
 			description, serviceContext);
@@ -298,7 +298,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.updateCategory(categoryId, parentCategoryId,
 			name, description, displayStyle, emailAddress, inProtocol,

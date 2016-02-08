@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
-import com.liferay.portal.model.Plugin;
+import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.ArrayList;

@@ -16,7 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CalendarResourceService}.
@@ -39,7 +39,8 @@ public class CalendarResourceServiceWrapper implements CalendarResourceService,
 		java.lang.String classUuid, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarResourceService.addCalendarResource(groupId,
 			classNameId, classPK, classUuid, code, nameMap, descriptionMap,
@@ -121,7 +122,8 @@ public class CalendarResourceServiceWrapper implements CalendarResourceService,
 		long calendarResourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarResourceService.updateCalendarResource(calendarResourceId,
 			nameMap, descriptionMap, active, serviceContext);

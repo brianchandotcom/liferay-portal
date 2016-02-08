@@ -19,8 +19,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.portal.kernel.lock.BaseLockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 
 /**

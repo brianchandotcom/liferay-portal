@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.ImageService;
+import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.Image;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.ImageService;
-import com.liferay.portal.service.persistence.ImagePersistence;
 
 import javax.sql.DataSource;
 
@@ -41,7 +41,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ImageServiceImpl
- * @see com.liferay.portal.service.ImageServiceUtil
+ * @see com.liferay.portal.kernel.service.ImageServiceUtil
  * @generated
  */
 public abstract class ImageServiceBaseImpl extends BaseServiceImpl
@@ -49,7 +49,7 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.ImageServiceUtil} to access the image remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.ImageServiceUtil} to access the image remote service.
 	 */
 
 	/**
@@ -57,7 +57,7 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the image local service
 	 */
-	public com.liferay.portal.service.ImageLocalService getImageLocalService() {
+	public com.liferay.portal.kernel.service.ImageLocalService getImageLocalService() {
 		return imageLocalService;
 	}
 
@@ -67,7 +67,7 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 	 * @param imageLocalService the image local service
 	 */
 	public void setImageLocalService(
-		com.liferay.portal.service.ImageLocalService imageLocalService) {
+		com.liferay.portal.kernel.service.ImageLocalService imageLocalService) {
 		this.imageLocalService = imageLocalService;
 	}
 
@@ -249,9 +249,9 @@ public abstract class ImageServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ImageLocalService.class)
-	protected com.liferay.portal.service.ImageLocalService imageLocalService;
-	@BeanReference(type = com.liferay.portal.service.ImageService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
+	protected com.liferay.portal.kernel.service.ImageLocalService imageLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ImageService.class)
 	protected ImageService imageService;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;

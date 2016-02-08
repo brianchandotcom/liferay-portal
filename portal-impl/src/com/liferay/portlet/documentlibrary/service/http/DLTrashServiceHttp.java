@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DLTrashServiceHttp {
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		HttpPrincipal httpPrincipal, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLTrashServiceUtil.class,
@@ -123,7 +123,7 @@ public class DLTrashServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		HttpPrincipal httpPrincipal, long fileShortcutId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLTrashServiceUtil.class,
@@ -190,7 +190,7 @@ public class DLTrashServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DLTrashServiceUtil.class,
@@ -341,21 +341,21 @@ public class DLTrashServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(DLTrashServiceHttp.class);
 	private static final Class<?>[] _moveFileEntryFromTrashParameterTypes0 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFileEntryToTrashParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _moveFileShortcutFromTrashParameterTypes2 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFileShortcutToTrashParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _moveFolderFromTrashParameterTypes4 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFolderToTrashParameterTypes5 = new Class[] {
 			long.class

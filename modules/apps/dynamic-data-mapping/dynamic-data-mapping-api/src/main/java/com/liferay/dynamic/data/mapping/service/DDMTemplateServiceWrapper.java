@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDMTemplateService}.
@@ -63,7 +63,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.addTemplate(groupId, classNameId, classPK,
 			resourceClassNameId, nameMap, descriptionMap, type, mode, language,
@@ -112,7 +112,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.addTemplate(groupId, classNameId, classPK,
 			resourceClassNameId, templateKey, nameMap, descriptionMap, type,
@@ -140,7 +140,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.copyTemplate(templateId, nameMap,
 			descriptionMap, serviceContext);
@@ -149,7 +149,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		long templateId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.copyTemplate(templateId, serviceContext);
 	}
@@ -177,7 +177,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		long classNameId, long oldClassPK, long resourceClassNameId,
 		long newClassPK, java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.copyTemplates(classNameId, oldClassPK,
 			resourceClassNameId, newClassPK, type, serviceContext);
@@ -411,7 +411,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 
 	@Override
 	public void revertTemplate(long templateId, java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmTemplateService.revertTemplate(templateId, version, serviceContext);
 	}
@@ -787,7 +787,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.updateTemplate(templateId, classPK, nameMap,
 			descriptionMap, type, mode, language, script, cacheable,
@@ -828,7 +828,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.updateTemplate(templateId, classPK, nameMap,
 			descriptionMap, type, mode, language, script, cacheable,

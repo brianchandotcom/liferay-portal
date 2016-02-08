@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.hibernate;
 
-import com.liferay.portal.service.PortalServiceUtil;
+import com.liferay.portal.kernel.service.PortalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 
 /**

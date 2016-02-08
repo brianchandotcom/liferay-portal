@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.HashMap;
 import java.util.Map;

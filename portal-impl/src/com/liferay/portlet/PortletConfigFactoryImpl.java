@@ -14,11 +14,11 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletConfigFactory;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.util.Map;

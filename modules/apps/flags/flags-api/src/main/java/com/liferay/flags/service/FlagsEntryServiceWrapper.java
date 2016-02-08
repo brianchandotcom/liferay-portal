@@ -16,7 +16,7 @@ package com.liferay.flags.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link FlagsEntryService}.
@@ -37,7 +37,7 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
 		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		_flagsEntryService.addEntry(className, classPK, reporterEmailAddress,
 			reportedUserId, contentTitle, contentURL, reason, serviceContext);
 	}

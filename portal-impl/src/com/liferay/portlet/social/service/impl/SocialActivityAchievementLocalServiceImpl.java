@@ -15,7 +15,7 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portlet.social.service.base.SocialActivityAchievementLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialAchievement;
 import com.liferay.social.kernel.model.SocialActivityAchievement;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.exception.PwdEncryptorException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;

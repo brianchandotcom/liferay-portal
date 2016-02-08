@@ -7,8 +7,8 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 </#if>
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

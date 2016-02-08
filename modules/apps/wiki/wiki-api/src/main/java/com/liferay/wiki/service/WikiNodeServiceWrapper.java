@@ -16,7 +16,7 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link WikiNodeService}.
@@ -35,7 +35,7 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	@Override
 	public com.liferay.wiki.model.WikiNode addNode(java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.addNode(name, description, serviceContext);
 	}
@@ -147,7 +147,7 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	@Override
 	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.updateNode(nodeId, name, description,
 			serviceContext);

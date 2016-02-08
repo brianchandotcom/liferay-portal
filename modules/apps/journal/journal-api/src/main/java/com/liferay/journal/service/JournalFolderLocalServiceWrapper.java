@@ -16,7 +16,7 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link JournalFolderLocalService}.
@@ -38,7 +38,7 @@ public class JournalFolderLocalServiceWrapper
 	public com.liferay.journal.model.JournalFolder addFolder(long userId,
 		long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.addFolder(userId, groupId,
 			parentFolderId, name, description, serviceContext);
@@ -134,8 +134,8 @@ public class JournalFolderLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.deletePersistedModel(persistedModel);
 	}
@@ -517,7 +517,7 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getPersistedModel(primaryKeyObj);
@@ -532,7 +532,7 @@ public class JournalFolderLocalServiceWrapper
 	@Override
 	public com.liferay.journal.model.JournalFolder moveFolder(long folderId,
 		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.moveFolder(folderId, parentFolderId,
 			serviceContext);
@@ -541,7 +541,7 @@ public class JournalFolderLocalServiceWrapper
 	@Override
 	public com.liferay.journal.model.JournalFolder moveFolderFromTrash(
 		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.moveFolderFromTrash(userId, folderId,
 			parentFolderId, serviceContext);
@@ -602,7 +602,7 @@ public class JournalFolderLocalServiceWrapper
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.updateFolder(userId, groupId,
 			folderId, parentFolderId, name, description, ddmStructureIds,
@@ -614,7 +614,7 @@ public class JournalFolderLocalServiceWrapper
 		long groupId, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.updateFolder(userId, groupId,
 			folderId, parentFolderId, name, description, mergeWithParentFolder,

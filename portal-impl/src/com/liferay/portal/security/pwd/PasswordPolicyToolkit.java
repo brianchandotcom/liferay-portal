@@ -14,20 +14,20 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.security.pwd.BasicToolkit;
+import com.liferay.portal.kernel.service.PasswordTrackerLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.words.WordsUtil;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;

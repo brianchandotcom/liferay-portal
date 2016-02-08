@@ -16,8 +16,8 @@ package com.liferay.portal.search.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.model.Company;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

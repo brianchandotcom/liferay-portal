@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.kernel.model.RepositoryEntry;
+import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the RepositoryEntry service. Represents a row in the &quot;RepositoryEntry&quot; database table, with each column mapped to a property of this class.

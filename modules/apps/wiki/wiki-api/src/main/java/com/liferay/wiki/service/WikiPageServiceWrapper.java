@@ -16,7 +16,7 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link WikiPageService}.
@@ -37,7 +37,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.addPage(nodeId, title, content, summary,
 			minorEdit, format, parentTitle, redirectTitle, serviceContext);
@@ -47,7 +47,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	public com.liferay.wiki.model.WikiPage addPage(long nodeId,
 		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.addPage(nodeId, title, content, summary,
 			minorEdit, serviceContext);
@@ -106,7 +106,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	@Override
 	public void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageService.changeParent(nodeId, title, newParentTitle,
 			serviceContext);
@@ -351,7 +351,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	@Override
 	public void renamePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageService.renamePage(nodeId, title, newTitle, serviceContext);
 	}
@@ -372,7 +372,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	@Override
 	public com.liferay.wiki.model.WikiPage revertPage(long nodeId,
 		java.lang.String title, double version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.revertPage(nodeId, title, version,
 			serviceContext);
@@ -395,7 +395,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		java.lang.String title, double version, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.updatePage(nodeId, title, version, content,
 			summary, minorEdit, format, parentTitle, redirectTitle,

@@ -22,6 +22,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.EventDefinition;
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletInfo;
+import com.liferay.portal.kernel.model.PortletInstance;
+import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -31,6 +39,9 @@ import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -51,18 +62,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.EventDefinition;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletCategory;
-import com.liferay.portal.model.PortletInfo;
-import com.liferay.portal.model.PortletInstance;
-import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
-import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.servlet.jsp.compiler.JspServlet;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
@@ -133,10 +133,11 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = PortletTracker.class)
 public class PortletTracker
 	implements
-		ServiceTrackerCustomizer<Portlet, com.liferay.portal.model.Portlet> {
+		ServiceTrackerCustomizer
+			<Portlet, com.liferay.portal.kernel.model.Portlet> {
 
 	@Override
-	public com.liferay.portal.model.Portlet addingService(
+	public com.liferay.portal.kernel.model.Portlet addingService(
 		ServiceReference<Portlet> serviceReference) {
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
@@ -170,7 +171,7 @@ public class PortletTracker
 			return null;
 		}
 
-		com.liferay.portal.model.Portlet portletModel =
+		com.liferay.portal.kernel.model.Portlet portletModel =
 			_portletLocalService.getPortletById(portletId);
 
 		if (portletModel != null) {
@@ -198,7 +199,7 @@ public class PortletTracker
 	@Override
 	public void modifiedService(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		removedService(serviceReference, portletModel);
 
@@ -208,7 +209,7 @@ public class PortletTracker
 	@Override
 	public void removedService(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		portletModel.unsetReady();
 
@@ -268,7 +269,7 @@ public class PortletTracker
 		}
 	}
 
-	protected com.liferay.portal.model.Portlet addingPortlet(
+	protected com.liferay.portal.kernel.model.Portlet addingPortlet(
 		ServiceReference<Portlet> serviceReference, Portlet portlet,
 		String portletName, String portletId) {
 
@@ -293,8 +294,8 @@ public class PortletTracker
 			BundlePortletApp bundlePortletApp = createBundlePortletApp(
 				bundle, bundleClassLoader, serviceRegistrations);
 
-			com.liferay.portal.model.Portlet portletModel = buildPortletModel(
-				bundlePortletApp, portletId);
+			com.liferay.portal.kernel.model.Portlet portletModel =
+				buildPortletModel(bundlePortletApp, portletId);
 
 			portletModel.setPortletName(portletName);
 
@@ -363,10 +364,10 @@ public class PortletTracker
 		}
 	}
 
-	protected com.liferay.portal.model.Portlet buildPortletModel(
+	protected com.liferay.portal.kernel.model.Portlet buildPortletModel(
 		BundlePortletApp bundlePortletApp, String portletId) {
 
-		com.liferay.portal.model.Portlet portletModel =
+		com.liferay.portal.kernel.model.Portlet portletModel =
 			_portletLocalService.createPortlet(0);
 
 		portletModel.setPortletId(portletId);
@@ -382,7 +383,7 @@ public class PortletTracker
 
 	protected void checkResourceBundles(
 		BundleContext bundleContext, ClassLoader classLoader,
-		com.liferay.portal.model.Portlet portletModel,
+		com.liferay.portal.kernel.model.Portlet portletModel,
 		ServiceRegistrations serviceRegistrations) {
 
 		if (Validator.isBlank(portletModel.getResourceBundle())) {
@@ -454,7 +455,7 @@ public class PortletTracker
 
 	protected void collectApplicationTypes(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Set<ApplicationType> applicationTypes = new HashSet<>();
 
@@ -484,12 +485,12 @@ public class PortletTracker
 
 	protected void collectCacheScope(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 	}
 
 	protected void collectExpirationCache(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		int expirationCache = GetterUtil.getInteger(
 			serviceReference.getProperty("javax.portlet.expiration-cache"));
@@ -499,7 +500,7 @@ public class PortletTracker
 
 	protected void collectInitParams(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Map<String, String> initParams = new HashMap<>();
 
@@ -522,7 +523,7 @@ public class PortletTracker
 
 	protected void collectJxPortletFeatures(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		collectApplicationTypes(serviceReference, portletModel);
 		collectCacheScope(serviceReference, portletModel);
@@ -541,7 +542,7 @@ public class PortletTracker
 
 	protected void collectLiferayFeatures(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		portletModel.setActionTimeout(
 			GetterUtil.getInteger(
@@ -725,7 +726,7 @@ public class PortletTracker
 
 	protected void collectPortletInfo(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		String portletInfoTitle = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.info.title"));
@@ -750,7 +751,7 @@ public class PortletTracker
 
 	protected void collectPortletModes(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Map<String, Set<String>> portletModes = new HashMap<>();
 
@@ -785,7 +786,7 @@ public class PortletTracker
 
 	protected void collectPortletPreferences(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		String defaultPreferences = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.preferences"));
@@ -813,7 +814,7 @@ public class PortletTracker
 
 	protected void collectResourceBundle(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		String resourceBundle = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.resource-bundle"),
@@ -824,7 +825,7 @@ public class PortletTracker
 
 	protected void collectSecurityRoleRefs(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Set<String> unlinkedRoles = new HashSet<>();
 
@@ -851,7 +852,7 @@ public class PortletTracker
 
 	protected void collectSupportedProcessingEvents(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Set<QName> processingEvents = new HashSet<>();
 
@@ -895,7 +896,7 @@ public class PortletTracker
 
 	protected void collectSupportedPublicRenderParameters(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Set<PublicRenderParameter> publicRenderParameters = new HashSet<>();
 
@@ -933,7 +934,7 @@ public class PortletTracker
 
 	protected void collectSupportedPublishingEvents(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Set<QName> publishingEvents = new HashSet<>();
 
@@ -966,7 +967,7 @@ public class PortletTracker
 
 	protected void collectWindowStates(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel) {
+		com.liferay.portal.kernel.model.Portlet portletModel) {
 
 		Map<String, Set<String>> windowStates = new HashMap<>();
 
@@ -1030,7 +1031,7 @@ public class PortletTracker
 			return bundlePortletApp;
 		}
 
-		com.liferay.portal.model.Portlet portalPortletModel =
+		com.liferay.portal.kernel.model.Portlet portalPortletModel =
 			_portletLocalService.getPortletById(
 				CompanyConstants.SYSTEM, PortletKeys.PORTAL);
 
@@ -1203,7 +1204,7 @@ public class PortletTracker
 
 	protected void deployPortlet(
 			ServiceReference<Portlet> serviceReference,
-			com.liferay.portal.model.Portlet portletModel,
+			com.liferay.portal.kernel.model.Portlet portletModel,
 			List<Company> companies)
 		throws PortalException {
 
@@ -1211,8 +1212,8 @@ public class PortletTracker
 			get(serviceReference, "display-category"), "category.undefined");
 
 		for (Company company : companies) {
-			com.liferay.portal.model.Portlet companyPortletModel =
-				(com.liferay.portal.model.Portlet)portletModel.clone();
+			com.liferay.portal.kernel.model.Portlet companyPortletModel =
+				(com.liferay.portal.kernel.model.Portlet)portletModel.clone();
 
 			companyPortletModel.setCompanyId(company.getCompanyId());
 
@@ -1398,7 +1399,7 @@ public class PortletTracker
 	private SAXReader _saxReader;
 	private final ConcurrentMap<Bundle, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
-	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>
+	private ServiceTracker<Portlet, com.liferay.portal.kernel.model.Portlet>
 		_serviceTracker;
 
 	private static class JspServletWrapper extends HttpServlet {

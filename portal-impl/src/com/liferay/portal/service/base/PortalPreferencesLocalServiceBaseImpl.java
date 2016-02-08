@@ -29,17 +29,17 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.model.PortalPreferences;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.PortalPreferencesLocalService;
-import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
 
 import java.io.Serializable;
 
@@ -56,7 +56,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl
- * @see com.liferay.portal.service.PortalPreferencesLocalServiceUtil
+ * @see com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -66,7 +66,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.PortalPreferencesLocalServiceUtil} to access the portal preferences local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil} to access the portal preferences local service.
 	 */
 
 	/**
@@ -227,7 +227,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PortalPreferencesLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PortalPreferences.class);
 
@@ -240,7 +240,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PortalPreferencesLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(PortalPreferences.class);
 
@@ -252,7 +252,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PortalPreferencesLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PortalPreferences.class);
 
@@ -371,13 +371,13 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.PortalPreferences",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.PortalPreferences",
 			portalPreferencesLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.model.PortalPreferences");
+			"com.liferay.portal.kernel.model.PortalPreferences");
 	}
 
 	/**
@@ -422,7 +422,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.PortalPreferencesLocalService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.PortalPreferencesLocalService.class)
 	protected PortalPreferencesLocalService portalPreferencesLocalService;
 	@BeanReference(type = PortalPreferencesPersistence.class)
 	protected PortalPreferencesPersistence portalPreferencesPersistence;

@@ -15,7 +15,7 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.kernel.model.BaseModelListener;
 
 /**
  * @author Bryan Engler

@@ -105,7 +105,7 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.User"
+			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"

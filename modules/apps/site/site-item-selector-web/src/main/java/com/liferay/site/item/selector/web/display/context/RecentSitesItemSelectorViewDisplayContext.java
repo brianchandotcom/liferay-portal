@@ -14,7 +14,7 @@
 
 package com.liferay.site.item.selector.web.display.context;
 
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.RecentGroupManager;

@@ -239,7 +239,7 @@ public class TrashEntryServiceSoap {
 	*/
 	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			TrashEntryServiceUtil.moveEntry(className, classPK,

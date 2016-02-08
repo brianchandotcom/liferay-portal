@@ -15,10 +15,10 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.ResourceAction;
-import com.liferay.portal.model.ResourceBlockConstants;
-import com.liferay.portal.model.ResourceBlockPermissionsContainer;
-import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceBlockConstants;
+import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
+import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.service.base.ResourceTypePermissionLocalServiceBaseImpl;
 
 import java.util.List;

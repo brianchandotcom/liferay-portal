@@ -14,8 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletURLListener;
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletURLListener;
 
 /**
  * @author Brian Wing Shun Chan

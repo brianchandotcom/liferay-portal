@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.OrgLaborServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.OrgLaborServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,7 +54,7 @@ import com.liferay.portal.service.OrgLaborServiceUtil;
  */
 @ProviderType
 public class OrgLaborServiceHttp {
-	public static com.liferay.portal.model.OrgLabor addOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
 		HttpPrincipal httpPrincipal, long organizationId, long typeId,
 		int sunOpen, int sunClose, int monOpen, int monClose, int tueOpen,
 		int tueClose, int wedOpen, int wedClose, int thuOpen, int thuClose,
@@ -82,7 +82,7 @@ public class OrgLaborServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.OrgLabor)returnObj;
+			return (com.liferay.portal.kernel.model.OrgLabor)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -119,7 +119,7 @@ public class OrgLaborServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.OrgLabor getOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLabor getOrgLabor(
 		HttpPrincipal httpPrincipal, long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -142,7 +142,7 @@ public class OrgLaborServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.OrgLabor)returnObj;
+			return (com.liferay.portal.kernel.model.OrgLabor)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -151,7 +151,7 @@ public class OrgLaborServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.OrgLabor> getOrgLabors(
+	public static java.util.List<com.liferay.portal.kernel.model.OrgLabor> getOrgLabors(
 		HttpPrincipal httpPrincipal, long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -174,7 +174,7 @@ public class OrgLaborServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.OrgLabor>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.OrgLabor>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -183,7 +183,7 @@ public class OrgLaborServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.OrgLabor updateOrgLabor(
+	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
 		HttpPrincipal httpPrincipal, long orgLaborId, long typeId, int sunOpen,
 		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
 		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
@@ -211,7 +211,7 @@ public class OrgLaborServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.OrgLabor)returnObj;
+			return (com.liferay.portal.kernel.model.OrgLabor)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

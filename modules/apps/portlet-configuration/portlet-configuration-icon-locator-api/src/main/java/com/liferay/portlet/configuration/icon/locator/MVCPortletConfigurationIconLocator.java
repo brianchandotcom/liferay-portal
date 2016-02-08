@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.configuration.icon.locator;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,9 +20,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -692,7 +692,7 @@ public class MBMailingListWrapper implements MBMailingList,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mbMailingList.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -937,7 +937,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.message.boards.kernel.model.MBMailingList> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBMailingList> toCacheModel() {
 		return _mbMailingList.toCacheModel();
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -28,9 +27,21 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.TeamPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -41,19 +52,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.MVCCModel;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupImpl;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.persistence.CompanyProvider;
-import com.liferay.portal.service.persistence.CompanyProviderWrapper;
-import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.TeamPersistence;
-import com.liferay.portal.service.persistence.UserGroupPersistence;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.io.Serializable;
 
@@ -75,7 +75,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see UserGroupPersistence
- * @see com.liferay.portal.service.persistence.UserGroupUtil
+ * @see com.liferay.portal.kernel.service.persistence.UserGroupUtil
  * @generated
  */
 @ProviderType
@@ -4506,7 +4506,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
-	 * Returns the user group with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
+	 * Returns the user group with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group
@@ -4902,7 +4902,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the groups associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Group> getGroups(long pk) {
+	public List<com.liferay.portal.kernel.model.Group> getGroups(long pk) {
 		return getGroups(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -4919,8 +4919,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the range of groups associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end) {
+	public List<com.liferay.portal.kernel.model.Group> getGroups(long pk,
+		int start, int end) {
 		return getGroups(pk, start, end, null);
 	}
 
@@ -4938,9 +4938,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the ordered range of groups associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end,
-		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
+	public List<com.liferay.portal.kernel.model.Group> getGroups(long pk,
+		int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.Group> orderByComparator) {
 		return userGroupToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5013,7 +5013,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param group the group
 	 */
 	@Override
-	public void addGroup(long pk, com.liferay.portal.model.Group group) {
+	public void addGroup(long pk, com.liferay.portal.kernel.model.Group group) {
 		UserGroup userGroup = fetchByPrimaryKey(pk);
 
 		if (userGroup == null) {
@@ -5057,7 +5057,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param groups the groups
 	 */
 	@Override
-	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups) {
+	public void addGroups(long pk,
+		List<com.liferay.portal.kernel.model.Group> groups) {
 		long companyId = 0;
 
 		UserGroup userGroup = fetchByPrimaryKey(pk);
@@ -5069,7 +5070,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			companyId = userGroup.getCompanyId();
 		}
 
-		for (com.liferay.portal.model.Group group : groups) {
+		for (com.liferay.portal.kernel.model.Group group : groups) {
 			userGroupToGroupTableMapper.addTableMapping(companyId, pk,
 				group.getPrimaryKey());
 		}
@@ -5103,7 +5104,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param group the group
 	 */
 	@Override
-	public void removeGroup(long pk, com.liferay.portal.model.Group group) {
+	public void removeGroup(long pk, com.liferay.portal.kernel.model.Group group) {
 		userGroupToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 	}
 
@@ -5128,8 +5129,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void removeGroups(long pk,
-		List<com.liferay.portal.model.Group> groups) {
-		for (com.liferay.portal.model.Group group : groups) {
+		List<com.liferay.portal.kernel.model.Group> groups) {
+		for (com.liferay.portal.kernel.model.Group group : groups) {
 			userGroupToGroupTableMapper.deleteTableMapping(pk,
 				group.getPrimaryKey());
 		}
@@ -5181,12 +5182,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param groups the groups to be associated with the user group
 	 */
 	@Override
-	public void setGroups(long pk, List<com.liferay.portal.model.Group> groups) {
+	public void setGroups(long pk,
+		List<com.liferay.portal.kernel.model.Group> groups) {
 		try {
 			long[] groupPKs = new long[groups.size()];
 
 			for (int i = 0; i < groups.size(); i++) {
-				com.liferay.portal.model.Group group = groups.get(i);
+				com.liferay.portal.kernel.model.Group group = groups.get(i);
 
 				groupPKs[i] = group.getPrimaryKey();
 			}
@@ -5218,7 +5220,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the teams associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Team> getTeams(long pk) {
+	public List<com.liferay.portal.kernel.model.Team> getTeams(long pk) {
 		return getTeams(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -5235,8 +5237,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the range of teams associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end) {
+	public List<com.liferay.portal.kernel.model.Team> getTeams(long pk,
+		int start, int end) {
 		return getTeams(pk, start, end, null);
 	}
 
@@ -5254,9 +5256,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the ordered range of teams associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end,
-		OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+	public List<com.liferay.portal.kernel.model.Team> getTeams(long pk,
+		int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.Team> orderByComparator) {
 		return userGroupToTeamTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5329,7 +5331,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param team the team
 	 */
 	@Override
-	public void addTeam(long pk, com.liferay.portal.model.Team team) {
+	public void addTeam(long pk, com.liferay.portal.kernel.model.Team team) {
 		UserGroup userGroup = fetchByPrimaryKey(pk);
 
 		if (userGroup == null) {
@@ -5373,7 +5375,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param teams the teams
 	 */
 	@Override
-	public void addTeams(long pk, List<com.liferay.portal.model.Team> teams) {
+	public void addTeams(long pk,
+		List<com.liferay.portal.kernel.model.Team> teams) {
 		long companyId = 0;
 
 		UserGroup userGroup = fetchByPrimaryKey(pk);
@@ -5385,7 +5388,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			companyId = userGroup.getCompanyId();
 		}
 
-		for (com.liferay.portal.model.Team team : teams) {
+		for (com.liferay.portal.kernel.model.Team team : teams) {
 			userGroupToTeamTableMapper.addTableMapping(companyId, pk,
 				team.getPrimaryKey());
 		}
@@ -5419,7 +5422,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param team the team
 	 */
 	@Override
-	public void removeTeam(long pk, com.liferay.portal.model.Team team) {
+	public void removeTeam(long pk, com.liferay.portal.kernel.model.Team team) {
 		userGroupToTeamTableMapper.deleteTableMapping(pk, team.getPrimaryKey());
 	}
 
@@ -5443,8 +5446,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param teams the teams
 	 */
 	@Override
-	public void removeTeams(long pk, List<com.liferay.portal.model.Team> teams) {
-		for (com.liferay.portal.model.Team team : teams) {
+	public void removeTeams(long pk,
+		List<com.liferay.portal.kernel.model.Team> teams) {
+		for (com.liferay.portal.kernel.model.Team team : teams) {
 			userGroupToTeamTableMapper.deleteTableMapping(pk,
 				team.getPrimaryKey());
 		}
@@ -5495,12 +5499,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param teams the teams to be associated with the user group
 	 */
 	@Override
-	public void setTeams(long pk, List<com.liferay.portal.model.Team> teams) {
+	public void setTeams(long pk,
+		List<com.liferay.portal.kernel.model.Team> teams) {
 		try {
 			long[] teamPKs = new long[teams.size()];
 
 			for (int i = 0; i < teams.size(); i++) {
-				com.liferay.portal.model.Team team = teams.get(i);
+				com.liferay.portal.kernel.model.Team team = teams.get(i);
 
 				teamPKs[i] = team.getPrimaryKey();
 			}
@@ -5532,7 +5537,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the users associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.User> getUsers(long pk) {
+	public List<com.liferay.portal.kernel.model.User> getUsers(long pk) {
 		return getUsers(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -5549,8 +5554,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the range of users associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end) {
+	public List<com.liferay.portal.kernel.model.User> getUsers(long pk,
+		int start, int end) {
 		return getUsers(pk, start, end, null);
 	}
 
@@ -5568,9 +5573,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @return the ordered range of users associated with the user group
 	 */
 	@Override
-	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end,
-		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
+	public List<com.liferay.portal.kernel.model.User> getUsers(long pk,
+		int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.User> orderByComparator) {
 		return userGroupToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5643,7 +5648,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param user the user
 	 */
 	@Override
-	public void addUser(long pk, com.liferay.portal.model.User user) {
+	public void addUser(long pk, com.liferay.portal.kernel.model.User user) {
 		UserGroup userGroup = fetchByPrimaryKey(pk);
 
 		if (userGroup == null) {
@@ -5687,7 +5692,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param users the users
 	 */
 	@Override
-	public void addUsers(long pk, List<com.liferay.portal.model.User> users) {
+	public void addUsers(long pk,
+		List<com.liferay.portal.kernel.model.User> users) {
 		long companyId = 0;
 
 		UserGroup userGroup = fetchByPrimaryKey(pk);
@@ -5699,7 +5705,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			companyId = userGroup.getCompanyId();
 		}
 
-		for (com.liferay.portal.model.User user : users) {
+		for (com.liferay.portal.kernel.model.User user : users) {
 			userGroupToUserTableMapper.addTableMapping(companyId, pk,
 				user.getPrimaryKey());
 		}
@@ -5733,7 +5739,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param user the user
 	 */
 	@Override
-	public void removeUser(long pk, com.liferay.portal.model.User user) {
+	public void removeUser(long pk, com.liferay.portal.kernel.model.User user) {
 		userGroupToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
 	}
 
@@ -5757,8 +5763,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param users the users
 	 */
 	@Override
-	public void removeUsers(long pk, List<com.liferay.portal.model.User> users) {
-		for (com.liferay.portal.model.User user : users) {
+	public void removeUsers(long pk,
+		List<com.liferay.portal.kernel.model.User> users) {
+		for (com.liferay.portal.kernel.model.User user : users) {
 			userGroupToUserTableMapper.deleteTableMapping(pk,
 				user.getPrimaryKey());
 		}
@@ -5809,12 +5816,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param users the users to be associated with the user group
 	 */
 	@Override
-	public void setUsers(long pk, List<com.liferay.portal.model.User> users) {
+	public void setUsers(long pk,
+		List<com.liferay.portal.kernel.model.User> users) {
 		try {
 			long[] userPKs = new long[users.size()];
 
 			for (int i = 0; i < users.size(); i++) {
-				com.liferay.portal.model.User user = users.get(i);
+				com.liferay.portal.kernel.model.User user = users.get(i);
 
 				userPKs[i] = user.getPrimaryKey();
 			}
@@ -5867,13 +5875,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	protected TableMapper<UserGroup, com.liferay.portal.model.Group> userGroupToGroupTableMapper;
+	protected TableMapper<UserGroup, com.liferay.portal.kernel.model.Group> userGroupToGroupTableMapper;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
-	protected TableMapper<UserGroup, com.liferay.portal.model.Team> userGroupToTeamTableMapper;
+	protected TableMapper<UserGroup, com.liferay.portal.kernel.model.Team> userGroupToTeamTableMapper;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	protected TableMapper<UserGroup, com.liferay.portal.model.User> userGroupToUserTableMapper;
+	protected TableMapper<UserGroup, com.liferay.portal.kernel.model.User> userGroupToUserTableMapper;
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
 	private static final String _SQL_SELECT_USERGROUP_WHERE_PKS_IN = "SELECT userGroup FROM UserGroup userGroup WHERE userGroupId IN (";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";

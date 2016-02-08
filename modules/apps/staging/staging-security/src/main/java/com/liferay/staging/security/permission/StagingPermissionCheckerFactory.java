@@ -14,9 +14,9 @@
 
 package com.liferay.staging.security.permission;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.model.User;
 
 import java.util.Collection;
 import java.util.Iterator;

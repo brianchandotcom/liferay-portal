@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -28,7 +29,6 @@ import com.liferay.portal.lock.exception.ExpiredLockException;
 import com.liferay.portal.lock.exception.NoSuchLockException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl;
-import com.liferay.portal.model.User;
 
 import java.util.Date;
 import java.util.List;

@@ -76,7 +76,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Role"
+		className="com.liferay.portal.kernel.model.Role"
 		keyProperty="roleId"
 		modelVar="role"
 	>
@@ -112,7 +112,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Team"
+		className="com.liferay.portal.kernel.model.Team"
 		keyProperty="teamId"
 		modelVar="team"
 	>

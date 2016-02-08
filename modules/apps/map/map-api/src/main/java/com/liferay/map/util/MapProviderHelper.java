@@ -15,10 +15,10 @@
 package com.liferay.map.util;
 
 import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalService;
 
 import javax.portlet.PortletPreferences;
 

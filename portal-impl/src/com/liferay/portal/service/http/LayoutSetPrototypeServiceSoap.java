@@ -18,8 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -36,10 +36,10 @@ import java.util.Map;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.LayoutSetPrototypeSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.LayoutSetPrototypeSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.LayoutSetPrototype}, that is translated to a
- * {@link com.liferay.portal.model.LayoutSetPrototypeSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.LayoutSetPrototype}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.LayoutSetPrototypeSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -62,19 +62,19 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutSetPrototypeServiceHttp
- * @see com.liferay.portal.model.LayoutSetPrototypeSoap
+ * @see com.liferay.portal.kernel.model.LayoutSetPrototypeSoap
  * @see LayoutSetPrototypeServiceUtil
  * @generated
  */
 @ProviderType
 public class LayoutSetPrototypeServiceSoap {
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, boolean active,
 		boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -82,10 +82,10 @@ public class LayoutSetPrototypeServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(nameMap,
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(nameMap,
 					descriptionMap, active, layoutsUpdateable, serviceContext);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -99,20 +99,20 @@ public class LayoutSetPrototypeServiceSoap {
 	Map, boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,
 		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(nameMap,
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(nameMap,
 					description, active, layoutsUpdateable, serviceContext);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -133,12 +133,12 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap fetchLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap fetchLayoutSetPrototype(
 		long layoutSetPrototypeId) throws RemoteException {
 		try {
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -147,12 +147,12 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap getLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap getLayoutSetPrototype(
 		long layoutSetPrototypeId) throws RemoteException {
 		try {
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -161,15 +161,15 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap[] search(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap[] search(
 		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutSetPrototype> obc)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.LayoutSetPrototype> returnValue =
+			java.util.List<com.liferay.portal.kernel.model.LayoutSetPrototype> returnValue =
 				LayoutSetPrototypeServiceUtil.search(companyId, active, obc);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModels(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -178,13 +178,13 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, boolean active,
 		boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -192,11 +192,11 @@ public class LayoutSetPrototypeServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
 					nameMap, descriptionMap, active, layoutsUpdateable,
 					serviceContext);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -211,21 +211,21 @@ public class LayoutSetPrototypeServiceSoap {
 	ServiceContext)}
 	*/
 	@Deprecated
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,
 		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
 					nameMap, description, active, layoutsUpdateable,
 					serviceContext);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -234,14 +234,14 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
+	public static com.liferay.portal.kernel.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String settings)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
+			com.liferay.portal.kernel.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
 					settings);
 
-			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

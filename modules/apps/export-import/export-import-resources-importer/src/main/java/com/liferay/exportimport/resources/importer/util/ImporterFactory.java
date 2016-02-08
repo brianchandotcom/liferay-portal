@@ -16,11 +16,11 @@ package com.liferay.exportimport.resources.importer.util;
 
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalService;
 
 import java.net.URL;
 import java.net.URLConnection;

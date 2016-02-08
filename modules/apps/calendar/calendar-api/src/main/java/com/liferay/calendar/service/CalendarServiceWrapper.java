@@ -16,7 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CalendarService}.
@@ -39,7 +39,7 @@ public class CalendarServiceWrapper implements CalendarService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.addCalendar(groupId, calendarResourceId,
 			nameMap, descriptionMap, timeZoneId, color, defaultCalendar,
@@ -197,7 +197,8 @@ public class CalendarServiceWrapper implements CalendarService,
 	public com.liferay.calendar.model.Calendar updateCalendar(long calendarId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int color, com.liferay.portal.service.ServiceContext serviceContext)
+		int color,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.updateCalendar(calendarId, nameMap,
 			descriptionMap, color, serviceContext);
@@ -209,7 +210,7 @@ public class CalendarServiceWrapper implements CalendarService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String timeZoneId, int color, boolean defaultCalendar,
 		boolean enableComments, boolean enableRatings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.updateCalendar(calendarId, nameMap,
 			descriptionMap, timeZoneId, color, defaultCalendar, enableComments,
@@ -218,7 +219,8 @@ public class CalendarServiceWrapper implements CalendarService,
 
 	@Override
 	public com.liferay.calendar.model.Calendar updateColor(long calendarId,
-		int color, com.liferay.portal.service.ServiceContext serviceContext)
+		int color,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarService.updateColor(calendarId, color, serviceContext);
 	}

@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.PluginSettingServiceUtil;
+import com.liferay.portal.kernel.service.PluginSettingServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.PluginSettingSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.PluginSettingSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.PluginSetting}, that is translated to a
- * {@link com.liferay.portal.model.PluginSettingSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.PluginSetting}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.PluginSettingSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,20 +58,20 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see PluginSettingServiceHttp
- * @see com.liferay.portal.model.PluginSettingSoap
+ * @see com.liferay.portal.kernel.model.PluginSettingSoap
  * @see PluginSettingServiceUtil
  * @generated
  */
 @ProviderType
 public class PluginSettingServiceSoap {
-	public static com.liferay.portal.model.PluginSettingSoap updatePluginSetting(
+	public static com.liferay.portal.kernel.model.PluginSettingSoap updatePluginSetting(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
 		java.lang.String roles, boolean active) throws RemoteException {
 		try {
-			com.liferay.portal.model.PluginSetting returnValue = PluginSettingServiceUtil.updatePluginSetting(companyId,
+			com.liferay.portal.kernel.model.PluginSetting returnValue = PluginSettingServiceUtil.updatePluginSetting(companyId,
 					pluginId, pluginType, roles, active);
 
-			return com.liferay.portal.model.PluginSettingSoap.toSoapModel(returnValue);
+			return com.liferay.portal.kernel.model.PluginSettingSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

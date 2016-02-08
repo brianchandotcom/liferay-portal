@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.model.NestedSetsTreeNodeModel;
 
 import java.util.Iterator;
 import java.util.List;

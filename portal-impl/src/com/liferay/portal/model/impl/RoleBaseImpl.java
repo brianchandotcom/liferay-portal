@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Role;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Role service. Represents a row in the &quot;Role_&quot; database table, with each column mapped to a property of this class.

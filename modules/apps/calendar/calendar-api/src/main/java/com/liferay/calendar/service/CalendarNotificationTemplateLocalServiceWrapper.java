@@ -16,7 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CalendarNotificationTemplateLocalService}.
@@ -53,7 +53,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 		java.lang.String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.addCalendarNotificationTemplate(userId,
 			calendarId, notificationType, notificationTypeSettings,
@@ -107,8 +107,8 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.deletePersistedModel(persistedModel);
 	}
@@ -345,7 +345,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.getPersistedModel(primaryKeyObj);
@@ -368,7 +368,7 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 		long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.updateCalendarNotificationTemplate(calendarNotificationTemplateId,
 			notificationTypeSettings, subject, body, serviceContext);

@@ -16,7 +16,7 @@ package com.liferay.message.boards.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MBThreadLocalService}.
@@ -49,7 +49,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	public com.liferay.message.boards.kernel.model.MBThread addThread(
 		long categoryId,
 		com.liferay.message.boards.kernel.model.MBMessage message,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.addThread(categoryId, message,
 			serviceContext);
@@ -97,8 +97,8 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.deletePersistedModel(persistedModel);
 	}
@@ -427,7 +427,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.getPersistedModel(primaryKeyObj);
@@ -566,7 +566,7 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	@Override
 	public com.liferay.message.boards.kernel.model.MBThread splitThread(
 		long userId, long messageId, java.lang.String subject,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.splitThread(userId, messageId, subject,
 			serviceContext);

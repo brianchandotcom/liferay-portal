@@ -40,7 +40,7 @@ import javax.servlet.http.HttpSession;
 public class PortletServlet extends HttpServlet {
 
 	public static final String PORTLET_APP =
-		"com.liferay.portal.model.PortletApp";
+		"com.liferay.portal.kernel.model.PortletApp";
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

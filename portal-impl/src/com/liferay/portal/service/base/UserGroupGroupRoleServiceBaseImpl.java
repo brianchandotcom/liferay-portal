@@ -20,17 +20,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleService;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
+import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
+import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.UserGroupGroupRole;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.UserGroupGroupRoleService;
-import com.liferay.portal.service.persistence.RoleFinder;
-import com.liferay.portal.service.persistence.RolePersistence;
-import com.liferay.portal.service.persistence.UserGroupFinder;
-import com.liferay.portal.service.persistence.UserGroupGroupRoleFinder;
-import com.liferay.portal.service.persistence.UserGroupGroupRolePersistence;
-import com.liferay.portal.service.persistence.UserGroupPersistence;
 
 import javax.sql.DataSource;
 
@@ -43,7 +43,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl
- * @see com.liferay.portal.service.UserGroupGroupRoleServiceUtil
+ * @see com.liferay.portal.kernel.service.UserGroupGroupRoleServiceUtil
  * @generated
  */
 public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
@@ -51,7 +51,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.UserGroupGroupRoleServiceUtil} to access the user group group role remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.UserGroupGroupRoleServiceUtil} to access the user group group role remote service.
 	 */
 
 	/**
@@ -59,7 +59,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user group group role local service
 	 */
-	public com.liferay.portal.service.UserGroupGroupRoleLocalService getUserGroupGroupRoleLocalService() {
+	public com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService getUserGroupGroupRoleLocalService() {
 		return userGroupGroupRoleLocalService;
 	}
 
@@ -69,7 +69,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param userGroupGroupRoleLocalService the user group group role local service
 	 */
 	public void setUserGroupGroupRoleLocalService(
-		com.liferay.portal.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
+		com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
 		this.userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
 	}
 
@@ -154,7 +154,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the role local service
 	 */
-	public com.liferay.portal.service.RoleLocalService getRoleLocalService() {
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
 		return roleLocalService;
 	}
 
@@ -164,7 +164,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param roleLocalService the role local service
 	 */
 	public void setRoleLocalService(
-		com.liferay.portal.service.RoleLocalService roleLocalService) {
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
@@ -173,7 +173,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the role remote service
 	 */
-	public com.liferay.portal.service.RoleService getRoleService() {
+	public com.liferay.portal.kernel.service.RoleService getRoleService() {
 		return roleService;
 	}
 
@@ -183,7 +183,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param roleService the role remote service
 	 */
 	public void setRoleService(
-		com.liferay.portal.service.RoleService roleService) {
+		com.liferay.portal.kernel.service.RoleService roleService) {
 		this.roleService = roleService;
 	}
 
@@ -228,7 +228,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user group local service
 	 */
-	public com.liferay.portal.service.UserGroupLocalService getUserGroupLocalService() {
+	public com.liferay.portal.kernel.service.UserGroupLocalService getUserGroupLocalService() {
 		return userGroupLocalService;
 	}
 
@@ -238,7 +238,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param userGroupLocalService the user group local service
 	 */
 	public void setUserGroupLocalService(
-		com.liferay.portal.service.UserGroupLocalService userGroupLocalService) {
+		com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService) {
 		this.userGroupLocalService = userGroupLocalService;
 	}
 
@@ -247,7 +247,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user group remote service
 	 */
-	public com.liferay.portal.service.UserGroupService getUserGroupService() {
+	public com.liferay.portal.kernel.service.UserGroupService getUserGroupService() {
 		return userGroupService;
 	}
 
@@ -257,7 +257,7 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param userGroupService the user group remote service
 	 */
 	public void setUserGroupService(
-		com.liferay.portal.service.UserGroupService userGroupService) {
+		com.liferay.portal.kernel.service.UserGroupService userGroupService) {
 		this.userGroupService = userGroupService;
 	}
 
@@ -346,9 +346,9 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.UserGroupGroupRoleLocalService.class)
-	protected com.liferay.portal.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserGroupGroupRoleService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService.class)
+	protected com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupGroupRoleService.class)
 	protected UserGroupGroupRoleService userGroupGroupRoleService;
 	@BeanReference(type = UserGroupGroupRolePersistence.class)
 	protected UserGroupGroupRolePersistence userGroupGroupRolePersistence;
@@ -356,18 +356,18 @@ public abstract class UserGroupGroupRoleServiceBaseImpl extends BaseServiceImpl
 	protected UserGroupGroupRoleFinder userGroupGroupRoleFinder;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
-	protected com.liferay.portal.service.RoleLocalService roleLocalService;
-	@BeanReference(type = com.liferay.portal.service.RoleService.class)
-	protected com.liferay.portal.service.RoleService roleService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleService.class)
+	protected com.liferay.portal.kernel.service.RoleService roleService;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
-	@BeanReference(type = com.liferay.portal.service.UserGroupLocalService.class)
-	protected com.liferay.portal.service.UserGroupLocalService userGroupLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserGroupService.class)
-	protected com.liferay.portal.service.UserGroupService userGroupService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupLocalService.class)
+	protected com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupService.class)
+	protected com.liferay.portal.kernel.service.UserGroupService userGroupService;
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
 	@BeanReference(type = UserGroupFinder.class)

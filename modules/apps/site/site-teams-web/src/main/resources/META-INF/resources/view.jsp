@@ -114,7 +114,7 @@ teamSearchContainer.setTotal(teamsCount);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Team"
+			className="com.liferay.portal.kernel.model.Team"
 			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="teamId"

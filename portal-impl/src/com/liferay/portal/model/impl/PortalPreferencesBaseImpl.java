@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.PortalPreferences;
-import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.model.PortalPreferences;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 
 /**
  * The extended model base implementation for the PortalPreferences service. Represents a row in the &quot;PortalPreferences&quot; database table, with each column mapped to a property of this class.

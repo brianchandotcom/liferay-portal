@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Image;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Image service. Represents a row in the &quot;Image&quot; database table, with each column mapped to a property of this class.

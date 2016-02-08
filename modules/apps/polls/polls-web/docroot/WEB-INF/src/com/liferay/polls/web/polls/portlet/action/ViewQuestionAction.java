@@ -16,9 +16,9 @@ package com.liferay.polls.web.polls.portlet.action;
 
 import com.liferay.polls.service.PollsVoteServiceUtil;
 import com.liferay.polls.web.util.PollsUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

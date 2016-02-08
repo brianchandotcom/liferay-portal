@@ -58,7 +58,7 @@ public class BackgroundTaskLocalServiceUtil {
 		java.lang.String[] servletContextNames,
 		java.lang.Class<?> taskExecutorClass,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addBackgroundTask(userId, groupId, name,
@@ -70,7 +70,7 @@ public class BackgroundTaskLocalServiceUtil {
 		long userId, long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addBackgroundTask(userId, groupId, name,
@@ -97,7 +97,8 @@ public class BackgroundTaskLocalServiceUtil {
 	public static com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext) {
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
 			status, serviceContext);
@@ -107,7 +108,7 @@ public class BackgroundTaskLocalServiceUtil {
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
 			status, statusMessage, serviceContext);
@@ -178,8 +179,8 @@ public class BackgroundTaskLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -495,7 +496,7 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);

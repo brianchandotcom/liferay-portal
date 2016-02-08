@@ -15,7 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.service.base.ResourceBlockServiceBaseImpl;
 
 import java.util.List;

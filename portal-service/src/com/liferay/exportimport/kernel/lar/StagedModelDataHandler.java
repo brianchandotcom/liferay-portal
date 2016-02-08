@@ -15,8 +15,8 @@
 package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 
 import java.util.List;
 import java.util.Map;

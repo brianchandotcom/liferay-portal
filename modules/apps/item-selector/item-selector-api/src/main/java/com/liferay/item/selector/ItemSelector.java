@@ -14,9 +14,9 @@
 
 package com.liferay.item.selector;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.model.Group;
 
 import java.util.List;
 import java.util.Map;

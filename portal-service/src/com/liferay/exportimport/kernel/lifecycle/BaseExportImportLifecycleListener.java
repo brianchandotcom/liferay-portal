@@ -48,8 +48,8 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.TransientValue;
-import com.liferay.portal.model.StagedModel;
 
 import java.io.Serializable;
 

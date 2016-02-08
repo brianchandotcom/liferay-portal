@@ -16,7 +16,7 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PollsQuestionService}.
@@ -40,7 +40,7 @@ public class PollsQuestionServiceWrapper implements PollsQuestionService,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionService.addQuestion(titleMap, descriptionMap,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -78,7 +78,7 @@ public class PollsQuestionServiceWrapper implements PollsQuestionService,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionService.updateQuestion(questionId, titleMap,
 			descriptionMap, expirationDateMonth, expirationDateDay,

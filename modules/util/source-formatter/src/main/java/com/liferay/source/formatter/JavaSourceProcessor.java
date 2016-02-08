@@ -3629,7 +3629,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/test/**/*PersistenceTest.java", "**/source/formatter/**"
 		};
 		includes = new String[] {
-			"**/com/liferay/portal/service/ServiceContext*.java",
+			"**/com/liferay/portal/kernel/service/ServiceContext*.java",
 			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
 			"**/portal-test/**/portal/service/**/*.java",
 			"**/portal-test-internal/**/portal/service/**/*.java",

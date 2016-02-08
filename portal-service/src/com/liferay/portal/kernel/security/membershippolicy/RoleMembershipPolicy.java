@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.Role;
 
 import java.io.Serializable;
 

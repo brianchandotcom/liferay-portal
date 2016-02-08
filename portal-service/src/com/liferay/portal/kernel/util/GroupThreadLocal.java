@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupConstants;
 
 /**
  * @author Shinn Lok

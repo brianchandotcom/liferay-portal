@@ -16,12 +16,12 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 

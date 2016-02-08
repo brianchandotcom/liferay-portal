@@ -100,7 +100,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.ContainerModel"
+			className="com.liferay.portal.kernel.model.ContainerModel"
 			keyProperty="containerModelId"
 			modelVar="curContainerModel"
 		>

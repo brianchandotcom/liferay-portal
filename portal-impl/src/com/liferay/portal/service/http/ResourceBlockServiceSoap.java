@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.ResourceBlockServiceUtil;
+import com.liferay.portal.kernel.service.ResourceBlockServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portal.model.ResourceBlockSoap}.
+ * is translated to an array of {@link com.liferay.portal.kernel.model.ResourceBlockSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portal.model.ResourceBlock}, that is translated to a
- * {@link com.liferay.portal.model.ResourceBlockSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.kernel.model.ResourceBlock}, that is translated to a
+ * {@link com.liferay.portal.kernel.model.ResourceBlockSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,7 +58,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockServiceHttp
- * @see com.liferay.portal.model.ResourceBlockSoap
+ * @see com.liferay.portal.kernel.model.ResourceBlockSoap
  * @see ResourceBlockServiceUtil
  * @generated
  */

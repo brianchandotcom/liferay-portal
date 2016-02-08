@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.io.Serializable;
 

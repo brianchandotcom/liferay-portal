@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.BaseModel;
 
 import java.util.List;
 

@@ -16,7 +16,7 @@ package com.liferay.roles.admin.web.custom.attributes;
 
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

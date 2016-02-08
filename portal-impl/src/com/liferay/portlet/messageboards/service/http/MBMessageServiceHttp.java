@@ -59,7 +59,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
 		long classPK, long threadId, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -97,7 +97,7 @@ public class MBMessageServiceHttp {
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -134,7 +134,7 @@ public class MBMessageServiceHttp {
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format, java.lang.String fileName, java.io.File file,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			java.io.FileNotFoundException {
 		try {
@@ -174,7 +174,7 @@ public class MBMessageServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long categoryId, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -211,7 +211,7 @@ public class MBMessageServiceHttp {
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -1012,7 +1012,7 @@ public class MBMessageServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		long messageId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -1050,7 +1050,7 @@ public class MBMessageServiceHttp {
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -1086,30 +1086,30 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _addDiscussionMessageParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, long.class, long.class,
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes1 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, java.util.List.class,
 			boolean.class, double.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes2 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.io.File.class, boolean.class,
 			double.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.util.List.class, boolean.class,
 			double.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageAttachmentParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.io.File.class,
@@ -1205,11 +1205,12 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _updateDiscussionMessageParameterTypes30 = new Class[] {
 			java.lang.String.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateMessageParameterTypes31 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.util.List.class, java.util.List.class, double.class,
-			boolean.class, com.liferay.portal.service.ServiceContext.class
+			boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

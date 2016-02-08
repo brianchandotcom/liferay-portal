@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MDRRuleGroupInstanceLocalService}.
@@ -50,7 +50,7 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId, int priority,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, priority, serviceContext);
@@ -60,7 +60,7 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, serviceContext);
@@ -113,8 +113,8 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.deletePersistedModel(persistedModel);
 	}
@@ -371,7 +371,7 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.getPersistedModel(primaryKeyObj);

@@ -16,9 +16,9 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.ResourcedModel;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.ResourcedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 
 /**
  * @author Mate Thurzo

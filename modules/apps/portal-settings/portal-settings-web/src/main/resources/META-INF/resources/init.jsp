@@ -30,15 +30,18 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
-page import="com.liferay.portal.LocaleException" %><%@
-page import="com.liferay.portal.exception.AccountNameException" %><%@
-page import="com.liferay.portal.exception.CompanyMxException" %><%@
-page import="com.liferay.portal.exception.CompanyVirtualHostException" %><%@
+page import="com.liferay.portal.kernel.exception.AccountNameException" %><%@
+page import="com.liferay.portal.kernel.exception.CompanyMxException" %><%@
+page import="com.liferay.portal.kernel.exception.CompanyVirtualHostException" %><%@
+page import="com.liferay.portal.kernel.exception.LocaleException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.*" %><%@
+page import="com.liferay.portal.kernel.model.impl.*" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.kernel.service.*" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.DynamicInclude" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@

@@ -20,9 +20,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Team;
-import com.liferay.portal.service.TeamLocalService;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
 import java.util.List;

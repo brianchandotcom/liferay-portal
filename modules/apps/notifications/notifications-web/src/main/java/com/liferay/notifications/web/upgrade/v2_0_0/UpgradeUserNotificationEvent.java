@@ -15,9 +15,9 @@
 package com.liferay.notifications.web.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.UserNotificationEventLocalService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -66,7 +66,7 @@ public class LiferayTemplateClassResolverTest {
 	@Test(expected = TemplateException.class)
 	public void testResolvePortalClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
-			"com.liferay.portal.model.User", null, null);
+			"com.liferay.portal.kernel.model.User", null, null);
 	}
 
 	@Test(expected = TemplateException.class)
@@ -92,13 +92,15 @@ public class LiferayTemplateClassResolverTest {
 	public void testResolveRestrictedClass3() throws Exception {
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("allowedClasses", "com.liferay.portal.model.User");
-		properties.put("restrictedClasses", "com.liferay.portal.model.*");
+		properties.put(
+			"allowedClasses", "com.liferay.portal.kernel.model.User");
+		properties.put(
+			"restrictedClasses", "com.liferay.portal.kernel.model.*");
 
 		_liferayTemplateClassResolver.activate(properties);
 
 		_liferayTemplateClassResolver.resolve(
-			"com.liferay.portal.model.User", null, null);
+			"com.liferay.portal.kernel.model.User", null, null);
 	}
 
 	private LiferayTemplateClassResolver _liferayTemplateClassResolver;

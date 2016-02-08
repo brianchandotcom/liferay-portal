@@ -16,6 +16,12 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ColorScheme;
+import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.model.PortletDecorator;
+import com.liferay.portal.kernel.model.SpriteImage;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -29,12 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ColorScheme;
-import com.liferay.portal.model.Plugin;
-import com.liferay.portal.model.PortletDecorator;
-import com.liferay.portal.model.SpriteImage;
-import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;

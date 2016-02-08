@@ -15,8 +15,8 @@
 package com.liferay.my.account.web.portlet;
 
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 

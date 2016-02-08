@@ -14,7 +14,7 @@
 
 package com.liferay.portal.convert.util;
 
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.IOException;
 

@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portal.model.Layout</model-name>
+		<model-name>com.liferay.portal.kernel.model.Layout</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
@@ -43,7 +43,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.model.Team</model-name>
+		<model-name>com.liferay.portal.kernel.model.Team</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_site_teams_web_portlet_SiteTeamsPortlet</portlet-name>
 		</portlet-ref>

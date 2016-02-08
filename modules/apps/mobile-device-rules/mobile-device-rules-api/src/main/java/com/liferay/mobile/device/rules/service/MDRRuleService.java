@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Locale;
 import java.util.Map;
@@ -58,17 +58,17 @@ public interface MDRRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleServiceUtil} to access the m d r rule remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MDRRule addRule(long ruleGroupId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public MDRRule addRule(long ruleGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
 		UnicodeProperties typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MDRRule addRule(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteRule(long ruleId) throws PortalException;

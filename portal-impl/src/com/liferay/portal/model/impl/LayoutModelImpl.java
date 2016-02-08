@@ -21,11 +21,18 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutModel;
+import com.liferay.portal.kernel.model.LayoutSoap;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -34,13 +41,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutModel;
-import com.liferay.portal.model.LayoutSoap;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -153,13 +153,13 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.Layout"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Layout"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.Layout"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Layout"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.Layout"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Layout"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long FRIENDLYURL_COLUMN_BITMASK = 2L;
@@ -242,7 +242,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.Layout"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.Layout"));
 
 	public LayoutModelImpl() {
 	}
@@ -2076,7 +2076,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.Layout");
+		sb.append("com.liferay.portal.kernel.model.Layout");
 		sb.append("</model-name>");
 
 		sb.append(

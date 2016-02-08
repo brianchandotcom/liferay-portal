@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLAppLocalService}.
@@ -36,7 +36,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 		long userId, long repositoryId, long folderId,
 		java.lang.String sourceFileName, java.lang.String mimeType,
-		byte[] bytes, com.liferay.portal.service.ServiceContext serviceContext)
+		byte[] bytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, bytes, serviceContext);
@@ -78,7 +79,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String changeLog, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog, bytes,
@@ -121,7 +122,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String changeLog, java.io.File file,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog, file,
@@ -166,7 +167,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String changeLog, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFileEntry(userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog, is, size,
@@ -187,7 +188,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileRank addFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _dlAppLocalService.addFileRank(repositoryId, companyId, userId,
 			fileEntryId, serviceContext);
 	}
@@ -208,7 +209,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long userId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFileShortcut(userId, repositoryId,
 			folderId, toFileEntryId, serviceContext);
@@ -232,7 +233,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
 		long userId, long repositoryId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.addFolder(userId, repositoryId,
 			parentFolderId, name, description, serviceContext);
@@ -484,7 +485,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(
 		long userId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.moveFileEntry(userId, fileEntryId,
 			newFolderId, serviceContext);
@@ -493,7 +494,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.moveFolder(userId, folderId, parentFolderId,
 			serviceContext);
@@ -621,7 +622,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFileEntry(userId, fileEntryId,
 			sourceFileName, mimeType, title, description, changeLog,
@@ -668,7 +669,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFileEntry(userId, fileEntryId,
 			sourceFileName, mimeType, title, description, changeLog,
@@ -716,7 +717,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFileEntry(userId, fileEntryId,
 			sourceFileName, mimeType, title, description, changeLog,
@@ -737,7 +738,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _dlAppLocalService.updateFileRank(repositoryId, companyId,
 			userId, fileEntryId, serviceContext);
 	}
@@ -758,7 +759,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFileShortcut(userId, fileShortcutId,
 			folderId, toFileEntryId, serviceContext);
@@ -816,7 +817,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFolder(folderId, parentFolderId, name,
 			description, serviceContext);

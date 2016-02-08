@@ -74,7 +74,7 @@ public class BlogsEntryServiceSoap {
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.blogs.kernel.model.BlogsEntry returnValue = BlogsEntryServiceUtil.addEntry(title,
@@ -420,7 +420,7 @@ public class BlogsEntryServiceSoap {
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.blogs.kernel.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,

@@ -14,10 +14,15 @@
 
 package com.liferay.portal.settings;
 
-import com.liferay.portal.exception.NoSuchPortletItemException;
+import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.FallbackSettings;
@@ -30,11 +35,6 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.PortletItem;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.PortletItemLocalService;
 import com.liferay.portal.settings.util.ConfigurationPidUtil;
 
 import java.util.ArrayList;
@@ -88,7 +88,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		List<PortletItem> portletItems =
 			_portletItemLocalService.getPortletItems(
 				groupId, portletId,
-				com.liferay.portal.model.PortletPreferences.class.getName());
+				com.liferay.portal.kernel.model.PortletPreferences.class.
+					getName());
 
 		for (PortletItem portletItem : portletItems) {
 			archivedSettingsList.add(new ArchivedSettingsImpl(portletItem));

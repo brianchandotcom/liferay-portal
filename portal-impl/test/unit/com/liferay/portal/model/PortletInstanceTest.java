@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portlet.util.test.PortletKeys;
 
 import java.security.InvalidParameterException;

@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingCategoryLocalService}.
@@ -38,7 +38,7 @@ public class ShoppingCategoryLocalServiceWrapper
 	public com.liferay.shopping.model.ShoppingCategory addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.addCategory(userId,
 			parentCategoryId, name, description, serviceContext);
@@ -125,8 +125,8 @@ public class ShoppingCategoryLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.deletePersistedModel(persistedModel);
 	}
@@ -323,7 +323,7 @@ public class ShoppingCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.getPersistedModel(primaryKeyObj);
@@ -381,7 +381,7 @@ public class ShoppingCategoryLocalServiceWrapper
 	public com.liferay.shopping.model.ShoppingCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryLocalService.updateCategory(categoryId,
 			parentCategoryId, name, description, mergeWithParentCategory,

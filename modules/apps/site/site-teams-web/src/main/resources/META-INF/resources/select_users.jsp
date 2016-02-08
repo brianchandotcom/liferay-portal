@@ -111,7 +111,7 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 		searchContainer="<%= userSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.User"
+			className="com.liferay.portal.kernel.model.User"
 			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"

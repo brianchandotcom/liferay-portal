@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingCouponService}.
@@ -42,7 +42,7 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 		int endDateMinute, boolean neverExpire, boolean active,
 		java.lang.String limitCategories, java.lang.String limitSkus,
 		double minOrder, double discount, java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.addCoupon(code, autoCode, name,
 			description, startDateMonth, startDateDay, startDateYear,
@@ -93,7 +93,7 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 		boolean neverExpire, boolean active, java.lang.String limitCategories,
 		java.lang.String limitSkus, double minOrder, double discount,
 		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.updateCoupon(couponId, name, description,
 			startDateMonth, startDateDay, startDateYear, startDateHour,

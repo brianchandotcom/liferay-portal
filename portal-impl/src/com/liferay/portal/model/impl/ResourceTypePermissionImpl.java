@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceAction;
 
 /**
  * Stores the actions a role has permission to perform on all resources of the

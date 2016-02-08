@@ -15,10 +15,10 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ClassName;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -15,18 +15,18 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.portal.exception.LayoutBranchNameException;
-import com.liferay.portal.exception.NoSuchLayoutBranchException;
+import com.liferay.portal.kernel.exception.LayoutBranchNameException;
+import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.model.LayoutBranchConstants;
+import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutRevisionConstants;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.LayoutBranchConstants;
-import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutRevisionConstants;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutBranchLocalServiceBaseImpl;
 
 import java.util.List;

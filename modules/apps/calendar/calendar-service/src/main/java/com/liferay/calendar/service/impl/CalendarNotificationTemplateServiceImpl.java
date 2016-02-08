@@ -21,7 +21,7 @@ import com.liferay.calendar.service.base.CalendarNotificationTemplateServiceBase
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Marcellus Tavares

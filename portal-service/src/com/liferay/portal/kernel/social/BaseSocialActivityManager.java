@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.social;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.service.SocialActivityLocalService;

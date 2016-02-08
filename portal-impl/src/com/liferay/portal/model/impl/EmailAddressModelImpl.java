@@ -24,7 +24,14 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.EmailAddressModel;
+import com.liferay.portal.kernel.model.EmailAddressSoap;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -32,13 +39,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.model.EmailAddressModel;
-import com.liferay.portal.model.EmailAddressSoap;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -114,13 +114,13 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.EmailAddress"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.EmailAddress"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.EmailAddress"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.EmailAddress"),
 			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
@@ -181,7 +181,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.EmailAddress"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.EmailAddress"));
 
 	public EmailAddressModelImpl() {
 	}
@@ -838,7 +838,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.EmailAddress");
+		sb.append("com.liferay.portal.kernel.model.EmailAddress");
 		sb.append("</model-name>");
 
 		sb.append(

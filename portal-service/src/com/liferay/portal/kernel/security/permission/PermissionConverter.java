@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Permission;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.model.Permission;
+import com.liferay.portal.kernel.model.Role;
 
 import java.util.List;
 

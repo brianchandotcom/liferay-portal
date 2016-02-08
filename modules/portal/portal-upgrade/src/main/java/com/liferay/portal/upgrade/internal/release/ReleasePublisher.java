@@ -15,9 +15,9 @@
 package com.liferay.portal.upgrade.internal.release;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.model.Release;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 
 import java.util.Dictionary;
 import java.util.HashMap;

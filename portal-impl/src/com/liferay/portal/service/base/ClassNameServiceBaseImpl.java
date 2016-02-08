@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.ClassNameService;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.ClassName;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.ClassNameService;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
 
 import javax.sql.DataSource;
 
@@ -38,7 +38,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ClassNameServiceImpl
- * @see com.liferay.portal.service.ClassNameServiceUtil
+ * @see com.liferay.portal.kernel.service.ClassNameServiceUtil
  * @generated
  */
 public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
@@ -46,7 +46,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.ClassNameServiceUtil} to access the class name remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.ClassNameServiceUtil} to access the class name remote service.
 	 */
 
 	/**
@@ -54,7 +54,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
 		return classNameLocalService;
 	}
 
@@ -64,7 +64,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -172,9 +172,9 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
 	protected ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;

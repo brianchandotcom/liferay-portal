@@ -20,10 +20,10 @@ import com.liferay.message.boards.kernel.model.MBMailingList;
 import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 
 /**
  * @author Brian Wing Shun Chan

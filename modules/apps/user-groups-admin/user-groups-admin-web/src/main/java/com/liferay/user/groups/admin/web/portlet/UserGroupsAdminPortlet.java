@@ -14,21 +14,21 @@
 
 package com.liferay.user.groups.admin.web.portlet;
 
-import com.liferay.portal.exception.DuplicateUserGroupException;
-import com.liferay.portal.exception.NoSuchUserGroupException;
-import com.liferay.portal.exception.RequiredUserGroupException;
-import com.liferay.portal.exception.UserGroupNameException;
+import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
+import com.liferay.portal.kernel.exception.RequiredUserGroupException;
+import com.liferay.portal.kernel.exception.UserGroupNameException;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserGroupService;
-import com.liferay.portal.service.UserService;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 

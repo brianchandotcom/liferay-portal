@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.service.CompanyLocalService;
 
 import java.util.Collections;
 

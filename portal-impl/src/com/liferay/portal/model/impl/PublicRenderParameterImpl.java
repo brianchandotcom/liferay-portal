@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PublicRenderParameter;
 
 /**
  * @author Brian Wing Shun Chan

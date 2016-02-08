@@ -16,7 +16,7 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link JournalFeedService}.
@@ -42,7 +42,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.addFeed(groupId, feedId, autoFeedId, name,
 			description, ddmStructureKey, ddmTemplateKey,
@@ -96,7 +96,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.updateFeed(groupId, feedId, name,
 			description, ddmStructureKey, ddmTemplateKey,

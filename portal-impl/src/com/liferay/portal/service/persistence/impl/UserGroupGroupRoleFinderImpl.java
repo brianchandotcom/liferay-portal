@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
-import com.liferay.portal.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;

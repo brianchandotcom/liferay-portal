@@ -14,11 +14,11 @@
 
 package com.liferay.site.memberships.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
 import javax.portlet.PortletRequest;

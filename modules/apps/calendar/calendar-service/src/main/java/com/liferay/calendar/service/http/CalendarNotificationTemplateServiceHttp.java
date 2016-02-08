@@ -61,7 +61,7 @@ public class CalendarNotificationTemplateServiceHttp {
 		java.lang.String notificationTypeSettings,
 		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarNotificationTemplateServiceUtil.class,
@@ -98,7 +98,7 @@ public class CalendarNotificationTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
 		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarNotificationTemplateServiceUtil.class,
@@ -138,12 +138,12 @@ public class CalendarNotificationTemplateServiceHttp {
 			java.lang.String.class,
 			com.liferay.calendar.notification.NotificationTemplateType.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCalendarNotificationTemplateParameterTypes1 =
 		new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -14,15 +14,15 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.kernel.model.EventDefinition;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletFilter;
+import com.liferay.portal.kernel.model.PortletURLListener;
+import com.liferay.portal.kernel.model.PublicRenderParameter;
+import com.liferay.portal.kernel.model.SpriteImage;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.model.EventDefinition;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletFilter;
-import com.liferay.portal.model.PortletURLListener;
-import com.liferay.portal.model.PublicRenderParameter;
-import com.liferay.portal.model.SpriteImage;
 
 import java.util.Dictionary;
 import java.util.List;

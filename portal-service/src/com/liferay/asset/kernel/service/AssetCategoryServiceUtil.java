@@ -45,7 +45,7 @@ public class AssetCategoryServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCategory(groupId, parentCategoryId, titleMap,
@@ -54,7 +54,7 @@ public class AssetCategoryServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
 		long groupId, java.lang.String title, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCategory(groupId, title, vocabularyId, serviceContext);
@@ -71,7 +71,7 @@ public class AssetCategoryServiceUtil {
 	@Deprecated
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> deleteCategories(
 		long[] categoryIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCategories(categoryIds, serviceContext);
 	}
@@ -213,7 +213,7 @@ public class AssetCategoryServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetCategory moveCategory(
 		long categoryId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveCategory(categoryId, parentCategoryId, vocabularyId,
@@ -302,7 +302,7 @@ public class AssetCategoryServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCategory(categoryId, parentCategoryId, titleMap,

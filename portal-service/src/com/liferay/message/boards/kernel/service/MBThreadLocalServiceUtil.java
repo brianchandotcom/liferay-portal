@@ -55,7 +55,7 @@ public class MBThreadLocalServiceUtil {
 	public static com.liferay.message.boards.kernel.model.MBThread addThread(
 		long categoryId,
 		com.liferay.message.boards.kernel.model.MBMessage message,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addThread(categoryId, message, serviceContext);
 	}
@@ -98,8 +98,8 @@ public class MBThreadLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -394,7 +394,7 @@ public class MBThreadLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -510,7 +510,7 @@ public class MBThreadLocalServiceUtil {
 
 	public static com.liferay.message.boards.kernel.model.MBThread splitThread(
 		long userId, long messageId, java.lang.String subject,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .splitThread(userId, messageId, subject, serviceContext);

@@ -16,9 +16,9 @@ package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
 
 import java.lang.reflect.Field;

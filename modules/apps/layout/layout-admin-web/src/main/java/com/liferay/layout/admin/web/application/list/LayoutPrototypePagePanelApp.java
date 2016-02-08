@@ -18,7 +18,7 @@ import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.model.Portlet;
 
 import javax.servlet.ServletContext;
 

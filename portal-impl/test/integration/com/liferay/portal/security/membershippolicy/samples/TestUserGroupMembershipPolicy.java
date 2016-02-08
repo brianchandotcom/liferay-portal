@@ -15,10 +15,10 @@
 package com.liferay.portal.security.membershippolicy.samples;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.membershippolicy.BaseUserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.membershippolicy.BaseUserGroupMembershipPolicyTestCase;
 
 import java.io.Serializable;

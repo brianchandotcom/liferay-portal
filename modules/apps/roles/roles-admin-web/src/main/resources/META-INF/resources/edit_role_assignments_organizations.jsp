@@ -53,7 +53,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Organization"
+		className="com.liferay.portal.kernel.model.Organization"
 		escapedModel="<%= true %>"
 		keyProperty="group.groupId"
 		modelVar="organization"

@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingCategoryService}.
@@ -37,7 +37,7 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	public com.liferay.shopping.model.ShoppingCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryService.addCategory(parentCategoryId, name,
 			description, serviceContext);
@@ -110,7 +110,7 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	public com.liferay.shopping.model.ShoppingCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCategoryService.updateCategory(categoryId,
 			parentCategoryId, name, description, mergeWithParentCategory,

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.opensso.internal.verify;
 
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 

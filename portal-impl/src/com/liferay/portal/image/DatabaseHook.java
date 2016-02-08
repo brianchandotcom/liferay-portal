@@ -15,7 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.model.Image;
+import com.liferay.portal.kernel.model.Image;
 
 import java.io.InputStream;
 

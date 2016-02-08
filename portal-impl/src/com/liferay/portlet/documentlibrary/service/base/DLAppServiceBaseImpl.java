@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence;
+import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
+import com.liferay.portal.kernel.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
-import com.liferay.portal.service.persistence.RepositoryPersistence;
-import com.liferay.portal.service.persistence.SubscriptionPersistence;
 
 import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
 
@@ -121,7 +121,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the repository local service
 	 */
-	public com.liferay.portal.service.RepositoryLocalService getRepositoryLocalService() {
+	public com.liferay.portal.kernel.service.RepositoryLocalService getRepositoryLocalService() {
 		return repositoryLocalService;
 	}
 
@@ -131,7 +131,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 * @param repositoryLocalService the repository local service
 	 */
 	public void setRepositoryLocalService(
-		com.liferay.portal.service.RepositoryLocalService repositoryLocalService) {
+		com.liferay.portal.kernel.service.RepositoryLocalService repositoryLocalService) {
 		this.repositoryLocalService = repositoryLocalService;
 	}
 
@@ -140,7 +140,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the repository remote service
 	 */
-	public com.liferay.portal.service.RepositoryService getRepositoryService() {
+	public com.liferay.portal.kernel.service.RepositoryService getRepositoryService() {
 		return repositoryService;
 	}
 
@@ -150,7 +150,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 * @param repositoryService the repository remote service
 	 */
 	public void setRepositoryService(
-		com.liferay.portal.service.RepositoryService repositoryService) {
+		com.liferay.portal.kernel.service.RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
 
@@ -178,7 +178,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the repository entry local service
 	 */
-	public com.liferay.portal.service.RepositoryEntryLocalService getRepositoryEntryLocalService() {
+	public com.liferay.portal.kernel.service.RepositoryEntryLocalService getRepositoryEntryLocalService() {
 		return repositoryEntryLocalService;
 	}
 
@@ -188,7 +188,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 * @param repositoryEntryLocalService the repository entry local service
 	 */
 	public void setRepositoryEntryLocalService(
-		com.liferay.portal.service.RepositoryEntryLocalService repositoryEntryLocalService) {
+		com.liferay.portal.kernel.service.RepositoryEntryLocalService repositoryEntryLocalService) {
 		this.repositoryEntryLocalService = repositoryEntryLocalService;
 	}
 
@@ -216,7 +216,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the subscription local service
 	 */
-	public com.liferay.portal.service.SubscriptionLocalService getSubscriptionLocalService() {
+	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
 		return subscriptionLocalService;
 	}
 
@@ -226,7 +226,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 * @param subscriptionLocalService the subscription local service
 	 */
 	public void setSubscriptionLocalService(
-		com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService) {
+		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService) {
 		this.subscriptionLocalService = subscriptionLocalService;
 	}
 
@@ -558,18 +558,18 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	protected DLAppService dlAppService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
-	protected com.liferay.portal.service.RepositoryLocalService repositoryLocalService;
-	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
-	protected com.liferay.portal.service.RepositoryService repositoryService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryLocalService.class)
+	protected com.liferay.portal.kernel.service.RepositoryLocalService repositoryLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryService.class)
+	protected com.liferay.portal.kernel.service.RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;
-	@BeanReference(type = com.liferay.portal.service.RepositoryEntryLocalService.class)
-	protected com.liferay.portal.service.RepositoryEntryLocalService repositoryEntryLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryEntryLocalService.class)
+	protected com.liferay.portal.kernel.service.RepositoryEntryLocalService repositoryEntryLocalService;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
-	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
-	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.SubscriptionLocalService.class)
+	protected com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService;
 	@BeanReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)

@@ -57,7 +57,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 	<liferay-ui:search-container-results results="<%= embeddedPortlets %>" />
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Portlet"
+		className="com.liferay.portal.kernel.model.Portlet"
 		escapedModel="<%= true %>"
 		keyProperty="portletId"
 		modelVar="portlet"

@@ -69,7 +69,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portal.model.UserNotificationEvent"
+					className="com.liferay.portal.kernel.model.UserNotificationEvent"
 					keyProperty="userNotificationEventId"
 					modelVar="userNotificationEvent"
 				>

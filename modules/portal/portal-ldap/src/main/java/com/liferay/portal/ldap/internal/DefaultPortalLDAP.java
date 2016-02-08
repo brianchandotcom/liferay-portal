@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.ldap.PortalLDAP;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.ldap.UserConverterKeys;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.configuration.SystemLDAPConfiguration;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.util.ArrayList;
 import java.util.List;

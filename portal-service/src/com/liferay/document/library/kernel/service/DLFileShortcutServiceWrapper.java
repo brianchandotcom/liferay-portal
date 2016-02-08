@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLFileShortcutService}.
@@ -36,7 +36,7 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileShortcut addFileShortcut(
 		long groupId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutService.addFileShortcut(groupId, repositoryId,
 			folderId, toFileEntryId, serviceContext);
@@ -69,7 +69,7 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 	public com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
 		long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutService.updateFileShortcut(fileShortcutId,
 			repositoryId, folderId, toFileEntryId, serviceContext);

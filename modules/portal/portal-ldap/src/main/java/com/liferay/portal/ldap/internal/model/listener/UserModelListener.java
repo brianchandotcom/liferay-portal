@@ -14,22 +14,22 @@
 
 package com.liferay.portal.ldap.internal.model.listener;
 
-import com.liferay.portal.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.MembershipRequest;
+import com.liferay.portal.kernel.model.MembershipRequestConstants;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserExporter;
+import com.liferay.portal.kernel.service.MembershipRequestLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.ldap.internal.UserImportTransactionThreadLocal;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.model.MembershipRequestConstants;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.MembershipRequestLocalService;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 

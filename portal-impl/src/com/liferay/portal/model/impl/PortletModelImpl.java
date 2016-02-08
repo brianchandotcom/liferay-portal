@@ -21,16 +21,16 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletModel;
+import com.liferay.portal.kernel.model.PortletSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletModel;
-import com.liferay.portal.model.PortletSoap;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -91,13 +91,13 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.Portlet"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Portlet"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.Portlet"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Portlet"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.Portlet"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Portlet"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long PORTLETID_COLUMN_BITMASK = 2L;
@@ -147,7 +147,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.Portlet"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.Portlet"));
 
 	public PortletModelImpl() {
 	}
@@ -506,7 +506,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.Portlet");
+		sb.append("com.liferay.portal.kernel.model.Portlet");
 		sb.append("</model-name>");
 
 		sb.append(

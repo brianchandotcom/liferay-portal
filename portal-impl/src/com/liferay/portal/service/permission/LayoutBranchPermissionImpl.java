@@ -15,11 +15,11 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutBranchPermission;
-import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan

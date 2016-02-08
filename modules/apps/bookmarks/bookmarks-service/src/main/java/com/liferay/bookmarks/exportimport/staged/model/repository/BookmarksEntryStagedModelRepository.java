@@ -25,8 +25,8 @@ import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepo
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 

@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class AssetTagServiceSoap {
 	public static com.liferay.asset.kernel.model.AssetTagSoap addTag(
 		long groupId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetTag returnValue = AssetTagServiceUtil.addTag(groupId,
@@ -407,7 +407,7 @@ public class AssetTagServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetTagSoap updateTag(
 		long tagId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.asset.kernel.model.AssetTag returnValue = AssetTagServiceUtil.updateTag(tagId,

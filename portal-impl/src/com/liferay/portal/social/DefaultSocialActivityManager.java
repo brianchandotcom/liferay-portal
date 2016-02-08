@@ -15,9 +15,9 @@
 package com.liferay.portal.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
-import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 /**

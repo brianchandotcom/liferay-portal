@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.sso.openid.internal.auto.login;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

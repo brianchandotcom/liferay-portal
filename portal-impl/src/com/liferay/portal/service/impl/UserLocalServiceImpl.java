@@ -16,27 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.portal.exception.CompanyMaxUsersException;
-import com.liferay.portal.exception.ContactBirthdayException;
-import com.liferay.portal.exception.ContactNameException;
-import com.liferay.portal.exception.DuplicateGoogleUserIdException;
-import com.liferay.portal.exception.DuplicateOpenIdException;
-import com.liferay.portal.exception.GroupFriendlyURLException;
-import com.liferay.portal.exception.ModelListenerException;
-import com.liferay.portal.exception.NoSuchImageException;
-import com.liferay.portal.exception.NoSuchOrganizationException;
-import com.liferay.portal.exception.NoSuchTicketException;
-import com.liferay.portal.exception.NoSuchUserException;
-import com.liferay.portal.exception.PasswordExpiredException;
-import com.liferay.portal.exception.RequiredUserException;
-import com.liferay.portal.exception.SendPasswordException;
-import com.liferay.portal.exception.UserEmailAddressException;
-import com.liferay.portal.exception.UserIdException;
-import com.liferay.portal.exception.UserLockoutException;
-import com.liferay.portal.exception.UserPasswordException;
-import com.liferay.portal.exception.UserReminderQueryException;
-import com.liferay.portal.exception.UserScreenNameException;
-import com.liferay.portal.exception.UserSmsException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
@@ -44,14 +23,54 @@ import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronize
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
+import com.liferay.portal.kernel.exception.ContactBirthdayException;
+import com.liferay.portal.kernel.exception.ContactNameException;
+import com.liferay.portal.kernel.exception.DuplicateGoogleUserIdException;
+import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
+import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.NoSuchImageException;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredUserException;
+import com.liferay.portal.kernel.exception.SendPasswordException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserIdException;
+import com.liferay.portal.kernel.exception.UserLockoutException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.exception.UserReminderQueryException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactConstants;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -75,6 +94,9 @@ import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -103,25 +125,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.Account;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.ContactConstants;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.Team;
-import com.liferay.portal.model.Ticket;
-import com.liferay.portal.model.TicketConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.UserCacheModel;
 import com.liferay.portal.model.impl.UserImpl;
@@ -135,9 +138,6 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.RegExpToolkit;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -2893,13 +2893,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  status the workflow status
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.UserFinder}.
+	 *         com.liferay.portal.kernel.service.persistence.UserFinder}.
 	 * @param  start the lower bound of the range of users
 	 * @param  end the upper bound of the range of users (not inclusive)
 	 * @param  obc the comparator to order the users by (optionally
 	 *         <code>null</code>)
 	 * @return the matching users
-	 * @see    com.liferay.portal.service.persistence.UserFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.UserFinder
 	 */
 	@Override
 	public List<User> search(
@@ -3047,7 +3047,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  status the workflow status
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.UserFinder}.
+	 *         com.liferay.portal.kernel.service.persistence.UserFinder}.
 	 * @param  andSearch whether every field must match its keywords, or just
 	 *         one field. For example, &quot;users with the first name 'bob' and
 	 *         last name 'smith'&quot; vs &quot;users with the first name 'bob'
@@ -3057,7 +3057,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  obc the comparator to order the users by (optionally
 	 *         <code>null</code>)
 	 * @return the matching users
-	 * @see    com.liferay.portal.service.persistence.UserFinder
+	 * @see    com.liferay.portal.kernel.service.persistence.UserFinder
 	 */
 	@Override
 	public List<User> search(
@@ -3171,7 +3171,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  status the workflow status
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.UserFinder}.
+	 *         com.liferay.portal.kernel.service.persistence.UserFinder}.
 	 * @return the number matching users
 	 */
 	@Override
@@ -3250,7 +3250,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  status the workflow status
 	 * @param  params the finder parameters (optionally <code>null</code>). For
 	 *         more information see {@link
-	 *         com.liferay.portal.service.persistence.UserFinder}.
+	 *         com.liferay.portal.kernel.service.persistence.UserFinder}.
 	 * @param  andSearch whether every field must match its keywords, or just
 	 *         one field. For example, &quot;users with the first name 'bob' and
 	 *         last name 'smith'&quot; vs &quot;users with the first name 'bob'

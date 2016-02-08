@@ -82,7 +82,7 @@ roleSearch.setResults(roles);
 		searchContainer="<%= roleSearch %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Role"
+			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"
 			modelVar="role"
 		>

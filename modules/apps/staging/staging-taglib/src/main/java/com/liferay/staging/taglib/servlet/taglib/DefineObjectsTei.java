@@ -14,7 +14,7 @@
 
 package com.liferay.staging.taglib.servlet.taglib;
 
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.model.Group;
 
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;

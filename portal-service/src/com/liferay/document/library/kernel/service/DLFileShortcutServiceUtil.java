@@ -42,7 +42,7 @@ public class DLFileShortcutServiceUtil {
 	 */
 	public static com.liferay.document.library.kernel.model.DLFileShortcut addFileShortcut(
 		long groupId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileShortcut(groupId, repositoryId, folderId,
@@ -72,7 +72,7 @@ public class DLFileShortcutServiceUtil {
 	public static com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
 		long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileShortcut(fileShortcutId, repositoryId, folderId,

@@ -14,15 +14,15 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.WebsiteURLException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.WebsiteURLException;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ListTypeConstants;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.Website;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.WebsiteLocalServiceBaseImpl;
 
 import java.util.List;

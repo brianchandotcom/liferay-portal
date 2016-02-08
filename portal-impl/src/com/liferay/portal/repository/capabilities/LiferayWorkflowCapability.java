@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
@@ -33,7 +34,6 @@ import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapt
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Adolfo Pérez

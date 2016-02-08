@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.systemevent;
 
-import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

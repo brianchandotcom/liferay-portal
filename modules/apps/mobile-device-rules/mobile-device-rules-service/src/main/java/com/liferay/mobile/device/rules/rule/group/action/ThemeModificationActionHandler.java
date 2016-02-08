@@ -17,15 +17,15 @@ package com.liferay.mobile.device.rules.rule.group.action;
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.model.ColorScheme;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.ColorScheme;
-import com.liferay.portal.model.Theme;
-import com.liferay.portal.service.ThemeLocalService;
 
 import java.util.Arrays;
 import java.util.Collection;

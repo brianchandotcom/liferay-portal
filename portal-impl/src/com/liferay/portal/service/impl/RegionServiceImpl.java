@@ -14,12 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.RegionCodeException;
-import com.liferay.portal.exception.RegionNameException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RegionCodeException;
+import com.liferay.portal.kernel.exception.RegionNameException;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Region;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
 import java.util.List;

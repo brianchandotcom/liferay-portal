@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.ClusterGroup;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.model.ClusterGroup;
 
 import java.util.Iterator;
 import java.util.List;

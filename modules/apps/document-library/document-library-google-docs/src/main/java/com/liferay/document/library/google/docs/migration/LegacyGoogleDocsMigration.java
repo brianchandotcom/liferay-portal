@@ -28,8 +28,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.model.Company;
 
 /**
  * @author Iván Zaera

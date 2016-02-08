@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
 

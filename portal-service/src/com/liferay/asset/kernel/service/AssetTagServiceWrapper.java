@@ -16,7 +16,7 @@ package com.liferay.asset.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AssetTagService}.
@@ -35,7 +35,7 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetTag addTag(long groupId,
 		java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagService.addTag(groupId, name, serviceContext);
 	}
@@ -189,7 +189,7 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	@Override
 	public com.liferay.asset.kernel.model.AssetTag updateTag(long tagId,
 		java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagService.updateTag(tagId, name, serviceContext);
 	}

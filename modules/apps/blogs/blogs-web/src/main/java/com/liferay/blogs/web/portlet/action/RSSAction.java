@@ -17,6 +17,7 @@ package com.liferay.blogs.web.portlet.action;
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 

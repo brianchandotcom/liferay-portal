@@ -15,8 +15,8 @@
 package com.liferay.mentions.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Sergio González

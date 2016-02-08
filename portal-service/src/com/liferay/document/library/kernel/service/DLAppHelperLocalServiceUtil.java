@@ -42,7 +42,7 @@ public class DLAppHelperLocalServiceUtil {
 	 */
 	public static void addFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addFolder(userId, folder, serviceContext);
 	}
@@ -52,7 +52,7 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.cancelCheckOut(userId, fileEntry, sourceFileVersion,
@@ -136,7 +136,7 @@ public class DLAppHelperLocalServiceUtil {
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntryFromTrash(userId, fileEntry, newFolderId,
@@ -161,7 +161,7 @@ public class DLAppHelperLocalServiceUtil {
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileShortcutFromTrash(userId, fileShortcut,
@@ -185,7 +185,7 @@ public class DLAppHelperLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
 		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFolderFromTrash(userId, folder, parentFolderId,
@@ -300,7 +300,7 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
@@ -309,7 +309,7 @@ public class DLAppHelperLocalServiceUtil {
 
 	public static void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateFolder(userId, folder, serviceContext);
 	}
@@ -318,7 +318,7 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
 		int oldStatus, int newStatus,
-		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

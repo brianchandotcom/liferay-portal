@@ -16,9 +16,9 @@ package com.liferay.microblogs.web.notifications;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.portal.model.UserNotificationDeliveryConstants;
 
 import org.osgi.service.component.annotations.Component;
 

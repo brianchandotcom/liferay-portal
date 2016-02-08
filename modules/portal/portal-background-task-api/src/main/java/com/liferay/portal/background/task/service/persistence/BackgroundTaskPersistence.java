@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the background task service.

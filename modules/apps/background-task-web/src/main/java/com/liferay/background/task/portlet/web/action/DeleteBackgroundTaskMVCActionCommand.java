@@ -15,7 +15,7 @@
 package com.liferay.background.task.portlet.web.action;
 
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.exception.NoSuchBackgroundTaskException;
+import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

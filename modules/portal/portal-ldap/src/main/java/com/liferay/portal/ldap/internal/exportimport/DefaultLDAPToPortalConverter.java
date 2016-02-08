@@ -14,11 +14,16 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
-import com.liferay.portal.exception.UserEmailAddressException;
-import com.liferay.portal.exception.UserScreenNameException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactConstants;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.FullNameDefinition;
 import com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
@@ -26,6 +31,10 @@ import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.ldap.LDAPGroup;
 import com.liferay.portal.kernel.security.ldap.LDAPToPortalConverter;
 import com.liferay.portal.kernel.security.ldap.LDAPUser;
+import com.liferay.portal.kernel.service.ListTypeService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.ContactPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,15 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.ContactConverterKeys;
 import com.liferay.portal.ldap.GroupConverterKeys;
 import com.liferay.portal.ldap.UserConverterKeys;
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.ContactConstants;
-import com.liferay.portal.model.ListType;
-import com.liferay.portal.model.ListTypeConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ListTypeService;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.persistence.ContactPersistence;
-import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.text.ParseException;
 

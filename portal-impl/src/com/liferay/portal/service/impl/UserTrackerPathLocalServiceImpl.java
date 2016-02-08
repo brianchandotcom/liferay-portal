@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.model.UserTrackerPath;
+import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.service.base.UserTrackerPathLocalServiceBaseImpl;
 
 import java.util.List;

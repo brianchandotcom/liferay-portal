@@ -15,8 +15,8 @@
 package com.liferay.portal.workflow.kaleo.deployment;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 
 /**

@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MDRRuleLocalService}.
@@ -50,7 +50,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
 			descriptionMap, type, typeSettings, serviceContext);
@@ -63,7 +63,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.addRule(ruleGroupId, nameMap,
 			descriptionMap, type, typeSettingsProperties, serviceContext);
@@ -72,7 +72,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRule copyRule(
 		com.liferay.mobile.device.rules.model.MDRRule rule, long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.copyRule(rule, ruleGroupId, serviceContext);
 	}
@@ -80,7 +80,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRule copyRule(long ruleId,
 		long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.copyRule(ruleId, ruleGroupId, serviceContext);
 	}
@@ -126,8 +126,8 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.deletePersistedModel(persistedModel);
 	}
@@ -369,7 +369,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.getPersistedModel(primaryKeyObj);
@@ -422,7 +422,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.updateRule(ruleId, nameMap, descriptionMap,
 			type, typeSettings, serviceContext);
@@ -434,7 +434,7 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleLocalService.updateRule(ruleId, nameMap, descriptionMap,
 			type, typeSettingsProperties, serviceContext);

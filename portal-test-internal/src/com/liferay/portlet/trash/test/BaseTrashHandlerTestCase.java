@@ -14,11 +14,20 @@
 
 package com.liferay.portlet.trash.test;
 
-import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -29,15 +38,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.ContainerModel;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.TrashedModel;
-import com.liferay.portal.model.WorkflowedModel;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.service.TrashEntryServiceUtil;

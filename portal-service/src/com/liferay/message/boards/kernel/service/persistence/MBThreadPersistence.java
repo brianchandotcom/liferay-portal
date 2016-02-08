@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
 import com.liferay.message.boards.kernel.model.MBThread;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
 

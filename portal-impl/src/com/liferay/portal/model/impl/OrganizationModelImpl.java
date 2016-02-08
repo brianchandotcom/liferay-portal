@@ -24,19 +24,19 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationModel;
+import com.liferay.portal.kernel.model.OrganizationSoap;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationModel;
-import com.liferay.portal.model.OrganizationSoap;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -122,13 +122,13 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.model.Organization"),
+				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Organization"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.model.Organization"),
+				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Organization"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.model.Organization"),
+				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Organization"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long NAME_COLUMN_BITMASK = 2L;
@@ -211,7 +211,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ORGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Orgs"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.model.Organization"));
+				"lock.expiration.time.com.liferay.portal.kernel.model.Organization"));
 
 	public OrganizationModelImpl() {
 	}
@@ -986,7 +986,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.model.Organization");
+		sb.append("com.liferay.portal.kernel.model.Organization");
 		sb.append("</model-name>");
 
 		sb.append(

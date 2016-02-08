@@ -74,7 +74,7 @@ public class MDRRuleGroupServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -96,7 +96,7 @@ public class MDRRuleGroupServiceSoap {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupSoap copyRuleGroup(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.mobile.device.rules.model.MDRRuleGroup returnValue = MDRRuleGroupServiceUtil.copyRuleGroup(ruleGroupId,
@@ -185,7 +185,7 @@ public class MDRRuleGroupServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

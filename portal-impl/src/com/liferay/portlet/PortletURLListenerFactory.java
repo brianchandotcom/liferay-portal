@@ -14,9 +14,9 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletURLListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

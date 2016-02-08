@@ -56,7 +56,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Role"
+		className="com.liferay.portal.kernel.model.Role"
 		escapedModel="<%= true %>"
 		keyProperty="roleId"
 		modelVar="role"

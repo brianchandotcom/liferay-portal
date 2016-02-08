@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDLRecordSetLocalService}.
@@ -52,7 +52,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows, int scope,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.addRecordSet(userId, groupId,
 			ddmStructureId, recordSetKey, nameMap, descriptionMap,
@@ -119,8 +119,8 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.deletePersistedModel(persistedModel);
 	}
@@ -383,7 +383,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
@@ -462,7 +462,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.updateMinDisplayRows(recordSetId,
 			minDisplayRows, serviceContext);
@@ -474,7 +474,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.updateRecordSet(groupId,
 			ddmStructureId, recordSetKey, nameMap, descriptionMap,
@@ -487,7 +487,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
 			ddmStructureId, nameMap, descriptionMap, minDisplayRows,

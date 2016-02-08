@@ -21,9 +21,9 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
 
 import java.io.File;
 import java.io.InputStream;

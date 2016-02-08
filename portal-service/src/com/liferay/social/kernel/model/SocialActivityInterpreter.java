@@ -16,7 +16,7 @@ package com.liferay.social.kernel.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Brian Wing Shun Chan

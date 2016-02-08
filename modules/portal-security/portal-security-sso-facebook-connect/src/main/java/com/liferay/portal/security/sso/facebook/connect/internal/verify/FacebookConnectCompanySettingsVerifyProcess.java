@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect.internal.verify;
 
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.LegacyFacebookConnectPropsKeys;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 
 import java.util.Locale;
 

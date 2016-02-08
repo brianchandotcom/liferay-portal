@@ -172,7 +172,7 @@ public class TrashEntryServiceUtil {
 	*/
 	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.moveEntry(className, classPK, destinationContainerModelId,

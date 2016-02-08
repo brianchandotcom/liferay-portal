@@ -16,7 +16,7 @@ package com.liferay.message.boards.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MBBanService}.
@@ -34,14 +34,15 @@ public class MBBanServiceWrapper implements MBBanService,
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBBan addBan(
-		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
+		long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbBanService.addBan(banUserId, serviceContext);
 	}
 
 	@Override
 	public void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbBanService.deleteBan(banUserId, serviceContext);
 	}

@@ -45,7 +45,7 @@ public class SAPEntryServiceUtil {
 		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
 		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSAPEntry(allowedServiceSignatures, defaultSAPEntry,
@@ -110,7 +110,7 @@ public class SAPEntryServiceUtil {
 		long sapEntryId, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,

@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.Team;
-import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.service.UserLocalService;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 import java.util.List;

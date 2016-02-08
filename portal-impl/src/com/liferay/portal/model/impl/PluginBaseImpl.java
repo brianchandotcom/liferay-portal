@@ -15,8 +15,8 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.model.Plugin;
-import com.liferay.portal.model.PluginSetting;
+import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.model.PluginSetting;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.kernel.staging.permission;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.model.Group;
 
 /**
  * @author Jorge Ferrer

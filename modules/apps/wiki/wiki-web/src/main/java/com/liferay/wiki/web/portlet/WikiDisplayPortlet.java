@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.portlet;
 
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import javax.portlet.Portlet;

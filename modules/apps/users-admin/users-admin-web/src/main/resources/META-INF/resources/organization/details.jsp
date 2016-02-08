@@ -189,7 +189,7 @@ if (parentOrganization != null) {
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Organization"
+		className="com.liferay.portal.kernel.model.Organization"
 		escapedModel="<%= true %>"
 		keyProperty="organizationId"
 		modelVar="curOrganization"

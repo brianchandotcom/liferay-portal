@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.persistence.CountryPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.model.Region;
-import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.RegionService;
-import com.liferay.portal.service.persistence.CountryPersistence;
-import com.liferay.portal.service.persistence.RegionPersistence;
 
 import javax.sql.DataSource;
 
@@ -39,7 +39,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.RegionServiceImpl
- * @see com.liferay.portal.service.RegionServiceUtil
+ * @see com.liferay.portal.kernel.service.RegionServiceUtil
  * @generated
  */
 public abstract class RegionServiceBaseImpl extends BaseServiceImpl
@@ -47,7 +47,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.RegionServiceUtil} to access the region remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.kernel.service.RegionServiceUtil} to access the region remote service.
 	 */
 
 	/**
@@ -110,7 +110,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the country remote service
 	 */
-	public com.liferay.portal.service.CountryService getCountryService() {
+	public com.liferay.portal.kernel.service.CountryService getCountryService() {
 		return countryService;
 	}
 
@@ -120,7 +120,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 	 * @param countryService the country remote service
 	 */
 	public void setCountryService(
-		com.liferay.portal.service.CountryService countryService) {
+		com.liferay.portal.kernel.service.CountryService countryService) {
 		this.countryService = countryService;
 	}
 
@@ -190,14 +190,14 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.RegionService.class)
+	@BeanReference(type = com.liferay.portal.kernel.service.RegionService.class)
 	protected RegionService regionService;
 	@BeanReference(type = RegionPersistence.class)
 	protected RegionPersistence regionPersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.CountryService.class)
-	protected com.liferay.portal.service.CountryService countryService;
+	@BeanReference(type = com.liferay.portal.kernel.service.CountryService.class)
+	protected com.liferay.portal.kernel.service.CountryService countryService;
 	@BeanReference(type = CountryPersistence.class)
 	protected CountryPersistence countryPersistence;
 }

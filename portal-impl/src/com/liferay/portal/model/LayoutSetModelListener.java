@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 /**

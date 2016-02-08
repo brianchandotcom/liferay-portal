@@ -15,12 +15,12 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.PortalPreferencesLocalService;
 import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 import com.liferay.util.ContentUtil;

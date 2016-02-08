@@ -64,7 +64,7 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.BaseModel"
+		className="com.liferay.portal.kernel.model.BaseModel"
 		keyProperty="primaryKeyObj"
 		modelVar="result"
 	>

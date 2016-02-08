@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.model.Plugin;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;

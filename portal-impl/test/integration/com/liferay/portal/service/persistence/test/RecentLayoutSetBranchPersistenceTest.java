@@ -14,13 +14,17 @@
 
 package com.liferay.portal.service.persistence.test;
 
-import com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
+import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
+import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence;
+import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
@@ -29,10 +33,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.RecentLayoutSetBranch;
-import com.liferay.portal.service.RecentLayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.service.persistence.RecentLayoutSetBranchPersistence;
-import com.liferay.portal.service.persistence.RecentLayoutSetBranchUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 

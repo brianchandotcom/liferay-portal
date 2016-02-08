@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;

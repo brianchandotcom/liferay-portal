@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Team;
 
 /**
  * @author Eudaldo Alonso

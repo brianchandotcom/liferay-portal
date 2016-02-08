@@ -75,7 +75,7 @@ public class DLAppServiceUtil {
 		long repositoryId, long folderId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntry(repositoryId, folderId, sourceFileName,
@@ -117,7 +117,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		java.io.File file,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntry(repositoryId, folderId, sourceFileName,
@@ -160,7 +160,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileEntry(repositoryId, folderId, sourceFileName,
@@ -181,7 +181,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFileShortcut(repositoryId, folderId, toFileEntryId,
@@ -203,7 +203,7 @@ public class DLAppServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.Folder addFolder(
 		long repositoryId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFolder(repositoryId, parentFolderId, name, description,
@@ -317,7 +317,7 @@ public class DLAppServiceUtil {
 	*/
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 	}
@@ -346,7 +346,7 @@ public class DLAppServiceUtil {
 	*/
 	public static void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.checkInFileEntry(fileEntryId, majorVersion, changeLog,
@@ -380,7 +380,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .checkOutFileEntry(fileEntryId, owner, expirationTime,
@@ -407,7 +407,7 @@ public class DLAppServiceUtil {
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	*/
 	public static void checkOutFileEntry(long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkOutFileEntry(fileEntryId, serviceContext);
 	}
@@ -426,7 +426,7 @@ public class DLAppServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.Folder copyFolder(
 		long repositoryId, long sourceFolderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .copyFolder(repositoryId, sourceFolderId, parentFolderId,
@@ -1590,7 +1590,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(
 		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntry(fileEntryId, newFolderId, serviceContext);
@@ -1606,7 +1606,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveFolder(folderId, parentFolderId, serviceContext);
 	}
@@ -1657,7 +1657,7 @@ public class DLAppServiceUtil {
 	*/
 	public static void revertFileEntry(long fileEntryId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertFileEntry(fileEntryId, version, serviceContext);
 	}
@@ -1807,7 +1807,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, byte[] bytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
@@ -1852,7 +1852,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
@@ -1898,7 +1898,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntry(fileEntryId, sourceFileName, mimeType,
@@ -1911,7 +1911,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntryAndCheckIn(fileEntryId, sourceFileName,
@@ -1924,7 +1924,7 @@ public class DLAppServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileEntryAndCheckIn(fileEntryId, sourceFileName,
@@ -1946,7 +1946,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long fileShortcutId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFileShortcut(fileShortcutId, folderId, toFileEntryId,
@@ -1975,7 +1975,7 @@ public class DLAppServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.repository.model.Folder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFolder(folderId, name, description, serviceContext);

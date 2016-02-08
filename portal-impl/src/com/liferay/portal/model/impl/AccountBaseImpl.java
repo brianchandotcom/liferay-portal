@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Account;
-import com.liferay.portal.service.AccountLocalServiceUtil;
+import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Account service. Represents a row in the &quot;Account_&quot; database table, with each column mapped to a property of this class.

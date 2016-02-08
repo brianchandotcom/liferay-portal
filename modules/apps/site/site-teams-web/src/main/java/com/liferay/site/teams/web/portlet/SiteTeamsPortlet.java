@@ -14,22 +14,22 @@
 
 package com.liferay.site.teams.web.portlet;
 
-import com.liferay.portal.exception.DuplicateTeamException;
-import com.liferay.portal.exception.NoSuchGroupException;
-import com.liferay.portal.exception.NoSuchTeamException;
-import com.liferay.portal.exception.TeamNameException;
+import com.liferay.portal.kernel.exception.DuplicateTeamException;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.NoSuchTeamException;
+import com.liferay.portal.kernel.exception.TeamNameException;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.TeamService;
+import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Team;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.TeamService;
-import com.liferay.portal.service.UserGroupService;
-import com.liferay.portal.service.UserService;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
 import java.io.IOException;

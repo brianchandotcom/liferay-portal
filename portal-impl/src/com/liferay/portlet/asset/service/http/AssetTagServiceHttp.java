@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AssetTagServiceHttp {
 	public static com.liferay.asset.kernel.model.AssetTag addTag(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
@@ -700,7 +700,7 @@ public class AssetTagServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetTag updateTag(
 		HttpPrincipal httpPrincipal, long tagId, java.lang.String name,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
@@ -734,7 +734,7 @@ public class AssetTagServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AssetTagServiceHttp.class);
 	private static final Class<?>[] _addTagParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTagParameterTypes1 = new Class[] {
 			long.class
@@ -808,6 +808,6 @@ public class AssetTagServiceHttp {
 		};
 	private static final Class<?>[] _updateTagParameterTypes23 = new Class[] {
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

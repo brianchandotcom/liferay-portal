@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.RecentLayoutSetBranch;
-import com.liferay.portal.service.RecentLayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
+import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalServiceUtil;
 
 /**
  * The extended model base implementation for the RecentLayoutSetBranch service. Represents a row in the &quot;RecentLayoutSetBranch&quot; database table, with each column mapped to a property of this class.

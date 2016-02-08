@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class PollsVoteServiceSoap {
 	public static com.liferay.polls.model.PollsVoteSoap addVote(
 		long questionId, long choiceId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.polls.model.PollsVote returnValue = PollsVoteServiceUtil.addVote(questionId,

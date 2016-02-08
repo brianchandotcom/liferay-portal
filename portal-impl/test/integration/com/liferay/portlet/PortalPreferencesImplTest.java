@@ -14,12 +14,15 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
@@ -27,9 +30,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.service.PortalPreferencesLocalService;
-import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -86,7 +86,7 @@ public class PortalPreferencesImplTest {
 		_updatePreferencesMethod =
 			PortalPreferencesLocalService.class.getMethod(
 				"updatePortalPreferences",
-				com.liferay.portal.model.PortalPreferences.class);
+				com.liferay.portal.kernel.model.PortalPreferences.class);
 	}
 
 	@Before

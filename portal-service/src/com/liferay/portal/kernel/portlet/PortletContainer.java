@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 
 import java.util.List;
 

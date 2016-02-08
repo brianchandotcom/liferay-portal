@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.model.listener;
 
-import com.liferay.portal.exception.ModelListenerException;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.shopping.service.ShoppingCartLocalService;
 import com.liferay.shopping.service.ShoppingCategoryLocalService;
 import com.liferay.shopping.service.ShoppingCouponLocalService;

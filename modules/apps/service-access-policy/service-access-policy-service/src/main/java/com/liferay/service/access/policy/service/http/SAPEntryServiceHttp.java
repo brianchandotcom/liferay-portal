@@ -59,7 +59,7 @@ public class SAPEntryServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
@@ -338,7 +338,7 @@ public class SAPEntryServiceHttp {
 		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
 		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SAPEntryServiceUtil.class,
@@ -374,7 +374,7 @@ public class SAPEntryServiceHttp {
 	private static final Class<?>[] _addSAPEntryParameterTypes0 = new Class[] {
 			java.lang.String.class, boolean.class, boolean.class,
 			java.lang.String.class, java.util.Map.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSAPEntryParameterTypes1 = new Class[] {
 			long.class
@@ -404,6 +404,6 @@ public class SAPEntryServiceHttp {
 	private static final Class<?>[] _updateSAPEntryParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, boolean.class, boolean.class,
 			java.lang.String.class, java.util.Map.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

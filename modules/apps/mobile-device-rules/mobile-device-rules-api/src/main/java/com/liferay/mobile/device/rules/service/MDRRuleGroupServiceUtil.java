@@ -45,7 +45,7 @@ public class MDRRuleGroupServiceUtil {
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleGroup(groupId, nameMap, descriptionMap,
@@ -54,7 +54,7 @@ public class MDRRuleGroupServiceUtil {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
@@ -98,7 +98,7 @@ public class MDRRuleGroupServiceUtil {
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,

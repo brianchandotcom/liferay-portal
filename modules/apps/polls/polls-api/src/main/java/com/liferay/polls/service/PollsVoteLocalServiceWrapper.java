@@ -16,7 +16,7 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PollsVoteLocalService}.
@@ -48,7 +48,7 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	@Override
 	public com.liferay.polls.model.PollsVote addVote(long userId,
 		long questionId, long choiceId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsVoteLocalService.addVote(userId, questionId, choiceId,
 			serviceContext);
@@ -69,8 +69,8 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsVoteLocalService.deletePersistedModel(persistedModel);
 	}
@@ -247,7 +247,7 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsVoteLocalService.getPersistedModel(primaryKeyObj);

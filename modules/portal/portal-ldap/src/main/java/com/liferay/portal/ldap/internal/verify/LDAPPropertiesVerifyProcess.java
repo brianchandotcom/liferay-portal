@@ -16,7 +16,9 @@ package com.liferay.portal.ldap.internal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -32,8 +34,6 @@ import com.liferay.portal.ldap.constants.LDAPConstants;
 import com.liferay.portal.ldap.constants.LegacyLDAPPropsKeys;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.ArrayList;

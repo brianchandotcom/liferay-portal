@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLFolderLocalService}.
@@ -77,7 +77,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean hidden,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
 			mountPoint, parentFolderId, name, description, hidden,
@@ -220,8 +220,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.deletePersistedModel(persistedModel);
 	}
@@ -663,7 +663,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.getPersistedModel(primaryKeyObj);
@@ -749,7 +749,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder moveFolder(
 		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.moveFolder(userId, folderId,
 			parentFolderId, serviceContext);
@@ -813,7 +813,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
@@ -825,7 +825,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long folderId, java.lang.String name, java.lang.String description,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
@@ -843,7 +843,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
 			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
@@ -855,7 +855,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
 			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
@@ -874,7 +874,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
 			folderId, parentFolderId, name, description,
@@ -887,7 +887,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateFolderAndFileEntryTypes(userId,
 			folderId, parentFolderId, name, description,
@@ -905,7 +905,7 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	public com.liferay.document.library.kernel.model.DLFolder updateStatus(
 		long userId, long folderId, int status,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateStatus(userId, folderId, status,
 			workflowContext, serviceContext);

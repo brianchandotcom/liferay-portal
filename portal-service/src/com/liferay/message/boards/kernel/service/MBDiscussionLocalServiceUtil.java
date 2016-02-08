@@ -48,7 +48,7 @@ public class MBDiscussionLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
 		long userId, long classNameId, long classPK, long threadId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDiscussion(userId, classNameId, classPK, threadId,
@@ -57,7 +57,8 @@ public class MBDiscussionLocalServiceUtil {
 
 	public static com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
 		long userId, long groupId, long classNameId, long classPK,
-		long threadId, com.liferay.portal.service.ServiceContext serviceContext)
+		long threadId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDiscussion(userId, groupId, classNameId, classPK,
@@ -113,8 +114,8 @@ public class MBDiscussionLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -345,7 +346,7 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);

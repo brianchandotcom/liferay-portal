@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.trash.test;
 
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Cristina González

@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.AddressServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.AddressServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -54,13 +54,13 @@ import com.liferay.portal.service.AddressServiceUtil;
  */
 @ProviderType
 public class AddressServiceHttp {
-	public static com.liferay.portal.model.Address addAddress(
+	public static com.liferay.portal.kernel.model.Address addAddress(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long regionId, long countryId, long typeId, boolean mailing,
 		boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
@@ -84,7 +84,7 @@ public class AddressServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Address)returnObj;
+			return (com.liferay.portal.kernel.model.Address)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -119,7 +119,7 @@ public class AddressServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Address getAddress(
+	public static com.liferay.portal.kernel.model.Address getAddress(
 		HttpPrincipal httpPrincipal, long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -141,7 +141,7 @@ public class AddressServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Address)returnObj;
+			return (com.liferay.portal.kernel.model.Address)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -150,7 +150,7 @@ public class AddressServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Address> getAddresses(
+	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -173,7 +173,7 @@ public class AddressServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.Address>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Address>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -182,7 +182,7 @@ public class AddressServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Address updateAddress(
+	public static com.liferay.portal.kernel.model.Address updateAddress(
 		HttpPrincipal httpPrincipal, long addressId, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long regionId,
@@ -209,7 +209,7 @@ public class AddressServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Address)returnObj;
+			return (com.liferay.portal.kernel.model.Address)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -224,7 +224,7 @@ public class AddressServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, long.class,
 			long.class, long.class, boolean.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAddressParameterTypes1 = new Class[] {
 			long.class

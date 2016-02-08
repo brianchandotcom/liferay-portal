@@ -107,7 +107,7 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.MembershipRequest"
+			className="com.liferay.portal.kernel.model.MembershipRequest"
 			modelVar="membershipRequest"
 		>
 

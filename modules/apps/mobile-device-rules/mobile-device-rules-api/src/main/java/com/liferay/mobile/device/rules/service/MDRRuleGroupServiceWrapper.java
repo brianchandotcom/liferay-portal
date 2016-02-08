@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link MDRRuleGroupService}.
@@ -37,7 +37,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.addRuleGroup(groupId, nameMap,
 			descriptionMap, serviceContext);
@@ -46,7 +46,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.copyRuleGroup(ruleGroupId, groupId,
 			serviceContext);
@@ -98,7 +98,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.updateRuleGroup(ruleGroupId, nameMap,
 			descriptionMap, serviceContext);

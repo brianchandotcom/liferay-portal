@@ -69,7 +69,7 @@ public class MBCategoryServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBCategorySoap addCategory(
 		long userId, long parentCategoryId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBCategory returnValue = MBCategoryServiceUtil.addCategory(userId,
@@ -95,7 +95,7 @@ public class MBCategoryServiceSoap {
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBCategory returnValue = MBCategoryServiceUtil.addCategory(parentCategoryId,
@@ -561,7 +561,7 @@ public class MBCategoryServiceSoap {
 		boolean outUseSSL, java.lang.String outUserName,
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.message.boards.kernel.model.MBCategory returnValue = MBCategoryServiceUtil.updateCategory(categoryId,

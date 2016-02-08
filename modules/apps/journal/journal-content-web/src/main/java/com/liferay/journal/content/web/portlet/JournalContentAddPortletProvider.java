@@ -22,10 +22,10 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.model.Layout;
 
 import javax.portlet.PortletPreferences;
 

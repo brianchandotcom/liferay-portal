@@ -163,7 +163,7 @@ public class MBThreadServiceUtil {
 
 	public static com.liferay.message.boards.kernel.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().splitThread(messageId, subject, serviceContext);
 	}

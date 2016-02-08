@@ -111,7 +111,7 @@ public class PortletBagFactoryTest extends TestCase {
 
 				@Override
 				protected Portlet getPortletInstance(
-					com.liferay.portal.model.Portlet portlet) {
+					com.liferay.portal.kernel.model.Portlet portlet) {
 
 					return mvcPortlet;
 				}

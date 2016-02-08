@@ -16,7 +16,7 @@ package com.liferay.trash.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link TrashEntryService}.
@@ -172,7 +172,7 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	@Override
 	public void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_trashEntryService.moveEntry(className, classPK,
 			destinationContainerModelId, serviceContext);

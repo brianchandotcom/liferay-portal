@@ -14,7 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletApp;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,14 +28,14 @@ import javax.portlet.filter.FilterConfig;
 public class FilterConfigFactory {
 
 	public static FilterConfig create(
-		com.liferay.portal.model.PortletFilter portletFilter,
+		com.liferay.portal.kernel.model.PortletFilter portletFilter,
 		PortletContext ctx) {
 
 		return _instance._create(portletFilter, ctx);
 	}
 
 	public static void destroy(
-		com.liferay.portal.model.PortletFilter portletFilter) {
+		com.liferay.portal.kernel.model.PortletFilter portletFilter) {
 
 		_instance._destroy(portletFilter);
 	}
@@ -45,7 +45,7 @@ public class FilterConfigFactory {
 	}
 
 	private FilterConfig _create(
-		com.liferay.portal.model.PortletFilter portletFilter,
+		com.liferay.portal.kernel.model.PortletFilter portletFilter,
 		PortletContext ctx) {
 
 		PortletApp portletApp = portletFilter.getPortletApp();
@@ -74,7 +74,7 @@ public class FilterConfigFactory {
 	}
 
 	private void _destroy(
-		com.liferay.portal.model.PortletFilter portletFilter) {
+		com.liferay.portal.kernel.model.PortletFilter portletFilter) {
 
 		PortletApp portletApp = portletFilter.getPortletApp();
 

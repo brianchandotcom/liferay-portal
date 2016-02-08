@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.LayoutSetServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.LayoutSetServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -199,7 +199,7 @@ public class LayoutSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
+	public static com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		java.lang.String themeId, java.lang.String colorSchemeId,
 		java.lang.String css)
@@ -224,7 +224,7 @@ public class LayoutSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.LayoutSet)returnObj;
+			return (com.liferay.portal.kernel.model.LayoutSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -233,7 +233,7 @@ public class LayoutSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSet updateSettings(
+	public static com.liferay.portal.kernel.model.LayoutSet updateSettings(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -257,7 +257,7 @@ public class LayoutSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.LayoutSet)returnObj;
+			return (com.liferay.portal.kernel.model.LayoutSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -266,7 +266,7 @@ public class LayoutSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.LayoutSet updateVirtualHost(
+	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		java.lang.String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -290,7 +290,7 @@ public class LayoutSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.LayoutSet)returnObj;
+			return (com.liferay.portal.kernel.model.LayoutSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

@@ -57,7 +57,7 @@ public class SAPEntryLocalServiceUtil {
 		long userId, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSAPEntry(userId, allowedServiceSignatures,
@@ -83,8 +83,8 @@ public class SAPEntryLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -258,7 +258,7 @@ public class SAPEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -337,7 +337,7 @@ public class SAPEntryLocalServiceUtil {
 		long sapEntryId, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSAPEntry(sapEntryId, allowedServiceSignatures,

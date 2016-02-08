@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.ldap.bundle.ldapuerimporterutil;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.ldap.LDAPUserImporter;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
 
 import java.util.concurrent.atomic.AtomicReference;

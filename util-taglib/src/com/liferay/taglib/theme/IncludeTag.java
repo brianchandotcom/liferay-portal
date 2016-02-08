@@ -14,8 +14,8 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Theme;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.ThemeUtil;
 

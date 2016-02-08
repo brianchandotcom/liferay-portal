@@ -92,7 +92,7 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 		searchContainer="<%= siteBrowserDisplayContext.getGroupSearch() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Group"
+			className="com.liferay.portal.kernel.model.Group"
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
 			modelVar="group"

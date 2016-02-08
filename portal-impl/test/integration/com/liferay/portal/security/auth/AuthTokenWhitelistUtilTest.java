@@ -14,13 +14,14 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.auth.AuthTokenWhitelistUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreActions;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreOrigins;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnorePortlets;
@@ -29,7 +30,6 @@ import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCRen
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCResourceCommand;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelist;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelistActions;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.PropsValues;

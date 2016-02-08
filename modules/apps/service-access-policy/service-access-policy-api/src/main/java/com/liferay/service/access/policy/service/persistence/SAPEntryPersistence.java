@@ -16,7 +16,7 @@ package com.liferay.service.access.policy.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import com.liferay.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.service.access.policy.model.SAPEntry;

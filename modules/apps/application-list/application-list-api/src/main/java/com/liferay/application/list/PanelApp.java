@@ -15,8 +15,8 @@
 package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
 

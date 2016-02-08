@@ -30,8 +30,9 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 
 	@Override
 	public InvokerPortlet create(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletConfig portletConfig, PortletContext portletContext,
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletConfig portletConfig,
+			PortletContext portletContext,
 			InvokerFilterContainer invokerFilterContainer,
 			boolean checkAuthToken, boolean facesPortlet, boolean strutsPortlet,
 			boolean strutsBridgePortlet)
@@ -50,8 +51,8 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 
 	@Override
 	public InvokerPortlet create(
-			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
-			PortletContext portletContext,
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletContext portletContext,
 			InvokerFilterContainer invokerFilterContainer)
 		throws PortletException {
 

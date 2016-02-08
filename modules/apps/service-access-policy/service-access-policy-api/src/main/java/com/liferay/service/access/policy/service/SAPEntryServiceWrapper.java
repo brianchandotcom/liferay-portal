@@ -16,7 +16,7 @@ package com.liferay.service.access.policy.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link SAPEntryService}.
@@ -37,7 +37,7 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
 		boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryService.addSAPEntry(allowedServiceSignatures,
 			defaultSAPEntry, enabled, name, titleMap, serviceContext);
@@ -111,7 +111,7 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		long sapEntryId, java.lang.String allowedServiceSignatures,
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryService.updateSAPEntry(sapEntryId,
 			allowedServiceSignatures, defaultSAPEntry, enabled, name, titleMap,

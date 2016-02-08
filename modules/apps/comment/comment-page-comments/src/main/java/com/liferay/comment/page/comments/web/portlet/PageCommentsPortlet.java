@@ -15,8 +15,8 @@
 package com.liferay.comment.page.comments.web.portlet;
 
 import com.liferay.comment.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 

@@ -16,7 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DLTrashService}.
@@ -53,7 +53,7 @@ public class DLTrashServiceWrapper implements DLTrashService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlTrashService.moveFileEntryFromTrash(fileEntryId, newFolderId,
 			serviceContext);
@@ -83,7 +83,7 @@ public class DLTrashServiceWrapper implements DLTrashService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long fileShortcutId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlTrashService.moveFileShortcutFromTrash(fileShortcutId,
 			newFolderId, serviceContext);
@@ -114,7 +114,7 @@ public class DLTrashServiceWrapper implements DLTrashService,
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlTrashService.moveFolderFromTrash(folderId, parentFolderId,
 			serviceContext);

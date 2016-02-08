@@ -16,7 +16,7 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ShoppingOrderLocalService}.
@@ -58,7 +58,7 @@ public class ShoppingOrderLocalServiceWrapper
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail, boolean updateInventory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.completeOrder(number, ppTxnId,
 			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
@@ -99,8 +99,8 @@ public class ShoppingOrderLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderLocalService.deletePersistedModel(persistedModel);
 	}
@@ -270,7 +270,7 @@ public class ShoppingOrderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderLocalService.getPersistedModel(primaryKeyObj);
@@ -355,14 +355,14 @@ public class ShoppingOrderLocalServiceWrapper
 	@Override
 	public void sendEmail(com.liferay.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.sendEmail(order, emailType, serviceContext);
 	}
 
 	@Override
 	public void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}

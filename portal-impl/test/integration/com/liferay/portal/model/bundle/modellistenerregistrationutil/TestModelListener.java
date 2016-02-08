@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.bundle.modellistenerregistrationutil;
 
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
 

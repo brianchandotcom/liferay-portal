@@ -15,7 +15,7 @@
 package com.liferay.mentions.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
 
 import java.util.List;

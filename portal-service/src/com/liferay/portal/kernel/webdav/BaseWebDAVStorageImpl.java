@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import javax.servlet.http.HttpServletResponse;
 

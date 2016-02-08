@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
-<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
-<#assign layoutService = serviceLocator.findService("com.liferay.portal.service.LayoutService")>
+<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")>
+<#assign layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")>
 
 <@liferay_aui["field-wrapper"] data=data>
 	<#assign selectedPlid = 0>

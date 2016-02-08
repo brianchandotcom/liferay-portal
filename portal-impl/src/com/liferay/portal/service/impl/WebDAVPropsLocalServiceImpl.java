@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.NoSuchWebDAVPropsException;
+import com.liferay.portal.kernel.exception.NoSuchWebDAVPropsException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.webdav.WebDAVException;
-import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.service.base.WebDAVPropsLocalServiceBaseImpl;
 
 import java.util.Date;

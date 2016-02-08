@@ -14,15 +14,15 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.NoSuchLayoutFriendlyURLException;
+import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutFriendlyURLLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.Map;
  * <p>
  * All custom service methods should be put in this class. Whenever methods are
  * added, rerun ServiceBuilder to copy their definitions into the {@link
- * com.liferay.portal.service.LayoutFriendlyURLLocalService} interface.
+ * com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService} interface.
  * </p>
  *
  * <p>

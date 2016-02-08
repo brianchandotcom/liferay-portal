@@ -74,7 +74,7 @@ public class SAPEntryServiceSoap {
 		boolean enabled, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -218,7 +218,7 @@ public class SAPEntryServiceSoap {
 		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,

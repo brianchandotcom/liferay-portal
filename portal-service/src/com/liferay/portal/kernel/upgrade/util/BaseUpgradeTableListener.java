@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.model.ServiceComponent;
+import com.liferay.portal.kernel.model.ServiceComponent;
 
 import java.io.IOException;
 

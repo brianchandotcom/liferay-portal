@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.security.auth;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.model.Portlet;
 
 import java.util.Set;
 

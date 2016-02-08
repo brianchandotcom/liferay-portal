@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.storage;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Eduardo Lundgren

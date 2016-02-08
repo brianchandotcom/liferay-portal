@@ -73,7 +73,7 @@ public class ShoppingCouponServiceSoap {
 		int endDateMinute, boolean neverExpire, boolean active,
 		java.lang.String limitCategories, java.lang.String limitSkus,
 		double minOrder, double discount, java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.shopping.model.ShoppingCoupon returnValue = ShoppingCouponServiceUtil.addCoupon(code,
@@ -145,7 +145,7 @@ public class ShoppingCouponServiceSoap {
 		boolean neverExpire, boolean active, java.lang.String limitCategories,
 		java.lang.String limitSkus, double minOrder, double discount,
 		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.shopping.model.ShoppingCoupon returnValue = ShoppingCouponServiceUtil.updateCoupon(couponId,

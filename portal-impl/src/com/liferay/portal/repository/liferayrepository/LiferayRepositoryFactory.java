@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portal.service.RepositoryService;
-import com.liferay.portal.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.RepositoryService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 
 /**
  * @author Adolfo Pérez
@@ -87,7 +87,7 @@ public class LiferayRepositoryFactory implements RepositoryFactory {
 		long dlFolderId = 0;
 		long groupId = 0;
 
-		com.liferay.portal.model.Repository repository =
+		com.liferay.portal.kernel.model.Repository repository =
 			_repositoryLocalService.fetchRepository(repositoryId);
 
 		if (repository == null) {

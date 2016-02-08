@@ -154,7 +154,7 @@ public class JournalArticleServiceSoap {
 		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
 		int reviewDateHour, int reviewDateMinute, boolean neverReview,
 		boolean indexable, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -227,7 +227,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		double version, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			JournalArticleServiceUtil.deleteArticle(groupId, articleId,
@@ -254,7 +254,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			JournalArticleServiceUtil.deleteArticle(groupId, articleId,
@@ -288,7 +288,7 @@ public class JournalArticleServiceSoap {
 	public static com.liferay.journal.model.JournalArticleSoap expireArticle(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.expireArticle(groupId,
@@ -323,7 +323,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static void expireArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			JournalArticleServiceUtil.expireArticle(groupId, articleId,
@@ -1289,7 +1289,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static void moveArticle(long groupId, java.lang.String articleId,
 		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			JournalArticleServiceUtil.moveArticle(groupId, articleId,
@@ -1322,7 +1322,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap moveArticleFromTrash(
 		long groupId, long resourcePrimKey, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
@@ -1357,7 +1357,7 @@ public class JournalArticleServiceSoap {
 	*/
 	public static com.liferay.journal.model.JournalArticleSoap moveArticleFromTrash(
 		long groupId, java.lang.String articleId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
@@ -2018,7 +2018,7 @@ public class JournalArticleServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String content,
 		java.lang.String layoutUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
@@ -2081,7 +2081,7 @@ public class JournalArticleServiceSoap {
 	public static com.liferay.journal.model.JournalArticleSoap updateArticle(
 		long groupId, long folderId, java.lang.String articleId,
 		double version, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.updateArticle(groupId,
@@ -2143,7 +2143,7 @@ public class JournalArticleServiceSoap {
 	public static com.liferay.journal.model.JournalArticleSoap updateStatus(
 		long groupId, java.lang.String articleId, double version, int status,
 		java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.updateStatus(groupId,

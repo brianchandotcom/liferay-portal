@@ -22,9 +22,9 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.user.personal.site.permissions.UserPersonalSitePermissions;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
 
 import java.util.ArrayList;
 import java.util.List;

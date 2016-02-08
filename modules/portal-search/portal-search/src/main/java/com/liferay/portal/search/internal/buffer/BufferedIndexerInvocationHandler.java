@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;

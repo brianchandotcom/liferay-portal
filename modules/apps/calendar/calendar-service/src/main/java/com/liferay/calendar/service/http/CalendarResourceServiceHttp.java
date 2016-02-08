@@ -60,7 +60,8 @@ public class CalendarResourceServiceHttp {
 		long classPK, java.lang.String classUuid, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
@@ -315,7 +316,8 @@ public class CalendarResourceServiceHttp {
 		HttpPrincipal httpPrincipal, long calendarResourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarResourceServiceUtil.class,
@@ -352,7 +354,8 @@ public class CalendarResourceServiceHttp {
 	private static final Class<?>[] _addCalendarResourceParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.util.Map.class, java.util.Map.class,
-			boolean.class, com.liferay.portal.service.ServiceContext.class
+			boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCalendarResourceParameterTypes1 = new Class[] {
 			long.class
@@ -385,6 +388,6 @@ public class CalendarResourceServiceHttp {
 		};
 	private static final Class<?>[] _updateCalendarResourceParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

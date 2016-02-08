@@ -85,7 +85,7 @@ public class DDMTemplateLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTemplate(userId, groupId, classNameId, classPK,
@@ -135,7 +135,7 @@ public class DDMTemplateLocalServiceUtil {
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTemplate(userId, groupId, classNameId, classPK,
@@ -195,7 +195,7 @@ public class DDMTemplateLocalServiceUtil {
 		long userId, long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .copyTemplate(userId, templateId, nameMap, descriptionMap,
@@ -204,7 +204,7 @@ public class DDMTemplateLocalServiceUtil {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		long userId, long templateId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyTemplate(userId, templateId, serviceContext);
 	}
@@ -230,7 +230,7 @@ public class DDMTemplateLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		long userId, long classNameId, long oldClassPK, long newClassPK,
 		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .copyTemplates(userId, classNameId, oldClassPK, newClassPK,
@@ -275,8 +275,8 @@ public class DDMTemplateLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -578,7 +578,7 @@ public class DDMTemplateLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -861,7 +861,7 @@ public class DDMTemplateLocalServiceUtil {
 
 	public static void revertTemplate(long userId, long templateId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertTemplate(userId, templateId, version, serviceContext);
 	}
@@ -1278,7 +1278,7 @@ public class DDMTemplateLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, java.lang.String script, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTemplate(userId, templateId, classPK, nameMap,
@@ -1321,7 +1321,7 @@ public class DDMTemplateLocalServiceUtil {
 		java.lang.String language, java.lang.String script, boolean cacheable,
 		boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallImageFile,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTemplate(userId, templateId, classPK, nameMap,

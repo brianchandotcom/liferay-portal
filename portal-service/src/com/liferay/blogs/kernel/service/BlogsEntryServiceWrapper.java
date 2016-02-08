@@ -16,7 +16,7 @@ package com.liferay.blogs.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link BlogsEntryService}.
@@ -48,7 +48,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.addEntry(title, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -67,7 +67,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.addEntry(title, subtitle, description,
 			content, displayDateMonth, displayDateDay, displayDateYear,
@@ -281,7 +281,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.updateEntry(entryId, title, description,
 			content, displayDateMonth, displayDateDay, displayDateYear,
@@ -300,7 +300,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.updateEntry(entryId, title, subtitle,
 			description, content, displayDateMonth, displayDateDay,

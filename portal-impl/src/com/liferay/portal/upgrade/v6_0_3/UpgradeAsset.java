@@ -40,7 +40,8 @@ public class UpgradeAsset extends UpgradeProcess {
 		catch (Exception e) {
 		}
 
-		updateAssetEntry("com.liferay.portal.model.User", "User_", "userId");
+		updateAssetEntry(
+			"com.liferay.portal.kernel.model.User", "User_", "userId");
 		updateAssetEntry(
 			"com.liferay.portlet.blogs.model.BlogsEntry", "BlogsEntry",
 			"entryId");

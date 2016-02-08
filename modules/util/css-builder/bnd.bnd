@@ -11,6 +11,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/model/ModelHintsConstants.class
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/regex/PatternFactory.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Field.class,\
@@ -32,6 +33,5 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsConstants.class
 Main-Class: com.liferay.css.builder.CSSBuilder
 Private-Package: com.liferay.css.builder.sass

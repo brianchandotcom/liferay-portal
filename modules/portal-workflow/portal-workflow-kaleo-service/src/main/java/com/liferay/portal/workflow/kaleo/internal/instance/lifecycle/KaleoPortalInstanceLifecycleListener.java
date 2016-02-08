@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.model.Company;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;

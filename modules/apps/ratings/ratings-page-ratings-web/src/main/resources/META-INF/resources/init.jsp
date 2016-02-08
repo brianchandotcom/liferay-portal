@@ -19,7 +19,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.model.Layout" %>
+<%@ page import="com.liferay.portal.kernel.model.Layout" %>
 
 <liferay-theme:defineObjects />
 

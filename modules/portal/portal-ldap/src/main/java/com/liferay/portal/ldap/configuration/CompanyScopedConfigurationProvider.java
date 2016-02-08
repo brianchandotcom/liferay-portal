@@ -19,12 +19,12 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.constants.LDAPConstants;
-import com.liferay.portal.model.CompanyConstants;
 
 import java.io.IOException;
 

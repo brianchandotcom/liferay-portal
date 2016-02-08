@@ -14,13 +14,13 @@
 
 package com.liferay.product.navigation.product.menu.theme.contributor;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
 import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys;
 
 import java.util.Map;

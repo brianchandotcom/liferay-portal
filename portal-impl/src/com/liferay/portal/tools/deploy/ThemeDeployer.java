@@ -14,11 +14,11 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Plugin;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;

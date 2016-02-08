@@ -40,7 +40,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Portlet"
+		className="com.liferay.portal.kernel.model.Portlet"
 		modelVar="portlet"
 	>
 

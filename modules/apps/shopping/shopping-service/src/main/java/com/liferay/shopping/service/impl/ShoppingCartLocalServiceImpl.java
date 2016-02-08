@@ -15,10 +15,10 @@
 package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.User;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.shopping.exception.CartMinQuantityException;
 import com.liferay.shopping.exception.CouponActiveException;

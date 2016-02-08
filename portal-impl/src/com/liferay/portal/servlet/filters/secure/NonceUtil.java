@@ -14,11 +14,11 @@
 
 package com.liferay.portal.servlet.filters.secure;
 
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.concurrent.DelayQueue;

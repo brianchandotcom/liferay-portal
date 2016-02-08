@@ -14,14 +14,14 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupWrapper;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserWrapper;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupWrapper;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserWrapper;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.PACLTestRule;
 
 import org.junit.AfterClass;

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
 import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;

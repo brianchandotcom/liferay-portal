@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.util;
 
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
-import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.http.ThemeServiceHttp;
 
 import java.util.ArrayList;

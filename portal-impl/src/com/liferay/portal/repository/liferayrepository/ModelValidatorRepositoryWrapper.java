@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.repository.util.RepositoryWrapper;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
 import java.io.File;

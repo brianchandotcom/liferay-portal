@@ -57,7 +57,7 @@ public class MDRRuleGroupLocalServiceUtil {
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleGroup(groupId, nameMap, descriptionMap,
@@ -66,14 +66,15 @@ public class MDRRuleGroupLocalServiceUtil {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
+		long groupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
@@ -116,8 +117,8 @@ public class MDRRuleGroupLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -339,7 +340,7 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
@@ -441,7 +442,7 @@ public class MDRRuleGroupLocalServiceUtil {
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,

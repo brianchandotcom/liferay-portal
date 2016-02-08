@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.UserGroupServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -110,7 +110,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup addUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -134,7 +134,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -143,10 +143,10 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup addUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
@@ -168,7 +168,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -205,7 +205,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup fetchUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup fetchUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -228,7 +228,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -237,7 +237,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup getUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -260,7 +260,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -269,7 +269,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup getUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup getUserGroup(
 		HttpPrincipal httpPrincipal, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -291,7 +291,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -300,7 +300,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
 		HttpPrincipal httpPrincipal, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -322,7 +322,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.UserGroup>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.UserGroup>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -331,7 +331,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserUserGroups(
 		HttpPrincipal httpPrincipal, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -353,7 +353,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portal.model.UserGroup>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.UserGroup>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -419,7 +419,7 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup updateUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId, java.lang.String name,
 		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -443,7 +443,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -452,10 +452,10 @@ public class UserGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.UserGroup updateUserGroup(
+	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
@@ -477,7 +477,7 @@ public class UserGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.UserGroup)returnObj;
+			return (com.liferay.portal.kernel.model.UserGroup)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -498,7 +498,7 @@ public class UserGroupServiceHttp {
 		};
 	private static final Class<?>[] _addUserGroupParameterTypes3 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteUserGroupParameterTypes4 = new Class[] {
 			long.class
@@ -529,6 +529,6 @@ public class UserGroupServiceHttp {
 		};
 	private static final Class<?>[] _updateUserGroupParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -14,14 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupGroupRoleLocalServiceBaseImpl;
-import com.liferay.portal.service.persistence.UserGroupGroupRolePK;
 
 import java.util.List;
 

@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.UserTracker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.UserTrackerUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.UserTracker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserTrackerLocalServiceUtil;
-import com.liferay.portal.service.persistence.UserTrackerUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;

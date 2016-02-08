@@ -16,7 +16,7 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link WikiNodeLocalService}.
@@ -35,7 +35,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 
 	@Override
 	public com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.addDefaultNode(userId, serviceContext);
 	}
@@ -43,7 +43,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	@Override
 	public com.liferay.wiki.model.WikiNode addNode(long userId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.addNode(userId, name, description,
 			serviceContext);
@@ -126,8 +126,8 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.deletePersistedModel(persistedModel);
 	}
@@ -372,7 +372,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.getPersistedModel(primaryKeyObj);
@@ -509,7 +509,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	@Override
 	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.updateNode(nodeId, name, description,
 			serviceContext);
@@ -518,7 +518,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	@Override
 	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
 		com.liferay.wiki.model.WikiNode node, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.updateStatus(userId, node, status,
 			serviceContext);

@@ -17,11 +17,11 @@ package com.liferay.portlet.exportimport.service.impl;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.model.Layout;
 import com.liferay.portlet.exportimport.service.base.ExportImportServiceBaseImpl;
 
 import java.io.File;

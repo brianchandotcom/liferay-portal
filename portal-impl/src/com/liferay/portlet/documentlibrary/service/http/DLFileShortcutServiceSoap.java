@@ -67,7 +67,7 @@ import java.rmi.RemoteException;
 public class DLFileShortcutServiceSoap {
 	public static com.liferay.document.library.kernel.model.DLFileShortcutSoap addFileShortcut(
 		long groupId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFileShortcut returnValue =
@@ -113,7 +113,7 @@ public class DLFileShortcutServiceSoap {
 	public static com.liferay.document.library.kernel.model.DLFileShortcutSoap updateFileShortcut(
 		long fileShortcutId, long repositoryId, long folderId,
 		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.document.library.kernel.model.DLFileShortcut returnValue =

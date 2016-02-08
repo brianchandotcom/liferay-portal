@@ -58,7 +58,7 @@ public class JournalFolderServiceHttp {
 	public static com.liferay.journal.model.JournalFolder addFolder(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
@@ -739,7 +739,7 @@ public class JournalFolderServiceHttp {
 
 	public static com.liferay.journal.model.JournalFolder moveFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
@@ -772,7 +772,7 @@ public class JournalFolderServiceHttp {
 
 	public static com.liferay.journal.model.JournalFolder moveFolderFromTrash(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
@@ -922,7 +922,7 @@ public class JournalFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
@@ -959,7 +959,7 @@ public class JournalFolderServiceHttp {
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
 		int restrictionType, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
@@ -996,7 +996,7 @@ public class JournalFolderServiceHttp {
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {
 			long.class
@@ -1072,11 +1072,11 @@ public class JournalFolderServiceHttp {
 		};
 	private static final Class<?>[] _moveFolderParameterTypes24 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFolderFromTrashParameterTypes25 = new Class[] {
 			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFolderToTrashParameterTypes26 = new Class[] {
 			long.class
@@ -1093,11 +1093,11 @@ public class JournalFolderServiceHttp {
 	private static final Class<?>[] _updateFolderParameterTypes30 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes31 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long[].class, int.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

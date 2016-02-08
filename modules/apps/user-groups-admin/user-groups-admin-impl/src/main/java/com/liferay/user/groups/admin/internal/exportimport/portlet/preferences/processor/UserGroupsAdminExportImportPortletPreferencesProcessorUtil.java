@@ -14,11 +14,11 @@
 
 package com.liferay.user.groups.admin.internal.exportimport.portlet.preferences.processor;
 
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.UserGroup;
 
 import javax.portlet.PortletPreferences;
 

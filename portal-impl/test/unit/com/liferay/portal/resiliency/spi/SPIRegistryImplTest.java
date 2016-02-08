@@ -14,6 +14,8 @@
 
 package com.liferay.portal.resiliency.spi;
 
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
@@ -25,8 +27,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -305,8 +305,8 @@ public class SPIRegistryImplTest {
 	public static class PortletLocalServiceUtilAdvice {
 
 		@Around(
-			"execution(public static com.liferay.portal.model.PortletApp " +
-				"com.liferay.portal.service.PortletLocalServiceUtil." +
+			"execution(public static com.liferay.portal.kernel.model.PortletApp " +
+				"com.liferay.portal.kernel.service.PortletLocalServiceUtil." +
 					"getPortletApp(String)) && args(servletContextName)"
 		)
 		public PortletApp getPortletApp(String servletContextName) {
@@ -318,8 +318,8 @@ public class SPIRegistryImplTest {
 		}
 
 		@Around(
-			"execution(public static com.liferay.portal.model.Portlet com." +
-				"liferay.portal.service.PortletLocalServiceUtil." +
+			"execution(public static com.liferay.portal.kernel.model.Portlet" +
+				" com.liferay.portal.kernel.service.PortletLocalServiceUtil." +
 					"getPortletById(String)) && args(portletId)"
 		)
 		public Portlet getPortletById(String portletId) {

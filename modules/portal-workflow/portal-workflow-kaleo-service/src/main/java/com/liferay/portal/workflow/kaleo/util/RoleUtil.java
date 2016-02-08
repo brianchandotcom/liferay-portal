@@ -14,14 +14,14 @@
 
 package com.liferay.portal.workflow.kaleo.util;
 
-import com.liferay.portal.exception.DuplicateRoleException;
-import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.DuplicateRoleException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;

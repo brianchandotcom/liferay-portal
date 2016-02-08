@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link DDLRecordSetService}.
@@ -38,7 +38,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows, int scope,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetService.addRecordSet(groupId, ddmStructureId,
 			recordSetKey, nameMap, descriptionMap, minDisplayRows, scope,
@@ -110,7 +110,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetService.updateMinDisplayRows(recordSetId,
 			minDisplayRows, serviceContext);
@@ -122,7 +122,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetService.updateRecordSet(groupId, ddmStructureId,
 			recordSetKey, nameMap, descriptionMap, minDisplayRows,
@@ -135,7 +135,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetService.updateRecordSet(recordSetId,
 			ddmStructureId, nameMap, descriptionMap, minDisplayRows,

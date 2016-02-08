@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.exception.NoSuchResourceActionException;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Role;
 
 import java.io.InputStream;
 

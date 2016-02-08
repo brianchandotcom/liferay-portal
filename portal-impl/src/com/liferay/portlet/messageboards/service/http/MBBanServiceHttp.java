@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class MBBanServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBBan addBan(
 		HttpPrincipal httpPrincipal, long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
@@ -89,7 +89,7 @@ public class MBBanServiceHttp {
 	}
 
 	public static void deleteBan(HttpPrincipal httpPrincipal, long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
@@ -118,9 +118,9 @@ public class MBBanServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MBBanServiceHttp.class);
 	private static final Class<?>[] _addBanParameterTypes0 = new Class[] {
-			long.class, com.liferay.portal.service.ServiceContext.class
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteBanParameterTypes1 = new Class[] {
-			long.class, com.liferay.portal.service.ServiceContext.class
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

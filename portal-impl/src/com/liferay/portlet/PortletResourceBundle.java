@@ -14,8 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.model.PortletInfo;
 
 import java.util.Collections;
 import java.util.Enumeration;

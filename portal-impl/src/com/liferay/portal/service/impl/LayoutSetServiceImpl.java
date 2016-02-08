@@ -15,11 +15,11 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.Plugin;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 
 import java.io.File;

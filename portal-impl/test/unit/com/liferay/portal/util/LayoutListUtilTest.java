@@ -19,13 +19,13 @@ import com.germinus.easyconf.ConfigurationSerializer;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -44,7 +44,7 @@ public class DDLRecordServiceUtil {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRecord(groupId, recordSetId, displayIndex,
@@ -54,7 +54,7 @@ public class DDLRecordServiceUtil {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRecord(groupId, recordSetId, displayIndex, fields,
@@ -64,7 +64,7 @@ public class DDLRecordServiceUtil {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRecord(groupId, recordSetId, displayIndex, fieldsMap,
@@ -78,7 +78,7 @@ public class DDLRecordServiceUtil {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecordLocale(recordId, locale, serviceContext);
 	}
@@ -99,7 +99,7 @@ public class DDLRecordServiceUtil {
 	}
 
 	public static void revertRecord(long recordId, java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertRecord(recordId, version, serviceContext);
 	}
@@ -111,7 +111,7 @@ public class DDLRecordServiceUtil {
 	@Deprecated
 	public static void revertRecordVersion(long recordId,
 		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().revertRecordVersion(recordId, version, serviceContext);
 	}
@@ -120,7 +120,7 @@ public class DDLRecordServiceUtil {
 		long recordId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRecord(recordId, displayIndex, fieldsMap,
@@ -130,7 +130,7 @@ public class DDLRecordServiceUtil {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRecord(recordId, majorVersion, displayIndex,
@@ -141,7 +141,7 @@ public class DDLRecordServiceUtil {
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
 		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRecord(recordId, majorVersion, displayIndex, fields,

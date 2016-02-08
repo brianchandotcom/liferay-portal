@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.model.adapter;
 
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.Theme;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.Theme;
 
 /**
  * @author Mate Thurzo

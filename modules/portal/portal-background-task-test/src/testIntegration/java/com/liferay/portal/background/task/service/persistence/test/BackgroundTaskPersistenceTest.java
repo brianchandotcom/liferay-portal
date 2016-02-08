@@ -225,7 +225,7 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testCountByG_TArrayable() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(),
+		_persistence.countByG_T(new long[] { RandomTestUtil.nextLong(), 0L },
 			new String[] {
 				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
 				null, null
@@ -287,7 +287,7 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testCountByG_T_CArrayable() throws Exception {
-		_persistence.countByG_T_C(RandomTestUtil.nextLong(),
+		_persistence.countByG_T_C(new long[] { RandomTestUtil.nextLong(), 0L },
 			new String[] {
 				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
 				null, null

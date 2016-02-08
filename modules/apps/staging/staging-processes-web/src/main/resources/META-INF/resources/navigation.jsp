@@ -20,6 +20,22 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "processes");
 
 PortletURL portletURL = renderResponse.createRenderURL();
+
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String navigation = ParamUtil.getString(request, "navigation", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
+	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
+}
+
+String searchContainerId = "publishLayoutProcesses";
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -47,12 +63,28 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
+<c:if test='<%= tabs1.equals("processes") %>'>
+	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="mvcRenderCommandName" value="viewPublishLayouts" />
+		<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
+		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+		<liferay-util:param name="navigation" value="<%= navigation %>" />
+		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+	</liferay-util:include>
+</c:if>
+
 <div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
 	<c:choose>
 		<c:when test='<%= tabs1.equals("processes") %>'>
-			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+				<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+				<liferay-util:param name="navigation" value="<%= navigation %>" />
+				<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+				<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+			</liferay-util:include>
 
 			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 		</c:when>
@@ -61,3 +93,26 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		</c:when>
 	</c:choose>
 </div>
+
+<aui:script use="liferay-export-import">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
+		<portlet:param name="orderByType" value="<%= orderByType %>" />
+	</liferay-portlet:resourceURL>
+
+	new Liferay.ExportImport(
+		{
+			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
+			locale: '<%= locale.toLanguageTag() %>',
+			namespace: '<portlet:namespace />',
+			processesNode: '#publishProcessesSearchContainer',
+			processesResourceURL: '<%= publishProcessesURL.toString() %>',
+			timeZone: '<%= timeZone.getID() %>'
+		}
+	);
+</aui:script>

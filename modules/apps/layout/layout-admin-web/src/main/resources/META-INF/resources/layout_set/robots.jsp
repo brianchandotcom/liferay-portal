@@ -28,7 +28,7 @@ String robots = ParamUtil.getString(request, "robots", defaultRobots);
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostName) %>">
-		<aui:input cols="60" label="set-the-robots-txt" name="robots" rows="15" type="textarea" value="<%= robots %>" />
+		<aui:input label="set-the-robots-txt" name="robots" placeholder="robots" type="textarea" value="<%= robots %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

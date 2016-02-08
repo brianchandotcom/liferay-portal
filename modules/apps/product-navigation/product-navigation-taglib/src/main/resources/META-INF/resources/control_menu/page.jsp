@@ -110,6 +110,5 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 				);
 			}
 		);
-
 	</aui:script>
 </c:if>

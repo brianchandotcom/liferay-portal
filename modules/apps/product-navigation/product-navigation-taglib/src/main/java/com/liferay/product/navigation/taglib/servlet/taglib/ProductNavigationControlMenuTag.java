@@ -14,10 +14,10 @@
 
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
-import com.liferay.product.navigation.control.menu.ControlMenuCategory;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.util.ControlMenuCategoryRegistry;
-import com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
 import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -29,7 +29,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class ControlMenuTag extends IncludeTag {
+public class ProductNavigationControlMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
@@ -59,18 +59,19 @@ public class ControlMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		ControlMenuCategoryRegistry controlMenuCategoryRegistry =
-			ServletContextUtil.getControlMenuCategoryRegistry();
+		ProductNavigationControlMenuCategoryRegistry
+			controlMenuCategoryRegistry =
+				ServletContextUtil.getControlMenuCategoryRegistry();
 
-		List<ControlMenuCategory> controlMenuCategories =
+		List<ProductNavigationControlMenuCategory> controlMenuCategories =
 			controlMenuCategoryRegistry.getControlMenuCategories(
-				ControlMenuCategoryKeys.ROOT);
+				ProductNavigationControlMenuCategoryKeys.ROOT);
 
 		request.setAttribute(
 			"liferay-product-navigation:control-menu:control-menu-categories",
 			controlMenuCategories);
 
-		ControlMenuEntryRegistry controlMenuEntryRegistry =
+		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry =
 			ServletContextUtil.getControlMenuEntryRegistry();
 
 		request.setAttribute(

@@ -1,0 +1,9 @@
+.portlet-layouts-admin {
+	.color-scheme-selector, .theme-selector {
+		cursor: pointer;
+
+		&.selected {
+			box-shadow: 0 0 0 2px #65B6F0;
+		}
+	}
+}

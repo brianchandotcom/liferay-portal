@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class PortletSharingWebUpgrade implements UpgradeStepRegistrator {
+public class PortletConfigurationSharingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {

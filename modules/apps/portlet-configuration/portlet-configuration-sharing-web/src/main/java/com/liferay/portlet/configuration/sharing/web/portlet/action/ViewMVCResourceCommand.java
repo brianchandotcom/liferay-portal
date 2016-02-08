@@ -16,7 +16,7 @@ package com.liferay.portlet.configuration.sharing.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portlet.configuration.sharing.web.constants.PortletSharingPortletKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletSharingPortletKeys.PORTLET_SHARING,
+		"javax.portlet.name=" + PortletConfigurationSharingPortletKeys.PORTLET_SHARING,
 		"mvc.command.name=/portlet_sharing/view"
 	},
 	service = MVCResourceCommand.class

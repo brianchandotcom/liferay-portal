@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.configuration.sharing.web.upgrade.v1_0_0;
 
-import com.liferay.portlet.configuration.sharing.web.constants.PortletSharingPortletKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
 
 /**
  * @author Peter Fellwock
@@ -25,7 +25,7 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"133", PortletSharingPortletKeys.PORTLET_SHARING}
+			new String[] {"133", PortletConfigurationSharingPortletKeys.PORTLET_SHARING}
 		};
 	}
 

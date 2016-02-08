@@ -67,6 +67,13 @@ public class LayoutBranchLocalServiceImpl
 
 		layoutBranchPersistence.update(layoutBranch);
 
+		// Resources
+
+		resourceLocalService.addResources(
+			layoutBranch.getCompanyId(), layoutBranch.getGroupId(),
+			layoutBranch.getUserId(), LayoutBranch.class.getName(),
+			layoutBranch.getLayoutBranchId(), false, true, false);
+
 		StagingUtil.setRecentLayoutBranchId(
 			user, layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
 			layoutBranch.getLayoutBranchId());

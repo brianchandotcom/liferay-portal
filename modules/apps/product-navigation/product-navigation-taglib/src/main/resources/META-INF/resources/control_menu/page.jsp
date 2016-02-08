@@ -93,7 +93,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		panelEntryBodies.forEach(
 			function(item) {
 				item.on(
-					'open.lexicon.sidenav',
+					'openStart.lexicon.sidenav',
 					function(event) {
 						var itemId = event.target.getAttribute('id');
 

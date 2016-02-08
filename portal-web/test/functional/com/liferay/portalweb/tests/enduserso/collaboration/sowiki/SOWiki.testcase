@@ -3244,7 +3244,7 @@
 		<execute function="AssertClick" locator1="Wiki#LINK_ATTACHMENTS" value1="1 Attachment" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#ADD_ATTACHMENTS" />
-		<execute function="AssertElementNotPresent" locator1="Wiki#ATTACHMENT_TABLE_REMOVE" value1="Remove" />
+		<execute function="AssertElementNotPresent" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />

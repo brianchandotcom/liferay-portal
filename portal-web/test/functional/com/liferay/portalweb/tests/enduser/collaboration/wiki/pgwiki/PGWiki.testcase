@@ -13,18 +13,20 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1_column" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Wiki" />
 		</execute>
 	</set-up>
 
@@ -576,9 +578,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This page does not exist yet. Use the form below to create it." />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />

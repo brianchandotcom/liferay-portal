@@ -35,8 +35,18 @@
 				<condition function="IsElementNotPresent" locator1="ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX" />
 			</and>
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Enabling Xuggler provides video conversion functionality." />
+				</execute>
+
 				<execute function="Select" locator1="ServerAdministrationExternalServices#XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
+
 				<execute function="AssertClick" locator1="ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON" value1="Install" />
+
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Enabling Xuggler provides video conversion functionality." />
+				</execute>
+
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
 			</then>
 		</if>

@@ -154,8 +154,6 @@
 
 		<execute function="AssertClick" locator1="Wiki#LINK_ADD_CHILD_PAGE" value1="Add Child Page" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This page does not exist yet. Use the form below to create it." />
-
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />
 		</execute>

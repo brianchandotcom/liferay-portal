@@ -10,7 +10,9 @@ Export-Package:\
 	com.liferay.portal.ldap.exportimport,\
 	com.liferay.portal.ldap.exportimport.configuration,\
 	com.liferay.portal.ldap.exportimport.util,\
-	com.liferay.portal.ldap.exportimport.validator
+	com.liferay.portal.ldap.exportimport.validator,\
+	com.liferay.portal.ldap.util,\
+	com.liferay.portal.ldap.validator
 Import-Package:\
 	!junit.*,\
 	!org.junit.*,\

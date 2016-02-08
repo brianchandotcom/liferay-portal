@@ -1,5 +1,8 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compile project(":apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
+	compile project(":apps:journal:journal-lang")
 	compile project(":apps:journal:journal-web")
 	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-metatype")

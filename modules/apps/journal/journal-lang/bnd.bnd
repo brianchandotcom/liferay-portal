@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Journal Lang
+Bundle-SymbolicName: com.liferay.journal.lang
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+-include: ../../../../marketplace/web-content-management/bnd.bnd

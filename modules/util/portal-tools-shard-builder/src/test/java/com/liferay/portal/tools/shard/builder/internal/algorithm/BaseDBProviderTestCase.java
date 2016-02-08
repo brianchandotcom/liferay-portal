@@ -77,6 +77,30 @@ public abstract class BaseDBProviderTestCase {
 	}
 
 	@Test
+	public void testSerializeTableFieldDouble() throws Exception {
+		String serializeTableField = dbProvider.serializeTableField(
+			Double.valueOf(99.99));
+
+		Assert.assertEquals("99.99", serializeTableField);
+	}
+
+	@Test
+	public void testSerializeTableFieldFloat() throws Exception {
+		String serializeTableField = dbProvider.serializeTableField(
+			Float.valueOf(1));
+
+		Assert.assertEquals("1.0", serializeTableField);
+	}
+
+	@Test
+	public void testSerializeTableFieldInteger() throws Exception {
+		String serializeTableField = dbProvider.serializeTableField(
+			Integer.valueOf(1));
+
+		Assert.assertEquals("1", serializeTableField);
+	}
+
+	@Test
 	public void testSerializeTableFieldString() throws Exception {
 		String serializeTableField = dbProvider.serializeTableField(
 			new String("1"));

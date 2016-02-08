@@ -2818,7 +2818,7 @@ plugins.includes=</echo>
 		<zip destfile="dist/liferay-portal-doc-${lp.version}.zip">
 			<zipfileset
 				dir="api"
-				includes="**/*.css,**/*.gif,**/*.html"
+				includes="**/*.css,**/*.gif,**/*.html,**/*.jpeg,**/*.jpg,**/*.png,**/*.svg"
 				prefix="liferay-portal-doc-${lp.version}"
 			/>
 		</zip>

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.sharing.web.portlet;
+package com.liferay.portlet.configuration.sharing.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portlet.sharing.web.constants.PortletSharingPortletKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletSharingPortletKeys;
 
 import javax.portlet.Portlet;
 

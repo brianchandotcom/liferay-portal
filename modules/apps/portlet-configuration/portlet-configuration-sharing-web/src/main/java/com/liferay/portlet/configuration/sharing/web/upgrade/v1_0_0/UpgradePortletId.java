@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.sharing.web.constants;
+package com.liferay.portlet.configuration.sharing.web.upgrade.v1_0_0;
+
+import com.liferay.portlet.configuration.sharing.web.constants.PortletSharingPortletKeys;
 
 /**
  * @author Peter Fellwock
  */
-public class PortletSharingPortletKeys {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
-	public static final String PORTLET_SHARING =
-		"com_liferay_portlet_sharing_web_portlet_PortletSharingPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"133", PortletSharingPortletKeys.PORTLET_SHARING}
+		};
+	}
 
 }

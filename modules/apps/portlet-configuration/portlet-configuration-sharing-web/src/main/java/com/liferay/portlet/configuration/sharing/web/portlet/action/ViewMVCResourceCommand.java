@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.sharing.web.portlet.action;
+package com.liferay.portlet.configuration.sharing.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portlet.sharing.web.constants.PortletSharingPortletKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletSharingPortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

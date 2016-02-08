@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.product.navigation.control.menu.ControlMenuCategory;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,9 +78,10 @@ public class ControlMenuCategoryRegistry {
 							return false;
 						}
 
-						List<ControlMenuEntry> controlMenuEntries =
-							_controlMenuEntryRegistry.getControlMenuEntries(
-								controlMenuCategory, request);
+						List<ProductNavigationControlMenuEntry>
+							controlMenuEntries =
+								_controlMenuEntryRegistry.getControlMenuEntries(
+									controlMenuCategory, request);
 
 						if (controlMenuEntries.isEmpty()) {
 							return false;

@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 
 import java.util.Locale;
@@ -46,10 +46,11 @@ import org.osgi.service.component.annotations.Component;
 		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=200"
 	},
-	service = ControlMenuEntry.class
+	service = ProductNavigationControlMenuEntry.class
 )
 public class ToggleControlsControlMenuEntry
-	extends BaseControlMenuEntry implements ControlMenuEntry {
+	extends BaseProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public Map<String, Object> getData(HttpServletRequest request) {

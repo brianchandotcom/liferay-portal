@@ -29,7 +29,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class ControlMenuTag extends IncludeTag {
+public class ProductNavigationControlMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {

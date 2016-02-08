@@ -149,6 +149,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		</liferay-util:buffer>
 
 		<liferay-ui:alert
+			icon="check"
 			message="<%= alertMessage %>"
 			timeout="0"
 			type="success"

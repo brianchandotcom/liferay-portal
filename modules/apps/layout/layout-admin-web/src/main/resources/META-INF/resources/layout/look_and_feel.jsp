@@ -81,7 +81,7 @@ else {
 
 	<legend><liferay-ui:message key="css" /></legend>
 
-	<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
+	<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= cssText %>" />
 </div>
 
 <aui:script>

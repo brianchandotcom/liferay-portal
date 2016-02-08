@@ -15,8 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.StringReader;
 
 import java.net.URL;
 
@@ -153,12 +153,16 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String localURLString = JenkinsResultsParserUtil.getLocalURL(urlString);
+		while (urlString.endsWith("/")) {
+			urlString = urlString.substring(0, urlString.length() - 1);
+		}
 
-		File sampleDir = new File(localURLString.substring("file:".length()));
+		File sampleDir = new File(
+			dependenciesDir,
+			urlString.substring(urlString.lastIndexOf("/") + 1));
 
 		Project project = getProject(
-			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
+			sampleDir.getName(), "", sampleDir.getPath());
 
 		GitHubMessageUtil.getGitHubMessage(project);
 
@@ -166,14 +170,14 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	protected Project getProject(
-			File samplePropertiesFile, String buildURLString,
+			String sampleName, String buildURLString,
 			String topLevelSharedDirName)
 		throws Exception {
 
 		Project project = new Project();
 
-		if (samplePropertiesFile != null) {
-			Properties properties = loadProperties(samplePropertiesFile);
+		if ((sampleName != null) && (sampleName.length() > 0)) {
+			Properties properties = loadProperties(sampleName);
 
 			for (Entry<Object, Object> entry : properties.entrySet()) {
 				project.setProperty(
@@ -207,12 +211,17 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		return project;
 	}
 
-	protected Properties loadProperties(File file) throws Exception {
+	protected Properties loadProperties(String sampleName) throws Exception {
+		Class<?> clazz = getClass();
+
 		Properties properties = new Properties();
 
-		try (FileInputStream fis = new FileInputStream(file)) {
-			properties.load(fis);
-		}
+		String content = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(
+				"${dependencies.url}" + clazz.getSimpleName() + "/" +
+					sampleName + "/sample.properties"));
+
+		properties.load(new StringReader(content));
 
 		return properties;
 	}

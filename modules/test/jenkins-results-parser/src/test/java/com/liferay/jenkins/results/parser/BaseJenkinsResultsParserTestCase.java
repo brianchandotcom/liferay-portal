@@ -42,7 +42,21 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
-		String actualMessage = getMessage(toURLString(caseDir));
+		expectedMessage = expectedMessage.replace(" \n", "\n");
+
+		String actualMessage = getMessage(
+			"${dependencies.url}/" + getSimpleClassName() + "/" +
+				caseDir.getName() + "/");
+
+		actualMessage = actualMessage.replace(" \n", "\n");
+
+		if (actualMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL)) {
+
+			actualMessage = actualMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL,
+				"${dependencies.url}");
+		}
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -145,7 +159,19 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			xml = xml.replace(_XML_REPLACEMENTS[i][0], _XML_REPLACEMENTS[i][1]);
 		}
 
-		Document document = saxReader.read(new StringReader(xml));
+		Document document = null;
+
+		try {
+			document = saxReader.read(new StringReader(xml));
+		}
+		catch (DocumentException de) {
+			DocumentException newDE = new DocumentException(
+				de.getMessage() + "\n" + xml);
+
+			newDE.setStackTrace(de.getStackTrace());
+
+			throw newDE;
+		}
 
 		String formattedXML = JenkinsResultsParserUtil.format(
 			document.getRootElement());
@@ -189,12 +215,30 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String urlString = url.toString();
 
-		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
+		String path = dependenciesDir.getPath();
+
+		int x =
+			path.indexOf("src/test/resources/dependencies/") +
+				"src/test/resources/dependencies/".length();
+
+		path = path.substring(x);
+
+		return urlString.replace(
+			"file:" + dependenciesDir.getAbsolutePath(),
+			"${dependencies.url}/" + path);
 	}
 
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 		String expectedMessage = getMessage(toURLString(sampleDir));
+
+		if (expectedMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL)) {
+
+			expectedMessage = expectedMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_ROOT_URL,
+				"${dependencies.url}");
+		}
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}

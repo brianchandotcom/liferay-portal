@@ -24,6 +24,9 @@ String themeId = ParamUtil.getString(request, "themeId");
 String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTheme");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_theme.jsp");
@@ -32,6 +35,8 @@ portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("themeId", themeId);
 
 List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
+
+themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")));
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -44,6 +49,13 @@ List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(),
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>

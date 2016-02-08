@@ -43,7 +43,7 @@ public interface GoogleAuthorizationConfiguration {
 	@Meta.AD(deflt = "", description = "%client-secret-help", required = false)
 	public String clientSecret();
 
-	@Meta.AD(deflt = "true", description = "%enabled-help", required = false)
+	@Meta.AD(deflt = "false", description = "%enabled-help", required = false)
 	public boolean enabled();
 
 }

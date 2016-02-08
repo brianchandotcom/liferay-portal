@@ -23,7 +23,7 @@ taglib prefix="liferay-portlet" uri="http://liferay.com/tld/portlet" %><%@
 taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %><%@
 taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
-<%@ page import="com.liferay.product.navigation.control.menu.ControlMenuCategory" %><%@
+<%@ page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory" %><%@
 page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry" %><%@
 page import="com.liferay.product.navigation.control.menu.util.ControlMenuEntryRegistry" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>

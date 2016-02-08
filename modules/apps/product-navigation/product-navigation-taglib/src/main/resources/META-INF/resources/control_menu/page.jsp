@@ -17,7 +17,7 @@
 <%@ include file="/control_menu/init.jsp" %>
 
 <%
-List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
+List<ProductNavigationControlMenuCategory> controlMenuCategories = (List<ProductNavigationControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
 ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
 %>
 
@@ -27,7 +27,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%
-				for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
 				%>
 
 					<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
@@ -69,7 +69,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		<div class="control-menu-body">
 
 			<%
-			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+			for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
 				List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
 				for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {

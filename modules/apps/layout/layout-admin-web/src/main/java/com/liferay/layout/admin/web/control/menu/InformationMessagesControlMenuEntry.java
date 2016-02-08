@@ -26,7 +26,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=300"
 	},
 	service = ProductNavigationControlMenuEntry.class

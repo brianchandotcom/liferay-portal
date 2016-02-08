@@ -288,13 +288,13 @@ else if (depth < 4) {
 						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 						<aui:button-row>
-							<aui:button cssClass="bt-lg btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+							<aui:button cssClass="btn-lg btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 							<%
 							String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + index + "','" + namespace + randomNamespace + "postReplyForm" + index + "')";
 							%>
 
-							<aui:button cssClass="bt-lg btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
+							<aui:button cssClass="btn-lg btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
 						</aui:button-row>
 
 						<aui:script>

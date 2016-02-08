@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `9a2eb64`.*
+*This document has been reviewed through commit `8e34a45`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3650,67 +3650,60 @@ Media, this change was necessary.
 
 ---------------------------------------
 
-### The aui:button-item taglib has been removed and replaced with aui:button taglib
-- **Date:** 2016-Feb-4
+### Removed the aui:button-item Tag and Replaced with aui:button
+- **Date:** 2016-Feb-04
 - **JIRA Ticket:** LPS-62922
 
 #### What changed?
 
-The `aui:button-item` taglib has been removed and replaced with
-`aui:button` taglib.
+The `aui:button-item` tag has been removed and replaced with the `aui:button`
+tag.
 
 #### Who is affected?
 
-Plugins or templates that are using the `aui:button-item` tag need
-to update their usage of the tag.
+Plugins or templates that are using the `aui:button-item` tag must update their
+usage of the tag.
 
 #### How should I update my code?
 
-You should import the `aui` tag library if it isn't already and
-update the tag namespace from `aui:button-item` to `aui:button`.
+You should import the `aui` tag library (if necessary) and update the tag
+namespace from `aui:button-item` to `aui:button`.
 
 #### Why was this change made?
 
-This change was made as a part of the ongoing strategy to remove deprecated code.
+This change was made as a part of the ongoing strategy to remove deprecated
+code.
 
 ---------------------------------------
 
-### The wap functionality has been removed
+### Removed the WAP Functionality
 - **Date:** 2016-Feb-05
 - **JIRA Ticket:** LPS-62920
 
 #### What changed?
 
-The functionality was removed.
+The WAP functionality has been removed.
 
 #### Who is affected?
 
-Everyone that uses this functionality.
+This affects developers that use the WAP functionality.
 
 #### How should I update my code?
 
-If you are using any of this methods(updateLookAndFeel) of
-LayoutLocalServiceUtil you need to removed the parameters related with wap
+If you are using any of the following methods, you need to remove the parameters
+in those methods related to WAP.
 
-If you are using any of this methods(addLayoutRevision, updateLayoutRevision) of
-LayoutRevisionLocalServiceUtil you need to removed the parameters related with
-wap
-
-If you are using any of this methods(addLayoutRevision) of
-LayoutRevisionServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutSetLocalServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(updateLookAndFeel) of
-LayoutSetServiceUtil you need to removed the parameters related with wap
-
-If you are using any of this methods(getColorScheme, getControlPanelThemes,
-getPageThemes, getTheme) of ThemeLocalServiceUtil you need to removed the
-parameters related with wap
+- `LayoutLocalServiceUtil.updateLookAndFeel`
+- `LayoutRevisionLocalServiceUtil.addLayoutRevision`
+- `LayoutRevisionLocalServiceUtil.updateLayoutRevision`
+- `LayoutRevisionServiceUtil.addLayoutRevision`
+- `LayoutServiceUtil.updateLookAndFeel`
+- `LayoutSetLocalServiceUtil.updateLookAndFeel`
+- `LayoutSetServiceUtil.updateLookAndFeel`
+- `ThemeLocalServiceUtil.getColorScheme`
+- `ThemeLocalServiceUtil.getControlPanelThemes`
+- `ThemeLocalServiceUtil.getPageThemes`
+- `ThemeLocalServiceUtil.getTheme`
 
 #### Why was this change made?
 

@@ -130,12 +130,12 @@
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
-	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-summary']</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6)[2]</td>
 	<td></td>
 </tr>
 <!--RESULTS_TABLE-->

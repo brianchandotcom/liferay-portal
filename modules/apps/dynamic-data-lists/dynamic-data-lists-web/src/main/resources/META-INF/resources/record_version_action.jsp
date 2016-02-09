@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-DDLRecordVersion recordVersion = (DDLRecordVersion)row.getObject();
+DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
-long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTemplateId"));
+DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -38,15 +38,17 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 		url="<%= viewRecordVersionURL %>"
 	/>
 
-	<portlet:actionURL name="revertRecord" var="revertURL">
-		<portlet:param name="mvcPath" value="/edit_record.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="recordId" value="<%= String.valueOf(recordVersion.getRecordId()) %>" />
-		<portlet:param name="version" value="<%= String.valueOf(recordVersion.getVersion()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= recordVersion.isApproved() && !Validator.equals(record.getVersion(), recordVersion.getVersion()) %>">
+		<portlet:actionURL name="revertRecord" var="revertURL">
+			<portlet:param name="mvcPath" value="/edit_record.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(recordVersion.getRecordId()) %>" />
+			<portlet:param name="version" value="<%= String.valueOf(recordVersion.getVersion()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="revert"
-		url="<%= revertURL %>"
-	/>
+		<liferay-ui:icon
+			message="revert"
+			url="<%= revertURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

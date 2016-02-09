@@ -420,6 +420,15 @@ $horizontal-spacing: 35px;
 		margin: 0;
 	}
 
+	.asset-icon .lexicon-icon {
+		height: 32px;
+		width: 32px;
+	}
+
+	.record-set-id, .record-set-modified-date {
+		margin-right: 20px;
+	}
+
 	.ddl-form-basic-info {
 		background-color: #869CAD;
 		min-height: 300px;

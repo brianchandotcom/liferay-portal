@@ -66,8 +66,12 @@ headerNames.add(StringPool.BLANK);
 
 SearchContainer recordSearchContainer = new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found", HtmlUtil.escape(ddmStructure.getName(locale)), false));
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String orderByCol = ddlViewRecordsDisplayContext.getOrderByCol();
+String orderByType = ddlViewRecordsDisplayContext.getOrderByType();
+
+if (!user.isDefaultUser()) {
+	recordSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+}
 
 OrderByComparator<DDLRecord> orderByComparator = DDLPortletUtil.getDDLRecordOrderByComparator(orderByCol, orderByType);
 
@@ -84,6 +88,10 @@ recordSearchContainer.setOrderByType(orderByType);
 </portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
+	</aui:nav>
+
 	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isDisplayPortlet() %>">
 		<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
 			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
@@ -114,15 +122,41 @@ recordSearchContainer.setOrderByType(orderByType);
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= !user.isDefaultUser() %>"
+	searchContainerId="ddlRecord"
+>
+
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/view_records_sort_buttons.jsp" servletContext="<%= application %>" />
+
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= ddlViewRecordsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= ddlViewRecordsDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date", "modified-date"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteRecords();";
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<aui:input name="recordIds" type="hidden" />
+
 		<liferay-ui:search-container
+			id="ddlRecord"
 			searchContainer="<%= recordSearchContainer %>"
 		>
 			<liferay-ui:search-container-results>
@@ -204,4 +238,17 @@ recordSearchContainer.setOrderByType(orderByType);
 
 <aui:script>
 	AUI().use('liferay-portlet-dynamic-data-lists');
+
+	function <portlet:namespace />deleteRecords() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			var searchContainer = AUI.$('#<portlet:namespace />ddlRecord', form);
+
+			form.attr('method', 'post');
+			form.fm('recordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteRecord"><portlet:param name="mvcPath" value="/view_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
 </aui:script>

@@ -17,8 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_template.jsp");
+
+long templateId = ParamUtil.getLong(request, "templateId");
+
+long classNameId = ParamUtil.getLong(request, "classNameId");
+long classPK = ParamUtil.getLong(request, "classPK");
+
+long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
+
+if (resourceClassNameId == 0) {
+	resourceClassNameId = PortalUtil.getClassNameId(PortletDisplayTemplate.class);
+}
+
+String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+portletURL.setParameter("mvcPath", mvcPath);
+portletURL.setParameter("templateId", String.valueOf(templateId));
+portletURL.setParameter("classNameId", String.valueOf(classNameId));
+portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
+portletURL.setParameter("eventName", eventName);
 %>
 
 <liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
@@ -28,7 +52,17 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/template_sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= includeCheckBox %>">

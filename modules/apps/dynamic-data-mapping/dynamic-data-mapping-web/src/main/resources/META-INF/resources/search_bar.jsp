@@ -16,7 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String scopedLabel = Validator.isNull(scopeTitle) ? "structures" : scopeTitle;
+%>
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="<%= scopedLabel %>" selected="<%= true %>" />
+	</aui:nav>
+
 	<aui:nav-bar-search>
 		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

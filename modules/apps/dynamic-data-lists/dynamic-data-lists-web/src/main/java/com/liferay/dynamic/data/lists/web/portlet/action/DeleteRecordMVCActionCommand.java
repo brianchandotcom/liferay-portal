@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -45,9 +46,22 @@ public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long[] recordIds = getRecordIds(actionRequest);
+
+		for (long recordId : recordIds) {
+			_ddlRecordService.deleteRecord(recordId);
+		}
+	}
+
+	protected long[] getRecordIds(ActionRequest actionRequest) {
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
-		_ddlRecordService.deleteRecord(recordId);
+		if (recordId > 0) {
+			return new long[] {recordId};
+		}
+
+		return StringUtil.split(
+			ParamUtil.getString(actionRequest, "recordIds"), 0L);
 	}
 
 	@Reference(unbind = "-")

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -127,6 +128,21 @@ public class DDLDisplayContext {
 		return PrefsParamUtil.getLong(
 			_ddlRequestHelper.getPortletPreferences(),
 			_ddlRequestHelper.getRenderRequest(), "formDDMTemplateId");
+	}
+
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(
+			_ddlRequestHelper.getRenderRequest(), "orderByCol",
+			"modified-date");
+
+		return orderByCol;
+	}
+
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(
+			_ddlRequestHelper.getRenderRequest(), "orderByType", "asc");
+
+		return orderByType;
 	}
 
 	public DDLRecordSet getRecordSet() {
@@ -374,7 +390,7 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private String _ddlRecordDisplayStyle;
 	private final DDLRequestHelper _ddlRequestHelper;

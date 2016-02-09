@@ -232,84 +232,86 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			</aui:script>
 		</c:if>
 
-		<aui:fieldset>
-			<aui:field-wrapper>
-				<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-					</div>
-				</c:if>
-				<c:if test="<%= (classPK > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(groupId, classNameId, classPK) > 0) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
-					</div>
-				</c:if>
-			</aui:field-wrapper>
-
-			<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
-
-			<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
-					<aui:row cssClass="lfr-ddm-types-form-column">
-						<c:choose>
-							<c:when test="<%= Validator.isNull(storageTypeValue) %>">
-								<aui:col width="<%= 50 %>">
-									<aui:field-wrapper>
-										<aui:select disabled="<%= structure != null %>" name="storageType">
-
-										<%
-										for (String storageType : StorageType.getTypes()) {
-										%>
-
-											<aui:option label="<%= storageType %>" value="<%= storageType %>" />
-
-										<%
-										}
-										%>
-
-										</aui:select>
-									</aui:field-wrapper>
-								</aui:col>
-							</c:when>
-							<c:otherwise>
-								<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
-							</c:otherwise>
-						</c:choose>
-					</aui:row>
-
-				<c:if test="<%= !ddmWebConfiguration.autogenerateStructureKey() %>">
-					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
-				</c:if>
-
-					<aui:input name="description" />
-
-					<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
-						<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
-
-						<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
-
-						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
-
-						<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
-					</aui:field-wrapper>
-
-					<c:if test="<%= structure != null %>">
-						<portlet:resourceURL id="getStructure" var="getStructureURL">
-							<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
-						</portlet:resourceURL>
-
-						<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
-
-						<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-							<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-						</c:if>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:field-wrapper>
+					<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+						</div>
 					</c:if>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</aui:fieldset>
-	</aui:form>
+					<c:if test="<%= (classPK > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(groupId, classNameId, classPK) > 0) %>">
+						<div class="alert alert-info">
+							<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
+						</div>
+					</c:if>
+				</aui:field-wrapper>
 
-	<%@ include file="/form_builder.jspf" %>
+				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+
+				<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
+					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" markupView="lexicon" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
+						<aui:row cssClass="lfr-ddm-types-form-column">
+							<c:choose>
+								<c:when test="<%= Validator.isNull(storageTypeValue) %>">
+									<aui:col width="<%= 50 %>">
+										<aui:field-wrapper>
+											<aui:select disabled="<%= structure != null %>" name="storageType">
+
+											<%
+											for (String storageType : StorageType.getTypes()) {
+											%>
+
+												<aui:option label="<%= storageType %>" value="<%= storageType %>" />
+
+											<%
+											}
+											%>
+
+											</aui:select>
+										</aui:field-wrapper>
+									</aui:col>
+								</c:when>
+								<c:otherwise>
+									<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
+								</c:otherwise>
+							</c:choose>
+						</aui:row>
+
+					<c:if test="<%= !ddmWebConfiguration.autogenerateStructureKey() %>">
+						<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
+					</c:if>
+
+						<aui:input name="description" />
+
+						<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
+							<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
+
+							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
+
+							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+
+							<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+						</aui:field-wrapper>
+
+						<c:if test="<%= structure != null %>">
+							<portlet:resourceURL id="getStructure" var="getStructureURL">
+								<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
+							</portlet:resourceURL>
+
+							<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
+
+							<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+								<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+							</c:if>
+						</c:if>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
+
+				<%@ include file="/form_builder.jspf" %>
+			</aui:fieldset>
+		</aui:fieldset-group>
+	</aui:form>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />

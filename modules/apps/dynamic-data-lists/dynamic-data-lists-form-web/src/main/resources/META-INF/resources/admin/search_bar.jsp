@@ -16,13 +16,16 @@
 
 <%@ include file="/admin/init.jsp" %>
 
+<%
+PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+%>
+
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="forms" selected="<%= true %>" />
+	</aui:nav>
+
 	<aui:nav-bar-search>
-
-		<%
-		PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
-		%>
-
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
 		</aui:form>

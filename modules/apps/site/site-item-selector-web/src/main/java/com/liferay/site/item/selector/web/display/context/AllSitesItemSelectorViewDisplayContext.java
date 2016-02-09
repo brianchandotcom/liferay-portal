@@ -15,9 +15,18 @@
 package com.liferay.site.item.selector.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.GroupSearchProvider;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -42,6 +51,8 @@ public class AllSitesItemSelectorViewDisplayContext
 
 		_groupSearchProvider = groupSearchProvider;
 		_portletRequest = getPortletRequest();
+
+		addBreadcrumbEntries(portletURL);
 	}
 
 	@Override
@@ -53,6 +64,45 @@ public class AllSitesItemSelectorViewDisplayContext
 	public boolean isShowChildSitesLink() {
 		return true;
 	}
+
+	protected void addBreadcrumbEntries(PortletURL portletURL) {
+		Group group = getGroup();
+
+		if (group == null) {
+			return;
+		}
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "all"), portletURL.toString());
+
+		try {
+			SitesUtil.addPortletBreadcrumbEntries(group, request, portletURL);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to add Breadcrumb entries for group " +
+					group.getGroupId());
+		}
+	}
+
+	protected Group getGroup() {
+		long groupId = ParamUtil.getLong(
+			request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		if (groupId > 0) {
+			try {
+				return GroupServiceUtil.getGroup(groupId);
+			}
+			catch (PortalException pe) {
+				_log.error("Unable to obtain group " + groupId);
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AllSitesItemSelectorViewDisplayContext.class);
 
 	private final GroupSearchProvider _groupSearchProvider;
 	private final PortletRequest _portletRequest;

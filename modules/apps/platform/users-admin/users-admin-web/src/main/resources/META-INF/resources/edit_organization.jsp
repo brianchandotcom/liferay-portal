@@ -105,6 +105,7 @@ renderResponse.setTitle(headerTitle);
 		formModelBean="<%= organization %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS %>"
+		markupView="lexicon"
 	/>
 </aui:form>
 

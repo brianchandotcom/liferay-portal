@@ -14,7 +14,7 @@ dependencies {
 	provided project(":apps:portal-settings:portal-settings-web")
 	provided project(":frontend:frontend-taglib")
 	provided project(":portal:portal-language-resource-bundle")
-	provided project(":portal:portal-ldap")
+	provided project(":portal-security:portal-security-ldap")
 }
 
 liferay {

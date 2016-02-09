@@ -85,7 +85,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		Company company = _companyLocalService.getCompany(
 			serviceContext.getCompanyId());
 
-		// Group_companyLocalService
+		// Group
 
 		Layout layout = _layoutLocalService.getLayout(serviceContext.getPlid());
 
@@ -151,10 +151,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String fromName = flagsGroupServiceConfiguration.emailFromName();
 		String fromAddress = flagsGroupServiceConfiguration.emailFromAddress();
 
-		String emailSubject = ContentUtil.get(
+		String subject = ContentUtil.get(
 			FlagsRequestMessageListener.class.getClassLoader(),
 			flagsGroupServiceConfiguration.emailSubject());
-		String emailBody = ContentUtil.get(
+		String body = ContentUtil.get(
 			FlagsRequestMessageListener.class.getClassLoader(),
 			flagsGroupServiceConfiguration.emailBody());
 
@@ -172,7 +172,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
 					contentType, flagsRequest.getContentURL(), reason, fromName,
 					fromAddress, recipient.getFullName(),
-					recipient.getEmailAddress(), emailSubject, emailBody,
+					recipient.getEmailAddress(), subject, body,
 					serviceContext);
 			}
 			catch (IOException ioe) {
@@ -234,7 +234,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			String reportedUserURL, long contentId, String contentTitle,
 			String contentType, String contentURL, String reason,
 			String fromName, String fromAddress, String toName,
-			String toAddress, String emailSubject, String emailBody,
+			String toAddress, String subject, String body,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -242,7 +242,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(emailBody);
+		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$CONTENT_ID$]", contentId, "[$CONTENT_TYPE$]", contentType,
@@ -262,7 +262,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.setMailId("flags_request", contentId);
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(emailSubject);
+		subscriptionSender.setSubject(subject);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

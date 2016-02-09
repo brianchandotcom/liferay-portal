@@ -93,6 +93,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.staging.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
+page import="com.liferay.staging.processes.web.dao.search.PublishResultRowSplitter" %><%@
 page import="com.liferay.staging.processes.web.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@

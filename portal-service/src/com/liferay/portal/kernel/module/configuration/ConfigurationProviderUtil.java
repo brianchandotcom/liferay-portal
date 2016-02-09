@@ -34,9 +34,7 @@ public class ConfigurationProviderUtil {
 		return configurationProvider.getConfiguration(clazz, settingsLocator);
 	}
 
-	public static String getConfigurationPid(Class clazz)
-		throws ConfigurationException {
-
+	public static String getConfigurationPid(Class<?> clazz) {
 		ConfigurationProvider configurationProvider =
 			getConfigurationProvider();
 

@@ -42,6 +42,10 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public int getDDMStructuresCount() throws PortalException;
 
+	public String getDiscussionClassName();
+
+	public long getDiscussionClassPK();
+
 	public Menu getMenu() throws PortalException;
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;

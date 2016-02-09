@@ -16,6 +16,7 @@ package com.liferay.document.library.web.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
@@ -120,6 +121,16 @@ public class DefaultDLViewFileVersionDisplayContext
 		List<DDMStructure> ddmStructures = getDDMStructures();
 
 		return ddmStructures.size();
+	}
+
+	@Override
+	public String getDiscussionClassName() {
+		return DLFileEntryConstants.getClassName();
+	}
+
+	@Override
+	public long getDiscussionClassPK() {
+		return _fileVersion.getFileEntryId();
 	}
 
 	@Override

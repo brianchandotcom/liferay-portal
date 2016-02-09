@@ -70,6 +70,16 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public String getDiscussionClassName() {
+		return parentDisplayContext.getDiscussionClassName();
+	}
+
+	@Override
+	public long getDiscussionClassPK() {
+		return parentDisplayContext.getDiscussionClassPK();
+	}
+
+	@Override
 	public Menu getMenu() throws PortalException {
 		return parentDisplayContext.getMenu();
 	}

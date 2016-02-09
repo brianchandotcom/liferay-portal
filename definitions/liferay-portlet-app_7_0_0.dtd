@@ -104,8 +104,8 @@ search index for the portlet.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portlet/messageboards/util/MBMessageIndexer.html
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/search/Indexer.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-impl/com/liferay/portlet/messageboards/util/MBMessageIndexer.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/search/Indexer.html
 http://lucene.apache.org
 -->
 <!ELEMENT indexer-class (#PCDATA)>
@@ -117,8 +117,8 @@ in the OpenSearch 1.1 standard.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/search/HitsOpenSearchImpl.html
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/search/OpenSearch.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/search/HitsOpenSearchImpl.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/search/OpenSearch.html
 http://www.opensearch.org
 -->
 <!ELEMENT open-search-class (#PCDATA)>
@@ -195,7 +195,7 @@ default portlet URL implementation.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs-all/com/liferay/portal/struts/StrutsActionPortletURL.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-impl/com/liferay/portal/struts/StrutsActionPortletURL.html
 -->
 <!ELEMENT portlet-url-class (#PCDATA)>
 
@@ -208,7 +208,7 @@ example of its uses.
 See:
 
 http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/wiki/wiki-web/src/main/java/com/liferay/wiki/web/portlet/route/WikiFriendlyURLMapper.java
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/portlet/FriendlyURLMapper.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/portlet/FriendlyURLMapper.html
 -->
 <!ELEMENT friendly-url-mapper-class (#PCDATA)>
 
@@ -242,7 +242,7 @@ tasks are run.
 See:
 
 http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-service/src/main/java/com/liferay/journal/lar/JournalPortletDataHandler.java
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/exportimport/lar/PortletDataHandler.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/exportimport/lar/PortletDataHandler.html
 -->
 <!ELEMENT portlet-data-handler-class (#PCDATA)>
 
@@ -261,7 +261,7 @@ is added, moved, or removed from a layout.
 See:
 
 http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-content-web/src/main/java/com/liferay/journal/content/web/JournalContentPortletLayoutListener.java
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
 -->
 <!ELEMENT portlet-layout-listener-class (#PCDATA)>
 
@@ -273,7 +273,7 @@ notified of data changes. See the Chat portlet for a real world implementation.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/poller/PollerProcessor.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/poller/PollerProcessor.html
 -->
 <!ELEMENT poller-processor-class (#PCDATA)>
 
@@ -285,7 +285,7 @@ emails.
 See:
 
 http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/pop/MessageListenerImpl.java
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/pop/MessageListener.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/pop/MessageListener.html
 -->
 <!ELEMENT pop-message-listener-class (#PCDATA)>
 
@@ -298,7 +298,7 @@ human being.
 See:
 
 http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/social/MBMessageActivityInterpreter.java
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/social/model/SocialActivityInterpreter.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/social/model/SocialActivityInterpreter.html
 -->
 <!ELEMENT social-activity-interpreter-class (#PCDATA)>
 
@@ -310,7 +310,7 @@ human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/social/model/SocialRequestInterpreter.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/social/model/SocialRequestInterpreter.html
 -->
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
 
@@ -322,7 +322,7 @@ understandable by a human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
 -->
 <!ELEMENT user-notification-handler-class (#PCDATA)>
 
@@ -397,7 +397,7 @@ context. The default value is set in portal.properties.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/ControlPanelEntry.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/ControlPanelEntry.html
 -->
 <!ELEMENT control-panel-entry-class (#PCDATA)>
 
@@ -408,7 +408,7 @@ Publisher.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/asset/model/AssetRendererFactory.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/asset/model/AssetRendererFactory.html
 -->
 <!ELEMENT asset-renderer-factory (#PCDATA)>
 
@@ -425,7 +425,7 @@ custom fields administration UI.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-service/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
 -->
 <!ELEMENT custom-attributes-display (#PCDATA)>
 

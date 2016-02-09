@@ -39,8 +39,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 <aui:input name="addGroupIds" type="hidden" />
 <aui:input name="deleteGroupIds" type="hidden" />
 
-<h3><liferay-ui:message key="sites" /></h3>
-
 <liferay-ui:search-container
 	curParam="sitesCur"
 	headerNames="name,roles,null"

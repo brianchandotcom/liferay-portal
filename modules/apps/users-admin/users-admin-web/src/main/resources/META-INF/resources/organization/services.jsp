@@ -99,8 +99,6 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="services" />
 
-<h3><liferay-ui:message key="services" /></h3>
-
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
 
 <aui:fieldset>

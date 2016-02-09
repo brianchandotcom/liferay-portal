@@ -72,8 +72,6 @@ if (selUser != null) {
 }
 %>
 
-<h3><liferay-ui:message key="personal-site" /></h3>
-
 <aui:fieldset>
 
 	<%

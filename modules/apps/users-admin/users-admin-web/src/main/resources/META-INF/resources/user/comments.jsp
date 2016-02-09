@@ -22,8 +22,6 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<h3><liferay-ui:message key="comments" /></h3>
-
 <c:choose>
 	<c:when test="<%= selUser != null %>">
 		<aui:fieldset>

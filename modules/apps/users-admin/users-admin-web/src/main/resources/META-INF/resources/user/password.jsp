@@ -41,8 +41,6 @@ else {
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<h3><liferay-ui:message key="password" /></h3>
-
 <liferay-ui:error exception="<%= UserPasswordException.MustBeLonger.class %>">
 
 	<%

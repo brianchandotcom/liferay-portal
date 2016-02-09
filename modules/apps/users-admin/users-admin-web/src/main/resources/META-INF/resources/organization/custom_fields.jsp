@@ -22,8 +22,6 @@ long organizationId = ParamUtil.getLong(request, "organizationId");
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 %>
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
 <aui:fieldset>
 	<liferay-ui:custom-attribute-list
 		className="<%= Organization.class.getName() %>"

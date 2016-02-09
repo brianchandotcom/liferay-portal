@@ -97,9 +97,11 @@
 	</command>
 
 	<command name="editTranslation">
+		<execute function="Click" locator1="Translation#ADD" />
+
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
-		<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 	</command>
 
 	<command name="editViaRecordViewCP">

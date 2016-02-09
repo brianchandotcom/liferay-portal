@@ -231,6 +231,8 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="gotoChildPagePG">

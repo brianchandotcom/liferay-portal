@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
-import com.liferay.portal.ldap.configuration.ConfigurationProvider;
-import com.liferay.portal.ldap.constants.LDAPConstants;
-import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
-import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
+import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.security.ldap.constants.LDAPConstants;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import java.util.Dictionary;
@@ -113,7 +113,7 @@ public class PortalSettingsLDAPFormMVCActionCommand
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPAuthConfigurationProvider(
@@ -124,7 +124,7 @@ public class PortalSettingsLDAPFormMVCActionCommand
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPExportConfigurationProvider(
@@ -135,7 +135,7 @@ public class PortalSettingsLDAPFormMVCActionCommand
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPImportConfigurationProvider(

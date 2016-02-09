@@ -32,13 +32,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.ldap.DuplicateLDAPServerNameException;
-import com.liferay.portal.ldap.LDAPServerNameException;
-import com.liferay.portal.ldap.configuration.ConfigurationProvider;
-import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
-import com.liferay.portal.ldap.constants.LDAPConstants;
-import com.liferay.portal.ldap.util.LDAPUtil;
-import com.liferay.portal.ldap.validator.LDAPFilterException;
+import com.liferay.portal.security.ldap.DuplicateLDAPServerNameException;
+import com.liferay.portal.security.ldap.LDAPServerNameException;
+import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.security.ldap.constants.LDAPConstants;
+import com.liferay.portal.security.ldap.util.LDAPUtil;
+import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import java.util.Dictionary;
@@ -146,7 +146,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.configuration.LDAPServerConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPServerConfigurationProvider(
@@ -177,7 +177,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.ldap)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.ldap)", unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

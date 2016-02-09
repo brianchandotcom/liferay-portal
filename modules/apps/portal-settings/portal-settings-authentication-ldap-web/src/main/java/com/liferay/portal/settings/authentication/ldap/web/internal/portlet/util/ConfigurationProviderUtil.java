@@ -14,11 +14,11 @@
 
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util;
 
-import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
-import com.liferay.portal.ldap.configuration.ConfigurationProvider;
-import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
-import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
-import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
+import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
+import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +54,7 @@ public class ConfigurationProviderUtil {
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPAuthConfigurationProvider(
@@ -65,7 +65,7 @@ public class ConfigurationProviderUtil {
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPExportConfigurationProvider(
@@ -76,7 +76,7 @@ public class ConfigurationProviderUtil {
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPImportConfigurationProvider(
@@ -87,7 +87,7 @@ public class ConfigurationProviderUtil {
 	}
 
 	@Reference(
-		target = "(factoryPid=com.liferay.portal.ldap.configuration.LDAPServerConfiguration)",
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
 		unbind = "-"
 	)
 	protected void setLDAPServerConfigurationProvider(

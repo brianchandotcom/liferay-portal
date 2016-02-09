@@ -79,7 +79,7 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name="TypeSettingsProperties--layoutCustomizable--" type="checkbox" />
+		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="checkbox" />
 
 		<div class="customization-settings" id="<portlet:namespace/>customizationSettings">
 
@@ -92,7 +92,7 @@ if (selLayout != null) {
 		</div>
 
 		<aui:script>
-			Liferay.Util.toggleBoxes('<portlet:namespace />layoutCustomizable', '<portlet:namespace />customizationSettings');
+			Liferay.Util.toggleBoxes('<portlet:namespace /><%= LayoutConstants.CUSTOMIZABLE_LAYOUT %>', '<portlet:namespace />customizationSettings');
 		</aui:script>
 	</c:otherwise>
 </c:choose>

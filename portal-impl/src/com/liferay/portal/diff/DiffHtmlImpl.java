@@ -105,15 +105,15 @@ public class DiffHtmlImpl implements DiffHtml {
 
 			Locale locale = LocaleUtil.getDefault();
 
-			TextNodeComparator leftTextNodeComparator =
-				new TextNodeComparator(oldDomTreeBuilder, locale);
+			TextNodeComparator leftTextNodeComparator = new TextNodeComparator(
+				oldDomTreeBuilder, locale);
 
 			DomTreeBuilder newDomTreeBuilder = new DomTreeBuilder();
 
 			htmlCleaner.cleanAndParse(newSource, newDomTreeBuilder);
 
-			TextNodeComparator rightTextNodeComparator =
-				new TextNodeComparator(newDomTreeBuilder, locale);
+			TextNodeComparator rightTextNodeComparator = new TextNodeComparator(
+				newDomTreeBuilder, locale);
 
 			contentHandler.startDocument();
 			contentHandler.startElement(
@@ -122,8 +122,8 @@ public class DiffHtmlImpl implements DiffHtml {
 			contentHandler.startElement(
 				StringPool.BLANK, _DIFF, _DIFF, new AttributesImpl());
 
-			HtmlSaxDiffOutput htmlSaxDiffOutput =
-				new HtmlSaxDiffOutput(contentHandler, _DIFF);
+			HtmlSaxDiffOutput htmlSaxDiffOutput = new HtmlSaxDiffOutput(
+				contentHandler, _DIFF);
 
 			HTMLDiffer htmlDiffer = new HTMLDiffer(htmlSaxDiffOutput);
 

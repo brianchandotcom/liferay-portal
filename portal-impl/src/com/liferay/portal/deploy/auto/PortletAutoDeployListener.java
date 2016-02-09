@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy.auto;
 
+import com.liferay.portal.deploy.auto.util.PluginAutoDetectorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
@@ -79,8 +80,8 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected boolean isDeployable(File file) throws AutoDeployException {
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
+		PluginAutoDetectorUtil pluginAutoDeployListenerHelper =
+			new PluginAutoDetectorUtil(file);
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile(
 				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {

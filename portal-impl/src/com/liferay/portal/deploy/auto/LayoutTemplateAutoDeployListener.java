@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy.auto;
 
+import com.liferay.portal.deploy.auto.util.PluginAutoDetectorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
@@ -45,8 +46,8 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected boolean isDeployable(File file) throws AutoDeployException {
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
+		PluginAutoDetectorUtil pluginAutoDeployListenerHelper =
+			new PluginAutoDetectorUtil(file);
 
 		return pluginAutoDeployListenerHelper.isLayoutTemplatePlugin();
 	}

@@ -18,6 +18,7 @@ import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.portal.deploy.auto.util.PluginAutoDetectorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
@@ -61,8 +62,8 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 	}
 
 	protected boolean isModule(File file) throws AutoDeployException {
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
+		PluginAutoDetectorUtil pluginAutoDeployListenerHelper =
+			new PluginAutoDetectorUtil(file);
 
 		if (!pluginAutoDeployListenerHelper.isJarFile()) {
 			return false;

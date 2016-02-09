@@ -19,14 +19,6 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * Defines the configuration property keys and sensible default values.
- *
- * <p>
- * This class also defines the identity of the configuration schema which, among
- * other things, defines the filename (minus the <code>.cfg</code> extension)
- * for setting values via a file.
- * </p>
- *
  * @author Stian Sigvartsen
  */
 @ExtendedObjectClassDefinition(category = "platform")

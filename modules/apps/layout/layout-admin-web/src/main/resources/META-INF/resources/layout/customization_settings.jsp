@@ -83,6 +83,8 @@ if (selLayout != null) {
 			<liferay-ui:message key="customizable-help" />
 		</div>
 
+		<aui:input name="TypeSettingsProperties--layoutCustomizable--" type="checkbox" value="<%= selLayout.isCustomizable() %>" />
+
 		<div class="customization-settings">
 
 			<%

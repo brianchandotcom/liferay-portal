@@ -42,6 +42,12 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 <liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="app-templates" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <div class="container-fluid-1280">
 	<div class="button-holder text-center">
 		<portlet:renderURL var="addAppTemplateURL">

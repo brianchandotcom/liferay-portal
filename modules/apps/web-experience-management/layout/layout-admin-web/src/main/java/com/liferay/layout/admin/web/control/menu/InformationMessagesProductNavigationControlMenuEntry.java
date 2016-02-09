@@ -101,6 +101,12 @@ public class InformationMessagesProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (layout.isCustomizable() &&
+			hasUpdateLayoutPermission(themeDisplay)) {
+
+			return true;
+		}
+
 		if (!layoutTypePortlet.isCustomizable()) {
 			return false;
 		}

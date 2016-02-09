@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.documentlibrary.handler;
 
+import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.filesystem.Watcher;
@@ -42,6 +43,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
@@ -158,7 +160,7 @@ public class DownloadFileHandler extends BaseHandler {
 	}
 
 	protected void copyFile(
-			SyncFile syncFile, Path filePath, InputStream inputStream,
+			final SyncFile syncFile, Path filePath, InputStream inputStream,
 			boolean append)
 		throws Exception {
 
@@ -226,12 +228,24 @@ public class DownloadFileHandler extends BaseHandler {
 				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
 				StandardCopyOption.REPLACE_EXISTING);
 
-			syncFile.setState(SyncFile.STATE_SYNCED);
+			ExecutorService executorService = SyncEngine.getExecutorService();
 
-			SyncFileService.update(syncFile);
+			Runnable runnable = new Runnable() {
 
-			IODeltaUtil.checksums(syncFile);
+				@Override
+				public void run() {
+					IODeltaUtil.checksums(syncFile);
+
+					syncFile.setState(SyncFile.STATE_SYNCED);
+
+					SyncFileService.update(syncFile);
+				}
+
+			};
+
+			executorService.execute(runnable);
 		}
+
 		catch (FileSystemException fse) {
 			downloadedFilePathNames.remove(filePath.toString());
 

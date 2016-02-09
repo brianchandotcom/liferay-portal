@@ -60,6 +60,8 @@ request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionCl
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
@@ -82,21 +84,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/message_boards/view_threads.jspf" %>
 
 	</c:when>
-	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
+	<c:when test='<%= mbListDisplayContext.isShowSearch() || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>'>
 
 		<%
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 		entriesSearchContainer.setId("mbEntries");
 
-		MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
-
 		mbListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
 		%>
 
 		<c:choose>
 			<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
-				<c:if test="<%= Validator.isNotNull(keywords) %>">
+				<c:if test="<%= mbListDisplayContext.isShowSearch() %>">
 					<liferay-ui:header
 						backURL="<%= redirect %>"
 						title="search"
@@ -258,10 +258,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 			</c:when>
-			<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
+			<c:when test="<%= mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>">
 
 				<%
-				if (mvcRenderCommandName.equals("/message_boards/view_my_posts") && themeDisplay.isSignedIn()) {
+				if (mbListDisplayContext.isShowMyPosts() && themeDisplay.isSignedIn()) {
 					groupThreadsUserId = user.getUserId();
 				}
 
@@ -270,7 +270,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				}
 				%>
 
-				<c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") && (groupThreadsUserId > 0) %>'>
+				<c:if test="<%= mbListDisplayContext.isShowMyPosts() && (groupThreadsUserId > 0) %>">
 					<div class="alert alert-info">
 						<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 					</div>
@@ -279,7 +279,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%
 				String entriesEmptyResultsMessage = "you-do-not-have-any-posts";
 
-				if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+				if (mbListDisplayContext.isShowRecentPosts()) {
 					entriesEmptyResultsMessage = "there-are-no-recent-posts";
 				}
 
@@ -289,7 +289,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 				%>
 
-				<c:if test='<%= enableRSS && mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
+				<c:if test="<%= enableRSS && mbListDisplayContext.isShowRecentPosts() %>">
 					<br />
 
 					<liferay-ui:rss
@@ -308,13 +308,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%
 				String pageSubtitle = null;
 
-				if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+				if (mbListDisplayContext.isShowMyPosts()) {
 					pageSubtitle = "my-posts";
 				}
-				else if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
-					pageSubtitle = "my-subscriptions";
-				}
-				else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+				else if (mbListDisplayContext.isShowRecentPosts()) {
 					pageSubtitle = "recent-posts";
 				}
 

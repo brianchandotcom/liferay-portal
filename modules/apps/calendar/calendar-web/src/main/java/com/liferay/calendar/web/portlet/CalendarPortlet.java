@@ -646,17 +646,12 @@ public class CalendarPortlet extends MVCPortlet {
 			java.util.Calendar firstDayJCalendar = JCalendarUtil.getJCalendar(
 				calendarBooking.getStartTime(), timeZone);
 
-			firstDayJCalendar.set(
-				java.util.Calendar.DAY_OF_WEEK_IN_MONTH,
-				startTimeJCalendar.get(
-					java.util.Calendar.DAY_OF_WEEK_IN_MONTH));
+			long startTime = firstDayJCalendar.getTimeInMillis();
 
-			firstDayJCalendar.set(java.util.Calendar.DAY_OF_WEEK, 7);
+			long endTime = startTime + calendarBooking.getDuration();
 
-			calendarBooking.setStartTime(firstDayJCalendar.getTimeInMillis());
-			calendarBooking.setEndTime(
-				firstDayJCalendar.getTimeInMillis() +
-					calendarBooking.getDuration());
+			calendarBooking.setStartTime(startTime);
+			calendarBooking.setEndTime(endTime);
 
 			calendarBooking.setRecurrence(
 				RecurrenceSerializer.serialize(recurrenceObj));
@@ -710,7 +705,7 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	protected long getOffset(
-			CalendarBooking calendarBooking, long startTime,
+			CalendarBooking editedCalendarBookingInstance, long newStartTime,
 			Recurrence recurrence)
 		throws PortalException {
 
@@ -720,37 +715,35 @@ public class CalendarPortlet extends MVCPortlet {
 			frequency = recurrence.getFrequency();
 		}
 
+		long currentStartTime = editedCalendarBookingInstance.getStartTime();
+		TimeZone timeZone = editedCalendarBookingInstance.getTimeZone();
+
 		if (frequency == Frequency.WEEKLY) {
 			CalendarBooking firstInstance =
 				_calendarBookingService.getCalendarBookingInstance(
-					calendarBooking.getCalendarBookingId(), 0);
+					editedCalendarBookingInstance.getCalendarBookingId(), 0);
 
-			java.util.Calendar startTimeJCalendar =
-				CalendarFactoryUtil.getCalendar(
-					startTime, calendarBooking.getTimeZone());
+			java.util.Calendar currentStartTimeJCalendar =
+				CalendarFactoryUtil.getCalendar(currentStartTime, timeZone);
 
 			java.util.Calendar firstInstanceJCalendar =
 				CalendarFactoryUtil.getCalendar(
-					firstInstance.getStartTime(),
-					calendarBooking.getTimeZone());
+					firstInstance.getStartTime(), timeZone);
 
 			if (!JCalendarUtil.isSameDayOfWeek(
-					startTimeJCalendar, firstInstanceJCalendar)) {
+					currentStartTimeJCalendar, firstInstanceJCalendar)) {
 
-				java.util.Calendar currentInstanceJCalendar =
-					CalendarFactoryUtil.getCalendar(
-						calendarBooking.getStartTime(),
-						calendarBooking.getTimeZone());
+				java.util.Calendar newStartTimeJCalendar =
+					CalendarFactoryUtil.getCalendar(newStartTime, timeZone);
 
-				startTimeJCalendar = JCalendarUtil.mergeJCalendar(
-					currentInstanceJCalendar, startTimeJCalendar,
-					calendarBooking.getTimeZone());
+				newStartTimeJCalendar = JCalendarUtil.mergeJCalendar(
+					currentStartTimeJCalendar, newStartTimeJCalendar, timeZone);
 
-				startTime = startTimeJCalendar.getTimeInMillis();
+				newStartTime = newStartTimeJCalendar.getTimeInMillis();
 			}
 		}
 
-		return startTime - calendarBooking.getStartTime();
+		return newStartTime - currentStartTime;
 	}
 
 	protected Recurrence getRecurrence(ActionRequest actionRequest) {

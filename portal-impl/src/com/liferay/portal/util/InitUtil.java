@@ -145,7 +145,7 @@ public class InitUtil {
 
 		DBManagerUtil.setDBManager(DoPrivilegedUtil.wrap(new DBManagerImpl()));
 
-		// Upgrade Optimized Connection Provider registry
+		// Upgrade optimized connection provider registry
 
 		UpgradeOptimizedConnectionProviderRegistryUtil.setRegister(
 			new UpgradeOptimizedConnectionProviderRegistryImpl());

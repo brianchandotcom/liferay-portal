@@ -17,8 +17,8 @@
 <%@ include file="/control_menu/init.jsp" %>
 
 <%
-List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
-ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
+List<ProductNavigationControlMenuCategory> controlMenuCategories = (List<ProductNavigationControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
+ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry = (ProductNavigationControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">
@@ -27,16 +27,16 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%
-				for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
 				%>
 
 					<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
 						<ul class="control-menu-nav">
 
 							<%
-							List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+							List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-							for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+							for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
 								if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
 									continue;
 								}
@@ -69,10 +69,10 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		<div class="control-menu-body">
 
 			<%
-			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
-				List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+			for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-				for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+				for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
 					controlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
 				}
 			}
@@ -81,7 +81,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		</div>
 	</div>
 
-	<aui:script use="liferay-control-menu">
+	<aui:script use="liferay-product-navigation-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 
 		var panelEntryBodies = $('#<portlet:namespace/>ControlMenu [data-toggle="sidenav"]').toArray().map(

@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-control-menu-add-base',
+	'liferay-product-navigation-control-menu-add-base',
 	function(A) {
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
@@ -457,6 +457,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['anim', 'aui-base', 'liferay-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'transition']
+		requires: ['anim', 'aui-base', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'transition']
 	}
 );

@@ -14,7 +14,7 @@
 								'aui-dialog-iframe-deprecated',
 								'aui-event-input',
 								'aui-modal',
-								'liferay-control-menu',
+								'liferay-product-navigation-control-menu',
 								'liferay-portlet-base',
 								'liferay-util-window',
 								'liferay-widget-size-animation-plugin'

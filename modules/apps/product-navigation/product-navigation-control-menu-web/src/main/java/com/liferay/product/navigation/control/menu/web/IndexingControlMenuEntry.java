@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.product.navigation.control.menu.BaseControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -38,13 +38,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=500"
 	},
-	service = ControlMenuEntry.class
+	service = ProductNavigationControlMenuEntry.class
 )
 public class IndexingControlMenuEntry
-	extends BaseControlMenuEntry implements ControlMenuEntry {
+	extends BaseProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public Map<String, Object> getData(HttpServletRequest request) {

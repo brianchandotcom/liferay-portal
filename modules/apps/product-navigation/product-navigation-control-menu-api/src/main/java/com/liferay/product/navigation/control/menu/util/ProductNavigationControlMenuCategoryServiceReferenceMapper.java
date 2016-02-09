@@ -18,19 +18,20 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Julio Camarero
  */
-public class ControlMenuEntryServiceReferenceMapper
-	implements ServiceReferenceMapper<String, ControlMenuEntry> {
+public class ProductNavigationControlMenuCategoryServiceReferenceMapper
+	implements ServiceReferenceMapper
+		<String, ProductNavigationControlMenuCategory> {
 
 	@Override
 	public void map(
-		ServiceReference<ControlMenuEntry> serviceReference,
+		ServiceReference<ProductNavigationControlMenuCategory> serviceReference,
 		Emitter<String> emitter) {
 
 		String controlMenuCategoryKey = (String)serviceReference.getProperty(
@@ -38,7 +39,7 @@ public class ControlMenuEntryServiceReferenceMapper
 
 		if (Validator.isNull(controlMenuCategoryKey)) {
 			_log.error(
-				"Unable to register control menu entry because of missing " +
+				"Unable to register control menu category because of missing " +
 					"service property \"control.menu.category.key\"");
 		}
 		else {
@@ -47,6 +48,6 @@ public class ControlMenuEntryServiceReferenceMapper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ControlMenuEntryServiceReferenceMapper.class);
+		ProductNavigationControlMenuCategoryServiceReferenceMapper.class);
 
 }

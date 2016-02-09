@@ -23,4 +23,6 @@ public abstract class UpgradeProcess {
 
 	public abstract void upgrade() throws Exception;
 
+	public abstract void upgradeSchema() throws Exception;
+
 }

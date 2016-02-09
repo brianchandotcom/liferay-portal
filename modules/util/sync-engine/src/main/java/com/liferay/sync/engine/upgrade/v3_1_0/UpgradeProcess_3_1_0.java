@@ -14,15 +14,13 @@
 
 package com.liferay.sync.engine.upgrade.v3_1_0;
 
-import com.liferay.sync.engine.service.SyncAccountService;
-import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
-import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 
 /**
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_1_0 extends UpgradeProcess {
+public class UpgradeProcess_3_1_0 extends BaseUpgradeProcess {
 
 	@Override
 	public int getThreshold() {
@@ -30,15 +28,11 @@ public class UpgradeProcess_3_1_0 extends UpgradeProcess {
 	}
 
 	@Override
-	public void upgrade() throws Exception {
-		SyncAccountPersistence syncAccountPersistence =
-			SyncAccountService.getSyncAccountPersistence();
-
-		syncAccountPersistence.executeRaw(
+	public void upgradeSchema() throws Exception {
+		runSQL(
 			"ALTER TABLE `SyncAccount` ADD COLUMN " +
 				"authenticationRetryInterval INTEGER BEFORE batchFileMaxSize;");
-		syncAccountPersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR(255);");
+		runSQL("ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR(255);");
 	}
 
 }

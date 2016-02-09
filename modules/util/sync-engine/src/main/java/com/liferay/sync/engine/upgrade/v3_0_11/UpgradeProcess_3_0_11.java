@@ -20,7 +20,7 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
-import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 import com.liferay.sync.engine.util.FileKeyUtil;
 
 import java.nio.file.Files;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_11 extends UpgradeProcess {
+public class UpgradeProcess_3_0_11 extends BaseUpgradeProcess {
 
 	@Override
 	public int getThreshold() {

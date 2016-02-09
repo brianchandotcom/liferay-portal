@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.sync.engine.upgrade.v3_0_8;
+package com.liferay.sync.engine.upgrade;
 
-import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
-import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
+import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 
 /**
- * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_8 extends BaseUpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return 3008;
-	}
+public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
-		UpgradeUtil.copyLoggerConfiguration();
 	}
 
 	@Override
 	public void upgradeSchema() throws Exception {
-		runSQL("CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum);");
+	}
+
+	protected void runSQL(String sql) throws Exception {
+		SyncAccountPersistence syncAccountPersistence =
+			SyncAccountService.getSyncAccountPersistence();
+
+		syncAccountPersistence.executeRaw(sql);
 	}
 
 }

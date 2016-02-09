@@ -110,6 +110,16 @@ public class UpgradeUtil {
 
 		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
 			if (buildNumber < upgradeProcess.getThreshold()) {
+				_logger.info(
+					"Upgrading database schema to {}",
+					upgradeProcess.getThreshold());
+
+				upgradeProcess.upgradeSchema();
+			}
+		}
+
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (buildNumber < upgradeProcess.getThreshold()) {
 				_logger.info("Upgrading to {}", upgradeProcess.getThreshold());
 
 				upgradeProcess.upgrade();

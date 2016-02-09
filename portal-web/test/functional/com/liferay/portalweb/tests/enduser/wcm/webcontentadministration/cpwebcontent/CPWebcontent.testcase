@@ -129,6 +129,10 @@
 			<var name="structureName" value="WC Structure Name 1" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="WC Structure Name 1" />
+		</execute>
+
 		<for list="Boolean,Date,Decimal,Documents and Media" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
@@ -149,6 +153,10 @@
 			<var name="structureName" value="WC Structure Name 2" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="WC Structure Name 2" />
+		</execute>
+
 		<for list="HTML,Image,Integer,Link to Page" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
@@ -167,6 +175,10 @@
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
 			<var name="structureName" value="WC Structure Name 3" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="WC Structure Name 3" />
 		</execute>
 
 		<for list="Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
@@ -272,6 +284,10 @@
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
 			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="WC Structure Name" />
 		</execute>
 
 		<for list="Text,Integer" param="structureFieldName">

@@ -498,7 +498,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetType}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -2189,7 +2189,7 @@
 	<command name="viewPGDetails">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 

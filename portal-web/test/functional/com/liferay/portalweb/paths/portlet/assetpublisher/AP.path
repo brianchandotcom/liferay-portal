@@ -9,26 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_NEW_DROPDOWN</td>
-	<td>//div[contains(@class,'add-asset-selector') and contains(@class,'lfr-meta-actions')]//ul/li/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_DROPDOWN_SITE_NAME</td>
-	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_siteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_DROPDOWN_CHILD_SITENAME</td>
-	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_childSiteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_DROPDOWN_IN_SCOPED_SITE</td>
-	<td>//div[contains(@class,'lfr-meta-actions') and contains(@class,'add-asset-selector')]//span[contains(.,'Add New in ${key_siteScope}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_ASSET_PLUS_ICON</td>
 	<td>//a[contains(@id,'AssetPublisher')]/i[contains(@class,'icon-plus')]</td>
 	<td></td>
@@ -39,23 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RSS_LINK</td>
-	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--MENU_ITEMS-->
-<tr>
-	<td>ADD_BLOGS_ENTRY_MENU_ITEM</td>
-	<td>//li[contains(.,'Add New in ${key_siteScope}')]//a[@title='Blogs Entry']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_BASIC_WEB_CONTENT_MENU_ITEM</td>
+	<td>ADD_BASIC_WEB_CONTENT_LINK</td>
 	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']</td>
 	<td></td>
 </tr>
@@ -68,22 +32,6 @@
 <tr>
 	<td>CATEGORIES_FILTER_CATEGORY</td>
 	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_NEW-->
-<tr>
-	<td>ADD_NEW_2_BASIC_WEB_CONTENT</td>
-	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_CUSTOM_STRUCTURE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,17 +73,17 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_EDIT</td>
-	<td>//div[contains(@class,'asset-abstract ') and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ABSTRACT_THUMBNAIL</td>
-	<td>//div[contains(@class,'asset-abstract ') and contains(.,'${key_assetTitle}')]//div[@class='asset-resource-info']/div/img</td>
+		<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
 	<td>//div[contains(@class,'asset-abstract ') and h4[contains(.,'${key_assetTitle}')]]/div[@class='asset-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_ASSET_ABSTRACT_DESCRIPTION</td>
+	<td>//div[@class='asset-abstract' and h3[contains(.,'${key_assetTitle}')]]/div[@class='asset-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,11 +147,6 @@
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
 	<td>//h3/a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
-	<td>//a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
 	<td></td>
 </tr>
 <tr>

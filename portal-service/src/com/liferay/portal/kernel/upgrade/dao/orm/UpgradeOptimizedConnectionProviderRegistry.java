@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
  */
 public interface UpgradeOptimizedConnectionProviderRegistry {
 
-	public UpgradeOptimizedConnectionProvider getConnectionProvider(
-		DBType dbType);
+	public UpgradeOptimizedConnectionProvider
+		getUpgradeOptimizedConnectionProvider(DBType dbType);
 
 }

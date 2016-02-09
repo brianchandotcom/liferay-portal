@@ -143,12 +143,12 @@ public class DataAccess {
 
 		DBType dbType = db.getDBType();
 
-		UpgradeOptimizedConnectionProvider connectionProvider =
+		UpgradeOptimizedConnectionProvider upgradeOptimizedConnectionProvider =
 			UpgradeOptimizedConnectionProviderRegistryUtil.
-				getConnectionProvider(dbType);
+				getUpgradeOptimizedConnectionProvider(dbType);
 
-		if (connectionProvider != null) {
-			return connectionProvider.getConnection();
+		if (upgradeOptimizedConnectionProvider != null) {
+			return upgradeOptimizedConnectionProvider.getConnection();
 		}
 
 		return getConnection();

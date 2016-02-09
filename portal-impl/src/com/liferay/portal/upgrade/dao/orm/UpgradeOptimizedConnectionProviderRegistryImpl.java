@@ -50,8 +50,8 @@ public class UpgradeOptimizedConnectionProviderRegistryImpl
 	}
 
 	@Override
-	public UpgradeOptimizedConnectionProvider getConnectionProvider(
-		DBType dbType) {
+	public UpgradeOptimizedConnectionProvider
+		getUpgradeOptimizedConnectionProvider(DBType dbType) {
 
 		return _upgradeOptimizedConnectionProviderMap.get(dbType);
 	}

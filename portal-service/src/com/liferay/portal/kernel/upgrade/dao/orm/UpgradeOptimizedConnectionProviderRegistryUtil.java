@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.dao.db.DBType;
  */
 public class UpgradeOptimizedConnectionProviderRegistryUtil {
 
-	public static UpgradeOptimizedConnectionProvider getConnectionProvider(
-		DBType dbType) {
+	public static UpgradeOptimizedConnectionProvider
+		getUpgradeOptimizedConnectionProvider(DBType dbType) {
 
 		return _upgradeOptimizedConnectionProviderRegister.
-			getConnectionProvider(dbType);
+			getUpgradeOptimizedConnectionProvider(dbType);
 	}
 
 	public static void setRegister(

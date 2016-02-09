@@ -5,6 +5,10 @@
 		<execute function="Type" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeName}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditDocumentType#DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Main Metadata Fields" />
+		</execute>
+
 		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
 			<execute macro="DMDocumentType#addField">
 				<var name="field" value="${dmDocumentTypeFieldName}" />
@@ -18,6 +22,10 @@
 		<if>
 			<isset var="metadataSetName" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Additional Metadata Fields" />
+				</execute>
+
 				<execute macro="DMDocumentType#selectPGMetadataSet">
 					<var name="key_metadataSetName" value="${metadataSetName}" />
 				</execute>

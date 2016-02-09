@@ -254,17 +254,18 @@ else {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
 		}
 	}
-<c:if test="<%= recordVersion != null %>">
-	$('#<portlet:namespace />recordPanel').sideNavigation(
-		{
-			gutter: 15,
-			position: 'right',
-			type: 'relative',
-			typeMobile: 'fixed',
-			width: 320
-		}
-	);
-</c:if>
+
+	<c:if test="<%= recordVersion != null %>">
+		$('#<portlet:namespace />recordPanel').sideNavigation(
+			{
+				gutter: 15,
+				position: 'right',
+				type: 'relative',
+				typeMobile: 'fixed',
+				width: 320
+			}
+		);
+	</c:if>
 </aui:script>
 
 <%

@@ -429,7 +429,6 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		Map<java.lang.String, Serializable> fieldsMap, boolean mergeFields,
 		ServiceContext serviceContext) throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord updateRecord(long userId, long recordId,
 		boolean majorVersion, int displayIndex, DDMFormValues ddmFormValues,
 		ServiceContext serviceContext) throws PortalException;

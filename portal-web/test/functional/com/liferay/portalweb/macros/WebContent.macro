@@ -1490,7 +1490,7 @@
 			<var name="portletTitle" value="Web Content" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="WC#NAVBAR_CONTAINER" />
+		<execute function="AssertElementPresent" locator1="NavBar#CONTAINER" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
 	</command>
 

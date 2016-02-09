@@ -90,7 +90,7 @@
 
 		<execute function="AssertClick" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
-		<execute function="AssertTextNotPresent" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
+		<execute function="AssertTextNotPresent" locator1="Portlet#TITLE" value1="Blogs" />
 	</command>
 
 	<command name="deletePrivatePageCP">

@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'searchContent')]</td>
 	<td></td>

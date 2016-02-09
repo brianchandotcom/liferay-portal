@@ -1802,7 +1802,7 @@
 
 		<execute macro="BlogsNavigator#gotoSettings" />
 
-		<execute macro="BlogsEntry#addRelatedAssetPG">
+		<execute macro="BlogsEntry#addRelatedAsset">
 			<var name="assetTitle" value="Blogs Entry1 Title" />
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
@@ -1990,7 +1990,7 @@
 
 		<execute macro="BlogsNavigator#gotoSettings" />
 
-		<execute macro="BlogsEntry#addRelatedAssetPG">
+		<execute macro="BlogsEntry#addRelatedAsset">
 			<var name="assetTitle" value="WC WebContent Title" />
 			<var name="assetType" value="Basic Web Content" />
 		</execute>

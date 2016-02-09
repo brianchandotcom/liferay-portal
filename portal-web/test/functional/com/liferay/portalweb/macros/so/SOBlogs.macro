@@ -42,18 +42,12 @@
 			</then>
 		</if>
 
-		<execute function="MakeVisible" locator1="SOBlogs#BLOGS_PORTLET_OPTIONS" />
-		<execute function="Click" locator1="SOBlogs#BLOGS_PORTLET_OPTIONS_LINK" />
+		<execute macro="Blogs#disableSocialBookmarkSites">
+			<var name="socialBookmarkSites" value="twitter,facebook,plusone,addthis,blinklist,delicious,digg,evernote,linkedin,newsvine,reddit,slashdot,stumbleupon,technorati,tuenti" />
+		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
-		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
-		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
-		<execute function="AssertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
-
-		<execute function="AssertElementPresent" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" />
 	</command>
 
@@ -88,8 +82,8 @@
 		<execute function="AssertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_DATE" />
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
 		<if>
 			<not>
@@ -99,43 +93,43 @@
 				</and>
 			</not>
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By Test Test" />
+				<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
 				<if>
 					<isset var="entryAuthorMiddleName" />
 					<then>
-						<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
 					</else>
 				</if>
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#YOUR_RATING" value1="Your Rating" />
+		<execute function="AssertTextEquals" locator1="Ratings#YOUR_RATING_LABEL" value1="Your Rating" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="PGBlogsEntry#PREVIOUS" />
+			<condition function="IsElementPresent" locator1="Pagination#PREVIOUS_LINK" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS" value1="Previous" />
+				<execute function="AssertTextEquals" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
+				<execute function="AssertTextEquals" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 			</else>
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="PGBlogsEntry#NEXT" />
+			<condition function="IsElementPresent" locator1="Pagination#NEXT_LINK" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT" value1="Next" />
+				<execute function="AssertTextEquals" locator1="Pagination#NEXT_LINK" value1="Next" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
+				<execute function="AssertTextEquals" locator1="Pagination#NEXT_LINK" value1="Next" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
+		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="Comments#ENTRY_COUNT_PANEL" value1="Comments" />
 	</command>
 </definition>

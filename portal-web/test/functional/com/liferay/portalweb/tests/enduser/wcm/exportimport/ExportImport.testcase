@@ -498,9 +498,9 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertElementNotPresent" locator1="Link#EDIT" value1="Edit" />
+		<execute function="AssertElementNotPresent" locator1="Link#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="LAR#configureExportSiteCP" />
 
@@ -540,9 +540,9 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertElementNotPresent" locator1="Link#EDIT" value1="Edit" />
+		<execute function="AssertElementNotPresent" locator1="Link#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
@@ -757,7 +757,7 @@
 			<var name="uploadFileName" value="DM Document Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#publishCP" />
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="LAR#configureExportSiteCP">
 			<var name="mainContent" value="Blogs" />

@@ -485,7 +485,7 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -518,7 +518,7 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -546,7 +546,7 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry Title" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />

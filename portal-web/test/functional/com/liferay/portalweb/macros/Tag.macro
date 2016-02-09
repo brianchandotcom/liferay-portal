@@ -74,11 +74,11 @@
 		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
 
 		<for list="${tagNameList}" param="tagName">
-			<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-			<execute function="Click" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<execute function="Type#clickAtSendKeys" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
 		</for>
 
-		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Click" locator1="Button#PUBLISH" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -200,37 +200,6 @@
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 
-	<command name="removeSelectTagViaBlogsPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
-
-		<execute macro="BlogsNavigator#gotoSettings" />
-
-		<execute function="AssertClick" locator1="AssetCategorization#TAGS_SELECT_BUTTON" value1="Select" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute function="Uncheck" locator1="PGBlogsAddSelectTag#TAG_ENTRY_CHECKBOX" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
-		<execute function="Uncheck" locator1="PGBlogsAddSelectTag#TAG_ENTRY_CHECKBOX" />
-		<execute function="Click" locator1="PGBlogsAddSelectTag#CLOSE_BUTTON" />
-
-		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute function="AssertTextNotPresent" locator1="PGBlogs#TAG" value1="${tagName1}" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
-		<execute function="AssertTextNotPresent" locator1="PGBlogs#TAG" value1="${tagName3}" />
-	</command>
-
 	<command name="removeTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -300,14 +269,6 @@
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
-	</command>
-
-	<command name="viewMultipleViaBlogsPG">
-		<for list="${tagNameList}" param="tagName">
-			<var name="key_tagName" value="${tagName}" />
-
-			<execute function="AssertTextEquals" locator1="PGBlogs#TAG" value1="${tagName}" />
-		</for>
 	</command>
 
 	<command name="viewTagsCP">

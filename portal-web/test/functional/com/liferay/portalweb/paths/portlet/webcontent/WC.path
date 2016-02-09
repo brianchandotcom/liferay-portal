@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">WC</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_NONE</td>

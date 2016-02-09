@@ -1203,12 +1203,7 @@
 		<if>
 			<isset var="kbArticleFriendlyURL" />
 			<then>
-				<var method="selenium#getLocation()" name="url" />
-
-				<execute macro="TestUtils#assertEquals">
-					<var name="actual" value="${url}" />
-					<var name="expected" value="http://localhost:8080/web/guest/knowledge-base-display/-/knowledge_base/${kbArticleFriendlyURL}" />
-				</execute>
+				<execute function="AssertLocation" value1="http://localhost:8080/web/guest/knowledge-base-display/-/knowledge_base/${kbArticleFriendlyURL}" />
 			</then>
 		</if>
 
@@ -1221,12 +1216,7 @@
 
 				<execute function="SelectWindow" locator1="Google#PAGE_TITLE" />
 
-				<var method="selenium#getLocation()" name="url" />
-
-				<execute macro="TestUtils#assertEquals">
-					<var name="actual" value="${url}" />
-					<var name="expected" value="https://www.google.com/?gws_rd=ssl" />
-				</execute>
+				<execute function="AssertLocation" value1="https://www.google.com/?gws_rd=ssl" />
 
 				<execute function="Close" locator1="Google#PAGE_TITLE" />
 			</then>

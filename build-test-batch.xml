@@ -362,7 +362,15 @@ mysql.executable=${mysql.executable}]]></echo>
 			<var name="app.server.type" value="@{app.server.type}" />
 			<var name="app.server.version" value="@{app.server.version}" />
 
-			<property name="test.class" value="${axis.variable}" />
+			<if>
+				<matches pattern="[A-z]+" string="${axis.variable}" />
+				<then>
+					<property name="test.class" value="${axis.variable}" />
+				</then>
+				<else>
+					<property name="test.class" value="${run.test.case.method.group}_${axis.variable}" />
+				</else>
+			</if>
 
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>

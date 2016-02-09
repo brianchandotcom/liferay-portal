@@ -125,17 +125,17 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_EDIT</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
+	<td>//div[contains(@class,'asset-abstract ') and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_THUMBNAIL</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-resource-info']/div/img</td>
+	<td>//div[contains(@class,'asset-abstract ') and contains(.,'${key_assetTitle}')]//div[@class='asset-resource-info']/div/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
-	<td>//div[@class='asset-abstract ' and h4[contains(.,'${key_assetTitle}')]]/div[@class='asset-content']</td>
+	<td>//div[contains(@class,'asset-abstract ') and h4[contains(.,'${key_assetTitle}')]]/div[@class='asset-content']</td>
 	<td></td>
 </tr>
 <tr>

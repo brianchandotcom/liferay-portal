@@ -56,7 +56,6 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 		Map<String, Object> properties = labelDDMFormField.getProperties();
 
 		Assert.assertTrue(properties.containsKey("placeholder"));
-		Assert.assertTrue(properties.containsKey("tooltip"));
 
 		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
 			"predefinedValue");
@@ -95,7 +94,8 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		Assert.assertTrue(properties.containsKey("displayStyle"));
 		Assert.assertEquals("multiline", properties.get("displayStyle"));
-		Assert.assertTrue(properties.containsKey("tooltip"));
+
+		Assert.assertTrue(properties.containsKey("placeholder"));
 
 		Assert.assertTrue(textDDMFormField.isRequired());
 

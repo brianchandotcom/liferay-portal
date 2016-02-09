@@ -39,8 +39,8 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected String getSuccessMessage(File file) {
-		return
-			"Layout templates for " + file.getPath() + " copied successfully";
+		return "Layout templates for " + file.getPath() +
+			" copied successfully";
 	}
 
 	@Override

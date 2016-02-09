@@ -37,9 +37,8 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected String getSuccessMessage(File file) {
-		return
-			"Extension environment for " + file.getPath() +
-				" copied successfully";
+		return "Extension environment for " + file.getPath() +
+			" copied successfully";
 	}
 
 	@Override

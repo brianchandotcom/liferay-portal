@@ -37,8 +37,8 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
 	protected String getSuccessMessage(File file) {
-		return
-			"Liferay package for " + file.getPath() + " extracted successfully";
+		return "Liferay package for " + file.getPath() +
+			" extracted successfully";
 	}
 
 	@Override

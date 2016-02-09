@@ -368,7 +368,7 @@ public class SessionMessages {
 		return map.size();
 	}
 
-	protected static String _getKey(PortletRequest portletRequest) {
+	private static String _getKey(PortletRequest portletRequest) {
 		StringBundler sb = new StringBundler(6);
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -384,7 +384,7 @@ public class SessionMessages {
 		return sb.toString();
 	}
 
-	protected static Map<String, Object> _getMap(
+	private static Map<String, Object> _getMap(
 		HttpSession session, String key, boolean createIfAbsent) {
 
 		if (session == null) {
@@ -411,7 +411,7 @@ public class SessionMessages {
 		}
 	}
 
-	protected static Map<String, Object> _getMap(
+	private static Map<String, Object> _getMap(
 		PortletRequest portletRequest, boolean createIfAbsent) {
 
 		return _getMap(
@@ -419,7 +419,7 @@ public class SessionMessages {
 			createIfAbsent);
 	}
 
-	protected static HttpSession _getPortalSession(
+	private static HttpSession _getPortalSession(
 		PortletRequest portletRequest) {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(

@@ -122,7 +122,7 @@ else {
 							<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 							<p>
-								
+
 								<%
 								Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 								%>

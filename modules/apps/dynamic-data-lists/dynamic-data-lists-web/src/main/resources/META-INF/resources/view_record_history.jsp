@@ -21,15 +21,12 @@ DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS
 
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
-
 List<DDLRecordVersion> recordVersions = DDLRecordVersionServiceUtil.getRecordVersions(record.getRecordId());
 
 for (DDLRecordVersion recordVersion: recordVersions) {
 	dateSearchEntry.setDate(recordVersion.getCreateDate());
 
-	request.setAttribute("currentRecordVersion", record.getVersion());
-	request.setAttribute("recordVersion", recordVersion);
+	request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, recordVersion);
 %>
 
 <div>

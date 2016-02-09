@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
 String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_template.jsp");
 
 long templateId = ParamUtil.getLong(request, "templateId");
@@ -34,8 +31,10 @@ if (resourceClassNameId == 0) {
 }
 
 String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
+boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", mvcPath);

@@ -264,8 +264,8 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC" />
 
-		<var name="key_threadsNumber" value="${threadsNumber}" />
 		<var name="key_subcategoriesNumber" value="${subcategoriesNumber}" />
+		<var name="key_threadsNumber" value="${threadsNumber}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORIES" value1="0" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_THREADS" value1="0" />
@@ -433,8 +433,8 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<var name="key_categoryName" value="${subCategoryName}" />
 		<var name="key_categoryDescription" value="${subCategoryDescription}" />
+		<var name="key_categoryName" value="${subCategoryName}" />
 		<var name="key_threadsNumber" value="${threadsNumber}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${subCategoryName}" />

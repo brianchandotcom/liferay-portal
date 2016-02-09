@@ -135,6 +135,8 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
+<div class="lfr-alert-container"></div>
+
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />

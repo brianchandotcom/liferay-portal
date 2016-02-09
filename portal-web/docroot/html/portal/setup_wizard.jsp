@@ -234,13 +234,11 @@
 						var defaultDatabaseOptions = A.one('#defaultDatabaseOptions');
 						var defaultDatabaseOptionsLink = A.one('#defaultDatabaseOptionsLink');
 
-						var jdbcDefaultURL = A.one('#jdbcDefaultURL');
 						var jdbcDefaultDriverClassName = A.one('#jdbcDefaultDriverName');
-						var jdbcDefaultUserName = A.one('#jdbcDefaultUserName');
-						var jdbcDefaultPassword = A.one('#jdbcDefaultPassword');
+						var jdbcDefaultURL = A.one('#jdbcDefaultURL');
 
-						var setupForm = A.one('#fm');
 						var command = A.one('#<%= Constants.CMD %>');
+						var setupForm = A.one('#fm');
 
 						var connectionMessages = A.one('#connectionMessages');
 
@@ -265,17 +263,15 @@
 						}
 
 						var onChangeDatabaseSelector = function() {
-							var value = databaseSelector.val();
-
 							var index = databaseSelector.get('selectedIndex');
 
 							var selectedOption = databaseSelector.get('options').item(index);
 
-							var driverClassName = selectedOption.attr('data-driverClassName');
 							var databaseURL = selectedOption.attr('data-url');
+							var driverClassName = selectedOption.attr('data-driverClassName');
 
-							jdbcDefaultURL.val(databaseURL);
 							jdbcDefaultDriverClassName.val(driverClassName);
+							jdbcDefaultURL.val(databaseURL);
 						};
 
 						databaseSelector.on('change', onChangeDatabaseSelector);

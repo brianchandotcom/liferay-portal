@@ -41,7 +41,7 @@ import java.util.jar.Manifest;
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+	protected AutoDeployer buildAutoDeployer() {
 		return new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
 	}
 

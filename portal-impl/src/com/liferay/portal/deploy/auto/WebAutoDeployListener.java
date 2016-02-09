@@ -26,7 +26,7 @@ import java.io.File;
 public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+	protected AutoDeployer buildAutoDeployer() {
 		return new ThreadSafeAutoDeployer(new WebAutoDeployer());
 	}
 

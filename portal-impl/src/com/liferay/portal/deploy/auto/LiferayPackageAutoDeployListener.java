@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
 
@@ -27,7 +26,7 @@ import java.io.File;
 public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+	protected AutoDeployer buildAutoDeployer() {
 		return new ThreadSafeAutoDeployer(new LiferayPackageAutoDeployer());
 	}
 
@@ -43,7 +42,7 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 	}
 
 	@Override
-	protected boolean isDeployable(File file) throws AutoDeployException {
+	protected boolean isDeployable(File file) {
 		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
 			new PluginAutoDeployListenerHelper(file);
 

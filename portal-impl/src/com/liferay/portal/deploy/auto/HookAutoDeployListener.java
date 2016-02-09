@@ -27,7 +27,7 @@ import java.io.File;
 public class HookAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override
-	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+	protected AutoDeployer buildAutoDeployer() {
 		return new ThreadSafeAutoDeployer(new HookAutoDeployer());
 	}
 

@@ -21,11 +21,14 @@ import java.io.File;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.internal.DynamicObject;
 import org.gradle.api.internal.DynamicObjectUtil;
+import org.gradle.api.invocation.Gradle;
 
 /**
  * @author Andrea Di Giorgi
@@ -114,6 +117,27 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return new File(settings.getRootDir(), value);
+	}
+
+	public static boolean isInTaskGraph(Task task) {
+		try {
+			Project project = task.getProject();
+
+			Gradle gradle = project.getGradle();
+
+			TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
+
+			if (taskExecutionGraph.hasTask(task)) {
+				return true;
+			}
+		}
+		catch (IllegalStateException ise) {
+
+			// If task execution graph is not populated yet
+
+		}
+
+		return false;
 	}
 
 }

@@ -235,19 +235,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final Configuration bundleConfiguration,
 		final WorkspaceExtension workspaceExtension) {
 
-		abstractCopyTask.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					File file = bundleConfiguration.getSingleFile();
-
-					GradleUtil.setProperty(
-						task, _BUNDLE_FILE_PROPERTY_NAME, file);
-				}
-
-			});
-
 		abstractCopyTask.from(
 			new Callable<FileCollection>() {
 
@@ -255,14 +242,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public FileCollection call() throws Exception {
 					Project project = abstractCopyTask.getProject();
 
-					if (!abstractCopyTask.hasProperty(
-							_BUNDLE_FILE_PROPERTY_NAME)) {
-
+					if (!GradleUtil.isInTaskGraph(abstractCopyTask)) {
 						return project.files();
 					}
 
-					File file = (File)abstractCopyTask.property(
-						_BUNDLE_FILE_PROPERTY_NAME);
+					File file = bundleConfiguration.getSingleFile();
 
 					String fileName = file.getName();
 
@@ -314,7 +298,5 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 	}
-
-	private static final String _BUNDLE_FILE_PROPERTY_NAME = "bundleFile";
 
 }

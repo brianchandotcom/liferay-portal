@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine.upgrade.v3_0_13;
+package com.liferay.sync.engine.upgrade.v3_1_0;
 
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
@@ -22,11 +22,11 @@ import com.liferay.sync.engine.upgrade.UpgradeProcess;
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_13 extends UpgradeProcess {
+public class UpgradeProcess_3_1_0 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 3013;
+		return 3100;
 	}
 
 	@Override

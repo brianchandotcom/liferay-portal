@@ -14,9 +14,18 @@
 
 package com.liferay.trash.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.trash.taglib.servlet.ServletContextUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +68,29 @@ public class UndoTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String key =
+			portletDisplay.getId() +
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA;
+
+		if (!SessionMessages.contains(portletRequest, key)) {
+			return null;
+		}
+
+		Map<String, String[]> data =
+			(HashMap<String, String[]>)SessionMessages.get(portletRequest, key);
+
+		if (data == null) {
+			return null;
+		}
+
 		return _PAGE;
 	}
 

@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.product.navigation.control.menu;
+package com.liferay.layout.admin.web.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
 
 import java.io.IOException;
 
@@ -44,24 +43,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
-		"service.ranking:Integer=300"
+		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"service.ranking:Integer=400"
 	},
-	service = ProductNavigationControlMenuEntry.class
+	service = ControlMenuEntry.class
 )
-public class InformationMessagesProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+public class CustomizationSettingsControlMenuEntry
+	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
-	public static final String INFORMATION_MESSAGES_LINKED_LAYOUT =
-		"INFORMATION_MESSAGES_LINKED_LAYOUT";
+	public static final String CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION =
+		"CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION";
 
-	public static final String INFORMATION_MESSAGES_MODIFIED_LAYOUT =
-		"INFORMATION_MESSAGES_MODIFIED_LAYOUT";
+	@Override
+	public String getBodyJspPath() {
+		return "/control/menu/customization_settings_body.jsp";
+	}
 
 	@Override
 	public String getIconJspPath() {
-		return "/control/menu/information_messages.jsp";
+		return "/control/menu/customization_settings_icon.jsp";
 	}
 
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
@@ -78,7 +78,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean includeIcon(
+	public boolean includeBody(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -87,17 +87,14 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		try {
 			request.setAttribute(
-				INFORMATION_MESSAGES_LINKED_LAYOUT,
-				isLinkedLayout(themeDisplay));
-			request.setAttribute(
-				INFORMATION_MESSAGES_MODIFIED_LAYOUT,
-				isModifiedLayout(themeDisplay));
+				CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION,
+				hasUpdateLayoutPermission(themeDisplay));
 		}
 		catch (PortalException pe) {
 			_log.error(pe);
 		}
 
-		return super.includeIcon(request, response);
+		return super.includeBody(request, response);
 	}
 
 	@Override
@@ -111,7 +108,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (!isLinkedLayout(themeDisplay) && !isModifiedLayout(themeDisplay)) {
+		if (!isCustomizableLayout(themeDisplay)) {
 			return false;
 		}
 
@@ -127,44 +124,40 @@ public class InformationMessagesProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean isLinkedLayout(ThemeDisplay themeDisplay)
+	protected boolean isCustomizableLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!LayoutPermissionUtil.containsWithoutViewableGroup(
-				themeDisplay.getPermissionChecker(), layout, false,
-				ActionKeys.UPDATE)) {
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
+			group.isStagingGroup() || group.isUserGroup()) {
 
 			return false;
 		}
 
-		Group group = layout.getGroup();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
 
-		if (!SitesUtil.isLayoutUpdateable(layout) ||
-			(layout.isLayoutPrototypeLinkActive() &&
-			 !group.hasStagingGroup())) {
+		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
+			return false;
+		}
+
+		if (layout.isCustomizable() &&
+			hasUpdateLayoutPermission(themeDisplay)) {
 
 			return true;
 		}
 
-		return false;
-	}
-
-	protected boolean isModifiedLayout(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
-			!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-
+		if (!layoutTypePortlet.isCustomizable()) {
 			return false;
 		}
 
-		if (!hasUpdateLayoutPermission(themeDisplay)) {
+		if (!LayoutPermissionUtil.containsWithoutViewableGroup(
+				themeDisplay.getPermissionChecker(), layout, false,
+				ActionKeys.CUSTOMIZE)) {
+
 			return false;
 		}
 
@@ -172,6 +165,6 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InformationMessagesProductNavigationControlMenuEntry.class);
+		CustomizationSettingsControlMenuEntry.class);
 
 }

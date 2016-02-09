@@ -22,15 +22,15 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
+<%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
 <%@ page import="com.liferay.layout.admin.web.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
-<%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
@@ -47,8 +47,6 @@
 
 <%
 String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.LAYOUT_ADMIN);
-
-InformationMessagesProductNavigationControlMenuEntry informationMessagesProductNavigationControlMenuEntry = (InformationMessagesProductNavigationControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);
 
 Map<String, Object> data = new HashMap<>();
 
@@ -68,7 +66,12 @@ data.put("qa-id", "info");
 
 <div class="hide">
 	<div id="<%= portletNamespace %>infoContainer">
-		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isModifiedLayout(themeDisplay) %>">
+
+		<%
+		boolean modifiedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT));
+		%>
+
+		<c:if test="<%= modifiedLayout %>">
 			<div class="modified-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
 
@@ -94,7 +97,11 @@ data.put("qa-id", "info");
 			</div>
 		</c:if>
 
-		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isLinkedLayout(themeDisplay) %>">
+		<%
+		boolean linkedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT));
+		%>
+
+		<c:if test="<%= linkedLayout %>">
 			<div class="linked-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
 
@@ -117,106 +124,6 @@ data.put("qa-id", "info");
 					</c:choose>
 				</span>
 			</div>
-		</c:if>
-
-		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
-			<aui:icon image="information-live" markupView="lexicon" />
-
-			<c:if test="<%= layoutTypePortlet.isCustomizable() %>">
-				<div class="customizable-layout">
-					<span class="message-info">
-						<c:choose>
-							<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-								<liferay-ui:message key="you-can-customize-this-page" />
-
-								<liferay-ui:icon-help message="customizable-user-help" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
-
-								<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
-									<liferay-ui:icon-help message="customizable-admin-help" />
-								</c:if>
-							</c:otherwise>
-						</c:choose>
-					</span>
-
-					<span class="button-info">
-
-						<%
-						String taglibMessage = "view-default-page";
-
-						if (!layoutTypePortlet.isCustomizedView()) {
-							taglibMessage = "view-my-customized-page";
-						}
-						else if (layoutTypePortlet.isDefaultUpdated()) {
-							taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
-						}
-						%>
-
-						<liferay-ui:icon
-							cssClass="view-default"
-							id='<%= portletNamespace + "toggleCustomizedView" %>'
-							label="<%= true %>"
-							message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>"
-							url="javascript:;"
-						/>
-
-						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-
-							<%
-							PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
-
-							resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
-							resetCustomizationViewURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
-
-							String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
-							%>
-
-							<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
-						</c:if>
-					</span>
-				</div>
-			</c:if>
-
-			<aui:script position="inline" sandbox="<%= true %>">
-				$('#<%= portletNamespace %>toggleCustomizedView').on(
-					'click',
-					function(event) {
-						$.ajax(
-							themeDisplay.getPathMain() + '/portal/update_layout',
-							{
-								data: {
-									cmd: 'toggle_customized_view',
-									customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-									p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-								},
-								success: function() {
-									window.location.href = themeDisplay.getLayoutURL();
-								}
-							}
-						);
-					}
-				);
-			</aui:script>
-
-			<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
-				<aui:button name="manageCustomization" value="show-customizable-sections" />
-
-				<div class="hide layout-customizable-controls" id="<portlet:namespace />layoutCustomizableControls">
-					<span title="<liferay-ui:message key="customizable-help" />">
-						<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
-					</span>
-				</div>
-
-				<aui:script use="liferay-layout-customization-settings">
-					new Liferay.LayoutCustomizationSettings(
-						{
-							namespace: '<portlet:namespace />'
-						}
-					);
-				</aui:script>
-			</c:if>
 		</c:if>
 	</div>
 </div>

@@ -309,7 +309,6 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 				</liferay-ui:panel-container>
 
 				<%@ include file="/form_builder.jspf" %>
-
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</aui:form>

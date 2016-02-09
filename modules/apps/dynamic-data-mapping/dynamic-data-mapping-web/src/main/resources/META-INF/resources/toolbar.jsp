@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 

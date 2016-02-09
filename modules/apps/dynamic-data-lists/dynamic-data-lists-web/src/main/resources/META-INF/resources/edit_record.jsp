@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
 DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 long recordId = BeanParamUtil.getLong(record, request, "recordId");
@@ -124,6 +122,11 @@ else {
 							<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 							<p>
+								
+								<%
+								Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+								%>
+
 								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateFormatDateTime.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 							</p>
 						</div>

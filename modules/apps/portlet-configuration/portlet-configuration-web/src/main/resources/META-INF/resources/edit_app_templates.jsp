@@ -71,6 +71,8 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 <liferay-frontend:management-bar
 	disabled="<%= archivedSettingsCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="archivedSettings"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -93,6 +95,10 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteArchivedSettings" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
@@ -105,34 +111,56 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 		<aui:button href="<%= addAppTemplateURL %>" value="create-app-template" />
 	</div>
 
-	<liferay-ui:search-container
-		searchContainer="<%= archivedSettingsSearch %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.settings.ArchivedSettings"
-			keyProperty="name"
-			modelVar="archivedSettings"
+	<portlet:actionURL name="deleteArchivedSetups" var="deleteArchivedSetupsURL">
+		<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+		<portlet:param name="portletResource" value="<%= portletResource %>" />
+	</portlet:actionURL>
+
+	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
+		<liferay-ui:search-container
+			id="archivedSettings"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= archivedSettingsSearch %>"
 		>
-			<liferay-ui:search-container-column-text
-				name="name"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.settings.ArchivedSettings"
+				keyProperty="name"
+				modelVar="archivedSettings"
+			>
+				<liferay-ui:search-container-column-text
+					name="name"
+				/>
 
-			<liferay-ui:search-container-column-text
-				name="user-name"
-				property="userName"
-			/>
+				<liferay-ui:search-container-column-text
+					name="user-name"
+					property="userName"
+				/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				property="modifiedDate"
-			/>
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					property="modifiedDate"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				path="/app_template_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-jsp
+					cssClass="list-group-item-field"
+					path="/app_template_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-	</liferay-ui:search-container>
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />deleteArchivedSettings').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				submitForm($(document.<portlet:namespace />fm));
+			}
+		}
+	);
+</aui:script>

@@ -419,6 +419,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>POST_NEW_THREAD</td>
+	<td>//span[contains(.,'Post New Thread')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
 	<td></td>

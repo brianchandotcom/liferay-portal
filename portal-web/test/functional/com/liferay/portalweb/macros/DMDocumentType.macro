@@ -17,8 +17,6 @@
 			</execute>
 		</for>
 
-		<execute function="SelectFrame" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_IFRAME" />
-
 		<if>
 			<isset var="metadataSetName" />
 			<then>
@@ -29,8 +27,6 @@
 				<execute macro="DMDocumentType#selectPGMetadataSet">
 					<var name="key_metadataSetName" value="${metadataSetName}" />
 				</execute>
-
-				<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 			</then>
 		</if>
 
@@ -39,8 +35,6 @@
 	</command>
 
 	<command name="addField">
-		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
-
 		<execute function="AssertClick" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
@@ -61,8 +55,6 @@
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertClick" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 		<execute function="Click" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deletePG">

@@ -36,6 +36,7 @@ data.put("qa-id", "customizations");
 %>
 
 <liferay-ui:icon
+	cssClass="visible-xs"
 	data="<%= data %>"
 	icon="pencil"
 	id="customizationButton"

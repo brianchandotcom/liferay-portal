@@ -162,7 +162,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 			return "/html/taglib/aui/nav/" + getMarkupView() + "/page.jsp";
 		}
 
-		return "/html/taglib/aui/nav/lexicon/page.jsp";
+		return "/html/taglib/aui/nav/page.jsp";
 	}
 
 	@Override

@@ -120,62 +120,64 @@ data.put("qa-id", "info");
 		</c:if>
 
 		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
-			<div class="customizable-layout">
-				<aui:icon image="information-live" markupView="lexicon" />
+			<aui:icon image="information-live" markupView="lexicon" />
 
-				<span class="message-info">
-					<c:choose>
-						<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<liferay-ui:message key="you-can-customize-this-page" />
+			<c:if test="<%= layoutTypePortlet.isCustomizable() %>">
+				<div class="customizable-layout">
+					<span class="message-info">
+						<c:choose>
+							<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
+								<liferay-ui:message key="you-can-customize-this-page" />
 
-							<liferay-ui:icon-help message="customizable-user-help" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+								<liferay-ui:icon-help message="customizable-user-help" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
-							<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
-								<liferay-ui:icon-help message="customizable-admin-help" />
-							</c:if>
-						</c:otherwise>
-					</c:choose>
-				</span>
+								<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
+									<liferay-ui:icon-help message="customizable-admin-help" />
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</span>
 
-				<span class="button-info">
-
-					<%
-					String taglibMessage = "view-default-page";
-
-					if (!layoutTypePortlet.isCustomizedView()) {
-						taglibMessage = "view-my-customized-page";
-					}
-					else if (layoutTypePortlet.isDefaultUpdated()) {
-						taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
-					}
-					%>
-
-					<liferay-ui:icon
-						cssClass="view-default"
-						id='<%= portletNamespace + "toggleCustomizedView" %>'
-						label="<%= true %>"
-						message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>"
-						url="javascript:;"
-					/>
-
-					<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+					<span class="button-info">
 
 						<%
-						PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+						String taglibMessage = "view-default-page";
 
-						resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
-						resetCustomizationViewURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
-
-						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
+						if (!layoutTypePortlet.isCustomizedView()) {
+							taglibMessage = "view-my-customized-page";
+						}
+						else if (layoutTypePortlet.isDefaultUpdated()) {
+							taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
+						}
 						%>
 
-						<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
-					</c:if>
-				</span>
-			</div>
+						<liferay-ui:icon
+							cssClass="view-default"
+							id='<%= portletNamespace + "toggleCustomizedView" %>'
+							label="<%= true %>"
+							message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>"
+							url="javascript:;"
+						/>
+
+						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+
+							<%
+							PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+
+							resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
+							resetCustomizationViewURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+
+							String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
+							%>
+
+							<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
+						</c:if>
+					</span>
+				</div>
+			</c:if>
 
 			<aui:script position="inline" sandbox="<%= true %>">
 				$('#<%= portletNamespace %>toggleCustomizedView').on(

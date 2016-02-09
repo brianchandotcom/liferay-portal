@@ -40,18 +40,6 @@ archivedSettingsList = ListUtil.subList(archivedSettingsList, archivedSettingsSe
 archivedSettingsSearch.setResults(archivedSettingsList);
 %>
 
-<portlet:renderURL var="backURL">
-	<portlet:param name="mvcPath" value="/edit_configuration.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
-	<portlet:param name="portletResource" value="<%= portletResource %>" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="archived-setups"
-/>
-
 <liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
 <liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
@@ -64,6 +52,8 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+
+	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
 
 	<liferay-ui:search-container
 		searchContainer="<%= archivedSettingsSearch %>"
@@ -95,14 +85,4 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
-
-	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-	</aui:button-row>
 </aui:form>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "archived"), currentURL);
-%>

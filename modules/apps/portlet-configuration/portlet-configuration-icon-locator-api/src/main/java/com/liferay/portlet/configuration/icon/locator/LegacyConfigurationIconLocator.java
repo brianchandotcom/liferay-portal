@@ -17,8 +17,11 @@ package com.liferay.portlet.configuration.icon.locator;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +41,22 @@ public class LegacyConfigurationIconLocator
 
 	@Override
 	public List<String> getDefaultViews(String portletId) {
-		List<String> defaultViews = new ArrayList<>();
+		return new ArrayList<>();
+	}
+
+	@Override
+	public String getPath(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getRootPortletId();
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet == null) {
-			return defaultViews;
+			return StringPool.BLANK;
 		}
 
 		Map<String, String> initParams = portlet.getInitParams();
@@ -52,14 +65,9 @@ public class LegacyConfigurationIconLocator
 			initParams.get("always-display-default-configuration-icons"));
 
 		if (alwaysDisplayDefaultConfigurationIcons) {
-			defaultViews.add(StringPool.DASH);
+			return StringPool.DASH;
 		}
 
-		return defaultViews;
-	}
-
-	@Override
-	public String getPath(PortletRequest portletRequest) {
 		return StringPool.BLANK;
 	}
 

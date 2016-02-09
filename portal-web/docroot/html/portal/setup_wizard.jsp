@@ -75,24 +75,25 @@
 							<aui:fieldset cssClass="col-md-6" label="portal">
 								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(request, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
-								<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
+								<aui:field-wrapper label="default-language" name="companyLocale">
+									<aui:select inlineField="<%= true %>" label="" name="companyLocale">
 
-									<%
-									String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
+										<%
+										String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
 
-									for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
-									%>
+										for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+										%>
 
-										<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+											<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-								</aui:select>
+									</aui:select>
 
-								<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
-
+									<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
+								</aui:field-wrapper>
 								<aui:input label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 

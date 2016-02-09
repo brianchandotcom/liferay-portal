@@ -141,3 +141,62 @@
 		margin-top: 0;
 	}
 }
+
+.aui .input-group {
+	display: block;
+}
+
+.input-select-wrapper {
+	display: inline;
+}
+
+.input-group-btn {
+	display: inline-block; vertical-align: top;
+}
+
+#companyLocale {
+	display: inline-block; width: 90%
+}
+
+@media (min-width: 992px) {
+	#companyLocale {
+		width: 80%;
+	}
+}
+
+@media (max-width: 979px) {
+	#companyLocale {
+		width: 90%;
+	}
+}
+
+@media (max-width: 767px) {
+	#companyLocale {
+		width: 80%;
+	}
+}
+
+@media (max-width: 480px) {
+	#companyLocale {
+		width: 70%;
+	}
+}
+
+@media (max-width: 301px) {
+	#companyLocale {
+		margin-bottom: 10px;
+		width: 100%;
+	}
+}
+
+@media (max-width: 979px) {
+	.aui .change-language {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 767px) {
+	button.change-language {
+		width: initial;
+	}
+}

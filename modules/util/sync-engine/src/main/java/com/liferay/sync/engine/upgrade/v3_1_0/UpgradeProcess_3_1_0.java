@@ -32,7 +32,15 @@ public class UpgradeProcess_3_1_0 extends BaseUpgradeProcess {
 		runSQL(
 			"ALTER TABLE `SyncAccount` ADD COLUMN " +
 				"authenticationRetryInterval INTEGER BEFORE batchFileMaxSize;");
+		runSQL(
+			"ALTER TABLE `SyncAccount` ALTER COLUMN batchFileMaxSize INTEGER;");
+		runSQL("ALTER TABLE `SyncAccount` ALTER COLUMN oAuthEnabled BOOLEAN;");
+		runSQL(
+			"ALTER TABLE `SyncAccount` ALTER COLUMN pluginVersion " +
+				"VARCHAR(255);");
 		runSQL("ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR(255);");
+
+		runSQL("ALTER TABLE `SyncFile` ALTER COLUMN userName VARCHAR(255);");
 	}
 
 }

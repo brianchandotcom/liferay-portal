@@ -56,7 +56,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</liferay-util:include>
 
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 	</liferay-portlet:renderURL>
 
 	<aui:nav-bar-search>

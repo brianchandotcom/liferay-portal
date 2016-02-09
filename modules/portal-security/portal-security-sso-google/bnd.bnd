@@ -11,8 +11,8 @@ Bundle-SymbolicName: com.liferay.portal.security.sso.google
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.google,\
-	com.liferay.portal.security.sso.google.constants,\
-	com.liferay.portal.security.sso.google.configuration
+	com.liferay.portal.security.sso.google.configuration,\
+	com.liferay.portal.security.sso.google.constants
 Import-Package:\
 	!com.fasterxml.jackson.core,\
 	!com.google.*,\

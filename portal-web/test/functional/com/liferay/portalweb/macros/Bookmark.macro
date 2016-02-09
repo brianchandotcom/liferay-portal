@@ -411,16 +411,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
-	<command name="searchCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
-
-		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
-
-		<var name="key_bookmarkName" value="${bookmarkName}" />
-
-		<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
-	</command>
-
 	<command name="searchNullCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${nullBookmarkName}" />
 
@@ -430,49 +420,6 @@
 
 		<execute function="AssertTextNotPresent" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
 		<execute function="AssertTextNotPresent" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmar2Name}" />
-	</command>
-
-	<command name="searchPG">
-		<if>
-			<equals arg1="${bookmarkSearch}" arg2="Entry" />
-			<then>
-				<var name="key_bookmarkName" value="${bookmarkName}" />
-
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
-
-				<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
-
-				<var name="key_bookmarkName" value="${bookmarkName}" />
-
-				<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
-			</then>
-			<elseif>
-				<equals arg1="${bookmarkSearch}" arg2="Null" />
-				<then>
-					<var name="key_bookmarkName" value="${bookmarkName}" />
-
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="asdf" />
-
-					<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
-
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found that matched the keywords: asdf." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${bookmarkSearch}" arg2="Quotes" />
-				<then>
-					<var name="quotes"><![CDATA["${bookmarkName}"]]></var>
-
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${quotes}" />
-
-					<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
-
-					<var name="key_bookmarkName" value="${bookmarkName}" />
-
-					<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
-				</then>
-			</elseif>
-		</if>
 	</command>
 
 	<command name="tearDownCP">

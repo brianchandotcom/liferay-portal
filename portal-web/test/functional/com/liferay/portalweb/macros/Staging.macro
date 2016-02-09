@@ -84,6 +84,7 @@
 			<else>
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 				<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
+				<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
 			</else>
 		</if>
 
@@ -197,9 +198,9 @@
 
 	<command name="configurePublishToLive">
 		<if>
-			<condition function="IsElementPresent" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" />
+			<condition function="IsElementPresent" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 			<then>
-				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" value1="Switch to Advanced Publication" />
 			</then>
 		</if>
 
@@ -589,15 +590,11 @@
 
 	<command name="publishToLivePublishTemplate">
 		<if>
-			<condition function="IsElementPresent" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" />
+			<condition function="IsElementPresent" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 			<then>
-				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" value1="Switch to Advanced Publication" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 
 		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
 
@@ -746,7 +743,7 @@
 		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" value1="Switch to Advanced Publication" />
 		<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_RADIO" />
 		<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
 
@@ -819,9 +816,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertClick" locator1="Staging#STAGING_NAVIGATION" value1="Staging" />
-		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_CONTENT_COUNT" />
-		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_CONTENT_INFO" />
-		<execute function="AssertTextEquals" locator1="Staging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
+		<execute function="AssertElementNotPresent" locator1="BasePortletStaging#STAGING_CONTENT_COUNT" />
+		<execute function="AssertElementNotPresent" locator1="BasePortletStaging#STAGING_CONTENT_INFO" />
+		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -833,19 +830,24 @@
 	</command>
 
 	<command name="viewPublishContentCountViaPortletStagingCP">
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#EXPORT_IMPORT" />
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-		<execute function="AssertClick" locator1="Staging#STAGING_NAVIGATION" value1="Staging" />
-		<execute function="AssertTextEquals" locator1="Staging#STAGING_CONTENT_COUNT" value1="${contentCount}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_CONTENT_INFO" value1="${contentInformation}" />
-		<execute function="AssertTextEquals" locator1="Staging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
+		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_CONTENT_COUNT" value1="${contentCount}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortletStaging#STAGING_CONTENT_INFO" value1="${contentInformation}" />
+		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
 		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewPublishTemplate">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="MenuItem#PUBLISH_TEPMLATES" value1="Publish Templates" />
 

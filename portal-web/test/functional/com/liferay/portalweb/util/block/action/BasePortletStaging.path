@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>STAGING_DATE_RANGE</td>
-	<td>//span[@id='_86_selectedRange']</td>
+	<td>//span[contains(@id,'selectedRange')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>STAGING_CONTENT_INFO</td>
-	<td>//span[contains(@id,'_86_selectedContent')]</td>
+	<td>//span[contains(@id,'selectedContent')]</td>
 	<td></td>
 </tr>
 <tr>

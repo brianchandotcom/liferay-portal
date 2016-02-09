@@ -158,7 +158,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			Assert.assertEquals(
 				"Portal property \"" + modularizedPortalKey +
 					"\" was modularized to " + modularizedPortalKey +
-						" as \"" + modularizedPortalKey,
+						" as \"" + modularizedPortalKey + "\"",
 				loggingEvent.getMessage());
 		}
 		finally {

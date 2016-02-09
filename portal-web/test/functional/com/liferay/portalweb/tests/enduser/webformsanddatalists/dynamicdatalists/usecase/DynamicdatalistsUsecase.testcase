@@ -1597,7 +1597,7 @@
 	</command>
 
 	<command name="EditDefaultLanguageAndPublishRecord" priority="3">
-		<description message="This is a use case for LPS-59154." />
+		<description message="This is a use case for LPS-59154 and LPS-62523." />
 
 		<execute macro="Navigator#openURL" />
 

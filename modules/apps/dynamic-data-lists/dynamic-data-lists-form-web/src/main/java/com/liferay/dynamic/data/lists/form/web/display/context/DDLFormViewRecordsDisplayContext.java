@@ -140,6 +140,20 @@ public class DDLFormViewRecordsDisplayContext {
 		return "list";
 	}
 
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(
+			_liferayPortletRequest, "orderByCol", "modified-date");
+
+		return orderByCol;
+	}
+
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(
+			_liferayPortletRequest, "orderByType", "asc");
+
+		return orderByType;
+	}
+
 	public RecordSearch getRecordSearchContainer() {
 		return _recordSearchContainer;
 	}

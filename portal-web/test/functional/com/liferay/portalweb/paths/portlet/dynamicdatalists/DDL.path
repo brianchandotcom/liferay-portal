@@ -57,47 +57,47 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//thead/tr/th[2])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_NAME</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//thead/tr/th[3])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/span)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_VIEW</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/span)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a[contains(.,'Preview')])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]/a[contains(.,'Preview')])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_NAME</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//thead/tr/th[4])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[4])</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,17 +149,17 @@
 </tr>
 <tr>
 	<td>LIST_TABLE_ID_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[1]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[3]/a)</td>
 	<td></td>
 </tr>
 <tr>

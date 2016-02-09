@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.google;
 
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 

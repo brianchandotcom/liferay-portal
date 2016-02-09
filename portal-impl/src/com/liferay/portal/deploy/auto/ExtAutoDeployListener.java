@@ -14,58 +14,42 @@
 
 package com.liferay.portal.deploy.auto;
 
+import com.liferay.portal.deploy.auto.util.PluginAutoDetectorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
-	public ExtAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ExtAutoDeployer());
+	@Override
+	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+		return new ThreadSafeAutoDeployer(new ExtAutoDeployer());
 	}
 
 	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		File file = autoDeploymentContext.getFile();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + file.getPath());
-		}
-
-		if (!isExtPlugin(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Copying extension environment plugin for " + file.getPath());
-		}
-
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
-
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(
-				"Extension environment for " + file.getPath() +
-					" copied successfully. Deployment will start in a few " +
-						"seconds.");
-		}
-
-		return code;
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copying extension environment plugin for " + file.getPath();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExtAutoDeployListener.class);
+	@Override
+	protected String getSuccessMessage(File file) {
+		return
+			"Extension environment for " + file.getPath() +
+				" copied successfully";
+	}
 
-	private final AutoDeployer _autoDeployer;
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDetectorUtil pluginAutoDeployListenerHelper =
+			new PluginAutoDetectorUtil(file);
+
+		return pluginAutoDeployListenerHelper.isExtPlugin();
+	}
 
 }

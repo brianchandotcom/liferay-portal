@@ -18,12 +18,10 @@ import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.portal.deploy.auto.util.PluginAutoDetectorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,44 +37,35 @@ import java.util.jar.Manifest;
 
 /**
  * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
-	public ModuleAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
+	@Override
+	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
+		return new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
 	}
 
 	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copied module for " + file.getPath();
+	}
 
-		File file = autoDeploymentContext.getFile();
+	@Override
+	protected String getSuccessMessage(File file) {
+		return "Module for " + file.getPath() + " copied successfully";
+	}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + file.getPath());
-		}
-
-		if (!isModule(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Copied module for " + file.getPath());
-		}
-
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
-
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(
-				"Module for " + file.getPath() + " copied successfully. " +
-					"Deployment will start in a few seconds.");
-		}
-
-		return code;
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		return isModule(file);
 	}
 
 	protected boolean isModule(File file) throws AutoDeployException {
-		if (!isJarFile(file)) {
+		PluginAutoDetectorUtil pluginAutoDeployListenerHelper =
+			new PluginAutoDetectorUtil(file);
+
+		if (!pluginAutoDeployListenerHelper.isJarFile()) {
 			return false;
 		}
 
@@ -121,10 +110,5 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 		return Validator.isNotNull(bundleSymbolicName);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModuleAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

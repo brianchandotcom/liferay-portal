@@ -23,7 +23,7 @@ public interface SettingsLocatorHelper {
 		long companyId, String settingsId, Settings parentSettings);
 
 	public Settings getConfigurationBeanSettings(
-		String settingsId, Settings parentSettings);
+		String configurationPid, Settings parentSettings);
 
 	public Settings getGroupPortletPreferencesSettings(
 		long groupId, String settingsId, Settings parentSettings);

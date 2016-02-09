@@ -79,13 +79,13 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getConfigurationBeanSettings(
-		String settingsId, Settings parentSettings) {
+		String configurationPid, Settings parentSettings) {
 
 		return new ConfigurationBeanSettings(
 			new LocationVariableResolver(
-				getResourceManager(settingsId),
+				getResourceManager(configurationPid),
 				SettingsFactoryUtil.getSettingsFactory()),
-			getConfigurationBean(settingsId), parentSettings);
+			getConfigurationBean(configurationPid), parentSettings);
 	}
 
 	public PortletPreferences getGroupPortletPreferences(
@@ -192,11 +192,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		}
 	}
 
-	protected Object getConfigurationBean(String settingsId) {
-		settingsId = PortletConstants.getRootPortletId(settingsId);
-
+	protected Object getConfigurationBean(String configurationPid) {
 		Class<?> configurationBeanClass = _configurationBeanClasses.get(
-			settingsId);
+			configurationPid);
 
 		if (configurationBeanClass == null) {
 			return null;
@@ -208,11 +206,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return configurationBeanManagedService.getConfigurationBean();
 	}
 
-	protected ResourceManager getResourceManager(String settingsId) {
-		settingsId = PortletConstants.getRootPortletId(settingsId);
-
+	protected ResourceManager getResourceManager(String configurationPid) {
 		Class<?> configurationBeanClass = _configurationBeanClasses.get(
-			settingsId);
+			configurationPid);
 
 		if (configurationBeanClass == null) {
 			return new ClassLoaderResourceManager(

@@ -34,15 +34,24 @@ public class ConfigurationProviderUtil {
 		return configurationProvider.getConfiguration(clazz, settingsLocator);
 	}
 
+	public static String getConfigurationPid(Class clazz)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		return configurationProvider.getConfigurationPid(clazz);
+	}
+
 	public static ConfigurationProvider getConfigurationProvider() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ConfigurationProviderUtil.class);
 
-		return _configurationFactories.get(0);
+		return _configurationProvider.get(0);
 	}
 
 	private static final ServiceTrackerList<ConfigurationProvider>
-		_configurationFactories = ServiceTrackerCollections.openList(
+		_configurationProvider = ServiceTrackerCollections.openList(
 			ConfigurationProvider.class);
 
 }

@@ -265,10 +265,21 @@ public class PortletDisplay implements Cloneable, Serializable {
 		String portletId = Validator.isNull(
 			_portletResource) ? _id : _portletResource;
 
-		return ConfigurationProviderUtil.getConfiguration(
-			clazz,
-			new PortletInstanceSettingsLocator(
-				_themeDisplay.getLayout(), portletId));
+		String configurationPid = ConfigurationProviderUtil.getConfigurationPid(
+			clazz);
+
+		if (Validator.isNotNull(configurationPid)) {
+			return ConfigurationProviderUtil.getConfiguration(
+				clazz,
+				new PortletInstanceSettingsLocator(
+					_themeDisplay.getLayout(), portletId, configurationPid));
+		}
+		else {
+			return ConfigurationProviderUtil.getConfiguration(
+				clazz,
+				new PortletInstanceSettingsLocator(
+					_themeDisplay.getLayout(), portletId));
+		}
 	}
 
 	public String getPortletName() {

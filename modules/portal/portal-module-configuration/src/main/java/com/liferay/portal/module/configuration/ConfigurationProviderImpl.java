@@ -14,6 +14,8 @@
 
 package com.liferay.portal.module.configuration;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.Settings;
@@ -72,6 +74,16 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			throw new ConfigurationException(
 				"Unable to load configuration of type " + clazz.getName(), e);
 		}
+	}
+
+	public String getConfigurationPid(Class<?> clazz) {
+		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
+
+		if (ocd == null) {
+			return null;
+		}
+
+		return ocd.id();
 	}
 
 	protected <T> Class<?> getOverrideClass(Class<T> clazz) {

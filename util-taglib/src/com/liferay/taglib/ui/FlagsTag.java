@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+ *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
  */
 @Deprecated
 public class FlagsTag extends IncludeTag {

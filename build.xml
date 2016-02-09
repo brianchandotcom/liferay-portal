@@ -544,7 +544,6 @@
 	<target name="doc">
 		<antcall target="dtddoc" />
 		<antcall target="javadoc" />
-		<antcall target="javadoc-all" />
 		<antcall target="propertiesdoc" />
 		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
 	</target>

@@ -851,25 +851,31 @@
 	</command>
 
 	<command name="viewContentSharingPG">
-		<var name="key_siteScope" value="${siteScope1}" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-		<execute function="AssertTextEquals" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope1}" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<var name="key_siteScope" value="${siteScope2}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${siteScope1}" />
 
-		<execute function="AssertTextEquals" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope2}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteScope1}" />
 
-		<var name="key_assetTitle" value="${assetTitle}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${siteScope2}" />
 
-		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteScope2}" />
+
+		<execute function="Refresh" />
+
+		<execute macro="AssetPublisherPortlet#viewPG">
+			<var name="assetContent" value="${assetContent}" />
+			<var name="assetTitle" value="${assetTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_RICH_SUMMARY_TITLE" value1="${assetTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#CUSTOM_ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
 		<execute function="AssertElementPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertElementPresent" locator1="Icon#PRINT" />
 		<execute function="AssertElementPresent" locator1="Icon#FLAG" />
@@ -881,15 +887,15 @@
 			<then>
 				<execute function="AssertElementNotPresent" locator1="Comments#BE_THE_FIRST_LINK" />
 				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
-				<execute function="AssertElementNotPresent" locator1="Icon#EDIT" />
+				<execute function="AssertElementNotPresent" locator1="Icon#CUSTOM_EDIT" />
 			</then>
 			<else>
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
-				<execute function="AssertElementPresent" locator1="Icon#EDIT" />
+				<execute function="AssertElementPresent" locator1="Icon#CUSTOM_EDIT" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+		<execute function="Click" locator1="Icon#SHARE" value1="Share" />
 
 		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
 		<execute function="AssertElementPresent" locator1="Icon#FACEBOOK" />
@@ -1004,15 +1010,17 @@
 	<command name="viewMultipleSiteScopesAddDropdowns">
 		<var name="key_siteScope" value="${siteName1}" />
 
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName1}" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-		<execute function="AssertElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<var name="key_siteScope" value="${siteName2}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${siteName1}" />
 
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName2}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName1}" />
 
-		<execute function="AssertElementPresent" locator1="AP#ADD_NEW_2_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${siteName2}" />
+
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName2}" />
 	</command>
 
 	<command name="viewNoEditLinkPG">

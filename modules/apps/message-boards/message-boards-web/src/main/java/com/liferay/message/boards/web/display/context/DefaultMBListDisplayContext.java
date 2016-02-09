@@ -109,6 +109,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			searchContainer.setTotal(hits.getLength());
 			searchContainer.setResults(
 				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
+			searchContainer.setSearch(true);
 		}
 		else if (entriesNavigation.equals("all")) {
 			int status = WorkflowConstants.STATUS_APPROVED;

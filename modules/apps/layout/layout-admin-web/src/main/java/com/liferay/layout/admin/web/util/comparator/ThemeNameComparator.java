@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.util.comparator;
 
-import com.liferay.portal.model.Theme;
+import com.liferay.portal.kernel.model.Theme;
 
 import java.io.Serializable;
 

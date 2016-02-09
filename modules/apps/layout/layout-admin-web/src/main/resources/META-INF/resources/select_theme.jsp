@@ -91,7 +91,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Theme"
+			className="com.liferay.portal.kernel.model.Theme"
 			escapedModel="<%= true %>"
 			keyProperty="themeId"
 			modelVar="theme"

@@ -430,27 +430,40 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Entry" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Quotes" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm"><![CDATA["DM Document Title"]]></var>
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Null" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="asdf" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="asdf" />
 		</execute>
 	</command>
 </definition>

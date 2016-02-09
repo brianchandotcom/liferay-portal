@@ -432,9 +432,12 @@
 			<var name="folderName" value="${folderName}" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Entry" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Bookmark Name" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -445,9 +448,14 @@
 			<var name="folderName" value="${folderName}" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Null" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="asdf" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="asdf" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -458,9 +466,12 @@
 			<var name="folderName" value="${folderName}" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Quotes" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm"><![CDATA["Test Bookmark Name"]]></var>
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
 		</execute>
 	</command>
 </definition>

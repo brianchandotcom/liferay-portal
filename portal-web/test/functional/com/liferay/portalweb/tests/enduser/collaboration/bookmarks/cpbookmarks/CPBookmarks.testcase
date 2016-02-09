@@ -658,8 +658,12 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#searchCP">
-			<var name="bookmarkName" value="${bookmarkName}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Bookmark" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark" />
 		</execute>
 	</command>
 
@@ -723,8 +727,12 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#searchCP">
-			<var name="bookmarkName" value="${bookmark1Name}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Bookmark" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -733,8 +741,12 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#searchCP">
-			<var name="bookmarkName" value="${bookmark2Name}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Bookmark 2" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark 2" />
 		</execute>
 	</command>
 

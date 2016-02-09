@@ -17,13 +17,13 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/message_boards/view");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
-
-String displayStyle = BeanPropertiesUtil.getString(category, "displayStyle", MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 
@@ -83,13 +83,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	</c:when>
 	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
-		<liferay-portlet:renderURL varImpl="backURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-		</liferay-portlet:renderURL>
-
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:header
-				backURL="<%= backURL.toString() %>"
+				backURL="<%= redirect %>"
 				title="search"
 			/>
 		</c:if>
@@ -212,12 +208,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				parentCategoryId = parentCategory.getCategoryId();
 				parentCategoryName = parentCategory.getName();
 			}
-
-			if (parentCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-				backURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-				backURL.setParameter("mbCategoryId", String.valueOf(parentCategoryId));
-			}
 			%>
+
+			<portlet:renderURL var="backURL">
+				<c:choose>
+					<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+					</c:when>
+					<c:otherwise>
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+					</c:otherwise>
+				</c:choose>
+			</portlet:renderURL>
 
 			<liferay-ui:header
 				backLabel="<%= parentCategoryName %>"

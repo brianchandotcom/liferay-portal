@@ -17,6 +17,7 @@ package com.liferay.portal.language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resource.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -153,6 +154,9 @@ public class LanguageResources {
 			new LanguageResourceServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			RESOURCE_BUNDLE_LOADER);
 	}
 
 	public void setConfig(String config) {

@@ -21,7 +21,7 @@ CLASSPATH=""
 DEBUG="false"
 DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,address=9009,server=y,suspend=n"
 JAVA_BIN="$(whereis java)"
-JAVA_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
+JAVA_OPTS="-Xmx2048m -XX:MaxPermSize=384m"
 STD_IN=0
 
 key=""

@@ -27,29 +27,22 @@ public class ShardExporterFactory {
 
 	public static ShardExporter getShardExporter(Properties properties) {
 		String dataSourceClassName = properties.getProperty(
-			"dataSourceClassName");
+			"dataSourceClassName", "");
 
-		if (_DATASOURCE_CLASS_NAME_MYSQL.equals(dataSourceClassName)) {
+		if (dataSourceClassName.equals(
+				"com.mysql.jdbc.jdbc2.optional.MysqlDataSource")) {
+
 			return new MySQLProvider(properties);
 		}
-		else if (_DATASOURCE_CLASS_NAME_POSTGRESQL.equals(
-					dataSourceClassName) ||
-				 _DATASOURCE_CLASS_NAME_POSTGRESQL_SIMPLE.equals(
-					 dataSourceClassName)) {
+		else if (dataSourceClassName.equals(
+					"com.impossibl.postgres.jdbc.PGDataSource") ||
+				 dataSourceClassName.equals(
+					"org.postgresql.ds.PGSimpleDataSource")) {
 
 			return new PostgreSQLProvider(properties);
 		}
 
 		throw new DBProviderNotAvailableException();
 	}
-
-	private static final String _DATASOURCE_CLASS_NAME_MYSQL =
-		"com.mysql.jdbc.jdbc2.optional.MysqlDataSource";
-
-	private static final String _DATASOURCE_CLASS_NAME_POSTGRESQL =
-		"com.impossibl.postgres.jdbc.PGDataSource";
-
-	private static final String _DATASOURCE_CLASS_NAME_POSTGRESQL_SIMPLE =
-		"org.postgresql.ds.PGSimpleDataSource";
 
 }

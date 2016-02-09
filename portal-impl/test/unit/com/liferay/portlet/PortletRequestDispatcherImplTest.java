@@ -140,6 +140,11 @@ public class PortletRequestDispatcherImplTest {
 		}
 
 		@Override
+		public String getPortletName() {
+			return StringPool.BLANK;
+		}
+
+		@Override
 		public URLEncoder getURLEncoderInstance() {
 			return null;
 		}

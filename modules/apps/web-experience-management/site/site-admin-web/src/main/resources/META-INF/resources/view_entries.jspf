@@ -75,6 +75,13 @@
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
+
+				boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
+				%>
+
 				<%@ include file="/site_columns.jspf" %>
 			</c:otherwise>
 		</c:choose>

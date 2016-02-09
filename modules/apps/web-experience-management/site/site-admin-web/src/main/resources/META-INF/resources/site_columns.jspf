@@ -19,7 +19,19 @@
 	name="name"
 	orderable="<%= true %>"
 >
-	<aui:a href="<%= rowURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+	<c:choose>
+		<c:when test="<%= hasAddChildSitePermisison && (row != null) %>">
+			<liferay-portlet:renderURL var="viewSubsitesURL">
+				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:a href="<%= viewSubsitesURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+		</c:when>
+		<c:otherwise>
+			<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
+		</c:otherwise>
+	</c:choose>
 
 	<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -64,26 +76,23 @@
 
 	<%
 	}
-
-	if (GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
-		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
-
-		if (!childSites.isEmpty()) {
 	%>
 
-			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-			</liferay-portlet:renderURL>
+</liferay-ui:search-container-column-text>
 
-			<div class="subsites-count">
-				<a href="<%= viewSubsitesURL.toString() %>">
-					<%= LanguageUtil.format(request, childSites.size() == 1 ? "this-site-has-x-child-site" : "this-site-has-x-child-sites", String.valueOf(childSites.size()), false) %>
-				</a>
-			</div>
+<liferay-ui:search-container-column-text
+	name="child-sites"
+>
 
 	<%
-		}
+	if (hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
+	%>
+
+		<div class="subsites-count">
+			<%= childSites.size() %>
+		</div>
+
+	<%
 	}
 	%>
 

@@ -60,21 +60,21 @@ public class BackgroundTaskConstants {
 
 	public static String getStatusCssClass(int status) {
 		if (status == STATUS_CANCELLED) {
-			return "label-info";
+			return "text-info";
 		}
 		else if (status == STATUS_FAILED) {
-			return "label-danger";
+			return "text-danger";
 		}
 		else if (status == STATUS_IN_PROGRESS) {
-			return "label-warning";
+			return "text-warning";
 		}
 		else if ((status == BackgroundTaskConstants.STATUS_NEW) ||
 				 (status == BackgroundTaskConstants.STATUS_QUEUED)) {
 
-			return "label-info";
+			return "text-info";
 		}
 		else if (status == STATUS_SUCCESSFUL) {
-			return "label-success";
+			return "text-success";
 		}
 
 		return StringPool.BLANK;

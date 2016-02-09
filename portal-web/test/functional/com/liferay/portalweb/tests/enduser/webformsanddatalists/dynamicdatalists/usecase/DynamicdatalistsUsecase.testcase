@@ -1652,13 +1652,13 @@
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
+		<execute macro="DDLRecord#viewDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text Spanish" />
 			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#changeDefaultLanguage">
-			<var name="defaultLanguage" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">
@@ -1742,13 +1742,13 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
+		<execute macro="DDLRecord#viewDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text Spanish" />
 			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#changeDefaultLanguage">
-			<var name="defaultLanguage" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">

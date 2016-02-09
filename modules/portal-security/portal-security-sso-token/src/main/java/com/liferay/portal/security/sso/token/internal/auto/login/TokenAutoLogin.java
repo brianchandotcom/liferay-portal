@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.security.exportimport.UserImporterUtil;
+import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -137,11 +137,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		if (tokenCompanyServiceSettings.importFromLDAP()) {
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = UserImporterUtil.importUser(
+					user = _userImporter.importUser(
 						companyId, StringPool.BLANK, login);
 				}
 				else if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-					user = UserImporterUtil.importUser(
+					user = _userImporter.importUser(
 						companyId, login, StringPool.BLANK);
 				}
 				else {
@@ -208,6 +208,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserImporter(UserImporter userImporter) {
+		_userImporter = userImporter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -219,6 +224,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(TokenAutoLogin.class);
 
 	private ConfigurationProvider _configurationProvider;
+	private UserImporter _userImporter;
 	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
 		new ConcurrentHashMap<>();
 	private UserLocalService _userLocalService;

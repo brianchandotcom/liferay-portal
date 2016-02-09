@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.security.exportimport.UserImporterUtil;
+import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -88,7 +88,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 		if (isLDAPImportEnabled(companyId)) {
 			try {
-				user = UserImporterUtil.importUser(
+				user = _userImporter.importUser(
 					companyId, StringPool.BLANK, screenName);
 			}
 			catch (Exception e) {
@@ -163,6 +163,11 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserImporter(UserImporter userImporter) {
+		_userImporter = userImporter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -193,6 +198,5 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		RequestHeaderAutoLogin.class);
 
 	private ConfigurationProvider _configurationProvider;
-	private UserLocalService _userLocalService;
-
+	private UserImporter _userImporter;
 }

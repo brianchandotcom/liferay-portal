@@ -30,6 +30,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
 		upgradeSiteAdmin();
+		upgradeWebSite();
 	}
 
 	protected void upgradeAssetCategoriesAdmin() throws Exception {
@@ -141,6 +142,10 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		runSQL("alter table Team add lastPublishDate DATE null");
 
 		updateLastPublishDates("134", "Team");
+	}
+
+	protected void upgradeWebSite() throws Exception {
+		runSQL("alter table Website add lastPublishDate DATE null");
 	}
 
 }

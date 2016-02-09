@@ -17,15 +17,22 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-boolean googleAuthEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), "google-auth-enabled", true);
-String googleClientId = PrefsPropsUtil.getString(company.getCompanyId(), "google-client-id");
-String googleClientSecret = PrefsPropsUtil.getString(company.getCompanyId(), "google-client-secret");
+GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationProviderUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "google--", new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));
+
+boolean googleAuthEnabled = googleAuthorizationConfiguration.enabled();
+String googleClientId = googleAuthorizationConfiguration.clientId();
+String googleClientSecret = googleAuthorizationConfiguration.clientSecret();
 %>
 
+<liferay-ui:error key="googleClientIdInvalid" message="the-google-client-id-is-invalid" />
+<liferay-ui:error key="googleClientSecretInvalid" message="the-google-client-secret-is-invalid" />
+
 <aui:fieldset>
-	<aui:input label="enabled" name='<%= "settings--google-auth-enabled--" %>' type="checkbox" value="<%= googleAuthEnabled %>" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/google" />
 
-	<aui:input label="google-client-id" name='<%= "settings--google-client-id--" %>' type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input label="enabled" name="google--enabled" type="checkbox" value="<%= googleAuthEnabled %>" />
 
-	<aui:input label="google-client-secret" name='<%= "settings--google-client-secret--" %>' type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
+	<aui:input label="google-client-id" name="google--clientId" type="text" value="<%= googleClientId %>" wrapperCssClass="lfr-input-text-container" />
+
+	<aui:input label="google-client-secret" name="google--clientSecret" type="text" value="<%= googleClientSecret %>" wrapperCssClass="lfr-input-text-container" />
 </aui:fieldset>

@@ -51,6 +51,7 @@ AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 			%>
 
 			<liferay-ui:icon
+				cssClass="visible-interaction"
 				data="<%= data %>"
 				icon="pencil"
 				label="<%= false %>"

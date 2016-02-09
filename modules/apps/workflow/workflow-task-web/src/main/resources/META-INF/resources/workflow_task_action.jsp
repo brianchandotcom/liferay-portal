@@ -141,7 +141,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 </div>
 
 <div class="hide" id="<%= randomId %>updateDueDate">
-	<aui:input bean="<%= workflowTask %>" model="<%= WorkflowTask.class %>" name="dueDate" />
+	<aui:input bean="<%= workflowTask %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
 </div>
 
 <div class="hide" id="<%= randomId %>updateComments">

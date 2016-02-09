@@ -48,31 +48,29 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h6 class="text-default">
+					<h5 class="text-default">
 
 						<%
 						dateSearchEntry.setDate(workflowTask.getCreateDate());
 						%>
 
-						<aui:a href="<%= rowURL %>">
-							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
-						</aui:a>
-					</h6>
+						<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
+					</h5>
 
-					<h5>
+					<h4>
 						<aui:a href="<%= rowURL %>">
 							<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>
 						</aui:a>
-					</h5>
+					</h4>
 
-					<h6 class="text-default">
-						<aui:a cssClass="asset-type" href="<%= rowURL %>">
+					<h5 class="text-default">
+						<span class="asset-type">
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
-						</aui:a>
+						</span>
 
-						<aui:a cssClass="task-name" href="<%= rowURL %>" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
+						<span class="task-name" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
-						</aui:a>
+						</span>
 
 						<c:if test="<%= workflowTaskDisplayContext.getDueDate(workflowTask) != null %>">
 
@@ -80,16 +78,17 @@
 							dateSearchEntry.setDate(workflowTaskDisplayContext.getDueDate(workflowTask));
 							%>
 
-							<aui:a cssClass="due-date" href="<%= rowURL %>">
-								<strong><liferay-ui:message key="due-date" />:</strong> <%= dateSearchEntry.getName(request) %>
-							</aui:a>
+							<span class="due-date">
+								<liferay-ui:message key="due-date" />: <%= dateSearchEntry.getName(request) %>
+							</span>
 						</c:if>
-					</h6>
+					</h5>
 				</liferay-ui:search-container-column-text>
 
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_task_action.jsp"
 						/>
 					</c:when>
@@ -102,6 +101,7 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
+					cssClass="asset-title"
 					href="<%= rowURL %>"
 					name="asset-title"
 					value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
@@ -138,6 +138,7 @@
 				<c:choose>
 					<c:when test="<%= !workflowTask.isCompleted() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_task_action.jsp"
 						/>
 					</c:when>

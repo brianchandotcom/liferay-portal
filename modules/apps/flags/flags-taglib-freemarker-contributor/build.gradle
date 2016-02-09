@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":apps:flags:flags-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

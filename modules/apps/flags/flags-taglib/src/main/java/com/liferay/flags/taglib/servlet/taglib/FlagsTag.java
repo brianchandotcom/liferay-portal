@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.flags.taglib.servlet.taglib;
 
+import com.liferay.flags.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julio Camarero
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
  */
-@Deprecated
 public class FlagsTag extends IncludeTag {
 
 	public void setClassName(String className) {
@@ -44,6 +43,13 @@ public class FlagsTag extends IncludeTag {
 
 	public void setMessage(String message) {
 		_message = message;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setReportedUserId(long reportedUserId) {
@@ -67,17 +73,19 @@ public class FlagsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:flags:className", _className);
+		request.setAttribute("liferay-flags:flags:className", _className);
 		request.setAttribute(
-			"liferay-ui:flags:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-ui:flags:contentTitle", _contentTitle);
-		request.setAttribute("liferay-ui:flags:label", String.valueOf(_label));
-		request.setAttribute("liferay-ui:flags:message", _message);
+			"liferay-flags:flags:classPK", String.valueOf(_classPK));
+		request.setAttribute("liferay-flags:flags:contentTitle", _contentTitle);
 		request.setAttribute(
-			"liferay-ui:flags:reportedUserId", String.valueOf(_reportedUserId));
+			"liferay-flags:flags:label", String.valueOf(_label));
+		request.setAttribute("liferay-flags:flags:message", _message);
+		request.setAttribute(
+			"liferay-flags:flags:reportedUserId",
+			String.valueOf(_reportedUserId));
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/flags/page.jsp";
+	private static final String _PAGE = "/flags/page.jsp";
 
 	private String _className;
 	private long _classPK;

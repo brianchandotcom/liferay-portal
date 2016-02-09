@@ -46,9 +46,6 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 
 	var sidenavSlider = $('#sidenavSliderId');
 
-	sidenavSlider.off('closed.lexicon.sidenav');
-	sidenavSlider.off('open.lexicon.sidenav');
-
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {
@@ -72,10 +69,12 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 				var showUserCollapse = function() {
 					var userCollapse = $(userCollapseSelector);
 
-					userCollapse.collapse({
-						show: true,
-						parent: '#<portlet:namespace />Accordion'
-					});
+					userCollapse.collapse(
+						{
+							parent: '#<portlet:namespace />Accordion',
+							show: true
+						}
+					);
 
 					userCollapse.collapse('show');
 				};

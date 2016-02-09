@@ -27,5 +27,5 @@ User selUser = (User)request.getAttribute("user.selUser");
 <liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-openid-already-exists" />
 
 <aui:fieldset>
-	<aui:input label="" name="openId" />
+	<aui:input label="openid" name="openId" />
 </aui:fieldset>

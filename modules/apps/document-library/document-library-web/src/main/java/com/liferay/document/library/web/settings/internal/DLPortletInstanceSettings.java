@@ -135,10 +135,6 @@ public class DLPortletInstanceSettings {
 		return _typedSettings.getBooleanValue("showActions");
 	}
 
-	public boolean isShowFolderMenu() {
-		return _typedSettings.getBooleanValue("showFolderMenu");
-	}
-
 	public boolean isShowFoldersSearch() {
 		return _typedSettings.getBooleanValue("showFoldersSearch");
 	}
@@ -173,7 +169,6 @@ public class DLPortletInstanceSettings {
 			"fileEntriesPerPage",
 			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		fallbackKeys.add("showActions", PropsKeys.DL_ACTIONS_VISIBLE);
-		fallbackKeys.add("showFolderMenu", PropsKeys.DL_FOLDER_MENU_VISIBLE);
 		fallbackKeys.add(
 			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
 		fallbackKeys.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);

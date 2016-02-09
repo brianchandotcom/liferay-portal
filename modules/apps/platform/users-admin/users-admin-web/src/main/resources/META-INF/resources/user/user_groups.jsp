@@ -73,10 +73,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="openUserGroupsLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		url="javascript:;"
 	/>

@@ -118,7 +118,6 @@ if (selUser != null) {
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-search"
 									label="<%= true %>"
 									message="open-pages"
 									method="get"
@@ -189,7 +188,6 @@ if (selUser != null) {
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-search"
 									label="<%= true %>"
 									message="open-pages"
 									method="get"

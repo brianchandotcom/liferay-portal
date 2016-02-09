@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.PortletAppImpl;
@@ -142,6 +143,11 @@ public class PortletRequestDispatcherImplTest {
 		@Override
 		public String getPortletName() {
 			return StringPool.BLANK;
+		}
+
+		@Override
+		public String getPortletName(){
+			return RandomTestUtil.randomString();
 		}
 
 		@Override

@@ -25,29 +25,37 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+<%@ page import="com.liferay.flags.configuration.FlagsGroupServiceConfiguration" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.*" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+page import="com.liferay.taglib.aui.AUIUtil" %><%@
+page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
 page import="javax.portlet.PortletURL" %>
 
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />
+
 <%
+FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(FlagsGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(themeDisplay.getCompanyId(), "com.liferay.flags.configuration.FlagsConfiguration"));
+
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
 PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -68,6 +76,5 @@ if ((portletRequest != null) && (portletResponse != null)) {
 else {
 	currentURL = PortalUtil.getCurrentURL(request);
 }
-%>
 
-<liferay-theme:defineObjects />
+%>

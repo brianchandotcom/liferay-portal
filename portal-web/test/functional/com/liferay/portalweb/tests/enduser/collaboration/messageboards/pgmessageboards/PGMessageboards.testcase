@@ -152,6 +152,7 @@
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subCategoryDescription" value="${subCategoryDescription}" />
 			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>
 
@@ -184,6 +185,8 @@
 
 		<execute macro="MessageboardsCategory#viewCategoryDefaultPG">
 			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoriesNumber" value="0" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>
 
@@ -1262,12 +1265,14 @@
 			<var name="categoryName" value="MB Category Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewSubcategoryFromSubcategoryPG">
 			<var name="categoryName" value="MB Subcategory Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name 2" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -250,8 +250,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -274,8 +272,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -296,8 +292,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -317,8 +311,6 @@
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
 		</execute>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -929,8 +921,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1165,8 +1155,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1186,8 +1174,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 			<var name="dmDocumentTypeNameEdit" value="DM Document Type Name Edit" />
 		</execute>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

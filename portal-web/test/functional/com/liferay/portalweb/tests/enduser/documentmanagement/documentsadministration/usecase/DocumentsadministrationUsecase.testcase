@@ -49,8 +49,6 @@
 
 		<execute macro="DMMetadataSet#save" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -63,8 +61,6 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -839,8 +835,6 @@
 			<var name="dmDocumentTypeFieldNames" value="Text Box,Date" />
 			<var name="dmDocumentTypeName" value="Photos" />
 		</execute>
-
-		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

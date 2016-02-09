@@ -1154,7 +1154,9 @@
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="DocumentsAndMediaSelectFolder#CHOOSE_BUTTON_GENERIC" value1="Choose" />
+				<var name="key_dmFolderName" value="${dmFolderName}" />
+
+				<execute function="AssertClick" locator1="DocumentsAndMedia#CHOOSE_FOLDER_BUTTON" value1="Choose" />
 			</else>
 		</if>
 
@@ -1481,9 +1483,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#REVERT" value1="Revert" />
 
@@ -2120,6 +2122,8 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 
+		<execute function="MakeVisible" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL_GENERIC" />
+
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
 		<var method="StringUtil#upperCase('${key_dmFolderName}')" name="dmFolderName" />
@@ -2134,9 +2138,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 
-		<var name="key_rowEntry" value="Version ${dmDocumentVersionNumber}" />
+		<var name="key_dmDocumentVersionNumber" value="Version ${dmDocumentVersionNumber}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 

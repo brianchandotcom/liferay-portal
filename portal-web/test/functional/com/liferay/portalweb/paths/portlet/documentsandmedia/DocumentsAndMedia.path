@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_FOLDER_BUTTON</td>
+	<td>//button[@data-foldername='${key_dmFolderName}']/span[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_IFRAME</td>
 	<td>//iframe[contains(@id,'DLPortlet')]</td>
 	<td></td>
@@ -31,6 +36,16 @@
 <tr>
 	<td>CONFIGURATION_OPTIONS</td>
 	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
+	<td>//h4[contains(.,'${key_dmDocumentVersionNumber}')]/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
 	<td></td>
 </tr>
 <tr>

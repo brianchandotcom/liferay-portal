@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.deploy.auto;
+package com.liferay.portal.deploy.auto.util;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,9 +29,9 @@ import java.util.zip.ZipFile;
 /**
  * @author Manuel de la Peña
  */
-public class PluginAutoDeployListenerHelper {
+public class PluginAutoDetectorUtil {
 
-	public PluginAutoDeployListenerHelper(File file) {
+	public PluginAutoDetectorUtil(File file) {
 		_file = file;
 	}
 
@@ -52,6 +52,10 @@ public class PluginAutoDeployListenerHelper {
 		}
 
 		return false;
+	}
+
+	public boolean isJarFile() {
+		return isMatchingFileExtension(".jar");
 	}
 
 	public boolean isLayoutTemplatePlugin() throws AutoDeployException {
@@ -175,12 +179,8 @@ public class PluginAutoDeployListenerHelper {
 		return false;
 	}
 
-	protected boolean isJarFile() {
-		return isMatchingFileExtension(".jar");
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PluginAutoDeployListenerHelper.class);
+		PluginAutoDetectorUtil.class);
 
 	private static final Pattern _extPluginPattern = Pattern.compile(
 		"-(E|e)xt[-0-9.]*\\+?\\.(war|zip)$");

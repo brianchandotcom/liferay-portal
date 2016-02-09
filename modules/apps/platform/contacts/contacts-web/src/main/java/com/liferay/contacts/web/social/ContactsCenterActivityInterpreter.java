@@ -14,6 +14,7 @@
 
 package com.liferay.contacts.web.social;
 
+import com.liferay.contacts.web.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,11 +23,18 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRelationConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Hai Yu
  */
+@Component(
+	property = {"javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER},
+	service = SocialActivityInterpreter.class
+)
 public class ContactsCenterActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

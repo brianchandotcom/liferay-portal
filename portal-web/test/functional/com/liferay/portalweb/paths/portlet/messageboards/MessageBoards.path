@@ -372,7 +372,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_LIST_STARTED_BY</td>
+	<td>THREAD_LIST_LAST_POST</td>
 	<td>//li[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>

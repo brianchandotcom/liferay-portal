@@ -28,7 +28,6 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.session.Session;
-import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.GetterUtil;
@@ -84,10 +83,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					String urlPath, Map<String, Object> parameters)
 				throws Exception {
 
-				Session session = SessionManager.getSession(getSyncAccountId());
-
 				HttpClient anonymousHttpClient =
-					session.getAnonymousHttpClient();
+					Session.getAnonymousHttpClient();
 
 				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 					getSyncAccountId());

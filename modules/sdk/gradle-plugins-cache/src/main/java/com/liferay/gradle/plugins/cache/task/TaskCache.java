@@ -171,10 +171,6 @@ public class TaskCache implements PatternFilterable {
 		return this;
 	}
 
-	public boolean isFailIfOutOfDate() {
-		return _failIfOutOfDate;
-	}
-
 	public boolean isUpToDate() {
 		FileCollection testFiles = getTestFiles();
 
@@ -206,10 +202,6 @@ public class TaskCache implements PatternFilterable {
 		_patternFilterable.setExcludes(excludes);
 
 		return this;
-	}
-
-	public void setFailIfOutOfDate(boolean failIfOutOfDate) {
-		_failIfOutOfDate = failIfOutOfDate;
 	}
 
 	@Override
@@ -266,7 +258,6 @@ public class TaskCache implements PatternFilterable {
 
 	private Object _baseDir;
 	private Object _cacheDir;
-	private boolean _failIfOutOfDate;
 	private final String _name;
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private final Project _project;

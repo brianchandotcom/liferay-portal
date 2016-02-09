@@ -29,7 +29,7 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 		<liferay-ui:error exception="<%= UserSmsException.MustBeEmailAddress.class %>" message="please-enter-a-sms-id-that-is-a-valid-email-address" />
 
 		<aui:fieldset>
-			<aui:input label="" name="smsSn" />
+			<aui:input label="sms" name="smsSn" />
 		</aui:fieldset>
 	</c:when>
 	<c:otherwise>

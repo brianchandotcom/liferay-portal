@@ -25,7 +25,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 <c:choose>
 	<c:when test="<%= selUser != null %>">
 		<aui:fieldset>
-			<aui:input label="" name="comments" />
+			<aui:input label="comments" name="comments" />
 		</aui:fieldset>
 	</c:when>
 	<c:otherwise>

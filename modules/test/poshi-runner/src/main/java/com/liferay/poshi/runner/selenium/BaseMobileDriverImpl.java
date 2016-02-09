@@ -1588,6 +1588,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void typeEditor(String locator, String value) {
+		WebDriverHelper.typeEditor(this, locator, value);
+	}
+
+	@Override
 	public void typeKeys(String locator, String value) {
 		throw new UnsupportedOperationException();
 	}

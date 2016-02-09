@@ -134,106 +134,78 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= topLink.equals("home") %>'>
-			<aui:row>
-				<c:if test="<%= folder != null %>">
-					<aui:col width="<%= 100 %>">
-						<liferay-ui:header
-							localizeTitle="<%= false %>"
-							title="<%= folder.getName() %>"
-						/>
-					</aui:col>
-				</c:if>
-
-				<%
-				SearchContainer igSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-				int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
-
-				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
-
-				int imagesCount = total - foldersCount;
-
-				igSearchContainer.setTotal(total);
-
-				List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
-
-				igSearchContainer.setResults(results);
-
-				request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-				request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
-				%>
-
-				<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
-					<div id="<portlet:namespace />imageGalleryAssetInfo">
-						<c:if test="<%= folder != null %>">
-							<div class="lfr-asset-description">
-								<%= HtmlUtil.escape(folder.getDescription()) %>
-							</div>
-
-							<div class="lfr-asset-metadata">
-								<div class="icon-calendar lfr-asset-icon">
-									<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
-								</div>
-
-								<%
-								AssetRendererFactory<?> dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-								%>
-
-								<div class="lfr-asset-icon">
-									<liferay-ui:icon icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
-
-									<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-								</div>
-
-								<%
-								AssetRendererFactory<?> dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-								%>
-
-								<div class="last lfr-asset-icon">
-									<liferay-ui:icon icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
-
-									<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-								</div>
-							</div>
-
-							<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-								<liferay-ui:custom-attribute-list
-									className="<%= DLFolderConstants.getClassName() %>"
-									classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-									editable="<%= false %>"
-									label="<%= true %>"
-								/>
-							</liferay-ui:custom-attributes-available>
-						</c:if>
-
-						<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
-					</div>
+			<c:if test="<%= folder != null %>">
+				<aui:col width="<%= 100 %>">
+					<liferay-ui:header
+						localizeTitle="<%= false %>"
+						title="<%= folder.getName() %>"
+					/>
 				</aui:col>
+			</c:if>
 
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() %>">
-					<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
-						<div class="lfr-asset-summary">
-							<liferay-ui:icon
-								cssClass="lfr-asset-avatar"
-								image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
-								message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>'
-							/>
+			<%
+			SearchContainer igSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-							<div class="lfr-asset-name">
-								<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
-							</div>
+			int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
+
+			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, true);
+
+			int imagesCount = total - foldersCount;
+
+			igSearchContainer.setTotal(total);
+
+			List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, true, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
+
+			igSearchContainer.setResults(results);
+
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
+			%>
+
+			<div id="<portlet:namespace />imageGalleryAssetInfo">
+				<c:if test="<%= folder != null %>">
+					<div class="lfr-asset-description">
+						<%= HtmlUtil.escape(folder.getDescription()) %>
+					</div>
+
+					<div class="lfr-asset-metadata">
+						<div class="icon-calendar lfr-asset-icon">
+							<liferay-ui:message arguments="<%= dateFormatDate.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
 						</div>
 
 						<%
-						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-						request.setAttribute("info_panel.jsp-folder", folder);
+						AssetRendererFactory<?> dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 						%>
 
-						<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
-					</aui:col>
+						<div class="lfr-asset-icon">
+							<liferay-ui:icon icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
+							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+						</div>
+
+						<%
+						AssetRendererFactory<?> dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						%>
+
+						<div class="last lfr-asset-icon">
+							<liferay-ui:icon icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
+							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+						</div>
+					</div>
+
+					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFolderConstants.getClassName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
 				</c:if>
-			</aui:row>
+
+				<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
+			</div>
 
 			<%
 			if (folder != null) {

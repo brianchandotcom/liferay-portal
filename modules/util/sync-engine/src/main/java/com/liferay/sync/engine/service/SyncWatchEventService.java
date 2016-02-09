@@ -94,6 +94,23 @@ public class SyncWatchEventService {
 		}
 	}
 
+	public static SyncWatchEvent fetchDuplicateSyncWatchEvent(
+		SyncWatchEvent syncWatchEvent) {
+
+		try {
+			return _syncWatchEventPersistence.fetchByE_F_NotT_First(
+				syncWatchEvent.getEventType(), syncWatchEvent.getFilePathName(),
+				syncWatchEvent.getTimestamp());
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return null;
+		}
+	}
+
 	public static SyncWatchEvent fetchSyncWatchEvent(long syncWatchEventId) {
 		try {
 			return _syncWatchEventPersistence.queryForId(syncWatchEventId);
@@ -111,7 +128,7 @@ public class SyncWatchEventService {
 		String eventType, String filePathName, long timestamp) {
 
 		try {
-			return _syncWatchEventPersistence.fetchByE_F_T(
+			return _syncWatchEventPersistence.fetchByE_F_T_First(
 				eventType, filePathName, timestamp);
 		}
 		catch (SQLException sqle) {

@@ -36,6 +36,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.ServerInfo;
 
@@ -409,6 +410,8 @@ public class FileEventUtil {
 			uploadingSyncFile.setSize(Files.size(filePath));
 
 			SyncFileService.update(uploadingSyncFile);
+
+			IODeltaUtil.checksums(uploadingSyncFile);
 
 			if (uploadingSyncFile.getTypePK() > 0) {
 				updateFile(

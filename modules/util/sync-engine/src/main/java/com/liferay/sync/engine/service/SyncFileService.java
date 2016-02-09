@@ -753,6 +753,10 @@ public class SyncFileService {
 			Path filePath, long syncAccountId, SyncFile syncFile)
 		throws Exception {
 
+		if (Files.notExists(filePath)) {
+			return null;
+		}
+
 		// Local sync file
 
 		FileKeyUtil.writeFileKey(

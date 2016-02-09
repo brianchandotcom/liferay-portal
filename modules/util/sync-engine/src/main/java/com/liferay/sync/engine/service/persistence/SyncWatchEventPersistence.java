@@ -59,7 +59,26 @@ public class SyncWatchEventPersistence
 		return where.queryForFirst();
 	}
 
-	public SyncWatchEvent fetchByE_F_T(
+	public SyncWatchEvent fetchByE_F_NotT_First(
+			String eventType, String filePathName, long timestamp)
+		throws SQLException {
+
+		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
+
+		queryBuilder.limit(1L);
+
+		Where<SyncWatchEvent, Long> where = queryBuilder.where();
+
+		where.eq("eventType", eventType);
+		where.eq("filePathName", new SelectArg(filePathName));
+		where.ne("timestamp", timestamp);
+
+		where.and(3);
+
+		return where.queryForFirst();
+	}
+
+	public SyncWatchEvent fetchByE_F_T_First(
 			String eventType, String filePathName, long timestamp)
 		throws SQLException {
 

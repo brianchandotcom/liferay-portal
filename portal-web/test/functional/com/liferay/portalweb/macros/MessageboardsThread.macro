@@ -456,7 +456,6 @@
 
 	<command name="movePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
-
 		<var name="key_categoryName" value="${categoryName1}" />
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName1}" />

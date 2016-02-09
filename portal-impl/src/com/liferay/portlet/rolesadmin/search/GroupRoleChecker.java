@@ -49,6 +49,13 @@ public class GroupRoleChecker extends EmptyOnClickRowChecker {
 		}
 	}
 
+	@Override
+	public boolean isDisabled(Object obj) {
+		Group group = (Group)obj;
+
+		return isChecked(group);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupRoleChecker.class);
 

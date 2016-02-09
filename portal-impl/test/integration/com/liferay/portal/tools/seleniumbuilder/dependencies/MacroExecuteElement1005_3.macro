@@ -1,5 +1,0 @@
-<definition>
-	<command name="name">
-		<execute action="action" value="value" />
-	</command>
-</definition>

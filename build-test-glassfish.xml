@@ -34,16 +34,12 @@
 
 		<antcall target="revert-test-properties" />
 
-		<ant dir="portal-impl" target="build-selenium-test-case" />
+		<antcall target="record-test-generated-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />
-
-		<antcall target="start-selenium" />
 
 		<antcall target="run-glassfish" inheritAll="false">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
-
-		<antcall target="stop-selenium" />
 	</target>
 </project>

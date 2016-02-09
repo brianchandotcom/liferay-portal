@@ -340,18 +340,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/javacpp.jar</file-name>
-				<version>0.9</version>
-				<project-name>JavaCPP</project-name>
-				<project-url>http://bytedeco.org/javacpp</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Classpath</license-name>
-						<license-url>http://www.gnu.org/software/classpath/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jbi_rt.jar</file-name>
 				<version>2.0 UR1</version>
 				<project-name>Glassfish</project-name>
@@ -579,18 +567,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/opencv.jar</file-name>
-				<version>2.4.9-0.9</version>
-				<project-name>JavaCPP Presets for OpenCV</project-name>
-				<project-url>https://github.com/bytedeco/javacpp-presets/tree/master/opencv</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/orangevolt-ant-tasks.jar</file-name>
 				<version>1.3.5</version>
 				<project-name>Orangevolt ANT Tasks</project-name>
@@ -635,30 +611,6 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/piccolo2d-core.jar</file-name>
-				<version>1.3.1</version>
-				<project-name>Piccolo2D</project-name>
-				<project-url>http://code.google.com/p/piccolo2d</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/piccolo2d-extras.jar</file-name>
-				<version>1.3.1</version>
-				<project-name>Piccolo2D</project-name>
-				<project-url>http://code.google.com/p/piccolo2d</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -810,38 +762,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/selenium-java.jar</file-name>
-				<version>2.42.2</version>
-				<project-name>Selenium Client Drivers</project-name>
-				<project-url>http://seleniumhq.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See the Ant target "build-selenium-java-jar" in
-					portal-impl/build.xml.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/development/selenium-server.jar</file-name>
-				<version>2.42.2</version>
-				<project-name>Selenium Server</project-name>
-				<project-url>http://seleniumhq.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See the Ant target "build-selenium-server-jar" in
-					portal-impl/build.xml.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/development/servlet-api.jar</file-name>
 				<version>3.0.1</version>
 				<project-name>Java Servlet</project-name>
@@ -850,30 +770,6 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/sikuli-api.jar</file-name>
-				<version>1.2.0</version>
-				<project-name>Sikuli API</project-name>
-				<project-url>http://www.sikuli.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://sikuli.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/sikuli-core.jar</file-name>
-				<version>1.2.2</version>
-				<project-name>Sikuli Core</project-name>
-				<project-url>http://www.sikuli.org</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT License</license-name>
-						<license-url>http://sikuli.org/license.html</license-url>
 					</license>
 				</licenses>
 			</library>

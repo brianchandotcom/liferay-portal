@@ -58,15 +58,11 @@ plugins.includes=marketplace-portlet</echo>
 
 		<antcall target="revert-test-properties" />
 
-		<ant dir="portal-impl" target="build-selenium-test-case" />
-
-		<antcall target="start-selenium" />
+		<antcall target="record-test-generated-properties" />
 
 		<antcall target="run-tcat" inheritAll="false">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
-
-		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-tcat">

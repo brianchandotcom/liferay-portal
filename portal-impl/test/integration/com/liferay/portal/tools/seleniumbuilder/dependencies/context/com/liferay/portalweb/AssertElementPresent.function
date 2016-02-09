@@ -1,7 +1,0 @@
-<definition default="assertElementPresent">
-	<command name="assertElementPresent">
-		<execute selenium="waitForElementPresent" />
-
-		<execute selenium="assertElementPresent" />
-	</command>
-</definition>

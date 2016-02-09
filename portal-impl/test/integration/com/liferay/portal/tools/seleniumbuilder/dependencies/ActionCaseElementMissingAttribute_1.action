@@ -1,7 +1,0 @@
-<definition>
-	<command name="name">
-		<case>
-			<execute function="Function#function" />
-		</case>
-	</command>
-</definition>

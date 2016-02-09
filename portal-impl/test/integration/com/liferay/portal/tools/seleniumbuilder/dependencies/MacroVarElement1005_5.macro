@@ -1,3 +1,0 @@
-<definition>
-	<var name="name" locator-key="SITE_NAME" path="Home" value="value" />
-</definition>

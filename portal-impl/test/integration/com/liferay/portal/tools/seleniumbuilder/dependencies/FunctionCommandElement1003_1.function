@@ -1,5 +1,0 @@
-<definition default="name">
-	<command>
-		<execute selenium="selenium" />
-	</command>
-</definition>

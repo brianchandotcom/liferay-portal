@@ -1,5 +1,0 @@
-<definition>
-	<command name="test" priority="5">
-		<execute function="Function#function" locator="Macro#TEST_MESSAGE" value1="No entries were found." />
-	</command>
-</definition>

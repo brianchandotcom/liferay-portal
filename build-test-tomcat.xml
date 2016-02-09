@@ -21,15 +21,7 @@
 
 		<antcall target="revert-test-properties" />
 
-		<if>
-			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			<then>
-				<antcall target="record-test-generated-properties" />
-			</then>
-			<else>
-				<ant dir="portal-impl" target="build-selenium-test-case" />
-			</else>
-		</if>
+		<antcall target="record-test-generated-properties" />
 
 		<if>
 			<isset property="vm.host" />
@@ -43,8 +35,6 @@
 		</if>
 
 		<antcall target="prepare-virtual-host-name-properties" />
-
-		<antcall target="start-selenium" />
 
 		<if>
 			<isset property="test.base.dir.name" />
@@ -60,8 +50,6 @@
 				</antcall>
 			</else>
 		</if>
-
-		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-tomcat">

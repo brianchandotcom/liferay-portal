@@ -1,5 +1,0 @@
-<definition>
-	<command>
-		<execute macro="macro" />
-	</command>
-</definition>

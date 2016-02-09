@@ -3482,10 +3482,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="clean-up-sikuli-temp-files">
-		<delete dir="lib/development/libs" />
-	</target>
-
 	<target name="clean-up-sybase-processes">
 		<if>
 			<os family="unix" />
@@ -3659,39 +3655,6 @@ go]]></replacevalue>
 					/>
 				</then>
 			</elseif>
-		</if>
-	</target>
-
-	<target name="copy-sikuli-temp-files">
-		<if>
-			<os family="unix" />
-			<then>
-				<mirrors-get
-					dest="lib/development/opencv-linux-x86.jar"
-					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
-				/>
-
-				<mirrors-get
-					dest="lib/development/opencv-linux-x86_64.jar"
-					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
-				/>
-			</then>
-			<else>
-				<if>
-					<os family="windows" />
-					<then>
-						<mirrors-get
-							dest="lib/development/opencv-windows-x86.jar"
-							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86.jar"
-						/>
-
-						<mirrors-get
-							dest="lib/development/opencv-windows-x86_64.jar"
-							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86_64.jar"
-						/>
-					</then>
-				</if>
-			</else>
 		</if>
 	</target>
 
@@ -6900,15 +6863,11 @@ if (ppstate.equals("normal")) {
 	<target name="run-selenium-smoke-test">
 		<antcall target="compile" />
 
-		<antcall target="start-selenium" />
-
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
 		<ant dir="portal-web" target="test-class" inheritAll="false">
 			<property name="test.class" value="SeleniumSmokeTestSuite" />
 		</ant>
-
-		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-selenium-test" depends="prepare-selenium">
@@ -7326,8 +7285,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<antcall target="copy-sikuli-temp-files" />
-
 		<start-app-server />
 
 		<get-testcase-property property.name="app.server.bundles.size" />
@@ -7432,8 +7389,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<antcall target="clean-up-sikuli-temp-files" />
-
 		<antcall target="clean-up-web-xml" />
 	</target>
 
@@ -7486,36 +7441,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<arg value="/c" />
 			<arg value="apacheds.bat" />
 		</exec>
-	</target>
-
-	<target name="start-selenium">
-		<if>
-			<not>
-				<resourcecontains
-					resource="portal-impl/classes/system-ext.properties"
-					substring="java.awt.headless=false"
-				/>
-			</not>
-			<then>
-				<echo append="true" file="portal-impl/classes/system-ext.properties">
-					java.awt.headless=false
-				</echo>
-			</then>
-		</if>
-
-		<!--<java
-			jar="lib/development/selenium-server.jar"
-			fork="true"
-			spawn="true"
-		>-->
-		<java
-			classname="org.openqa.grid.selenium.GridLauncher"
-			classpathref="project.classpath"
-			fork="true"
-			spawn="true"
-		>
-			<arg line="-port 14444 -singleWindow" />
-		</java>
 	</target>
 
 	<target name="start-test-smtp-server">
@@ -7594,31 +7519,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 			</sequential>
 		</for>
-	</target>
-
-	<target name="stop-selenium">
-		<if>
-			<available file="portal-impl/src/system-ext.properties" />
-			<then>
-				<if>
-					<not>
-						<filesmatch
-							file1="portal-impl/src/system-ext.properties"
-							file2="portal-impl/classes/system-ext.properties"
-						/>
-					</not>
-					<then>
-						<copy
-							file="portal-impl/src/system-ext.properties"
-							overwrite="true"
-							tofile="portal-impl/classes/system-ext.properties"
-						/>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
 	</target>
 
 	<target name="test-integration">

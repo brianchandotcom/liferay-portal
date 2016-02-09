@@ -1,9 +1,0 @@
-<definition>
-	<command name="name">
-		<default>
-			<description message="" />
-			<execute function="Function#function" />
-			<execute function="Function#function" />
-		</default>
-	</command>
-</definition>

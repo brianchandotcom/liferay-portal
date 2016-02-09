@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,29 +45,33 @@ public class AutoDeployDir {
 
 		List<AutoDeployListener> deployableAutoDeployListeners =
 			new ArrayList<>();
-		List<String> duplicateApplicableAutoDeployListenerClassNames =
-			new ArrayList<>();
 
 		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
 			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-				Class<?> autoDeployListenerClass =
-					autoDeployListener.getClass();
-
 				deployableAutoDeployListeners.add(autoDeployListener);
-				duplicateApplicableAutoDeployListenerClassNames.add(
-					autoDeployListenerClass.getName());
 			}
 		}
 
 		if (deployableAutoDeployListeners.size() > 1) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(
+				3 + (deployableAutoDeployListeners.size() * 2) - 1);
 
 			sb.append("More than one auto deploy listener is available for ");
 			sb.append(autoDeploymentContext.getFile());
 			sb.append(": ");
-			sb.append(
-				StringUtil.merge(
-					duplicateApplicableAutoDeployListenerClassNames, ", "));
+
+			for (int i = 0; i < deployableAutoDeployListeners.size(); i++ ) {
+				AutoDeployListener deployableAutoDeployListener =
+					deployableAutoDeployListeners.get(i); 
+					
+				Class<?> clazz = deployableAutoDeployListener.getClass();
+
+				if (i != 0) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				sb.append(clazz.getName());
+			}
 
 			throw new AutoDeployException(sb.toString());
 		}

@@ -35,7 +35,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/file_entry_discussion.jsp#pre" />
 
-<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="comments">
+<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= dlViewFileVersionDisplayContext.getDiscussionLabel(locale) %>">
 	<liferay-ui:discussion
 		className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
 		classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"

@@ -17,7 +17,7 @@
 <%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
 <%
-	data.put("toggle", sidenavId);
+data.put("toggle", sidenavId);
 %>
 
 <liferay-frontend:management-bar-button

@@ -41,19 +41,16 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 %>
 
 <liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
-<liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
-<portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
-	<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
-	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-</portlet:actionURL>
+<div class="container-fluid-1280">
+	<div class="button-holder text-center">
+		<portlet:renderURL var="addAppTemplateURL">
+			<portlet:param name="mvcPath" value="/add_app_template.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
 
-<aui:form action="<%= updateArchivedSetupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
-	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-
-	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
+		<aui:button href="<%= addAppTemplateURL %>" value="create-app-template" />
+	</div>
 
 	<liferay-ui:search-container
 		searchContainer="<%= archivedSettingsSearch %>"
@@ -85,4 +82,4 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
-</aui:form>
+</div>

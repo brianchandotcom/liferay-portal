@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -60,10 +61,10 @@ public class AutoDeployDir {
 			sb.append(autoDeploymentContext.getFile());
 			sb.append(": ");
 
-			for (int i = 0; i < deployableAutoDeployListeners.size(); i++ ) {
+			for (int i = 0; i < deployableAutoDeployListeners.size(); i++) {
 				AutoDeployListener deployableAutoDeployListener =
-					deployableAutoDeployListeners.get(i); 
-					
+					deployableAutoDeployListeners.get(i);
+
 				Class<?> clazz = deployableAutoDeployListener.getClass();
 
 				if (i != 0) {

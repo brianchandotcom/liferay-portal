@@ -98,9 +98,14 @@
 	</command>
 
 	<command name="executeServerResourcesActions">
+		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Clean Up Actions" />
+		</execute>
+
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
-		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="ServerAdministrationResources#ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
 		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />

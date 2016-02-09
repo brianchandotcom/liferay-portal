@@ -21,12 +21,12 @@
 <!--ACTIONS_TABLE-->
 <tr>
 	<td>ACTIONS_TABLE_DESCRIPTION</td>
-	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//li[contains(.,'${key_actionsDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_TABLE_EXECUTE</td>
-	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td/button[contains(.,'Execute')]</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//li[contains(.,'${key_actionsDescription}')]//button[contains(.,'Execute')]</td>
 	<td></td>
 </tr>
 </tbody>

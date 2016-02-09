@@ -320,6 +320,38 @@ public class WebDriverHelper {
 		return _defaultWindowHandle;
 	}
 
+	public static String getEditorName(WebDriver webDriver, String locator) {
+		String editorName = null;
+		String idAttribute = getAttribute(webDriver, locator + "@id");
+		String titleAttribute = getAttribute(webDriver, locator + "@title");
+
+		if (titleAttribute.contains("Rich Text Editor,")) {
+			int x = titleAttribute.indexOf(",");
+			int y = titleAttribute.indexOf(",", x + 1);
+
+			if (y == -1) {
+				y = titleAttribute.length();
+			}
+
+			editorName = titleAttribute.substring(x + 2, y);
+		}
+		else if (idAttribute.contains("cke__")) {
+			int x = idAttribute.indexOf("cke__");
+			int y = idAttribute.indexOf("cke__", x + 1);
+
+			if (y == -1) {
+				y = idAttribute.length();
+			}
+
+			editorName = idAttribute.substring(x + 4, y);
+		}
+		else {
+			editorName = idAttribute;
+		}
+
+		return editorName;
+	}
+
 	public static int getElementHeight(WebDriver webDriver, String locator) {
 		WebElement webElement = getWebElement(webDriver, locator, "1");
 

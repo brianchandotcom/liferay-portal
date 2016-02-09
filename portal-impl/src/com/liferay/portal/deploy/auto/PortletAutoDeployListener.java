@@ -36,16 +36,16 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	protected AutoDeployer buildAutoDeployer() throws AutoDeployException {
 		AutoDeployer autoDeployer = null;
 
-		if (_isPortletDeployer) {
+		if (_portletDeployer) {
 			autoDeployer = new PortletAutoDeployer();
 		}
-		else if (_isMvcDeployer) {
+		else if (_mvcDeployer) {
 			autoDeployer = new MVCPortletAutoDeployer();
 		}
-		else if (_isPhpDeployer) {
+		else if (_phpDeployer) {
 			autoDeployer = new PHPPortletAutoDeployer();
 		}
-		else if (_isWaiDeployer) {
+		else if (_waiDeployer) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying package as a web application");
 			}
@@ -85,19 +85,19 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		if (pluginAutoDeployListenerHelper.isMatchingFile(
 				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
 
-			_isPortletDeployer = true;
+			_portletDeployer = true;
 
 			return true;
 		}
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile("index_mvc.jsp")) {
-			_isMvcDeployer = true;
+			_mvcDeployer = true;
 
 			return true;
 		}
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
-			_isPhpDeployer = true;
+			_phpDeployer = true;
 
 			return true;
 		}
@@ -110,7 +110,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			!pluginAutoDeployListenerHelper.isWebPlugin() &&
 			file.getName().endsWith(".war")) {
 
-			_isWaiDeployer = true;
+			_waiDeployer = true;
 
 			return true;
 		}
@@ -121,9 +121,9 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAutoDeployListener.class);
 
-	private boolean _isMvcDeployer;
-	private boolean _isPhpDeployer;
-	private boolean _isPortletDeployer;
-	private boolean _isWaiDeployer;
+	private boolean _mvcDeployer;
+	private boolean _phpDeployer;
+	private boolean _portletDeployer;
+	private boolean _waiDeployer;
 
 }

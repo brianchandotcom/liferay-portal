@@ -99,7 +99,7 @@ public class ContactsCenterRequestInterpreter
 		User.class.getName()
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ContactsCenterRequestInterpreter.class);
 
 }

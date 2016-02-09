@@ -74,9 +74,7 @@ public class UpgradeSharding extends UpgradeProcess {
 			defaultPartitioningEnabled = true;
 		}
 
-		if ((!defaultPartitioningEnabled) &&
-			 Validator.isNull(defaultShardName)) {
-
+		if (!defaultPartitioningEnabled && Validator.isNull(defaultShardName)) {
 			throw new RuntimeException(
 				"The property \"shard.default.name\" is not set in " +
 					"portal.properties. Please specify a default shard name " +

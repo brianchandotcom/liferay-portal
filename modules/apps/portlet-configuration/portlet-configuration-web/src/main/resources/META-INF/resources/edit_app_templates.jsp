@@ -22,7 +22,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/edit_archived_setups.jsp");
+portletURL.setParameter("mvcPath", "/edit_app_templates.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
@@ -56,7 +56,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 <liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
 <portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
-	<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
+	<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
@@ -89,7 +89,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="list-group-item-field"
-				path="/archived_setup_action.jsp"
+				path="/app_template_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

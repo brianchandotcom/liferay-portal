@@ -37,6 +37,8 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.external.javadoc.CoreJavadocOptions;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,6 +60,8 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
+
+		configureTasksJavadoc(project, buildPluginDescriptorTask);
 
 		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
@@ -198,6 +202,31 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		processResourcesTask.mustRunAfter(buildPluginDescriptorTask);
 
 		return buildPluginDescriptorTask;
+	}
+
+	protected void configureTaskJavadoc(Javadoc javadoc) {
+		CoreJavadocOptions coreJavadocOptions = (
+			CoreJavadocOptions)javadoc.getOptions();
+
+		coreJavadocOptions.addStringOption("Xdoclint:none", "quiet");
+	}
+
+	protected void configureTasksJavadoc(
+		Project project,
+		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Javadoc.class,
+			new Action<Javadoc>() {
+
+				@Override
+				public void execute(Javadoc javadoc) {
+					configureTaskJavadoc(javadoc);
+				}
+
+			});
 	}
 
 	protected void configureTasksUpload(

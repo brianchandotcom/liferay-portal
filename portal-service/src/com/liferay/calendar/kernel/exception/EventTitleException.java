@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.calendar.exception;
+package com.liferay.calendar.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EventStartDateException extends PortalException {
+public class EventTitleException extends PortalException {
 
-	public EventStartDateException() {
+	public EventTitleException() {
 	}
 
-	public EventStartDateException(String msg) {
+	public EventTitleException(String msg) {
 		super(msg);
 	}
 
-	public EventStartDateException(String msg, Throwable cause) {
+	public EventTitleException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public EventStartDateException(Throwable cause) {
+	public EventTitleException(Throwable cause) {
 		super(cause);
 	}
 

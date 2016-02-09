@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `8e34a45`.*
+*This document has been reviewed through commit `1265cd6`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3737,23 +3737,25 @@ This change was made because WAP is an obsolete functionality.
 
 ---------------------------------------
 
-### The aui:layout taglib has been removed with no direct replacement
-- **Date:** 2015-Feb-8
+### Removed the aui:layout Tag with No Direct Replacement
+- **Date:** 2015-Feb-08
 - **JIRA Ticket:** LPS-62935
 
 #### What changed?
 
-The `aui:layout` taglib has been removed with no direct replacement.
+The `aui:layout` tag has been removed with no direct replacement.
 
 #### Who is affected?
 
-Plugins or templates that are using the `aui:layout` tag need
-to remove their usage of the tag.
+Plugins or templates that are using the `aui:layout` tag must remove their usage
+of the tag.
 
 #### How should I update my code?
 
-There is no direct replacement. You should removeany usages of the `aui:layout` tag.
+There is no direct replacement. You should remove all usages of the `aui:layout`
+tag.
 
 #### Why was this change made?
 
-This change was made as a part of the ongoing strategy to remove deprecated taglibs.
+This change was made as a part of the ongoing strategy to remove deprecated
+tags.

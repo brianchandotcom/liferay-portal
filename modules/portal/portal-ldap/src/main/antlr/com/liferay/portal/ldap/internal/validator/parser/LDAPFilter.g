@@ -159,5 +159,3 @@ DOT: '.';
 COLON: ':';
 UTF: '\u0080'..'\ufffe';
 ASCII_LATIN1: '\u0000'..'\u007f';
-
-

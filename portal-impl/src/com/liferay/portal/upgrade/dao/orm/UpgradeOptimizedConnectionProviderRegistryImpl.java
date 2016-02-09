@@ -29,21 +29,16 @@ public class UpgradeOptimizedConnectionProviderRegistryImpl
 	implements UpgradeOptimizedConnectionProviderRegistry {
 
 	public UpgradeOptimizedConnectionProviderRegistryImpl() {
-		_upgradeOptimizedConnectionProviderMap = new HashMap<>();
-
-		Class<UpgradeOptimizedConnectionProviderRegistryImpl>
-			providerRegisterClass =
-				UpgradeOptimizedConnectionProviderRegistryImpl.class;
-
 		ServiceLoader<UpgradeOptimizedConnectionProvider> serviceLoader =
 			ServiceLoader.load(
 				UpgradeOptimizedConnectionProvider.class,
-				providerRegisterClass.getClassLoader());
+				UpgradeOptimizedConnectionProviderRegistryImpl.class.
+					getClassLoader());
 
 		for (UpgradeOptimizedConnectionProvider
 				upgradeOptimizedConnectionProvider : serviceLoader) {
 
-			_upgradeOptimizedConnectionProviderMap.put(
+			_upgradeOptimizedConnectionProviders.put(
 				upgradeOptimizedConnectionProvider.getDBType(),
 				upgradeOptimizedConnectionProvider);
 		}
@@ -53,10 +48,10 @@ public class UpgradeOptimizedConnectionProviderRegistryImpl
 	public UpgradeOptimizedConnectionProvider
 		getUpgradeOptimizedConnectionProvider(DBType dbType) {
 
-		return _upgradeOptimizedConnectionProviderMap.get(dbType);
+		return _upgradeOptimizedConnectionProviders.get(dbType);
 	}
 
 	private final Map<DBType, UpgradeOptimizedConnectionProvider>
-		_upgradeOptimizedConnectionProviderMap;
+		_upgradeOptimizedConnectionProviders = new HashMap<>();
 
 }

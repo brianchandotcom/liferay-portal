@@ -974,6 +974,29 @@ public class WebDriverHelper {
 		javascriptExecutor.executeScript(sb.toString());
 	}
 
+	public static void typeEditor(
+		WebDriver webDriver, String locator, String value) {
+
+		WebElement webElement = getWebElement(webDriver, locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("CKEDITOR.instances[\"");
+		sb.append(getEditorName(webDriver, locator));
+		sb.append("\"].setData(\"");
+		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
+		sb.append("\");");
+
+		javascriptExecutor.executeScript(sb.toString());
+	}
+
 	public static void uncheck(WebDriver webdDriver, String locator) {
 		WebElement webElement = getWebElement(webdDriver, locator);
 

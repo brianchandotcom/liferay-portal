@@ -37,7 +37,7 @@ public class ShardExporterFactory {
 		else if (dataSourceClassName.equals(
 					"com.impossibl.postgres.jdbc.PGDataSource") ||
 				 dataSourceClassName.equals(
-					"org.postgresql.ds.PGSimpleDataSource")) {
+					 "org.postgresql.ds.PGSimpleDataSource")) {
 
 			return new PostgreSQLProvider(properties);
 		}

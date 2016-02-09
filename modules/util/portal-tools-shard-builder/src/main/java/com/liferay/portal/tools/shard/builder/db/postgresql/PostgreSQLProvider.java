@@ -60,8 +60,8 @@ public class PostgreSQLProvider extends BaseDBProvider {
 		sb.append(
 			" from information_schema.columns c2 where c2.table_catalog = '");
 		sb.append(schema);
-		sb.append("' and c2.table_schema = 'public' ");
-		sb.append("and c2.column_name = 'companyid' group by c2.");
+		sb.append("' and c2.table_schema = 'public' and c2.column_name = ");
+		sb.append("'companyid' group by c2.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c2.");
 		sb.append(getTableNameFieldName());
@@ -87,12 +87,12 @@ public class PostgreSQLProvider extends BaseDBProvider {
 			sb.append("', 'YYYY-MM-DD HH24:MI:SS:MS')");
 		}
 		else if (field instanceof String) {
+			sb.append("'");
+
 			String value = (String)field;
 
-			value = value.replace("'", "\\'");
+			sb.append(value.replace("'", "\\'"));
 
-			sb.append("'");
-			sb.append(value);
 			sb.append("'");
 		}
 		else {

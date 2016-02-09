@@ -19,7 +19,7 @@ options {
  * details.
  */
 
-package com.liferay.portal.ldap.internal.validator.parser;
+package com.liferay.portal.security.ldap.internal.validator.parser;
 
 /**
 * This is a generated file from LDAPFilter.g. DO NOT MODIFY THIS FILE MANUALLY!!
@@ -43,7 +43,7 @@ package com.liferay.portal.ldap.internal.validator.parser;
  * details.
  */
 
-package com.liferay.portal.ldap.internal.validator.parser;
+package com.liferay.portal.security.ldap.internal.validator.parser;
 }
 @lexer::members {
 	@Override

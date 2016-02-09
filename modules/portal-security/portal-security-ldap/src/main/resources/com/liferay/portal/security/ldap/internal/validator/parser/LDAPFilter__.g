@@ -24,7 +24,7 @@ options {
  * details.
  */
 
-package com.liferay.portal.ldap.internal.validator.parser;
+package com.liferay.portal.security.ldap.internal.validator.parser;
 }
 
 T11 : '(' ;

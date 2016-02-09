@@ -46,21 +46,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_DATE_RANGE</td>
-	<td>//span[@id='_86_selectedRange']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_CONTENT_COUNT</td>
-	<td>//span[contains(@class,'badge-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_CONTENT_INFO</td>
-	<td>//span[contains(@id,'_86_selectedContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STAGING_STATUS</td>
 	<td>//tr/td[contains(@class,'status-column')]</td>
 	<td></td>

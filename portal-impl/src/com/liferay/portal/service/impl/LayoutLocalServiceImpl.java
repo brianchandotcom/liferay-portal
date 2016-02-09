@@ -2277,11 +2277,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		PortalUtil.updateImageId(
 			layout, iconImage, iconBytes, "iconImageId", 0, 0, 0);
 
-		boolean layoutUpdateable = ParamUtil.getBoolean(
-			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
-
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
+
+		boolean layoutCustomizable = GetterUtil.getBoolean(
+			typeSettingsProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+		if (!layoutCustomizable && type.equals(LayoutConstants.TYPE_PORTLET)) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.removeCustomization();
+		}
+
+		boolean layoutUpdateable = ParamUtil.getBoolean(
+			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
 
 		typeSettingsProperties.put(
 			Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));

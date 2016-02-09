@@ -20,8 +20,6 @@
 User selUser = (User)request.getAttribute("user.selUser");
 %>
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
 <aui:fieldset>
 	<liferay-ui:custom-attribute-list
 		className="com.liferay.portal.kernel.model.User"

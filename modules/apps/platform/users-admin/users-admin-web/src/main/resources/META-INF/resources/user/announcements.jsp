@@ -38,8 +38,6 @@ else {
 }
 %>
 
-<h3><liferay-ui:message key="alerts-and-announcements" /></h3>
-
 <liferay-ui:message key="select-the-delivery-options-for-alerts-and-announcements" />
 
 <liferay-ui:search-container>

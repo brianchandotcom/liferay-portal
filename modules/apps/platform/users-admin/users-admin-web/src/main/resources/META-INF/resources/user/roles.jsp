@@ -53,8 +53,6 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <aui:input name="deleteGroupRolesRoleIds" type="hidden" />
 <aui:input name="deleteRoleIds" type="hidden" />
 
-<h3><liferay-ui:message key="regular-roles" /></h3>
-
 <liferay-ui:search-container
 	curParam="regularRolesCur"
 	headerNames="title,null"

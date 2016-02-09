@@ -38,8 +38,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="deleteUserGroupIds" type="hidden" />
 
-<h3><liferay-ui:message key="user-groups" /></h3>
-
 <liferay-ui:search-container
 	curParam="userGroupsCur"
 	emptyResultsMessage="no-user-groups-were-found"

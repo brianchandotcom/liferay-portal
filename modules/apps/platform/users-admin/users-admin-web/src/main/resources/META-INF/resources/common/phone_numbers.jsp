@@ -63,8 +63,6 @@ else {
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="phoneNumbers" />
 
-<h3><liferay-ui:message key="phone-numbers" /></h3>
-
 <div class="alert alert-info">
 	<liferay-ui:message key="phone-number-and-type-are-required-fields.-extension-must-be-numeric" />
 </div>

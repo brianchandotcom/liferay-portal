@@ -62,8 +62,6 @@ else {
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="addresses" />
 
-<h3><liferay-ui:message key="addresses" /></h3>
-
 <div class="alert alert-info">
 	<liferay-ui:message key="street-1-and-city-are-required-fields.-postal-code-could-be-required-in-some-countries" />
 </div>

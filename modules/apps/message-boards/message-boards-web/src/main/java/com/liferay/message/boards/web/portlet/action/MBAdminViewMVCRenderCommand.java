@@ -15,16 +15,9 @@
 package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.constants.MBWebKeys;
-import com.liferay.message.boards.web.portlet.toolbar.contributor.MBPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,26 +35,5 @@ public class MBAdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 	public MBAdminViewMVCRenderCommand() {
 		super("/message_boards_admin/view.jsp");
 	}
-
-	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		renderRequest.setAttribute(
-			MBWebKeys.MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_mbPortletToolbarContributor);
-
-		return super.render(renderRequest, renderResponse);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBPortletToolbarContributor(
-		MBPortletToolbarContributor mbPortletToolbarContributor) {
-
-		_mbPortletToolbarContributor = mbPortletToolbarContributor;
-	}
-
-	private MBPortletToolbarContributor _mbPortletToolbarContributor;
 
 }

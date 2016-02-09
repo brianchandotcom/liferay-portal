@@ -59,6 +59,7 @@ page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
+page import="com.liferay.exportimport.web.dao.search.ExportImportResultRowSplitter" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationDisplayTerms" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationSearchTerms" %><%@

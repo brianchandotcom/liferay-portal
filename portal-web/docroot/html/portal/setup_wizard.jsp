@@ -75,8 +75,8 @@
 							<aui:fieldset cssClass="col-md-6" label="portal">
 								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(request, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
-								<aui:field-wrapper label="default-language" name="companyLocale">
-									<aui:select inlineField="<%= true %>" label="" name="companyLocale">
+								<aui:field-wrapper inlineLabel="default-language" label="default-language" name="companyLocale">
+									<aui:select label="" name="companyLocale">
 
 										<%
 										String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
@@ -94,6 +94,7 @@
 
 									<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
 								</aui:field-wrapper>
+
 								<aui:input label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 

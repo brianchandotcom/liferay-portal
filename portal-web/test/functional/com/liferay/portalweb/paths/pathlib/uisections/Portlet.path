@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOADED</td>
+	<td>//div[@data-qa-id='app-loaded']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE</td>
 	<td>//span[contains(@class,'header-toolbar-title')]</td>
 	<td></td>

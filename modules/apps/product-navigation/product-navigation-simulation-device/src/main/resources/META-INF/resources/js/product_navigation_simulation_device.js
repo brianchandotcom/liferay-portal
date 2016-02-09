@@ -90,8 +90,6 @@ AUI.add(
 
 						instance._dialogId = A.guid();
 
-						instance._closePanelButton = instance.byId('closeSimulationPanel');
-
 						instance._simulationDeviceNode = A.Node.create(Lang.sub(TPL_SIMULATION_DEVICE));
 
 						BODY.append(instance._simulationDeviceNode);
@@ -145,7 +143,6 @@ AUI.add(
 						);
 
 						eventHandles.push(
-							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
 							instance._simulationDeviceContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance),
 							resizeHandle
 						);

@@ -160,6 +160,10 @@
 
 				instance.list.push(portlet.portletId);
 
+				if (portlet) {
+					portlet.attr('data-qa-id', 'app-loaded');
+				}
+
 				Liferay.fire(
 					'addPortlet',
 					{
@@ -623,6 +627,10 @@
 							data: A.mix(params, data, true),
 							onComplete: function(portlet, portletId) {
 								portlet.refreshURL = url;
+
+								if (portlet) {
+									portlet.attr('data-qa-id', 'app-refreshed');
+								}
 
 								Liferay.fire(
 									portlet.portletId + ':portletRefreshed',

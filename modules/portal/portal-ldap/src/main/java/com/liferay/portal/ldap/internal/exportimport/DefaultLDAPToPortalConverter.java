@@ -16,7 +16,6 @@ package com.liferay.portal.ldap.internal.exportimport;
 
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -28,9 +27,6 @@ import com.liferay.portal.kernel.security.auth.FullNameDefinition;
 import com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
-import com.liferay.portal.kernel.security.ldap.LDAPGroup;
-import com.liferay.portal.kernel.security.ldap.LDAPToPortalConverter;
-import com.liferay.portal.kernel.security.ldap.LDAPUser;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
@@ -47,6 +43,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.ContactConverterKeys;
 import com.liferay.portal.ldap.GroupConverterKeys;
 import com.liferay.portal.ldap.UserConverterKeys;
+import com.liferay.portal.ldap.exportimport.LDAPGroup;
+import com.liferay.portal.ldap.exportimport.LDAPToPortalConverter;
+import com.liferay.portal.ldap.exportimport.LDAPUser;
+import com.liferay.portal.ldap.util.LDAPUtil;
 
 import java.text.ParseException;
 

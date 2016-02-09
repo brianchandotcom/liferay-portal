@@ -647,6 +647,7 @@ public class CalendarPortlet extends MVCPortlet {
 				calendarBooking.getStartTime(), timeZone);
 
 			long startTime = firstDayJCalendar.getTimeInMillis();
+
 			long endTime = startTime + calendarBooking.getDuration();
 
 			calendarBooking.setStartTime(startTime);
@@ -704,7 +705,7 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	protected long getOffset(
-			CalendarBooking editedInstance, long newStartTime,
+			CalendarBooking editedCalendarBookingInstance, long newStartTime,
 			Recurrence recurrence)
 		throws PortalException {
 
@@ -714,13 +715,13 @@ public class CalendarPortlet extends MVCPortlet {
 			frequency = recurrence.getFrequency();
 		}
 
-		long currentStartTime = editedInstance.getStartTime();
-		TimeZone timeZone = editedInstance.getTimeZone();
+		long currentStartTime = editedCalendarBookingInstance.getStartTime();
+		TimeZone timeZone = editedCalendarBookingInstance.getTimeZone();
 
 		if (frequency == Frequency.WEEKLY) {
 			CalendarBooking firstInstance =
 				_calendarBookingService.getCalendarBookingInstance(
-					editedInstance.getCalendarBookingId(), 0);
+					editedCalendarBookingInstance.getCalendarBookingId(), 0);
 
 			java.util.Calendar currentStartTimeJCalendar =
 				CalendarFactoryUtil.getCalendar(currentStartTime, timeZone);

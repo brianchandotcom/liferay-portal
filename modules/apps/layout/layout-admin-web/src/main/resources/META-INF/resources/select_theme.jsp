@@ -23,7 +23,6 @@ String themeId = ParamUtil.getString(request, "themeId");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTheme");
-
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -31,8 +30,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_theme.jsp");
 portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("themeId", themeId);
+portletURL.setParameter("eventName", eventName);
 
 List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
 

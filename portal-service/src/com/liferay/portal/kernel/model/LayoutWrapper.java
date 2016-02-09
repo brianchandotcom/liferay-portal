@@ -1372,6 +1372,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public boolean isCustomizable() {
+		return _layout.isCustomizable();
+	}
+
+	@Override
 	public boolean isEscapedModel() {
 		return _layout.isEscapedModel();
 	}

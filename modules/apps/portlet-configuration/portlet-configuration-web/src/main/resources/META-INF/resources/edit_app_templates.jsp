@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -32,6 +34,23 @@ portletURL.setParameter("portletResource", portletResource);
 SearchContainer<ArchivedSettings> archivedSettingsSearch = new SearchContainer<ArchivedSettings>(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-archived-setups");
 
 List<ArchivedSettings> archivedSettingsList = SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(scopeGroupId, selPortlet.getRootPortletId());
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator orderByComparator = null;
+
+if (orderByCol.equals("modified-date")) {
+	orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
+}
+else {
+	orderByComparator = new ArchivedSettingsModifiedDateComparator(orderByAsc);
+}
+
+archivedSettingsList = ListUtil.sort(archivedSettingsList, orderByComparator);
 
 int archivedSettingsCount = archivedSettingsList.size();
 
@@ -56,6 +75,13 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name", "modified-date"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>

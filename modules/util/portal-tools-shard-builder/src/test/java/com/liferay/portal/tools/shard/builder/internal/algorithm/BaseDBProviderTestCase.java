@@ -109,7 +109,7 @@ public abstract class BaseDBProviderTestCase {
 	}
 
 	@Test
-	public void testSerializeTableFieldStringShouldEscapeQuotes()
+	public void testSerializeTableFieldStringShouldWithQuotes()
 		throws Exception {
 
 		String serializeTableField = dbProvider.serializeTableField(

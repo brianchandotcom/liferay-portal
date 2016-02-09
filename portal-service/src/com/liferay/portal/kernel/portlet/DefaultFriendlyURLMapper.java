@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -158,12 +159,12 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String namespace = null;
 
-		String portletId = getPortletId(routeParameters);
+		String portletInstanceKey = getPortletId(routeParameters);
 
-		if (Validator.isNotNull(portletId)) {
-			namespace = PortalUtil.getPortletNamespace(portletId);
+		if (Validator.isNotNull(portletInstanceKey)) {
+			namespace = PortalUtil.getPortletNamespace(portletInstanceKey);
 
-			addParameter(namespace, parameterMap, "p_p_id", portletId);
+			addParameter(namespace, parameterMap, "p_p_id", portletInstanceKey);
 		}
 		else if (isAllPublicRenderParameters(routeParameters)) {
 
@@ -268,16 +269,20 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		// Populate virtual parameters for instanceable portlets
 
-		if (isPortletInstanceable()) {
-			String portletId = liferayPortletURL.getPortletId();
+		String portletInstanceKey = liferayPortletURL.getPortletId();
 
-			routeParameters.put("p_p_id", portletId);
+		if (Validator.isNotNull(portletInstanceKey)) {
+			routeParameters.put("p_p_id", portletInstanceKey);
 
-			if (Validator.isNotNull(portletId) &&
-				PortletConstants.hasInstanceId(portletId)) {
+			PortletInstance portletInstance =
+				PortletInstance.fromPortletInstanceKey(portletInstanceKey);
 
+			routeParameters.put(
+				"fullInstanceId", portletInstance.getFullInstanceId());
+
+			if (portletInstance.hasInstanceId()) {
 				routeParameters.put(
-					"instanceId", PortletConstants.getInstanceId(portletId));
+					"instanceId", portletInstance.getInstanceId());
 			}
 		}
 
@@ -297,14 +302,24 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 *         <code>null</code> if it cannot be determined
 	 */
 	protected String getPortletId(Map<String, String> routeParameters) {
-		if (!isPortletInstanceable()) {
+		String fullInstanceId = routeParameters.remove("fullInstanceId");
+
+		if (!isPortletInstanceable() && Validator.isNull(fullInstanceId)) {
 			return getPortletId();
 		}
 
-		String portletId = routeParameters.remove("p_p_id");
+		String portletInstanceKey = routeParameters.remove("p_p_id");
 
-		if (Validator.isNotNull(portletId)) {
-			return portletId;
+		if (Validator.isNotNull(portletInstanceKey)) {
+			return portletInstanceKey;
+		}
+
+		if (Validator.isNotNull(fullInstanceId)) {
+			PortletInstance portletInstance =
+				PortletInstance.fromPortletNameAndFullInstanceId(
+					getPortletId(), fullInstanceId);
+
+			return portletInstance.getPortletInstanceKey();
 		}
 
 		String instanceId = routeParameters.remove("instanceId");

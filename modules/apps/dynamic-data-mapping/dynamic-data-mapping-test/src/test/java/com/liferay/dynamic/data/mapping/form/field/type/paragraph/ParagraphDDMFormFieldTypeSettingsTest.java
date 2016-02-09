@@ -94,7 +94,6 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		Assert.assertTrue(properties.containsKey("displayStyle"));
 		Assert.assertEquals("multiline", properties.get("displayStyle"));
-
 		Assert.assertTrue(properties.containsKey("placeholder"));
 
 		Assert.assertTrue(textDDMFormField.isRequired());

@@ -258,6 +258,7 @@ if (selUser != null) {
 		htmlBottom="<%= htmlBottom %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS %>"
+		markupView="lexicon"
 	/>
 </aui:form>
 

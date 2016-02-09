@@ -88,12 +88,14 @@ public class IFrameUtil {
 
 		String roleName = PropsValues.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE;
 
-		if (Validator.isNull(roleName)) {
+		if (layout.isPrivateLayout() && layout.getGroup().isUser() &&
+			(themeDisplay.getRealUserId() == layout.getGroup().getClassPK())) {
+
 			return true;
 		}
 
-		if (layout.isPrivateLayout() && layout.getGroup().isUser()) {
-			return true;
+		if (Validator.isNull(roleName)) {
+			return false;
 		}
 
 		try {

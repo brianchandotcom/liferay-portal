@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/search"
 	}
 )

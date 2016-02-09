@@ -142,11 +142,6 @@ public class PortletRequestDispatcherImplTest {
 
 		@Override
 		public String getPortletName() {
-			return StringPool.BLANK;
-		}
-
-		@Override
-		public String getPortletName(){
 			return RandomTestUtil.randomString();
 		}
 

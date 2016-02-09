@@ -37,6 +37,21 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public boolean isShowMyPosts() {
+		return parentDisplayContext.isShowMyPosts();
+	}
+
+	@Override
+	public boolean isShowRecentPosts() {
+		return parentDisplayContext.isShowRecentPosts();
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return parentDisplayContext.isShowSearch();
+	}
+
+	@Override
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 

@@ -22,6 +22,12 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface MBListDisplayContext extends MBDisplayContext {
 
+	public boolean isShowMyPosts();
+
+	public boolean isShowRecentPosts();
+
+	public boolean isShowSearch();
+
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException;
 

@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.display.context;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 
 import javax.servlet.http.HttpServletRequest;

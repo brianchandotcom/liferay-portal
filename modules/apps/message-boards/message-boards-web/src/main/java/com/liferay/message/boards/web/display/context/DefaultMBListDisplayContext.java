@@ -65,6 +65,48 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	}
 
 	@Override
+	public boolean isShowMyPosts() {
+		String mvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName");
+
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isShowRecentPosts() {
+		String mvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName");
+
+		if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			return true;
+		}
+
+		String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation");
+
+		if (entriesNavigation.equals("recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
@@ -76,7 +118,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 		String keywords = ParamUtil.getString(_request, "keywords");
 
-		if (Validator.isNotNull(keywords)) {
+		if (isShowSearch()) {
 			long searchCategoryId = ParamUtil.getLong(
 				_request, "searchCategoryId");
 
@@ -111,28 +153,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
 			searchContainer.setSearch(true);
 		}
-		else if (entriesNavigation.equals("all")) {
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			if (permissionChecker.isContentReviewer(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
-
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			searchContainer.setTotal(
-				MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
-					themeDisplay.getScopeGroupId(), _categoryId, status));
-			searchContainer.setResults(
-				MBCategoryServiceUtil.getCategoriesAndThreads(
-					themeDisplay.getScopeGroupId(), _categoryId, status,
-					searchContainer.getStart(), searchContainer.getEnd()));
-		}
-		else if (entriesNavigation.equals("recent")) {
+		else if (isShowRecentPosts()) {
 			long groupThreadsUserId = ParamUtil.getLong(
 				_request, "groupThreadsUserId");
 
@@ -155,6 +176,46 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				MBThreadServiceUtil.getGroupThreads(
 					themeDisplay.getScopeGroupId(), groupThreadsUserId,
 					calendar.getTime(), WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd()));
+		}
+		else if (isShowMyPosts()) {
+			long groupThreadsUserId = ParamUtil.getLong(
+				_request, "groupThreadsUserId");
+
+			if (themeDisplay.isSignedIn()) {
+				groupThreadsUserId = themeDisplay.getUserId();
+			}
+
+			int status = WorkflowConstants.STATUS_ANY;
+
+			searchContainer.setTotal(
+				MBThreadServiceUtil.getGroupThreadsCount(
+					themeDisplay.getScopeGroupId(), groupThreadsUserId,
+					status));
+			searchContainer.setResults(
+				MBThreadServiceUtil.getGroupThreads(
+					themeDisplay.getScopeGroupId(), groupThreadsUserId, status,
+					searchContainer.getStart(), searchContainer.getEnd()));
+		}
+		else {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (permissionChecker.isContentReviewer(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
+			searchContainer.setTotal(
+				MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(
+					themeDisplay.getScopeGroupId(), _categoryId, status));
+			searchContainer.setResults(
+				MBCategoryServiceUtil.getCategoriesAndThreads(
+					themeDisplay.getScopeGroupId(), _categoryId, status,
 					searchContainer.getStart(), searchContainer.getEnd()));
 		}
 	}

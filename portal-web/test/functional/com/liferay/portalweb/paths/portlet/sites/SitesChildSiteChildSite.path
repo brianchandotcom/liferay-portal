@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_MEMBERS_USERS</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='user-count']</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]//div[@class='user-count']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_MEMBERS_ORGS</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='organization-count']</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_childChildSiteName}')]//div[@class='organization-count']</td>
 	<td></td>
 </tr>
 <tr>

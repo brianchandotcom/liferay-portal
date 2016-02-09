@@ -92,10 +92,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="selectRegularRoleLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		method="get"
 		url="javascript:;"
@@ -308,10 +307,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="selectOrganizationRoleLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		method="get"
 		url="javascript:;"
@@ -424,10 +422,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<liferay-ui:icon
 				cssClass="modify-link"
-				iconCssClass="icon-search"
 				id="selectSiteRoleLink"
 				label="<%= true %>"
-				linkCssClass="btn btn-default"
+				linkCssClass="btn btn-default btn-lg"
 				message="select"
 				method="get"
 				url="javascript:;"

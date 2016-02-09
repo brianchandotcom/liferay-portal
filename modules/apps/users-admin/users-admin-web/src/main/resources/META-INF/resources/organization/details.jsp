@@ -220,10 +220,9 @@ if (parentOrganization != null) {
 
 <liferay-ui:icon
 	cssClass="modify-link"
-	iconCssClass="icon-search"
 	id="selectOrganizationLink"
 	label="<%= true %>"
-	linkCssClass="btn btn-default"
+	linkCssClass="btn btn-default btn-lg"
 	message="select"
 	method="get"
 	url="javascript:;"

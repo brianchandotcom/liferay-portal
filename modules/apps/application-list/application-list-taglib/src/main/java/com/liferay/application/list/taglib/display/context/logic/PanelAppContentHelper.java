@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.DynamicServletRequestUtil;
 import com.liferay.portlet.PortletRequestImpl;
 
 import java.io.Writer;
@@ -74,15 +76,8 @@ public class PanelAppContentHelper {
 		if (Validator.isNotNull(velocityTemplateId) &&
 			Validator.isNotNull(content)) {
 
-			HttpServletRequest request = _request;
-
-			PortletRequestImpl portletRequestImpl =
-				(PortletRequestImpl)_request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			if (portletRequestImpl != null) {
-				request = portletRequestImpl.getOriginalHttpServletRequest();
-			}
+			HttpServletRequest request = getOriginalHttpServletRequest(
+				_request);
 
 			StringBundler sb = RuntimePageUtil.getProcessedTemplate(
 				request, _response, getPortletId(),
@@ -102,6 +97,26 @@ public class PanelAppContentHelper {
 		}
 
 		return _companyId;
+	}
+
+	protected HttpServletRequest getOriginalHttpServletRequest(
+		HttpServletRequest request) {
+
+		PortletRequestImpl portletRequestImpl =
+			(PortletRequestImpl)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequestImpl != null) {
+			return portletRequestImpl.getOriginalHttpServletRequest();
+		}
+
+		HttpServletRequest originalServletRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		Portlet portlet = getPortlet();
+
+		return DynamicServletRequestUtil.createDynamicServletRequest(
+			originalServletRequest, portlet, request.getParameterMap(), false);
 	}
 
 	protected Portlet getPortlet() {

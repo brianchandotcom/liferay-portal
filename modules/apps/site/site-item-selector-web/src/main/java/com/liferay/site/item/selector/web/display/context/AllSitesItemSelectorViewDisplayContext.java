@@ -80,7 +80,7 @@ public class AllSitesItemSelectorViewDisplayContext
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to add Breadcrumb entries for group " +
+				"Unable to add breadcrumb entries for group " +
 					group.getGroupId());
 		}
 	}

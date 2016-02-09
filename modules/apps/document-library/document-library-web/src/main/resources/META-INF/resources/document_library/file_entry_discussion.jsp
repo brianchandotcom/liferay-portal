@@ -20,6 +20,8 @@
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 %>
 
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/file_entry_discussion.jsp#pre" />
+
 <liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="comments">
 	<liferay-ui:discussion
 		className="<%= DLFileEntryConstants.getClassName() %>"
@@ -30,3 +32,5 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 		userId="<%= fileEntry.getUserId() %>"
 	/>
 </liferay-ui:panel>
+
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/file_entry_discussion.jsp#post" />

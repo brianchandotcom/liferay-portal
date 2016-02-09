@@ -51,8 +51,10 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache exclude(@SuppressWarnings("rawtypes") Closure closure) {
-		_patternFilterable.exclude(closure);
+	public TaskCache exclude(
+		@SuppressWarnings("rawtypes") Closure excludeSpec) {
+
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
@@ -65,8 +67,8 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache exclude(Spec<FileTreeElement> spec) {
-		_patternFilterable.exclude(spec);
+	public TaskCache exclude(Spec<FileTreeElement> excludeSpec) {
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
@@ -140,8 +142,10 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache include(@SuppressWarnings("rawtypes") Closure closure) {
-		_patternFilterable.include(closure);
+	public TaskCache include(
+		@SuppressWarnings("rawtypes") Closure includeSpec) {
+
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
@@ -154,8 +158,8 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache include(Spec<FileTreeElement> spec) {
-		_patternFilterable.include(spec);
+	public TaskCache include(Spec<FileTreeElement> includeSpec) {
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}

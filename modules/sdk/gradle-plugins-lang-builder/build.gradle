@@ -4,3 +4,7 @@ dependencies {
 
 	provided project(":util:lang-builder")
 }
+
+updateFileVersions {
+	match(/"com\.liferay\.gradle\.plugins\.lang\.builder", version: "(.+)"/, "../gradle-plugins/build.gradle")
+}

@@ -4,3 +4,7 @@ dependencies {
 
 	provided project(":util:javadoc-formatter")
 }
+
+updateFileVersions {
+	match(/"com\.liferay\.gradle\.plugins\.javadoc\.formatter", version: "(.+)"/, "../gradle-plugins/build.gradle")
+}

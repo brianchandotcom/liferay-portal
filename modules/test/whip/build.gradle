@@ -5,3 +5,7 @@ dependencies {
 liferay {
 	deployDir = "../../../tools/sdk/tmp/portal-tools/whip"
 }
+
+updateFileVersions {
+	match(/com\.liferay\.whip=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

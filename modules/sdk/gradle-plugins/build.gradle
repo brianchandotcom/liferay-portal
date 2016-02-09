@@ -26,3 +26,7 @@ dependencies {
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.8"
 }
+
+updateFileVersions {
+	match(/"com\.liferay\.gradle\.plugins", version: "(.+)"/, "../../build-buildscript.gradle", "../gradle-plugins-workspace/build.gradle")
+}

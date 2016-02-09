@@ -24,3 +24,8 @@ dependencies {
 formatSource {
 	mustRunAfter formatXML
 }
+
+updateFileVersions {
+	match(/\t\t\t\t<version>(.+)<\/version>/, "samples/pom.xml")
+	match(/com\.liferay\.xml\.formatter=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

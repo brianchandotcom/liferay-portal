@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.exportimport;
+package com.liferay.portal.security.exportimport;
 
 import com.liferay.portal.kernel.model.User;
 

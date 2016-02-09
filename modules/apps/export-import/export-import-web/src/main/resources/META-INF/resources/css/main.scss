@@ -1,3 +1,10 @@
+@import "mixins";
+
+@mixin default-label {
+	color: #869CAD;
+	font-size: 14px;
+}
+
 .export-dialog-tree {
 	.content-options {
 		margin-bottom: 1em;
@@ -197,13 +204,12 @@
 }
 
 .permissions-description {
-	color: #869CAD;
-	font-size: 14px;
+	@include default-label;
 }
 
 .permissions-label {
-	color: #869CAD;
-	font-size: 14px;
+	@include default-label;
+
 	font-weight: bold;
 }
 

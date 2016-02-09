@@ -25,14 +25,11 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
-String orderByCol = ddlDisplayContext.getOrderByCol();
-String orderByType = ddlDisplayContext.getOrderByType();
+OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(ddlDisplayContext.getOrderByCol(), ddlDisplayContext.getOrderByType());
 
-OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
-
-recordSetSearch.setOrderByCol(orderByCol);
+recordSetSearch.setOrderByCol(ddlDisplayContext.getOrderByCol());
 recordSetSearch.setOrderByComparator(orderByComparator);
-recordSetSearch.setOrderByType(orderByType);
+recordSetSearch.setOrderByType(ddlDisplayContext.getOrderByType());
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />

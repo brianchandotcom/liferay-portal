@@ -120,7 +120,7 @@ public interface VelocityTaglib {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
 	 */
 	@Deprecated
 	public void flags(
@@ -141,7 +141,7 @@ public interface VelocityTaglib {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
 	 */
 	@Deprecated
 	public FlagsTag getFlagsTag() throws Exception;

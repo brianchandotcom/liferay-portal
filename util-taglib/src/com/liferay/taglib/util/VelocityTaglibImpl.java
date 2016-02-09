@@ -325,7 +325,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
 	 */
 	@Deprecated
 	@Override
@@ -399,7 +399,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 *             com.liferay.flags.taglib.servlet.taglib.FlagsTag}
 	 */
 	@Deprecated
 	@Override

@@ -98,7 +98,7 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 	}
 
 	@Override
-	protected String getExportPortletPreferencesUuid(
+	protected String getExportPortletPreferencesValue(
 			PortletDataContext portletDataContext, Portlet portlet,
 			String className, long primaryKeyLong)
 		throws Exception {
@@ -124,13 +124,14 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 	}
 
 	@Override
-	protected Long getImportPortletPreferencesNewPrimaryKey(
+	protected Long getImportPortletPreferencesNewValue(
 			PortletDataContext portletDataContext, Class<?> clazz,
-			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
+			long companyGroupId, Map<Long, Long> primaryKeys,
+			String portletPreferencesOldValue)
 		throws Exception {
 
-		if (Validator.isNumber(uuid)) {
-			long oldPrimaryKey = GetterUtil.getLong(uuid);
+		if (Validator.isNumber(portletPreferencesOldValue)) {
+			long oldPrimaryKey = GetterUtil.getLong(portletPreferencesOldValue);
 
 			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
 		}
@@ -139,7 +140,8 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 
 		if (className.equals(Organization.class.getName())) {
 			Organization organization = OrganizationUtil.fetchByUuid_C_First(
-				uuid, portletDataContext.getCompanyId(), null);
+				portletPreferencesOldValue, portletDataContext.getCompanyId(),
+				null);
 
 			if (organization != null) {
 				return organization.getOrganizationId();

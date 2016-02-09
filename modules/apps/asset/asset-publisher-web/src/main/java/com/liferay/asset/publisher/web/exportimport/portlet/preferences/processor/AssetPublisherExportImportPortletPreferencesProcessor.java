@@ -296,12 +296,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	}
 
 	@Override
-	protected String getExportPortletPreferencesUuid(
+	protected String getExportPortletPreferencesValue(
 			PortletDataContext portletDataContext, Portlet portlet,
 			String className, long primaryKeyLong)
 		throws Exception {
 
 		String uuid = null;
+		long groupId = 0L;
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 
@@ -311,6 +312,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 			if (assetCategory != null) {
 				uuid = assetCategory.getUuid();
+				groupId = assetCategory.getGroupId();
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, assetCategory,
@@ -324,6 +326,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 			if (assetVocabulary != null) {
 				uuid = assetVocabulary.getUuid();
+				groupId = assetVocabulary.getGroupId();
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, assetVocabulary,
@@ -336,6 +339,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 			if (ddmStructure != null) {
 				uuid = ddmStructure.getUuid();
+				groupId = ddmStructure.getGroupId();
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, ddmStructure,
@@ -348,6 +352,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 			if (dlFileEntryType != null) {
 				uuid = dlFileEntryType.getUuid();
+				groupId = dlFileEntryType.getGroupId();
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, dlFileEntryType,
@@ -367,31 +372,46 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 		}
 
-		return uuid;
+		if (Validator.isNull(uuid)) {
+			return null;
+		}
+
+		return StringUtil.merge(new Object[] {uuid, groupId}, StringPool.POUND);
 	}
 
 	@Override
-	protected Long getImportPortletPreferencesNewPrimaryKey(
+	protected Long getImportPortletPreferencesNewValue(
 			PortletDataContext portletDataContext, Class<?> clazz,
-			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
+			long companyGroupId, Map<Long, Long> primaryKeys,
+			String portletPreferencesOldValue)
 		throws Exception {
 
-		if (Validator.isNumber(uuid)) {
-			long oldPrimaryKey = GetterUtil.getLong(uuid);
+		if (Validator.isNumber(portletPreferencesOldValue)) {
+			long oldPrimaryKey = GetterUtil.getLong(portletPreferencesOldValue);
 
 			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
 		}
 
 		String className = clazz.getName();
 
+		String[] oldValues = StringUtil.split(
+			portletPreferencesOldValue, StringPool.POUND);
+
+		String uuid = oldValues[0];
+		long groupId = portletDataContext.getScopeGroupId();
+
+		if (oldValues.length > 1) {
+			Map<Long, Long> groupIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class);
+
+			groupId = MapUtil.getLong(
+				groupIds, GetterUtil.getLong(oldValues[1]));
+		}
+
 		if (className.equals(AssetCategory.class.getName())) {
 			AssetCategory assetCategory = AssetCategoryUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (assetCategory == null) {
-				assetCategory = AssetCategoryUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
+				uuid, groupId);
 
 			if (assetCategory != null) {
 				return assetCategory.getCategoryId();
@@ -399,12 +419,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(AssetVocabulary.class.getName())) {
 			AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (assetVocabulary == null) {
-				assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
+				uuid, groupId);
 
 			if (assetVocabulary != null) {
 				return assetVocabulary.getVocabularyId();
@@ -412,12 +427,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(DDMStructure.class.getName())) {
 			DDMStructure ddmStructure = DDMStructureUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (ddmStructure == null) {
-				ddmStructure = DDMStructureUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
+				uuid, groupId);
 
 			if (ddmStructure != null) {
 				return ddmStructure.getStructureId();
@@ -425,12 +435,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		else if (className.equals(DLFileEntryType.class.getName())) {
 			DLFileEntryType dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (dlFileEntryType == null) {
-				dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
+				uuid, groupId);
 
 			if (dlFileEntryType == null) {
 				Element rootElement =

@@ -22,6 +22,7 @@ DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormV
 DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
 
 PortletURL searchURL = renderResponse.createRenderURL();
+
 searchURL.setParameter("mvcPath", "/admin/view_records.jsp");
 searchURL.setParameter("redirect", ParamUtil.getString(request, "redirect"));
 searchURL.setParameter("recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));

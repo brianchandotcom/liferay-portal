@@ -67,8 +67,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%title",
-		properties = {"placeholder=%enter-title", "placeholder=%enter-a-title"},
+		label = "%title", properties = {"placeholder=%enter-a-title"},
 		required = true, type = "key-value"
 	)
 	@Override

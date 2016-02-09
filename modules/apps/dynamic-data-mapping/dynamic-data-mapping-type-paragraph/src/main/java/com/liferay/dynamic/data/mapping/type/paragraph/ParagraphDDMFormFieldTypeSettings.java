@@ -67,8 +67,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%title",
-		properties = {"placeholder=%enter-title", "tooltip=%enter-title"},
+		label = "%title", properties = {"placeholder=%enter-a-title"},
 		required = true, type = "key-value"
 	)
 	@Override
@@ -92,7 +91,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%body-text",
-		properties = {"displayStyle=multiline", "tooltip=%enter-body-text"},
+		properties = {"displayStyle=multiline", "placeholder=%enter-body-text"},
 		required = true, type = "text"
 	)
 	public String text();

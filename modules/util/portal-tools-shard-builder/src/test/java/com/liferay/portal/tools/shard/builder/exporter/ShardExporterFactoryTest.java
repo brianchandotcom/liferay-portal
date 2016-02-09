@@ -38,12 +38,12 @@ public class ShardExporterFactoryTest {
 	}
 
 	@Test
-	public void testGetShardExporterReturnsMysqlProvider() throws Exception {
+	public void testGetShardExporterReturnsMySQLProvider() throws Exception {
 		testGetShardExporter("mysql", MySQLProvider.class);
 	}
 
 	@Test
-	public void testGetShardExporterReturnsPostgreSqlProvider()
+	public void testGetShardExporterReturnsPostgreSQLProvider()
 		throws Exception {
 
 		testGetShardExporter("postgresql", PostgreSQLProvider.class);

@@ -3083,7 +3083,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
 		<execute macro="Staging#viewPublishContentCountViaPortletStagingCP">
 			<var name="contentCount" value="1" />

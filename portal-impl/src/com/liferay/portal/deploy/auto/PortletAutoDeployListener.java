@@ -54,8 +54,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (autoDeployer == null) {
-			throw new AutoDeployException(
-				"No Portlet auto deployers have been found.");
+			throw new AutoDeployException("Unable to find an auto deployer");
 		}
 
 		if (_log.isDebugEnabled()) {

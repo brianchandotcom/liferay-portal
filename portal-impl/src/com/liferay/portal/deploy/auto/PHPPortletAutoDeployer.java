@@ -16,7 +16,6 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 
@@ -78,25 +77,6 @@ public class PHPPortletAutoDeployer extends PortletAutoDeployer {
 		copyDependencyXml(
 			"liferay-portlet.xml", srcFile + "/WEB-INF", filterMap);
 		copyDependencyXml("portlet.xml", srcFile + "/WEB-INF", filterMap);
-	}
-
-	@Override
-	public String getExtraContent(
-			double webXmlVersion, File srcFile, String displayName)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(2);
-
-		String extraFiltersContent = super.getExtraFiltersContent(
-			webXmlVersion, srcFile);
-
-		sb.append(extraFiltersContent);
-
-		// Ignore filters
-
-		sb.append(getIgnoreFiltersContent(srcFile));
-
-		return sb.toString();
 	}
 
 }

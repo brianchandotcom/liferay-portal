@@ -32,6 +32,7 @@ if (Validator.isNull(id)) {
 }
 
 String dataTarget = (String)request.getAttribute("aui:nav-bar:dataTarget");
+IntegerWrapper navItemCount = (IntegerWrapper)request.getAttribute("aui:nav-bar:navItemCount");
 String responsiveButtons = (String)request.getAttribute("aui:nav-bar:responsiveButtons");
 String selectedItemName = (String)request.getAttribute("aui:nav-bar:selectedItemName");
 %>

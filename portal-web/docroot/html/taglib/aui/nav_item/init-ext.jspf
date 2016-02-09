@@ -40,4 +40,10 @@ if (dropdown) {
 if (Validator.isNull(state)) {
 	state = GetterUtil.getString(SessionClicks.get(request, id, null));
 }
+
+IntegerWrapper navItemCount = (IntegerWrapper)request.getAttribute("aui:nav-bar:navItemCount");
+
+if (navItemCount != null) {
+	navItemCount.increment();
+}
 %>

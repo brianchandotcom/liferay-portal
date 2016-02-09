@@ -21,6 +21,7 @@ import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersio
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 import java.util.ArrayList;
@@ -68,6 +69,19 @@ public class DefaultIGViewFileVersionDisplayContext
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
 		}
+	}
+
+	@Override
+	public Menu getMenu() throws PortalException {
+		Menu menu = new Menu();
+
+		menu.setDirection("left-side");
+		menu.setMarkupView("lexicon");
+		menu.setMenuItems(getMenuItems());
+		menu.setScroll(false);
+		menu.setShowWhenSingleIcon(true);
+
+		return menu;
 	}
 
 	@Override

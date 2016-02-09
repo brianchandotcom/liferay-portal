@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>IMAGE_TITLE</td>
-	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td>//div[contains(@class,'image')]//div[contains(@class,'card-dm-text-large') and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +46,7 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_THUMBNAIL</td>
-	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_TITLE</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td>//div[contains(@title,'${key_mgDocumentTitle}')]//span/img</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +72,12 @@
 </tr>
 <tr>
 	<td>FOLDER_NAME</td>
-	<td>//span[@class='image-title' and contains(.,'${key_mgFolderName}')]</td>
+	<td>//span[@title='${key_mgFolderName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_GENERIC</td>
+	<td>//li[@data-qa-id='row']//div[contains(@class,'card-row')]</td>
 	<td></td>
 </tr>
 <tr>

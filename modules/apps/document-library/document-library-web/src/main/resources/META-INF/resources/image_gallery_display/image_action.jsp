@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/document_library/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -41,36 +41,16 @@ if (row != null) {
 	else if (result instanceof FileShortcut) {
 		fileShortcut = (FileShortcut)result;
 	}
-	else if (result instanceof TrashEntry) {
-		TrashEntry trashEntry = (TrashEntry)result;
-
-		String className = trashEntry.getClassName();
-
-		if (className.equals(DLFileEntryConstants.getClassName())) {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(trashEntry.getClassPK());
-		}
-		else {
-			fileShortcut = DLAppLocalServiceUtil.getFileShortcut(trashEntry.getClassPK());
-		}
-	}
-}
-else if (request.getAttribute("info_panel.jsp-fileEntry") != null) {
-	fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
-}
-else if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
-	fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
 }
 
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
+IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
 
 if (fileShortcut == null) {
-	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
+	igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 }
 else {
-	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
+	igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
 }
-
-DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
-<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
+<liferay-ui:menu menu="<%= igViewFileVersionDisplayContext.getMenu() %>" />

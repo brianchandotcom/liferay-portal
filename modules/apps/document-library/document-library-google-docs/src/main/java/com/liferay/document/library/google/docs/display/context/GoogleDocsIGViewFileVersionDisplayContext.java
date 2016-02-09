@@ -19,6 +19,7 @@ import com.liferay.image.gallery.display.kernel.display.context.BaseIGViewFileVe
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 import java.util.List;
@@ -46,6 +47,15 @@ public class GoogleDocsIGViewFileVersionDisplayContext
 
 		_googleDocsUIItemsProcessor = new GoogleDocsUIItemsProcessor(
 			request, googleDocsMetadataHelper);
+	}
+
+	@Override
+	public Menu getMenu() throws PortalException {
+		Menu menu = super.getMenu();
+
+		_googleDocsUIItemsProcessor.processMenuItems(menu.getMenuItems());
+
+		return menu;
 	}
 
 	@Override

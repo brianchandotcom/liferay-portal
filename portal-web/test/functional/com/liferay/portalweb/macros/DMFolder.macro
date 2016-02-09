@@ -89,7 +89,6 @@
 
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute function="AssertElementPresent" locator1="MediaGallery#FOLDER_THUMBNAIL" value1="${mgFolderName}" />
 		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderName}" />
 	</command>
 
@@ -352,9 +351,11 @@
 	</command>
 
 	<command name="gotoPGViaMG">
+		<execute function="MakeVisible" locator1="MediaGallery#FOLDER_GENERIC" />
+
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute function="AssertClick" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderName}" />
+		<execute function="Click" locator1="MediaGallery#FOLDER_NAME" />
 
 		<execute function="AssertTextEquals" locator1="MediaGallery#BREADCRUMB" value1="${mgFolderName}" />
 	</command>
@@ -565,9 +566,12 @@
 	</command>
 
 	<command name="viewPGViaMG">
+		<execute function="MakeVisible" locator1="MediaGallery#FOLDER_GENERIC" />
+
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute function="Click" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderName}" />
+		<execute function="Click" locator1="MediaGallery#FOLDER_NAME" />
+
 		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_HEADER_TITLE" value1="${mgFolderName}" />
 	</command>
 </definition>

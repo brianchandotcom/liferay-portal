@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//span[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_COMMUNITY_SITE</td>
 	<td>//button[contains(.,'Add Community Site')]</td>
 	<td></td>

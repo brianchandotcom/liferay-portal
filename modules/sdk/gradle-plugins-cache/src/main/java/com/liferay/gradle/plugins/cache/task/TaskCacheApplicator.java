@@ -66,12 +66,6 @@ public class TaskCacheApplicator {
 			_logger.info(task + " is out-of-date");
 		}
 
-		if (taskCache.isFailIfOutOfDate()) {
-			throw new GradleException(
-				"Unable to build " + taskCache.getProject() + ": " + task +
-					" is out-of-date and failIsOutOfDate is true");
-		}
-
 		Copy copy = createSaveCacheTask(taskCache);
 
 		task.finalizedBy(copy);

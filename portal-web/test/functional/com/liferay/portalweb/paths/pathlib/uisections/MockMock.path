@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>MockMock</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MockMock</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>MOCKMOCK_HEADER_LINK</td>
+	<td>//a[@class='brand' and contains(.,'MockMock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_HOME_LINK</td>
+	<td>//a[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_NO_EMAILS_MESSAGE</td>
+	<td>//div[@class='container' and contains(.,'No emails in queue')]/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_EMAIL_COUNT_MESSAGE</td>
+	<td>//div[@class='container' and contains(.,'You have ${key_emailCount}!')]/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_HAVE_EMAILS_MESSAGE</td>
+	<td>//div[@class='container' and contains(.,'You have')]/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_EMAIL_FROM</td>
+	<td>//tr[contains(.,'${key_userName}') and contains(.,'${key_emailAddress}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_FROM_FIELD</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_TO_FIELD</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_SUBJECT_FIELD</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_SUBJECT_FIELD_LINK</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_MESSAGE_BODY</td>
+	<td>//div[@class='well' and contains(.,'${key_asset}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

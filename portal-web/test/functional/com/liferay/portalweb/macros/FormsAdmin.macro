@@ -77,6 +77,11 @@
 		</while>
 	</command>
 
+	<command name="viewCannotEditFormEntries">
+		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertElementNotPresent" locator1="FormFields#FIELD_ADD" />
+	</command>
+
 	<command name="viewCheckboxEntry">
 		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
 

@@ -94,7 +94,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 						if (_log.isInfoEnabled()) {
 							StringBundler sb = new StringBundler(9);
 
-							sb.append("Uanble to export the layout scoped ");
+							sb.append("Unable to export the layout scoped ");
 							sb.append("element with class name ");
 							sb.append(className);
 							sb.append(" and class primary key ");

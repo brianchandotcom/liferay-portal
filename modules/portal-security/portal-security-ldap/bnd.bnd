@@ -2,17 +2,17 @@ Bundle-Name: Liferay Portal Security LDAP
 Bundle-SymbolicName: com.liferay.portal.security.ldap
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.ldap,\
-	com.liferay.portal.ldap.authenticator.configuration,\
-	com.liferay.portal.ldap.configuration,\
-	com.liferay.portal.ldap.constants,\
-	com.liferay.portal.ldap.dummy,\
-	com.liferay.portal.ldap.exportimport,\
-	com.liferay.portal.ldap.exportimport.configuration,\
-	com.liferay.portal.ldap.exportimport.util,\
-	com.liferay.portal.ldap.exportimport.validator,\
-	com.liferay.portal.ldap.util,\
-	com.liferay.portal.ldap.validator
+	com.liferay.portal.security.ldap,\
+	com.liferay.portal.security.ldap.authenticator.configuration,\
+	com.liferay.portal.security.ldap.configuration,\
+	com.liferay.portal.security.ldap.constants,\
+	com.liferay.portal.security.ldap.dummy,\
+	com.liferay.portal.security.ldap.exportimport,\
+	com.liferay.portal.security.ldap.exportimport.configuration,\
+	com.liferay.portal.security.ldap.exportimport.util,\
+	com.liferay.portal.security.ldap.exportimport.validator,\
+	com.liferay.portal.security.ldap.util,\
+	com.liferay.portal.security.ldap.validator
 Import-Package:\
 	!junit.*,\
 	!org.junit.*,\

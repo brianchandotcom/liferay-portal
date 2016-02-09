@@ -37,6 +37,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
+
 portletURL.setParameter("mvcPath", mvcPath);
 portletURL.setParameter("templateId", String.valueOf(templateId));
 portletURL.setParameter("classNameId", String.valueOf(classNameId));

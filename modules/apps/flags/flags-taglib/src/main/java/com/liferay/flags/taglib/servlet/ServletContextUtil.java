@@ -14,8 +14,6 @@
 
 package com.liferay.flags.taglib.servlet;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;

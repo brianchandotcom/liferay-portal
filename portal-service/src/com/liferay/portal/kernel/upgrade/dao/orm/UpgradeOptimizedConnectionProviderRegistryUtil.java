@@ -24,19 +24,19 @@ public class UpgradeOptimizedConnectionProviderRegistryUtil {
 	public static UpgradeOptimizedConnectionProvider
 		getUpgradeOptimizedConnectionProvider(DBType dbType) {
 
-		return _upgradeOptimizedConnectionProviderRegister.
+		return _upgradeOptimizedConnectionProviderRegistry.
 			getUpgradeOptimizedConnectionProvider(dbType);
 	}
 
-	public static void setRegister(
+	public static void setUpgradeOptimizedConnectionProviderRegistry(
 		UpgradeOptimizedConnectionProviderRegistry
-			upgradeOptimizedConnectionProviderRegister) {
+			upgradeOptimizedConnectionProviderRegistry) {
 
-		_upgradeOptimizedConnectionProviderRegister =
-			upgradeOptimizedConnectionProviderRegister;
+		_upgradeOptimizedConnectionProviderRegistry =
+			upgradeOptimizedConnectionProviderRegistry;
 	}
 
 	private static UpgradeOptimizedConnectionProviderRegistry
-		_upgradeOptimizedConnectionProviderRegister;
+		_upgradeOptimizedConnectionProviderRegistry;
 
 }

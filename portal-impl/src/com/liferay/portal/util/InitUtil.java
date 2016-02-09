@@ -147,7 +147,7 @@ public class InitUtil {
 
 		// Upgrade optimized connection provider registry
 
-		UpgradeOptimizedConnectionProviderRegistryUtil.setRegister(
+		UpgradeOptimizedConnectionProviderRegistryUtil.setUpgradeOptimizedConnectionProviderRegistry(
 			new UpgradeOptimizedConnectionProviderRegistryImpl());
 
 		// ROME

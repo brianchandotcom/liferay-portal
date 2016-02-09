@@ -441,7 +441,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
 			layoutService.updateLayout(
-				groupId, privateLayout, layoutId, layout.getTypeSettings());
+				groupId, privateLayout, layoutId,
+				layoutTypeSettingsProperties.toString());
 		}
 		else {
 			layout.setTypeSettingsProperties(formTypeSettingsProperties);

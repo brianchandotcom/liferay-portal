@@ -71,10 +71,6 @@
 	</command>
 
 	<command name="save">
-		<execute function="SelectFrameTop" />
-
-		<execute function="SelectFrame" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
-
 		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#SAVE_BUTTON" value1="Save" />
 	</command>
 

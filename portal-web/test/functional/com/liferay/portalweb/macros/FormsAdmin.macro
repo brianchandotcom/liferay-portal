@@ -77,6 +77,33 @@
 		</while>
 	</command>
 
+	<command name="viewCheckboxEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX" />
+	</command>
+
+	<command name="viewDateEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewDateLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewEntryNotPresent">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldValue" value="${fieldValue}" />
@@ -115,5 +142,64 @@
 
 	<command name="viewNoFormEntries">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
+	</command>
+
+	<command name="viewParagraphEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewParagraphBody">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
+	<command name="viewRadioEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewRadioLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_radioOption" value="${fieldValue}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#RADIO_OPTION" />
+
+		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldValue" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#RADIO_OPTION" value1="${fieldValue}" />
+	</command>
+
+	<command name="viewSelectEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewSelectLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="FormFields#SELECT_OPTION" />
+	</command>
+
+	<command name="viewTextEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 </definition>

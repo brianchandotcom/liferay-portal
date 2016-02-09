@@ -904,6 +904,31 @@
 			<var name="fieldLabel" value="Select Field" />
 			<var name="fieldValue" value="Select 2" />
 		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
+			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewCheckboxEntry">
+			<var name="fieldLabel" value="Checkbox Field" />
+			<var name="fieldName" value="CheckboxField" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewRadioEntry">
+			<var name="fieldLabel" value="Radio Field" />
+			<var name="fieldName" value="RadioField" />
+			<var name="fieldValue" value="Option 1" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewSelectEntry">
+			<var name="fieldLabel" value="Select Field" />
+			<var name="fieldName" value="SelectField" />
+			<var name="fieldValue" value="Select 2" />
+		</execute>
 	</command>
 
 	<command name="SubmitFormWithoutAFormNameAndViewErrorMessage" priority="3">
@@ -995,6 +1020,13 @@
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Form" />
 			<var name="fieldValue" value="Approved" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewParagraphEntry">
+			<var name="fieldName" value="ParagraphField" />
+			<var name="fieldValue" value="Paragraph field body text." />
 		</execute>
 	</command>
 
@@ -1516,6 +1548,13 @@
 			<var name="fieldLabel" value="Checkbox Field" />
 			<var name="fieldValue" value="Yes" />
 		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewCheckboxEntry">
+			<var name="fieldLabel" value="Checkbox Field" />
+			<var name="fieldName" value="CheckboxField" />
+		</execute>
 	</command>
 
 	<command name="SubmitFormWithTextField" priority="5">
@@ -1590,6 +1629,14 @@
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 	</command>

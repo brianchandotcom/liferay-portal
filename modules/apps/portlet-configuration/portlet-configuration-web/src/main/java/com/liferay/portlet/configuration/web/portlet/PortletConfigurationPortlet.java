@@ -123,7 +123,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortletConfigurationPortlet extends MVCPortlet {
 
-	public void deleteArchivedSetup(
+	public void deleteArchivedSetups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -132,14 +132,25 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String[] names = null;
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		ArchivedSettings archivedSettings =
-			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
-				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
-				name);
+		if (Validator.isNotNull(name)) {
+			names = new String[] {name};
+		}
+		else {
+			names = ParamUtil.getStringValues(actionRequest, "rowIds");
+		}
 
-		archivedSettings.delete();
+		for (String curName : names) {
+			ArchivedSettings archivedSettings =
+				SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+					themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
+					curName);
+
+			archivedSettings.delete();
+		}
 	}
 
 	public void editConfiguration(

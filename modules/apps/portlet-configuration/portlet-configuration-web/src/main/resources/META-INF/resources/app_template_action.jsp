@@ -24,7 +24,7 @@ ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:actionURL name="restoreArchivedSetup" var="restoreArchivedSetupURL">
-		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
+		<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -36,8 +36,8 @@ ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 		url="<%= restoreArchivedSetupURL %>"
 	/>
 
-	<portlet:actionURL name="deleteArchivedSetup" var="deleteArchivedBackupURL">
-		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
+	<portlet:actionURL name="deleteArchivedSetups" var="deleteArchivedSetupsURL">
+		<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -45,6 +45,6 @@ ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		url="<%= deleteArchivedBackupURL %>"
+		url="<%= deleteArchivedSetupsURL %>"
 	/>
 </liferay-ui:icon-menu>

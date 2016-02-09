@@ -7,6 +7,5 @@ Export-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Provide-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/flags";version:Version="1.0.0"
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/flags";version:Version="1.0.0"
 Web-ContextPath: /flags-taglib

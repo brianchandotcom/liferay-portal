@@ -30,11 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final ServletContext getServletContext() {
-		if (Validator.isNotNull(_instance)) {
-			return _instance._getServletContext();
-		}
-
-		return null;
+		return _instance._getServletContext();
 	}
 
 	@Activate
@@ -61,6 +57,6 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

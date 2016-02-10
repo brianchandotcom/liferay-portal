@@ -92,7 +92,7 @@ public class ProductNavigationControlMenuEntryRegistry {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ProductNavigationControlMenuEntry.class,
-			"(control.menu.category.key=*)",
+			"(product.navigation.control.menu.category.key=*)",
 			new ProductNavigationControlMenuEntryServiceReferenceMapper(),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator("service.ranking")));

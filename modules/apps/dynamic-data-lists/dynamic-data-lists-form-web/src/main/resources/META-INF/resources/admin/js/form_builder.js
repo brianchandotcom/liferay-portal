@@ -121,6 +121,15 @@ AUI.add(
 						field.destroy();
 					},
 
+					editField: function(field) {
+						var fieldType = this.findTypeOfField(field);
+
+						this.showFieldSettingsPanel(field, Lang.sub(
+							Liferay.Language.get('edit-x-field'),
+							[fieldType.get('label')]
+						));
+					},
+
 					findTypeOfField: function(field) {
 						var instance = this;
 

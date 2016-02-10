@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.audit;
+package com.liferay.portal.security.audit;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Michael C. Han
  */
-@DoPrivileged
 public class AuditRouterProxyBean extends BaseProxyBean implements AuditRouter {
 
 	@Override

@@ -22,6 +22,8 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -171,8 +173,15 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		if (group.isStagingGroup()) {
 			if (group.isStagedRemotely()) {
-				_liveGroupURL = StagingUtil.buildRemoteURL(
-					group.getTypeSettingsProperties());
+				Layout layout = _themeDisplay.getLayout();
+
+				try {
+					_liveGroupURL = StagingUtil.getRemoteSiteURL(
+						group, layout.isPrivateLayout());
+				}
+				catch (PortalException pe) {
+					_log.error(pe);
+				}
 			}
 			else {
 				Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
@@ -438,6 +447,9 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_groupProvider.setGroup(request, _group);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteAdministrationPanelCategoryDisplayContext.class);
 
 	private Boolean _collapsedPanel;
 	private Group _group;

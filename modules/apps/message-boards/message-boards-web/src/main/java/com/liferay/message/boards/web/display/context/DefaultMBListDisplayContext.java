@@ -143,13 +143,12 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 			searchContext.setKeywords(keywords);
 
+			Hits hits = indexer.search(searchContext);
+
 			searchContainer.setResults(
 				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
 			searchContext.setStart(searchContainer.getStart());
 			searchContainer.setSearch(true);
-
-			Hits hits = indexer.search(searchContext);
-
 			searchContainer.setTotal(hits.getLength());
 		}
 		else if (isShowRecentPosts()) {

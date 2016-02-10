@@ -16,7 +16,7 @@
 
 <c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
 	<div class="btn-toolbar">
-		<a class="btn btn-default" href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-device-family" /></a>
+		<aui:button name="saveInstance" value="select-device-family" />
 
 		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 			<aui:button name="managePriorities" value="manage-rule-priorities" />

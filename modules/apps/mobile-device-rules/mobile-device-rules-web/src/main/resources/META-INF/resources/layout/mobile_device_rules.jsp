@@ -47,17 +47,19 @@ long classPK = selLayout.getPlid();
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(request, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
-
-<aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-device-rules-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
+<aui:input label='<%= LanguageUtil.format(request, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="toggle-switch" value="<%= mdrRuleGroupInstancesCount == 0 %>" />
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
-	<div class="alert alert-info">
+	<p class="text-muted">
 		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-are-inhertited-from-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </div>
 
 <div class="<%= (mdrRuleGroupInstancesCount > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />uniqueRuleGroupInstancesContainer">
+	<p class="text-muted">
+		<liferay-ui:message key="device-family" />
+	</p>
+
 	<liferay-util:include page="/layout/mobile_device_rules_rule_group_instances.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="groupId" value="<%= String.valueOf(selLayout.getGroupId()) %>" />
 		<liferay-util:param name="className" value="<%= className %>" />
@@ -66,6 +68,6 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 </div>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />inheritRuleGroupInstances', '<portlet:namespace />inheritRuleGroupInstancesContainer', '<portlet:namespace />uniqueRuleGroupInstancesContainer');
-	Liferay.Util.toggleRadio('<portlet:namespace />uniqueRuleGroupInstances', '<portlet:namespace />uniqueRuleGroupInstancesContainer', '<portlet:namespace />inheritRuleGroupInstancesContainer');
+	Liferay.Util.toggleBoxes('<portlet:namespace />inheritRuleGroupInstances', '<portlet:namespace />inheritRuleGroupInstancesContainer');
+	Liferay.Util.toggleBoxes('<portlet:namespace />inheritRuleGroupInstances', '<portlet:namespace />uniqueRuleGroupInstancesContainer', true);
 </aui:script>

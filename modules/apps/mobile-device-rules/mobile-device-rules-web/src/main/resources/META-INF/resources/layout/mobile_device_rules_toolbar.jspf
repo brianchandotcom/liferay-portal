@@ -16,7 +16,7 @@
 
 <c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
 	<div class="btn-toolbar">
-		<aui:button name="saveInstance" value="select-device-family" />
+		<aui:button name="saveInstance" value="select" />
 
 		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 			<aui:button name="managePriorities" value="manage-rule-priorities" />

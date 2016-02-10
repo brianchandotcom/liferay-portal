@@ -97,15 +97,13 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
+		request = PortalUtil.getOriginalServletRequest(request);
+
 		HttpSession session = request.getSession();
 
 		DiscoveryInformation discoveryInformation =
 			(DiscoveryInformation)session.getAttribute(
 				OpenIdWebKeys.OPEN_ID_DISCO);
-
-		request = PortalUtil.getOriginalServletRequest(request);
-
-		session = request.getSession();
 
 		ParameterList parameterList = new ParameterList(
 			request.getParameterMap());
@@ -327,6 +325,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			actionRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
+
+		request = PortalUtil.getOriginalServletRequest(request);
+
 		HttpSession session = request.getSession();
 
 		LiferayPortletResponse liferayPortletResponse =

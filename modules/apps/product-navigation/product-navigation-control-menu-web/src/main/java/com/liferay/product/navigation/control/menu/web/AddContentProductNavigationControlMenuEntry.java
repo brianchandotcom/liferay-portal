@@ -16,19 +16,18 @@ package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,30 +38,23 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.SITES,
-		"service.ranking:Integer=200"
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
+		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class PortletBackLinkControlMenuEntry
+public class AddContentProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getIconJspPath() {
-		return "/entries/portlet_back_link.jsp";
+	public String getBodyJspPath() {
+		return "/entries/add_content_body.jsp";
 	}
 
 	@Override
-	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		request.setAttribute(
-			ProductNavigationControlMenuWebKeys.PORTLET_BACK_URL,
-			getPortletBackURL(request));
-
-		return super.includeIcon(request, response);
+	public String getIconJspPath() {
+		return "/entries/add_content_icon.jsp";
 	}
 
 	@Override
@@ -70,15 +62,33 @@ public class PortletBackLinkControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeControlPanel()) {
+		if (themeDisplay.isStateMaximized()) {
 			return false;
 		}
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		Layout layout = themeDisplay.getLayout();
 
-		if (!portletDisplay.isShowBackIcon()) {
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
+			return false;
+		}
+
+		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
+			return false;
+		}
+
+		if (!(hasCustomizePermission(themeDisplay) ||
+			  hasUpdateLayoutPermission(themeDisplay))) {
+
 			return false;
 		}
 
@@ -94,13 +104,51 @@ public class PortletBackLinkControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected String getPortletBackURL(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected boolean hasAddContentOrApplicationPermission(
+		ThemeDisplay themeDisplay) {
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		Layout layout = themeDisplay.getLayout();
 
-		return portletDisplay.getURLBack();
+		if (layout.isLayoutPrototypeLinkActive()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Layout layout = themeDisplay.getLayout();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
+			return false;
+		}
+
+		if (!layoutTypePortlet.isCustomizable() ||
+			!layoutTypePortlet.isCustomizedView()) {
+
+			return false;
+		}
+
+		if (LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.CUSTOMIZE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 }

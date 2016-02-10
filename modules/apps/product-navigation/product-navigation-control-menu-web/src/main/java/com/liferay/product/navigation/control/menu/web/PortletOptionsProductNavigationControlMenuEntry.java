@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.control;
+package com.liferay.product.navigation.control.menu.web;
 
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,22 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
-		"service.ranking:Integer=200"
+		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class SimulationControlMenuEntry
+public class PortletOptionsProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getBodyJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_body.jsp";
-	}
-
-	@Override
 	public String getIconJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_entry_icon.jsp";
+		return "/entries/portlet_options.jsp";
 	}
 
 	@Override
@@ -67,19 +55,7 @@ public class SimulationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (!hasUpdateLayoutPermission(themeDisplay)) {
-			return false;
-		}
-
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			SimulationPanelCategory.SIMULATION,
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
-
-		if (panelApps.isEmpty()) {
+		if (!layout.isTypeControlPanel()) {
 			return false;
 		}
 
@@ -88,26 +64,11 @@ public class SimulationControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.web)",
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	private PanelAppRegistry _panelAppRegistry;
 
 }

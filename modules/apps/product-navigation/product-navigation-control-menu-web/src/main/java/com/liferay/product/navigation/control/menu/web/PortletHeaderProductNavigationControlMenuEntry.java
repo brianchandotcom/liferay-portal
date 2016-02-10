@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.staging.bar.web.control.menu;
+package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,13 +44,33 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class StagingControlMenuEntry
+public class PortletHeaderProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/control_menu/entry.jsp";
+		return "/entries/portlet_header.jsp";
+	}
+
+	@Override
+	public boolean includeIcon(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		request.setAttribute(
+			ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION,
+			portletDisplay.getDescription());
+		request.setAttribute(
+			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
+			portletDisplay.getTitle());
+
+		return super.includeIcon(request, response);
 	}
 
 	@Override
@@ -55,20 +80,23 @@ public class StagingControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
+		if (!layout.isTypeControlPanel()) {
 			return false;
 		}
 
-		if (!themeDisplay.isShowStagingIcon()) {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay == null) {
 			return false;
 		}
 
-		return true;
+		return super.isShow(request);
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

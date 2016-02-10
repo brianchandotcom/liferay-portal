@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.product.navigation.product.menu.web.control.menu;
+package com.liferay.staging.bar.web.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -34,22 +34,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.SITES,
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class ProductMenuControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry {
-
-	@Override
-	public String getBodyJspPath() {
-		return "/portlet/control_menu/product_menu_control_menu_entry_body.jsp";
-	}
+public class StagingProductNavigationControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/portlet/control_menu/product_menu_control_menu_entry_icon.jsp";
+		return "/control_menu/entry.jsp";
 	}
 
 	@Override
@@ -57,23 +53,22 @@ public class ProductMenuControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isImpersonated()) {
-			return true;
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return false;
 		}
 
-		User user = themeDisplay.getUser();
-
-		if (themeDisplay.isSignedIn() && user.isSetupComplete()) {
-			return true;
+		if (!themeDisplay.isShowStagingIcon()) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.product.menu.web)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

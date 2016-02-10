@@ -23,7 +23,7 @@
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
-<%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
+<%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
@@ -48,7 +48,7 @@
 <%
 String namespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.LAYOUT_ADMIN);
 
-InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);
+InformationMessagesProductNavigationControlMenuEntry informationMessagesProductNavigationControlMenuEntry = (InformationMessagesProductNavigationControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);
 
 Map<String, Object> data = new HashMap<>();
 
@@ -68,7 +68,7 @@ data.put("qa-id", "info");
 
 <div class="hide">
 	<div id="<%= namespace %>infoContainer">
-		<c:if test="<%= informationMessagesControlMenuEntry.isModifiedLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isModifiedLayout(themeDisplay) %>">
 			<div class="modified-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
 
@@ -94,7 +94,7 @@ data.put("qa-id", "info");
 			</div>
 		</c:if>
 
-		<c:if test="<%= informationMessagesControlMenuEntry.isLinkedLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isLinkedLayout(themeDisplay) %>">
 			<div class="linked-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
 
@@ -119,7 +119,7 @@ data.put("qa-id", "info");
 			</div>
 		</c:if>
 
-		<c:if test="<%= informationMessagesControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
 			<div class="customizable-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
 
@@ -133,7 +133,7 @@ data.put("qa-id", "info");
 						<c:otherwise>
 							<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
-							<c:if test="<%= informationMessagesControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
+							<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
 								<liferay-ui:icon-help message="customizable-admin-help" />
 							</c:if>
 						</c:otherwise>

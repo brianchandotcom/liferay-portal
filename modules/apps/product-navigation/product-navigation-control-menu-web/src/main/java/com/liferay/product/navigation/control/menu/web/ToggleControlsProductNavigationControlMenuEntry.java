@@ -15,22 +15,29 @@
 package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import javax.servlet.ServletContext;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -38,23 +45,59 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
-		"service.ranking:Integer=100"
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"service.ranking:Integer=200"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class AddContentControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
+public class ToggleControlsProductNavigationControlMenuEntry
+	extends BaseProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getBodyJspPath() {
-		return "/entries/add_content_body.jsp";
+	public Map<String, Object> getData(HttpServletRequest request) {
+		Map<String, Object> data = super.getData(request);
+
+		data.put("qa-id", "showControls");
+
+		return data;
 	}
 
 	@Override
-	public String getIconJspPath() {
-		return "/entries/add_content_icon.jsp";
+	public String getIconCssClass(HttpServletRequest request) {
+		String stateCss = null;
+
+		String toggleControls = GetterUtil.getString(
+			SessionClicks.get(
+				request, "com.liferay.frontend.js.web_toggleControls",
+				"visible"));
+
+		if (toggleControls.equals("visible")) {
+			stateCss = "view";
+		}
+		else {
+			stateCss = "hidden";
+		}
+
+		return stateCss;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "toggle-controls");
+	}
+
+	@Override
+	public String getLinkCssClass(HttpServletRequest request) {
+		return "toggle-controls visible-xs";
+	}
+
+	@Override
+	public String getURL(HttpServletRequest request) {
+		return "javascript:;";
 	}
 
 	@Override
@@ -62,58 +105,26 @@ public class AddContentControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isStateMaximized()) {
-			return false;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
 			return false;
 		}
 
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
+		Group group = layout.getGroup();
 
-		LayoutTypeController layoutTypeController =
-			layoutTypePortlet.getLayoutTypeController();
-
-		if (layoutTypeController.isFullPageDisplayable()) {
+		if (group.hasStagingGroup() && !group.isStagingGroup()) {
 			return false;
 		}
 
-		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
-			return false;
-		}
-
-		if (!(hasCustomizePermission(themeDisplay) ||
-			  hasUpdateLayoutPermission(themeDisplay))) {
+		if (!(hasUpdateLayoutPermission(themeDisplay) ||
+			  hasCustomizePermission(themeDisplay) ||
+			  hasPortletConfigurationPermission(themeDisplay))) {
 
 			return false;
 		}
 
 		return super.isShow(request);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	protected boolean hasAddContentOrApplicationPermission(
-		ThemeDisplay themeDisplay) {
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isLayoutPrototypeLinkActive()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
@@ -141,6 +152,15 @@ public class AddContentControlMenuEntry
 		}
 
 		return false;
+	}
+
+	protected boolean hasPortletConfigurationPermission(
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return PortletPermissionUtil.hasConfigurationPermission(
+			themeDisplay.getPermissionChecker(), themeDisplay.getSiteGroupId(),
+			themeDisplay.getLayout(), ActionKeys.CONFIGURATION);
 	}
 
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

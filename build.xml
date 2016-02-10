@@ -695,8 +695,8 @@
 				<param name="-linksource" />
 			</doclet>
 
-			<group title="Portal Services" packages="com.liferay.portal*:com.liferay.counter*:com.liferay.mail*" />
-			<group title="Portal Kernel" packages="com.liferay.portal.kernel*" />
+			<group title="Portal Services" packages="com.liferay.portal.*:com.liferay.counter.*:com.liferay.mail.*" />
+			<group title="Portal Kernel" packages="com.liferay.portal.kernel.*" />
 			<group title="Portlet Services" packages="com.liferay.*" />
 
 			<link href="http://docs.liferay.com/portlet-api/2.0/javadocs" />

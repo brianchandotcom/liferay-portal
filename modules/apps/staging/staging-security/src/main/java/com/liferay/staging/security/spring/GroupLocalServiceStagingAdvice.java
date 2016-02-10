@@ -26,5 +26,36 @@ public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public GroupLocalServiceStagingAdvice() throws NoSuchMethodException {
 		super(GroupLocalService.class);
+
+		initRelatedServiceBuilderMethods("Organization");
+		initRelatedServiceBuilderMethods("Role");
+		initRelatedServiceBuilderMethods("User");
+		initRelatedServiceBuilderMethods("UserGroup");
 	}
+
+	protected void initRelatedServiceBuilderMethods(String relatedEntityName)
+		throws NoSuchMethodException {
+
+		Method[] relatedEntityMethods = GroupLocalService.class.getMethods();
+
+		for (String template : _SERVICE_BUILDER_GENERATED_TEMPLATES) {
+			String serviceBuilderMethodName = StringUtil.replace(
+				template, "$1", relatedEntityName);
+
+			for (Method method : relatedEntityMethods) {
+				if (method.getName().equals(serviceBuilderMethodName)) {
+					initCustomMethod(
+						serviceBuilderMethodName, 1,
+						method.getParameterTypes());
+				}
+			}
+		}
+	}
+
+	private static final String[] _SERVICE_BUILDER_GENERATED_TEMPLATES =
+		new String[] {
+			"add$1Group", "add$1Groups", "delete$1Group", "delete$1Groups",
+			"has$1Group", "set$1Groups", "unset$1Groups"
+		};
+
 }

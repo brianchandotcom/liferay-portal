@@ -43,13 +43,27 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		_localServiceClass = localServiceClass;
 	}
 
+	public void initCustomMethod(
+			String methodName, Integer index, Class... parameterTypes)
+		throws NoSuchMethodException {
+
+		Method customMethod = _localServiceClass.getMethod(
+			methodName, parameterTypes);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Registering " + customMethod);
+		}
+
+		_customMethods.put(customMethod, index);
+	}
+
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
 			return methodInvocation.proceed();
 		}
 
-		/* noop in this commit */
+		replaceStagingGroupIdsInCustomMethod(methodInvocation);
 
 		return methodInvocation.proceed();
 	}
@@ -164,10 +178,30 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		return _staging.getLiveGroupId(groupId);
 	}
 
+	protected void replaceStagingGroupIdsInCustomMethod(
+		MethodInvocation methodInvocation) {
+
+		Method method = methodInvocation.getMethod();
+
+		Integer argumentIndex = _customMethods.get(method);
+
+		if (argumentIndex == null) {
+			return;
+		}
+
+		Object[] arguments = methodInvocation.getArguments();
+
+		replaceArgument(arguments, argumentIndex);
+	}
+
 	protected void setStaging(Staging staging) {
 		_staging = staging;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiveGroupStagingAdvice.class);
+
+	private final Map<Method, Integer> _customMethods = new HashMap<>();
 	private final Class _localServiceClass;
 	private Staging _staging;
 

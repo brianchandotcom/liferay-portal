@@ -145,7 +145,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
@@ -153,7 +153,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	$('#<portlet:namespace />deleteSelectedDeviceFamilies').on(
 		'click',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
 				submitForm($(document.<portlet:namespace />fm));
 			}
 		}

@@ -71,7 +71,7 @@ rulesSearchContainer.setResults(rules);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x", ruleGroup.getName(locale), false));
+renderResponse.setTitle(LanguageUtil.format(resourceBundle, "classification-rules-for-x", ruleGroup.getName(locale), false));
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -150,5 +150,5 @@ renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
 </liferay-frontend:add-menu>

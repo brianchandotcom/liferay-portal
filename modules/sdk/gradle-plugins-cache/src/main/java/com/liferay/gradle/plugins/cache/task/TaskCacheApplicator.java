@@ -71,7 +71,7 @@ public class TaskCacheApplicator {
 		task.finalizedBy(copy);
 	}
 
-	protected void applyUpToDate(final TaskCache taskCache, Task task) {
+	protected void applyUpToDate(TaskCache taskCache, Task task) {
 		if (_logger.isInfoEnabled()) {
 			_logger.info(task + " is up-to-date");
 		}

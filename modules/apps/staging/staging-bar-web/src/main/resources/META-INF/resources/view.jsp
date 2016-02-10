@@ -161,9 +161,11 @@ if (layout != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<li class="control-menu-nav-item hidden-xs staging-divider">
-				<span> / </span>
-			</li>
+			<c:if test="<%= !group.isStagingGroup() || Validator.isNotNull(liveFriendlyURL) %>">
+				<li class="control-menu-nav-item hidden-xs staging-divider">
+					<span> / </span>
+				</li>
+			</c:if>
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">

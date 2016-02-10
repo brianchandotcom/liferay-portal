@@ -1157,8 +1157,8 @@
 		<execute macro="Page#add">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
-			<var name="pageType" value="Panel" />
 			<var name="portletNameList" value="Blogs,Message Boards" />
+			<var name="sitePageType" value="Panel" />
 		</execute>
 
 		<execute macro="Page#viewPanelPortletListPG">

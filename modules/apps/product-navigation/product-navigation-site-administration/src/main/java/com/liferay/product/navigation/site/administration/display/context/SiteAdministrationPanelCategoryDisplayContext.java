@@ -150,6 +150,16 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			group, privateLayout, _portletRequest);
 	}
 
+	public String getLiveGroupLabel() {
+		Group group = getGroup();
+
+		if (group.isStagedRemotely()) {
+			return "remote-live";
+		}
+
+		return "live";
+	}
+
 	public String getLiveGroupURL() {
 		if (_liveGroupURL != null) {
 			return _liveGroupURL;

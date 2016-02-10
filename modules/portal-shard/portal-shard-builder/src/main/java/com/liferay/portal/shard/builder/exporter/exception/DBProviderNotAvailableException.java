@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.exporter.exception;
+package com.liferay.portal.shard.builder.exporter.exception;
 
 /**
  * @author Miguel Pastor

@@ -12,15 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.exporter;
+package com.liferay.portal.shard.builder.internal.validators;
 
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
+import com.beust.jcommander.ParameterException;
 
 /**
  * @author Manuel de la Peña
  */
-public interface ShardExporter {
+public class CompanyIdsRequiredParameterValidator
+	extends RequiredParameterValidator {
 
-	public void export(ExportContext exportContext);
+	@Override
+	public void validate(String name, String value) throws ParameterException {
+		super.validate(name, value);
+
+		String[] companyIds = value.split(",");
+
+		for (String companyId : companyIds) {
+			try {
+				Long.parseLong(companyId);
+			}
+			catch (NumberFormatException nfe) {
+				throw new ParameterException(
+					"Parameter " + name + " with value " + companyId +
+						" is not a valid number");
+			}
+		}
+	}
 
 }

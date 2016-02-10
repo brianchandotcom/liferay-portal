@@ -12,27 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.validators;
+package com.liferay.portal.shard.builder.exporter;
 
-import com.beust.jcommander.ParameterException;
-
-import java.io.File;
+import com.liferay.portal.shard.builder.exporter.context.ExportContext;
 
 /**
  * @author Manuel de la Peña
  */
-public class FileRequiredParameterValidator extends RequiredParameterValidator {
+public interface ShardExporter {
 
-	@Override
-	public void validate(String name, String value) throws ParameterException {
-		super.validate(name, value);
-
-		File file = new File(value);
-
-		if (!file.exists()) {
-			throw new ParameterException(
-				"Parameter " + name + " does not reference an existing file");
-		}
-	}
+	public void export(ExportContext exportContext);
 
 }

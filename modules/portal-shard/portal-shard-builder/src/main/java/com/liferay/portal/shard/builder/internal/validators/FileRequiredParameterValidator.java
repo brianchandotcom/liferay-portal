@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.validators;
+package com.liferay.portal.shard.builder.internal.validators;
 
 import com.beust.jcommander.ParameterException;
 
@@ -21,8 +21,7 @@ import java.io.File;
 /**
  * @author Manuel de la Peña
  */
-public class WritableFileRequiredParameterValidator
-	extends FileRequiredParameterValidator {
+public class FileRequiredParameterValidator extends RequiredParameterValidator {
 
 	@Override
 	public void validate(String name, String value) throws ParameterException {
@@ -30,9 +29,9 @@ public class WritableFileRequiredParameterValidator
 
 		File file = new File(value);
 
-		if (!file.canRead() || !file.canWrite()) {
+		if (!file.exists()) {
 			throw new ParameterException(
-				"Parameter " + name + " does not reference a writable file");
+				"Parameter " + name + " does not reference an existing file");
 		}
 	}
 

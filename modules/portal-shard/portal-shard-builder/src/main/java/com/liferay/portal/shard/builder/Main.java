@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder;
+package com.liferay.portal.shard.builder;
 
 import com.beust.jcommander.JCommander;
 
-import com.liferay.portal.tools.shard.builder.exporter.ShardExporter;
-import com.liferay.portal.tools.shard.builder.exporter.ShardExporterFactory;
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.shard.builder.internal.util.PropsReader;
+import com.liferay.portal.shard.builder.exporter.ShardExporter;
+import com.liferay.portal.shard.builder.exporter.ShardExporterFactory;
+import com.liferay.portal.shard.builder.exporter.context.ExportContext;
+import com.liferay.portal.shard.builder.internal.util.PropsReader;
 
 import java.util.Properties;
 

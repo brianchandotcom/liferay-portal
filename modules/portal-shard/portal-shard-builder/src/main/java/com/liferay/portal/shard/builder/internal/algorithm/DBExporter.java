@@ -12,32 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.validators;
+package com.liferay.portal.shard.builder.internal.algorithm;
 
-import com.beust.jcommander.ParameterException;
+import java.io.OutputStream;
+
+import java.util.List;
 
 /**
  * @author Manuel de la Peña
  */
-public class CompanyIdsRequiredParameterValidator
-	extends RequiredParameterValidator {
+public interface DBExporter {
 
-	@Override
-	public void validate(String name, String value) throws ParameterException {
-		super.validate(name, value);
+	public List<String> getControlTableNames(String schemaName);
 
-		String[] companyIds = value.split(",");
+	public List<String> getPartitionedTableNames(String schemaName);
 
-		for (String companyId : companyIds) {
-			try {
-				Long.parseLong(companyId);
-			}
-			catch (NumberFormatException nfe) {
-				throw new ParameterException(
-					"Parameter " + name + " with value " + companyId +
-						" is not a valid number");
-			}
-		}
-	}
+	public void write(
+		long companyId, String tableName, OutputStream outputStream);
+
+	public void write(String tableName, OutputStream outputStream);
 
 }

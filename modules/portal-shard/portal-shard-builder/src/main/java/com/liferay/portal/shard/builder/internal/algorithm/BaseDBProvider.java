@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.algorithm;
+package com.liferay.portal.shard.builder.internal.algorithm;
 
-import com.liferay.portal.tools.shard.builder.exporter.ShardExporter;
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.shard.builder.internal.DBProvider;
+import com.liferay.portal.shard.builder.exporter.ShardExporter;
+import com.liferay.portal.shard.builder.exporter.context.ExportContext;
+import com.liferay.portal.shard.builder.internal.DBProvider;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

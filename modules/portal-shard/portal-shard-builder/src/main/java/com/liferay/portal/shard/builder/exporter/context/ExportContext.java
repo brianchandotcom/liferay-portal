@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.exporter.context;
+package com.liferay.portal.shard.builder.exporter.context;
 
 import java.util.List;
 

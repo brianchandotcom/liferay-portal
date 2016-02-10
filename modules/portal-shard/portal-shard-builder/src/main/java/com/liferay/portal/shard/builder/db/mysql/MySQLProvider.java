@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.db.mysql;
+package com.liferay.portal.shard.builder.db.mysql;
 
-import com.liferay.portal.tools.shard.builder.internal.algorithm.BaseDBProvider;
+import com.liferay.portal.shard.builder.internal.algorithm.BaseDBProvider;
 
 import java.util.Properties;
 

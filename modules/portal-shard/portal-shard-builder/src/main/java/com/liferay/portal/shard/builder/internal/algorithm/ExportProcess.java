@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.algorithm;
+package com.liferay.portal.shard.builder.internal.algorithm;
 
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
+import com.liferay.portal.shard.builder.exporter.context.ExportContext;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

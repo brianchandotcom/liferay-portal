@@ -12,26 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.util;
+package com.liferay.portal.shard.builder.internal.validators;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.beust.jcommander.ParameterException;
 
-import java.util.Properties;
+import java.io.File;
 
 /**
  * @author Manuel de la Peña
  */
-public class PropsReader {
+public class WritableFileRequiredParameterValidator
+	extends FileRequiredParameterValidator {
 
-	public static Properties read(String fileName) throws IOException {
-		try (InputStream inputStream = new FileInputStream(fileName)) {
-			Properties properties = new Properties();
+	@Override
+	public void validate(String name, String value) throws ParameterException {
+		super.validate(name, value);
 
-			properties.load(inputStream);
+		File file = new File(value);
 
-			return properties;
+		if (!file.canRead() || !file.canWrite()) {
+			throw new ParameterException(
+				"Parameter " + name + " does not reference a writable file");
 		}
 	}
 

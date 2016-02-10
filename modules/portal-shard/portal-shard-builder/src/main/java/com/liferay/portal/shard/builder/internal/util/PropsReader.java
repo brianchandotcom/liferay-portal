@@ -12,24 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.algorithm;
+package com.liferay.portal.shard.builder.internal.util;
 
-import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBExporter {
+public class PropsReader {
 
-	public List<String> getControlTableNames(String schemaName);
+	public static Properties read(String fileName) throws IOException {
+		try (InputStream inputStream = new FileInputStream(fileName)) {
+			Properties properties = new Properties();
 
-	public List<String> getPartitionedTableNames(String schemaName);
+			properties.load(inputStream);
 
-	public void write(
-		long companyId, String tableName, OutputStream outputStream);
-
-	public void write(String tableName, OutputStream outputStream);
+			return properties;
+		}
+	}
 
 }

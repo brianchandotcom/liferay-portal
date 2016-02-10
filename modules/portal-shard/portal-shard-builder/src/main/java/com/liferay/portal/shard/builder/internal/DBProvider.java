@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.validators;
+package com.liferay.portal.shard.builder.internal;
 
-import com.beust.jcommander.IParameterValidator;
-import com.beust.jcommander.ParameterException;
+import javax.sql.DataSource;
 
 /**
  * @author Manuel de la Peña
  */
-public class RequiredParameterValidator implements IParameterValidator {
+public interface DBProvider {
 
-	@Override
-	public void validate(String name, String value) throws ParameterException {
-		if (value == null) {
-			throw new ParameterException("Parameter " + name + " is null");
-		}
+	public DataSource getDataSource();
 
-		value = value.trim();
+	public String getDateTimeFormat();
 
-		if (value.length() == 0) {
-			throw new ParameterException("Parameter " + name + " is empty");
-		}
-	}
+	public int getFetchSize();
+
+	public String getTableNameFieldName();
+
+	public String serializeTableField(Object field);
 
 }

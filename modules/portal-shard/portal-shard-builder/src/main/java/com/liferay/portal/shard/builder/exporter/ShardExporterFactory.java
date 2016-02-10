@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.exporter;
+package com.liferay.portal.shard.builder.exporter;
 
-import com.liferay.portal.tools.shard.builder.db.mysql.MySQLProvider;
-import com.liferay.portal.tools.shard.builder.db.postgresql.PostgreSQLProvider;
-import com.liferay.portal.tools.shard.builder.exporter.exception.DBProviderNotAvailableException;
+import com.liferay.portal.shard.builder.db.mysql.MySQLProvider;
+import com.liferay.portal.shard.builder.db.postgresql.PostgreSQLProvider;
+import com.liferay.portal.shard.builder.exporter.exception.DBProviderNotAvailableException;
 
 import java.util.Properties;
 

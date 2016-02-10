@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder;
+package com.liferay.portal.shard.builder;
 
 import com.beust.jcommander.Parameter;
 
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.shard.builder.internal.validators.CompanyIdsRequiredParameterValidator;
-import com.liferay.portal.tools.shard.builder.internal.validators.FileRequiredParameterValidator;
-import com.liferay.portal.tools.shard.builder.internal.validators.RequiredParameterValidator;
-import com.liferay.portal.tools.shard.builder.internal.validators.WritableFileRequiredParameterValidator;
+import com.liferay.portal.shard.builder.exporter.context.ExportContext;
+import com.liferay.portal.shard.builder.internal.validators.CompanyIdsRequiredParameterValidator;
+import com.liferay.portal.shard.builder.internal.validators.FileRequiredParameterValidator;
+import com.liferay.portal.shard.builder.internal.validators.RequiredParameterValidator;
+import com.liferay.portal.shard.builder.internal.validators.WritableFileRequiredParameterValidator;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -161,7 +161,9 @@ if (category != null) {
 }
 %>
 
-<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+<c:if test="<%= !mbListDisplayContext.isShowSearch() %>">
+	<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

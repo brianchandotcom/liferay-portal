@@ -54,6 +54,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
 		<execute macro="User#viewNoUsersFoundCP" />
 
 		<execute macro="ProductMenu#gotoUserMyAccount">

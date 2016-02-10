@@ -15,13 +15,20 @@
 package com.liferay.gradle.plugins.cache.task;
 
 import com.liferay.gradle.plugins.cache.CacheExtension;
+import com.liferay.gradle.plugins.cache.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Set;
 
+import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -40,6 +47,12 @@ public class TaskCacheApplicator {
 
 		boolean upToDate = false;
 
+		String currentDigest = getCurrentDigest(taskCache);
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Current digest is " + currentDigest);
+		}
+
 		if (cacheExtension.isForcedCache()) {
 			File cacheDir = taskCache.getCacheDir();
 
@@ -50,23 +63,64 @@ public class TaskCacheApplicator {
 			upToDate = true;
 		}
 		else {
-			upToDate = taskCache.isUpToDate();
+			String cachedDigest = getCachedDigest(taskCache);
+
+			if (_logger.isInfoEnabled()) {
+				if (Validator.isNull(cachedDigest)) {
+					_logger.info("No cached digest has been found");
+				}
+				else {
+					_logger.info("Cached digest is " + cachedDigest);
+				}
+			}
+
+			if (cachedDigest.equals(currentDigest)) {
+				upToDate = true;
+			}
 		}
 
 		if (upToDate) {
 			applyUpToDate(taskCache, task);
 		}
 		else {
-			applyOutOfDate(taskCache, task);
+			applyOutOfDate(taskCache, task, currentDigest);
 		}
 	}
 
-	protected void applyOutOfDate(final TaskCache taskCache, Task task) {
+	protected void applyOutOfDate(
+		final TaskCache taskCache, Task task, final String currentDigest) {
+
 		if (_logger.isInfoEnabled()) {
 			_logger.info(task + " is out-of-date");
 		}
 
 		Copy copy = createSaveCacheTask(taskCache);
+
+		copy.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					File digestFile = new File(
+						taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+
+					try {
+						Files.write(
+							digestFile.toPath(),
+							currentDigest.getBytes(StandardCharsets.UTF_8));
+
+						if (_logger.isInfoEnabled()) {
+							_logger.info(
+								"Updated digest file to " + currentDigest);
+						}
+					}
+					catch (IOException ioe) {
+						throw new GradleException(
+							"Unable to write digest file", ioe);
+					}
+				}
+
+			});
 
 		task.finalizedBy(copy);
 	}
@@ -93,6 +147,7 @@ public class TaskCacheApplicator {
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
+		copy.exclude(_DIGEST_FILE_NAME);
 		copy.from(taskCache.getCacheDir());
 		copy.into(taskCache.getBaseDir());
 		copy.setDescription(
@@ -117,6 +172,63 @@ public class TaskCacheApplicator {
 		copy.setDescription("Caches the output files of " + task + ".");
 
 		return copy;
+	}
+
+	protected String getCachedDigest(TaskCache taskCache) {
+		try {
+			File digestFile = new File(
+				taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+
+			if (!digestFile.exists()) {
+				return "";
+			}
+
+			return new String(
+				Files.readAllBytes(digestFile.toPath()),
+				StandardCharsets.UTF_8);
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to read digest file", ioe);
+		}
+	}
+
+	protected String getCurrentDigest(TaskCache taskCache) {
+		StringBuilder sb = new StringBuilder();
+
+		for (File testFile : taskCache.getTestFiles()) {
+			if (!testFile.exists()) {
+				continue;
+			}
+
+			if (testFile.isDirectory()) {
+				Iterable<File> files;
+
+				try {
+					files = FileUtil.getFiles(testFile);
+				}
+				catch (IOException ioe) {
+					throw new GradleException(
+						"Unable to get files in " + testFile, ioe);
+				}
+
+				for (File file : files) {
+					sb.append(FileUtil.getDigest(file));
+					sb.append(_DIGEST_SEPARATOR);
+				}
+			}
+			else {
+				sb.append(FileUtil.getDigest(testFile));
+				sb.append(_DIGEST_SEPARATOR);
+			}
+		}
+
+		if (sb.length() == 0) {
+			throw new GradleException("At least one test file is required");
+		}
+
+		sb.setLength(sb.length() - 1);
+
+		return sb.toString();
 	}
 
 	protected void removeSkippedTaskDependencies(
@@ -157,6 +269,10 @@ public class TaskCacheApplicator {
 			}
 		}
 	}
+
+	private static final String _DIGEST_FILE_NAME = ".digest";
+
+	private static final char _DIGEST_SEPARATOR = '-';
 
 	private static final Logger _logger = Logging.getLogger(
 		TaskCacheApplicator.class);

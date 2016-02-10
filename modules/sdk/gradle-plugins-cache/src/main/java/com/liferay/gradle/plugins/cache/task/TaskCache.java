@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.cache.task;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -27,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
@@ -169,24 +167,6 @@ public class TaskCache implements PatternFilterable {
 		_patternFilterable.include(includes);
 
 		return this;
-	}
-
-	public boolean isUpToDate() {
-		FileCollection testFiles = getTestFiles();
-
-		if (testFiles.isEmpty()) {
-			throw new GradleException("At least one test file is required");
-		}
-
-		File cacheDir = getCacheDir();
-
-		for (File testFile : testFiles) {
-			if (!FileUtil.isUpToDate(_project, testFile, cacheDir)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	public void setBaseDir(Object baseDir) {

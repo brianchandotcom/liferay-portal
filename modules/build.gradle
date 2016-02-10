@@ -24,6 +24,8 @@ gradle.beforeProject {
 			apply from: rootProject.file("build-module.gradle")
 			apply plugin: "pmd"
 
+			task installCache(type: InstallCacheTask)
+
 			configurations {
 				xmltask
 			}
@@ -31,6 +33,23 @@ gradle.beforeProject {
 			dependencies {
 				pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
 				xmltask rootProject.files("../lib/development/xmltask.jar")
+			}
+
+			installCache {
+				artifactGroup = "${->project.group}"
+				artifactName = "${->project.archivesBaseName}"
+				artifactVersion = "${->project.version}"
+
+				dependsOn cleanInstallCache
+				dependsOn install
+
+				description = "Installs the project to the local Gradle cache for testing."
+
+				ext {
+					autoClean = false
+				}
+
+				group = "upload"
 			}
 
 			pmd {

@@ -373,7 +373,7 @@ AUI.add(
 							function(item, index) {
 								var localizedValue = fieldJSON[item];
 
-								if (localizedValue) {
+								if (item !== 'options' && localizedValue) {
 									fieldJSON[item] = localizedValue[editingLocale] || localizedValue[defaultLocale];
 								}
 							}

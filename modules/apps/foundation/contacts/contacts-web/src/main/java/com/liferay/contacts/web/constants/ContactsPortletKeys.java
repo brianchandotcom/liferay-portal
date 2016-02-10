@@ -23,6 +23,8 @@ public class ContactsPortletKeys {
 
 	public static final String MEMBERS = "4_WAR_contactsportlet";
 
+	public static final String MY_CONTACTS = "3_WAR_contactsportlet";
+
 	public static final String PRIVATE_MESSAGING =
 		"1_WAR_privatemessagingportlet";
 

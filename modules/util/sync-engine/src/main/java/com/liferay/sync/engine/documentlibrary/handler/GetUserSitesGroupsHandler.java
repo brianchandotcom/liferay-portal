@@ -120,7 +120,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 
 				if (!localSyncSiteName.equals(remoteSyncSite.getName())) {
 					SyncSiteService.setFilePathName(
-						localSyncSite.getSyncSiteId(), remoteSyncSiteName);
+						localSyncSite.getSyncSiteId(), filePathName);
 
 					FileUtil.moveFile(
 						Paths.get(localSyncSite.getFilePathName()),

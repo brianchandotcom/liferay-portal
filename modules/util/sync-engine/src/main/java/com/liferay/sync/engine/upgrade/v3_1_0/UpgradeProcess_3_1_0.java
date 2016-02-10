@@ -12,30 +12,35 @@
  * details.
  */
 
-package com.liferay.sync.engine.upgrade.v3_0_8;
+package com.liferay.sync.engine.upgrade.v3_1_0;
 
 import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
-import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 
 /**
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_8 extends BaseUpgradeProcess {
+public class UpgradeProcess_3_1_0 extends BaseUpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 3008;
-	}
-
-	@Override
-	public void upgrade() throws Exception {
-		UpgradeUtil.copyLoggerConfiguration();
+		return 3100;
 	}
 
 	@Override
 	public void upgradeSchema() throws Exception {
-		runSQL("CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum);");
+		runSQL(
+			"ALTER TABLE `SyncAccount` ADD COLUMN " +
+				"authenticationRetryInterval INTEGER BEFORE batchFileMaxSize;");
+		runSQL(
+			"ALTER TABLE `SyncAccount` ALTER COLUMN batchFileMaxSize INTEGER;");
+		runSQL("ALTER TABLE `SyncAccount` ALTER COLUMN oAuthEnabled BOOLEAN;");
+		runSQL(
+			"ALTER TABLE `SyncAccount` ALTER COLUMN pluginVersion " +
+				"VARCHAR(255);");
+		runSQL("ALTER TABLE `SyncAccount` ADD COLUMN uuid VARCHAR(255);");
+
+		runSQL("ALTER TABLE `SyncFile` ALTER COLUMN userName VARCHAR(255);");
 	}
 
 }

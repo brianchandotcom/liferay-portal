@@ -109,7 +109,7 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		int authenticationRetryInterval = GetterUtil.getInteger(
 			portletPreferencesMap.get(
 				SyncContext.PREFERENCE_KEY_AUTHENTICATION_RETRY_INTERVAL),
-			300);
+			60);
 
 		syncAccount.setAuthenticationRetryInterval(authenticationRetryInterval);
 

@@ -11,10 +11,10 @@
 	</command>
 
 	<command name="viewFormEntryTable">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
 
 		<var name="key_workflowStatus" value="${workflowStatus}" />
 

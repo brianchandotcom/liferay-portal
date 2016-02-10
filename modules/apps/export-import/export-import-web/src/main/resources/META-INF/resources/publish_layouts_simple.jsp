@@ -87,10 +87,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 				</liferay-util:include>
 			</div>
 
-			<div class="alert alert-info">
-				<liferay-ui:message key="permissions-will-be-published" />
-			</div>
-
 			<ul class="lfr-tree list-unstyled">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
@@ -174,6 +170,10 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 						</li>
 					</aui:fieldset>
 				</aui:fieldset-group>
+
+				<span class="publish-simple-help-text">
+					<liferay-ui:message key="simple-publication-help" />
+				</span>
 
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />

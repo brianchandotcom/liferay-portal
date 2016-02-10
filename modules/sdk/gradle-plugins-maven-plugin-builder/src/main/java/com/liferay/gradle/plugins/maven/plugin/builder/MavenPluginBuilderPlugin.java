@@ -61,7 +61,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
 
-		configureTasksJavadoc(project, buildPluginDescriptorTask);
+		configureTasksJavadoc(project);
 		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
@@ -210,10 +210,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		coreJavadocOptions.addStringOption("Xdoclint:none", "quiet");
 	}
 
-	protected void configureTasksJavadoc(
-		Project project,
-		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
-
+	protected void configureTasksJavadoc(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(

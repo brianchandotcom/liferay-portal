@@ -47,7 +47,7 @@ if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(
 
 <liferay-ui:search-container-column-text
 	name="scope"
-	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+	value="<%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>"
 />
 
 <liferay-ui:search-container-column-date

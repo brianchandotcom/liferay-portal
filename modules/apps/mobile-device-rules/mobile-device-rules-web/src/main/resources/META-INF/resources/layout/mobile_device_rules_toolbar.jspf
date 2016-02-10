@@ -104,7 +104,7 @@
 						modal: true
 					},
 					id: '<portlet:namespace />selectRuleGroup',
-					title: '<%= UnicodeLanguageUtil.get(request, "device-families") %>',
+					title: '<%= UnicodeLanguageUtil.get(resourceBundle, "device-families") %>',
 
 					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/select_rule_group" />
@@ -132,7 +132,7 @@
 					dialogIframe: {
 						bodyCssClass: 'dialog-with-footer'
 					},
-					title: '<%= UnicodeLanguageUtil.get(request, "rule-priorities") %>',
+					title: '<%= UnicodeLanguageUtil.get(resourceBundle, "rule-priorities") %>',
 
 					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />

@@ -573,26 +573,22 @@ public class MBMessageLocalServiceUtil {
 
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(userId, message, status,
-			includePrevAndNext);
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMessageDisplay(userId, message, status);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, boolean includePrevAndNext,
+		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getMessageDisplay(userId, message, status,
-			includePrevAndNext, comparator);
+				   .getMessageDisplay(userId, message, status, comparator);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, boolean)}
+	MBMessage, int)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
@@ -606,7 +602,7 @@ public class MBMessageLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, boolean, Comparator)} (
+	MBMessage, int, Comparator)} (
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
@@ -620,16 +616,14 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long userId, long messageId, int status, boolean includePrevAndNext)
+		long userId, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getMessageDisplay(userId, messageId, status,
-			includePrevAndNext);
+		return getService().getMessageDisplay(userId, messageId, status);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int, boolean)}
+	long, int)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(

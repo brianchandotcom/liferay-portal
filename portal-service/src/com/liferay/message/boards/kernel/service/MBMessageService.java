@@ -158,12 +158,12 @@ public interface MBMessageService extends BaseService {
 	public MBMessage getMessage(long messageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long messageId, int status,
-		boolean includePrevAndNext) throws PortalException;
+	public MBMessageDisplay getMessageDisplay(long messageId, int status)
+		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long, int,
-	boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

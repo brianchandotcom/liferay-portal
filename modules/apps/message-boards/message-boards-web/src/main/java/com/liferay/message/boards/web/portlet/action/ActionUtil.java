@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import javax.portlet.PortletRequest;
@@ -139,13 +138,8 @@ public class ActionUtil {
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		boolean includePrevAndNext =
-			PropsValues.
-				MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED;
-
 		MBMessageDisplay messageDisplay =
-			MBMessageServiceUtil.getMessageDisplay(
-				messageId, status, includePrevAndNext);
+			MBMessageServiceUtil.getMessageDisplay(messageId, status);
 
 		if (messageDisplay != null) {
 			MBMessage message = messageDisplay.getMessage();

@@ -621,25 +621,23 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageLocalService.getMessageDisplay(userId, message,
-			status, includePrevAndNext);
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getMessageDisplay(userId, message, status);
 	}
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.message.boards.kernel.model.MBMessage message,
-		int status, boolean includePrevAndNext,
+		int status,
 		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getMessageDisplay(userId, message,
-			status, includePrevAndNext, comparator);
+			status, comparator);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, boolean)}
+	MBMessage, int)}
 	*/
 	@Deprecated
 	@Override
@@ -653,7 +651,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, boolean, Comparator)} (
+	MBMessage, int, Comparator)} (
 	*/
 	@Deprecated
 	@Override
@@ -668,15 +666,15 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long userId, long messageId, int status, boolean includePrevAndNext)
+		long userId, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getMessageDisplay(userId, messageId,
-			status, includePrevAndNext);
+			status);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int, boolean)}
+	long, int)}
 	*/
 	@Deprecated
 	@Override

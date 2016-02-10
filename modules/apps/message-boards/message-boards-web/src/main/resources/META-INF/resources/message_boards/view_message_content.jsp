@@ -29,9 +29,6 @@ MBCategory category = messageDisplay.getCategory();
 
 MBThread thread = messageDisplay.getThread();
 
-MBThread previousThread = messageDisplay.getPreviousThread();
-MBThread nextThread = messageDisplay.getNextThread();
-
 if (Validator.isNull(redirect)) {
 	PortletURL backPortletURL = renderResponse.createRenderURL();
 
@@ -66,46 +63,6 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<div class="thread-controls">
-		<c:if test="<%= PropsValues.MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
-			<div class="thread-navigation">
-				<liferay-ui:message key="threads" />
-
-				[
-
-				<c:choose>
-					<c:when test="<%= previousThread != null %>">
-						<portlet:renderURL var="previousThreadURL">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
-							<portlet:param name="messageId" value="<%= String.valueOf(previousThread.getRootMessageId()) %>" />
-						</portlet:renderURL>
-
-						<aui:a href="<%= previousThreadURL %>" label="previous" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="previous" />
-					</c:otherwise>
-				</c:choose>
-
-				|
-
-				<c:choose>
-					<c:when test="<%= nextThread != null %>">
-						<portlet:renderURL var="nextThreadURL">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
-							<portlet:param name="messageId" value="<%= String.valueOf(nextThread.getRootMessageId()) %>" />
-						</portlet:renderURL>
-
-						<aui:a href="<%= nextThreadURL %>" label="next" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="next" />
-					</c:otherwise>
-				</c:choose>
-
-				]
-			</div>
-		</c:if>
-
 		<div class="thread-actions">
 			<liferay-ui:icon-list>
 				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.ADD_MESSAGE) %>">

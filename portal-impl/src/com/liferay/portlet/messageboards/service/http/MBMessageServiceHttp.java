@@ -712,15 +712,14 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		HttpPrincipal httpPrincipal, long messageId, int status,
-		boolean includePrevAndNext)
+		HttpPrincipal httpPrincipal, long messageId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"getMessageDisplay", _getMessageDisplayParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					messageId, status, includePrevAndNext);
+					messageId, status);
 
 			Object returnObj = null;
 
@@ -1171,7 +1170,7 @@ public class MBMessageServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getMessageDisplayParameterTypes20 = new Class[] {
-			long.class, int.class, boolean.class
+			long.class, int.class
 		};
 	private static final Class<?>[] _getMessageDisplayParameterTypes21 = new Class[] {
 			long.class, int.class, java.lang.String.class, boolean.class

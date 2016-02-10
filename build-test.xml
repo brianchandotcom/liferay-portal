@@ -588,7 +588,13 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					int x = testClass.indexOf("#");
 
 					if (x != -1) {
-						String testMethodName = testClass.substring(x + 1);
+						int y = testClass.length();
+
+						if (testClass.contains(",")) {
+							y = testClass.indexOf(",");
+						}
+
+						String testMethodName = testClass.substring(x + 1, y);
 
 						if (!testMethodName.startsWith("test")) {
 							testMethodName = "test" + testMethodName;

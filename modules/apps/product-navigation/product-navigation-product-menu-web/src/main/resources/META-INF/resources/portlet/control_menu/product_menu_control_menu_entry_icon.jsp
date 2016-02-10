@@ -31,8 +31,6 @@
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
 

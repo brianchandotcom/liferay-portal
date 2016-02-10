@@ -171,25 +171,23 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		Group group = getGroup();
 
-		if (group.isStagingGroup()) {
-			if (group.isStagedRemotely()) {
-				Layout layout = _themeDisplay.getLayout();
+		if (group.isStagedRemotely()) {
+			Layout layout = _themeDisplay.getLayout();
 
-				try {
-					_liveGroupURL = StagingUtil.getRemoteSiteURL(
-						group, layout.isPrivateLayout());
-				}
-				catch (PortalException pe) {
-					_log.error(pe);
-				}
+			try {
+				_liveGroupURL = StagingUtil.getRemoteSiteURL(
+					group, layout.isPrivateLayout());
 			}
-			else {
-				Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+			catch (PortalException pe) {
+				_log.error(pe);
+			}
+		}
+		else if (group.isStagingGroup()) {
+			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
 
-				if (liveGroup != null) {
-					_liveGroupURL = _groupURLProvider.getGroupURL(
-						liveGroup, _portletRequest);
-				}
+			if (liveGroup != null) {
+				_liveGroupURL = _groupURLProvider.getGroupURL(
+					liveGroup, _portletRequest);
 			}
 		}
 

@@ -16,10 +16,6 @@ package com.liferay.product.navigation.control.menu.web;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -43,18 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class AddContentControlMenuEntry
+public class PortletOptionsProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getBodyJspPath() {
-		return "/entries/add_content_body.jsp";
-	}
-
-	@Override
 	public String getIconJspPath() {
-		return "/entries/add_content_icon.jsp";
+		return "/entries/portlet_options.jsp";
 	}
 
 	@Override
@@ -62,33 +53,9 @@ public class AddContentControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isStateMaximized()) {
-			return false;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		LayoutTypeController layoutTypeController =
-			layoutTypePortlet.getLayoutTypeController();
-
-		if (layoutTypeController.isFullPageDisplayable()) {
-			return false;
-		}
-
-		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
-			return false;
-		}
-
-		if (!(hasCustomizePermission(themeDisplay) ||
-			  hasUpdateLayoutPermission(themeDisplay))) {
-
+		if (!layout.isTypeControlPanel()) {
 			return false;
 		}
 
@@ -102,53 +69,6 @@ public class AddContentControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	protected boolean hasAddContentOrApplicationPermission(
-		ThemeDisplay themeDisplay) {
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isLayoutPrototypeLinkActive()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
-			return false;
-		}
-
-		if (!layoutTypePortlet.isCustomizable() ||
-			!layoutTypePortlet.isCustomizedView()) {
-
-			return false;
-		}
-
-		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.CUSTOMIZE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
 	}
 
 }

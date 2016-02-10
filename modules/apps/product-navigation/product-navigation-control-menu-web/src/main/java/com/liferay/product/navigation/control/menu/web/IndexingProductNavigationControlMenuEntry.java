@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class IndexingControlMenuEntry
+public class IndexingProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 

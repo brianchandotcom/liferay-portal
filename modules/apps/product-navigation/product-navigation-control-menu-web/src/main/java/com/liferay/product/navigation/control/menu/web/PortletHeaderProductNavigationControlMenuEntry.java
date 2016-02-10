@@ -39,18 +39,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.SITES,
-		"service.ranking:Integer=200"
+		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class PortletBackLinkControlMenuEntry
+public class PortletHeaderProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/portlet_back_link.jsp";
+		return "/entries/portlet_header.jsp";
 	}
 
 	@Override
@@ -58,9 +58,17 @@ public class PortletBackLinkControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		request.setAttribute(
-			ProductNavigationControlMenuWebKeys.PORTLET_BACK_URL,
-			getPortletBackURL(request));
+			ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION,
+			portletDisplay.getDescription());
+		request.setAttribute(
+			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
+			portletDisplay.getTitle());
 
 		return super.includeIcon(request, response);
 	}
@@ -78,7 +86,7 @@ public class PortletBackLinkControlMenuEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (!portletDisplay.isShowBackIcon()) {
+		if (portletDisplay == null) {
 			return false;
 		}
 
@@ -92,15 +100,6 @@ public class PortletBackLinkControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	protected String getPortletBackURL(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getURLBack();
 	}
 
 }

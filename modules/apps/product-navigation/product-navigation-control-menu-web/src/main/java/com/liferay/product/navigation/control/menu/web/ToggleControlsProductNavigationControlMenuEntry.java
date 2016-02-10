@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class ToggleControlsControlMenuEntry
+public class ToggleControlsProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 

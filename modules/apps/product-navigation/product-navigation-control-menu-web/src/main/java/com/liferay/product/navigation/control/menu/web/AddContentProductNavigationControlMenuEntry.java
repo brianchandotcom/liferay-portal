@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.control;
+package com.liferay.product.navigation.control.menu.web;
 
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,9 +25,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,22 +39,22 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
-		"service.ranking:Integer=200"
+		"service.ranking:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class SimulationControlMenuEntry
+public class AddContentProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getBodyJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_body.jsp";
+		return "/entries/add_content_body.jsp";
 	}
 
 	@Override
 	public String getIconJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_entry_icon.jsp";
+		return "/entries/add_content_icon.jsp";
 	}
 
 	@Override
@@ -65,21 +62,33 @@ public class SimulationControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isStateMaximized()) {
+			return false;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
 			return false;
 		}
 
-		if (!hasUpdateLayoutPermission(themeDisplay)) {
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
 			return false;
 		}
 
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			SimulationPanelCategory.SIMULATION,
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
+		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
+			return false;
+		}
 
-		if (panelApps.isEmpty()) {
+		if (!(hasCustomizePermission(themeDisplay) ||
+			  hasUpdateLayoutPermission(themeDisplay))) {
+
 			return false;
 		}
 
@@ -88,11 +97,50 @@ public class SimulationControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.web)",
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	protected boolean hasAddContentOrApplicationPermission(
+		ThemeDisplay themeDisplay) {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isLayoutPrototypeLinkActive()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Layout layout = themeDisplay.getLayout();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
+			return false;
+		}
+
+		if (!layoutTypePortlet.isCustomizable() ||
+			!layoutTypePortlet.isCustomizedView()) {
+
+			return false;
+		}
+
+		if (LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.CUSTOMIZE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
@@ -102,12 +150,5 @@ public class SimulationControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			ActionKeys.UPDATE);
 	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	private PanelAppRegistry _panelAppRegistry;
 
 }

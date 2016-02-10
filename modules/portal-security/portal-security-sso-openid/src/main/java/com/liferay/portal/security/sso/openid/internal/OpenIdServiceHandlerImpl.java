@@ -79,12 +79,14 @@ import org.openid4java.message.sreg.SRegRequest;
 import org.openid4java.message.sreg.SRegResponse;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = OpenIdServiceHandler.class)
 public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 	@Override
@@ -99,12 +101,12 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 		HttpSession session = request.getSession();
 
-		ParameterList parameterList = new ParameterList(
-			request.getParameterMap());
-
 		DiscoveryInformation discoveryInformation =
 			(DiscoveryInformation)session.getAttribute(
 				OpenIdWebKeys.OPEN_ID_DISCO);
+
+		ParameterList parameterList = new ParameterList(
+			request.getParameterMap());
 
 		if (discoveryInformation == null) {
 			return null;
@@ -323,6 +325,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			actionRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
+
+		request = PortalUtil.getOriginalServletRequest(request);
+
 		HttpSession session = request.getSession();
 
 		LiferayPortletResponse liferayPortletResponse =

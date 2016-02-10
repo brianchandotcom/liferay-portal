@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITES_MODAL_TITLE</td>
+	<td>//h3[@class='modal-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GO_TO_SITES_LINK</td>
 	<td>//a[contains(.,'Go to Site')]</td>
 	<td></td>

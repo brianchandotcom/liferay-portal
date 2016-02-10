@@ -84,7 +84,7 @@
 		var text = '';
 
 		if (node) {
-			var toolTipTextNode = node.next('.tooltip-text');
+			var toolTipTextNode = node.next('.taglib-text');
 
 			if (toolTipTextNode) {
 				text = toolTipTextNode.html();

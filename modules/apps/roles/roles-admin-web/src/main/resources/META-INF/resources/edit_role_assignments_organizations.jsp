@@ -23,14 +23,20 @@ int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
 Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 
+String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
+
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
+
+EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+if (tabs3.equals("available")) {
+	rowChecker = new OrganizationRoleChecker(renderResponse, role);
+}
 %>
 
-<aui:input name="addGroupIds" type="hidden" />
-<aui:input name="removeGroupIds" type="hidden" />
-
 <liferay-ui:search-container
-	rowChecker="<%= new OrganizationRoleChecker(renderResponse, role) %>"
+	id="assigneesSearch"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 	var="organizationSearchContainer"
 >
@@ -58,44 +64,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		keyProperty="group.groupId"
 		modelVar="organization"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="parent-organization"
-			value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="type"
-			orderable="<%= true %>"
-			value="<%= LanguageUtil.get(request, organization.getType()) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="city"
-			value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="region"
-			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="country"
-			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-		/>
+		<%@ include file="/organization_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

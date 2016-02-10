@@ -23,14 +23,20 @@ int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
 Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 
+String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
+
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
+
+EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+if (tabs3.equals("available")) {
+	rowChecker = new GroupRoleChecker(renderResponse, role);
+}
 %>
 
-<aui:input name="addGroupIds" type="hidden" />
-<aui:input name="removeGroupIds" type="hidden" />
-
 <liferay-ui:search-container
-	rowChecker="<%= new GroupRoleChecker(renderResponse, role) %>"
+	id="assigneesSearch"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 >
 
@@ -56,11 +62,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 	<%
 	portletURL.setParameter("cur", String.valueOf(cur));
-
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + "');";
 	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
@@ -69,17 +71,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		modelVar="group"
 		rowIdProperty="friendlyURL"
 	>
-
-		<liferay-ui:search-container-column-text
-			name="name"
-			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
-		/>
+		<%@ include file="/site_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

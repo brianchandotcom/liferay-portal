@@ -26,12 +26,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Role role = (Role)row.getObject();
 
 String name = role.getName();
-
-boolean unassignableRole = false;
-
-if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
-	unassignableRole = true;
-}
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -84,16 +78,6 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 		</portlet:renderURL>
 
 		<liferay-ui:icon message="define-permissions" url="<%= editRolePermissionsURL %>" />
-	</c:if>
-
-	<c:if test="<%= !unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon message="assign-members" url="<%= assignMembersURL %>" />
 	</c:if>
 
 	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">

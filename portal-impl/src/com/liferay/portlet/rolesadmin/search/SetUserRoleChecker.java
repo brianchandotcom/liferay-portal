@@ -18,17 +18,19 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Charles May
+ * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  */
-public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
+public class SetUserRoleChecker extends EmptyOnClickRowChecker {
 
-	public UserGroupRoleChecker(RenderResponse renderResponse, Role role) {
+	public SetUserRoleChecker(RenderResponse renderResponse, Role role) {
 		super(renderResponse);
 
 		_role = role;
@@ -36,11 +38,11 @@ public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
-		UserGroup userGroup = (UserGroup)obj;
+		User user = (User)obj;
 
 		try {
-			return GroupLocalServiceUtil.hasRoleGroup(
-				_role.getRoleId(), userGroup.getGroup().getGroupId());
+			return UserLocalServiceUtil.hasRoleUser(
+				_role.getRoleId(), user.getUserId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -51,13 +53,25 @@ public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		UserGroup userGroup = (UserGroup)obj;
+		User user = (User)obj;
 
-		return isChecked(userGroup);
+		try {
+			if (isChecked(user) ||
+				!RoleMembershipPolicyUtil.isRoleAllowed(
+					user.getUserId(), _role.getRoleId())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupRoleChecker.class);
+		SetUserRoleChecker.class);
 
 	private final Role _role;
 

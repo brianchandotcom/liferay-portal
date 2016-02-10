@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <liferay-ui:search-container
 	id="sites"
 	rowChecker="<%= new SiteChecker(renderResponse) %>"

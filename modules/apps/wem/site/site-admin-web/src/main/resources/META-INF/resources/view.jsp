@@ -128,7 +128,9 @@ if (group != null) {
 			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
 			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
-			<%@ include file="/view_entries.jspf" %>
+			<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="searchContainerId" value="sites" />
+			</liferay-util:include>
 		</aui:form>
 	</div>
 </div>

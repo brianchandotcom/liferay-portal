@@ -31,6 +31,12 @@ else {
 	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 }
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+if (Validator.isNotNull(keywords)) {
+	portletURL.setParameter("keywords", keywords);
+}
+
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
@@ -50,7 +56,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</liferay-util:include>
 
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
+		<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
 	</liferay-portlet:renderURL>
 
 	<aui:nav-bar-search>
@@ -77,72 +83,25 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
-
-int entriesTotal = 0;
-
-long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-Calendar calendar = Calendar.getInstance();
-
-int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-calendar.add(Calendar.DATE, -offset);
-
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
 searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
-if (entriesNavigation.equals("all")) {
-	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
-}
-else if (entriesNavigation.equals("recent")) {
-	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-}
+MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 
-searchContainer.setTotal(entriesTotal);
-
-int status = WorkflowConstants.STATUS_APPROVED;
-
-if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-	status = WorkflowConstants.STATUS_ANY;
-}
-
-List entriesResults = null;
-
-if (entriesNavigation.equals("all")) {
-	entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (entriesNavigation.equals("recent")) {
-	entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
-}
-
-searchContainer.setResults(entriesResults);
+mbListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
 
 <liferay-frontend:management-bar
-	disabled="<%= entriesTotal == 0 %>"
+	disabled="<%= searchContainer.getTotal() == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >
-
-	<%
-	PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-	if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-	}
-	else {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-		displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
-	}
-	%>
-
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= displayStyleURL %>"
+			portletURL="<%= searchContainer.getIteratorURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -202,7 +161,9 @@ if (category != null) {
 }
 %>
 
-<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+<c:if test="<%= !mbListDisplayContext.isShowSearch() %>">
+	<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

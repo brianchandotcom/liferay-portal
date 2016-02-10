@@ -14,23 +14,21 @@
 
 package com.liferay.message.boards.display.context;
 
-import com.liferay.portal.kernel.display.context.DisplayContextFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface MBDisplayContextFactory extends DisplayContextFactory {
+public interface MBListDisplayContext extends MBDisplayContext {
 
-	public MBHomeDisplayContext getMBHomeDisplayContext(
-		MBHomeDisplayContext parentMBHomeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+	public boolean isShowMyPosts();
 
-	public MBListDisplayContext getMBListDisplayContext(
-		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId);
+	public boolean isShowRecentPosts();
+
+	public boolean isShowSearch();
+
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException;
 
 }

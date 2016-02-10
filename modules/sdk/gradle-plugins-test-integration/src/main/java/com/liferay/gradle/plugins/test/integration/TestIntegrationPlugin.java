@@ -126,6 +126,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		SetupArquillianTask setupArquillianTask = GradleUtil.addTask(
 			project, SETUP_ARQUILLIAN_TASK_NAME, SetupArquillianTask.class);
 
+		setupArquillianTask.setDescription(
+			"Creates the Arquillian container configuration file for this " +
+				"project.");
+
 		setupArquillianTask.setOutputDir(
 			new Callable<File>() {
 
@@ -175,6 +179,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		setupTestableTomcatTask.setDescription(
+			"Configures the local Liferay Tomcat bundle to run integration " +
+				"tests.");
 
 		setupTestableTomcatTask.setDir(
 			new Callable<File>() {
@@ -292,6 +300,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
+		startTestableTomcatTask.setDescription(
+			"Starts the local Liferay Tomcat bundle.");
+
 		startTestableTomcatTask.setLiferayHome(
 			new Callable<File>() {
 
@@ -360,6 +371,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.doFirst(action);
 
 		stopTestableTomcatTask.mustRunAfter(testIntegrationTask);
+		stopTestableTomcatTask.setDescription(
+			"Stops the local Liferay Tomcat bundle.");
 
 		configureBaseAppServerTask(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);

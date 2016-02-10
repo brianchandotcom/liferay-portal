@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
-import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,9 +150,6 @@ public class FileShortcutStagedModelDataHandler
 		Element fileShortcutElement = portletDataContext.getExportDataElement(
 			fileShortcut);
 
-		fileShortcutElement.addAttribute(
-			"file-entry-uuid", fileEntry.getUuid());
-
 		portletDataContext.addClassedModel(
 			fileShortcutElement,
 			ExportImportPathUtil.getModelPath(fileShortcut), fileShortcut);
@@ -181,20 +177,22 @@ public class FileShortcutStagedModelDataHandler
 			groupId = folder.getRepositoryId();
 		}
 
-		Element fileShortcutElement =
-			portletDataContext.getImportDataStagedModelElement(fileShortcut);
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
 
-		String fileEntryUuid = fileShortcutElement.attributeValue(
-			"file-entry-uuid");
+		long fileEntryId = MapUtil.getLong(
+			fileEntryIds, fileShortcut.getToFileEntryId(),
+			fileShortcut.getToFileEntryId());
 
-		FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
-			fileEntryUuid, groupId);
+		FileEntry importedFileEntry = null;
 
-		if (importedFileEntry == null) {
+		try {
+			importedFileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to fetch file entry {uuid=" + fileEntryUuid +
-						", groupId=" + groupId + "}");
+				_log.warn("Unable to fetch file entry with id " + fileEntryId);
 			}
 
 			return;

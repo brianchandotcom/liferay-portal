@@ -112,7 +112,7 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		throws Exception {
 
 		String uuid = null;
-		long groupId = 0L;
+		long groupId = 0;
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 

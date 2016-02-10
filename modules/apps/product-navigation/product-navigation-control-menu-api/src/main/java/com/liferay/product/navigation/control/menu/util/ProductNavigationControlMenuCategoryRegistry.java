@@ -47,46 +47,46 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductNavigationControlMenuCategoryRegistry {
 
 	public List<ProductNavigationControlMenuCategory> getControlMenuCategories(
-		String controlMenuCategoryKey) {
+		String productControlMenuCategoryKey) {
 
-		List<ProductNavigationControlMenuCategory> controlMenuCategories =
-			_controlMenuCategoryServiceTrackerMap.getService(
-				controlMenuCategoryKey);
+		List<ProductNavigationControlMenuCategory> productControlMenuCategories =
+			_productControlMenuCategoryServiceTrackerMap.getService(
+				productControlMenuCategoryKey);
 
-		if (controlMenuCategories == null) {
+		if (productControlMenuCategories == null) {
 			return Collections.emptyList();
 		}
 
-		return new ArrayList<>(controlMenuCategories);
+		return new ArrayList<>(productControlMenuCategories);
 	}
 
 	public List<ProductNavigationControlMenuCategory> getControlMenuCategories(
-		String controlMenuCategoryKey, final HttpServletRequest request) {
+		String productControlMenuCategoryKey, final HttpServletRequest request) {
 
-		List<ProductNavigationControlMenuCategory> controlMenuCategories =
-			getControlMenuCategories(controlMenuCategoryKey);
+		List<ProductNavigationControlMenuCategory> productControlMenuCategories =
+			getControlMenuCategories(productControlMenuCategoryKey);
 
-		if (controlMenuCategories.isEmpty()) {
-			return controlMenuCategories;
+		if (productControlMenuCategories.isEmpty()) {
+			return productControlMenuCategories;
 		}
 
 		return ListUtil.filter(
-			controlMenuCategories,
+			productControlMenuCategories,
 			new PredicateFilter<ProductNavigationControlMenuCategory>() {
 
 				@Override
 				public boolean filter(
-					ProductNavigationControlMenuCategory controlMenuCategory) {
+					ProductNavigationControlMenuCategory productControlMenuCategory) {
 
 					try {
-						if (!controlMenuCategory.hasAccessPermission(request)) {
+						if (!productControlMenuCategory.hasAccessPermission(request)) {
 							return false;
 						}
 
 						List<ProductNavigationControlMenuEntry>
 							controlMenuEntries =
 								_controlMenuEntryRegistry.getControlMenuEntries(
-									controlMenuCategory, request);
+									productControlMenuCategory, request);
 
 						if (controlMenuEntries.isEmpty()) {
 							return false;
@@ -106,7 +106,7 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
-		_controlMenuCategoryServiceTrackerMap =
+		_productControlMenuCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ProductNavigationControlMenuCategory.class,
 				"(product.navigation.control.menu.category.key=*)",
@@ -117,7 +117,7 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_controlMenuCategoryServiceTrackerMap.close();
+		_productControlMenuCategoryServiceTrackerMap.close();
 	}
 
 	@Reference(unbind = "-")
@@ -132,7 +132,7 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	private ServiceTrackerMap
 		<String, List<ProductNavigationControlMenuCategory>>
-			_controlMenuCategoryServiceTrackerMap;
+			_productControlMenuCategoryServiceTrackerMap;
 	private ProductNavigationControlMenuEntryRegistry _controlMenuEntryRegistry;
 
 }

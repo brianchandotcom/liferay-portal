@@ -59,23 +59,22 @@ portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(role.getTitle(locale));
 
-int type = role.getType();
+String breadcrumbKey = null;
 
-String rootBreadcrumbKey = null;
-
-if (type == RoleConstants.TYPE_SITE) {
-	rootBreadcrumbKey = "site-roles";
+if (role.getType() == RoleConstants.TYPE_SITE) {
+	breadcrumbKey = "site-roles";
 }
-else if (type == RoleConstants.TYPE_ORGANIZATION) {
-	rootBreadcrumbKey = "organization-roles";
+else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+	breadcrumbKey = "organization-roles";
 }
 else {
-	rootBreadcrumbKey = "regular-roles";
+	breadcrumbKey = "regular-roles";
 }
 
-String rootBreadcrumbEntry = LanguageUtil.get(request, rootBreadcrumbKey);
+String breadcrumbTitle = LanguageUtil.get(request, breadcrumbKey);
 
-PortalUtil.addPortletBreadcrumbEntry(request, rootBreadcrumbEntry, redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, redirect);
+
 PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 

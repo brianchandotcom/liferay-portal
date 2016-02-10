@@ -29,10 +29,9 @@ long roleId = ParamUtil.getLong(request, "roleId");
 Role role = RoleServiceUtil.fetchRole(roleId);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAssignees");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAssignees");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

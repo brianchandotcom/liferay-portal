@@ -49,9 +49,9 @@ else {
 	breadcrumbKey = "regular-roles";
 }
 
-String breadcrumbEntry = LanguageUtil.get(request, breadcrumbKey);
+String breadcrumbTitle = LanguageUtil.get(request, breadcrumbKey);
 
-PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbEntry, currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />

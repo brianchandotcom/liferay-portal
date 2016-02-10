@@ -37,11 +37,8 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
@@ -288,16 +285,10 @@ public class FileShortcutStagedModelDataHandler
 		_dlFileShortcutLocalService = dlFileShortcutLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileShortcutStagedModelDataHandler.class);
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
-	private GroupLocalService _groupLocalService;
 
 }

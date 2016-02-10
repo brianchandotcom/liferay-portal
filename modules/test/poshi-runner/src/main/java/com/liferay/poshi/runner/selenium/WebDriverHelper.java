@@ -321,7 +321,6 @@ public class WebDriverHelper {
 	}
 
 	public static String getEditorName(WebDriver webDriver, String locator) {
-		String editorName = null;
 		String idAttribute = getAttribute(webDriver, locator + "@id");
 		String titleAttribute = getAttribute(webDriver, locator + "@title");
 
@@ -333,9 +332,10 @@ public class WebDriverHelper {
 				y = titleAttribute.length();
 			}
 
-			editorName = titleAttribute.substring(x + 2, y);
+			return titleAttribute.substring(x + 2, y);
 		}
-		else if (idAttribute.contains("cke__")) {
+
+		if (idAttribute.contains("cke__")) {
 			int x = idAttribute.indexOf("cke__");
 			int y = idAttribute.indexOf("cke__", x + 1);
 
@@ -343,13 +343,10 @@ public class WebDriverHelper {
 				y = idAttribute.length();
 			}
 
-			editorName = idAttribute.substring(x + 4, y);
-		}
-		else {
-			editorName = idAttribute;
+			return idAttribute.substring(x + 4, y);
 		}
 
-		return editorName;
+		return idAttribute;
 	}
 
 	public static int getElementHeight(WebDriver webDriver, String locator) {
@@ -977,14 +974,11 @@ public class WebDriverHelper {
 	public static void typeEditor(
 		WebDriver webDriver, String locator, String value) {
 
-		WebElement webElement = getWebElement(webDriver, locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+		WrapsDriver wrapsDriver = (WrapsDriver)getWebElement(
+			webDriver, locator);
 
 		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
 
 		StringBuilder sb = new StringBuilder();
 

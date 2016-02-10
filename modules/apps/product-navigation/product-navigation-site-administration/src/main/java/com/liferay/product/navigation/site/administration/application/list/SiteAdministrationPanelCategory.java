@@ -19,6 +19,7 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.product.navigation.site.administration.constants.SiteAdministrationWebKeys;
 import com.liferay.site.util.GroupURLProvider;
@@ -89,6 +90,8 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		request.setAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 		request.setAttribute(
+			SiteAdministrationWebKeys.ITEM_SELECTOR, _itemSelector);
+		request.setAttribute(
 			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER,
 			_recentGroupManager);
 
@@ -103,6 +106,11 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	@Reference(unbind = "-")
 	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
 		_groupURLProvider = groupURLProvider;
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
 	}
 
 	@Reference(unbind = "-")
@@ -121,6 +129,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	private GroupProvider _groupProvider;
 	private GroupURLProvider _groupURLProvider;
+	private ItemSelector _itemSelector;
 	private RecentGroupManager _recentGroupManager;
 
 }

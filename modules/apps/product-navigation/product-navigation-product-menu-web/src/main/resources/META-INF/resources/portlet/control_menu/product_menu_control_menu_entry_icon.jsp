@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
@@ -32,8 +30,6 @@
 <%@ page import="javax.portlet.RenderRequest" %>
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");

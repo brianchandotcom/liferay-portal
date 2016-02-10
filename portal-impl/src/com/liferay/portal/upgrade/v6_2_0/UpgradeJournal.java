@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 
 import java.sql.Connection;
@@ -357,18 +358,28 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				String structureId = rs.getString("structureId");
+			try(PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						con.prepareStatement(
+							"update AssetEntry set classTypeId = " +
+								"? where classPK = ?"));) {
 
-				long ddmStructureId = getDDMStructureId(
-					groupId, getCompanyGroupId(companyId), structureId);
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String structureId = rs.getString("structureId");
 
-				runSQL(
-					"update AssetEntry set classTypeId = " +
-						ddmStructureId + " where classPK = " + resourcePrimKey);
+					long ddmStructureId = getDDMStructureId(
+						groupId, getCompanyGroupId(companyId), structureId);
+
+					ps2.setLong(1, ddmStructureId);
+					ps2.setLong(2, resourcePrimKey);
+
+					ps2.addBatch();
+				}
+
+				ps.executeBatch();
 			}
 		}
 		finally {

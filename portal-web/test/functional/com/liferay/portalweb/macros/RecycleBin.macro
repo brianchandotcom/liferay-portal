@@ -21,9 +21,11 @@
 			<var name="panelHeading" value="Recycle Bin" />
 		</execute>
 
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
+		<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
 		<execute function="Confirm" value1="Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin." />
+
+		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

@@ -83,7 +83,7 @@
 
 	.move-list {
 		.move-file, .move-folder {
-			background: #F0FAF0 url() no-repeat 5px 50%;
+			background: #F0FAF0 no-repeat 5px 50%;
 			border-bottom: 1px solid #CCC;
 			display: block;
 			font-weight: bold;
@@ -291,7 +291,7 @@
 
 	.app-view-entry-taglib {
 		.entry-result-icon {
-			background: url() no-repeat 50%;
+			background:  no-repeat 50%;
 			display: none;
 			height: 16px;
 			position: absolute;
@@ -331,7 +331,7 @@
 		}
 
 		.entry-title-text {
-			background: url() no-repeat 0 50%;
+			background:  no-repeat 0 50%;
 		}
 
 		&.upload-error, &.upload-success, &.upload-warning {

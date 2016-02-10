@@ -17,11 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 TrashRenderer trashRenderer = null;
 
-if (row != null) {
+if ((row != null) && (row.getObject() instanceof TrashRenderer)) {
 	trashRenderer = (TrashRenderer)row.getObject();
 }
 else {
@@ -35,7 +37,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 	<c:if test="<%= trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashRenderer.getClassName())) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(trashRenderer.getClassPK()))) %>" />

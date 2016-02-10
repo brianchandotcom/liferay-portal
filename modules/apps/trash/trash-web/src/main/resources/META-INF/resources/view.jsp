@@ -297,8 +297,6 @@ if (Validator.isNotNull(keywords)) {
 					<c:otherwise>
 
 						<%
-						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
 						request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
 						%>
 

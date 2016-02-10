@@ -113,9 +113,6 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation", "all");
-
 		String keywords = ParamUtil.getString(_request, "keywords");
 
 		if (isShowSearch()) {

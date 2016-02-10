@@ -108,12 +108,13 @@ public class TaskCacheApplicator {
 		Copy copy = GradleUtil.addTask(
 			taskCache.getProject(), taskName, Copy.class);
 
+		Task task = taskCache.getTask();
+
 		copy.dependsOn(
-			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(taskName));
+			task, BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(taskName));
 		copy.from(taskCache.getFiles());
 		copy.into(taskCache.getCacheDir());
-		copy.setDescription(
-			"Caches the output files of " + taskCache.getTask() + ".");
+		copy.setDescription("Caches the output files of " + task + ".");
 
 		return copy;
 	}

@@ -10,6 +10,22 @@
 		</execute>
 	</command>
 
+	<command name="gotoDataDefinitionPermissions">
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="gotoDDLRecordEditViaWorkflow">
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 

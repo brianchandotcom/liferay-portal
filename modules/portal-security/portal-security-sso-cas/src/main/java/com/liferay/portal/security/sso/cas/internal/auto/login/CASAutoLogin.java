@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.security.exportimport.UserImporterUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
@@ -72,11 +72,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             UserImporterUtil#importUser(long, String, String)}
+	 *             UserImporter#importUser(long, String, String)}
 	 */
 	@Deprecated
 	protected User addUser(long companyId, String screenName) throws Exception {
-		return UserImporterUtil.importUser(
+		return _userImporter.importUser(
 			companyId, StringPool.BLANK, screenName);
 	}
 
@@ -147,11 +147,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 		if (casConfiguration.importFromLDAP()) {
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = UserImporterUtil.importUser(
+					user = _userImporter.importUser(
 						companyId, StringPool.BLANK, login);
 				}
 				else {
-					user = UserImporterUtil.importUser(
+					user = _userImporter.importUser(
 						companyId, login, StringPool.BLANK);
 				}
 			}
@@ -188,6 +188,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserImporter(UserImporter userImporter) {
+		_userImporter = userImporter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -195,6 +200,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
 	private ConfigurationProvider _configurationProvider;
+	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
 
 }

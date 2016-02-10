@@ -27,5 +27,4 @@ Include-Resource:\
 	lib/jackson-core.jar=lib/jackson-core.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Web-ContextPath: /portal-security-sso-google
 -include: ../../../marketplace/platform/bnd.bnd

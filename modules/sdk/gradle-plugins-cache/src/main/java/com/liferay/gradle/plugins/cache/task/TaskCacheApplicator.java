@@ -95,6 +95,8 @@ public class TaskCacheApplicator {
 
 		copy.from(taskCache.getCacheDir());
 		copy.into(taskCache.getBaseDir());
+		copy.setDescription(
+			"Restores the cached output files of " + taskCache.getTask() + ".");
 
 		return copy;
 	}
@@ -110,6 +112,8 @@ public class TaskCacheApplicator {
 			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(taskName));
 		copy.from(taskCache.getFiles());
 		copy.into(taskCache.getCacheDir());
+		copy.setDescription(
+			"Caches the output files of " + taskCache.getTask() + ".");
 
 		return copy;
 	}

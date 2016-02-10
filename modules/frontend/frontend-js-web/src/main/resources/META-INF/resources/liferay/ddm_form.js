@@ -690,7 +690,15 @@ AUI.add(
 							if (Lang.isObject(tipsMap)) {
 								var tip = tipsMap[instance.get('displayLocale')] || tipsMap[defaultLocale];
 
-								tipNode.one('.taglib-text').html(A.Escape.html(tip));
+								var text = A.Escape.html(tip);
+
+								tipNode.attr('onmouseover', '');
+
+								tipNode.one('.taglib-text').html(text);
+
+								tipNode.purge(true);
+
+								tipNode.on('mouseover', A.bind(Liferay.Portal.ToolTip.show, Liferay, tipNode, text));
 							}
 
 							labelNode.append(tipNode);

@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
+	<td>//div[@class='body-container']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_CONTENT</td>
 	<td>//div[@class='body']</td>
 	<td></td>

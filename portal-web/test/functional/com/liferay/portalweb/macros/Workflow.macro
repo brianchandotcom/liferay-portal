@@ -152,21 +152,6 @@
 		</execute>
 	</command>
 
-	<command name="approveTaskByNotifications">
-		<execute function="AssertClick" locator1="NotificationsDockbar#COUNT_ALERT" value1="${notificationCount}" />
-		<execute function="AssertClick" locator1="NotificationsDockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
-
-		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
-		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="${userName}" />
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#APPROVE" value1="Approve" />
-
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="assignToMeTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -234,21 +219,6 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-	</command>
-
-	<command name="assignToMeTaskByNotifications">
-		<execute function="AssertClick" locator1="NotificationsDockbar#COUNT_ALERT" value1="${notificationCount}" />
-		<execute function="AssertClick" locator1="NotificationsDockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
-
-		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
-		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
-
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="clickApproveByDetails">

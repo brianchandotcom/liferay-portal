@@ -10,6 +10,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for creating an account. You will be notified via email at ${userEmailAddress} when your account has been approved." />
 	</command>
 
+	<command name="gotoViaNotification">
+		<execute macro="Notifications#gotoNotifications" />
+
+		<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${user} sent you a ${assetType} for review in the workflow." />
+	</command>
+
 	<command name="viewFormEntryTable">
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="${fieldLabel}" />

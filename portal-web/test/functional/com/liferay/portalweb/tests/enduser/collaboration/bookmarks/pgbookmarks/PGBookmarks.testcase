@@ -395,72 +395,77 @@
 	</command>
 
 	<command name="SearchFolderBookmark" priority="4">
-		<var name="bookmarkDescription" value="Test Bookmark Description" />
-		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderDescription" value="Test Folder Description" />
-		<var name="folderName" value="Test Folder Name" />
-
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
+			<var name="folderDescription" value="Test Folder Description" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${folderName}" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
 		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="${bookmarkDescription}" />
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
+			<var name="bookmarkDescription" value="Test Bookmark Description" />
+			<var name="bookmarkName" value="Test Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${folderName}" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Entry" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Bookmark Name" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${folderName}" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Null" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="asdf" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="asdf" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${folderName}" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 
-		<execute macro="Bookmark#searchPG">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkSearch" value="Quotes" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm"><![CDATA["Test Bookmark Name"]]></var>
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Bookmark Name" />
 		</execute>
 	</command>
 </definition>

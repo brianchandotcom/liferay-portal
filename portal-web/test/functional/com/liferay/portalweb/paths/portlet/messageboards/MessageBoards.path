@@ -214,7 +214,17 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_THREADS</td>
-	<td>//li[contains(.,'${key_categoryName}')]/div/span[2][contains(.,'${key_threadsNumber}')]</td>
+	<td>//li[contains(.,'${key_categoryName}')]//span[2][contains(.,'${key_threadsNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_POSTS</td>
+	<td>//li[contains(.,'${key_categoryName}')]//span[contains(.,'${key_threadsNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_USERNAME</td>
+	<td>//li[contains(.,'${key_categoryName}')]//span[contains(.,'${key_threadsNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -368,11 +378,11 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_POSTS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]/div/span[1][contains(.,'${key_postsNumber}')]</td>
+	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_postsNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_LIST_STARTED_BY</td>
+	<td>THREAD_LIST_LAST_POST</td>
 	<td>//li[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>

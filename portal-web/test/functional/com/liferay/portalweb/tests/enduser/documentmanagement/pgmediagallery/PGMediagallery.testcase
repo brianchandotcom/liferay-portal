@@ -401,56 +401,63 @@
 	</command>
 
 	<command name="SearchFolderDocument" priority="4">
-		<var name="mgDocumentDescription" value="DM Document Description" />
-		<var name="mgDocumentFile" value="Document_1.jpg" />
-		<var name="mgDocumentTitle" value="DM Document Title" />
-		<var name="mgFolderDescription" value="DM Folder Description" />
-		<var name="mgFolderName" value="DM Folder Name" />
-
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
 		<execute macro="DMFolder#addPGViaMG">
-			<var name="mgFolderDescription" value="${mgFolderDescription}" />
-			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="DM Folder Description" />
+			<var name="mgFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPGViaMG">
-			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="DMDocument#addPGViaMG">
-			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
-			<var name="mgDocumentFile" value="${mgDocumentFile}" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentDescription" value="DM Document Description" />
+			<var name="mgDocumentFile" value="Document_1.jpg" />
+			<var name="mgDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Entry" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Quotes" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
-		<execute macro="DMDocument#searchPGviaMG">
-			<var name="mediaGallerySearch" value="Null" />
-			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm"><![CDATA["DM Document Title"]]></var>
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Media Gallery Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="asdf" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="asdf" />
 		</execute>
 	</command>
 </definition>

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//span[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_COMMUNITY_SITE</td>
 	<td>//button[contains(.,'Add Community Site')]</td>
 	<td></td>
@@ -86,6 +91,11 @@
 <tr>
 	<td>ADD_ROW_LAST</td>
 	<td>xpath=(//button[contains(@class,'add-row')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBCATEGORY</td>
+	<td>//span[contains(.,'Add Subcategory')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -416,6 +426,11 @@
 <tr>
 	<td>POST</td>
 	<td>//button[contains(.,'Post')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST_NEW_THREAD</td>
+	<td>//span[contains(.,'Post New Thread')]</td>
 	<td></td>
 </tr>
 <tr>

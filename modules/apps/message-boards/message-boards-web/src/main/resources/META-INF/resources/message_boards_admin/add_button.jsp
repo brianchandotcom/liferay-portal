@@ -17,28 +17,27 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-MBPortletToolbarContributor mbPortletToolbarContributor = (MBPortletToolbarContributor)request.getAttribute(MBWebKeys.MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR);
-
-List<Menu> menus = mbPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
+long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 %>
 
-<div id="addButtonContainer">
+<liferay-frontend:add-menu>
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_MESSAGE) %>">
+		<portlet:renderURL var="addMessageURL">
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
+		</portlet:renderURL>
 
-	<%
-	for (Menu menu : menus) {
-		List<URLMenuItem> urlMenuItems = (List<URLMenuItem>)(List<?>)menu.getMenuItems();
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "thread") %>' url="<%= addMessageURL.toString() %>" />
+	</c:if>
 
-		List<AddMenuItem> addMenuItems = new ArrayList<AddMenuItem>();
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY) %>">
+		<portlet:renderURL var="addCategoryURL">
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+		</portlet:renderURL>
 
-		for (URLMenuItem urlMenuItem : urlMenuItems) {
-			addMenuItems.add(new AddMenuItem(urlMenuItem.getLabel(), urlMenuItem.getURL()));
-		}
-	%>
-
-		<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" />
-
-	<%
-	}
-	%>
-
-</div>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "category[message-board]" : "subcategory[message-board]") %>' url="<%= addCategoryURL.toString() %>" />
+	</c:if>
+</liferay-frontend:add-menu>

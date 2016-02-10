@@ -127,58 +127,15 @@
 	<td>ASSET_ENTRY_TABLE_TITLE</td>
 	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
 	<td></td>
-</tr><tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_1</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle1}')]//a)[1]</td>
-	<td></td>
-</tr><tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_2</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle2}')]//a)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_3</td>
-	<td>xpath=(///li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle3}')]//a)[3]</td>
-	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_TYPE_1</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle1}')]//h6)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_TYPE_2</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle2}')]//h6)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_TYPE_3</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle3}')]//h6)[3]</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
-	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-summary']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY_1</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle1}')]//span[@class='asset-entry-summary'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY_2</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle2}')]//span[@class='asset-entry-summary'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY_3</td>
-	<td>xpath=(//tr[contains(.,'${key_searchAssetTitle3}')]//span[@class='asset-entry-summary'])[3]</td>
+	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6)[2]</td>
 	<td></td>
 </tr>
 <!--RESULTS_TABLE-->

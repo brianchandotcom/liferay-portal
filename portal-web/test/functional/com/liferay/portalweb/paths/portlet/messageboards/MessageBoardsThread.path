@@ -32,7 +32,7 @@
 
 <tr>
 	<td>THREAD_REPLY_BUTTON</td>
-	<td>//div[contains(@class,'message-container') and contains(.,'${key_threadSubject}')]//a[contains(@class,'btn')]</td>
+	<td>//div[@class='thread-container' and contains(.,'${key_threadSubject}')]//span[contains(.,'Reply to Main Thread')]</td>
 	<td></td>
 </tr>
 <tr>

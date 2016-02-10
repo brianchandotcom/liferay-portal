@@ -1047,9 +1047,9 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="Search#viewSearchResultsPG">
-				<var name="searchAssetTitle1" value="Blogs Entry Title" />
-				<var name="searchAssetType1" value="Blogs Entry" />
+			<execute macro="Search#viewSearchResultPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1097,9 +1097,9 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="Search#viewSearchResultsPG">
-				<var name="searchAssetTitle1" value="Blogs Entry Title" />
-				<var name="searchAssetType1" value="Blogs Entry" />
+			<execute macro="Search#viewSearchResultPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1147,9 +1147,9 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="Search#viewSearchResultsPG">
-				<var name="searchAssetTitle1" value="Blogs Entry Title" />
-				<var name="searchAssetType1" value="Blogs Entry" />
+			<execute macro="Search#viewSearchResultPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>
@@ -1201,9 +1201,9 @@
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 
-			<execute macro="Search#viewSearchResultsPG">
-				<var name="searchAssetTitle1" value="Blogs Entry Title" />
-				<var name="searchAssetType1" value="Blogs Entry" />
+			<execute macro="Search#viewSearchResultPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchAssetType" value="Blogs Entry" />
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
 		</for>

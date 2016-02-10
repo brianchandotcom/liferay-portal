@@ -15,6 +15,9 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -124,7 +127,13 @@ public class UpgradeAsset extends UpgradeProcess {
 			sb.append("(JournalArticle.resourcePrimkey = temp_table.primKey) ");
 			sb.append("and (JournalArticle.version = temp_table.maxVersion)");
 
-			ps = connection.prepareStatement(sb.toString());
+			DB db = DBManagerUtil.getDB();
+
+			String sql = db.buildSQL(sb.toString());
+
+			sql = SQLTransformer.transform(sql.trim());
+
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

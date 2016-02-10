@@ -86,6 +86,8 @@
 	</command>
 
 	<command name="DisableShowApplicationBreadcrumb" priority="4">
+		<property name="custom.properties" value="default.layout.template.id=1_column" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

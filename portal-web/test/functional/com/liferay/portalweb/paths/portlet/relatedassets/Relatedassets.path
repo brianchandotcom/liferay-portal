@@ -35,17 +35,17 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[1]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list')]/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_2</td>
-	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[2]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list')]/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_3</td>
-	<td>xpath=(//ul[contains(@class,'list-unstyled')]/li/a)[3]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list')]/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

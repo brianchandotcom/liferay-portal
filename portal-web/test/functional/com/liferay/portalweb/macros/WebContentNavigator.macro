@@ -90,6 +90,17 @@
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
+	<command name="gotoLocalizedEditPGViaWCD">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${localizedPortletName}" />
+			<var name="portletOption" value="${localizedPortletOption}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<execute function="AssertVisible" locator1="TextInput#TITLE" />
+	</command>
+
 	<command name="gotoManageStructures">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

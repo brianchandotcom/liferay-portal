@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>PANEL_TOGGLE</td>
-	<td>//div[contains(.,'Comment')]//div[@class='panel-toggle']</td>
+	<td>//div[contains(.,'Comments')]//div[@class='panel-heading']</td>
 	<td></td>
 </tr>
 <tr>

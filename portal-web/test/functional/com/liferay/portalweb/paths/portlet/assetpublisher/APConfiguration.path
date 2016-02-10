@@ -238,7 +238,7 @@
 <!--ASSET_SELECTION_MANUAL_ASSET_ENTRIES-->
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON</td>
-	<td>//div[contains(@id,'assetContent')]//a[contains(.,'Select')]</td>
+	<td>//div[contains(@id,'asset-kernelContent')]//a[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

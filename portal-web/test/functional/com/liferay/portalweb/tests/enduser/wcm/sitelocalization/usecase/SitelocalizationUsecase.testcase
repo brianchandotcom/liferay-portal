@@ -420,6 +420,7 @@
 
 		<execute macro="Page#viewPageLocalization">
 			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="page" value="Site Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -430,6 +431,7 @@
 
 		<execute macro="Page#viewPageLocalization">
 			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="page" value="Site Page 2" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -439,7 +441,7 @@
 
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Configuración" />
-			<var name="portlet" value="Configuración del Portal" />
+			<var name="portlet" value="Configuración de la instancia" />
 			<var name="tab" value="Panel de control" />
 		</execute>
 
@@ -478,7 +480,10 @@
 			<var name="webContentContent" value="Web Content1 Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoLocalizedEditPGViaWCD">
+			<var name="localizedPortletName" value="Visor de contenido web" />
+			<var name="localizedPortletOption" value="Editar contenido web" />
+		</execute>
 
 		<execute macro="WebContent#viewAvailableLanguagesPGViaWCD">
 			<var name="webContentTranslationLanguage1" value="German (Germany)" />

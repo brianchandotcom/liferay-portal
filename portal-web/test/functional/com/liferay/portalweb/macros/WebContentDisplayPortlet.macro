@@ -129,7 +129,7 @@
 			<then>
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-				<execute function="Check" locator1="WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX" />
+				<execute function="Check#checkToggleSwitch" locator1="WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>

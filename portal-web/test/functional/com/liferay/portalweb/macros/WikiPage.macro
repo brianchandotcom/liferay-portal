@@ -1258,7 +1258,6 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 		<execute function="AssertElementPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
-		<execute function="AssertElementPresent" locator1="Wiki#LINK_ATTACHMENTS" />
 		<execute function="AssertTextEquals" locator1="Wiki#LINK_EDIT" value1="Edit" />
 		<execute function="AssertTextEquals" locator1="Wiki#LINK_DETAILS" value1="Details" />
 		<execute function="AssertTextEquals" locator1="Wiki#LINK_PRINT" value1="Print" />

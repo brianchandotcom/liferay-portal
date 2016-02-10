@@ -104,7 +104,7 @@ public class AppTemplatePortletConfigurationIcon
 			return false;
 		}
 
-		return true;
+		return portletDisplay.isShowConfigurationIcon();
 	}
 
 	@Override

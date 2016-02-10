@@ -117,7 +117,7 @@ AUI.add(
 					instance._baseRenderPortletURL = baseRenderPortletURL;
 					instance._baseResourcePortletURL = baseResourcePortletURL;
 					instance._portletId = portletId;
-					instance._curPortlet = obj.one('.portlet');
+					instance._curPortlet = obj.one('.portlet-content');
 					instance._curPortletWrapperId = instance._curPortlet.attr(ID);
 					instance._portletBoundary = obj;
 					instance._portletBoundaryId = curPortletBoundaryId;

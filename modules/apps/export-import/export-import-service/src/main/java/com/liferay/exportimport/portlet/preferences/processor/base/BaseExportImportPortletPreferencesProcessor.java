@@ -34,14 +34,15 @@ import javax.portlet.PortletPreferences;
 public abstract class BaseExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 
-	protected abstract String getExportPortletPreferencesUuid(
+	protected abstract String getExportPortletPreferencesValue(
 			PortletDataContext portletDataContext, Portlet portlet,
 			String className, long primaryKeyLong)
 		throws Exception;
 
-	protected abstract Long getImportPortletPreferencesNewPrimaryKey(
+	protected abstract Long getImportPortletPreferencesNewValue(
 			PortletDataContext portletDataContext, Class<?> clazz,
-			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
+			long companyGroupId, Map<Long, Long> primaryKeys,
+			String portletPreferencesOldValue)
 		throws Exception;
 
 	protected void updateExportPortletPreferencesClassPKs(
@@ -71,20 +72,28 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 
 				long primaryKeyLong = GetterUtil.getLong(primaryKey);
 
-				String uuid = getExportPortletPreferencesUuid(
+				String newPreferencesValue = getExportPortletPreferencesValue(
 					portletDataContext, portlet, className, primaryKeyLong);
 
-				if (Validator.isNull(uuid)) {
+				if (Validator.isNull(newPreferencesValue)) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get UUID for class " + className +
-								" with primary key " + primaryKeyLong);
+						StringBundler sb = new StringBundler(4);
+
+						sb.append(
+							"Unable to export portlet preferences value " +
+								"contains class with class name ");
+						sb.append(className);
+						sb.append(" and primary key ");
+						sb.append(primaryKeyLong);
+
+						_log.warn(sb.toString());
 					}
 
 					continue;
 				}
 
-				newValue = StringUtil.replace(newValue, primaryKey, uuid);
+				newValue = StringUtil.replace(
+					newValue, primaryKey, newPreferencesValue);
 			}
 
 			newValues[i] = newValue;
@@ -115,32 +124,26 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 
 			String newValue = oldValue;
 
-			String[] uuids = StringUtil.split(oldValue);
+			String[] portletPreferencesOldValues = StringUtil.split(oldValue);
 
-			for (String uuid : uuids) {
-				Long newPrimaryKey = getImportPortletPreferencesNewPrimaryKey(
+			for (String portletPreferencesOldValue :
+					portletPreferencesOldValues) {
+
+				Long newPrimaryKey = getImportPortletPreferencesNewValue(
 					portletDataContext, clazz, companyGroupId, primaryKeys,
-					uuid);
+					portletPreferencesOldValue);
 
 				if (Validator.isNull(newPrimaryKey)) {
 					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(8);
-
-						sb.append("Unable to get primary key for ");
-						sb.append(clazz);
-						sb.append(" with UUID ");
-						sb.append(uuid);
-						sb.append(" in company group ");
-						sb.append(companyGroupId);
-						sb.append(" or in group ");
-						sb.append(portletDataContext.getScopeGroupId());
-
-						_log.info(sb.toString());
+						_log.info(
+							"Unable to import portlet preference: " +
+								portletPreferencesOldValue);
 					}
 				}
 				else {
 					newValue = StringUtil.replace(
-						newValue, uuid, newPrimaryKey.toString());
+						newValue, portletPreferencesOldValue,
+						newPrimaryKey.toString());
 				}
 			}
 

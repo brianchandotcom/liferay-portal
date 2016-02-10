@@ -26,12 +26,22 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -275,7 +285,42 @@ public class VerifyGroup extends VerifyProcess {
 
 				GroupLocalServiceUtil.updateGroup(stagingGroup);
 			}
+
+			if (!stagingGroup.isStagedRemotely()) {
+				verifyStagingGroupOrganizationMembership(stagingGroup);
+				verifyStagingGroupRoleMembership(stagingGroup);
+				verifyStagingGroupUserGroupMembership(stagingGroup);
+				verifyStagingGroupUserMembership(stagingGroup);
+				verifyStagingUserGroupRolesAssignments(stagingGroup);
+				verifyStagingUserGroupGroupRolesAssignments(stagingGroup);
+			}
 		}
+	}
+
+	protected void verifyStagingGroupOrganizationMembership(Group stagingGroup)
+		throws Exception {
+
+		List<Organization> stagingOrganizations =
+			OrganizationLocalServiceUtil.getGroupOrganizations(
+				stagingGroup.getGroupId());
+
+		if (ListUtil.isEmpty(stagingOrganizations)) {
+			return;
+		}
+
+		List<Organization> liveOrganizations =
+			OrganizationLocalServiceUtil.getGroupOrganizations(
+				stagingGroup.getLiveGroupId());
+
+		for (Organization stagingGroupOrganization : stagingOrganizations) {
+			if (!liveOrganizations.contains(stagingGroupOrganization)) {
+				OrganizationLocalServiceUtil.addGroupOrganization(
+					stagingGroup.getLiveGroupId(), stagingGroupOrganization);
+			}
+		}
+
+		OrganizationLocalServiceUtil.clearGroupOrganizations(
+			stagingGroup.getGroupId());
 	}
 
 	protected void verifyStagingTypeSettingsProperties(
@@ -306,6 +351,137 @@ public class VerifyGroup extends VerifyProcess {
 		for (long companyId : companyIds) {
 			GroupLocalServiceUtil.rebuildTree(companyId);
 		}
+	}
+
+	private void verifyStagingGroupRoleMembership(Group stagingGroup) {
+		List<Role> stagingRoles = RoleLocalServiceUtil.getGroupRoles(
+			stagingGroup.getGroupId());
+
+		if (ListUtil.isEmpty(stagingRoles)) {
+			return;
+		}
+
+		List<Role> liveRoles = RoleLocalServiceUtil.getGroupRoles(
+			stagingGroup.getLiveGroupId());
+
+		for (Role stagingGroupRole : stagingRoles) {
+			if (!liveRoles.contains(stagingGroupRole)) {
+				RoleLocalServiceUtil.addGroupRole(
+					stagingGroup.getLiveGroupId(), stagingGroupRole);
+			}
+		}
+
+		RoleLocalServiceUtil.clearGroupRoles(stagingGroup.getGroupId());
+	}
+
+	private void verifyStagingGroupUserGroupMembership(Group stagingGroup) {
+		List<UserGroup> stagingUserGroups =
+			UserGroupLocalServiceUtil.getGroupUserGroups(
+				stagingGroup.getGroupId());
+
+		if (ListUtil.isEmpty(stagingUserGroups)) {
+			return;
+		}
+
+		List<UserGroup> liveUserGroups =
+			UserGroupLocalServiceUtil.getGroupUserGroups(
+				stagingGroup.getLiveGroupId());
+
+		for (UserGroup stagingUserGroup : stagingUserGroups) {
+			if (!liveUserGroups.contains(stagingUserGroup)) {
+				UserGroupLocalServiceUtil.addGroupUserGroup(
+					stagingGroup.getLiveGroupId(), stagingUserGroup);
+			}
+		}
+
+		UserGroupLocalServiceUtil.clearGroupUserGroups(
+			stagingGroup.getGroupId());
+	}
+
+	private void verifyStagingGroupUserMembership(Group stagingGroup) {
+		List<User> stagingGroupUsers = UserLocalServiceUtil.getGroupUsers(
+			stagingGroup.getGroupId());
+
+		if (ListUtil.isEmpty(stagingGroupUsers)) {
+			return;
+		}
+
+		List<User> liveGroupUsers = UserLocalServiceUtil.getGroupUsers(
+			stagingGroup.getLiveGroupId());
+
+		for (User stagingGroupUser : stagingGroupUsers) {
+			if (!liveGroupUsers.contains(stagingGroupUser)) {
+				UserLocalServiceUtil.addGroupUser(
+					stagingGroup.getLiveGroupId(), stagingGroupUser);
+			}
+		}
+
+		UserLocalServiceUtil.clearGroupUsers(stagingGroup.getGroupId());
+	}
+
+	private void verifyStagingUserGroupGroupRolesAssignments(
+		Group stagingGroup) {
+
+		DynamicQuery dynamicQuery =
+			UserGroupGroupRoleLocalServiceUtil.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", stagingGroup.getGroupId()));
+
+		List<UserGroupGroupRole> staged =
+			UserGroupGroupRoleLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		if (staged.isEmpty()) {
+			return;
+		}
+
+		dynamicQuery = UserGroupGroupRoleLocalServiceUtil.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", stagingGroup.getLiveGroupId()));
+
+		List<UserGroupGroupRole> live =
+			UserGroupGroupRoleLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		for (UserGroupGroupRole userGroupGroupRole : staged) {
+			userGroupGroupRole.setGroupId(stagingGroup.getLiveGroupId());
+
+			if (!live.contains(userGroupGroupRole)) {
+				UserGroupGroupRoleLocalServiceUtil.updateUserGroupGroupRole(
+					userGroupGroupRole);
+			}
+		}
+
+		UserGroupGroupRoleLocalServiceUtil.deleteUserGroupGroupRolesByGroupId(
+			stagingGroup.getGroupId());
+	}
+
+	private void verifyStagingUserGroupRolesAssignments(Group stagingGroup) {
+		List<UserGroupRole> stagingUserGroupRoles =
+			UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroup(
+				stagingGroup.getGroupId());
+
+		if (ListUtil.isEmpty(stagingUserGroupRoles)) {
+			return;
+		}
+
+		List<UserGroupRole> liveUserGroupRoles =
+			UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroup(
+				stagingGroup.getLiveGroupId());
+
+		for (UserGroupRole stagingUserGroupRole : stagingUserGroupRoles) {
+			stagingUserGroupRole.setGroupId(stagingGroup.getLiveGroupId());
+
+			if (!liveUserGroupRoles.contains(stagingUserGroupRole)) {
+				UserGroupRoleLocalServiceUtil.updateUserGroupRole(
+					stagingUserGroupRole);
+			}
+		}
+
+		UserGroupRoleLocalServiceUtil.deleteUserGroupRolesByGroupId(
+			stagingGroup.getGroupId());
 	}
 
 	private static final String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {

@@ -81,30 +81,19 @@ public class RecentDocumentsMessageListener
 		activate(properties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLFileRankLocalService(
-		DLFileRankLocalService dLFileRankLocalService) {
-
-		_dLFileRankLocalService = dLFileRankLocalService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
-	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
+	@Reference
 	private DLFileRankLocalService _dLFileRankLocalService;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

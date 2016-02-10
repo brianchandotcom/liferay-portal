@@ -29,13 +29,11 @@ if (selLayout.isSupportsEmbeddedPortlets()) {
 	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
 }
 
-RowChecker rowChecker = new RowChecker(liferayPortletResponse);
+RowChecker rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 
 if (selLayout.isLayoutPrototypeLinkActive()) {
 	rowChecker = null;
 }
-
-rowChecker.setRowIds("removeEmbeddedPortletIds");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -48,7 +46,10 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="portlets"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -63,6 +64,10 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteEmbeddedPortlets" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
@@ -77,55 +82,76 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 		</c:choose>
 	</div>
 
-	<liferay-ui:search-container
-		deltaConfigurable="<%= false %>"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= rowChecker %>"
-	>
-		<liferay-ui:search-container-results results="<%= embeddedPortlets %>" />
+	<portlet:actionURL name="deleteEmbeddedPortlets" var="deleteEmbeddedPortletsURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.Portlet"
-			escapedModel="<%= true %>"
-			keyProperty="portletId"
-			modelVar="portlet"
+	<aui:form action="<%= deleteEmbeddedPortletsURL %>" name="fm">
+		<liferay-ui:search-container
+			deltaConfigurable="<%= false %>"
+			id="portlets"
+			iteratorURL="<%= portletURL %>"
+			rowChecker="<%= rowChecker %>"
 		>
-			<liferay-ui:search-container-column-text
-				name="portlet-id"
-				property="portletId"
+			<liferay-ui:search-container-results
+				results="<%= embeddedPortlets %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="title"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.model.Portlet"
+				escapedModel="<%= true %>"
+				keyProperty="portletId"
+				modelVar="portlet"
 			>
-				<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-			</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text
+					name="portlet-id"
+					property="portletId"
+				/>
 
-			<liferay-ui:search-container-column-text
-				name="status"
-			>
-				<c:choose>
-					<c:when test="<%= !portlet.isActive() %>">
-						<liferay-ui:message key="inactive" />
-					</c:when>
-					<c:when test="<%= !portlet.isReady() %>">
-						<liferay-ui:message arguments="portlet" key="is-not-ready" />
-					</c:when>
-					<c:when test="<%= portlet.isUndeployedPortlet() %>">
-						<liferay-ui:message key="undeployed" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="active" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text
+					name="title"
+				>
+					<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+				</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				path="/embedded_portlets_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-text
+					name="status"
+				>
+					<c:choose>
+						<c:when test="<%= !portlet.isActive() %>">
+							<liferay-ui:message key="inactive" />
+						</c:when>
+						<c:when test="<%= !portlet.isReady() %>">
+							<liferay-ui:message arguments="portlet" key="is-not-ready" />
+						</c:when>
+						<c:when test="<%= portlet.isUndeployedPortlet() %>">
+							<liferay-ui:message key="undeployed" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="active" />
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="none" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-jsp
+					cssClass="list-group-item-field"
+					path="/embedded_portlets_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="none" />
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />deleteEmbeddedPortlets').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				submitForm($(document.<portlet:namespace />fm));
+			}
+		}
+	);
+</aui:script>

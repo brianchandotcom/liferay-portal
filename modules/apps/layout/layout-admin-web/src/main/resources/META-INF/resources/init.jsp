@@ -36,6 +36,7 @@ page import="com.liferay.layout.admin.web.display.context.LayoutsAdminDisplayCon
 page import="com.liferay.layout.admin.web.display.context.LayoutsTreeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.util.comparator.ThemeNameComparator" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.exception.ImageTypeException" %><%@

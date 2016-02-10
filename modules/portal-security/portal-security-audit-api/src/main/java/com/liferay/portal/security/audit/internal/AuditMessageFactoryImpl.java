@@ -18,14 +18,15 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditMessageFactory;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Amos Fong
  */
-@DoPrivileged
+@Component(immediate = true, service = AuditMessageFactory.class)
 public class AuditMessageFactoryImpl implements AuditMessageFactory {
 
 	@Override

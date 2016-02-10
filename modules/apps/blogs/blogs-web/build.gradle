@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":apps:flags:flags-taglib")
 	compile project(":apps:item-selector:item-selector-api")
 	compile project(":apps:item-selector:item-selector-criteria-api")
 	compile project(":apps:item-selector:item-selector-taglib")

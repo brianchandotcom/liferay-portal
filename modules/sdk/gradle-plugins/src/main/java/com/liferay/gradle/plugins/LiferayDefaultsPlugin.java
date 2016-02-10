@@ -1181,7 +1181,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			uploadArchivesTask.finalizedBy(updateBundleVersionTask);
 		}
 
-		uploadArchivesTask.finalizedBy(updateBundleVersionTask);
+		uploadArchivesTask.finalizedBy(updateFileVersionsTask);
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

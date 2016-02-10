@@ -306,7 +306,7 @@ String customCSS = advancedData.getString("customCSS");
 
 // Generated CSS
 
-out.print("#p_p_id_" + portlet.getPortletId() + "_ .portlet");
+out.print("#p_p_id_" + portlet.getPortletId() + "_ .portlet-content");
 
 out.print(" {\n");
 

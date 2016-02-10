@@ -36,6 +36,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -193,6 +194,12 @@ public class TaskCacheApplicator {
 	}
 
 	protected String getCurrentDigest(TaskCache taskCache) {
+		Clock clock = null;
+
+		if (_logger.isInfoEnabled()) {
+			clock = new Clock();
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		for (File testFile : taskCache.getTestFiles()) {
@@ -227,6 +234,12 @@ public class TaskCacheApplicator {
 		}
 
 		sb.setLength(sb.length() - 1);
+
+		if (_logger.isInfoEnabled() && (clock != null)) {
+			_logger.info(
+				"Getting the current digest took " + clock.getTimeInMs() +
+					" ms");
+		}
 
 		return sb.toString();
 	}

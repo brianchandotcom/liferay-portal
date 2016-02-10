@@ -36,6 +36,12 @@ if (selLayout.isLayoutPrototypeLinkActive()) {
 rowChecker.setRowIds("removeEmbeddedPortletIds");
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="embedded-portlets" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <div class="container-fluid-1280">
 	<div class="text-muted">
 		<c:choose>

@@ -136,6 +136,7 @@ trashData.put("navigation", Boolean.TRUE.toString());
 </liferay-util:buffer>
 
 <liferay-ui:alert
+	icon="check"
 	message="<%= alertMessage %>"
 	timeout="0"
 	type="success"

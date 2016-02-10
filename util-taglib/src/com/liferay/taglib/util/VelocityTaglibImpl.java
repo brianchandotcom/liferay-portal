@@ -707,6 +707,10 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			resourcePrimKey, windowState, roleTypes);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void portletIconBack() throws Exception {
 		IconBackTag iconBackTag = new IconBackTag();

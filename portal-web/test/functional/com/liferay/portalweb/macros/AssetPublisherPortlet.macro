@@ -920,10 +920,11 @@
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
 
-		<execute function="AssertElementPresent" locator1="APConfiguration#SOURCE_DROPDOWN" />
-		<execute function="AssertElementPresent" locator1="APConfiguration#FILTER_DROPDOWN" />
-		<execute function="AssertElementPresent" locator1="APConfiguration#CUSTOM_USER_DROPDOWN" />
-		<execute function="AssertElementPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_DROPDOWN" />
+		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panelHeading">
+			<var name="key_panelHeading" value="${panelHeading}" />
+
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+		</for>
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -1123,7 +1124,7 @@
 			<var name="panelHeading" value="Asset Entries" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No assets selected." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No assets selected." />
 
 		<execute function="SelectFrameTop" />
 	</command>

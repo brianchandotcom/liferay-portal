@@ -786,6 +786,7 @@
 		<execute macro="UserGroup#addPageCP">
 			<var name="page" value="Profile" />
 			<var name="sitePageName" value="site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
 

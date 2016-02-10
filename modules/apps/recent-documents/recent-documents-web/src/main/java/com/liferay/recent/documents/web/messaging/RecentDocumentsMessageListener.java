@@ -14,21 +14,24 @@
 
 package com.liferay.recent.documents.web.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.document.library.kernel.service.DLFileRankLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -37,19 +40,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
-	property = {"destination.name=" + DestinationNames.SCHEDULER_DISPATCH},
-	service = MessageListener.class
+	configurationPid = "com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = RecentDocumentsMessageListener.class
 )
 public class RecentDocumentsMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
+		RecentDocumentsConfiguration recentDocumentsConfiguration =
+			Configurable.createConfigurable(
+				RecentDocumentsConfiguration.class, properties);
+
+		int interval = recentDocumentsConfiguration.checkFileRanksInterval();
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(), 1,
+				getEventListenerClass(), getEventListenerClass(), interval,
 				TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(
@@ -64,6 +72,13 @@ public class RecentDocumentsMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_dLFileRankLocalService.checkFileRanks();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+
+		activate(properties);
 	}
 
 	@Reference(unbind = "-")

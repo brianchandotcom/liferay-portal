@@ -135,10 +135,12 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 	<c:if test="<%= hasUpdateLayoutPermission %>">
 		<aui:button name="manageCustomization" value="show-customizable-sections" />
 
-		<div class="hide layout-customizable-controls" id="<portlet:namespace />layoutCustomizableControls">
-			<span title="<liferay-ui:message key="customizable-help" />">
-				<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
-			</span>
+		<div class="hide layout-customizable-controls-container" id="<portlet:namespace />layoutCustomizableControls">
+			<div class="layout-customizable-controls">
+				<span title="<liferay-ui:message key="customizable-help" />">
+					<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="no-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
+				</span>
+			</div>
 		</div>
 
 		<aui:script use="liferay-layout-customization-settings">

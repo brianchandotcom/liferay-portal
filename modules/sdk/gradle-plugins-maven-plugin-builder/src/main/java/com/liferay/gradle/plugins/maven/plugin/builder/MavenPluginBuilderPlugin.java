@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -61,7 +62,12 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
 
-		configureTasksJavadoc(project);
+		JavaVersion javaVersion = JavaVersion.current();
+
+		if (javaVersion.isJava8Compatible()) {
+			configureTasksJavadocDisableDoclint(project);
+		}
+
 		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
@@ -203,14 +209,14 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return buildPluginDescriptorTask;
 	}
 
-	protected void configureTaskJavadoc(Javadoc javadoc) {
+	protected void configureTaskJavadocDisableDoclint(Javadoc javadoc) {
 		CoreJavadocOptions coreJavadocOptions =
 			(CoreJavadocOptions)javadoc.getOptions();
 
 		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
 	}
 
-	protected void configureTasksJavadoc(Project project) {
+	protected void configureTasksJavadocDisableDoclint(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -219,7 +225,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Javadoc javadoc) {
-					configureTaskJavadoc(javadoc);
+					configureTaskJavadocDisableDoclint(javadoc);
 				}
 
 			});

@@ -31,6 +31,10 @@ PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
 
 pageContext.setAttribute("searchURL", searchURL);
 
+request.setAttribute("view.jsp-displayStyle", displayStyle);
+
+request.setAttribute("view.jsp-groupSearchContainer", groupSearch);
+
 PortletURL mainURL = renderResponse.createRenderURL();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sites"), mainURL.toString());
@@ -56,41 +60,9 @@ if (group != null) {
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="sites"
->
-	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				disabled="<%= false %>"
-				href="javascript:;"
-				icon="info-circle"
-				label="info"
-				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-			/>
-		</c:if>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "icon"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= groupSearch.getOrderByCol() %>"
-			orderByType="<%= groupSearch.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSites" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="sites" />
+</liferay-util:include>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<div class="sidenav-menu-slider">
@@ -134,14 +106,3 @@ if (group != null) {
 		</aui:form>
 	</div>
 </div>
-
-<aui:script>
-	$('#<portlet:namespace />deleteSites').on(
-		'click',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-				submitForm(AUI.$(document.<portlet:namespace />fm));
-			}
-		}
-	);
-</aui:script>

@@ -1,5 +1,7 @@
 <definition>
 	<command name="_gotoPendingFilter">
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
 		<var name="key_filterValue" value="Pending" />
@@ -374,6 +376,8 @@
 	</command>
 
 	<command name="gotoCompletedFilter">
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
 		<var name="key_filterValue" value="Completed" />

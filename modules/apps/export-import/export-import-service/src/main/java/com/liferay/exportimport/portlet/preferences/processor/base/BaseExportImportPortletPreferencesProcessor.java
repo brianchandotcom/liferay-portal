@@ -77,13 +77,12 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 
 				if (Validator.isNull(newPreferencesValue)) {
 					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(4);
+						StringBundler sb = new StringBundler(5);
 
-						sb.append(
-							"Unable to export portlet preferences value " +
-								"contains class with class name ");
+						sb.append("Unable to export portlet preferences ");
+						sb.append("value for class ");
 						sb.append(className);
-						sb.append(" and primary key ");
+						sb.append(" with primary key ");
 						sb.append(primaryKeyLong);
 
 						_log.warn(sb.toString());
@@ -136,7 +135,7 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 				if (Validator.isNull(newPrimaryKey)) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Unable to import portlet preference: " +
+							"Unable to import portlet preferences value " +
 								portletPreferencesOldValue);
 					}
 				}

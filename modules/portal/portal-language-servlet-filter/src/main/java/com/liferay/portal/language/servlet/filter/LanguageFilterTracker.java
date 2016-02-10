@@ -16,6 +16,7 @@ package com.liferay.portal.language.servlet.filter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -116,14 +117,21 @@ public class LanguageFilterTracker {
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			ResourceBundleLoader resourceBundleLoader =
-				new AggregateResourceBundleLoader(
-					ResourceBundleUtil.getResourceBundleLoader(
-						"content.Language", classLoader),
-					LanguageResources.RESOURCE_BUNDLE_LOADER);
+				new CacheResourceBundleLoader(
+					new AggregateResourceBundleLoader(
+						ResourceBundleUtil.getResourceBundleLoader(
+							"content.Language", classLoader),
+						LanguageResources.RESOURCE_BUNDLE_LOADER));
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("bundle.symbolic.name", bundle.getSymbolicName());
+
+			Object contextName = serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+
+			properties.put("servlet.context.name", contextName);
+
 			properties.put("service.ranking", Integer.MIN_VALUE);
 
 			serviceRegistrations.add(
@@ -145,13 +153,9 @@ public class LanguageFilterTracker {
 
 			properties = new Hashtable<>();
 
-			Object contextName = serviceReference.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
-
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 				contextName);
-
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
 				new String[] {

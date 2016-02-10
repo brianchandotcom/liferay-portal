@@ -18,7 +18,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.resource.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -54,7 +59,14 @@ public abstract class BaseJSPAssetRenderer<T>
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(jspPath);
 
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
 		try {
+			request.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER, getResourceBundleLoader());
+
 			requestDispatcher.include(request, response);
 
 			return true;
@@ -64,10 +76,26 @@ public abstract class BaseJSPAssetRenderer<T>
 
 			throw new IOException("Unable to include " + jspPath, se);
 		}
+		finally {
+			request.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+		}
 	}
 
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		if (_servletContext != null) {
+			return ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByServletContextName(
+					_servletContext.getServletContextName());
+		}
+
+		return new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader("content.Language", getClass()),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	protected ServletContext getServletContext() {

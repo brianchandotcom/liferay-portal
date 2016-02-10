@@ -113,8 +113,6 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(_request, "keywords");
-
 		if (isShowSearch()) {
 			long searchCategoryId = ParamUtil.getLong(
 				_request, "searchCategoryId");
@@ -140,7 +138,11 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			searchContext.setCategoryIds(categoryIdsArray);
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
+
+			String keywords = ParamUtil.getString(_request, "keywords");
+
 			searchContext.setKeywords(keywords);
+
 			searchContext.setStart(searchContainer.getStart());
 
 			Hits hits = indexer.search(searchContext);

@@ -16,18 +16,18 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
 <%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
+<%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
@@ -37,11 +37,13 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 
+<%@ page import="javax.portlet.ActionRequest" %>
+<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);
@@ -49,12 +51,14 @@ InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (Infor
 Map<String, Object> data = new HashMap<>();
 
 data.put("qa-id", "info");
+
+String namespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.LAYOUT_ADMIN);
 %>
 
 <liferay-ui:icon
 	data="<%= data %>"
 	icon="information-live"
-	id="infoButton"
+	id='<%= namespace + "infoButton" %>'
 	label="<%= false %>"
 	linkCssClass="control-menu-icon"
 	markupView="lexicon"
@@ -63,7 +67,7 @@ data.put("qa-id", "info");
 />
 
 <div class="hide">
-	<div id="<portlet:namespace/>infoContainer">
+	<div id="<%= namespace %>infoContainer">
 		<c:if test="<%= informationMessagesControlMenuEntry.isModifiedLayout(themeDisplay) %>">
 			<div class="modified-layout">
 				<aui:icon image="information-live" markupView="lexicon" />
@@ -74,13 +78,14 @@ data.put("qa-id", "info");
 					<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
 				</span>
 
-				<portlet:actionURL name="resetPrototype" var="resetPrototypeURL">
-					<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-				</portlet:actionURL>
-
 				<%
-				String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL) + "');";
+				PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+
+				resetPrototypeURL.setParameter(ActionRequest.ACTION_NAME, "resetPrototype");
+				resetPrototypeURL.setParameter("redirect", PortalUtil.getLayoutURL(themeDisplay));
+				resetPrototypeURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+
+				String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL.toString()) + "');";
 				%>
 
 				<span class="button-info">
@@ -148,15 +153,23 @@ data.put("qa-id", "info");
 					}
 					%>
 
-					<liferay-ui:icon cssClass="view-default" id="toggleCustomizedView" label="<%= true %>" message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>" url="javascript:;" />
+					<liferay-ui:icon
+						cssClass="view-default"
+						id='<%= namespace + "toggleCustomizedView" %>'
+						label="<%= true %>"
+						message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>"
+						url="javascript:;"
+					/>
 
 					<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-						<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
-							<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-						</portlet:actionURL>
 
 						<%
-						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+						PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+
+						resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
+						resetCustomizationViewURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+
+						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
 						%>
 
 						<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
@@ -165,7 +178,7 @@ data.put("qa-id", "info");
 			</div>
 
 			<aui:script position="inline" sandbox="<%= true %>">
-				$('#<portlet:namespace />toggleCustomizedView').on(
+				$('#<%= namespace %>toggleCustomizedView').on(
 					'click',
 					function(event) {
 						$.ajax(
@@ -189,7 +202,7 @@ data.put("qa-id", "info");
 </div>
 
 <aui:script position="auto" use="aui-popover,event-outside">
-	var trigger = A.one('#<portlet:namespace />infoButton');
+	var trigger = A.one('#<%= namespace %>infoButton');
 
 	var popOver = new A.Popover(
 		{
@@ -197,7 +210,7 @@ data.put("qa-id", "info");
 					node: trigger,
 					points:[A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
 				},
-			bodyContent: A.one('#<portlet:namespace/>infoContainer'),
+			bodyContent: A.one('#<%= namespace %>infoContainer'),
 			constrain: true,
 			hideOn: [
 				{

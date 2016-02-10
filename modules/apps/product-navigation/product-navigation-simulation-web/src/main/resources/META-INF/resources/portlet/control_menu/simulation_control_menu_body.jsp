@@ -21,7 +21,7 @@
 		<h4 class="sidebar-header">
 			<span><liferay-ui:message key="simulation" /></span>
 
-			<aui:icon cssClass="close" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
+			<aui:icon cssClass="close icon-monospaced" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
 		</h4>
 
 		<div class="loading-animation"></div>

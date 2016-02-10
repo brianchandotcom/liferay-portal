@@ -495,19 +495,6 @@ $horizontal-spacing: 35px;
 			position: relative;
 		}
 
-		.form-builder-field-toolbar {
-			min-width: 200px;
-			z-index: 750;
-
-			.form-builder-field-toolbar-items {
-				float: right;
-			}
-		}
-
-		.form-builder-field-toolbar-items {
-			z-index: 500;
-		}
-
 		.liferay-ddm-form-field-paragraph p {
 			min-height: 65px;
 		}
@@ -625,6 +612,8 @@ $horizontal-spacing: 35px;
 }
 
 .portlet-forms-admin {
+	@import "form-builder-field-toolbar";
+
 	$side-spacing: 34px;
 
 	.aspect-ratio img {
@@ -839,11 +828,6 @@ $horizontal-spacing: 35px;
 		.form-builder-pagination {
 			margin: 0;
 		}
-	}
-
-	.form-builder-field-toolbar-toggle,
-	.form-builder-field-toolbar {
-		z-index: 20;
 	}
 
 	.form-builder-tabview {

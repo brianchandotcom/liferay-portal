@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=300"
 	},
 	service = ProductNavigationControlMenuEntry.class

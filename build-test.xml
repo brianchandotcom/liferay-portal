@@ -702,6 +702,13 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					<var name="property.name" value="@{property.name}" />
 
+					<if>
+						<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
+						<then>
+							<get-test-class />
+						</then>
+					</if>
+
 					<get-test-method-name />
 					<get-test-simple-class-name />
 

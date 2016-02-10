@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.security.exportimport.UserExporter;
-import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.ldap.internal.UserImportTransactionThreadLocal;
+import com.liferay.portal.security.exportimport.UserExporter;
+import com.liferay.portal.security.exportimport.UserOperation;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

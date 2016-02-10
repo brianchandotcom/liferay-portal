@@ -19,8 +19,8 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
+import com.liferay.portal.security.exportimport.UserImporter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

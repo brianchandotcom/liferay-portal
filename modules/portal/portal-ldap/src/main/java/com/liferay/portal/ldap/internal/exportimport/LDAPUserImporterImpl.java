@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
-import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.security.ldap.AttributesTransformer;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -70,6 +69,7 @@ import com.liferay.portal.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.ldap.internal.UserImportTransactionThreadLocal;
 import com.liferay.portal.ldap.util.LDAPUtil;
+import com.liferay.portal.security.exportimport.UserImporter;
 
 import java.io.Serializable;
 

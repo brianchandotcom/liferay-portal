@@ -17,7 +17,7 @@ package com.liferay.portal.ldap.exportimport;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.security.exportimport.UserOperation;
+import com.liferay.portal.security.exportimport.UserOperation;
 
 import java.io.Serializable;
 

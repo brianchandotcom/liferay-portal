@@ -164,7 +164,7 @@ public class JniSassCompiler implements SassCompiler {
 
 		try {
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				inputFileName = _tmpDirName + "tmp.scss";
+				inputFileName = _tmpDirName + File.separator + "tmp.scss";
 
 				if (generateSourceMap) {
 					System.out.println("Source maps require a valid file name");
@@ -173,7 +173,13 @@ public class JniSassCompiler implements SassCompiler {
 				}
 			}
 
-			int index = inputFileName.lastIndexOf("/") + 1;
+			int index = inputFileName.lastIndexOf(File.separatorChar);
+
+			if ((index == -1) && (File.separatorChar != '/')) {
+				index = inputFileName.lastIndexOf('/');
+			}
+
+			index += 1;
 
 			String dirName = inputFileName.substring(0, index);
 			String fileName = inputFileName.substring(index);

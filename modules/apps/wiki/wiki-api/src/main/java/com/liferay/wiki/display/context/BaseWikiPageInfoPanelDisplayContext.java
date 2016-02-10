@@ -12,36 +12,26 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.wiki.display.context;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
+import java.util.UUID;
 
-import javax.servlet.jsp.JspException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Roberto Díaz
  */
-public class InfoBarTag extends BaseBarTag {
+public abstract class BaseWikiPageInfoPanelDisplayContext
+	extends BaseWikiDisplayContext<WikiPageInfoPanelDisplayContext>
+	implements WikiPageInfoPanelDisplayContext {
 
-	@Override
-	public int doEndTag() throws JspException {
-		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
+	public BaseWikiPageInfoPanelDisplayContext(
+		UUID uuid,
+		WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext,
+		HttpServletRequest request, HttpServletResponse response) {
 
-		return super.doEndTag();
+		super(uuid, wikiPageInfoPanelDisplayContext, request, response);
 	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	private static final String _END_PAGE = "/info_bar/end.jsp";
-
-	private static final String _START_PAGE = "/info_bar/start.jsp";
 
 }

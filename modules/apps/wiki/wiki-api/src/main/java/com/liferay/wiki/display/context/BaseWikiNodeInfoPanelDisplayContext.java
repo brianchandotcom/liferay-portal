@@ -20,17 +20,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public abstract class BaseWikiInfoPanelDisplayContext
-	extends BaseWikiDisplayContext<WikiInfoPanelDisplayContext>
-	implements WikiInfoPanelDisplayContext {
+public abstract class BaseWikiNodeInfoPanelDisplayContext
+	extends BaseWikiDisplayContext<WikiNodeInfoPanelDisplayContext>
+	implements WikiNodeInfoPanelDisplayContext {
 
-	public BaseWikiInfoPanelDisplayContext(
-		UUID uuid, WikiInfoPanelDisplayContext parentDisplayContext,
+	public BaseWikiNodeInfoPanelDisplayContext(
+		UUID uuid,
+		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext,
 		HttpServletRequest request, HttpServletResponse response) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(uuid, wikiNodeInfoPanelDisplayContext, request, response);
 	}
 
 }

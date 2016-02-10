@@ -21,9 +21,11 @@ import com.liferay.taglib.ui.IconTag;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 public class IconBackTag extends IconTag {
 
+	@Deprecated
 	@Override
 	protected String getPage() {
 		if (FileAvailabilityUtil.isAvailable(servletContext, _PAGE)) {

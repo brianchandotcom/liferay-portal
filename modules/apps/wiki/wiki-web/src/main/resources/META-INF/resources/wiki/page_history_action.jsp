@@ -25,7 +25,7 @@ if (row != null) {
 	wikiPage = (WikiPage)row.getObject();
 }
 else {
-	wikiPage = (WikiPage)request.getAttribute("info_panel.jsp-wikiPage");
+	wikiPage = (WikiPage)request.getAttribute("page_info_panel.jsp-wikiPage");
 }
 %>
 

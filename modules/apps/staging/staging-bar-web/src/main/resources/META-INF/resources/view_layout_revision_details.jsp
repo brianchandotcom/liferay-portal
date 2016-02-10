@@ -187,6 +187,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 		</a>
 
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
+			<li>
+				<a href="javascript:;" id="manageLayoutRevisions" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
+					<liferay-ui:message key="page-variations" />
+				</a>
+			</li>
+
 			<c:if test="<%= !layoutRevision.isIncomplete() %>">
 				<li>
 					<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="viewHistoryLink">
@@ -251,4 +257,30 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 			viewHistoryURL: '<%= viewHistoryURL %>'
 		}
 	);
+</aui:script>
+
+<aui:script>
+	function <portlet:namespace />openPageVariationsDialog() {
+		var pageVariationsDialog = Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true
+				},
+				id: 'pagesVariationsDialog',
+
+				<liferay-util:buffer var="helpIcon">
+					<liferay-ui:icon-help message="page-variations-help" />
+				</liferay-util:buffer>
+
+				title: '<liferay-ui:message arguments="<%= helpIcon %>" key="page-variations-x" />',
+
+				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
+					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+				</liferay-portlet:renderURL>
+
+				uri: '<%= HtmlUtil.escapeJS(layoutBranchesURL) %>'
+			}
+		);
+	}
 </aui:script>

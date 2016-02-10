@@ -95,6 +95,11 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/embedded_portlets_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" type="none" />

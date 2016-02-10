@@ -29,14 +29,12 @@ public class ManagementBarButtonsTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {
-		ManagementBarTag managementBarTag =
-			(ManagementBarTag)findAncestorWithClass(
-				this, ManagementBarTag.class);
+		BarTag barTag = (BarTag)findAncestorWithClass(this, BarTag.class);
 
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
-			managementBarTag.setButtons(bodyContent.getString());
+			barTag.setButtons(bodyContent.getString());
 		}
 
 		return EVAL_PAGE;

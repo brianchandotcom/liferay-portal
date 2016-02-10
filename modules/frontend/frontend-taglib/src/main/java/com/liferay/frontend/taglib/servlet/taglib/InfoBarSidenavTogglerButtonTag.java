@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/info_bar/init.jsp" %>
+package com.liferay.frontend.taglib.servlet.taglib;
 
-			</div>
-
-			<c:if test="<%= Validator.isNotNull(buttons) %>">
-				<div class="management-bar-header-right">
-					<%= buttons %>
-				</div>
-			</c:if>
-		</div>
-	</div>
-</div>
+/**
+ * @author Roberto Díaz
+ */
+public class InfoBarSidenavTogglerButtonTag
+	extends ManagementBarSidenavTogglerButtonTag {
+}

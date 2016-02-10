@@ -14,7 +14,7 @@
 
 package com.liferay.product.navigation.control.menu.web.portlet;
 
-import com.liferay.admin.kernel.util.PortalControlMenuApplicationType;
+import com.liferay.admin.kernel.util.PortalProductNavigationControlMenuApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=" + PortalControlMenuApplicationType.ControlMenu.CLASS_NAME
+		"model.class.name=" + PortalProductNavigationControlMenuApplicationType.ProductNavigationControlMenu.CLASS_NAME
 	},
 	service = ViewPortletProvider.class
 )

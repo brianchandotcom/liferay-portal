@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.cache.task;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -27,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
@@ -51,8 +49,10 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache exclude(@SuppressWarnings("rawtypes") Closure closure) {
-		_patternFilterable.exclude(closure);
+	public TaskCache exclude(
+		@SuppressWarnings("rawtypes") Closure excludeSpec) {
+
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
@@ -65,8 +65,8 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache exclude(Spec<FileTreeElement> spec) {
-		_patternFilterable.exclude(spec);
+	public TaskCache exclude(Spec<FileTreeElement> excludeSpec) {
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
@@ -140,8 +140,10 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache include(@SuppressWarnings("rawtypes") Closure closure) {
-		_patternFilterable.include(closure);
+	public TaskCache include(
+		@SuppressWarnings("rawtypes") Closure includeSpec) {
+
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
@@ -154,8 +156,8 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache include(Spec<FileTreeElement> spec) {
-		_patternFilterable.include(spec);
+	public TaskCache include(Spec<FileTreeElement> includeSpec) {
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
@@ -165,28 +167,6 @@ public class TaskCache implements PatternFilterable {
 		_patternFilterable.include(includes);
 
 		return this;
-	}
-
-	public boolean isFailIfOutOfDate() {
-		return _failIfOutOfDate;
-	}
-
-	public boolean isUpToDate() {
-		FileCollection testFiles = getTestFiles();
-
-		if (testFiles.isEmpty()) {
-			throw new GradleException("At least one test file is required");
-		}
-
-		File cacheDir = getCacheDir();
-
-		for (File testFile : testFiles) {
-			if (!FileUtil.isUpToDate(_project, testFile, cacheDir)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	public void setBaseDir(Object baseDir) {
@@ -202,10 +182,6 @@ public class TaskCache implements PatternFilterable {
 		_patternFilterable.setExcludes(excludes);
 
 		return this;
-	}
-
-	public void setFailIfOutOfDate(boolean failIfOutOfDate) {
-		_failIfOutOfDate = failIfOutOfDate;
 	}
 
 	@Override
@@ -262,7 +238,6 @@ public class TaskCache implements PatternFilterable {
 
 	private Object _baseDir;
 	private Object _cacheDir;
-	private boolean _failIfOutOfDate;
 	private final String _name;
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private final Project _project;

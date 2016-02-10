@@ -207,7 +207,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		CoreJavadocOptions coreJavadocOptions =
 			(CoreJavadocOptions)javadoc.getOptions();
 
-		coreJavadocOptions.addStringOption("Xdoclint:none", "quiet");
+		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
 	}
 
 	protected void configureTasksJavadoc(Project project) {

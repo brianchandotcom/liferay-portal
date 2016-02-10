@@ -188,6 +188,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<li>
+				<a href="javascript:;" id="manageLayoutSetRevisions" onclick='<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>'>
+					<liferay-ui:message key="site-pages-variation" />
+				</a>
+			</li>
+
+			<li>
 				<a href="javascript:;" id="manageLayoutRevisions" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
 					<liferay-ui:message key="page-variations" />
 				</a>
@@ -280,6 +286,29 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 				</liferay-portlet:renderURL>
 
 				uri: '<%= HtmlUtil.escapeJS(layoutBranchesURL) %>'
+			}
+		);
+	}
+
+	function <portlet:namespace />openSitePagesVariationsDialog() {
+		var sitePagesVariationDialog = Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true
+				},
+				id: 'sitePagesVariationDialog',
+
+				<liferay-util:buffer var="helpIcon">
+					<liferay-ui:icon-help message="pages-variations-help" />
+				</liferay-util:buffer>
+
+				title: '<liferay-ui:message arguments="<%= helpIcon %>" key="site-pages-variation-x" />',
+
+				<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
+				</liferay-portlet:renderURL>
+
+				uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
 			}
 		);
 	}

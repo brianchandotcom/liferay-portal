@@ -155,9 +155,6 @@ public class FileShortcutStagedModelDataHandler
 		Element fileShortcutElement = portletDataContext.getExportDataElement(
 			fileShortcut);
 
-		fileShortcutElement.addAttribute(
-			"file-entry-uuid", fileEntry.getUuid());
-
 		portletDataContext.addClassedModel(
 			fileShortcutElement,
 			ExportImportPathUtil.getModelPath(fileShortcut), fileShortcut);

@@ -1393,49 +1393,6 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-flags:flags</code>]]>.</description>
-		<name>flags</name>
-		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>The flagged asset's Java class name</description>
-			<name>className</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The flagged asset's entry ID</description>
-			<name>classPK</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The flagged asset's title</description>
-			<name>contentTitle</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Whether to show message text as a label next to the flag icon or as a tooltip. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
-			<name>message</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The user ID of the user who flagged the asset</description>
-			<name>reportedUserId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>flash</name>
 		<tag-class>com.liferay.taglib.ui.FlashTag</tag-class>
 		<body-content>JSP</body-content>

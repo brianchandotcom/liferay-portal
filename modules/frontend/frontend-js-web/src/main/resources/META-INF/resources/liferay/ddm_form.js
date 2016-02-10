@@ -682,7 +682,6 @@ AUI.add(
 							var instance = this;
 
 							var defaultLocale = instance.getDefaulLocale();
-
 							var fieldDefinition = instance.getFieldDefinition();
 
 							var tipsMap = fieldDefinition.tip;

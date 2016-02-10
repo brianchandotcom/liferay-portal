@@ -452,6 +452,33 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
+	<command name="editStagingConfiguration">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#STAGING_CONFIGURATION" value1="Staging Configuration" />
+
+		<if>
+			<equals arg1="${pageVersioningEnabled}" arg2="true" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="isNotEditable" />
+			<then>
+				<var name="key_contentName" value="${isNotEditable}" />
+
+				<execute function="AssertNotEditable" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="Pause" locator1="5000" />
+	</command>
+
 	<command name="enablePageInSitePagesVariation">
 		<execute function="Refresh" />
 

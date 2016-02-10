@@ -98,7 +98,7 @@
 	<command name="gotoSite">
 		<var name="key_site" value="${site}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#SITE" value1="${site}" />
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" />
 	</command>
 
 	<command name="gotoTab">
@@ -134,14 +134,11 @@
 
 	<command name="openSitesPopup">
 		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="ProductMenu#SITES_POPUP" />
-				<condition function="IsNotVisible" locator1="ProductMenu#SITES_POPUP" />
-			</and>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#SITES_MODAL_TITLE" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
 
-				<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
+				<execute function="AssertVisible" locator1="ProductMenu#SITES_MODAL_TITLE" />
 			</then>
 		</if>
 	</command>

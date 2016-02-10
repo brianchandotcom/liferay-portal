@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ROW_TD_1_SITE_LINK</td>
+	<td>xpath=(//*[@data-qa-id='row'])/td[1]/a[contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_TD_2</td>
 	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]/td[2]</td>
 	<td></td>

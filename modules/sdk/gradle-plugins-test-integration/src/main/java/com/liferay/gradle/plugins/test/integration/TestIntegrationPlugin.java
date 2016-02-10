@@ -47,6 +47,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
@@ -302,6 +303,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		startTestableTomcatTask.setDescription(
 			"Starts the local Liferay Tomcat bundle.");
+		startTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		startTestableTomcatTask.setLiferayHome(
 			new Callable<File>() {
@@ -373,6 +375,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.mustRunAfter(testIntegrationTask);
 		stopTestableTomcatTask.setDescription(
 			"Stops the local Liferay Tomcat bundle.");
+		stopTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		configureBaseAppServerTask(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);

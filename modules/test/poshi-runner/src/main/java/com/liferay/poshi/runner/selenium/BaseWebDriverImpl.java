@@ -2206,6 +2206,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void typeEditor(String locator, String value) {
+		WebDriverHelper.typeEditor(this, locator, value);
+	}
+
+	@Override
 	public void typeKeys(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 

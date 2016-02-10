@@ -28,6 +28,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
@@ -37,6 +38,7 @@ import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.search.ArticleSearch;
 import com.liferay.journal.web.search.EntriesChecker;
 import com.liferay.journal.web.search.EntriesMover;
+import com.liferay.journal.web.search.JournalSearcher;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
@@ -49,15 +51,18 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,9 +78,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -583,21 +592,55 @@ public class JournalDisplayContext {
 
 				params.put("expandoAttributes", getKeywords());
 
-				BaseModelSearchResult<JournalArticle> baseModelSearchResult =
-					JournalArticleLocalServiceUtil.searchJournalArticles(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(), folderIds,
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-						getDDMStructureKey(), getDDMTemplateKey(),
-						getKeywords(), params,
-						articleSearchContainer.getStart(),
-						articleSearchContainer.getEnd(), sort);
+				Indexer indexer = JournalSearcher.getInstance();
 
-				int total = baseModelSearchResult.getLength();
+				SearchContext searchContext = buildSearchContext(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+					getDDMStructureKey(), getDDMTemplateKey(), getKeywords(),
+					params, articleSearchContainer.getStart(),
+					articleSearchContainer.getEnd(), sort);
+
+				Hits hits = indexer.search(searchContext);
+
+				int total = hits.getLength();
 
 				articleSearchContainer.setTotal(total);
 
-				List results = baseModelSearchResult.getBaseModels();
+				List results = new ArrayList<>();
+
+				List<SearchResult> searchResultsList =
+					SearchResultUtil.getSearchResults(
+						hits, searchContext.getLocale(), _liferayPortletRequest,
+						_liferayPortletResponse);
+
+				for (int i = 0; i < searchResultsList.size(); i++) {
+					SearchResult searchResult = searchResultsList.get(i);
+
+					Summary summary = searchResult.getSummary();
+
+					summary.setQueryTerms(hits.getQueryTerms());
+
+					JournalArticle article = null;
+					JournalFolder folder = null;
+
+					String className = searchResult.getClassName();
+
+					if (className.equals(JournalArticle.class.getName())) {
+						article =
+							JournalArticleLocalServiceUtil.fetchLatestArticle(
+								searchResult.getClassPK(),
+								WorkflowConstants.STATUS_ANY, false);
+
+						results.add(article);
+					}
+					else if (className.equals(JournalFolder.class.getName())) {
+						folder = JournalFolderLocalServiceUtil.getFolder(
+							searchResult.getClassPK());
+
+						results.add(folder);
+					}
+				}
 
 				articleSearchContainer.setResults(results);
 			}
@@ -826,6 +869,87 @@ public class JournalDisplayContext {
 		}
 
 		return false;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, List<java.lang.Long> folderIds,
+		long classNameId, String ddmStructureKey, String ddmTemplateKey,
+		String keywords, LinkedHashMap<String, Object> params, int start,
+		int end, Sort sort) {
+
+		String articleId = null;
+		String title = null;
+		String description = null;
+		String content = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			articleId = keywords;
+			title = keywords;
+			description = keywords;
+			content = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(andOperator);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.ARTICLE_ID, articleId);
+		attributes.put(Field.CLASS_NAME_ID, classNameId);
+		attributes.put(Field.CONTENT, content);
+		attributes.put(Field.DESCRIPTION, description);
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		attributes.put(Field.TITLE, title);
+		attributes.put("ddmStructureKey", ddmStructureKey);
+		attributes.put("ddmTemplateKey", ddmTemplateKey);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setIncludeDiscussions(
+			GetterUtil.getBoolean(params.get("includeDiscussions"), true));
+
+		if (params != null) {
+			keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
+		searchContext.setAttribute("head", Boolean.FALSE.toString());
+		searchContext.setAttribute("params", params);
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
 	}
 
 	protected String getDisplayStyle(

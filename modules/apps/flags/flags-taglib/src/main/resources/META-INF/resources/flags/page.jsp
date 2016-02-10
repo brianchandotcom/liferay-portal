@@ -14,17 +14,17 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/flags/init.jsp" %>
 
 <%
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-String className = (String)request.getAttribute("liferay-ui:flags:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:flags:classPK"));
-String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-ui:flags:contentTitle"));
-boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:flags:label"), true);
-String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:flags:message"), "flag[action]");
-long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:flags:reportedUserId"));
+String className = (String)request.getAttribute("liferay-flags:flags:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:classPK"));
+String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:contentTitle"));
+boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:label"), true);
+String message = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:message"), "flag[action]");
+long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:reportedUserId"));
 
 String cssClass = randomNamespace;
 
@@ -45,7 +45,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 
 <c:if test="<%= !TrashUtil.isInTrash(className, classPK) %>">
 	<c:choose>
-		<c:when test="<%= PropsValues.FLAGS_GUEST_USERS_ENABLED || themeDisplay.isSignedIn() %>">
+		<c:when test="<%= flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn() %>">
 			<aui:script use="aui-io-plugin-deprecated,aui-modal">
 				var icon = A.one('.<%= randomNamespace %>');
 
@@ -57,7 +57,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 								{
 									dialog: {
 										destroyOnHide: true,
-										height: 400,
+										height: 300,
 										width: 400
 									},
 									title: '<%= UnicodeLanguageUtil.get(request, "report-inappropriate-content") %>'

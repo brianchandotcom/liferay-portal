@@ -791,8 +791,6 @@ public interface PropsKeys {
 
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED = "finalize.manager.thread.enabled";
 
-	public static final String FLAGS_GUEST_USERS_ENABLED = "flags.guest.users.enabled";
-
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 
 	public static final String GLOBAL_SHUTDOWN_EVENTS = "global.shutdown.events";

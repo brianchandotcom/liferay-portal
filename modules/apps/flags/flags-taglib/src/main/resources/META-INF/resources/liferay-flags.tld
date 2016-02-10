@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-flags</short-name>
+	<uri>http://liferay.com/tld/flags</uri>
+	<tag>
+		<description>Creates a flag icon that lets users report inappropriate content.</description>
+		<name>flags</name>
+		<tag-class>com.liferay.flags.taglib.servlet.taglib.FlagsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The flagged asset's Java class name</description>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The flagged asset's entry ID</description>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The flagged asset's title</description>
+			<name>contentTitle</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to show message text as a label next to the flag icon or as a tooltip. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The user ID of the user who flagged the asset</description>
+			<name>reportedUserId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

@@ -814,6 +814,10 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"flags.email.subject", "email.subject", "com.liferay.flags"
 		},
+		new String[] {
+			"flags.guest.users.enabled", "guest.users.enabled",
+			"com.liferay.flags"
+		},
 		new String[] {"flags.reasons", "reasons", "com.liferay.flags"},
 
 		// FreeMarker Engine

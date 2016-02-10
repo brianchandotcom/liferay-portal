@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Flags Taglib
+Bundle-SymbolicName: com.liferay.flags.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.flags.taglib,\
+	com.liferay.flags.taglib.servlet.taglib
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/flags";version:Version="1.0.0"
+Web-ContextPath: /flags-taglib

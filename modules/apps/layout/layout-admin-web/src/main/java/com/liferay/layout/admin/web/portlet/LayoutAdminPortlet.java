@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -554,6 +556,34 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 	}
 
+	public void resetCustomizationView(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				ActionKeys.CUSTOMIZE)) {
+
+			throw new PrincipalException();
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		if ((layoutTypePortlet != null) && layoutTypePortlet.isCustomizable() &&
+			layoutTypePortlet.isCustomizedView()) {
+
+			layoutTypePortlet.resetUserPreferences();
+		}
+
+		MultiSessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
+	}
+
 	/**
 	 * Resets the number of failed merge attempts for the page template, which
 	 * is accessed from the action request's <code>layoutPrototypeId</code>
@@ -598,6 +628,20 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		if (mergeFailCountAfterMerge > 0) {
 			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
+	}
+
+	public void resetPrototype(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SitesUtil.resetPrototype(themeDisplay.getLayout());
+
+		MultiSessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 	}
 
 	protected void deleteThemeSettingsProperties(

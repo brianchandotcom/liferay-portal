@@ -390,7 +390,8 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_bundleContext.getAllServiceReferences(
 					VerifyProcess.class.getName(),
 					"(&(objectClass=" + VerifyProcess.class.getName() +
-						")(verify.process.name=com.liferay.portal.ldap))");
+						")(verify.process.name=" +
+							"com.liferay.portal.security.ldap))");
 
 			if (ArrayUtil.isEmpty(serviceReferences)) {
 				throw new IllegalStateException("Unable to get verify process");

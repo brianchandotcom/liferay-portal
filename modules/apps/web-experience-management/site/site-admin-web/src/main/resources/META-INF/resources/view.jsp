@@ -96,7 +96,7 @@ if (group != null) {
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
 			<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
-				<liferay-util:include page="/view_site_info.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
 	</div>

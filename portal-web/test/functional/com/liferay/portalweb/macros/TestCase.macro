@@ -1,5 +1,6 @@
 <definition>
 	<command name="getSiteName" returns="siteName">
+		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
@@ -11,7 +12,12 @@
 			</or>
 			<then>
 				<if>
-					<equals arg1="${testPortalInstance}" arg2="true" />
+					<and>
+						<equals arg1="${testPortalInstance}" arg2="true" />
+						<not>
+							<condition function="IsTestName" locator1="${testNameSkipPortalInstance}" />
+						</not>
+					</and>
 					<then>
 						<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

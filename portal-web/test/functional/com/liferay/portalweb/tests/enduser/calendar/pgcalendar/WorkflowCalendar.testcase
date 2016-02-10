@@ -83,9 +83,13 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -94,7 +98,7 @@
 
 		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -129,7 +133,7 @@
 
 		<execute macro="CalendarEvent#viewInvitedUserRSVPWithApprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 			<var name="userCalendarName" value="Test Test" />
 		</execute>
 	</command>

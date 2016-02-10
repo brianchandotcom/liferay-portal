@@ -22,13 +22,14 @@ package com.liferay.admin.kernel.util;
  *             the <code>liferay-product-navigation:control-menu</code> tag.
  */
 @Deprecated
-public class PortalControlMenuApplicationType {
+public class PortalProductNavigationControlMenuApplicationType {
 
-	public interface ControlMenu {
+	public interface ProductNavigationControlMenu {
 
 		public static final String CLASS_NAME =
 			"com.liferay.portlet.admin.util." +
-				"PortalControlMenuApplicationType$ControlMenu";
+				"PortalProductNavigationControlMenuApplicationType" +
+					"$ProductNavigationControlMenu";
 
 	}
 

@@ -16,13 +16,21 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Marcellus Tavares
@@ -36,6 +44,9 @@ public class DDMFormFactory {
 		}
 
 		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(getAvailableLocales(clazz));
+		ddmForm.setDefaultLocale(getDefaultLocale(clazz));
 
 		for (Method method : getDDMFormFieldMethods(clazz)) {
 			DDMFormField ddmFormField = createDDMFormField(clazz, method);
@@ -105,12 +116,53 @@ public class DDMFormFactory {
 		return ddmFormField;
 	}
 
+	protected static Set<Locale> getAvailableLocales(Class<?> clazz) {
+		com.liferay.dynamic.data.mapping.annotations.DDMForm ddmForm =
+			clazz.getAnnotation(
+				com.liferay.dynamic.data.mapping.annotations.DDMForm.class);
+
+		if (Validator.isNull(ddmForm.availableLanguageIds())) {
+			Locale defaultLocale = getDefaultLocale(clazz);
+
+			return SetUtil.fromArray(new Locale[] {defaultLocale});
+		}
+
+		Set<Locale> availableLocales = new TreeSet<>();
+
+		for (String availableLanguageId :
+				StringUtil.split(ddmForm.availableLanguageIds())) {
+
+			availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+
+		return availableLocales;
+	}
+
 	protected static Collection<Method> getDDMFormFieldMethods(Class<?> clazz) {
 		Map<String, Method> methodsMap = new HashMap<>();
 
 		collectDDMFormFieldMethodsMap(clazz, methodsMap);
 
 		return methodsMap.values();
+	}
+
+	protected static Locale getDefaultLocale(Class<?> clazz) {
+		com.liferay.dynamic.data.mapping.annotations.DDMForm ddmForm =
+			clazz.getAnnotation(
+				com.liferay.dynamic.data.mapping.annotations.DDMForm.class);
+
+		if (Validator.isNull(ddmForm.defaultLanguageId())) {
+			Locale defaultLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (defaultLocale == null) {
+				defaultLocale = LocaleUtil.getDefault();
+			}
+
+			return defaultLocale;
+		}
+
+		return LocaleUtil.fromLanguageId(ddmForm.defaultLanguageId());
 	}
 
 	private static final Class<? extends Annotation> _DDM_FORM_ANNOTATION =

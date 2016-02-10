@@ -38,6 +38,10 @@ public class DynamicProxyCreator
 		return _instance;
 	}
 
+	public void clear() {
+		_beanMatcherInvocationHandlerFactories.clear();
+	}
+
 	@Override
 	public int getOrder() {
 		return Ordered.HIGHEST_PRECEDENCE;

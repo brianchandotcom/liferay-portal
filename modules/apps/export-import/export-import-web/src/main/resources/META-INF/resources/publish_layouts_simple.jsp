@@ -171,6 +171,10 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 					</aui:fieldset>
 				</aui:fieldset-group>
 
+				<span class="publish-simple-help-text">
+					<liferay-ui:message key="simple-publication-help" />
+				</span>
+
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 				</aui:button-row>

@@ -1,0 +1,40 @@
+.form-builder-field-toolbar,
+.form-builder-field-toolbar-toggle {
+	z-index: 20;
+}
+
+.form-builder-field-toolbar {
+	margin-top: 16px;
+	min-width: 200px;
+	z-index: 750;
+
+	.lexicon-icon {
+		margin-top: -3px;
+	}
+}
+
+.form-builder-field-toolbar .btn,
+.form-builder-field-toolbar .btn:hover {
+	border-width: 0;
+}
+
+.form-builder-field-toolbar .btn {
+	color: #65B3F0;
+}
+
+.form-builder-field-toolbar .lexicon-icon {
+	opacity: 0.5;
+}
+
+.form-builder-field-toolbar .btn:hover .lexicon-icon {
+	opacity: 1;
+}
+
+.form-builder-field-toolbar-items {
+	float: right;
+	z-index: 500;
+}
+
+.form-builder-field-toolbar-item {
+	width: 48px;
+}

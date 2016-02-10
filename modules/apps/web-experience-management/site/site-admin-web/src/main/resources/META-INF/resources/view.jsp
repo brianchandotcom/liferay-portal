@@ -27,10 +27,6 @@ SearchContainer groupSearch = siteAdminDisplayContext.getSearchContainer();
 
 PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 
-PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
-
-pageContext.setAttribute("searchURL", searchURL);
-
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 request.setAttribute("view.jsp-groupSearchContainer", groupSearch);
@@ -46,19 +42,7 @@ if (group != null) {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="sites" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="sites" />

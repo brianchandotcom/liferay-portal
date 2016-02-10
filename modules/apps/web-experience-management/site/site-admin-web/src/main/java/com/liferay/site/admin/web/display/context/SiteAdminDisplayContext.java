@@ -141,7 +141,11 @@ public class SiteAdminDisplayContext {
 		return _keywords;
 	}
 
-	public int getOrganizationsCount() {
+	public int getOrganizationsCount() throws PortalException {
+		return getOrganizationsCount(getGroup());
+	}
+
+	public int getOrganizationsCount(Group group) {
 		LinkedHashMap<String, Object> organizationParams =
 			new LinkedHashMap<>();
 
@@ -150,9 +154,8 @@ public class SiteAdminDisplayContext {
 
 		Company company = themeDisplay.getCompany();
 
-		organizationParams.put("groupOrganization", Long.valueOf(getGroupId()));
-		organizationParams.put(
-			"organizationsGroups", Long.valueOf(getGroupId()));
+		organizationParams.put("groupOrganization", group.getGroupId());
+		organizationParams.put("organizationsGroups", group.getGroupId());
 
 		return OrganizationLocalServiceUtil.searchCount(
 			company.getCompanyId(),
@@ -161,9 +164,11 @@ public class SiteAdminDisplayContext {
 	}
 
 	public int getPendingRequestsCount() throws PortalException {
-		int pendingRequests = 0;
+		return getPendingRequestsCount(getGroup());
+	}
 
-		Group group = getGroup();
+	public int getPendingRequestsCount(Group group) throws PortalException {
+		int pendingRequests = 0;
 
 		if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 			pendingRequests = MembershipRequestLocalServiceUtil.searchCount(
@@ -258,7 +263,11 @@ public class SiteAdminDisplayContext {
 		return siteAdministrationURL;
 	}
 
-	public int getUserGroupsCount() {
+	public int getUserGroupsCount() throws PortalException {
+		return getUserGroupsCount(getGroup());
+	}
+
+	public int getUserGroupsCount(Group group) {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -266,13 +275,17 @@ public class SiteAdminDisplayContext {
 
 		Company company = themeDisplay.getCompany();
 
-		userGroupParams.put("userGroupsGroups", Long.valueOf(getGroupId()));
+		userGroupParams.put("userGroupsGroups", group.getGroupId());
 
 		return UserGroupLocalServiceUtil.searchCount(
 			company.getCompanyId(), null, userGroupParams);
 	}
 
-	public int getUsersCount() {
+	public int getUsersCount() throws PortalException {
+		return getUsersCount(getGroup());
+	}
+
+	public int getUsersCount(Group group) {
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -281,7 +294,7 @@ public class SiteAdminDisplayContext {
 		Company company = themeDisplay.getCompany();
 
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", Long.valueOf(getGroupId()));
+		userParams.put("usersGroups", group.getGroupId());
 
 		return UserLocalServiceUtil.searchCount(
 			company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,

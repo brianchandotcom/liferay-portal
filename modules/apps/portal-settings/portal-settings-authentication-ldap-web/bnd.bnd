@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.settings.authentication.ldap.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Portal Settings
-Web-ContextPath: /portal-settings-authentication-ldap-web
+Web-ContextPath: /portal-settings-authentication-ldap
 -include: ../../../../marketplace/platform/bnd.bnd

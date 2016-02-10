@@ -12,14 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.portlet;
-
-import com.liferay.admin.kernel.util.PortalProductNavigationControlMenuApplicationType;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.admin.kernel.util;
 
 /**
  * @author     Eudaldo Alonso
@@ -28,21 +21,16 @@ import org.osgi.service.component.annotations.Component;
  *             wrapper mechanism, to using FreeMarker templates that leverage
  *             the <code>liferay-product-navigation:control-menu</code> tag.
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=" + PortalProductNavigationControlMenuApplicationType.ProductNavigationControlMenu.CLASS_NAME
-	},
-	service = ViewPortletProvider.class
-)
 @Deprecated
-public class ProductNavigationControlMenuViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class PortalProductNavigationControlMenuApplicationType {
 
-	@Override
-	public String getPortletId() {
-		return ProductNavigationControlMenuPortletKeys.
-			PRODUCT_NAVIGATION_CONTROL_MENU;
+	public interface ProductNavigationControlMenu {
+
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.admin.util." +
+				"PortalProductNavigationControlMenuApplicationType" +
+					"$ProductNavigationControlMenu";
+
 	}
 
 }

@@ -51,7 +51,7 @@ public class DynamicServletRequestUtil {
 
 			String[] values = entry.getValue();
 
-			String[] oldValues = httpServletRequest.getParameterValues(name);
+			String[] oldValues = dynamicServletRequest.getParameterValues(name);
 
 			if (mergeParameters && (oldValues != null)) {
 				values = ArrayUtil.append(values, oldValues);

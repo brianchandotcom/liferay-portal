@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -37,6 +38,8 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.external.javadoc.CoreJavadocOptions;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,6 +61,12 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
+
+		JavaVersion javaVersion = JavaVersion.current();
+
+		if (javaVersion.isJava8Compatible()) {
+			configureTasksJavadocDisableDoclint(project);
+		}
 
 		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
@@ -198,6 +207,28 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		processResourcesTask.mustRunAfter(buildPluginDescriptorTask);
 
 		return buildPluginDescriptorTask;
+	}
+
+	protected void configureTaskJavadocDisableDoclint(Javadoc javadoc) {
+		CoreJavadocOptions coreJavadocOptions =
+			(CoreJavadocOptions)javadoc.getOptions();
+
+		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
+	}
+
+	protected void configureTasksJavadocDisableDoclint(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Javadoc.class,
+			new Action<Javadoc>() {
+
+				@Override
+				public void execute(Javadoc javadoc) {
+					configureTaskJavadocDisableDoclint(javadoc);
+				}
+
+			});
 	}
 
 	protected void configureTasksUpload(

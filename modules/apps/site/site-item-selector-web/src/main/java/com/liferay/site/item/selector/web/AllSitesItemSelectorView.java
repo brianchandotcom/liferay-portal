@@ -80,7 +80,7 @@ public class AllSitesItemSelectorView
 
 	@Override
 	public boolean isShowSearch() {
-		return false;
+		return true;
 	}
 
 	@Override

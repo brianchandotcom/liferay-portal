@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -77,15 +76,16 @@ public class DDMFormInstanceFactoryHelper {
 	}
 
 	protected void setDDMFormFieldNameMethodMap(Class<?> clazz) {
-		Collection<Method> methods = DDMFormFactory.getDDMFormFieldMethods(
+		DDMFormFactoryHelper ddmFormFactoryHelper = new DDMFormFactoryHelper(
 			clazz);
 
-		for (Method method : methods) {
-			DDMFormFactoryHelper ddmFormFactoryHelper =
-				new DDMFormFactoryHelper(clazz, method);
+		for (Method method : ddmFormFactoryHelper.getDDMFormFieldMethods()) {
+			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
+				new DDMFormFieldFactoryHelper(method);
 
 			_ddmFormFieldMethodNameMap.put(
-				ddmFormFactoryHelper.getDDMFormFieldName(), method.getName());
+				ddmFormFieldFactoryHelper.getDDMFormFieldName(),
+				method.getName());
 		}
 	}
 

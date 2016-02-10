@@ -40,8 +40,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
+		icon="times"
+		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>
@@ -80,7 +80,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 				<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -240,7 +240,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			%>
 
 			<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
-				<liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 					<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 				</liferay-ui:search-container-column-text>
 			</c:if>
@@ -410,7 +410,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				%>
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
-					<liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>
 				</c:if>

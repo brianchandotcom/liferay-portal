@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
@@ -61,6 +62,8 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 		try {
 			DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 				serializedDDMForm);
+
+			_ddmFormValidator.validate(ddmForm);
 
 			DDMFormValues ddmFormValues =
 				_ddmFormValuesJSONDeserializer.deserialize(
@@ -120,6 +123,11 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValidator(DDMFormValidator ddmFormValidator) {
+		_ddmFormValidator = ddmFormValidator;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
@@ -138,6 +146,7 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 
 	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormValidator _ddmFormValidator;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private JSONFactory _jsonFactory;
 

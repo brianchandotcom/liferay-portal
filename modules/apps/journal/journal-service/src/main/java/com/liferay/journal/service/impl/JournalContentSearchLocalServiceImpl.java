@@ -16,6 +16,8 @@ package com.liferay.journal.service.impl;
 
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,13 +28,15 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,6 +44,19 @@ import javax.portlet.PortletPreferences;
  */
 public class JournalContentSearchLocalServiceImpl
 	extends JournalContentSearchLocalServiceBaseImpl {
+
+	@Override
+	public void afterPropertiesSet() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalContentSearchLocalServiceImpl.class);
+		BundleContext _bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			_bundleContext, DisplayInformationProvider.class,
+			"javax.portlet.name");
+
+		_serviceTrackerMap.open();
+	}
 
 	@Override
 	public void checkContentSearches(long companyId) throws PortalException {
@@ -158,6 +175,11 @@ public class JournalContentSearchLocalServiceImpl
 		for (JournalContentSearch contentSearch : contentSearches) {
 			deleteJournalContentSearch(contentSearch);
 		}
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -286,8 +308,7 @@ public class JournalContentSearchLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentSearchLocalServiceImpl.class);
 
-	private static final ServiceTrackerMap<String, DisplayInformationProvider>
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			DisplayInformationProvider.class, "javax.portlet.name");
+	private ServiceTrackerMap<String, DisplayInformationProvider>
+		_serviceTrackerMap;
 
 }

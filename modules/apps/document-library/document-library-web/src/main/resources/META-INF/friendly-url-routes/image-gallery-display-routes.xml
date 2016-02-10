@@ -7,15 +7,18 @@
 		<implicit-parameter name="folderId">0</implicit-parameter>
 		<implicit-parameter name="instanceId">0000</implicit-parameter>
 		<implicit-parameter name="mvcRenderCommandName">/image_gallery_display/view</implicit-parameter>
+		<implicit-parameter name="userIdAndInstanceId"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/view/{folderId:\d+}</pattern>
 		<implicit-parameter name="instanceId">0000</implicit-parameter>
 		<implicit-parameter name="mvcRenderCommandName">/image_gallery_display/view</implicit-parameter>
+		<implicit-parameter name="userIdAndInstanceId"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/view/{folderId:\d+}/{name}</pattern>
 		<implicit-parameter name="instanceId">0000</implicit-parameter>
 		<implicit-parameter name="mvcRenderCommandName">/document_library/view_file_entry</implicit-parameter>
+		<implicit-parameter name="userIdAndInstanceId"></implicit-parameter>
 	</route>
 </routes>

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.PortletInstance;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.util.test.PortletKeys;
 
 import java.security.InvalidParameterException;
@@ -25,8 +24,196 @@ import org.junit.Test;
 
 /**
  * @author Raymond Augé
+ * @author Manuel de la Peña
  */
 public class PortletInstanceTest {
+
+	@Test
+	public void testFromPortletNameAndUserIdAndInstanceId() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_xyz");
+
+		Assert.assertEquals(
+			"1234_xyz", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals("xyz", portletInstance.getInstanceId());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(1234, portletInstance.getUserId());
+	}
+
+	@Test
+	public void testFromPortletNameAndUserIdAndInstanceIdEmpty() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, StringPool.BLANK);
+
+		Assert.assertEquals(null, portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals(null, portletInstance.getInstanceId());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(0, portletInstance.getUserId());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdNull() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, null);
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidNumber1() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "12a34_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidNumber2() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "abcd_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash1() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "/1234_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash2() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "12/34_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash3() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234/_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash4() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234_/xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash5() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234_x/yz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidSlash6() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234_xyz/");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens1() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234xyz_");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens2() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "_1234xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens3() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "__1234xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens4() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234__xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens5() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234xyz__");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens6() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "12_34_xyz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens7() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "1234_x_yz");
+
+		Assert.fail();
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testFromPortletNameAndUserIdAndInstanceIdWithInvalidTokens8() {
+		PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+			PortletKeys.TEST, "12_34_x_yz");
+
+		Assert.fail();
+	}
+
+	@Test
+	public void
+		testFromPortletNameAndUserIdAndInstanceIdWithOnlyInstanceId() {
+
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "xyz");
+
+		Assert.assertEquals("xyz", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals("xyz", portletInstance.getInstanceId());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(0, portletInstance.getUserId());
+	}
+
+	@Test
+	public void testFromPortletNameAndUserIdAndInstanceIdWithOnlyUserId() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletNameAndUserIdAndInstanceId(
+				PortletKeys.TEST, "1234_");
+
+		Assert.assertEquals("1234_", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals(null, portletInstance.getInstanceId());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(1234, portletInstance.getUserId());
+	}
 
 	@Test
 	public void testGetInstanceId1() {
@@ -316,6 +503,50 @@ public class PortletInstanceTest {
 				getPortletInstanceKey(getPortletInstanceKey(), 1234, "5678"));
 
 		Assert.assertTrue(portletInstance.hasUserId());
+	}
+
+	@Test
+	public void testGetUserIdAndInstanceId() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(
+				PortletKeys.TEST + "_USER_1234_INSTANCE_xyz");
+
+		Assert.assertEquals(
+			"1234_xyz", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals("xyz", portletInstance.getInstanceId());
+		Assert.assertEquals(1234, portletInstance.getUserId());
+	}
+
+	@Test
+	public void testGetUserIdAndInstanceIdEmpty() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(PortletKeys.TEST);
+
+		Assert.assertEquals(null, portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals(null, portletInstance.getInstanceId());
+		Assert.assertEquals(0, portletInstance.getUserId());
+	}
+
+	@Test
+	public void testGetUserIdAndInstanceIdWithOnlyInstanceId() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(
+				PortletKeys.TEST + "_INSTANCE_xyz");
+
+		Assert.assertEquals("xyz", portletInstance.getInstanceId());
+		Assert.assertEquals("xyz", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals(0, portletInstance.getUserId());
+	}
+
+	@Test
+	public void testGetUserIdAndInstanceIdWithOnlyUserId() {
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(
+				PortletKeys.TEST + "_USER_1234");
+
+		Assert.assertEquals("1234_", portletInstance.getUserIdAndInstanceId());
+		Assert.assertEquals(null, portletInstance.getInstanceId());
+		Assert.assertEquals(1234, portletInstance.getUserId());
 	}
 
 	@Test

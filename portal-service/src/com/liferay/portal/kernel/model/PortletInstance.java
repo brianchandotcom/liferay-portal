@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -37,6 +39,17 @@ public class PortletInstance {
 		return new PortletInstance(
 			_getPortletName(portletInstanceKey), _getUserId(portletInstanceKey),
 			_getInstanceId(portletInstanceKey));
+	}
+
+	public static PortletInstance fromPortletNameAndUserIdAndInstanceId(
+		String portletId, String userIdAndInstanceId) {
+
+		UserIdAndInstanceIdEncoder userIdAndInstanceIdEncoder =
+			_buildUserIdAndInstanceIdEncoder(userIdAndInstanceId);
+
+		return new PortletInstance(
+			portletId, userIdAndInstanceIdEncoder.getUserId(),
+			userIdAndInstanceIdEncoder.getInstanceId());
 	}
 
 	public PortletInstance(String portletName) {
@@ -89,6 +102,13 @@ public class PortletInstance {
 		return _userId;
 	}
 
+	public String getUserIdAndInstanceId() {
+		UserIdAndInstanceIdEncoder userIdAndInstanceIdEncoder =
+			new UserIdAndInstanceIdEncoder(_instanceId, _userId);
+
+		return userIdAndInstanceIdEncoder.encode();
+	}
+
 	public boolean hasIdenticalPortletName(PortletInstance portletInstance) {
 		return hasIdenticalPortletName(portletInstance.getPortletName());
 	}
@@ -112,6 +132,59 @@ public class PortletInstance {
 	@Override
 	public String toString() {
 		return getPortletInstanceKey();
+	}
+
+	private static UserIdAndInstanceIdEncoder _buildUserIdAndInstanceIdEncoder(
+		String userIdAndInstanceId) {
+
+		if (userIdAndInstanceId == null) {
+			throw new InvalidParameterException(
+				"The userIdAndInstanceId must not be null.");
+		}
+
+		if (userIdAndInstanceId.isEmpty()) {
+			return new UserIdAndInstanceIdEncoder(null, 0);
+		}
+
+		int slashCount = StringUtil.count(
+			userIdAndInstanceId, StringPool.SLASH);
+
+		if (slashCount > 0) {
+			throw new InvalidParameterException(
+				"The userIdAndInstanceId must not contain slashes.");
+		}
+
+		int underlineCount = StringUtil.count(
+			userIdAndInstanceId, StringPool.UNDERLINE);
+
+		if (underlineCount > 1) {
+			throw new InvalidParameterException(
+				"The userIdAndInstanceId must only contain one underscore " +
+					"separating the userId from the instanceId.");
+		}
+
+		if (underlineCount == 1) {
+			int index = userIdAndInstanceId.indexOf(CharPool.UNDERLINE);
+
+			long userId = GetterUtil.getLong(
+				userIdAndInstanceId.substring(0, index), -1);
+
+			if (userId == -1) {
+				throw new InvalidParameterException(
+					"The fullInstanceId's userId must be a valid number.");
+			}
+
+			String instanceId = null;
+
+			if (index < (userIdAndInstanceId.length() - 1)) {
+				instanceId = userIdAndInstanceId.substring(index + 1);
+			}
+
+			return new UserIdAndInstanceIdEncoder(instanceId, userId);
+		}
+		else {
+			return new UserIdAndInstanceIdEncoder(userIdAndInstanceId, 0);
+		}
 	}
 
 	private static String _getInstanceId(String portletInstanceKey) {
@@ -178,5 +251,53 @@ public class PortletInstance {
 	private final String _instanceId;
 	private final String _portletName;
 	private final long _userId;
+
+	private static final class UserIdAndInstanceIdEncoder {
+
+		public UserIdAndInstanceIdEncoder() {
+			this(null, 0);
+		}
+
+		public UserIdAndInstanceIdEncoder(String instanceId, long userId) {
+			this._instanceId = instanceId;
+			this._userId = userId;
+		}
+
+		public String encode() {
+			if ((_userId <= 0) && Validator.isBlank(_instanceId)) {
+				return null;
+			}
+
+			StringBundler sb = new StringBundler(3);
+
+			if (_userId > 0) {
+				sb.append(_userId);
+				sb.append(StringPool.UNDERLINE);
+			}
+
+			if (_instanceId != null) {
+				sb.append(_instanceId);
+			}
+
+			return sb.toString();
+		}
+
+		public String getInstanceId() {
+			return _instanceId;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		@Override
+		public String toString() {
+			return encode();
+		}
+
+		private String _instanceId;
+		private long _userId;
+
+	}
 
 }

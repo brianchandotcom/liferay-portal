@@ -39,6 +39,8 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 	>
 
 		<%
+		boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
+
 		String rowURL = siteAdminDisplayContext.getRowURL(curGroup);
 
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
@@ -51,6 +53,12 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 				row.setCssClass("col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
 				%>
 
+				<liferay-portlet:renderURL var="viewSubsitesURL">
+					<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+				</liferay-portlet:renderURL>
+
 				<liferay-ui:search-container-column-text>
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
@@ -61,8 +69,8 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								showCheckbox="<%= false %>"
-								title="<%= curGroup.getName(locale) %>"
-								url="<%= rowURL != null ? rowURL.toString() : null %>"
+								title="<%= curGroup.getDescriptiveName(locale) %>"
+								url="<%= hasAddChildSitePermisison ? viewSubsitesURL.toString() : null %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:vertical-card>
@@ -75,8 +83,8 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								showCheckbox="<%= false %>"
-								title="<%= curGroup.getName(locale) %>"
-								url="<%= rowURL != null ? rowURL.toString() : null %>"
+								title="<%= curGroup.getDescriptiveName(locale) %>"
+								url="<%= hasAddChildSitePermisison ? viewSubsitesURL.toString() : null %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:icon-vertical-card>
@@ -88,8 +96,6 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 
 				<%
 				List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
-
-				boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
 				%>
 
 				<%@ include file="/site_columns.jspf" %>

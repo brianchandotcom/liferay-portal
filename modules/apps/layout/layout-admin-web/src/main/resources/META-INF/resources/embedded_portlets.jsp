@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 List<Portlet> embeddedPortlets = Collections.emptyList();
@@ -34,6 +36,10 @@ if (selLayout.isLayoutPrototypeLinkActive()) {
 }
 
 rowChecker.setRowIds("removeEmbeddedPortletIds");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -41,6 +47,23 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 		<aui:nav-item label="embedded-portlets" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<div class="text-muted">
@@ -56,6 +79,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 
 	<liferay-ui:search-container
 		deltaConfigurable="<%= false %>"
+		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= rowChecker %>"
 	>
 		<liferay-ui:search-container-results results="<%= embeddedPortlets %>" />
@@ -102,6 +126,6 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" type="none" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="none" />
 	</liferay-ui:search-container>
 </div>

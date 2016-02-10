@@ -21,18 +21,21 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getRootNodeName());
 %>
 
 <div class="container-fluid-1280 text-center">
-	<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-
-		<%
-		PortletURL addLayoutURL = layoutsAdminDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, layoutsAdminDisplayContext.isPrivateLayout());
-		%>
-
-		<aui:a cssClass="add-layout-btn btn btn-primary" href="<%= addLayoutURL.toString() %>" label='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "add-private-page" : "add-public-page" %>' />
-	</c:if>
 
 	<liferay-ui:empty-result-message message='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "there-are-no-private-pages" : "there-are-no-public-pages" %>'>
 		<p class="text-center text-muted">
 			<liferay-ui:message key='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "private-pages-help" : "public-pages-help" %>' />
 		</p>
 	</liferay-ui:empty-result-message>
+
+	<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
+
+		<%
+		PortletURL addLayoutURL = layoutsAdminDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, layoutsAdminDisplayContext.isPrivateLayout());
+		%>
+
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, layoutsAdminDisplayContext.isPrivateLayout() ? "add-private-page" : "add-public-page") %>' url="<%= addLayoutURL.toString() %>" />
+		</liferay-frontend:add-menu>
+	</c:if>
 </div>

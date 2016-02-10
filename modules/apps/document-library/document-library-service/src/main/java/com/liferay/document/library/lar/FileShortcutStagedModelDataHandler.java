@@ -155,27 +155,8 @@ public class FileShortcutStagedModelDataHandler
 		Element fileShortcutElement = portletDataContext.getExportDataElement(
 			fileShortcut);
 
-		String fileEntryLiveGroupId = String.valueOf(fileEntry.getGroupId());
-
-		Group fileShortcutGroup = _groupLocalService.getGroup(
-			fileShortcut.getGroupId());
-
-		if (fileShortcutGroup.isStagedRemotely()) {
-			Group fileEntryGroup = _groupLocalService.getGroup(
-				fileEntry.getGroupId());
-
-			UnicodeProperties typeSettingsProperties =
-				fileEntryGroup.getTypeSettingsProperties();
-
-			fileEntryLiveGroupId = typeSettingsProperties.getProperty(
-				"remoteGroupId");
-		}
-
 		fileShortcutElement.addAttribute(
 			"file-entry-uuid", fileEntry.getUuid());
-
-		fileShortcutElement.addAttribute(
-			"file-entry-live-group-id", fileEntryLiveGroupId);
 
 		portletDataContext.addClassedModel(
 			fileShortcutElement,

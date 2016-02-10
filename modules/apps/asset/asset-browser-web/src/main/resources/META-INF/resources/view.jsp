@@ -24,6 +24,7 @@ String typeSelection = ParamUtil.getString(request, "typeSelection");
 long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 boolean showNonindexable = ParamUtil.getBoolean(request, "showNonindexable");
 boolean showScheduled = ParamUtil.getBoolean(request, "showScheduled");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 Boolean listable = null;
 
@@ -95,6 +96,8 @@ else {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= assetBrowserSearch %>">
+		<aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
+
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />

@@ -129,7 +129,7 @@ else {
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/page_info_panel" var="sidebarPanelURL">
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-		<portlet:param name="showSidebarHeader" value="<%= Boolean.TRUE.toString() %>" />
+		<portlet:param name="<%= WikiWebKeys.SHOW_SIDEBAR_HEADER%>" value="<%= Boolean.TRUE.toString() %>" />
 	</liferay-portlet:resourceURL>
 
 	<liferay-frontend:sidebar-panel
@@ -139,7 +139,7 @@ else {
 
 		<%
 		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
-		request.setAttribute("showSidebarHeader", true);
+		request.setAttribute(WikiWebKeys.SHOW_SIDEBAR_HEADER, true);
 		%>
 
 		<liferay-util:include page="/wiki_admin/page_info_panel.jsp" servletContext="<%= application %>" />

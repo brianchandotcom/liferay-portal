@@ -83,10 +83,10 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 		HttpServletRequest request = getRequest();
 
 		boolean showSidebarHeader = GetterUtil.getBoolean(
-			request.getAttribute("showSidebarHeader"));
+			request.getAttribute(WikiWebKeys.SHOW_SIDEBAR_HEADER));
 
 		return ParamUtil.getBoolean(
-			request, "showSidebarHeader", showSidebarHeader);
+			request, WikiWebKeys.SHOW_SIDEBAR_HEADER, showSidebarHeader);
 	}
 
 	private WikiPage _page;

@@ -43,4 +43,6 @@ public class WikiWebKeys {
 	public static final String WIKI_TREE_WALKER_PARENT =
 		"WIKI_TREE_WALKER_PARENT";
 
+	public static final String SHOW_SIDEBAR_HEADER = "SHOW_SIDEBAR_HEADER";
+
 }

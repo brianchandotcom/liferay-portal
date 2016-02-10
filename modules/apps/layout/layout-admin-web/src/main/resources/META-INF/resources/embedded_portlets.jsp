@@ -18,6 +18,8 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
@@ -28,6 +30,10 @@ if (selLayout.isSupportsEmbeddedPortlets()) {
 
 	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
 }
+
+PortletTitleComparator portletTitleComparator = new PortletTitleComparator(application, locale);
+
+embeddedPortlets = ListUtil.sort(embeddedPortlets, portletTitleComparator);
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 
@@ -53,6 +59,13 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -104,16 +117,18 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 				keyProperty="portletId"
 				modelVar="portlet"
 			>
-				<liferay-ui:search-container-column-text
-					name="portlet-id"
-					property="portletId"
-				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="text-strong"
 					name="title"
 				>
 					<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
 				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text
+					name="portlet-id"
+					property="portletId"
+				/>
 
 				<liferay-ui:search-container-column-text
 					name="status"

@@ -17,39 +17,39 @@
 <%@ include file="/control_menu/init.jsp" %>
 
 <%
-List<ProductNavigationControlMenuCategory> controlMenuCategories = (List<ProductNavigationControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
-ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry = (ProductNavigationControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
+List<ProductNavigationControlMenuCategory> productNavigationControlMenuCategories = (List<ProductNavigationControlMenuCategory>)request.getAttribute("liferay-product-navigation:control-menu:control-menu-categories");
+ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegistry = (ProductNavigationControlMenuEntryRegistry)request.getAttribute("liferay-product-navigation:control-menu:control-menu-entry-registry");
 %>
 
-<c:if test="<%= !controlMenuCategories.isEmpty() %>">
+<c:if test="<%= !productNavigationControlMenuCategories.isEmpty() %>">
 	<div class="control-menu control-menu-level-1" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<div class="container-fluid-1280">
 			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%
-				for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
 				%>
 
-					<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
+					<li class="control-menu-nav-item <%= productNavigationControlMenuCategory.getKey() %>-controls-group">
 						<ul class="control-menu-nav">
 
 							<%
-							List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+							List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntryRegistry.getControlMenuEntries(productNavigationControlMenuCategory, request);
 
-							for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
-								if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
+							for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
+								if (productNavigationControlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
 									continue;
 								}
 							%>
 
 								<liferay-ui:icon
-									data="<%= controlMenuEntry.getData(request) %>"
-									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+									data="<%= productNavigationControlMenuEntry.getData(request) %>"
+									icon="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
 									label="<%= false %>"
-									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+									linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
 									markupView="lexicon"
-									message="<%= controlMenuEntry.getLabel(locale) %>"
-									url="<%= controlMenuEntry.getURL(request) %>"
+									message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
+									url="<%= productNavigationControlMenuEntry.getURL(request) %>"
 								/>
 
 							<%
@@ -69,11 +69,11 @@ ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry = (ProductNav
 		<div class="control-menu-body">
 
 			<%
-			for (ProductNavigationControlMenuCategory controlMenuCategory : controlMenuCategories) {
-				List<ProductNavigationControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+			for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
+				List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntryRegistry.getControlMenuEntries(productNavigationControlMenuCategory, request);
 
-				for (ProductNavigationControlMenuEntry controlMenuEntry : controlMenuEntries) {
-					controlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
+				for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
+					productNavigationControlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
 				}
 			}
 			%>

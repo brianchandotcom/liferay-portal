@@ -18,7 +18,15 @@
 
 <liferay-util:buffer var="labelContent">
 	<c:if test="<%= Validator.isNotNull(label) %>">
+		<c:if test='<%= type.equals("toggle-switch") %>'>
+			<span class="toggle-switch-label">
+		</c:if>
+
 		<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+
+		<c:if test='<%= type.equals("toggle-switch") %>'>
+			</span>
+		</c:if>
 
 		<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
 			<span class="icon-asterisk text-warning">

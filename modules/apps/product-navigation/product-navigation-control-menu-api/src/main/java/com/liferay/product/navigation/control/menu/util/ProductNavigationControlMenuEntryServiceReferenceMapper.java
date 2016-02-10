@@ -35,12 +35,13 @@ public class ProductNavigationControlMenuEntryServiceReferenceMapper
 		Emitter<String> emitter) {
 
 		String controlMenuCategoryKey = (String)serviceReference.getProperty(
-			"control.menu.category.key");
+			"product.navigation.control.menu.category.key");
 
 		if (Validator.isNull(controlMenuCategoryKey)) {
 			_log.error(
 				"Unable to register control menu entry because of missing " +
-					"service property \"control.menu.category.key\"");
+					"service property " +
+						"\"product.navigation.control.menu.category.key\"");
 		}
 		else {
 			emitter.emit(controlMenuCategoryKey);

@@ -43,10 +43,12 @@ public abstract class BaseProductNavigationControlMenuEntry
 			return false;
 		}
 
-		ProductNavigationControlMenuEntry controlMenuEntry =
+		ProductNavigationControlMenuEntry productNavigationControlMenuEntry =
 			(ProductNavigationControlMenuEntry)obj;
 
-		if (Validator.equals(getKey(), controlMenuEntry.getKey())) {
+		if (Validator.equals(
+				getKey(), productNavigationControlMenuEntry.getKey())) {
+
 			return true;
 		}
 

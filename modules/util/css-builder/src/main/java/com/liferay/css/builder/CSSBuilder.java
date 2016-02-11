@@ -123,14 +123,13 @@ public class CSSBuilder {
 		}
 
 		for (String fileName : fileNames) {
-			long start = System.currentTimeMillis();
+			long startTime = System.currentTimeMillis();
 
 			_parseSassFile(fileName);
 
-			long elapsedTime = System.currentTimeMillis() - start;
-
 			System.out.println(
-				"Parsed " + fileName + " in " + elapsedTime + "ms");
+				"Parsed " + fileName + " in " +
+					(System.currentTimeMillis() - startTime) + "ms");
 		}
 	}
 
@@ -283,12 +282,12 @@ public class CSSBuilder {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		return _fixRelativePath(
-			StringUtil.replace(
-				dirName + StringPool.SLASH + fileName,
-				new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
-				new String[] {StringPool.SLASH, StringPool.SLASH}
-			));
+		fileName = StringUtil.replace(
+			dirName + StringPool.SLASH + fileName,
+			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
+			new String[] {StringPool.SLASH, StringPool.SLASH});
+
+		return _fixRelativePath(fileName);
 	}
 
 	private String _parseSass(String fileName) throws SassCompilerException {
@@ -309,12 +308,11 @@ public class CSSBuilder {
 			}
 		}
 
-		return CSSBuilderUtil.parseStaticTokens(
-			_sassCompiler.compileFile(
-				filePath,
-				_portalCommonDirName + File.pathSeparator + cssBasePath,
-				_generateSourceMap, filePath + ".map"
-			));
+		String css = _sassCompiler.compileFile(
+			filePath, _portalCommonDirName + File.pathSeparator + cssBasePath,
+			_generateSourceMap, filePath + ".map");
+
+		return CSSBuilderUtil.parseStaticTokens(css);
 	}
 
 	private void _parseSassFile(String fileName) throws Exception {

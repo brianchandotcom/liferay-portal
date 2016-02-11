@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=30"},
+	property = {"service.ranking:Integer=50"},
 	service = FormNavigatorEntry.class
 )
 public class SiteCustomFieldsFormNavigatorEntry
@@ -43,7 +43,7 @@ public class SiteCustomFieldsFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_LANGUAGES;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
 	}
 
 	@Override

@@ -507,19 +507,29 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<propertycopy from="test.batch.run.property.names[${test.batch.name}]" name="test.batch.run.property.names" override="true" />
 			<propertycopy from="test.batch.run.property.values[${test.batch.name}]" name="test.batch.run.property.values" override="true" />
 
-			<antcall target="record-test-case-method-names">
-				<param name="test.batch.max.group.size" value="25" />
-				<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
-				<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
-			</antcall>
+			<if>
+				<and>
+					<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
+					<not>
+						<isset property="RUN_TEST_CASE_METHOD_GROUP_${test.class}" />
+					</not>
+				</and>
+				<then>
+					<antcall target="record-test-case-method-names">
+						<param name="test.batch.max.group.size" value="25" />
+						<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
+						<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
+					</antcall>
 
-			<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
-				<filterchain>
-					<linecontains>
-						<contains value="RUN_TEST_CASE_METHOD_GROUP_${test.class}" />
-					</linecontains>
-				</filterchain>
-			</loadproperties>
+					<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
+						<filterchain>
+							<linecontains>
+								<contains value="RUN_TEST_CASE_METHOD_GROUP_${test.class}" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>
+				</then>
+			</if>
 
 			<propertycopy from="RUN_TEST_CASE_METHOD_GROUP_${test.class}" name="test.class" override="true" />
 		</sequential>

@@ -195,7 +195,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								latestFileVersion = fileEntry.getLatestFileVersion();
 							}
 
-							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
+							request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
 							%>
 
 							<liferay-ui:app-view-search-entry
@@ -238,8 +238,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
-							request.setAttribute("view_entries.jsp-folder", curFolder);
-							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+							request.setAttribute("info_panel.jsp-folder", curFolder);
 							request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
 							%>
 

@@ -25,8 +25,6 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -70,40 +68,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle
 if (Validator.isNotNull(keywords)) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
 }
+
+request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 %>
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="trash"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= entrySearch.getOrderByCol() %>"
-			orderByType="<%= entrySearch.getOrderByType() %>"
-			orderColumns='<%= new String[] {"removed-date"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedEntries" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
@@ -312,17 +283,6 @@ if (Validator.isNotNull(keywords)) {
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedEntries').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
-		}
-	);
-</aui:script>
 
 <aui:script use="liferay-url-preview">
 	A.one('#<portlet:namespace />fm').delegate(

@@ -50,9 +50,8 @@
 		%>
 
 		<liferay-ui:icon
-			cssClass="visibility-control"
 			label="<%= true %>"
-			message='<%= ((flagValue == AnnouncementsFlagConstants.NOT_HIDDEN) ? "mark-as-read" : "show") %>'
+			message='<%= ((flagValue == AnnouncementsFlagConstants.NOT_HIDDEN) ? "mark-as-read" : "mark-as-unread") %>'
 			url="<%= taglibMarkAsReadURL %>"
 		/>
 	</c:if>

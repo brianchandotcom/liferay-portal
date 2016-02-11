@@ -476,9 +476,6 @@ if (portlet.getConfigurationActionInstance() != null) {
 		urlConfiguration.setParameter("settingsScope", settingsScope);
 	}
 }
-else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
-	urlConfiguration.setParameter("mvcPath", "/edit_permissions.jsp");
-}
 else {
 	urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
 }

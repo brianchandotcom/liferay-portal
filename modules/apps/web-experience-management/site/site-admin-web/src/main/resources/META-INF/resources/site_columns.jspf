@@ -19,19 +19,18 @@
 	name="name"
 	orderable="<%= true %>"
 >
-	<c:choose>
-		<c:when test="<%= hasAddChildSitePermisison && (row != null) %>">
-			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-			</liferay-portlet:renderURL>
 
-			<aui:a href="<%= viewSubsitesURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
-		</c:when>
-		<c:otherwise>
-			<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
-		</c:otherwise>
-	</c:choose>
+	<%
+	PortletURL viewSubsitesURL = null;
+
+	if (hasAddChildSitePermisison && (row != null)) {
+		viewSubsitesURL = renderResponse.createRenderURL();
+		viewSubsitesURL.setParameter("backURL", currentURL);
+		viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
+	}
+	%>
+
+	<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 	<c:if test="<%= curGroup.isOrganization() %>">
 

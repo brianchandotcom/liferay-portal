@@ -20,6 +20,7 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringPool;
@@ -85,7 +86,8 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	protected boolean isActive(
-		List<PanelApp> panelApps, PanelCategoryHelper panelCategoryHelper) {
+		List<PanelApp> panelApps, PanelCategoryHelper panelCategoryHelper,
+		Group group) {
 
 		if (_showOpen) {
 			return true;
@@ -104,7 +106,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			return false;
 		}
 
-		return _panelCategory.isActive(request, panelCategoryHelper);
+		return _panelCategory.isActive(request, panelCategoryHelper, group);
 	}
 
 	protected boolean isPersistState() {
@@ -128,23 +130,24 @@ public class PanelCategoryTag extends BasePanelTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Group group = themeDisplay.getScopeGroup();
+
 		List<PanelApp> panelApps = panelAppRegistry.getPanelApps(
-			_panelCategory, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup());
+			_panelCategory, themeDisplay.getPermissionChecker(), group);
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			panelAppRegistry, panelCategoryRegistry);
 
 		request.setAttribute(
 			"liferay-application-list:panel-category:active",
-			isActive(panelApps, panelCategoryHelper));
+			isActive(panelApps, panelCategoryHelper, group));
 
 		request.setAttribute(
 			"liferay-application-list:panel-category:id", getId());
 
 		int notificationsCount = panelCategoryHelper.getNotificationsCount(
 			_panelCategory.getKey(), themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup(), themeDisplay.getUser());
+			group, themeDisplay.getUser());
 
 		request.setAttribute(
 			"liferay-application-list:panel-category:notificationsCount",

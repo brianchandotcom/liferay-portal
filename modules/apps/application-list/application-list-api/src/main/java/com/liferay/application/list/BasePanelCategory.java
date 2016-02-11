@@ -85,14 +85,15 @@ public abstract class BasePanelCategory implements PanelCategory {
 
 	@Override
 	public boolean isActive(
-		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper,
+		Group group) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return panelCategoryHelper.containsPortlet(
 			themeDisplay.getPpid(), getKey(),
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
+			themeDisplay.getPermissionChecker(), group);
 	}
 
 	@Override

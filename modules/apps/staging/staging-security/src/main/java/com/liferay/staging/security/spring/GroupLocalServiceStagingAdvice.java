@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public GroupLocalServiceStagingAdvice() throws NoSuchMethodException {

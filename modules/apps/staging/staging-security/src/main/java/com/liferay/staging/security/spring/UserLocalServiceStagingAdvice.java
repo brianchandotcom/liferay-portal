@@ -17,9 +17,12 @@ package com.liferay.staging.security.spring;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public UserLocalServiceStagingAdvice() throws NoSuchMethodException {

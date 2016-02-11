@@ -16,9 +16,12 @@ package com.liferay.staging.security.spring;
 
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserGroupGroupRoleLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 

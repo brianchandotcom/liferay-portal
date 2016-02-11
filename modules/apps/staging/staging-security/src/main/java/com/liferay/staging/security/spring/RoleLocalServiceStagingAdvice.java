@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public RoleLocalServiceStagingAdvice() throws NoSuchMethodException {

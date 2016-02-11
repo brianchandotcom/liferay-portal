@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.display.context;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -46,8 +47,10 @@ public class LayoutsPrototypeTreeDisplayContext
 			liferayPortletRequest, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE,
 			PortletRequest.RENDER_PHASE);
 
+		Group group = getSelGroup();
+
 		editLayoutURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			"groupId", String.valueOf(group.getGroupId()));
 
 		Layout layout = getLayout();
 
@@ -63,9 +66,10 @@ public class LayoutsPrototypeTreeDisplayContext
 			return _layout;
 		}
 
+		Group group = getSelGroup();
+
 		_layout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		return _layout;
 	}

@@ -41,11 +41,6 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
-	<bean id="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil" class="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil">
-		<property name="auditMessageFactory">
-			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.bean.BeanPropertiesUtil" class="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
 		<property name="beanProperties">
 			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />

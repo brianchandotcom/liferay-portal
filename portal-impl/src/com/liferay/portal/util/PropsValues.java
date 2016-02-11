@@ -106,8 +106,6 @@ public class PropsValues {
 
 	public static final boolean AUDIT_MESSAGE_COM_LIFERAY_PORTAL_MODEL_LAYOUT_VIEW = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUDIT_MESSAGE_COM_LIFERAY_PORTAL_MODEL_LAYOUT_VIEW));
 
-	public static final boolean AUDIT_MESSAGE_SCHEDULER_JOB = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUDIT_MESSAGE_SCHEDULER_JOB));
-
 	public static boolean AUTH_FORWARD_BY_LAST_PATH = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_FORWARD_BY_LAST_PATH));
 
 	public static final boolean AUTH_FORWARD_BY_REDIRECT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_FORWARD_BY_REDIRECT));

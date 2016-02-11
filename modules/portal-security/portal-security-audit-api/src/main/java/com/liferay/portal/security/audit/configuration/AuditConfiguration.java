@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.audit;
+package com.liferay.portal.security.audit.configuration;
 
-import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouter;
-import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Michael C. Han
  */
-@DoPrivileged
-public class AuditRouterProxyBean extends BaseProxyBean implements AuditRouter {
+@ExtendedObjectClassDefinition(category = "platform")
+@Meta.OCD(
+	id = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
+	localization = "content/Language", name = "%audit.configuration.name"
+)
+public interface AuditConfiguration {
 
-	@Override
-	public boolean isDeployed() {
-		return false;
-	}
-
-	@Override
-	public void route(AuditMessage auditMessage) {
-		throw new UnsupportedOperationException();
-	}
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enabled();
 
 }

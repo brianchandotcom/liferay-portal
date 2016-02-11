@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -33,8 +34,7 @@ import javax.servlet.ServletContext;
 	property = {"service.ranking:Integer=50"},
 	service = FormNavigatorEntry.class
 )
-public class SitePagesFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -49,6 +49,15 @@ public class SitePagesFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "pages");
+	}
+
+	@Override
+	public boolean isVisible(User user, Group group) {
+		if ((group == null) || !group.isCompany()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

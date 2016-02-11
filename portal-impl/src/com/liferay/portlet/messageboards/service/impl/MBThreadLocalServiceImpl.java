@@ -1001,8 +1001,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (Validator.isNotNull(subject)) {
 			MBMessageDisplay messageDisplay =
 				mbMessageLocalService.getMessageDisplay(
-					userId, messageId, WorkflowConstants.STATUS_ANY,
-					MBThreadConstants.THREAD_VIEW_TREE, false);
+					userId, messageId, WorkflowConstants.STATUS_ANY);
 
 			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 

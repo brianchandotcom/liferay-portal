@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.trash;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.model.MBTreeWalker;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
@@ -100,8 +99,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageServiceUtil.getMessageDisplay(
-				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
-				MBThreadConstants.THREAD_VIEW_TREE, false);
+				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY);
 
 		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);

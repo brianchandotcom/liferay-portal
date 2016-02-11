@@ -1024,9 +1024,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		return getMessageDisplay(
-			userId, message, status, MBThreadConstants.THREAD_VIEW_COMBINATION,
-			false, comparator);
+		return getMessageDisplay(userId, message, status, comparator);
 	}
 
 	/**

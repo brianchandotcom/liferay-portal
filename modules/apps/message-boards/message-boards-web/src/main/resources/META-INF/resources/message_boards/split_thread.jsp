@@ -79,7 +79,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 
 			<%
-			MBMessageDisplay messageDisplay = MBMessageServiceUtil.getMessageDisplay(messageId, WorkflowConstants.STATUS_APPROVED, MBThreadConstants.THREAD_VIEW_TREE, false);
+			MBMessageDisplay messageDisplay = MBMessageServiceUtil.getMessageDisplay(messageId, WorkflowConstants.STATUS_APPROVED);
 
 			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 

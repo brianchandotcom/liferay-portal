@@ -75,6 +75,8 @@
 	<command name="addPGViaMG">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_FOLDER" value1="Add Folder" />
 
 		<execute function="Pause" locator1="1000" />
@@ -317,7 +319,7 @@
 	<command name="editPGViaMG">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MediaGallery#ENTRY_EDIT_ICON" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderNameEdit}" />
 
@@ -329,7 +331,7 @@
 
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_AVATAR_NAME" value1="${mgFolderNameEdit}" />
+		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderNameEdit}" />
 	</command>
 
 	<command name="gotoCP">

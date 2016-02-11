@@ -172,7 +172,7 @@
 
 	<command name="addSubfolderPGViaMG">
 		<execute function="Click" locator1="MediaGallery#HOME_VERTICAL_ELLIPSIS" />
-
+		
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
 
 		<execute function="Pause" locator1="1000" />

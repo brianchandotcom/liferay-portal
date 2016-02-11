@@ -84,7 +84,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					}
 				}
 
-				row.setClassName("col-md-3 col-sm-4 col-xs-6");
+				row.setClassName("col-md-4 col-sm-4 col-xs-6");
 				%>
 
 				<liferay-ui:search-container-column-text>
@@ -97,10 +97,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									cssClass="entry-display-style"
 									icon="documents-and-media"
 									resultRow="<%= row %>"
-									title="<%= fileEntry.getTitle() %>"
-								>
-									<%@ include file="/image_gallery_display/file_entry_vertical_card.jspf" %>
-								</liferay-frontend:icon-vertical-card>
+									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"
+								/>
 							</c:when>
 							<c:otherwise>
 								<liferay-frontend:vertical-card
@@ -109,10 +107,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									cssClass="entry-display-style"
 									imageUrl="<%= imageURL %>"
 									resultRow="<%= row %>"
-									title="<%= fileEntry.getTitle() %>"
-								>
-									<%@ include file="/image_gallery_display/file_entry_vertical_card.jspf" %>
-								</liferay-frontend:vertical-card>
+									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"
+								/>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -148,7 +144,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= igSearchContainer %>" />
+	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" resultRowSplitter="<%= new IGResultRowSplitter() %>" searchContainer="<%= igSearchContainer %>" />
 </liferay-ui:search-container>
 
 <%

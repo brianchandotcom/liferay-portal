@@ -83,8 +83,7 @@ public class BaseLayoutDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
-			editLayoutURL.setParameter(
-				"selPlid", String.valueOf(selPlid));
+			editLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 		}
 
 		if (privateLayout != null) {

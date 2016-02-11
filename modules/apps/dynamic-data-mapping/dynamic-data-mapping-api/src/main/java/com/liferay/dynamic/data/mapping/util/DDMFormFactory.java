@@ -15,14 +15,8 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -35,89 +29,13 @@ public class DDMFormFactory {
 				"Unsupported class " + clazz.getName());
 		}
 
-		DDMForm ddmForm = new DDMForm();
-
-		for (Method method : getDDMFormFieldMethods(clazz)) {
-			DDMFormField ddmFormField = createDDMFormField(clazz, method);
-
-			ddmForm.addDDMFormField(ddmFormField);
-		}
-
-		return ddmForm;
-	}
-
-	protected static void collectDDMFormFieldMethodsMap(
-		Class<?> clazz, Map<String, Method> methodsMap) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			collectDDMFormFieldMethodsMap(interfaceClass, methodsMap);
-		}
-
-		for (Method method : clazz.getDeclaredMethods()) {
-			if (method.isAnnotationPresent(_DDM_FORM_FIELD_ANNOTATION)) {
-				methodsMap.put(method.getName(), method);
-			}
-		}
-	}
-
-	protected static DDMFormField createDDMFormField(
-		Class<?> clazz, Method method) {
-
 		DDMFormFactoryHelper ddmFormFactoryHelper = new DDMFormFactoryHelper(
-			clazz, method);
+			clazz);
 
-		String name = ddmFormFactoryHelper.getDDMFormFieldName();
-		String type = ddmFormFactoryHelper.getDDMFormFieldType();
-
-		DDMFormField ddmFormField = new DDMFormField(name, type);
-
-		Map<String, Object> properties = ddmFormFactoryHelper.getProperties();
-
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (ddmFormFactoryHelper.isLocalizableValue((String)value)) {
-				value = ddmFormFactoryHelper.getPropertyValue(value);
-			}
-
-			ddmFormField.setProperty(key, value);
-		}
-
-		ddmFormField.setDataType(
-			ddmFormFactoryHelper.getDDMFormFieldDataType());
-		ddmFormField.setDDMFormFieldOptions(
-			ddmFormFactoryHelper.getDDMFormFieldOptions());
-		ddmFormField.setDDMFormFieldValidation(
-			ddmFormFactoryHelper.getDDMFormFieldValidation());
-		ddmFormField.setLabel(ddmFormFactoryHelper.getDDMFormFieldLabel());
-		ddmFormField.setLocalizable(
-			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
-		ddmFormField.setPredefinedValue(
-			ddmFormFactoryHelper.getDDMFormFieldPredefinedValue());
-		ddmFormField.setRepeatable(
-			ddmFormFactoryHelper.isDDMFormFieldRepeatable());
-		ddmFormField.setRequired(ddmFormFactoryHelper.isDDMFormFieldRequired());
-		ddmFormField.setTip(ddmFormFactoryHelper.getDDMFormFieldTip());
-		ddmFormField.setVisibilityExpression(
-			ddmFormFactoryHelper.getDDMFormFieldVisibilityExpression());
-
-		return ddmFormField;
-	}
-
-	protected static Collection<Method> getDDMFormFieldMethods(Class<?> clazz) {
-		Map<String, Method> methodsMap = new HashMap<>();
-
-		collectDDMFormFieldMethodsMap(clazz, methodsMap);
-
-		return methodsMap.values();
+		return ddmFormFactoryHelper.createDDMForm();
 	}
 
 	private static final Class<? extends Annotation> _DDM_FORM_ANNOTATION =
 		com.liferay.dynamic.data.mapping.annotations.DDMForm.class;
-
-	private static final Class<? extends Annotation>
-		_DDM_FORM_FIELD_ANNOTATION =
-			com.liferay.dynamic.data.mapping.annotations.DDMFormField.class;
 
 }

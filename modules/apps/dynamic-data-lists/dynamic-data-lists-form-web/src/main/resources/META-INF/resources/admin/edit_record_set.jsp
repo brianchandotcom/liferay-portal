@@ -88,6 +88,22 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 			<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidValidationExpression.class %>">
+
+			<%
+			DDMFormValidationException.MustSetValidValidationExpression msvve = (DDMFormValidationException.MustSetValidValidationExpression)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msvve.getFieldName() %>" key="invalid-validation-expression-was-defined-for-field-name-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidVisibilityExpression.class %>">
+
+			<%
+			DDMFormValidationException.MustSetValidVisibilityExpression msvve = (DDMFormValidationException.MustSetValidVisibilityExpression)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msvve.getFieldName() %>" key="invalid-visibility-expression-was-defined-for-field-name-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
 		<liferay-ui:error exception="<%= StorageException.class %>" message="please-enter-a-valid-form-settings" />

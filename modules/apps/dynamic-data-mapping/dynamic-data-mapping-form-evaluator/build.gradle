@@ -1,6 +1,5 @@
 dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":portal:portal-expression")
 }
 

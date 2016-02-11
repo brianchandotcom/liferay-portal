@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
@@ -31,6 +32,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -62,6 +65,16 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormFields(
 			ddmForm.getDDMFormFields(), new HashSet<String>(),
 			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
+	}
+
+	protected boolean isBooleanValueExpression(String expression) {
+		if (Validator.equals(StringPool.FALSE, expression) ||
+			Validator.equals(StringPool.TRUE, expression)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void validateDDMFormAvailableLocales(
@@ -177,12 +190,16 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);
 
-			validateDDMFormFieldType(ddmFormField);
-
 			validateDDMFormFieldIndexType(ddmFormField);
+
+			validateDDMFormFieldType(ddmFormField);
 
 			validateDDMFormFieldOptions(
 				ddmFormField, ddmFormAvailableLocales, ddmFormDefaultLocale);
+
+			validateDDMFormFieldValidationExpression(ddmFormField);
+
+			validateDDMFormFieldVisibilityExpression(ddmFormField);
 
 			validateOptionalDDMFormFieldLocalizedProperty(
 				ddmFormField, "label", ddmFormAvailableLocales,
@@ -218,6 +235,67 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 	}
 
+	protected void validateDDMFormFieldValidationExpression(
+			DDMFormField ddmFormField)
+		throws DDMFormValidationException {
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		if (ddmFormFieldValidation == null) {
+			return;
+		}
+
+		if (Validator.isNull(ddmFormFieldValidation.getExpression()) ||
+			isBooleanValueExpression(ddmFormField.getVisibilityExpression())) {
+
+			return;
+		}
+
+		Matcher matcher = _ddmFormFieldExpressionComparisonPattern1.matcher(
+			ddmFormFieldValidation.getExpression());
+
+		if (matcher.matches()) {
+			return;
+		}
+
+		matcher = _ddmFormFieldExpressionFunctionPattern.matcher(
+			ddmFormFieldValidation.getExpression());
+
+		if (matcher.matches()) {
+			return;
+		}
+
+		throw new MustSetValidValidationExpression(ddmFormField.getName());
+	}
+
+	protected void validateDDMFormFieldVisibilityExpression(
+			DDMFormField ddmFormField)
+		throws DDMFormValidationException {
+
+		if (Validator.isNull(ddmFormField.getVisibilityExpression()) ||
+			isBooleanValueExpression(ddmFormField.getVisibilityExpression())) {
+
+			return;
+		}
+
+		Matcher matcher = _ddmFormFieldExpressionComparisonPattern1.matcher(
+			ddmFormField.getVisibilityExpression());
+
+		if (matcher.matches()) {
+			return;
+		}
+
+		matcher = _ddmFormFieldExpressionComparisonPattern2.matcher(
+			ddmFormField.getVisibilityExpression());
+
+		if (matcher.matches()) {
+			return;
+		}
+
+		throw new MustSetValidVisibilityExpression(ddmFormField.getName());
+	}
+
 	protected void validateDDMFormLocales(DDMForm ddmForm)
 		throws DDMFormValidationException {
 
@@ -249,6 +327,12 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			ddmFormAvailableLocales, ddmFormDefaultLocale);
 	}
 
+	private final Pattern _ddmFormFieldExpressionComparisonPattern1 =
+		Pattern.compile("[^.;]+\\.(contains|equals)\\(\"?[^.;\"]*\"?\\)");
+	private final Pattern _ddmFormFieldExpressionComparisonPattern2 =
+		Pattern.compile("[^.;]+[ \t](==|!=|>=?|<=?)[ \t](true|false|[0-9]+)");
+	private final Pattern _ddmFormFieldExpressionFunctionPattern =
+		Pattern.compile("!?(isEmailAddress|isURL)\\([^.;\"]+\\)");
 	private final String[] _ddmFormFieldIndexTypes = new String[] {
 		StringPool.BLANK, "keyword", "text"
 	};

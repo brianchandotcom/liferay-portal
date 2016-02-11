@@ -157,8 +157,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 <aui:script use="aui-image-viewer,aui-image-viewer-media">
 	var viewportRegion = A.getDoc().get('viewportRegion');
 
-	var maxHeight = (viewportRegion.height / 2);
-	var maxWidth = (viewportRegion.width / 2);
+	var maxHeight = (viewportRegion.height);
+	var maxWidth = (viewportRegion.width);
 
 	var imageViewer = new A.ImageViewer(
 		{

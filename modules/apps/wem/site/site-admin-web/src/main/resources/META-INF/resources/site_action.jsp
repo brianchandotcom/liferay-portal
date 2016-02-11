@@ -77,7 +77,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 		<c:if test="<%= (childSitesCount > 0) && (row != null) %>">
 			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</liferay-portlet:renderURL>
 

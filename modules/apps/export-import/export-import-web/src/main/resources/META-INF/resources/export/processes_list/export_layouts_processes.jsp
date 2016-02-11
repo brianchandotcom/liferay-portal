@@ -178,22 +178,20 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 								String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
 								%>
 
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+								<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
 
-										<%
-										String messageKey = "exporting";
+									<%
+									String messageKey = "exporting";
 
-										if (Validator.equals(cmd, Constants.IMPORT)) {
-											messageKey = "importing";
-										}
-										%>
+									if (Validator.equals(cmd, Constants.IMPORT)) {
+										messageKey = "importing";
+									}
+									%>
 
-										<div class="progress-current-item">
-											<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
-										</div>
-									</c:when>
-								</c:choose>
+									<div class="progress-current-item">
+										<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
+									</div>
+								</c:if>
 							</c:if>
 						</c:if>
 

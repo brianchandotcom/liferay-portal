@@ -60,13 +60,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
 </portlet:actionURL>
 
-<portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="selPlid" value="<%= String.valueOf(parentPlid) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-</portlet:renderURL>
-
 <aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
 
 	<%
@@ -234,7 +227,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="add-page" />
 
-		<aui:button cssClass="btn-lg" href="<%= editLayoutRenderURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

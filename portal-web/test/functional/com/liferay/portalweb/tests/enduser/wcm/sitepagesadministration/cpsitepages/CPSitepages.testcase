@@ -397,6 +397,8 @@
 	</command>
 
 	<command name="DeleteSitePages" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

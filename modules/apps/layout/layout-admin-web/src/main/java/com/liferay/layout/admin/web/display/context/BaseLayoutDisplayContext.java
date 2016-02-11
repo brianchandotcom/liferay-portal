@@ -74,11 +74,6 @@ public class BaseLayoutDisplayContext {
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		addLayoutURL.setParameter(
-			"backURL",
-			PortalUtil.getCurrentURL(
-				PortalUtil.getHttpServletRequest(liferayPortletRequest)));
-
 		return addLayoutURL;
 	}
 

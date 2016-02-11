@@ -21,16 +21,21 @@ String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_header.jspf-portletURL");
+
+int ruleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<%@ include file="/layout/mobile_device_rules_toolbar.jspf" %>
+<c:if test="<%= ruleGroupInstancesCount <= 0 %>">
+	<p class="text-muted">
+		<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+	</p>
+</c:if>
 
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="no-device-rules-are-configured"
 	id="rules"
 	iteratorURL="<%= portletURL %>"
-	total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
+	total="<%= ruleGroupInstancesCount %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), new RuleGroupInstancePriorityComparator()) %>"
@@ -54,6 +59,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 
 	<liferay-ui:search-iterator markupView="lexicon" type="more" />
 </liferay-ui:search-container>
+
+<%@ include file="/layout/mobile_device_rules_toolbar.jspf" %>
 
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />rules').delegate(

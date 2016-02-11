@@ -99,7 +99,7 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 			<portlet:namespace />markEntry(entryId);
 		}
 		else {
-			<portlet:namespace />toggleContent(entry);
+			<portlet:namespace />unmarkEntry(entryId);
 		}
 	}
 
@@ -114,21 +114,22 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 		);
 	}
 
-	function <portlet:namespace />toggleContent(entry) {
-		var content = entry.find('.entry-content');
-		var scope = entry.find('.entry-scope');
-
-		var visible = entry.hasClass('visible');
-
-		entry.toggleClass('visible', !visible);
-
-		content.toggleClass('hide', visible);
-		scope.toggleClass('hide', visible);
-
-		var label = visible ? '<%= UnicodeLanguageUtil.get(request, "show") %>' : '<%= UnicodeLanguageUtil.get(request, "hide") %>';
-
-		var showHideControl = entry.find('.control-entry li.visibility-control a');
-
-		showHideControl.html(label);
+	function <portlet:namespace />unmarkEntry(entryId) {
+		Liferay.Service(
+			'/announcementsflag/get-flag',
+				{
+					entryId : entryId,
+					value: <%= AnnouncementsFlagConstants.HIDDEN %>
+				},
+				function(response) {
+					Liferay.Service(
+						'/announcementsflag/delete-flag',
+						{
+							flagId: response.flagId
+						},
+						AUI.$.proxy(Liferay.Portlet, 'refresh', '#p_p_id<portlet:namespace />')
+					);
+				}
+		);
 	}
 </aui:script>

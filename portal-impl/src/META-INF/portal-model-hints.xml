@@ -41,7 +41,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />

@@ -1,4 +1,6 @@
 <definition>
+	<var name="key_panelId" value="user" />
+
 	<command name="gotoDashboard">
 		<description message="Navigate to My Dashboard." />
 

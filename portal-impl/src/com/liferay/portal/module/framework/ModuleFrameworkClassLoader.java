@@ -14,12 +14,7 @@
 
 package com.liferay.portal.module.framework;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
 import java.io.IOException;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -36,35 +31,6 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 
 	public ModuleFrameworkClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
-
-		Field stateField = null;
-		Object startedState = null;
-
-		try {
-			Class<?> clazz = parent.getClass();
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			Class<?> lifecycleStateClass = classLoader.loadClass(
-				"org.apache.catalina.LifecycleState");
-
-			Method valueOfMethod = lifecycleStateClass.getMethod(
-				"valueOf", String.class);
-
-			startedState = valueOfMethod.invoke(null, "STARTED");
-
-			Class<?> WebappClassLoaderBaseClass = classLoader.loadClass(
-				"org.apache.catalina.loader.WebappClassLoaderBase");
-
-			stateField = ReflectionUtil.getDeclaredField(
-				WebappClassLoaderBaseClass, "state");
-		}
-		catch (Exception e) {
-			startedState = null;
-			stateField = null;
-		}
-
-		_startedState = startedState;
-		_stateField = stateField;
 	}
 
 	@Override
@@ -129,12 +95,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 					clazz = findClass(name);
 				}
 				catch (ClassNotFoundException cnfe) {
-					if (_stateField == null) {
-						clazz = super.loadClass(name, resolve);
-					}
-					else {
-						clazz = _loadForTomcat8(cnfe, name, resolve);
-					}
+					clazz = super.loadClass(name, resolve);
 				}
 			}
 
@@ -160,40 +121,8 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		return urls;
 	}
 
-	private Class<?> _loadForTomcat8(
-			ClassNotFoundException cnfe, String name, boolean resolve)
-		throws ClassNotFoundException {
-
-		ClassLoader classLoader = getParent();
-
-		try {
-			Object state = _stateField.get(classLoader);
-
-			if (state == _startedState) {
-				return super.loadClass(name, resolve);
-			}
-
-			_stateField.set(classLoader, _startedState);
-
-			try {
-				return super.loadClass(name, resolve);
-			}
-			finally {
-				_stateField.set(classLoader, state);
-			}
-		}
-		catch (ReflectiveOperationException roe) {
-			cnfe.addSuppressed(roe);
-
-			throw cnfe;
-		}
-	}
-
 	static {
 		ClassLoader.registerAsParallelCapable();
 	}
-
-	private final Object _startedState;
-	private final Field _stateField;
 
 }

@@ -23,7 +23,6 @@ import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.DiscussionTag;
-import com.liferay.taglib.ui.FlagsTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
@@ -145,12 +144,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void flags(
-		String className, long classPK, String contentTitle, boolean label,
-		String message, long reportedUserId) {
-	}
-
-	@Override
 	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag() {
 		return null;
 	}
@@ -172,11 +165,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public DiscussionTag getDiscussionTag() {
-		return null;
-	}
-
-	@Override
-	public FlagsTag getFlagsTag() {
 		return null;
 	}
 

@@ -1126,6 +1126,479 @@ AUI.add(
 
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
 
+		var LinkToPageField = A.Component.create(
+				{
+					ATTRS: {
+						delta: { value: 12 },
+						startPublic:{ value : 0 },
+						startPrivate:{ value : 0 },
+						lastLoadFinished:{ value : false},
+						
+						selectLinkToPageModal : {value : {}},
+						
+						pageSelected : {value : ''}
+					},
+	
+					EXTENDS: Field,
+	
+					prototype: {
+						initializer: function() {
+							var instance = this;
+	
+							var container = instance.get('container');
+	
+							container.delegate('click', instance._handleButtonsClick, '.btn', instance);
+						},
+	
+						getValue: function() {
+							var instance = this;
+
+							var value = instance.getInputNode().val();
+							
+							return instance.get('pageSelected');
+						},
+						
+						getParsedValue: function(value) {
+							var instance = this;
+	
+							if (Lang.isString(value)) {
+								if (value !== '') {
+									value = JSON.parse(value);
+								}
+								else {
+									value = {};
+								}
+							}
+	
+							return value;
+						},
+	
+						setValue: function(value) {
+							var instance = this;
+
+							var parsedValue = instance.getParsedValue(value);
+
+							if (!parsedValue.layoutId) {
+								value = '';
+							}
+							else {
+								value = JSON.stringify(parsedValue);
+							}
+
+							instance.set('pageSelected', value);
+							
+							LinkToPageField.superclass.setValue.call(instance, parsedValue.name);
+						},
+						
+						syncReadOnlyUI: function() {
+							var instance = this;
+	
+							var container = instance.get('container');
+	
+							var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
+	
+							selectButtonNode.attr('disabled', instance.get('readOnly'));
+						},
+	
+						
+						
+						_bindEvents : function(){
+							var instance = this;
+							
+							A.all('.group-choose').detach('click').on('click', function(event){
+								instance._handleChooseGroup(event);
+							});
+							
+							instance._bindScrollPaginationHandler();
+						},
+						
+						_bindScrollPaginationHandler : function(){
+							var instance = this;
+							
+							jQuery('.modal-body').unbind('scroll').scroll(function(event){
+								
+								var delta = instance.get('delta');
+								
+								var scrollTop = jQuery(event.target).scrollTop(); 
+								var height = jQuery(event.target).innerHeight(); 
+								
+								var options = instance.get('options');
+								
+								var hasMore = Object.keys(options).length >= delta; 
+								
+								var isScrollDown = (height + scrollTop) > this.scrollHeight - 20;
+								
+								var loadMore = isScrollDown && hasMore;
+									
+								if(!loadMore){
+									return;
+								}
+								
+								var privateLayoutsNode = A.one('.private-layouts');
+								
+								var privateLayout = privateLayoutsNode.test('.selected');
+								
+								instance._updatePaginationStart(privateLayout);
+								
+								if(instance.get('lastLoadFinished')){
+									instance._getEntries(privateLayout, true);
+								}
+							});
+						},
+						
+						_createCheckedAnchor : function(){
+							var instance = this;
+							var optionSelected = instance.getValue();
+							var layoutName = instance.getInputNode().val();
+							
+							if(layoutName.length <= 0){
+								return;
+							}
+							
+							optionSelected = JSON.parse(optionSelected);
+							optionSelected['name'] = layoutName;
+							optionSelected['checked'] = 'checked';
+							
+							var privateLayout = optionSelected.privateLayout;
+							
+							var optionLayout = {};
+							optionLayout[layoutName] = optionSelected;
+							
+							var radioOption = '<br>'+ instance._createRadioOptions(privateLayout, optionLayout, true);
+							
+							var groupLayouts = privateLayout ? '.private-layouts' :  '.public-layouts';
+							
+							A.one(groupLayouts).prepend(radioOption);
+							
+						},
+						
+						_createChooseGroup : function(type){
+							var CHOOSE_GROUP_TEMPLATE = '<div class="{type}-choose group-choose lfr-nav nav navbar-nav" >{label}</div>';
+							
+							var groupOptions = {
+									type : type,
+									label : Liferay.Language.get(type)	
+							}
+							
+							return Lang.sub(CHOOSE_GROUP_TEMPLATE, groupOptions);
+						},
+						
+						_createGroupRadioOptions : function(privateLayout, radioOptions){
+							var instance = this;
+							
+							var GROUP_TAMPLATE = '<div class="{type}-layouts"><br>{radioOptions}</div>';
+							
+							var type = privateLayout ? 'private' : 'public';  
+							
+							var radioOptions = {
+									radioOptions : radioOptions,
+									type : type,
+							}
+							
+							var radioGroupOptions = Lang.sub(GROUP_TAMPLATE, radioOptions);
+							
+							return radioGroupOptions;
+						},
+						
+						_createOptionElements : function(layouts, options, prefix){
+							var instance = this;
+
+							layouts.forEach(
+								function(item, index) {
+									options[prefix + item.name] = {
+										groupId: item.groupId,
+										layoutId: item.layoutId,
+										name: item.name,
+										privateLayout: item.privateLayout
+									};
+
+									if (item.hasChildren) {
+										instance._createOptionElements(
+											item.children.layouts,
+											options,
+											prefix + '-' + ' '
+										);
+									}
+								}
+							);
+						},
+						
+						_createRadioOptions : function(privateLayout, options, includeChecked){
+							var instance = this;
+							
+							var value = instance.getValue();
+							
+							var pageSelected = {};
+							
+							if(value && value.length > 0){
+								pageSelected = JSON.parse(value);
+							}
+							var RADIO_TEMPLATE = '<input type="radio" name="select-layout" value="{value}" {checked}>';
+							var LABEL_TEMPLATE = ' <label for="select-layout">{name}</label> <br> ';
+							
+							var OPTION_TEMPLATE = RADIO_TEMPLATE + LABEL_TEMPLATE;
+							
+							var layouts = '';
+							
+							for(var layoutName in options){
+								
+								var layout = options[layoutName];
+								
+								var checked = '';
+								if(pageSelected.layoutId == layout.layoutId &&
+										pageSelected.groupId == layout.groupId &&
+										pageSelected.privateLayout == layout.privateLayout){
+									
+									if(includeChecked){
+										checked = 'checked';
+									}
+									else{
+										continue;
+									}
+									
+								}
+								
+								var valueString = JSON.stringify(layout).replace(/"/g, '&quot;');
+								
+								var layoutValue = { 
+										name : layoutName,
+										value : valueString,
+										checked : checked
+								};
+																								
+								if(privateLayout == layout.privateLayout){
+									layouts = layouts + Lang.sub(OPTION_TEMPLATE, layoutValue);
+								}
+							}
+							
+							return layouts;
+						},
+						
+						_getEntries: function(privateLayout, reload){
+							var instance = this;
+							
+							instance.set('lastLoadFinished', false);
+							
+							var options = {};
+							
+							var start = privateLayout ? instance.get('startPrivate') : instance.get('startPublic');
+							var delta = instance.get('delta');
+							
+							A.io.request(
+									themeDisplay.getPathMain() + '/portal/get_layouts',
+									{
+										after: {
+											success: function() {
+												var	response = JSON.parse(this.get('responseData'));
+
+												if (response && response.layouts) {
+													instance._createOptionElements(response.layouts, options, " ");
+																									
+													var radioOptions = instance._createRadioOptions(privateLayout, options, false);
+													
+													var content = instance._createGroupRadioOptions(privateLayout, radioOptions);
+													content = content + instance._createGroupRadioOptions(!privateLayout, '');
+													
+													if(!reload){
+														instance._openLinkToPageModal(privateLayout, content);
+														instance._createCheckedAnchor();
+													}
+													else{
+														if(privateLayout){
+															A.one('.private-layouts').append(radioOptions);
+														}
+														else{
+															A.one('.public-layouts').append(radioOptions);	
+														}
+														
+													}
+												
+													instance._bindEvents();
+													
+													instance.set('options', options);
+													
+													instance.set('lastLoadFinished', true);
+													
+												}
+											}
+										},
+										data: {
+											cmd: 'get',
+											start: start,
+											end: start + delta,
+											expandParentLayouts: true,
+											groupId: themeDisplay.getScopeGroupId(),
+											p_auth: Liferay.authToken,
+											paginate: true,
+											privateLayout: privateLayout
+										}
+									}
+								);
+						},
+						
+						_handleChooseGroup : function(event){
+								var instance = this;
+							
+								var currentTarget = event.currentTarget;
+								
+								if(currentTarget.test('.selected')){
+									return;
+								}
+								
+								var privateLayout = currentTarget.test('.private-choose');
+								
+								instance._switchChooseGroup(privateLayout);
+								
+						},
+						
+						_handleButtonsClick: function(event) {
+							var instance = this;
+							
+							if (!instance.get('readOnly')) {
+								var currentTarget = event.currentTarget;
+	
+								if (currentTarget.test('.select-button')) {
+									instance._handleSelectButtonClick(event);
+								}
+								else if (currentTarget.test('.clear-button')) {
+									instance._handleClearButtonClick(event);
+								}
+							}
+						},
+	
+						_handleClearButtonClick: function(event) {
+							var instance = this;
+							
+							instance.setValue('');
+	
+						},
+	
+						_handleSelectButtonClick: function(event) {
+							var instance = this;
+
+							var portletNamespace = instance.get('portletNamespace');
+							
+							instance._getEntries(true, false);
+							
+						},
+						
+						_openLinkToPageModal : function (privateLayout, content){
+							var instance = this;
+							
+							instance.set('startPrivate', 0);
+							instance.set('startPublic', 0);
+							
+							content = instance._createChooseGroup('private') + content;
+							content = instance._createChooseGroup('public') + content;
+							
+							var handleChooseButtonClick = function(event){
+									
+									var optionSelected = A.one('[name="select-layout"]:checked');
+									
+									if(optionSelected){
+										instance.setValue(optionSelected.val());
+									}
+							}
+							
+							var selectLinkToPageModal = Liferay.Util.Window.getWindow(
+									{
+										
+										dialog:	{
+											bodyContent: content,
+											destroyOnHide: true,
+											modal:true,
+											height: 400,
+											resizable: false,
+											toolbars: {
+												footer: [
+											     	{
+											     		cssClass: 'btn-primary',
+														label: Liferay.Language.get('choose'),
+														on : {
+															click : handleChooseButtonClick
+														}
+													},
+													{
+														label: Liferay.Language.get('cancel'),
+													}		
+												]
+											},
+											width: 400
+										},
+										title: Liferay.Language.get('choose-page')
+									}
+								);
+							
+							selectLinkToPageModal.after('render', function(event) {
+												 
+												instance._getEntries(false, true);
+												instance._switchChooseGroup(false);
+												
+							});
+							
+							selectLinkToPageModal.toolbars.footer.on(
+											{
+											click : function(event){
+												selectLinkToPageModal.hide();
+												selectLinkToPageModal.destroy();
+												instance.set('startPublic',0);
+												instance.set('startPrivate', 0);
+											}
+										}
+							);
+													
+							selectLinkToPageModal.render().show();
+							
+							instance.set('selectLinkToPageModal', selectLinkToPageModal);
+						},
+						
+						_switchChooseGroup : function (privateLayout){
+							
+							A.all('.group-choose').removeClass('selected');
+							
+							var publicLayoutsNode = A.one('.public-layouts'); 
+							var privateLayoutsNode = A.one('.private-layouts');
+							
+							if(privateLayout){
+								
+								A.one('.private-choose').addClass('selected');
+								
+								publicLayoutsNode.removeClass('selected');
+								 
+								privateLayoutsNode.show();
+								publicLayoutsNode.hide();
+								
+							}
+							else{
+							
+								A.one('.public-choose').addClass('selected');
+								
+								privateLayoutsNode.removeClass('selected');
+								 
+								publicLayoutsNode.show();
+								privateLayoutsNode.hide();
+
+							}
+							
+						},
+						
+						_updatePaginationStart : function(privateLayout){
+							var instance = this;
+							
+							var startType = privateLayout ? 'startPrivate' : 'startPublic';
+							
+							var start = instance.get(startType);
+							var delta = instance.get('delta');
+							
+							instance.set(startType, start + delta);
+						}
+					
+					}
+				}
+			);
+	
+		FieldTypes['ddm-link-to-page'] = LinkToPageField;
+		
 		FieldTypes.field = Field;
 
 		var FieldsetField = A.Component.create(
@@ -1862,6 +2335,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-form', 'liferay-item-selector-dialog', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager']
+		requires: ['aui-base', 'liferay-ddm-form-field-radio', 'aui-datatable', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-form', 'liferay-item-selector-dialog', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager']
 	}
 );

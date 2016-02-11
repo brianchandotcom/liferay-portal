@@ -27,84 +27,27 @@
 	</#if>
 
 	<div class="form-group">
-		<@liferay_aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
-			<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
-				<optgroup label="${languageUtil.get(requestedLocale, "current")}">
-					<@getLayoutOption
-						layout = selectedLayout
-						level = 0
-						selected = true
-					/>
-				</optgroup>
-			</#if>
-
-			<@getLayoutsOptions
-				groupId = scopeGroupId
-				parentLayoutId = 0
-				privateLayout = false
-				selectedPlid = selectedPlid
+		
+		<@liferay_aui.input cssClass='link-to-page-value' dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName required=required type="text" value=fieldValue>
+			
+		</@liferay_aui.input>
+		
+		<@liferay_aui["button-row"]>
+			<@liferay_aui.button
+				cssClass="select-button"
+				id="${namespacedFieldName}SelectButton"
+				value="link-to-page"
 			/>
 
-			<@getLayoutsOptions
-				groupId = scopeGroupId
-				parentLayoutId = 0
-				privateLayout = true
-				selectedPlid = selectedPlid
+			<@liferay_aui.button
+				cssClass="clear-button ${(fieldRawValue?has_content)?string('', 'hide')}"
+				id="${namespacedFieldName}ClearButton"
+				value="clear"
 			/>
-		</@liferay_aui.select>
+		</@>
+		
 	</div>
 
 	${fieldStructure.children}
 </@>
 
-<#macro getLayoutOption
-	layout
-	level = 0
-	selected = false
->
-	<#assign layoutJSON = escapeAttribute("{\"groupId\":${layout.getGroupId()},\"layoutId\":${layout.getLayoutId()},\"privateLayout\":${layout.isPrivateLayout()?string}}")>
-
-	<@liferay_aui.option selected=selected useModelValue=false value=layoutJSON>
-		<#list 0..level as i>
-			&ndash;&nbsp;
-		</#list>
-
-		${escape(layout.getName(requestedLocale))}
-	</@>
-</#macro>
-
-<#macro getLayoutsOptions
-	groupId
-	parentLayoutId
-	privateLayout
-	selectedPlid
-	level = 0
->
-	<#assign layouts = layoutService.getLayouts(groupId, privateLayout, parentLayoutId)>
-
-	<#if (layouts?size > 0)>
-		<#if (level == 0)>
-			<optgroup label="<#if (privateLayout)>${languageUtil.get(requestedLocale, "private-pages")}<#else>${languageUtil.get(requestedLocale, "public-pages")}</#if>">
-		</#if>
-
-		<#list layouts as curLayout>
-			<@getLayoutOption
-				layout = curLayout
-				level = level
-				selected = (selectedPlid == curLayout.getPlid())
-			/>
-
-			<@getLayoutsOptions
-				groupId = scopeGroupId
-				level = level + 1
-				parentLayoutId = curLayout.getLayoutId()
-				privateLayout = privateLayout
-				selectedPlid = selectedPlid
-			/>
-		</#list>
-
-		<#if (level == 0)>
-			</optgroup>
-		</#if>
-	</#if>
-</#macro>

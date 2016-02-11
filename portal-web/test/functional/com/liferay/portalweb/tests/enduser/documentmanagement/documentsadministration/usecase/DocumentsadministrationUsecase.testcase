@@ -333,7 +333,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#editSaveAndCheckinPG">
+		<execute macro="DMDocument#saveAndCheckinEditedDocumentPG">
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 

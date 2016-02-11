@@ -240,6 +240,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 							<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
 						</div>
 					</c:if>
+
 					<c:if test="<%= (classPK > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(groupId, classNameId, classPK) > 0) %>">
 						<div class="alert alert-info">
 							<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />

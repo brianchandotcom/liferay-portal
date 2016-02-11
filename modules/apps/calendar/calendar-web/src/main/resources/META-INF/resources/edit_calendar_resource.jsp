@@ -92,6 +92,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 
 				<aui:input inlineLabel="left" name="active" type="checkbox" value="<%= (calendarResource == null) ? true : calendarResource.isActive() %>" />
 			</liferay-ui:panel>
+
 			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="calendarResourceCategorizationPanel" persistState="<%= true %>" title="categorization">
 				<aui:input classPK="<%= calendarResourceId %>" name="categories" type="assetCategories" />
 

@@ -202,6 +202,7 @@ if (Validator.isNotNull(languageId)) {
 					</div>
 				</div>
 			</aui:col>
+
 			<aui:col cssClass="diff-container-column" width="<%= 70 %>">
 				<div class="diff-version-filter hide" id="<portlet:namespace />versionFilter">
 				</div>

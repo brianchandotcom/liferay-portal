@@ -160,6 +160,7 @@ if (rule != null) {
 				value="<%= screenResolutionHeightMin %>"
 			/>
 		</aui:col>
+
 		<aui:col width="<%= 50 %>">
 			<h5><liferay-ui:message key="maximum" /></h5>
 

@@ -41,6 +41,7 @@ PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-action-buttons>
 
 		<%

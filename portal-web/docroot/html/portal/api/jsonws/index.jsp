@@ -41,6 +41,7 @@
 				<aui:col cssClass="lfr-api-navigation" width="<%= 25 %>">
 					<liferay-util:include page="/html/portal/api/jsonws/actions.jsp" />
 				</aui:col>
+
 				<aui:col cssClass="lfr-api-details" width="<%= 75 %>">
 					<liferay-util:include page="/html/portal/api/jsonws/action.jsp" />
 				</aui:col>

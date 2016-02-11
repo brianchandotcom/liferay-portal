@@ -56,6 +56,7 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 			%>
 
 		</aui:col>
+
 		<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
 	</aui:row>
 

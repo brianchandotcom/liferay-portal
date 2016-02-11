@@ -276,12 +276,15 @@ String signature = ParamUtil.getString(request, "signature");
 					<liferay-ui:section>
 						<pre class="lfr-code-block" id="serviceOutput"></pre>
 					</liferay-ui:section>
+
 					<liferay-ui:section>
 						<pre class="lfr-code-block" id="jsExample"></pre>
 					</liferay-ui:section>
+
 					<liferay-ui:section>
 						<pre class="lfr-code-block" id="curlExample"></pre>
 					</liferay-ui:section>
+
 					<liferay-ui:section>
 						<pre class="lfr-code-block" id="urlExample"></pre>
 					</liferay-ui:section>

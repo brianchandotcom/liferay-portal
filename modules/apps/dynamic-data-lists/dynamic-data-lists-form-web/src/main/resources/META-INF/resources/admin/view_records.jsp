@@ -59,6 +59,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 			portletURL="<%= searchURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-action-buttons>
 
 		<%

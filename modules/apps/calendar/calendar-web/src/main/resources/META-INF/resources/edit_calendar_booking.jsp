@@ -300,6 +300,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>
 					</aui:col>
+
 					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
 						<label class="field-label">
 							<liferay-ui:message key="accepted" /> (<span id="<portlet:namespace />acceptedCounter"><%= acceptedCalendarsJSONArray.length() %></span>)
@@ -316,6 +317,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
 						</aui:col>
+
 						<aui:col width="<%= 25 %>">
 							<label class="field-label">
 								<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)

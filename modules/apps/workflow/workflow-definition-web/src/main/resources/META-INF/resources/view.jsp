@@ -71,6 +71,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			selected='<%= navigation.equals("definitions") %>'
 		/>
 	</aui:nav>
+
 	<aui:nav-bar-search>
 		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/workflow_definition_search.jsp" servletContext="<%= application %>" />
@@ -88,6 +89,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'

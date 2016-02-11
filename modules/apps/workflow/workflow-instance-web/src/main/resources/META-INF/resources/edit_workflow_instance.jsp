@@ -52,6 +52,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</aui:col>
+
 				<aui:col width="<%= 33 %>">
 					<aui:field-wrapper label="end-date">
 						<aui:fieldset>
@@ -60,6 +61,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					</aui:field-wrapper>
 				</aui:col>
 			</aui:fieldset>
+
 			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>" id="preview">
 
 				<%
@@ -159,6 +161,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 									value="<%= workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>"
 								/>
 							</liferay-ui:search-container-row>
+
 							<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>

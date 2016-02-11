@@ -235,6 +235,7 @@ if (portletTitleBasedNavigation) {
 							<%@ include file="/message_boards/html_editor.jspf" %>
 						</c:otherwise>
 					</c:choose>
+
 					<aui:input name="body" type="hidden" />
 				</aui:field-wrapper>
 			</aui:fieldset>

@@ -15,7 +15,6 @@
 package com.liferay.css.builder;
 
 import com.liferay.css.builder.sass.SassFile;
-import com.liferay.css.builder.sass.SassFileWithMediaQuery;
 import com.liferay.css.builder.sass.SassString;
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.CharPool;
@@ -31,8 +30,6 @@ import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
 import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
-
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,18 +144,10 @@ public class CSSBuilder {
 		return false;
 	}
 
-	private void _addSassString(
-			SassFile sassFile, String fileName, String sassContent)
+	private void _addSassString(SassFile sassFile, String fileName)
 		throws Exception {
 
-		sassContent = sassContent.trim();
-
-		if (sassContent.isEmpty()) {
-			return;
-		}
-
-		String cssContent = _parseSass(
-			fileName, CSSBuilderUtil.parseStaticTokens(sassContent));
+		String cssContent = _parseSass(fileName);
 
 		sassFile.addSassFragment(new SassString(this, fileName, cssContent));
 	}
@@ -303,16 +292,15 @@ public class CSSBuilder {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		return StringUtil.replace(
-			dirName + StringPool.SLASH + fileName,
-			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
-			new String[] {StringPool.SLASH, StringPool.SLASH}
-		);
+		return _fixRelativePath(
+			StringUtil.replace(
+				dirName + StringPool.SLASH + fileName,
+				new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
+				new String[] {StringPool.SLASH, StringPool.SLASH}
+			));
 	}
 
-	private String _parseSass(String fileName, String content)
-		throws SassCompilerException {
-
+	private String _parseSass(String fileName) throws SassCompilerException {
 		String filePath = _docrootDirName.concat(fileName);
 
 		String cssBasePath = filePath;
@@ -330,10 +318,11 @@ public class CSSBuilder {
 			}
 		}
 
-		return _sassCompiler.compileString(
-			content, filePath,
-			_portalCommonDirName + File.pathSeparator + cssBasePath,
+		String css = _sassCompiler.compileFile(
+			filePath, _portalCommonDirName + File.pathSeparator + cssBasePath,
 			_generateSourceMap, filePath + ".map");
+
+		return CSSBuilderUtil.parseStaticTokens(css);
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {
@@ -347,91 +336,7 @@ public class CSSBuilder {
 			return;
 		}
 
-		String content = _read(file);
-
-		int pos = 0;
-
-		StringBundler sb = new StringBundler();
-
-		while (true) {
-			int commentX = content.indexOf(_CSS_COMMENT_BEGIN, pos);
-			int commentY = content.indexOf(
-				_CSS_COMMENT_END, commentX + _CSS_COMMENT_BEGIN.length());
-
-			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
-			int importY = content.indexOf(
-				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
-
-			if ((importX == -1) || (importY == -1)) {
-				sb.append(content.substring(pos));
-
-				break;
-			}
-			else if ((commentX != -1) && (commentY != -1) &&
-					 (commentX < importX) && (commentY > importX)) {
-
-				commentY += _CSS_COMMENT_END.length();
-
-				sb.append(content.substring(pos, commentY));
-
-				pos = commentY;
-			}
-			else {
-				sb.append(content.substring(pos, importX));
-
-				String mediaQuery = StringPool.BLANK;
-
-				int mediaQueryImportX = content.indexOf(
-					CharPool.CLOSE_PARENTHESIS,
-					importX + _CSS_IMPORT_BEGIN.length());
-				int mediaQueryImportY = content.indexOf(
-					CharPool.SEMICOLON, importX + _CSS_IMPORT_BEGIN.length());
-
-				String importFileName = null;
-
-				if (importY != mediaQueryImportX) {
-					mediaQuery = content.substring(
-						mediaQueryImportX + 1, mediaQueryImportY);
-
-					importFileName = content.substring(
-						importX + _CSS_IMPORT_BEGIN.length(),
-						mediaQueryImportX);
-				}
-				else {
-					importFileName = content.substring(
-						importX + _CSS_IMPORT_BEGIN.length(), importY);
-				}
-
-				if (!importFileName.isEmpty()) {
-					if (importFileName.charAt(0) != CharPool.SLASH) {
-						importFileName = _fixRelativePath(
-							sassFile.getBaseDir().concat(importFileName));
-					}
-
-					SassFile importSassFile = _build(importFileName);
-
-					if (Validator.isNotNull(mediaQuery)) {
-						sassFile.addSassFragment(
-							new SassFileWithMediaQuery(
-								importSassFile, mediaQuery));
-					}
-					else {
-						sassFile.addSassFragment(importSassFile);
-					}
-				}
-
-				// LEP-7540
-
-				if (Validator.isNotNull(mediaQuery)) {
-					pos = mediaQueryImportY + 1;
-				}
-				else {
-					pos = importY + _CSS_IMPORT_END.length();
-				}
-			}
-		}
-
-		_addSassString(sassFile, fileName, sb.toString());
+		_addSassString(sassFile, fileName);
 
 		String rtlCustomFileName = CSSBuilderUtil.getRtlCustomFileName(
 			fileName);
@@ -439,27 +344,11 @@ public class CSSBuilder {
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
-			_addSassString(sassFile, rtlCustomFileName, _read(rtlCustomFile));
+			_addSassString(sassFile, rtlCustomFileName);
 		}
 
 		sassFile.setElapsedTime(System.currentTimeMillis() - start);
 	}
-
-	private String _read(File file) throws Exception {
-		String s = new String(
-			Files.readAllBytes(file.toPath()), StringPool.UTF8);
-
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-	}
-
-	private static final String _CSS_COMMENT_BEGIN = "/*";
-
-	private static final String _CSS_COMMENT_END = "*/";
-
-	private static final String _CSS_IMPORT_BEGIN = "@import url(";
-
-	private static final String _CSS_IMPORT_END = ");";
 
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;

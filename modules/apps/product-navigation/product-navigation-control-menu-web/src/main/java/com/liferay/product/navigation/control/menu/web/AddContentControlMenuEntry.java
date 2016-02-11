@@ -67,7 +67,7 @@ public class AddContentControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
+		if (!layout.isTypePortlet()) {
 			return false;
 		}
 

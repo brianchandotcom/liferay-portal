@@ -500,7 +500,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<var name="test.batch.run.type" unset="true" />
 			<var name="test.portal.instance" unset="true" />
 
-			<property name="test.batch.name" value="functional-tomcat-mysql" />
+			<property name="test.batch.name" value="functional-tomcat8-mysql55-jdk7" />
 			<property name="test.batch.run.type" value="sequential" />
 			<property name="test.portal.instance" value="true" />
 

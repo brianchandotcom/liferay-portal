@@ -279,19 +279,24 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<var name="tagCounter" value="1,2" />
+
+		<for list="${tagCounter}" param="tagCount" >
+			<execute macro="DMDocument#editCmdPG">
+				<var name="dmDocumentTagName" value="tag${tagCount}" />
+				<var name="dmDocumentTitle" value="Document_1.doc" />
+			</execute>
+
+			<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+		</for>
+
 		<execute macro="DMDocument#editPublishPG">
-			<var name="dmDocumentTagName" value="tag1" />
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 			<var name="dmDocumentTitleEdit" value="Document1" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#editPublishPG">
-			<var name="dmDocumentTagName" value="tag2" />
-			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

@@ -19,6 +19,8 @@ package com.liferay.application.list.constants;
  */
 public class ApplicationListWebKeys {
 
+	public static final String GROUP_PROVIDER = "GROUP_PROVIDER";
+
 	public static final String PANEL_APP = "PANEL_APP";
 
 	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";

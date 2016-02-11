@@ -15,9 +15,9 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.application.list.GroupProvider;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalService;
@@ -720,7 +720,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				LayoutAdminWebKeys.GROUP_PROVIDER, groupProvider);
+				ApplicationListWebKeys.GROUP_PROVIDER, groupProvider);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

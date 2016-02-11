@@ -16,9 +16,9 @@ package com.liferay.layout.admin.web.application.list;
 
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import java.io.IOException;
@@ -58,7 +58,8 @@ public class GroupPagesPanelApp extends BaseJSPPanelApp {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute(LayoutAdminWebKeys.GROUP_PROVIDER, groupProvider);
+		request.setAttribute(
+			ApplicationListWebKeys.GROUP_PROVIDER, groupProvider);
 
 		return super.include(request, response);
 	}

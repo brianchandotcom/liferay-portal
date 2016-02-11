@@ -72,7 +72,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		_groupProvider = (GroupProvider)portletRequest.getAttribute(
-			SiteAdministrationWebKeys.GROUP_PROVIDER);
+			ApplicationListWebKeys.GROUP_PROVIDER);
 		_groupURLProvider = (GroupURLProvider)portletRequest.getAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER);
 		_panelCategory = (PanelCategory)_portletRequest.getAttribute(

@@ -68,7 +68,8 @@ public class RootPanelCategory implements PanelCategory {
 
 	@Override
 	public boolean isActive(
-		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper,
+		Group group) {
 
 		return false;
 	}

@@ -62,8 +62,7 @@ public class PanelCategoryBodyTag extends BasePanelTag {
 			WebKeys.THEME_DISPLAY);
 
 		return panelAppRegistry.getPanelApps(
-			_panelCategory, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup());
+			_panelCategory, themeDisplay.getPermissionChecker(), getGroup());
 	}
 
 	@Override

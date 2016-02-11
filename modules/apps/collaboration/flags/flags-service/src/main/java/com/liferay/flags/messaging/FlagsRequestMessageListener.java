@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -142,11 +141,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		// Email
 
 		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
-			ConfigurationProviderUtil.getConfiguration(
-				FlagsGroupServiceConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId,
-					"com.liferay.flags.configuration.FlagsConfiguration"));
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				FlagsGroupServiceConfiguration.class, companyId);
 
 		String fromName = flagsGroupServiceConfiguration.emailFromName();
 		String fromAddress = flagsGroupServiceConfiguration.emailFromAddress();

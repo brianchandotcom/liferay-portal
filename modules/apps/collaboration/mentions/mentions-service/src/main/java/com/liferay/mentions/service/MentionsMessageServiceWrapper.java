@@ -15,7 +15,6 @@
 package com.liferay.mentions.service;
 
 import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
-import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUtil;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -97,10 +95,9 @@ public class MentionsMessageServiceWrapper
 		}
 
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
-			_configurationProvider.getConfiguration(
+			_configurationProvider.getCompanyConfiguration(
 				MentionsGroupServiceConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					message.getCompanyId(), MentionsConstants.SERVICE_NAME));
+				message.getCompanyId());
 
 		LocalizedValuesMap subjectLocalizedValuesMap =
 			mentionsGroupServiceConfiguration.commentMentionEmailSubject();

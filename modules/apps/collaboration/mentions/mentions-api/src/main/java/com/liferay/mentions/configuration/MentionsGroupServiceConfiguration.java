@@ -16,6 +16,7 @@ package com.liferay.mentions.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
@@ -23,7 +24,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Sergio González
  */
 @ExtendedObjectClassDefinition(
-	category = "collaboration", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "collaboration",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY,
+	settingsId = MentionsConstants.SERVICE_NAME
 )
 @Meta.OCD(
 	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",

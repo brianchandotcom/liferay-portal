@@ -18,14 +18,12 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceWrapper;
 import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
-import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -88,10 +86,8 @@ public class MentionsBlogsEntryServiceWrapper
 		}
 
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
-			_configurationProvider.getConfiguration(
-				MentionsGroupServiceConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					entry.getCompanyId(), MentionsConstants.SERVICE_NAME));
+			_configurationProvider.getCompanyConfiguration(
+				MentionsGroupServiceConfiguration.class, entry.getCompanyId());
 
 		_mentionsNotifier.notify(
 			entry.getUserId(), entry.getGroupId(), entry.getTitle(),

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "entries");
+String tabs1 = announcementsRequestHelper.getTabs1();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -25,15 +25,15 @@ portletURL.setParameter("mvcRenderCommandName", "/announcements/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<c:if test="<%= !portletName.equals(AnnouncementsPortletKeys.ALERTS) || (portletName.equals(AnnouncementsPortletKeys.ALERTS) && AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) %>">
+<c:if test="<%= announcementsDisplayContext.isTabs1Visible() %>">
 	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("entries") %>'>
+	<c:when test="<%= announcementsDisplayContext.isShowEntries() %>">
 		<%@ include file="/view_entries.jspf" %>
 	</c:when>
-	<c:when test='<%= tabs1.equals("manage-entries") %>'>
+	<c:when test="<%= announcementsDisplayContext.isShowManageEntries() %>">
 		<%@ include file="/view_manage_entries.jspf" %>
 	</c:when>
 </c:choose>

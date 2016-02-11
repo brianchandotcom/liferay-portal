@@ -15,11 +15,11 @@
 --%>
 
 <%
-total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
+total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
 
 searchContainer.setTotal(total);
 
-results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
+results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
 
 searchContainer.setResults(results);
 

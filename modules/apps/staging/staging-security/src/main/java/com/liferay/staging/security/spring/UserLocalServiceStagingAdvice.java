@@ -26,6 +26,21 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		super(UserLocalService.class);
 
 		initGroupServiceBuilderMethods();
+
+		initCustomMethod("getGroupUserIds", 0, long.class);
+
+		initCustomMethod(
+			"searchSocial", 1, long.class, long[].class, String.class,
+			int.class, int.class);
+
+		initCustomMethod(
+			"searchSocial", 0, long[].class, long.class, int[].class,
+			String.class, int.class, int.class);
+
+		initCustomMethod(
+			"updateGroups", 1, long.class, long[].class, ServiceContext.class);
+
+		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
 	}
 
 }

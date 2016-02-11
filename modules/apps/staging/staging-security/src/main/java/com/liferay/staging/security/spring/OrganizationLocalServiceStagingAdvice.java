@@ -28,6 +28,9 @@ public class OrganizationLocalServiceStagingAdvice
 		super(OrganizationLocalService.class);
 
 		initGroupServiceBuilderMethods();
+
+		initCustomMethod(
+			"getGroupUserOrganizations", 0, long.class, long.class);
 	}
 
 }

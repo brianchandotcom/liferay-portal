@@ -26,6 +26,60 @@ public class UserGroupRoleLocalServiceStagingAdvice
 		throws NoSuchMethodException {
 
 		super(UserGroupRoleLocalService.class);
+
+		initCustomMethod(
+			"addUserGroupRoles", 1, long.class, long.class, long[].class);
+
+		initCustomMethod(
+			"addUserGroupRoles", 1, long[].class, long.class, long.class);
+
+		initCustomMethod("deleteUserGroupRoles", 0, long.class, int.class);
+
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long.class, long.class, long[].class);
+
+		initCustomMethod("deleteUserGroupRoles", 1, long.class, long[].class);
+
+		initCustomMethod("deleteUserGroupRoles", 1, long[].class, long.class);
+
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long[].class, long.class, long.class);
+
+		initCustomMethod(
+			"deleteUserGroupRoles", 1, long[].class, long.class, int.class);
+
+		initCustomMethod("deleteUserGroupRolesByGroupId", 0, long.class);
+
+		initCustomMethod("getUserGroupRoles", 1, long.class, long.class);
+
+		initCustomMethod(
+			"getUserGroupRoles", 1, long.class, long.class, int.class,
+			int.class);
+
+		initCustomMethod("getUserGroupRolesByGroup", 0, long.class);
+
+		initCustomMethod(
+			"getUserGroupRolesByGroupAndRole", 0, long.class, long.class);
+
+		initCustomMethod(
+			"getUserGroupRolesByUserUserGroupAndGroup", 1, long.class,
+			long.class);
+
+		initCustomMethod("getUserGroupRolesCount", 1, long.class, long.class);
+
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, long.class);
+
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, long.class,
+			boolean.class);
+
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, String.class);
+
+		initCustomMethod(
+			"hasUserGroupRole", 1, long.class, long.class, String.class,
+			boolean.class);
 	}
 
 }

@@ -27,6 +27,25 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		super(RoleLocalService.class);
 
 		initGroupServiceBuilderMethods();
+
+		initCustomMethod("getDefaultGroupRole", 0, long.class);
+		initCustomMethod("getGroupRelatedRoles", 0, long.class);
+		initCustomMethod("getTeamRoleMap", 0, long.class);
+		initCustomMethod("getTeamRoles", 0, long.class);
+		initCustomMethod("getTeamRoles", 0, long.class, long[].class);
+		initCustomMethod("getUserGroupGroupRoles", 1, long.class, long.class);
+
+		initCustomMethod(
+			"getUserGroupGroupRoles", 1, long.class, long.class, int.class,
+			int.class);
+
+		initCustomMethod(
+			"getUserGroupGroupRolesCount", 1, long.class, long.class);
+
+		initCustomMethod("getUserGroupRoles", 1, long.class, long.class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, long.class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, long[].class);
+		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
 	}
 
 }

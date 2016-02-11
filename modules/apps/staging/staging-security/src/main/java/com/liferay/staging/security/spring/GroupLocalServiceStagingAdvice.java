@@ -31,6 +31,8 @@ public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initRelatedServiceBuilderMethods("Role");
 		initRelatedServiceBuilderMethods("User");
 		initRelatedServiceBuilderMethods("UserGroup");
+
+		initCustomMethod("getUserGroupPrimaryKeys", 0, long.class);
 	}
 
 	protected void initRelatedServiceBuilderMethods(String relatedEntityName)

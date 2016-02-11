@@ -14,6 +14,8 @@
 
 package com.liferay.portal.scheduler.internal;
 
+import aQute.configurable.Configurable;
+
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
+import com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
@@ -79,6 +82,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -89,7 +93,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SchedulerEngineHelper.class)
+@Component(
+	configurationPid = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",
+	immediate = true, service = SchedulerEngineHelper.class
+)
 public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
@@ -112,7 +119,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void auditSchedulerJobs(Message message, TriggerState triggerState)
 		throws SchedulerException {
 
-		if (!_auditMessageSchedulerJob || (_auditRouter == null)) {
+		if (!_schedulerEngineHelperConfiguration.auditSchedulerJobEnabled() ||
+			(_auditRouter == null)) {
+
 			return;
 		}
 
@@ -816,8 +825,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			return;
 		}
 
-		_auditMessageSchedulerJob = GetterUtil.getBoolean(
-			_props.get(PropsKeys.AUDIT_MESSAGE_SCHEDULER_JOB));
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		_schedulerEngineHelperConfiguration = Configurable.createConfigurable(
+			SchedulerEngineHelperConfiguration.class, properties);
 
 		_bundleContext = componentContext.getBundleContext();
 
@@ -900,6 +912,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		return _schedulerEngine;
 	}
 
+	@Modified
+	protected void modified(Map<String, Object> properties) throws Exception {
+		_schedulerEngineHelperConfiguration = Configurable.createConfigurable(
+			SchedulerEngineHelperConfiguration.class, properties);
+	}
+
 	protected Destination registerDestination(
 		BundleContext bundleContext, String destinationType,
 		String destinationName) {
@@ -967,7 +985,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
-	private boolean _auditMessageSchedulerJob;
 	private AuditRouter _auditRouter;
 	private volatile BundleContext _bundleContext;
 	private DestinationFactory _destinationFactory;
@@ -979,6 +996,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
 	private volatile boolean _schedulerEngineEnabled;
+	private volatile SchedulerEngineHelperConfiguration
+		_schedulerEngineHelperConfiguration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();

@@ -107,6 +107,6 @@ public class JenkinsStopJobUtil {
 		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\[echo\\] Build \\'.*\\' started at (?<url>.+)\\.");
+		"Build \\'.*\\' started at (?<url>.+)\\.");
 
 }

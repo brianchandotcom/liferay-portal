@@ -51,7 +51,11 @@ public class InitFilterTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		try {
+			_serviceRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
+		}
 	}
 
 	private ServiceRegistration<Filter> _serviceRegistration;

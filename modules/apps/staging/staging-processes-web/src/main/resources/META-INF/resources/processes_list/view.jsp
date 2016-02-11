@@ -16,4 +16,27 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/processes_list/publish_layouts_processes.jsp" servletContext="<%= application %>" />
+<%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String navigation = ParamUtil.getString(request, "navigation", "all");
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+String tabs1 = ParamUtil.getString(request, "tabs1");
+%>
+
+<div id="<portlet:namespace />publishProcessesSearchContainer">
+	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="mvcRenderCommandName" value="viewPublishLayouts" />
+		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+		<liferay-util:param name="navigation" value="<%= navigation %>" />
+		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
+	</liferay-util:include>
+
+	<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
+		<liferay-util:include page="/processes_list/publish_layouts_processes.jsp" servletContext="<%= application %>" />
+	</div>
+</div>

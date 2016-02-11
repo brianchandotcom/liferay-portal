@@ -64,36 +64,23 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<c:if test='<%= tabs1.equals("processes") %>'>
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="mvcRenderCommandName" value="viewPublishLayouts" />
-		<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
-		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-		<liferay-util:param name="navigation" value="<%= navigation %>" />
-		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-	</liferay-util:include>
-</c:if>
+<c:choose>
+	<c:when test='<%= tabs1.equals("processes") %>'>
+		<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+			<liferay-util:param name="navigation" value="<%= navigation %>" />
+			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+			<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
+		</liferay-util:include>
 
-<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
-	<c:choose>
-		<c:when test='<%= tabs1.equals("processes") %>'>
-			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-				<liferay-util:param name="navigation" value="<%= navigation %>" />
-				<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-				<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-				<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-			</liferay-util:include>
-
-			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("scheduled") %>'>
-			<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />
-		</c:when>
-	</c:choose>
-</div>
+		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("scheduled") %>'>
+		<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">
@@ -104,6 +91,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
 		<portlet:param name="orderByType" value="<%= orderByType %>" />
 		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

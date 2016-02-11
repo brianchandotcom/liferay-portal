@@ -318,11 +318,9 @@
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
-				<var name="key_userName" value="${userName}" />
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-				<execute function="AssertVisible" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_IMAGE" />
-				<execute function="AssertTextEquals" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
+				<execute function="AssertVisible" locator1="Link#MESSAGE_BOARDS_ATTACHMENT" />
 			</then>
 		</if>
 	</command>

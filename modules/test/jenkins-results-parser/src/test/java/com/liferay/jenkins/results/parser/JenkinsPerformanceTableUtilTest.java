@@ -149,6 +149,6 @@ public class JenkinsPerformanceTableUtilTest
 	}
 
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\[echo\\] \\'.*\\' completed at (?<url>.+)\\.");
+		"\\'.*\\' completed at (?<url>.+)\\.");
 
 }

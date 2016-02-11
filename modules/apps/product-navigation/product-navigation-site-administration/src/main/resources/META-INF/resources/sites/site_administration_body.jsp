@@ -45,7 +45,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 					%>
 
 					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
-						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
+						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
 					</span>
 				</div>
 			</c:if>

@@ -22,8 +22,11 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -150,6 +153,16 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			group, privateLayout, _portletRequest);
 	}
 
+	public String getLiveGroupLabel() {
+		Group group = getGroup();
+
+		if (group.isStagedRemotely()) {
+			return "remote-live";
+		}
+
+		return "live";
+	}
+
 	public String getLiveGroupURL() {
 		if (_liveGroupURL != null) {
 			return _liveGroupURL;
@@ -159,18 +172,23 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		Group group = getGroup();
 
-		if (group.isStagingGroup()) {
-			if (group.isStagedRemotely()) {
-				_liveGroupURL = StagingUtil.buildRemoteURL(
-					group.getTypeSettingsProperties());
-			}
-			else {
-				Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+		if (group.isStagedRemotely()) {
+			Layout layout = _themeDisplay.getLayout();
 
-				if (liveGroup != null) {
-					_liveGroupURL = _groupURLProvider.getGroupURL(
-						liveGroup, _portletRequest);
-				}
+			try {
+				_liveGroupURL = StagingUtil.getRemoteSiteURL(
+					group, layout.isPrivateLayout());
+			}
+			catch (PortalException pe) {
+				_log.error(pe);
+			}
+		}
+		else if (group.isStagingGroup()) {
+			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+
+			if (liveGroup != null) {
+				_liveGroupURL = _groupURLProvider.getGroupURL(
+					liveGroup, _portletRequest);
 			}
 		}
 
@@ -428,6 +446,9 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_groupProvider.setGroup(request, _group);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteAdministrationPanelCategoryDisplayContext.class);
 
 	private Boolean _collapsedPanel;
 	private Group _group;

@@ -57,7 +57,7 @@ public class GhostscriptImpl implements Ghostscript {
 		arguments.add("-dSAFER");
 		arguments.add("-dNOPAUSE");
 		arguments.add("-dNOPROMPT");
-		arguments.add("-sFONTPATH" + _globalSearchPath);
+		arguments.add("-sFONTPATH=" + _globalSearchPath);
 		arguments.addAll(commandArguments);
 
 		if (_log.isInfoEnabled()) {
@@ -68,7 +68,7 @@ public class GhostscriptImpl implements Ghostscript {
 				sb.append(StringPool.SPACE);
 			}
 
-			_log.info("Excecuting command '" + sb.toString() + "'");
+			_log.info("Executing command '" + sb.toString() + "'");
 		}
 
 		return ProcessUtil.execute(

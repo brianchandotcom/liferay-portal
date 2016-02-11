@@ -2,8 +2,6 @@
 	<property name="testray.main.component.name" value="Content and Application Templates" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 
-	<var name="siteName" value="Test Site Name" />
-
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
@@ -170,10 +168,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -184,7 +178,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -196,7 +189,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -209,7 +201,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -218,7 +209,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -462,7 +452,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="pageName" value="ADT Test Page" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -556,10 +545,10 @@
 	</command>
 
 	<command name="ADTStagingCategoriesNavigation" priority="5">
-		<var name="siteName" value="${siteName}" />
+		<var name="siteName" value="Test Site Name" />
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
+			<var name="site" value="Test Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -576,7 +565,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
@@ -584,13 +573,13 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -601,20 +590,20 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="adt_categories_navigation_multi_column.ftl" />
 			<var name="adtType" value="Categories Navigation" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -630,7 +619,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -645,7 +634,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Test Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 

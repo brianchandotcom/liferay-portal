@@ -69,7 +69,7 @@ else {
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
-<aui:fieldset>
+<aui:fieldset id="websites">
 
 	<%
 	for (int i = 0; i < websitesIndexes.length; i++) {
@@ -100,16 +100,11 @@ else {
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />websites',
-		function() {
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />websites > fieldset',
-					fieldIndexes: '<portlet:namespace />websitesIndexes',
-					namespace: '<portlet:namespace />'
-				}
-			).render();
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />websites',
+			fieldIndexes: '<portlet:namespace />websitesIndexes',
+			namespace: '<portlet:namespace />'
 		}
-	);
+	).render();
 </aui:script>

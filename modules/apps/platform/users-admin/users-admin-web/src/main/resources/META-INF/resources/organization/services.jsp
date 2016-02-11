@@ -101,7 +101,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
 
-<aui:fieldset>
+<aui:fieldset id="services">
 
 	<%
 	Calendar cal = CalendarFactoryUtil.getCalendar();
@@ -213,16 +213,11 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />services',
-		function() {
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />services > fieldset',
-					fieldIndexes: '<portlet:namespace />orgLaborsIndexes',
-					namespace: '<portlet:namespace />'
-				}
-			).render();
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />services',
+			fieldIndexes: '<portlet:namespace />orgLaborsIndexes',
+			namespace: '<portlet:namespace />'
 		}
-	);
+	).render();
 </aui:script>

@@ -73,7 +73,7 @@ else {
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-<aui:fieldset cssClass="addresses">
+<aui:fieldset cssClass="addresses" id="addresses">
 
 	<%
 	for (int i = 0; i < addressesIndexes.length; i++) {
@@ -123,48 +123,43 @@ else {
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields,liferay-dynamic-select">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />addresses',
-		function() {
-			var addresses = new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />addresses > fieldset',
-					fieldIndexes: '<portlet:namespace />addressesIndexes',
-					namespace: '<portlet:namespace />',
-					on: {
-						'clone': function(event) {
-							var row = event.row;
-							var guid = event.guid;
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />addresses',
+			fieldIndexes: '<portlet:namespace />addressesIndexes',
+			namespace: '<portlet:namespace />',
+			on: {
+				'clone': function(event) {
+					var row = event.row;
+					var guid = event.guid;
 
-							var dynamicSelects = row.one('select[data-componentType=dynamic_select]');
+					var dynamicSelects = row.one('select[data-componentType=dynamic_select]');
 
-							if (dynamicSelects) {
-								dynamicSelects.detach('change');
-							}
-
-							new Liferay.DynamicSelect(
-								[
-									{
-										select: '<portlet:namespace />addressCountryId' + guid,
-										selectData: Liferay.Address.getCountries,
-										selectDesc: 'nameCurrentValue',
-										selectId: 'countryId',
-										selectSort: '<%= true %>',
-										selectVal: '0'
-									},
-									{
-										select: '<portlet:namespace />addressRegionId' + guid,
-										selectData: Liferay.Address.getRegions,
-										selectDesc: 'name',
-										selectId: 'regionId',
-										selectVal: '0'
-									}
-								]
-							);
-						}
+					if (dynamicSelects) {
+						dynamicSelects.detach('change');
 					}
+
+					new Liferay.DynamicSelect(
+						[
+							{
+								select: '<portlet:namespace />addressCountryId' + guid,
+								selectData: Liferay.Address.getCountries,
+								selectDesc: 'nameCurrentValue',
+								selectId: 'countryId',
+								selectSort: '<%= true %>',
+								selectVal: '0'
+							},
+							{
+								select: '<portlet:namespace />addressRegionId' + guid,
+								selectData: Liferay.Address.getRegions,
+								selectDesc: 'name',
+								selectId: 'regionId',
+								selectVal: '0'
+							}
+						]
+					);
 				}
-			).render();
+			}
 		}
-	);
+	).render();
 </aui:script>

@@ -50,13 +50,6 @@
 			top: 0;
 		}
 
-		.liferay-ddm-form-field-tip {
-			color: #869CAD;
-			font-size: 12px;
-			font-weight: 400;
-			line-height: 16px;
-		}
-
 		.liferay-ddm-form-field-date .input-group-addon {
 			cursor: pointer;
 		}
@@ -90,6 +83,13 @@
 	.row {
 		min-height: auto;
 	}
+}
+
+.liferay-ddm-form-field-tip {
+	color: #869CAD;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
 }
 
 .multi-step-progress-bar {

@@ -19,6 +19,6 @@ package com.liferay.portlet.blogs.constants;
  */
 public class BlogsConstants {
 
-	public static final String SERVICE_NAME = "com.liferay.blogs.kernel";
+	public static final String SERVICE_NAME = "com.liferay.blogs";
 
 }

@@ -74,7 +74,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				PortletURL rowURL = null;
 
-				if (journalDisplayContext.isShowEditActions()) {
+				if (journalDisplayContext.isShowEditActions() && JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
 					rowURL = journalDisplayContext.getPortletURL();
 
 					rowURL.setParameter("mvcPath", "/edit_article.jsp");

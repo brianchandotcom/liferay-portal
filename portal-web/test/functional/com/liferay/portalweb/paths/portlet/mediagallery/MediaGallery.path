@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HOME_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'asset-name')]/../../div//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_TITLE</td>
 	<td>//div[contains(@class,'image')]//div[contains(@class,'card-dm-text-large') and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>

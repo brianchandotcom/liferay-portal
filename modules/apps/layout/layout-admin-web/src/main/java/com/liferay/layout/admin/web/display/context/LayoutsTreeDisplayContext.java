@@ -97,7 +97,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		throws PortalException {
 
 		if (isLayoutSetBranchSelected(layoutSetBranch)) {
-			return "disabled";
+			return "active";
 		}
 
 		return StringPool.BLANK;
@@ -127,10 +127,6 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 	public String getLayoutSetBranchURL(LayoutSetBranch layoutSetBranch)
 		throws PortalException {
-
-		if (isLayoutSetBranchSelected(layoutSetBranch)) {
-			return null;
-		}
 
 		PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,

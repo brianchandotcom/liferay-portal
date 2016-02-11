@@ -15,6 +15,7 @@
 package com.liferay.portal.language.servlet.filter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -80,17 +81,20 @@ public class LanguageFilterTracker {
 			ResourceBundleLoader resourceBundleLoader =
 				_serviceTracker.getService();
 
+			ResourceBundleLoader portalResourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
 			if (resourceBundleLoader != null) {
 				ResourceBundle resourceBundle =
 					resourceBundleLoader.loadResourceBundle(languageId);
 
 				if (resourceBundle != null) {
-					return resourceBundle;
+					return new AggregateResourceBundle(
+						resourceBundle,
+						portalResourceBundleLoader.loadResourceBundle(
+							languageId));
 				}
 			}
-
-			ResourceBundleLoader portalResourceBundleLoader =
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
 			return portalResourceBundleLoader.loadResourceBundle(languageId);
 		}

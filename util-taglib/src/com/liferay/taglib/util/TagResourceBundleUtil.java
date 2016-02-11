@@ -16,6 +16,7 @@ package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -65,7 +66,7 @@ public class TagResourceBundleUtil {
 			(ResourceBundle)pageContext.getAttribute("resourceBundle");
 
 		HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
+			(HttpServletRequest)pageContext.getRequest();
 
 		Locale locale = PortalUtil.getLocale(request);
 
@@ -97,20 +98,29 @@ public class TagResourceBundleUtil {
 			(ResourceBundleLoader)request.getAttribute(
 				WebKeys.RESOURCE_BUNDLE_LOADER);
 
-		if (resourceBundleLoader != null) {
-			return resourceBundleLoader;
+		if (resourceBundleLoader == null) {
+			ServletContext servletContext = request.getServletContext();
+
+			String servletContextName = servletContext.getServletContextName();
+
+			if (Validator.isNull(servletContextName)) {
+				return null;
+			}
+
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByServletContextName(
+						servletContextName);
 		}
 
-		ServletContext servletContext = request.getServletContext();
-
-		String servletContextName = servletContext.getServletContextName();
-
-		if (Validator.isNull(servletContextName)) {
-			return null;
+		if (resourceBundleLoader == null) {
+			return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 		}
-
-		return ResourceBundleLoaderUtil.
-			getResourceBundleLoaderByServletContextName(servletContextName);
+		else {
+			return new AggregateResourceBundleLoader(
+				resourceBundleLoader,
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+		}
 	}
 
 	private static final ResourceBundle _emptyResourceBundle =

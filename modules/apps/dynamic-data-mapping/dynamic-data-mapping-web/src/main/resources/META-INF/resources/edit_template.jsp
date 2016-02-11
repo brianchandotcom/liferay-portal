@@ -109,7 +109,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 
 			<%
-			String[] imageExtensions = ddmServiceConfiguration.smallImageExtensions();
+			String[] imageExtensions = ddmGroupServiceConfiguration.smallImageExtensions();
 			%>
 
 			<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
@@ -118,7 +118,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
 			<%
-			long imageMaxSize = ddmServiceConfiguration.smallImageMaxSize();
+			long imageMaxSize = ddmGroupServiceConfiguration.smallImageMaxSize();
 			%>
 
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

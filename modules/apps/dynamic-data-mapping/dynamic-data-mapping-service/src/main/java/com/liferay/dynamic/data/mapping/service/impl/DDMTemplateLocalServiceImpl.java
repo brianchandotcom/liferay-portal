@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
@@ -1523,11 +1523,12 @@ public class DDMTemplateLocalServiceImpl
 		return script;
 	}
 
-	protected DDMServiceConfiguration getDDMServiceConfiguration(long groupId)
+	protected DDMGroupServiceConfiguration getDDMGroupServiceConfiguration(
+			long groupId)
 		throws ConfigurationException {
 
 		return configurationProvider.getConfiguration(
-			DDMServiceConfiguration.class,
+			DDMGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, DDMConstants.SERVICE_NAME));
 	}
@@ -1624,11 +1625,11 @@ public class DDMTemplateLocalServiceImpl
 
 		boolean validSmallImageExtension = false;
 
-		DDMServiceConfiguration ddmServiceConfiguration =
-			getDDMServiceConfiguration(groupId);
+		DDMGroupServiceConfiguration ddmGroupServiceConfiguration =
+			getDDMGroupServiceConfiguration(groupId);
 
 		for (String smallImageExtension :
-				ddmServiceConfiguration.smallImageExtensions()) {
+				ddmGroupServiceConfiguration.smallImageExtensions()) {
 
 			if (StringPool.STAR.equals(smallImageExtension) ||
 				StringUtil.endsWith(
@@ -1644,7 +1645,8 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateSmallImageNameException(smallImageName);
 		}
 
-		long smallImageMaxSize = ddmServiceConfiguration.smallImageMaxSize();
+		long smallImageMaxSize =
+			ddmGroupServiceConfiguration.smallImageMaxSize();
 
 		if ((smallImageMaxSize > 0) &&
 			(smallImageBytes.length > smallImageMaxSize)) {

@@ -14,22 +14,22 @@
 
 package com.liferay.dynamic.data.mapping.configuration.definition;
 
-import org.osgi.service.component.annotations.Component;
-
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
 @Component
-public class DDMServiceConfigurationPidMapping
+public class DDMGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return DDMServiceConfiguration.class;
+		return DDMGroupServiceConfiguration.class;
 	}
 
 	@Override

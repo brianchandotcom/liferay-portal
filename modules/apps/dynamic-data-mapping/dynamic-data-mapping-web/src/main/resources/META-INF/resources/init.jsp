@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
@@ -175,7 +175,7 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 }
 
 DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
-DDMServiceConfiguration ddmServiceConfiguration = ddmWebRequestHelper.getDDMServiceConfiguration();
+DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmWebRequestHelper.getDDMGroupServiceConfiguration();
 
 DDMWebConfiguration ddmWebConfiguration = (DDMWebConfiguration)request.getAttribute(DDMWebConfiguration.class.getName());
 

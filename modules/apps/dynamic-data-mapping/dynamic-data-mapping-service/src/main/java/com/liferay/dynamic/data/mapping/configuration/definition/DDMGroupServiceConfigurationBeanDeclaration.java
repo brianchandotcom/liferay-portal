@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.configuration.definition;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Lino Alves
  */
 @Component
-public class DDMServiceConfigurationBeanDeclaration
+public class DDMGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return DDMServiceConfiguration.class;
+		return DDMGroupServiceConfiguration.class;
 	}
 
 }

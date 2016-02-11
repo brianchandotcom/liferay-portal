@@ -578,7 +578,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		String bundleVersion = getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
-		project.setVersion(bundleVersion);
+		if (Validator.isNotNull(bundleVersion)) {
+			project.setVersion(bundleVersion);
+		}
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

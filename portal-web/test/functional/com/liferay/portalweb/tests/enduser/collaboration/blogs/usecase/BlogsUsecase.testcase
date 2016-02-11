@@ -1639,33 +1639,27 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
-		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName2" value="Blogs Aggregator Page" />
-		<var name="portletName2" value="Blogs Aggregator" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="Blogs Aggregator" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoSettings" />
@@ -1677,7 +1671,7 @@
 		<execute function="AssertClick" locator1="Blogs#MY_PENDING_ENTRIES_PANEL_COLLAPSED" value1="My Pending Entries" />
 
 		<execute macro="BlogsEntry#gotoScheduledEditPG">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoAbstractField" />
@@ -1689,7 +1683,7 @@
 		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEntryViaBlogsAggregatorPG" />
@@ -1697,15 +1691,15 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEntryAsGuestPG">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEntryViaBlogsAggregatorPG" />
@@ -1713,7 +1707,7 @@
 		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
@@ -1737,7 +1731,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />

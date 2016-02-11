@@ -62,7 +62,8 @@ public class DLFileVersionPolicyImpl implements DLFileVersionPolicy {
 		throws PortalException {
 
 		for (DLFileVersionPolicy dlFileVersionPolicy : _serviceTrackerList) {
-			if (!dlFileVersionPolicy.isKeepFileVersionLabel(
+			if ((dlFileVersionPolicy != this) &&
+				!dlFileVersionPolicy.isKeepFileVersionLabel(
 					lastDLFileVersion, latestDLFileVersion, serviceContext)) {
 
 				return false;

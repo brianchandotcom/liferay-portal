@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.simulation.web.portlet;
 
+import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
@@ -59,12 +60,19 @@ public class ProductNavigationSimulationPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
+			ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
+		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupProvider(GroupProvider groupProvider) {
+		_groupProvider = groupProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -79,6 +87,7 @@ public class ProductNavigationSimulationPortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
+	private GroupProvider _groupProvider;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 

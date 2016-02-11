@@ -141,6 +141,7 @@ for (Group group : allGroups) {
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+
 	<%
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);

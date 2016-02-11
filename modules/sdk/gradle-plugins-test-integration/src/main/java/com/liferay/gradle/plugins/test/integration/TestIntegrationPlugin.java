@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.SetupArquillianTask;
 import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
+import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -28,6 +29,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -517,12 +519,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					}
 				}
 
-				FileTree candidateClassFiles = test.getCandidateClassFiles();
-
-				if (candidateClassFiles.isEmpty()) {
-					return null;
-				}
-
 				return startTestableTomcatTask;
 			}
 
@@ -534,8 +530,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 			"-Duser.timezone=GMT");
 
-		// GRADLE-2697
-
 		Project project = test.getProject();
 
 		project.afterEvaluate(
@@ -543,12 +537,42 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					configureTaskTestIntegrationEnabled(test);
+
+					// GRADLE-2697
+
 					configureTaskSystemProperty(
 						test, "app.server.tomcat.dir",
 						testIntegrationTomcatExtension.getDir());
 				}
 
 			});
+	}
+
+	protected void configureTaskTestIntegrationEnabled(Test test) {
+		Project project = test.getProject();
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put(
+			"excludes",
+			StringUtil.replaceEnding(test.getExcludes(), ".class", ".java"));
+		args.put(
+			"includes",
+			StringUtil.replaceEnding(test.getIncludes(), ".class", ".java"));
+
+		for (File dir : test.getTestSrcDirs()) {
+			args.put("dir", dir);
+
+			FileTree fileTree = project.fileTree(args);
+
+			if (!fileTree.isEmpty()) {
+				return;
+			}
+		}
+
+		test.setDependsOn(Collections.emptySet());
+		test.setEnabled(false);
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

@@ -14,9 +14,11 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -30,6 +32,11 @@ public class UserGroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initGroupServiceBuilderMethods();
 
 		initCustomMethod("getGroupUserUserGroups", 0, long.class, long.class);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+		super.setStaging(staging);
 	}
 
 }

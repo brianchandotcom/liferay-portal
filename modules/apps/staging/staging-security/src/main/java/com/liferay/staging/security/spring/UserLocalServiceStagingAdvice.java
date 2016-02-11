@@ -14,10 +14,12 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -44,6 +46,11 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 			"updateGroups", 1, long.class, long[].class, ServiceContext.class);
 
 		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+		super.setStaging(staging);
 	}
 
 }

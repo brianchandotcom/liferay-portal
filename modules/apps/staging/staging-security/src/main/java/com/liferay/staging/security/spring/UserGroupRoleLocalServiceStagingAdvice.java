@@ -14,9 +14,11 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -83,6 +85,11 @@ public class UserGroupRoleLocalServiceStagingAdvice
 		initCustomMethod(
 			"hasUserGroupRole", 1, long.class, long.class, String.class,
 			boolean.class);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+		super.setStaging(staging);
 	}
 
 }

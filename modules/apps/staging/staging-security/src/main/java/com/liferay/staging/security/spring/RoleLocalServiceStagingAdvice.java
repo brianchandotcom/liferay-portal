@@ -14,11 +14,13 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -49,6 +51,11 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long.class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long[].class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+		super.setStaging(staging);
 	}
 
 }

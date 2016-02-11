@@ -14,12 +14,14 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -55,6 +57,11 @@ public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 				}
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+		super.setStaging(staging);
 	}
 
 	private static final String[] _SERVICE_BUILDER_GENERATED_TEMPLATES =

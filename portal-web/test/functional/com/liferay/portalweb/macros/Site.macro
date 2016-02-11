@@ -731,9 +731,7 @@
 
 					<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
 
-					<var name="key_menuItem" value="Membership Requested" />
-
-					<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Membership Requested" />
+					<execute function="AssertTextEquals" locator1="MenuItem#MEMBERSHIP_REQUESTED" value1="Membership Requested" />
 				</then>
 			</elseif>
 			<else>

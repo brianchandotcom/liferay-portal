@@ -509,6 +509,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MEMBERSHIP_REQUESTED</td>
+	<td>//ul[contains(.,'Membership Requested')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Metadata')]</td>
 	<td></td>

@@ -189,7 +189,7 @@
 			</then>
 		</if>
 
-		<execute macro="DDLDataDefinition#saveCP" />
+		<execute macro="WebContentStructures#saveCP" />
 	</command>
 
 	<command name="editSubstructureDefaultValuesCP">

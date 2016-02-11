@@ -38,9 +38,18 @@ public class OrganizationLocalServiceStagingAdvice
 			"getGroupUserOrganizations", 0, long.class, long.class);
 	}
 
+	@Reference
+	protected void setService(OrganizationLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(OrganizationLocalService service) {
+		unregisterAdvice(service);
 	}
 
 }

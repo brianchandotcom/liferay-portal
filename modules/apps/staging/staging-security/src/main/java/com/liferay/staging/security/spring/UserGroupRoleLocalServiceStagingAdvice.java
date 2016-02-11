@@ -87,9 +87,18 @@ public class UserGroupRoleLocalServiceStagingAdvice
 			boolean.class);
 	}
 
+	@Reference
+	protected void setService(UserGroupRoleLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(UserGroupRoleLocalService service) {
+		unregisterAdvice(service);
 	}
 
 }

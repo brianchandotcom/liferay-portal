@@ -68,9 +68,18 @@ public class UserGroupGroupRoleLocalServiceStagingAdvice
 			"hasUserGroupGroupRole", 1, long.class, long.class, String.class);
 	}
 
+	@Reference
+	protected void setService(UserGroupGroupRoleLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(UserGroupGroupRoleLocalService service) {
+		unregisterAdvice(service);
 	}
 
 }

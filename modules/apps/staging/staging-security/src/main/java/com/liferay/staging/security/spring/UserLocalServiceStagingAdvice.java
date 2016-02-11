@@ -48,9 +48,18 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
 	}
 
+	@Reference
+	protected void setService(UserLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(UserLocalService service) {
+		unregisterAdvice(service);
 	}
 
 }

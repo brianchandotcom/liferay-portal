@@ -59,9 +59,18 @@ public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		}
 	}
 
+	@Reference
+	protected void setService(GroupLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(GroupLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final String[] _SERVICE_BUILDER_GENERATED_TEMPLATES =

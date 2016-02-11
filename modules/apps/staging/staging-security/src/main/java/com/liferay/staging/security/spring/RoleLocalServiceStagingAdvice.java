@@ -53,9 +53,18 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
 	}
 
+	@Reference
+	protected void setService(RoleLocalService service) {
+		registerAdvice(service);
+	}
+
 	@Reference(unbind = "-")
 	protected void setStaging(Staging staging) {
 		super.setStaging(staging);
+	}
+
+	protected void unsetService(RoleLocalService service) {
+		unregisterAdvice(service);
 	}
 
 }

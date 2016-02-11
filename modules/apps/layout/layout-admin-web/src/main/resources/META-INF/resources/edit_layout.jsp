@@ -66,6 +66,14 @@ if (layoutRevision != null) {
 	}
 }
 
+String backURL = ParamUtil.getString(request, "backURL");
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+
+	portletDisplay.setURLBack(backURL);
+}
+
 renderResponse.setTitle(selLayout.getName(locale));
 %>
 

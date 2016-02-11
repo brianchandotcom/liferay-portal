@@ -81,7 +81,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateAssetEntries() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.journal.model.JournalArticle");
+			"com.liferay.journal.model.JournalArticle");
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;

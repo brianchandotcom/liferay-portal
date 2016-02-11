@@ -289,6 +289,14 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layout.getTypeSettingsProperties());
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void copyApplications(

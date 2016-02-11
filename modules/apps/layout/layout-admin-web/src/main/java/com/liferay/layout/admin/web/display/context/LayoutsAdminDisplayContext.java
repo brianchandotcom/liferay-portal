@@ -60,6 +60,18 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 			getLayoutDescriptions());
 	}
 
+	@Override
+	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {
+		PortletURL addLayoutURL = super.getAddLayoutURL(selPlid, privateLayout);
+
+		addLayoutURL.setParameter(
+			"backURL",
+			PortalUtil.getCurrentURL(
+				PortalUtil.getHttpServletRequest(liferayPortletRequest)));
+
+		return addLayoutURL;
+	}
+
 	public PortletURL getEditLayoutURL() {
 		PortletURL editLayoutURL = super.getEditLayoutURL(
 			getSelPlid(), isPrivateLayout());

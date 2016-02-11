@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, property = {"resource.name=com.liferay.polls"})
+@Component(
+	immediate = true,
+	property = {"resource.name=" + PollsResourcePermissionChecker.RESOURCE_NAME}
+)
 public class PollsResourcePermissionChecker
 	implements ResourcePermissionChecker {
 

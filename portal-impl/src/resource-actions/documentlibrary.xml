@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.document.library.kernel</model-name>
+		<model-name>com.liferay.document.library</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>

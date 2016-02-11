@@ -73,7 +73,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 					roleIds);
 			}
 		}
-		else if (className.equals("com.liferay.message.boards.kernel")) {
+		else if (className.equals("com.liferay.message.boards")) {
 			propagateMBRolePermissions(
 				actionRequest, className, primKey, roleIds);
 		}

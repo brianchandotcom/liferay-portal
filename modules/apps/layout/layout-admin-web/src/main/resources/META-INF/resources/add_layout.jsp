@@ -42,33 +42,32 @@ else {
 }
 
 String[] types = LayoutTypeControllerTracker.getTypes();
-%>
 
-<portlet:renderURL var="backURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-</portlet:renderURL>
+String backURL = ParamUtil.getString(request, "backURL");
 
-<%
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+
+	portletDisplay.setURLBack(backURL);
+}
 
 renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 %>
 
-<portlet:actionURL name="addLayout" var="addLayoutURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
+<portlet:actionURL name="addLayout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
 </portlet:actionURL>
 
-<portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="selPlid" value="<%= String.valueOf(parentPlid) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-</portlet:renderURL>
-
 <aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
-	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
+
+	<%
+	String redirect = ParamUtil.getString(request, "redirect");
+	%>
+
+	<c:if test="<%= Validator.isNotNull(redirect) %>">
+		<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= redirect %>" />
+	</c:if>
+
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
@@ -220,7 +219,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="add-page" />
 
-		<aui:button cssClass="btn-lg" href="<%= editLayoutRenderURL %>" type="cancel" />
+		<c:if test="<%= Validator.isNotNull(backURL) %>">
+			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		</c:if>
 	</aui:button-row>
 </aui:form>
 

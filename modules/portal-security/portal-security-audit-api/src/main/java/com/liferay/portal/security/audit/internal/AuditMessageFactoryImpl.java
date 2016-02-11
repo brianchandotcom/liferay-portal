@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.audit;
+package com.liferay.portal.security.audit.internal;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditMessageFactory;

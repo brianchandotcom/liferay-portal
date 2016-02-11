@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.audit;
+package com.liferay.portal.security.audit;
+
+import com.liferay.portal.kernel.audit.AuditException;
+import com.liferay.portal.kernel.audit.AuditMessage;
 
 /**
  * @author Michael C. Han

@@ -30,7 +30,7 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var TPL_LEXICON_ICON = '<svg class="lexicon-icon lexicon-icon-{0}" role="image">' +
+	var TPL_LEXICON_ICON = '<svg class="lexicon-icon lexicon-icon-{0} {1}" role="image">' +
 			'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#{0}" />' +
 		'</svg>';
 
@@ -405,16 +405,16 @@
 			}
 		},
 
-		getLexiconIcon: function(icon) {
+		getLexiconIcon: function(icon, cssClass) {
 			var instance = this;
 
-			return $(instance.getLexiconIconTpl(icon))[0];
+			return $(instance.getLexiconIconTpl(icon, cssClass))[0];
 		},
 
-		getLexiconIconTpl: function(icon) {
+		getLexiconIconTpl: function(icon, cssClass) {
 			var instance = this;
 
-			return _.sub(TPL_LEXICON_ICON, icon);
+			return _.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},
 
 		getOpener: function() {

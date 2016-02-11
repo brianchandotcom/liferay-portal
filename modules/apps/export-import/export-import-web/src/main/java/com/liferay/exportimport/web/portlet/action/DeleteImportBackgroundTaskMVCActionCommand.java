@@ -15,11 +15,13 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,7 +48,13 @@ public class DeleteImportBackgroundTaskMVCActionCommand
 		throws Exception {
 
 		try {
-			ActionUtil.deleteBackgroundTask(actionRequest);
+			long[] backgroundTaskIds = ParamUtil.getLongValues(
+				actionRequest, "deleteBackgroundTaskIds");
+
+			for (long backgroundTaskId : backgroundTaskIds) {
+				BackgroundTaskManagerUtil.deleteBackgroundTask(
+					backgroundTaskId);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchBackgroundTaskException ||

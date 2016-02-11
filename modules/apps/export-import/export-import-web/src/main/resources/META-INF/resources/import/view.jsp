@@ -41,29 +41,15 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 <liferay-util:include page="/import/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="mvcRenderCommandName" value="importLayoutsView" />
+<liferay-util:include page="/import/processes_list/view.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-	<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
 	<liferay-util:param name="navigation" value="<%= navigation %>" />
 	<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
 	<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+	<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 </liferay-util:include>
-
-<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
-	<liferay-util:include page="/import/processes_list/import_layouts_processes.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-		<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<liferay-util:param name="validate" value="<%= String.valueOf(Boolean.TRUE) %>" />
-		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-		<liferay-util:param name="navigation" value="<%= navigation %>" />
-		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-	</liferay-util:include>
-</div>
 
 <portlet:renderURL var="addNewImportProcessURL">
 	<portlet:param name="mvcPath" value="/import/new_import/import_layouts.jsp" />

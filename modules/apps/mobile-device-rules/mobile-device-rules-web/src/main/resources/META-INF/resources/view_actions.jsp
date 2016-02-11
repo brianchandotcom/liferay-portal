@@ -30,7 +30,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
+		<aui:nav-item label='<%= LanguageUtil.format(resourceBundle, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -104,7 +104,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-action") %>' url="<%= addURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-action") %>' url="<%= addURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
@@ -112,7 +112,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	$('#<portlet:namespace />deleteActions').on(
 		'click',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
 				submitForm(document.<portlet:namespace />fm);
 			}
 		}

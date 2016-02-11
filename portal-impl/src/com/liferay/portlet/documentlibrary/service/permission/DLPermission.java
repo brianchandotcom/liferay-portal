@@ -26,13 +26,10 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(
-	property = {"resource.name=com.liferay.document.library.kernel"}
-)
+@OSGiBeanProperties(property = {"resource.name=" + DLPermission.RESOURCE_NAME})
 public class DLPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.document.library.kernel";
+	public static final String RESOURCE_NAME = "com.liferay.document.library";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

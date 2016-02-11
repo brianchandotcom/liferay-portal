@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,14 +12,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portlet.documentlibrary.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class DLConstants {
+<%
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-	public static final String SERVICE_NAME = "com.liferay.document.library";
+String cssText = null;
 
+if ((selLayout != null) && !selLayout.isInheritLookAndFeel()) {
+	cssText = selLayout.getCssText();
 }
+else {
+	LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+
+	cssText = selLayoutSet.getCss();
+}
+%>
+
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="css" />
+
+<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= cssText %>" />

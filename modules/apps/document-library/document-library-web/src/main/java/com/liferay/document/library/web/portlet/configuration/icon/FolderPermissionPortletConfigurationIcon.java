@@ -61,7 +61,7 @@ public class FolderPermissionPortletConfigurationIcon
 			}
 			else {
 				url = PermissionsURLTag.doTag(
-					null, "com.liferay.document.library.kernel",
+					null, "com.liferay.document.library",
 					HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
 					String.valueOf(themeDisplay.getScopeGroupId()),
 					LiferayWindowState.POP_UP.toString(), null,

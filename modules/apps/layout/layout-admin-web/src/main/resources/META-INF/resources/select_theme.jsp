@@ -86,7 +86,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 		total="<%= themes.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= themes %>"
+			results="<%= ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

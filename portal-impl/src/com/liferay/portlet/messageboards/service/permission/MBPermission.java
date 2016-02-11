@@ -29,8 +29,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 @OSGiBeanProperties(property = {"resource.name=" + MBPermission.RESOURCE_NAME})
 public class MBPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.message.boards.kernel";
+	public static final String RESOURCE_NAME = "com.liferay.message.boards";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

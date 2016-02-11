@@ -79,7 +79,6 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
-		setPermissionAware(true);
 	}
 
 	@Override

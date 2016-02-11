@@ -60,7 +60,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 %>
 
-<portlet:actionURL name="addLayout" var="addLayoutURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
+<portlet:actionURL name="addLayout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
 </portlet:actionURL>
 

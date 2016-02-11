@@ -17,6 +17,10 @@ package com.liferay.document.library.web.portlet.action;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -32,10 +36,12 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCRenderCommand.class
 )
 public class UploadMultipleFileEntriesMVCRenderCommand
-	extends GetFolderMVCRenderCommand {
+	implements MVCRenderCommand {
 
-	@Override
-	protected String getPath() {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
 		return "/document_library/upload_multiple_file_entries.jsp";
 	}
 

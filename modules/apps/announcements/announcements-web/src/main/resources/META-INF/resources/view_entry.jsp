@@ -79,6 +79,12 @@ if (entry.getPriority() > 0) {
 							<%= HtmlUtil.escape(entry.getTitle()) %>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= entry.isAlert() %>">
+						<span class="badge badge-danger badge-sm">
+							<liferay-ui:message key="important" />
+						</span>
+					</c:if>
 				</h4>
 
 				<%

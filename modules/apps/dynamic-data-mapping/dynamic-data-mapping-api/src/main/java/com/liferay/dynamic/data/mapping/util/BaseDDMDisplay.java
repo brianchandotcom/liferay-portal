@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,6 +50,9 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo Garcia
@@ -327,21 +332,47 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
 
+		//This is OK because it is our own bundle
 		ResourceBundle baseDDMDisplayResourceBundle =
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale,
 				baseDDMDisplayClazz.getClassLoader());
 
-		Class<?> clazz = getClass();
+		//In this case it is best to look for a ResourceBundleLoader installed
+		//for the class' bundle. It would be better if the API would allow
+		//for the users to provide their ResourceBundles
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		//LanguageFilterTracker installs a ResourceBundleLoader for all the
+		//modules that register a ServletContext is OSGi
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					bundle.getSymbolicName());
+
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		if (resourceBundleLoader == null) {
+			return new AggregateResourceBundle(
+				baseDDMDisplayResourceBundle,
+				portalResourceBundleLoader.loadResourceBundle(languageId));
+		}
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			languageId);
+
+		if (resourceBundle == null) {
+			return new AggregateResourceBundle(
+				baseDDMDisplayResourceBundle,
+				portalResourceBundleLoader.loadResourceBundle(languageId));
+		}
 
 		return new AggregateResourceBundle(
-			baseDDMDisplayResourceBundle, resourceBundle,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				PortalClassLoaderUtil.getClassLoader()));
+			resourceBundle, baseDDMDisplayResourceBundle,
+			portalResourceBundleLoader.loadResourceBundle(languageId));
 	}
 
 	protected String getViewTemplatesURL(

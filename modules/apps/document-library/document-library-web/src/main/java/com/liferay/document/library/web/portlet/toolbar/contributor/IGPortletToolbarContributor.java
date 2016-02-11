@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.render.command.name=-",
 		"mvc.render.command.name=/image_gallery_display/view"
 	},
-	service = {IGPortletToolbarContributor.class, PortletToolbarContributor.class}
+	service = {PortletToolbarContributor.class}
 )
 public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 

@@ -46,49 +46,60 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ProductNavigationControlMenuCategoryRegistry {
 
-	public List<ProductNavigationControlMenuCategory> getControlMenuCategories(
-		String productControlMenuCategoryKey) {
+	public List<ProductNavigationControlMenuCategory>
+		getProductNavigationControlMenuCategories(
+			String productNavigationControlMenuCategoryKey) {
 
-		List<ProductNavigationControlMenuCategory> productControlMenuCategories =
-			_productControlMenuCategoryServiceTrackerMap.getService(
-				productControlMenuCategoryKey);
+		List<ProductNavigationControlMenuCategory>
+			productNavigationControlMenuCategories =
+				_productNavigationControlMenuCategoryServiceTrackerMap.
+					getService(productNavigationControlMenuCategoryKey);
 
-		if (productControlMenuCategories == null) {
+		if (productNavigationControlMenuCategories == null) {
 			return Collections.emptyList();
 		}
 
-		return new ArrayList<>(productControlMenuCategories);
+		return new ArrayList<>(productNavigationControlMenuCategories);
 	}
 
-	public List<ProductNavigationControlMenuCategory> getControlMenuCategories(
-		String productControlMenuCategoryKey, final HttpServletRequest request) {
+	public List<ProductNavigationControlMenuCategory>
+		getProductNavigationControlMenuCategories(
+			String productNavigationControlMenuCategoryKey,
+			final HttpServletRequest request) {
 
-		List<ProductNavigationControlMenuCategory> productControlMenuCategories =
-			getControlMenuCategories(productControlMenuCategoryKey);
+		List<ProductNavigationControlMenuCategory>
+			productNavigationControlMenuCategories =
+				getProductNavigationControlMenuCategories(
+					productNavigationControlMenuCategoryKey);
 
-		if (productControlMenuCategories.isEmpty()) {
-			return productControlMenuCategories;
+		if (productNavigationControlMenuCategories.isEmpty()) {
+			return productNavigationControlMenuCategories;
 		}
 
 		return ListUtil.filter(
-			productControlMenuCategories,
+			productNavigationControlMenuCategories,
 			new PredicateFilter<ProductNavigationControlMenuCategory>() {
 
 				@Override
 				public boolean filter(
-					ProductNavigationControlMenuCategory productControlMenuCategory) {
+					ProductNavigationControlMenuCategory
+						productNavigationControlMenuCategory) {
 
 					try {
-						if (!productControlMenuCategory.hasAccessPermission(request)) {
+						if (!productNavigationControlMenuCategory.
+								hasAccessPermission(request)) {
+
 							return false;
 						}
 
 						List<ProductNavigationControlMenuEntry>
-							controlMenuEntries =
-								_controlMenuEntryRegistry.getControlMenuEntries(
-									productControlMenuCategory, request);
+							productNavigationControlMenuEntries =
+								_productNavigationControlMenuEntryRegistry.
+									getProductNavigationControlMenuEntries(
+										productNavigationControlMenuCategory,
+										request);
 
-						if (controlMenuEntries.isEmpty()) {
+						if (productNavigationControlMenuEntries.isEmpty()) {
 							return false;
 						}
 
@@ -106,7 +117,7 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
-		_productControlMenuCategoryServiceTrackerMap =
+		_productNavigationControlMenuCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ProductNavigationControlMenuCategory.class,
 				"(product.navigation.control.menu.category.key=*)",
@@ -117,14 +128,16 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_productControlMenuCategoryServiceTrackerMap.close();
+		_productNavigationControlMenuCategoryServiceTrackerMap.close();
 	}
 
 	@Reference(unbind = "-")
-	protected void setControlMenuEntryRegistry(
-		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry) {
+	protected void setProductNavigationControlMenuEntryRegistry(
+		ProductNavigationControlMenuEntryRegistry
+			productNavigationControlMenuEntryRegistry) {
 
-		_controlMenuEntryRegistry = controlMenuEntryRegistry;
+		_productNavigationControlMenuEntryRegistry =
+			productNavigationControlMenuEntryRegistry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -132,7 +145,8 @@ public class ProductNavigationControlMenuCategoryRegistry {
 
 	private ServiceTrackerMap
 		<String, List<ProductNavigationControlMenuCategory>>
-			_productControlMenuCategoryServiceTrackerMap;
-	private ProductNavigationControlMenuEntryRegistry _controlMenuEntryRegistry;
+			_productNavigationControlMenuCategoryServiceTrackerMap;
+	private ProductNavigationControlMenuEntryRegistry
+		_productNavigationControlMenuEntryRegistry;
 
 }

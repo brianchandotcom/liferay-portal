@@ -34,17 +34,18 @@ public class ProductNavigationControlMenuEntryServiceReferenceMapper
 		ServiceReference<ProductNavigationControlMenuEntry> serviceReference,
 		Emitter<String> emitter) {
 
-		String controlMenuCategoryKey = (String)serviceReference.getProperty(
-			"product.navigation.control.menu.category.key");
+		String productNavigationControlMenuCategoryKey =
+			(String)serviceReference.getProperty(
+				"product.navigation.control.menu.category.key");
 
-		if (Validator.isNull(controlMenuCategoryKey)) {
+		if (Validator.isNull(productNavigationControlMenuCategoryKey)) {
 			_log.error(
-				"Unable to register control menu entry because of missing " +
-					"service property " +
+				"Unable to register product navigation control menu entry " +
+					"because of missing service property " +
 						"\"product.navigation.control.menu.category.key\"");
 		}
 		else {
-			emitter.emit(controlMenuCategoryKey);
+			emitter.emit(productNavigationControlMenuCategoryKey);
 		}
 	}
 

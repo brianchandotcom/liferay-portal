@@ -60,24 +60,29 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		ProductNavigationControlMenuCategoryRegistry
-			controlMenuCategoryRegistry =
-				ServletContextUtil.getControlMenuCategoryRegistry();
+			productNavigationControlMenuCategoryRegistry =
+				ServletContextUtil.
+					getProductNavigationControlMenuCategoryRegistry();
 
-		List<ProductNavigationControlMenuCategory> controlMenuCategories =
-			controlMenuCategoryRegistry.getControlMenuCategories(
-				ProductNavigationControlMenuCategoryKeys.ROOT);
+		List<ProductNavigationControlMenuCategory>
+			productNavigationControlMenuCategories =
+				productNavigationControlMenuCategoryRegistry.
+					getProductNavigationControlMenuCategories(
+						ProductNavigationControlMenuCategoryKeys.ROOT);
 
 		request.setAttribute(
 			"liferay-product-navigation:control-menu:control-menu-categories",
-			controlMenuCategories);
+			productNavigationControlMenuCategories);
 
-		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry =
-			ServletContextUtil.getControlMenuEntryRegistry();
+		ProductNavigationControlMenuEntryRegistry
+			productNavigationControlMenuEntryRegistry =
+				ServletContextUtil.
+					getProductNavigationControlMenuEntryRegistry();
 
 		request.setAttribute(
 			"liferay-product-navigation:control-menu:" +
 				"control-menu-entry-registry",
-			controlMenuEntryRegistry);
+			productNavigationControlMenuEntryRegistry);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

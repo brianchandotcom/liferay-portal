@@ -37,15 +37,15 @@ public class ServletContextUtil {
 	}
 
 	public static final ProductNavigationControlMenuCategoryRegistry
-		getControlMenuCategoryRegistry() {
+		getProductNavigationControlMenuCategoryRegistry() {
 
-		return _instance._getControlMenuCategoryRegistry();
+		return _instance._getProductNavigationControlMenuCategoryRegistry();
 	}
 
 	public static final ProductNavigationControlMenuEntryRegistry
-		getControlMenuEntryRegistry() {
+		getProductNavigationControlMenuEntryRegistry() {
 
-		return _instance._getControlMenuEntryRegistry();
+		return _instance._getProductNavigationControlMenuEntryRegistry();
 	}
 
 	public static final ServletContext getServletContext() {
@@ -63,18 +63,21 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setControlMenuCategoryRegistry(
+	protected void setProductNavigationControlMenuCategoryRegistry(
 		ProductNavigationControlMenuCategoryRegistry
-			controlMenuCategoryRegistry) {
+			productNavigationControlMenuCategoryRegistry) {
 
-		_controlMenuCategoryRegistry = controlMenuCategoryRegistry;
+		_productNavigationControlMenuCategoryRegistry =
+			productNavigationControlMenuCategoryRegistry;
 	}
 
 	@Reference(unbind = "-")
-	protected void setControlMenuEntryRegistry(
-		ProductNavigationControlMenuEntryRegistry controlMenuEntryRegistry) {
+	protected void setProductNavigationControlMenuEntryRegistry(
+		ProductNavigationControlMenuEntryRegistry
+			productNavigationControlMenuEntryRegistry) {
 
-		_controlMenuEntryRegistry = controlMenuEntryRegistry;
+		_productNavigationControlMenuEntryRegistry =
+			productNavigationControlMenuEntryRegistry;
 	}
 
 	@Reference(
@@ -86,15 +89,15 @@ public class ServletContextUtil {
 	}
 
 	private ProductNavigationControlMenuCategoryRegistry
-		_getControlMenuCategoryRegistry() {
+		_getProductNavigationControlMenuCategoryRegistry() {
 
-		return _controlMenuCategoryRegistry;
+		return _productNavigationControlMenuCategoryRegistry;
 	}
 
 	private ProductNavigationControlMenuEntryRegistry
-		_getControlMenuEntryRegistry() {
+		_getProductNavigationControlMenuEntryRegistry() {
 
-		return _controlMenuEntryRegistry;
+		return _productNavigationControlMenuEntryRegistry;
 	}
 
 	private ServletContext _getServletContext() {
@@ -104,8 +107,9 @@ public class ServletContextUtil {
 	private static ServletContextUtil _instance;
 
 	private ProductNavigationControlMenuCategoryRegistry
-		_controlMenuCategoryRegistry;
-	private ProductNavigationControlMenuEntryRegistry _controlMenuEntryRegistry;
+		_productNavigationControlMenuCategoryRegistry;
+	private ProductNavigationControlMenuEntryRegistry
+		_productNavigationControlMenuEntryRegistry;
 	private ServletContext _servletContext;
 
 }

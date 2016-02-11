@@ -43,40 +43,49 @@ import org.osgi.service.component.annotations.Deactivate;
 )
 public class ProductNavigationControlMenuEntryRegistry {
 
-	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
-		ProductNavigationControlMenuCategory controlMenuCategory) {
+	public List<ProductNavigationControlMenuEntry>
+		getProductNavigationControlMenuEntries(
+			ProductNavigationControlMenuCategory
+				productNavigationControlMenuCategory) {
 
-		List<ProductNavigationControlMenuEntry> controlMenuEntries =
-			_serviceTrackerMap.getService(controlMenuCategory.getKey());
+		List<ProductNavigationControlMenuEntry>
+			productNavigationControlMenuEntries = _serviceTrackerMap.getService(
+				productNavigationControlMenuCategory.getKey());
 
-		if (controlMenuEntries == null) {
+		if (productNavigationControlMenuEntries == null) {
 			return Collections.emptyList();
 		}
 
-		return controlMenuEntries;
+		return productNavigationControlMenuEntries;
 	}
 
-	public List<ProductNavigationControlMenuEntry> getControlMenuEntries(
-		ProductNavigationControlMenuCategory controlMenuCategory,
-		final HttpServletRequest request) {
+	public List<ProductNavigationControlMenuEntry>
+		getProductNavigationControlMenuEntries(
+			ProductNavigationControlMenuCategory
+				productNavigationControlMenuCategory,
+			final HttpServletRequest request) {
 
-		List<ProductNavigationControlMenuEntry> controlMenuEntries =
-			getControlMenuEntries(controlMenuCategory);
+		List<ProductNavigationControlMenuEntry>
+			productNavigationControlMenuEntries =
+				getProductNavigationControlMenuEntries(
+					productNavigationControlMenuCategory);
 
-		if (controlMenuEntries.isEmpty()) {
-			return controlMenuEntries;
+		if (productNavigationControlMenuEntries.isEmpty()) {
+			return productNavigationControlMenuEntries;
 		}
 
 		return ListUtil.filter(
-			controlMenuEntries,
+			productNavigationControlMenuEntries,
 			new PredicateFilter<ProductNavigationControlMenuEntry>() {
 
 				@Override
 				public boolean filter(
-					ProductNavigationControlMenuEntry controlMenuEntry) {
+					ProductNavigationControlMenuEntry
+						productNavigationControlMenuEntry) {
 
 					try {
-						return controlMenuEntry.isShow(request);
+						return productNavigationControlMenuEntry.isShow(
+							request);
 					}
 					catch (PortalException pe) {
 						_log.error(pe, pe);

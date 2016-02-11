@@ -161,15 +161,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 								long currentProgressBarCountersTotal = currentModelAdditionCountersTotal + currentPortletAdditionCounter;
 
 								if (allProgressBarCountersTotal > 0) {
-									int base = 100;
-
-									String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
-
-									if (phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
-										base = 50;
-									}
-
-									percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * base);
+									percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * 100);
 								}
 								%>
 
@@ -187,11 +179,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 								%>
 
 								<c:choose>
-									<c:when test="<%= Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
-										<div class="progress-current-item">
-											<strong><liferay-ui:message key="please-wait-as-the-publication-processes-on-the-remote-site" /></strong>
-										</div>
-									</c:when>
 									<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
 
 										<%
@@ -199,9 +186,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 										if (Validator.equals(cmd, Constants.IMPORT)) {
 											messageKey = "importing";
-										}
-										else if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) || Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
-											messageKey = "publishing";
 										}
 										%>
 

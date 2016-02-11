@@ -64,14 +64,15 @@ public class TagResourceBundleUtil {
 		ResourceBundle resourceBundle =
 			(ResourceBundle)pageContext.getAttribute("resourceBundle");
 
-		if (resourceBundle != null) {
-			return resourceBundle;
-		}
-
 		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+				(HttpServletRequest)pageContext.getRequest();
 
 		Locale locale = PortalUtil.getLocale(request);
+
+		if (resourceBundle != null) {
+			return new AggregateResourceBundle(
+				resourceBundle, PortalUtil.getResourceBundle(locale));
+		}
 
 		return getResourceBundle(request, locale);
 	}

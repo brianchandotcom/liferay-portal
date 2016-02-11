@@ -17,6 +17,7 @@ package com.liferay.staging.security.spring;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,6 +52,8 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long.class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, long[].class);
 		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
 
 	@Reference
@@ -66,5 +69,8 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 	protected void unsetService(RoleLocalService service) {
 		unregisterAdvice(service);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[] {"getGroupPrimaryKeys"});
 
 }

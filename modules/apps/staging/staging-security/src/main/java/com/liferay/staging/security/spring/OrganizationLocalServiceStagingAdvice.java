@@ -17,6 +17,9 @@ package com.liferay.staging.security.spring;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,6 +39,8 @@ public class OrganizationLocalServiceStagingAdvice
 
 		initCustomMethod(
 			"getGroupUserOrganizations", 0, long.class, long.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
 
 	@Reference
@@ -51,5 +56,8 @@ public class OrganizationLocalServiceStagingAdvice
 	protected void unsetService(OrganizationLocalService service) {
 		unregisterAdvice(service);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[] {"getGroupPrimaryKeys"});
 
 }

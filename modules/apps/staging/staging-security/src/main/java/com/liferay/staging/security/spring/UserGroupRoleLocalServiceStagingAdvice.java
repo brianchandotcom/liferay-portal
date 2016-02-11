@@ -17,6 +17,9 @@ package com.liferay.staging.security.spring;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,6 +88,8 @@ public class UserGroupRoleLocalServiceStagingAdvice
 		initCustomMethod(
 			"hasUserGroupRole", 1, long.class, long.class, String.class,
 			boolean.class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
 
 	@Reference
@@ -100,5 +105,8 @@ public class UserGroupRoleLocalServiceStagingAdvice
 	protected void unsetService(UserGroupRoleLocalService service) {
 		unregisterAdvice(service);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
+		new String[0]);
 
 }

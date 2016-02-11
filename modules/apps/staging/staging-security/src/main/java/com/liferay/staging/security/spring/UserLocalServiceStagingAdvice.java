@@ -18,6 +18,9 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,6 +49,8 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 			"updateGroups", 1, long.class, long[].class, ServiceContext.class);
 
 		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
 
 	@Reference
@@ -61,5 +66,10 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 	protected void unsetService(UserLocalService service) {
 		unregisterAdvice(service);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST =
+		Arrays.asList(new String[] {
+			"addDefaultGroups", "getGroupPrimaryKeys", "getNoGroups"
+		});
 
 }

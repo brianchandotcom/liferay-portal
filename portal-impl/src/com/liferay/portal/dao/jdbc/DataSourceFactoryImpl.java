@@ -103,8 +103,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	@Override
 	public DataSource initDataSource(Properties properties) throws Exception {
-		Class.forName(DataSourceWrapper.class.getName());
-
 		Properties defaultProperties = PropsUtil.getProperties(
 			"jdbc.default.", true);
 

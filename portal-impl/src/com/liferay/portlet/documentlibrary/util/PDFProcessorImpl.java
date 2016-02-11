@@ -62,6 +62,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -515,9 +517,39 @@ public class PDFProcessorImpl
 
 		String processIdentity = String.valueOf(fileVersion.getFileVersionId());
 
-		futures.put(processIdentity, future);
+		long waiting = PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT;
 
-		future.get();
+		if (_log.isDebugEnabled()) {
+			if (thumbnail) {
+				_log.debug(
+					"Waiting for " + waiting + " seconds to obtain " +
+						file.getPath() + " thumbnail generation");
+			}
+			else {
+				_log.debug(
+					"Waiting for " + waiting + " seconds to obtain " +
+						file.getPath() + " previews generation");
+			}
+		}
+
+		try {
+			future.get(waiting, TimeUnit.SECONDS);
+
+			futures.put(processIdentity, future);
+		}
+		catch (TimeoutException te) {
+			_log.error(file.getPath() + " generation timeout!");
+
+			boolean cancel = future.cancel(true);
+			_log.error("Generation cancelled?: "+ cancel);
+
+			throw te;
+		}
+		catch (Exception e) {
+			_log.error("Unexpected error: ", e);
+
+			throw e;
+		}
 
 		// Store images
 

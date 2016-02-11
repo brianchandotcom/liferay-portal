@@ -33,11 +33,11 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
 	<ul class="nav nav-equal-height nav-nested">
 		<li>
-			<div class="nav-equal-height-heading">
-				<span><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
+			<div class="scope-selector">
+				<span class="scope-name"><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
 
 				<span class="nav-equal-height-heading-field">
-					<liferay-ui:icon-menu direction="down" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+					<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 						<%
 						for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {

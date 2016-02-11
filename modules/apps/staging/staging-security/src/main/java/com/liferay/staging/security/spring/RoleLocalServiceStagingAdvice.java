@@ -25,6 +25,8 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public RoleLocalServiceStagingAdvice() throws NoSuchMethodException {
 		super(RoleLocalService.class);
+
+		initGroupServiceBuilderMethods();
 	}
 
 }

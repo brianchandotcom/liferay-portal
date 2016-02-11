@@ -17,6 +17,7 @@ package com.liferay.staging.security.spring;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.lang.reflect.Method;
 
@@ -88,6 +89,47 @@ public class LiveGroupStagingAdviceTest extends PowerMockito {
 		liveGroupStagingAdvice.initCustomMethod(
 			addUserGroupMethod.getName(), groupParameterIndex,
 			addUserGroupMethod.getParameterTypes());
+
+		liveGroupStagingAdvice.invoke(methodInvocation);
+
+		Object[] replacedArguments = methodInvocation.getArguments();
+		Group group = (Group)replacedArguments[groupParameterIndex];
+
+		Assert.assertEquals(_LIVE_GROUP_ID, group.getGroupId());
+	}
+
+	@Test
+	public void testInvokeServiceBuilderMethod() throws Throwable {
+		LiveGroupStagingAdvice liveGroupStagingAdvice =
+			new LiveGroupStagingAdvice(UserLocalService.class) {};
+
+		liveGroupStagingAdvice.setStaging(setUpStaging());
+
+		liveGroupStagingAdvice.initGroupServiceBuilderMethods();
+
+		Method addGroupuserMethod = UserLocalService.class.getMethod(
+			"addGroupUser", long.class, long.class);
+
+		final int groupParameterIndex = 0;
+
+		Object[] arguments = new Object[
+			addGroupuserMethod.getParameterTypes().length];
+
+		arguments[groupParameterIndex] = mockGroup(_STAGING_GROUP_ID);
+
+		MethodInvocation methodInvocation = mock(MethodInvocation.class);
+
+		when (
+			methodInvocation.getMethod()
+		).thenReturn(
+			addGroupuserMethod
+		);
+
+		when (
+			methodInvocation.getArguments()
+		).thenReturn(
+			arguments
+		);
 
 		liveGroupStagingAdvice.invoke(methodInvocation);
 

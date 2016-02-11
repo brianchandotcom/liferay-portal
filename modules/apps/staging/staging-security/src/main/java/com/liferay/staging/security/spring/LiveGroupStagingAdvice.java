@@ -57,6 +57,29 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		_customMethods.put(customMethod, index);
 	}
 
+	public void initGroupServiceBuilderMethods() {
+		String className = _localServiceClass.getSimpleName();
+		String relatedEntityName = className.substring(
+			0, className.length() - _LOCAL_SERVICE.length());
+
+		Method[] relatedEntityMethods = _localServiceClass.getMethods();
+
+		for (String template : _SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES) {
+			String serviceBuilderMethodName = StringUtil.replace(
+				template, "$1", relatedEntityName);
+
+			for (Method method : relatedEntityMethods) {
+				if (method.getName().equals(serviceBuilderMethodName)) {
+					_serviceBuilderGeneratedMethods.add(method);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Registering " + method);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
@@ -64,6 +87,8 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		}
 
 		replaceStagingGroupIdsInCustomMethod(methodInvocation);
+
+		replaceStagingGroupIdsInServiceBuilderGeneratedMethod(methodInvocation);
 
 		return methodInvocation.proceed();
 	}
@@ -194,15 +219,40 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		replaceArgument(arguments, argumentIndex);
 	}
 
+	protected void replaceStagingGroupIdsInServiceBuilderGeneratedMethod(
+		MethodInvocation methodInvocation) {
+
+		Method method = methodInvocation.getMethod();
+
+		if (!_serviceBuilderGeneratedMethods.contains(method)) {
+			return;
+		}
+
+		Object[] arguments = methodInvocation.getArguments();
+
+		replaceArgument(arguments, 0);
+	}
+
 	protected void setStaging(Staging staging) {
 		_staging = staging;
 	}
+
+	private static final String _LOCAL_SERVICE = "LocalService";
+
+	private static final String[] _SERVICE_BUILDER_GENERATED_GROUP_TEMPLATES =
+		new String[] {
+			"addGroup$1", "addGroup$1s", "clearGroup$1s", "deleteGroup$1",
+			"deleteGroup$1s", "getGroup$1s", "getGroup$1sCount", "hasGroup$1",
+			"hasGroup$1s", "setGroup$1s", "unsetGroup$1s"
+		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiveGroupStagingAdvice.class);
 
 	private final Map<Method, Integer> _customMethods = new HashMap<>();
 	private final Class _localServiceClass;
+	private final List<Method> _serviceBuilderGeneratedMethods =
+		new ArrayList<>();
 	private Staging _staging;
 
 }

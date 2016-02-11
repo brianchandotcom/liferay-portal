@@ -24,6 +24,8 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public UserLocalServiceStagingAdvice() throws NoSuchMethodException {
 		super(UserLocalService.class);
+
+		initGroupServiceBuilderMethods();
 	}
 
 }

@@ -26,6 +26,8 @@ public class OrganizationLocalServiceStagingAdvice
 		throws NoSuchMethodException {
 
 		super(OrganizationLocalService.class);
+
+		initGroupServiceBuilderMethods();
 	}
 
 }

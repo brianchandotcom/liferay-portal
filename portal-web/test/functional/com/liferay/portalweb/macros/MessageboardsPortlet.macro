@@ -171,6 +171,7 @@
 
 	<command name="searchPG">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+
 		<execute function="Click" locator1="MessageBoards#SEARCH_BUTTON" />
 	</command>
 

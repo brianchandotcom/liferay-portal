@@ -1455,6 +1455,33 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.count(beforePos, StringPool.NEW_LINE) + 1;
 	}
 
+	protected int getLineLength(String line) {
+		int lineLength = 0;
+
+		int tabLength = 4;
+
+		for (char c : line.toCharArray()) {
+			if (c == CharPool.TAB) {
+				for (int i = 0; i < tabLength; i++) {
+					lineLength++;
+				}
+
+				tabLength = 4;
+			}
+			else {
+				lineLength++;
+
+				tabLength--;
+
+				if (tabLength <= 0) {
+					tabLength = 4;
+				}
+			}
+		}
+
+		return lineLength;
+	}
+
 	protected String getMainReleaseVersion() {
 		if (_mainReleaseVersion != null) {
 			return _mainReleaseVersion;

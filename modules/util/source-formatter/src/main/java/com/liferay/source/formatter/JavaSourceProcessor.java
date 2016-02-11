@@ -3369,33 +3369,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected int getLineLength(String line) {
-		int lineLength = 0;
-
-		int tabLength = 4;
-
-		for (char c : line.toCharArray()) {
-			if (c == CharPool.TAB) {
-				for (int i = 0; i < tabLength; i++) {
-					lineLength++;
-				}
-
-				tabLength = 4;
-			}
-			else {
-				lineLength++;
-
-				tabLength--;
-
-				if (tabLength <= 0) {
-					tabLength = 4;
-				}
-			}
-		}
-
-		return lineLength;
-	}
-
 	protected int getLineStartPos(String content, int lineCount) {
 		int x = 0;
 

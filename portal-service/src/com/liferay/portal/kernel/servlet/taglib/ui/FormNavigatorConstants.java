@@ -58,8 +58,7 @@ public class FormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_SITES_GENERAL = "general";
 
-	public static final String CATEGORY_KEY_SITES_MISCELLANEOUS =
-		"miscellaneous";
+	public static final String CATEGORY_KEY_SITES_LANGUAGES = "languages";
 
 	public static final String CATEGORY_KEY_SITES_SEO =
 		"search-engine-optimization";

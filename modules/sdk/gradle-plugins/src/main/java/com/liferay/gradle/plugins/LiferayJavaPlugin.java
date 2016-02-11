@@ -447,9 +447,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		final Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
-		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-		test.jvmArgs("-Dliferay.mode=test");
-		test.jvmArgs("-Duser.timezone=GMT");
+		test.jvmArgs(
+			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
+			"-Duser.timezone=GMT");
 
 		test.setForkEvery(1L);
 

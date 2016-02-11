@@ -34,4 +34,3 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.css.builder.CSSBuilder
-Private-Package: com.liferay.css.builder.sass

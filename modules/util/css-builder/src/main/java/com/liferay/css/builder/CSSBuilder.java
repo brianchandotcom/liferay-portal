@@ -14,8 +14,6 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.css.builder.sass.SassFile;
-import com.liferay.css.builder.sass.SassString;
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
@@ -31,11 +30,13 @@ import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,13 +123,14 @@ public class CSSBuilder {
 		}
 
 		for (String fileName : fileNames) {
-			_build(fileName);
-		}
+			long start = System.currentTimeMillis();
 
-		for (SassFile sassFile : _sassFileCache.values()) {
-			sassFile.writeCacheFiles();
+			_parseSassFile(fileName);
 
-			System.out.println(sassFile);
+			long elapsedTime = System.currentTimeMillis() - start;
+
+			System.out.println(
+				"Parsed " + fileName + " in " + elapsedTime + "ms");
 		}
 	}
 
@@ -142,36 +144,6 @@ public class CSSBuilder {
 		}
 
 		return false;
-	}
-
-	private void _addSassString(SassFile sassFile, String fileName)
-		throws Exception {
-
-		String cssContent = _parseSass(fileName);
-
-		sassFile.addSassFragment(new SassString(this, fileName, cssContent));
-	}
-
-	private SassFile _build(String fileName) throws Exception {
-		SassFile sassFile = _sassFileCache.get(fileName);
-
-		if (sassFile != null) {
-			return sassFile;
-		}
-
-		sassFile = new SassFile(this, _docrootDirName, fileName);
-
-		SassFile previousSassFile = _sassFileCache.putIfAbsent(
-			fileName, sassFile);
-
-		if (previousSassFile != null) {
-			sassFile = previousSassFile;
-		}
-		else {
-			_parseSassFile(sassFile);
-		}
-
-		return sassFile;
 	}
 
 	private void _collectSassFiles(
@@ -231,6 +203,25 @@ public class CSSBuilder {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getRtlCss(String fileName, String css) throws Exception {
+		String rtlCss = css;
+
+		try {
+			if (_rtlCSSConverter == null) {
+				_rtlCSSConverter = new RTLCSSConverter();
+			}
+
+			rtlCss = _rtlCSSConverter.process(rtlCss);
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to generate RTL version for " + fileName +
+					StringPool.COMMA_AND_SPACE + e.getMessage());
+		}
+
+		return rtlCss;
 	}
 
 	private void _initSassCompiler(String sassCompilerClassName)
@@ -318,25 +309,32 @@ public class CSSBuilder {
 			}
 		}
 
-		String css = _sassCompiler.compileFile(
-			filePath, _portalCommonDirName + File.pathSeparator + cssBasePath,
-			_generateSourceMap, filePath + ".map");
-
-		return CSSBuilderUtil.parseStaticTokens(css);
+		return CSSBuilderUtil.parseStaticTokens(
+			_sassCompiler.compileFile(
+				filePath,
+				_portalCommonDirName + File.pathSeparator + cssBasePath,
+				_generateSourceMap, filePath + ".map"
+			));
 	}
 
-	private void _parseSassFile(SassFile sassFile) throws Exception {
-		String fileName = sassFile.getFileName();
-
-		long start = System.currentTimeMillis();
-
+	private void _parseSassFile(String fileName) throws Exception {
 		File file = new File(_docrootDirName, fileName);
 
 		if (!file.exists()) {
 			return;
 		}
 
-		_addSassString(sassFile, fileName);
+		String ltrContent = _parseSass(fileName);
+
+		_writeCacheFile(fileName, ltrContent, false);
+
+		if (isRtlExcludedPath(fileName)) {
+			return;
+		}
+
+		StringBundler rtlContent = new StringBundler();
+
+		rtlContent.append(_getRtlCss(fileName, ltrContent));
 
 		String rtlCustomFileName = CSSBuilderUtil.getRtlCustomFileName(
 			fileName);
@@ -344,11 +342,50 @@ public class CSSBuilder {
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
-			_addSassString(sassFile, rtlCustomFileName);
+			rtlContent.append(_parseSass(rtlCustomFileName));
 		}
 
-		sassFile.setElapsedTime(System.currentTimeMillis() - start);
+		_writeCacheFile(fileName, rtlContent.toString(), true);
 	}
+
+	private void _write(File file, String content) throws Exception {
+		File parentFile = file.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
+
+		Path path = Paths.get(file.toURI());
+
+		Files.write(path, content.getBytes(StringPool.UTF8));
+	}
+
+	private void _writeCacheFile(String fileName, String content, boolean rtl)
+		throws Exception {
+
+		String cacheFileName;
+
+		if (rtl) {
+			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
+
+			cacheFileName = CSSBuilderUtil.getCacheFileName(
+				rtlFileName, StringPool.BLANK);
+		}
+		else {
+			cacheFileName = CSSBuilderUtil.getCacheFileName(
+				fileName, StringPool.BLANK);
+		}
+
+		File cacheFile = new File(_docrootDirName, cacheFileName);
+
+		_write(cacheFile, content);
+
+		File file = new File(_docrootDirName, fileName);
+
+		cacheFile.setLastModified(file.lastModified());
+	}
+
+	private static RTLCSSConverter _rtlCSSConverter;
 
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
@@ -356,7 +393,5 @@ public class CSSBuilder {
 	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
-	private final ConcurrentMap<String, SassFile> _sassFileCache =
-		new ConcurrentHashMap<>();
 
 }

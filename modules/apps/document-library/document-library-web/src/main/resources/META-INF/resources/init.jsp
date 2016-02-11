@@ -84,6 +84,7 @@ page import="com.liferay.document.library.kernel.util.comparator.RepositoryModel
 page import="com.liferay.document.library.web.constants.DLPortletKeys" %><%@
 page import="com.liferay.document.library.web.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.dao.search.DLResultRowSplitter" %><%@
+page import="com.liferay.document.library.web.dao.search.IGResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.display.context.DLDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.display.context.IGDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper" %><%@

@@ -71,7 +71,7 @@ else {
 <liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
 <liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
 
-<aui:fieldset>
+<aui:fieldset id="phoneNumbers">
 
 	<%
 	for (int i = 0; i < phonesIndexes.length; i++) {
@@ -104,16 +104,11 @@ else {
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />phoneNumbers',
-		function() {
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />phoneNumbers > fieldset',
-					fieldIndexes: '<portlet:namespace />phonesIndexes',
-					namespace: '<portlet:namespace />'
-				}
-			).render();
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />phoneNumbers',
+			fieldIndexes: '<portlet:namespace />phonesIndexes',
+			namespace: '<portlet:namespace />'
 		}
-	);
+	).render();
 </aui:script>

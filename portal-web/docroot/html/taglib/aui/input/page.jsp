@@ -111,7 +111,7 @@
 
 		<c:if test='<%= type.equals("toggle-switch") %>'>
 			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" data-label-off="<%= (Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : StringPool.BLANK) %>" data-label-on="<%= (Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : StringPool.BLANK) %>">
+				<span class="toggle-switch-handle" data-label-off="<%= (Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : LanguageUtil.get(request, "no")) %>" data-label-on="<%= (Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : LanguageUtil.get(request, "yes")) %>">
 					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
 						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> toggle-switch-icon <%= buttonIconOn %>"></span>
 					</c:if>

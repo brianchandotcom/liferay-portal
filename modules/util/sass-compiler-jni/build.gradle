@@ -53,14 +53,14 @@ buildLibSass_Linux_x86_64 {
 
 buildLibSass_Win32_x86 {
 	inputFileName = "sass.dll"
-	makeExecutable = "mingw32-make.exe shared"
+	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
 	resourcesDirName = "win32-x86"
 }
 
 buildLibSass_Win32_x86_64 {
 	inputFileName = "sass.dll"
-	makeExecutable = "mingw32-make.exe shared"
+	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
 	resourcesDirName = "win32-x86-64"
 }

@@ -28,7 +28,6 @@ For resources/win32-x86/sass.dll:
 	- Run the tdm-gcc 32-bit installer and then click "Create".
 	- Install with all the defaults.
 	- Go to the installation folder C:\TDM-GCC-32\bin.
-	- Copy gcc.exe to a new file named cc.exe.
 	- Execute "gradle buildLibSass_Win32_x86" from sass-compiler.
 
 For resources/win32-x86-64/sass.dll:
@@ -38,5 +37,4 @@ For resources/win32-x86-64/sass.dll:
 	- Select MinGW-w64/TDM64 option
 	- Install with all the defaults.
 	- Go to the installation folder C:\TDM64-GCC-64\bin.
-	- Copy gcc.exe to a new file named cc.exe.
 	- Execute "gradle buildLibSass_Win32_x86_64" from sass-compiler.

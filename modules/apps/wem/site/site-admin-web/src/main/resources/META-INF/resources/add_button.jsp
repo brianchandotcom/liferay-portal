@@ -28,13 +28,11 @@
 
 	<liferay-portlet:renderURL varImpl="addSiteURL">
 		<portlet:param name="mvcPath" value="/edit_site.jsp" />
-	</liferay-portlet:renderURL>
 
-	<%
-	if ((group != null) && siteAdminDisplayContext.hasAddChildSitePermission(group)) {
-		addSiteURL.setParameter("parentGroupSearchContainerPrimaryKeys", String.valueOf(group.getGroupId()));
-	}
-	%>
+		<c:if test="<%= (group != null) && siteAdminDisplayContext.hasAddChildSitePermission(group) %>">
+			<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</c:if>
+	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
 		<c:choose>

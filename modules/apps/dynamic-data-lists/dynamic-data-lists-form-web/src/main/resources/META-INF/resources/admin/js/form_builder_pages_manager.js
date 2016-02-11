@@ -37,7 +37,7 @@ AUI.add(
 							deleteCurrentPage: Liferay.Language.get('delete-current-page'),
 							resetPage: Liferay.Language.get('reset-page'),
 							switchMode: Liferay.Language.get('switch-pagination-mode'),
-							untitledPage: Liferay.Language.get('untitled-page-x-of-n')
+							untitledPage: Liferay.Language.get('untitled-page-x-of-x')
 						},
 						writeOnce: true
 					}
@@ -151,6 +151,23 @@ AUI.add(
 
 						return popover;
 					},
+
+					_createUntitledPageLabel: function(activePageNumber, pagesQuantity) {
+						var instance = this;
+						var title;
+
+						var strings = instance.get('strings')
+
+						title = A.Lang.sub(
+							strings.untitledPage,
+							[
+								activePageNumber,
+								pagesQuantity
+							]
+						);
+
+				        return title;
+				    },
 
 					_createWizardItems: function() {
 						var instance = this;

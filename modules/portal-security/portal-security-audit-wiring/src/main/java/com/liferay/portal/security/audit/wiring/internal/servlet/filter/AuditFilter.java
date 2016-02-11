@@ -14,21 +14,43 @@
 
 package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.security.audit.configuration.AuditConfiguration;
 
+import java.util.Map;
+
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class AuditFilter extends BasePortalFilter implements TryFilter {
+@Component(
+	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
+	immediate = true,
+	property = {
+		"servlet-context-name=", "servlet-filter-name=Audit Filter",
+		"url-pattern=/*",
+		"url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$"
+	},
+	service = Filter.class
+)
+public class AuditFilter extends BaseFilter implements TryFilter {
 
 	@Override
 	public Object doFilterTry(
@@ -59,6 +81,23 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 		return null;
 	}
 
+	@Override
+	public boolean isFilterEnabled() {
+		return _auditConfiguration.enabled();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_auditConfiguration = Configurable.createConfigurable(
+			AuditConfiguration.class, properties);
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
 	protected String getRemoteAddr(HttpServletRequest request) {
 		String remoteAddr = request.getHeader(HttpHeaders.X_FORWARDED_FOR);
 
@@ -68,5 +107,9 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 
 		return request.getRemoteAddr();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(AuditFilter.class);
+
+	private volatile AuditConfiguration _auditConfiguration;
 
 }

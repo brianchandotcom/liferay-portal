@@ -526,7 +526,7 @@ mysql.executable=${mysql.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<target name="compile-jsp">
+	<target name="compile-jsp-jdk7">
 		<run-batch-test>
 			<test-action>
 				<ant dir="portal-web" target="compile-tomcat" />
@@ -540,7 +540,7 @@ mysql.executable=${mysql.executable}]]></echo>
 		</run-batch-test>
 	</target>
 
-	<target name="functional-bundle-tomcat-mysql">
+	<target name="functional-bundle-tomcat-mysql56-jdk7">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -553,43 +553,43 @@ mysql.executable=${mysql.executable}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-tomcat-hypersonic">
+	<target name="functional-tomcat8-hypersonic20-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
-	<target name="functional-tomcat-mysql">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
-	</target>
-
-	<target name="functional-tomcat-mysql55">
+	<target name="functional-tomcat8-mysql55-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
 	</target>
 
-	<target name="integration-db2">
+	<target name="functional-tomcat8-mysql56-jdk7">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="integration-db2105-jdk7">
 		<run-integration-test database.type="db2" />
 	</target>
 
-	<target name="integration-hypersonic">
+	<target name="integration-hypersonic20-jdk7">
 		<run-integration-test database.type="hypersonic" />
 	</target>
 
-	<target name="integration-mysql">
+	<target name="integration-mysql56-jdk7">
 		<run-integration-test database.type="mysql" />
 	</target>
 
-	<target name="integration-oracle">
+	<target name="integration-oracle12-jdk7">
 		<run-integration-test database.type="oracle" />
 	</target>
 
-	<target name="integration-postgresql">
+	<target name="integration-postgresql94-jdk7">
 		<run-integration-test database.type="postgresql" />
 	</target>
 
-	<target name="integration-sybase">
+	<target name="integration-sybase160-jdk7">
 		<run-integration-test database.type="sybase" />
 	</target>
 
-	<target name="modules-functional">
+	<target name="modules-functional-jdk7">
 		<run-batch-test>
 			<test-action>
 				<antcall target="run-selenium-test">
@@ -599,35 +599,35 @@ mysql.executable=${mysql.executable}]]></echo>
 		</run-batch-test>
 	</target>
 
-	<target name="modules-functional-tomcat-mysql">
+	<target name="modules-functional-tomcat8-mysql56-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="modules-integration-db2">
+	<target name="modules-integration-db2105-jdk7">
 		<run-modules-integration-test database.type="db2" />
 	</target>
 
-	<target name="modules-integration-hypersonic">
+	<target name="modules-integration-hypersonic20-jdk7">
 		<run-modules-integration-test database.type="hypersonic" />
 	</target>
 
-	<target name="modules-integration-mysql">
+	<target name="modules-integration-mysql56-jdk7">
 		<run-modules-integration-test database.type="mysql" />
 	</target>
 
-	<target name="modules-integration-oracle">
+	<target name="modules-integration-oracle12-jdk7">
 		<run-modules-integration-test database.type="oracle" />
 	</target>
 
-	<target name="modules-integration-postgresql">
+	<target name="modules-integration-postgresql94-jdk7">
 		<run-modules-integration-test database.type="postgresql" />
 	</target>
 
-	<target name="modules-integration-sybase">
+	<target name="modules-integration-sybase160-jdk7">
 		<run-modules-integration-test database.type="sybase" />
 	</target>
 
-	<target name="modules-unit">
+	<target name="modules-unit-jdk7">
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
@@ -678,7 +678,7 @@ ${output.content}</echo>
 		</exec>
 	</target>
 
-	<target name="plugins-compile">
+	<target name="plugins-compile-jdk7">
 		<run-batch-test>
 			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
@@ -692,7 +692,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="plugins-functional-bundle-tomcat-mysql">
+	<target name="plugins-functional-bundle-tomcat-mysql56-jdk7">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -704,11 +704,11 @@ ${output.content}</echo>
 		/>
 	</target>
 
-	<target name="plugins-functional-tomcat-mysql">
+	<target name="plugins-functional-tomcat8-mysql56-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="portal-web">
+	<target name="portal-web-jdk7">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql">
@@ -733,7 +733,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="ruby-sass-compiler">
+	<target name="ruby-sass-compiler-jdk7">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
 		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
@@ -761,7 +761,7 @@ ${output.content}</echo>
 		</fail>
 	</target>
 
-	<target name="service-builder">
+	<target name="service-builder-jdk7">
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
@@ -905,7 +905,7 @@ ${output.content}</echo>
 		<antcall target="clean-up-sybase-processes" />
 	</target>
 
-	<target name="tck">
+	<target name="tck-jdk7">
 		<run-batch-test tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -933,7 +933,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="unit">
+	<target name="unit-jdk7">
 		<run-batch-test>
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">

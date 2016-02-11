@@ -198,7 +198,7 @@ data.put("qa-id", "info");
 				);
 			</aui:script>
 
-			<c:if test="<%= informationMessagesControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
+			<c:if test="<%= informationMessagesProductNavigationControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
 				<aui:button name="manageCustomization" value="show-customizable-sections" />
 
 				<div class="hide layout-customizable-controls" id="<portlet:namespace />layoutCustomizableControls">

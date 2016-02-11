@@ -5034,11 +5034,22 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="test.class" />
 			<then>
-				<get-poshi-test-name />
+				<if>
+					<contains string="${test.class}" substring="," />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							test.name=${test.class}
+						</echo>
+					</then>
+					<else>
+						<get-poshi-test-name />
 
-				<echo append="true" file="${test.ext.properties.file}">
-					test.name=${poshi.test.name}
-				</echo>
+						<echo append="true" file="${test.ext.properties.file}">
+							test.name=${poshi.test.name}
+						</echo>
+					</else>
+				</if>
+
 			</then>
 		</if>
 

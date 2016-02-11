@@ -130,7 +130,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group = getGroup();
 
 		List<PanelApp> panelApps = panelAppRegistry.getPanelApps(
 			_panelCategory, themeDisplay.getPermissionChecker(), group);
@@ -146,8 +146,8 @@ public class PanelCategoryTag extends BasePanelTag {
 			"liferay-application-list:panel-category:id", getId());
 
 		int notificationsCount = panelCategoryHelper.getNotificationsCount(
-			_panelCategory.getKey(), themeDisplay.getPermissionChecker(),
-			group, themeDisplay.getUser());
+			_panelCategory.getKey(), themeDisplay.getPermissionChecker(), group,
+			themeDisplay.getUser());
 
 		request.setAttribute(
 			"liferay-application-list:panel-category:notificationsCount",

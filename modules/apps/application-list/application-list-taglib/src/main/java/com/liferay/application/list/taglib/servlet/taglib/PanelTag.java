@@ -68,7 +68,7 @@ public class PanelTag extends BasePanelTag {
 		List<PanelCategory> childPanelCategories =
 			panelCategoryRegistry.getChildPanelCategories(
 				_panelCategory, themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup());
+				getGroup());
 
 		request.setAttribute(
 			"liferay-application-list:panel:childPanelCategories",

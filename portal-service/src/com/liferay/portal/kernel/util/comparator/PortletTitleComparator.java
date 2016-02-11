@@ -33,14 +33,21 @@ public class PortletTitleComparator
 	implements Comparator<Portlet>, Serializable {
 
 	public PortletTitleComparator(Locale locale) {
-		this(null, locale);
+		this(null, locale, false);
 	}
 
 	public PortletTitleComparator(
 		ServletContext servletContext, Locale locale) {
 
+		this(servletContext, locale, false);
+	}
+
+	public PortletTitleComparator(
+		ServletContext servletContext, Locale locale, boolean ascending) {
+
 		_servletContext = servletContext;
 		_locale = locale;
+		_ascending = ascending;
 	}
 
 	@Override
@@ -73,9 +80,17 @@ public class PortletTitleComparator
 			return -1;
 		}
 
-		return portletTitle1.compareTo(portletTitle2);
+		int value = portletTitle1.compareTo(portletTitle2);
+
+		if (_ascending) {
+			return value;
+		}
+		else {
+			return -value;
+		}
 	}
 
+	private final boolean _ascending;
 	private final Locale _locale;
 	private final ServletContext _servletContext;
 

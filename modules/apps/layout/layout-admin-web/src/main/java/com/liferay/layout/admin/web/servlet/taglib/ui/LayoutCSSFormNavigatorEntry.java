@@ -14,16 +14,8 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -31,42 +23,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
+ * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=70"},
+	property = {"service.ranking:Integer=90"},
 	service = FormNavigatorEntry.class
 )
-public class LayoutEmbeddedPortletsFormNavigatorEntry
-	extends BaseLayoutFormNavigatorEntry {
+public class LayoutCSSFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_LOOK_AND_FEEL;
 	}
 
 	@Override
 	public String getKey() {
-		return "embedded-portlets";
-	}
-
-	@Override
-	public boolean isVisible(User user, Layout layout) {
-		if (!layout.isSupportsEmbeddedPortlets()) {
-			return false;
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		List<Portlet> embeddedPortlets =
-			layoutTypePortlet.getEmbeddedPortlets();
-
-		if (!embeddedPortlets.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return "css";
 	}
 
 	@Override
@@ -80,10 +52,7 @@ public class LayoutEmbeddedPortletsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/layout/embedded_portlets.jsp";
+		return "/layout/css.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutEmbeddedPortletsFormNavigatorEntry.class);
 
 }

@@ -208,11 +208,13 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</liferay-ui:section>
+
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
 
 		<%@ include file="/display_settings.jspf" %>
 	</liferay-ui:section>
+
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
 

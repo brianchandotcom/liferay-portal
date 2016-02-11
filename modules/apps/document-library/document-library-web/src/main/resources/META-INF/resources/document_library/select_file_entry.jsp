@@ -114,6 +114,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 					</c:when>
 				</c:choose>
 			</liferay-ui:search-container-row>
+
 			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
 		</liferay-ui:search-container>
 	</aui:form>

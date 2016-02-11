@@ -84,18 +84,21 @@ renderResponse.setTitle(headerTitle);
 							</div>
 						</aui:fieldset>
 					</aui:field-wrapper>
+
 					<aui:field-wrapper label="state">
 						<aui:fieldset>
 							<%= workflowTaskDisplayContext.getState(workflowTask) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</aui:col>
+
 				<aui:col width="<%= 50 %>">
 					<aui:field-wrapper label="create-date">
 						<aui:fieldset>
 							<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
+
 					<aui:field-wrapper label="due-date">
 						<aui:fieldset>
 							<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>

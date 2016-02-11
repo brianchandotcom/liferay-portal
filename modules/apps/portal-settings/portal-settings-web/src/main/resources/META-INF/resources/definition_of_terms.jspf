@@ -29,6 +29,7 @@
 			<liferay-ui:message key="the-email-verification-url" />
 		</dd>
 	</c:if>
+
 	<dt>
 		[$FROM_ADDRESS$]
 	</dt>

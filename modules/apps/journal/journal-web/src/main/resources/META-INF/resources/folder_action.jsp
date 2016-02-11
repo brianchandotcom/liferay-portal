@@ -80,6 +80,7 @@ else {
 				url="<%= moveURL %>"
 			/>
 		</c:if>
+
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
 			<portlet:renderURL var="addFolderURL">
 				<portlet:param name="mvcPath" value="/edit_folder.jsp" />
@@ -119,6 +120,7 @@ else {
 					url="<%= editURL %>"
 				/>
 			</c:if>
+
 			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
 				<portlet:renderURL var="addFolderURL">
 					<portlet:param name="mvcPath" value="/edit_folder.jsp" />

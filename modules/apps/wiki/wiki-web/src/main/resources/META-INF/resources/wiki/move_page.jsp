@@ -62,6 +62,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		<liferay-ui:section>
 			<%@ include file="/wiki/rename_page.jspf" %>
 		</liferay-ui:section>
+
 		<liferay-ui:section>
 			<%@ include file="/wiki/change_page_parent.jspf" %>
 		</liferay-ui:section>

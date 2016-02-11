@@ -46,6 +46,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="talent" selected="<%= (fromId == 9) %>" value="9" />
 					<aui:option label="handbreath" selected="<%= (fromId == 10) %>" value="10" />
 				</c:if>
+
 				<c:if test="<%= type == 1 %>">
 					<aui:option label="square-kilometer" selected="<%= (fromId == 0) %>" value="0" />
 					<aui:option label="square-meter" selected="<%= (fromId == 1) %>" value="1" />
@@ -58,6 +59,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="hectare" selected="<%= (fromId == 8) %>" value="8" />
 					<aui:option label="acre" selected="<%= (fromId == 9) %>" value="9" />
 				</c:if>
+
 				<c:if test="<%= type == 2 %>">
 					<aui:option label="liter" selected="<%= (fromId == 0) %>" value="0" />
 					<aui:option label="cubic-centimeter" selected="<%= (fromId == 1) %>" value="1" />
@@ -73,6 +75,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="hin" selected="<%= (fromId == 11) %>" value="11" />
 					<aui:option label="log" selected="<%= (fromId == 12) %>" value="12" />
 				</c:if>
+
 				<c:if test="<%= type == 3 %>">
 					<aui:option label="kilogram" selected="<%= (fromId == 0) %>" value="0" />
 					<aui:option label="pound" selected="<%= (fromId == 1) %>" value="1" />
@@ -84,6 +87,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="beka" selected="<%= (fromId == 7) %>" value="7" />
 					<aui:option label="gerah" selected="<%= (fromId == 8) %>" value="8" />
 				</c:if>
+
 				<c:if test="<%= type == 4 %>">
 					<aui:option label="kelvin" selected="<%= (fromId == 0) %>" value="0" />
 					<aui:option label="celsius" selected="<%= (fromId == 1) %>" value="1" />
@@ -111,6 +115,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="talent" selected="<%= (toId == 9) %>" value="9" />
 					<aui:option label="handbreath" selected="<%= (toId == 10) %>" value="10" />
 				</c:if>
+
 				<c:if test="<%= type == 1 %>">
 					<aui:option label="square-kilometer" selected="<%= (toId == 0) %>" value="0" />
 					<aui:option label="square-meter" selected="<%= (toId == 1) %>" value="1" />
@@ -123,6 +128,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="hectare" selected="<%= (toId == 8) %>" value="8" />
 					<aui:option label="acre" selected="<%= (toId == 9) %>" value="9" />
 				</c:if>
+
 				<c:if test="<%= type == 2 %>">
 					<aui:option label="liter" selected="<%= (toId == 0) %>" value="0" />
 					<aui:option label="cubic-centimeter" selected="<%= (toId == 1) %>" value="1" />
@@ -138,6 +144,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="hin" selected="<%= (toId == 11) %>" value="11" />
 					<aui:option label="log" selected="<%= (toId == 12) %>" value="12" />
 				</c:if>
+
 				<c:if test="<%= type == 3 %>">
 					<aui:option label="kilogram" selected="<%= (toId == 0) %>" value="0" />
 					<aui:option label="pound" selected="<%= (toId == 1) %>" value="1" />
@@ -149,6 +156,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="beka" selected="<%= (toId == 7) %>" value="7" />
 					<aui:option label="gerah" selected="<%= (toId == 8) %>" value="8" />
 				</c:if>
+
 				<c:if test="<%= type == 4 %>">
 					<aui:option label="kelvin" selected="<%= (toId == 0) %>" value="0" />
 					<aui:option label="celsius" selected="<%= (toId == 1) %>" value="1" />

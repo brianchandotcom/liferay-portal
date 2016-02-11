@@ -71,6 +71,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 					</small>
 				</div>
 			</c:if>
+
 			<c:if test="<%= (entry == null) || !entry.isApproved() %>">
 				<div class="save-status" id="<portlet:namespace />saveStatus"></div>
 			</c:if>

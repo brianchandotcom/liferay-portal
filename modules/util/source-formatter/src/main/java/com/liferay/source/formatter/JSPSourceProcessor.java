@@ -345,6 +345,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixEmptyLineInNestedTags(
 			newContent, _emptyLineInNestedTagsPattern3, false);
 
+		newContent = fixMissingEmptyLinesBetweenTags(newContent);
+
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -556,6 +558,23 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				content = StringUtil.replaceFirst(
 					content, StringPool.NEW_LINE, StringPool.BLANK,
 					matcher.end(1));
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixMissingEmptyLinesBetweenTags(String content) {
+		Matcher matcher = _missingEmptyLineBetweenTagsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(3);
+			String tagName = matcher.group(2);
+
+			if (tabs1.equals(tabs2) && !tagName.equals("when")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
 			}
 		}
 
@@ -1973,6 +1992,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
+	private final Pattern _missingEmptyLineBetweenTagsPattern = Pattern.compile(
+		"\n(\t*)</[a-z-]+:([a-z-]+)>\n(\t*)<[a-z-]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(

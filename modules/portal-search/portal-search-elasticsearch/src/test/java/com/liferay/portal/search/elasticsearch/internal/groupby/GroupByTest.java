@@ -1,5 +1,3 @@
-package com.liferay.portal.search.elasticsearch.internal.groupby;
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,6 +11,8 @@ package com.liferay.portal.search.elasticsearch.internal.groupby;
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+package com.liferay.portal.search.elasticsearch.internal.groupby;
 
 import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.unit.test.IndexingFixture;

@@ -133,6 +133,7 @@ else {
 
 					</div>
 				</liferay-ui:section>
+
 				<liferay-ui:section>
 					<div class="sidebar-body">
 						<liferay-util:include page="/view_record_history.jsp" servletContext="<%= application %>" />

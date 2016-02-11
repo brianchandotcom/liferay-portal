@@ -105,6 +105,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</aui:col>
+
 		<aui:col width="<%= 50 %>">
 			<liferay-portlet:preview
 				portletName="<%= portletResource %>"

@@ -26,7 +26,7 @@
 <!--PROCESSES-->
 <tr>
 	<td>INITIAL_PROCESS_SUCCESSFUL</td>
-	<td>//tr[contains(.,'Initial Publication')]//strong[contains(@class,'background-task-status-successful')]</td>
+	<td>//tr[contains(.,'Initial Publication')]//h5[contains(@class,'background-task-status-successful')]</td>
 	<td></td>
 </tr>
 <tr>

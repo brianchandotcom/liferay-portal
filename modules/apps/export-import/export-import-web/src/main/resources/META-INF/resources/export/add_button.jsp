@@ -20,6 +20,7 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(liveGroupId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
 %>
@@ -36,6 +37,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 		</portlet:renderURL>
 
@@ -51,6 +53,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-export") %>' url="<%= addNewCustomExportProcessURL %>" />

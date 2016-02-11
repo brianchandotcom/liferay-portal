@@ -83,12 +83,15 @@ else {
 
 boolean configuredExport = (exportImportConfiguration == null) ? false : true;
 
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "exportLayoutsView");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());

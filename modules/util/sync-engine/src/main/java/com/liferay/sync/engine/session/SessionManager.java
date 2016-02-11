@@ -33,8 +33,21 @@ import org.slf4j.LoggerFactory;
  */
 public class SessionManager {
 
-	public static synchronized Session getSession(long syncAccountId) {
-		Session session = _sessions.get(syncAccountId);
+	public static Session getSession(long syncAccountId) {
+		return getSession(syncAccountId, false);
+	}
+
+	public static synchronized Session getSession(
+		long syncAccountId, boolean unlimitedConnections) {
+
+		Session session = null;
+
+		if (unlimitedConnections) {
+			session = _sessions.get(syncAccountId + "#MAX");
+		}
+		else {
+			session = _sessions.get(String.valueOf(syncAccountId));
+		}
 
 		if (session != null) {
 			if (ServerInfo.supportsDeviceRegistration(syncAccountId)) {
@@ -53,30 +66,42 @@ public class SessionManager {
 
 			URL url = new URL(syncAccount.getUrl());
 
+			int maxConnections = 0;
+
+			if (unlimitedConnections) {
+				maxConnections = Integer.MAX_VALUE;
+			}
+			else {
+				maxConnections = syncAccount.getMaxConnections();
+			}
+
 			if (syncAccount.isOAuthEnabled()) {
 				session = new Session(
 					url, syncAccount.getOAuthConsumerKey(),
 					syncAccount.getOAuthConsumerSecret(),
 					syncAccount.getOAuthToken(),
 					Encryptor.decrypt(syncAccount.getOAuthTokenSecret()),
-					syncAccount.isTrustSelfSigned(),
-					syncAccount.getMaxConnections());
+					syncAccount.isTrustSelfSigned(), maxConnections);
 			}
 			else {
 				session = new Session(
 					url, syncAccount.getLogin(),
 					Encryptor.decrypt(syncAccount.getPassword()),
-					syncAccount.isTrustSelfSigned(),
-					syncAccount.getMaxConnections());
+					syncAccount.isTrustSelfSigned(), maxConnections);
 			}
 
 			if (ServerInfo.supportsDeviceRegistration(syncAccountId)) {
 				session.addHeader("Sync-UUID", syncAccount.getUuid());
 			}
 
-			session.startTrackTransferRate();
+			if (unlimitedConnections) {
+				_sessions.put(syncAccountId + "#MAX", session);
+			}
+			else {
+				session.startTrackTransferRate();
 
-			_sessions.put(syncAccountId, session);
+				_sessions.put(String.valueOf(syncAccountId), session);
+			}
 
 			return session;
 		}
@@ -88,12 +113,20 @@ public class SessionManager {
 	}
 
 	public static void removeSession(long syncAccountId) {
-		Session session = _sessions.remove(syncAccountId);
+		Session session = _sessions.remove(String.valueOf(syncAccountId));
 
-		if (session == null) {
-			return;
+		if (session != null) {
+			removeSession(session);
 		}
 
+		session = _sessions.remove(syncAccountId + "#MAX");
+
+		if (session != null) {
+			removeSession(session);
+		}
+	}
+
+	protected static void removeSession(Session session) {
 		session.stopTrackTransferRate();
 
 		ExecutorService executorService = session.getExecutorService();
@@ -104,6 +137,6 @@ public class SessionManager {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SessionManager.class);
 
-	private static final Map<Long, Session> _sessions = new HashMap<>();
+	private static final Map<String, Session> _sessions = new HashMap<>();
 
 }

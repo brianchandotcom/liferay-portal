@@ -28,6 +28,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.session.Session;
+import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.GetterUtil;
@@ -61,7 +62,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
 import org.slf4j.Logger;
@@ -76,20 +76,20 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		super(event);
 
 		GetSyncContextEvent getSyncContextEvent = new GetSyncContextEvent(
-			event.getSyncAccountId(), Collections.<String, Object>emptyMap()) {
+			getSyncAccountId(), Collections.<String, Object>emptyMap()) {
 
 			@Override
 			public void executePost(
 					String urlPath, Map<String, Object> parameters)
 				throws Exception {
 
-				HttpClient anonymousHttpClient =
-					Session.getAnonymousHttpClient();
-
 				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 					getSyncAccountId());
 
-				HttpResponse httpResponse = anonymousHttpClient.execute(
+				Session session = SessionManager.getSession(
+					getSyncAccountId(), true);
+
+				HttpResponse httpResponse = session.execute(
 					new HttpPost(
 						syncAccount.getUrl() + "/api/jsonws" + urlPath));
 

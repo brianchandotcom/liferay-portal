@@ -97,8 +97,7 @@ import org.slf4j.LoggerFactory;
 public class Session {
 
 	public static HttpClientBuilder createHttpClientBuilder(
-		boolean trustSelfSigned, int maxConnections, int connectionTimeout,
-		int socketTimeout) {
+		boolean trustSelfSigned, int maxConnections) {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
@@ -106,8 +105,14 @@ public class Session {
 
 		RequestConfig.Builder builder = RequestConfig.custom();
 
-		builder.setConnectTimeout(connectionTimeout);
-		builder.setSocketTimeout(socketTimeout);
+		builder.setConnectTimeout(PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT);
+
+		if (maxConnections == Integer.MAX_VALUE) {
+			builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT * 2);
+		}
+		else {
+			builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
+		}
 
 		List<Header> headers = new ArrayList<>(2);
 
@@ -153,20 +158,6 @@ public class Session {
 		return httpClientBuilder;
 	}
 
-	public static HttpClient getAnonymousHttpClient() {
-		if (_anonymousHttpClient != null) {
-			return _anonymousHttpClient;
-		}
-
-		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
-			true, 1000, PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT,
-			PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT * 2);
-
-		_anonymousHttpClient = httpClientBuilder.build();
-
-		return _anonymousHttpClient;
-	}
-
 	public static HttpRoutePlanner getHttpRoutePlanner() {
 		if (_httpRoutePlanner != null) {
 			return _httpRoutePlanner;
@@ -189,12 +180,15 @@ public class Session {
 		URL url, String login, String password, boolean trustSelfSigned,
 		int maxConnections) {
 
-		_executorService = Executors.newFixedThreadPool(maxConnections);
+		if (maxConnections == Integer.MAX_VALUE) {
+			_executorService = Executors.newCachedThreadPool();
+		}
+		else {
+			_executorService = Executors.newFixedThreadPool(maxConnections);
+		}
 
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
-			trustSelfSigned, maxConnections,
-			PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT,
-			PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
+			trustSelfSigned, maxConnections);
 
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
@@ -218,12 +212,15 @@ public class Session {
 		String oAuthToken, String oAuthTokenSecret, boolean trustSelfSigned,
 		int maxConnections) {
 
-		_executorService = Executors.newFixedThreadPool(maxConnections);
+		if (maxConnections == Integer.MAX_VALUE) {
+			_executorService = Executors.newCachedThreadPool();
+		}
+		else {
+			_executorService = Executors.newFixedThreadPool(maxConnections);
+		}
 
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
-			trustSelfSigned, maxConnections,
-			PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT,
-			PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
+			trustSelfSigned, maxConnections);
 
 		_httpClient = httpClientBuilder.build();
 
@@ -576,7 +573,6 @@ public class Session {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		Session.class);
 
-	private static HttpClient _anonymousHttpClient;
 	private static HttpRoutePlanner _httpRoutePlanner;
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newSingleThreadScheduledExecutor();

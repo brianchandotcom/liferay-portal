@@ -64,7 +64,7 @@ public abstract class BaseEvent implements Event {
 	}
 
 	public void executeAsynchronousGet(HttpGet httpGet) throws Exception {
-		Session session = SessionManager.getSession(_syncAccountId);
+		Session session = getSession();
 
 		_httpGet = httpGet;
 
@@ -88,7 +88,7 @@ public abstract class BaseEvent implements Event {
 			Handler<Void> handler)
 		throws Exception {
 
-		Session session = SessionManager.getSession(_syncAccountId);
+		Session session = getSession();
 
 		_httpPost = new HttpPost(urlPath);
 
@@ -96,7 +96,7 @@ public abstract class BaseEvent implements Event {
 	}
 
 	public void executeGet(String urlPath) throws Exception {
-		Session session = SessionManager.getSession(_syncAccountId);
+		Session session = getSession();
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			_syncAccountId);
@@ -109,7 +109,7 @@ public abstract class BaseEvent implements Event {
 	public void executePost(String urlPath, Map<String, Object> parameters)
 		throws Exception {
 
-		Session session = SessionManager.getSession(_syncAccountId);
+		Session session = getSession();
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			_syncAccountId);
@@ -176,6 +176,10 @@ public abstract class BaseEvent implements Event {
 
 			_handler.processFinally();
 		}
+	}
+
+	protected Session getSession() {
+		return SessionManager.getSession(_syncAccountId);
 	}
 
 	protected void processAsynchronousRequest() throws Exception {

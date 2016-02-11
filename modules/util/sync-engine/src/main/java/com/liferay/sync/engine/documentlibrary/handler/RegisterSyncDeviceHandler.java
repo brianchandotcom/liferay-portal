@@ -15,6 +15,7 @@
 package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
+import com.liferay.sync.engine.documentlibrary.model.SyncDevice;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.util.JSONUtil;
@@ -30,12 +31,12 @@ public class RegisterSyncDeviceHandler extends BaseJSONHandler {
 
 	@Override
 	public void processResponse(String response) throws Exception {
-		String uuid = JSONUtil.readValue(response, String.class);
+		SyncDevice syncDevice = JSONUtil.readValue(response, SyncDevice.class);
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
-		syncAccount.setUuid(uuid);
+		syncAccount.setUuid(syncDevice.getUuid());
 
 		SyncAccountService.update(syncAccount);
 	}

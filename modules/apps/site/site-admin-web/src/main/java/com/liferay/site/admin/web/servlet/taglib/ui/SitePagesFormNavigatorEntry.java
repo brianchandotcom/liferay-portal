@@ -38,7 +38,7 @@ public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
 	}
 
 	@Override

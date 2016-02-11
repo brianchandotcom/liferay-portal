@@ -19,7 +19,6 @@ package com.liferay.message.boards.kernel.constants;
  */
 public class MBConstants {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.message.boards.kernel";
+	public static final String SERVICE_NAME = "com.liferay.message.boards";
 
 }

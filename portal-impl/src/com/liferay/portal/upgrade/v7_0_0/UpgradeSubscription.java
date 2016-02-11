@@ -262,13 +262,12 @@ public class UpgradeSubscription extends UpgradeProcess {
 			"com.liferay.dynamic.data.mapping.kernel.DDMStructure",
 			"DDMStructure,groupId,structureId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.journal.model.JournalFolder",
+			"com.liferay.journal.model.JournalFolder",
 			"JournalFolder,groupId,folderId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.wiki.model.WikiNode",
-			"WikiNode,groupId,nodeId");
+			"com.liferay.wiki.model.WikiNode", "WikiNode,groupId,nodeId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.wiki.model.WikiPage",
+			"com.liferay.wiki.model.WikiPage",
 			"WikiPage,groupId,resourcePrimKey");
 	}
 

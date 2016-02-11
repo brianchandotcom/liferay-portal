@@ -400,7 +400,7 @@ public class DLFileVersionTest {
 
 	protected void setUpResourcePermission() throws Exception {
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library.kernel",
+			RoleConstants.GUEST, "com.liferay.document.library",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 	}
@@ -415,7 +415,7 @@ public class DLFileVersionTest {
 
 	protected void tearDownResourcePermission() throws Exception {
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, "com.liferay.document.library.kernel",
+			RoleConstants.GUEST, "com.liferay.document.library",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 	}

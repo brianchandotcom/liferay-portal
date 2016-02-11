@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -155,7 +156,8 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			oldValue = rs.getString(columnName);
 		}
 
-		upgradeTable(tableName, columnName);
+		upgradeTable(
+			tableName, columnName, getClassNames(), WildcardMode.SURROUND);
 
 		String newValue = StringUtil.replace(
 			oldValue, _OLD_CLASS_NAME, _NEW_CLASS_NAME);
@@ -183,7 +185,6 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		}
 	}
 
-	@Override
 	protected String[][] getClassNames() {
 		return new String[][] {{_OLD_CLASS_NAME, _NEW_CLASS_NAME}};
 	}

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public class AssetPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.asset.kernel";
+	public static final String RESOURCE_NAME = "com.liferay.asset";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

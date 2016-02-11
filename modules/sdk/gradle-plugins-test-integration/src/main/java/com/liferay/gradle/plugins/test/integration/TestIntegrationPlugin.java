@@ -493,21 +493,25 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@SuppressWarnings("unused")
 			public Task doCall(Test test) {
-				FileTree candidateClassFiles = test.getCandidateClassFiles();
+				SourceDirectorySet sourceDirectorySet =
+					testIntegrationSourceSet.getResources();
 
-				File srcDir = getSrcDir(
-					testIntegrationSourceSet.getResources());
+				for (File dir : sourceDirectorySet.getSrcDirs()) {
+					File file = new File(
+						dir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
 
-				File skipManagedAppServerFile = new File(
-					srcDir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
-
-				if (!candidateClassFiles.isEmpty() &&
-					!skipManagedAppServerFile.exists()) {
-
-					return startTestableTomcatTask;
+					if (file.exists()) {
+						return null;
+					}
 				}
 
-				return null;
+				FileTree candidateClassFiles = test.getCandidateClassFiles();
+
+				if (candidateClassFiles.isEmpty()) {
+					return null;
+				}
+
+				return startTestableTomcatTask;
 			}
 
 		};

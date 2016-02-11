@@ -30,37 +30,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	url="javascript:;"
 />
 
-<c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
-	<ul class="nav nav-equal-height nav-nested">
-		<li>
-			<div class="scope-selector">
-				<span class="scope-name"><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
-
-				<span class="nav-equal-height-heading-field">
-					<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
-
-						<%
-						for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
-						%>
-
-							<liferay-ui:icon
-								cssClass="<%= layoutsTreeDisplayContext.getLayoutSetBranchCssClass(curLayoutSetBranch) %>"
-								data="<%= layoutsTreeDisplayContext.getLayoutSetBranchURLData() %>"
-								message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-								url="<%= layoutsTreeDisplayContext.getLayoutSetBranchURL(curLayoutSetBranch) %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</liferay-ui:icon-menu>
-				</span>
-			</div>
-		</li>
-	</ul>
-</c:if>
-
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
 
 	<%
@@ -176,6 +145,37 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 			</span>
 		</c:if>
 	</div>
+</c:if>
+
+<c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
+	<ul class="nav nav-equal-height nav-nested">
+		<li>
+			<div class="scope-selector">
+				<span class="scope-name"><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
+
+				<span class="nav-equal-height-heading-field">
+					<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+
+						<%
+						for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
+						%>
+
+							<liferay-ui:icon
+								cssClass="<%= layoutsTreeDisplayContext.getLayoutSetBranchCssClass(curLayoutSetBranch) %>"
+								data="<%= layoutsTreeDisplayContext.getLayoutSetBranchURLData() %>"
+								message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
+								url="<%= layoutsTreeDisplayContext.getLayoutSetBranchURL(curLayoutSetBranch) %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</liferay-ui:icon-menu>
+				</span>
+			</div>
+		</li>
+	</ul>
 </c:if>
 
 <liferay-util:buffer var="linkTemplate">

@@ -25,9 +25,9 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 	<li class="control-menu-nav-item">
-		<a class="control-menu-label staging-variation-label" href="javascript:;" id="manageLayoutSetRevisions" onclick='<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>'>
+		<div class="control-menu-label staging-variation-label">
 			<liferay-ui:message key="site-pages-variation" />
-		</a>
+		</div>
 
 		<div class="dropdown">
 			<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
@@ -65,29 +65,6 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 	</li>
 
 	<aui:script>
-		function <portlet:namespace />openSitePagesVariationsDialog() {
-			var sitePagesVariationDialog = Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true
-					},
-					id: 'sitePagesVariationDialog',
-
-					<liferay-util:buffer var="helpIcon">
-						<liferay-ui:icon-help message="pages-variations-help" />
-					</liferay-util:buffer>
-
-					title: '<liferay-ui:message arguments="<%= helpIcon %>" key="site-pages-variation-x" />',
-
-					<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
-					</liferay-portlet:renderURL>
-
-					uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
-				}
-			);
-		}
-
 		$('.layout-set-branch-selector').on(
 			'mouseenter',
 			function(event) {

@@ -34,14 +34,6 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>Audit Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.audit.AuditFilter</filter-class>
-		<init-param>
-			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$</param-value>
-		</init-param>
-	</filter>
-	<filter>
 		<filter-name>Auto Login Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.autologin.AutoLoginFilter</filter-class>
 	</filter>
@@ -475,10 +467,6 @@
 		<url-pattern>/*</url-pattern>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Audit Filter</filter-name>
-		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Absolute Redirects Filter</filter-name>

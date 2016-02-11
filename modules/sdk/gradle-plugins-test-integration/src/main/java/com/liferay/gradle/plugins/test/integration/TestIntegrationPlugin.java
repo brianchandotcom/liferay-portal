@@ -54,6 +54,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.process.JavaForkOptions;
 
 /**
  * @author Andrea Di Giorgi
@@ -484,6 +485,17 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void configureTaskSystemProperty(
+		JavaForkOptions javaForkOptions, String key, File file) {
+
+		Map<String, Object> systemProperties =
+			javaForkOptions.getSystemProperties();
+
+		if (!systemProperties.containsKey(key)) {
+			systemProperties.put(key, FileUtil.getAbsolutePath(file));
+		}
+	}
+
 	protected void configureTaskTestIntegration(
 		final Test test, final SourceSet testIntegrationSourceSet,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension,
@@ -531,17 +543,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					Map<String, Object> systemProperties =
-						test.getSystemProperties();
-
-					if (!systemProperties.containsKey(
-							"app.server.tomcat.dir")) {
-
-						systemProperties.put(
-							"app.server.tomcat.dir",
-							FileUtil.getAbsolutePath(
-								testIntegrationTomcatExtension.getDir()));
-					}
+					configureTaskSystemProperty(
+						test, "app.server.tomcat.dir",
+						testIntegrationTomcatExtension.getDir());
 				}
 
 			});

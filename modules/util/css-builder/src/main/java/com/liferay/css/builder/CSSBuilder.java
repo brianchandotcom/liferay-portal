@@ -332,9 +332,7 @@ public class CSSBuilder {
 			return;
 		}
 
-		StringBundler rtlContent = new StringBundler();
-
-		rtlContent.append(_getRtlCss(fileName, ltrContent));
+		String rtlContent = _getRtlCss(fileName, ltrContent);
 
 		String rtlCustomFileName = CSSBuilderUtil.getRtlCustomFileName(
 			fileName);
@@ -342,10 +340,10 @@ public class CSSBuilder {
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
-			rtlContent.append(_parseSass(rtlCustomFileName));
+			rtlContent += _parseSass(rtlCustomFileName);
 		}
 
-		_writeCacheFile(fileName, rtlContent.toString(), true);
+		_writeCacheFile(fileName, rtlContent, true);
 	}
 
 	private void _write(File file, String content) throws Exception {

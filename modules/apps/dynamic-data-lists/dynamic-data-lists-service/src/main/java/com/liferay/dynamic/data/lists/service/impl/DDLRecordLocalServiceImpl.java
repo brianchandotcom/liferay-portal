@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -127,15 +128,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		String assetClassName = (String)serviceContext.getAttribute(
-			"assetClassName");
-
-		if (assetClassName == null) {
-			assetClassName = DDLRecord.class.getName();
-		}
-
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, assetClassName,
+			user.getCompanyId(), groupId, userId,
+			getWorkflowAssetClassName(recordVersion),
 			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
 
 		return record;
@@ -206,7 +201,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				record.getCompanyId(), record.getGroupId(),
-				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
+				getWorkflowAssetClassName(recordVersion),
+				recordVersion.getPrimaryKey());
 		}
 
 		// Asset
@@ -782,6 +778,18 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected String getWorkflowAssetClassName(DDLRecordVersion recordVersion)
+		throws PortalException {
+
+		DDLRecordSet recordSet = recordVersion.getRecordSet();
+
+		if (recordSet.getScope() == DDLRecordSetConstants.SCOPE_FORMS) {
+			return DDLFormRecord.class.getName();
+		}
+
+		return DDLRecord.class.getName();
 	}
 
 	/**

@@ -38,6 +38,7 @@
 
 	<command name="AddAnnouncementsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="PGAnnouncements#AddAnnouncementsEntry" />
 
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
@@ -232,6 +233,7 @@
 
 	<command name="DeleteAnnouncementsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="PGAnnouncements#DeleteAnnouncementsEntry" />
 
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -267,6 +269,7 @@
 
 	<command name="EditAnnouncementsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="PGAnnouncements#EditAnnouncementsEntry" />
 
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -313,6 +316,7 @@
 
 	<command name="HideAnnouncementsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="PGAnnouncements#HideAnnouncementsEntry" />
 
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />

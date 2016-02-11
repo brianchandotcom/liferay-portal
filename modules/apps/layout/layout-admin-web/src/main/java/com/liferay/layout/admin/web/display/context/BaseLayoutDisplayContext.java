@@ -57,53 +57,53 @@ public class BaseLayoutDisplayContext {
 	}
 
 	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {
-		PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
-		addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
+		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
-			addPagesURL.setParameter("selPlid", String.valueOf(selPlid));
+			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 		}
 
-		addPagesURL.setParameter("groupId", String.valueOf(getSelGroupId()));
+		addLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
 		if (privateLayout != null) {
-			addPagesURL.setParameter(
+			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		addPagesURL.setParameter(
+		addLayoutURL.setParameter(
 			"backURL",
 			PortalUtil.getCurrentURL(
 				PortalUtil.getHttpServletRequest(liferayPortletRequest)));
 
-		return addPagesURL;
+		return addLayoutURL;
 	}
 
 	public PortletURL getEditLayoutURL(long selPlid, Boolean privateLayout) {
-		PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
-			editPublicLayoutURL.setParameter(
+			editLayoutURL.setParameter(
 				"selPlid", String.valueOf(selPlid));
 		}
 
 		if (privateLayout != null) {
-			editPublicLayoutURL.setParameter(
+			editLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
 		Group liveGroup = getLiveGroup();
 
-		editPublicLayoutURL.setParameter(
+		editLayoutURL.setParameter(
 			"groupId", String.valueOf(liveGroup.getGroupId()));
-		editPublicLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
-		return editPublicLayoutURL;
+		return editLayoutURL;
 	}
 
 	public Long getLayoutId() {

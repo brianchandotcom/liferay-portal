@@ -53,19 +53,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), 
 			<aui:nav-item href="<%= supportedClientsURL %>" label="supported-clients" selected='<%= tabs1.equals("supported-clients") %>' />
 		</c:if>
 
-		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletResource, ActionKeys.PERMISSIONS) %>">
-			<portlet:renderURL var="permissionsURL">
-				<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
-				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="portletResource" value="<%= portletResource %>" />
-				<portlet:param name="resourcePrimKey" value="<%= PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletResource) %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= permissionsURL %>" label="permissions" selected='<%= tabs1.equals("permissions") %>' />
-		</c:if>
-
 		<c:if test="<%= !selPortlet.getPublicRenderParameters().isEmpty() %>">
 			<portlet:renderURL var="publicRenderParametersURL">
 				<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />

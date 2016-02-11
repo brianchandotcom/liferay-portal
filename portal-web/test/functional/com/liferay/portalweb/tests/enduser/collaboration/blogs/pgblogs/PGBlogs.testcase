@@ -468,38 +468,34 @@
 	<command name="AddBlogsEntryWithTrackbackURL" priority="4">
 		<property name="custom.properties" value="blogs.trackback.enabled=true" />
 
-		<var name="entryContent" value="Blogs Entry1 Content" />
-		<var name="entryContent2" value="Blogs Entry2 Content" />
-		<var name="entryTitle" value="Blogs Entry1 Title" />
-		<var name="entryTitle2" value="Blogs Entry2 Title" />
 		<var name="ipAddress" value="${getIPAddress()}" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#addWithTrackbackURLPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContent2" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryTitle2" value="${entryTitle2}" />
-			<var name="pageName" value="${pageName}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryContent2" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+			<var name="entryTitle2" value="Blogs Entry2 Title" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewWithTrackbackURLPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContent2" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryTitle2" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryContent2" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+			<var name="entryTitle2" value="Blogs Entry2 Title" />
 		</execute>
 	</command>
 

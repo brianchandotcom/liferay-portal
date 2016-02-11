@@ -120,6 +120,40 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkMaxLineLength(
+		String line, String fileName, int lineCount) {
+
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		if (!trimmedLine.startsWith("# ")) {
+			return;
+		}
+
+		int lineLength = getLineLength(line);
+
+		if (lineLength <= _MAX_LINE_LENGTH) {
+			return;
+		}
+
+		int x = line.indexOf("# ");
+		int y = line.lastIndexOf(StringPool.SPACE, _MAX_LINE_LENGTH);
+
+		if ((x + 1) == y) {
+			return;
+		}
+
+		int z = line.indexOf(StringPool.SPACE, _MAX_LINE_LENGTH + 1);
+
+		if (z == -1) {
+			z = lineLength;
+		}
+
+		if ((z - y + x + 2) <= _MAX_LINE_LENGTH) {
+			processErrorMessage(
+				fileName, "> 80: " + fileName + " " + lineCount);
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -142,7 +176,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			formatPortalProperties(fileName, content);
 		}
 
-		return formatProperties(newContent);
+		return formatProperties(fileName, newContent);
 	}
 
 	@Override
@@ -322,16 +356,24 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatProperties(String content) throws Exception {
+	protected String formatProperties(String fileName, String content)
+		throws Exception {
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			int lineCount = 0;
+
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
 				line = trimLine(line, true);
+
+				checkMaxLineLength(line, fileName, lineCount);
 
 				if (line.startsWith(StringPool.TAB)) {
 					line = line.replace(StringPool.TAB, StringPool.FOUR_SPACES);
@@ -529,6 +571,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		processFormattedFile(file, fileName, content, newContent);
 	}
+
+	private static final int _MAX_LINE_LENGTH = 80;
 
 	private Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
 		new HashMap<>();

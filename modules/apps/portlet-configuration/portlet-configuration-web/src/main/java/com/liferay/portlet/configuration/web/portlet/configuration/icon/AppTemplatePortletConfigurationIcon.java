@@ -53,8 +53,6 @@ public class AppTemplatePortletConfigurationIcon
 			String redirect = ParamUtil.getString(portletRequest, "redirect");
 			String returnToFullPageURL = ParamUtil.getString(
 				portletRequest, "returnToFullPageURL");
-			String portletResource = ParamUtil.getString(
-				portletRequest, "portletResource");
 
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				portletRequest,
@@ -67,7 +65,7 @@ public class AppTemplatePortletConfigurationIcon
 			portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 			portletURL.setParameter(
 				"portletConfiguration", Boolean.TRUE.toString());
-			portletURL.setParameter("portletResource", portletResource);
+			portletURL.setParameter("portletResource", portletDisplay.getId());
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();

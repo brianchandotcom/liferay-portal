@@ -17,6 +17,8 @@ package com.liferay.recent.documents.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.kernel.service.DLFileRankLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration;
 
 import java.util.Map;
@@ -49,6 +54,19 @@ public class RecentDocumentsMessageListener
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		if (!GetterUtil.getBoolean(
+				_props.get(PropsKeys.DL_FILE_RANK_ENABLED))) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Bypassing RecentDocumentsMessageListener scheduling due " +
+						"to dl.file.rank.enabled being set to false in " +
+						"portal.properties.");
+			}
+
+			return;
+		}
+
 		RecentDocumentsConfiguration recentDocumentsConfiguration =
 			Configurable.createConfigurable(
 				RecentDocumentsConfiguration.class, properties);
@@ -89,8 +107,14 @@ public class RecentDocumentsMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		RecentDocumentsMessageListener.class);
+
 	@Reference
 	private DLFileRankLocalService _dLFileRankLocalService;
+
+	@Reference
+	private Props _props;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

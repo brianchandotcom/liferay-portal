@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins</artifactId>
-  <version>1.0.138</version>
+  <version>1.0.139</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -24,12 +24,6 @@
     <url>http://github.com/liferay/liferay-portal</url>
   </scm>
   <dependencies>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.test.integration</artifactId>
-      <version>1.0.1</version>
-      <scope>compile</scope>
-    </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.service.builder</artifactId>
@@ -106,6 +100,12 @@
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.js.transpiler</artifactId>
       <version>1.0.21</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.test.integration</artifactId>
+      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

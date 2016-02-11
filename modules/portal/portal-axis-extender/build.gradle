@@ -8,6 +8,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
 	provided group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-1"
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {

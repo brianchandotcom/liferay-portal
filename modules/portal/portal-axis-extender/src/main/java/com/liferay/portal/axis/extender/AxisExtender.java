@@ -16,8 +16,11 @@ package com.liferay.portal.axis.extender;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.servlet.AxisServlet;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
+import com.liferay.util.axis.AxisServlet;
+
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -25,12 +28,18 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.servlet.Filter;
+import javax.servlet.GenericServlet;
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,12 +55,74 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 @Component(immediate = true)
 public class AxisExtender {
 
+	public static class TCCLServletWrapper extends GenericServlet {
+
+		public TCCLServletWrapper(ClassLoader classLoader, Servlet servlet) {
+			_classLoader = classLoader;
+			_servlet = servlet;
+		}
+
+		@Override
+		public void destroy() {
+			Thread thread = Thread.currentThread();
+
+			ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+			thread.setContextClassLoader(_classLoader);
+
+			try {
+				_servlet.destroy();
+			}
+			finally {
+				thread.setContextClassLoader(contextClassLoader);
+			}
+		}
+
+		@Override
+		public void init(ServletConfig config) throws ServletException {
+			Thread thread = Thread.currentThread();
+
+			ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+			thread.setContextClassLoader(_classLoader);
+
+			try {
+				_servlet.init(config);
+			}
+			finally {
+				thread.setContextClassLoader(contextClassLoader);
+			}
+		}
+
+		@Override
+		public void service(ServletRequest req, ServletResponse res)
+			throws IOException, ServletException {
+
+			Thread thread = Thread.currentThread();
+
+			ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+			thread.setContextClassLoader(_classLoader);
+
+			try {
+				_servlet.service(req, res);
+			}
+			finally {
+				thread.setContextClassLoader(contextClassLoader);
+			}
+		}
+
+		private final ClassLoader _classLoader;
+		private final Servlet _servlet;
+
+	}
+
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
+		_bundleContext = componentContext.getBundleContext();
 
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE,
+			_bundleContext, Bundle.ACTIVE,
 			new BundleRegistrationInfoBundleTrackerCustomizer());
 
 		_bundleTracker.open();
@@ -64,6 +135,7 @@ public class AxisExtender {
 
 	private static final Log _log = LogFactoryUtil.getLog(AxisExtender.class);
 
+	private BundleContext _bundleContext;
 	private BundleTracker<BundleRegistrationInfo> _bundleTracker;
 
 	private static class BundleRegistrationInfo {
@@ -108,7 +180,7 @@ public class AxisExtender {
 
 	}
 
-	private static class BundleRegistrationInfoBundleTrackerCustomizer
+	private class BundleRegistrationInfoBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<BundleRegistrationInfo> {
 
 		@Override
@@ -121,8 +193,6 @@ public class AxisExtender {
 				return null;
 			}
 
-			BundleContext bundleContext = bundle.getBundleContext();
-
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put(
@@ -134,7 +204,7 @@ public class AxisExtender {
 
 			ServiceRegistration<ServletContextHelper>
 				bundleServletContextHelperServiceRegistration =
-					bundleContext.registerService(
+					_bundleContext.registerService(
 						ServletContextHelper.class,
 						new ServletContextHelper(bundle) {
 
@@ -163,7 +233,7 @@ public class AxisExtender {
 				"/api/axis/*");
 
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
-				bundleContext.registerService(
+				_bundleContext.registerService(
 					Filter.class, new AuthVerifierFilter(), properties);
 
 			properties = new Hashtable<>();
@@ -178,10 +248,26 @@ public class AxisExtender {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 				"/api/axis/*");
 			properties.put("servlet.init.httpMethods", "GET,POST,HEAD");
+			properties.put("servlet.init.axis.servicesPath", "/api/axis/");
+
+			Bundle extenderBundle = _bundleContext.getBundle();
+
+			BundleWiring extenderBundleWiring = extenderBundle.adapt(
+				BundleWiring.class);
+
+			AggregateClassLoader aggregateClassLoader =
+				new AggregateClassLoader(extenderBundleWiring.getClassLoader());
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			aggregateClassLoader.addClassLoader(bundleWiring.getClassLoader());
+
+			Servlet servlet = new TCCLServletWrapper(
+				aggregateClassLoader, new AxisServlet());
 
 			ServiceRegistration<Servlet> axisServletServiceRegistration =
-				bundleContext.registerService(
-					Servlet.class, (Servlet)new AxisServlet(), properties);
+				_bundleContext.registerService(
+					Servlet.class, servlet, properties);
 
 			return new BundleRegistrationInfo(
 				authVerifierFilterServiceRegistration,

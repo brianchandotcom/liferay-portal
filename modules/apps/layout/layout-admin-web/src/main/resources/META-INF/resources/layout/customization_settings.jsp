@@ -84,36 +84,13 @@ if (selLayout != null) {
 		</div>
 
 		<div class="customization-settings">
-			<c:choose>
-				<c:when test="<%= themeDisplay.isStateExclusive() %>">
-					<aui:button name="manageCustomization" value="show-customizable-sections" />
 
-					<div class="hide layout-customizable-controls" id="<portlet:namespace />layoutCustomizableControls">
-						<span title="<liferay-ui:message key="customizable-help" />">
-							<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
-						</span>
-					</div>
-				</c:when>
-				<c:otherwise>
+			<%
+			if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+				RuntimePageUtil.processCustomizationSettings(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+			}
+			%>
 
-					<%
-					if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
-						RuntimePageUtil.processCustomizationSettings(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
-					}
-					%>
-
-				</c:otherwise>
-			</c:choose>
 		</div>
-
-		<c:if test="<%= themeDisplay.isStateExclusive() %>">
-			<aui:script use="liferay-layout-customization-settings">
-				new Liferay.LayoutCustomizationSettings(
-					{
-						namespace: '<portlet:namespace />'
-					}
-				);
-			</aui:script>
-		</c:if>
 	</c:otherwise>
 </c:choose>

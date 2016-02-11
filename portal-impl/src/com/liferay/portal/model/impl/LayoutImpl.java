@@ -903,6 +903,29 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
+	@Override
+	public boolean isCustomizable() {
+		if (!isTypePortlet()) {
+			return false;
+		}
+
+		boolean layoutCustomizable = GetterUtil.getBoolean(
+			getTypeSettingsProperty(LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+		if (layoutCustomizable) {
+			return true;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)getLayoutType();
+
+		if (layoutTypePortlet.isCustomizable()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout is the first layout in
 	 * its parent's hierarchical list of children layouts.

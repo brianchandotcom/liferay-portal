@@ -170,6 +170,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void movePortletId(
 		long userId, String portletId, String columnId, int columnPos);
 
+	public void removeCustomization();
+
 	public void removeModeAboutPortletId(String portletId);
 
 	public void removeModeConfigPortletId(String portletId);

@@ -231,7 +231,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="add-page" />
 
-		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		<c:if test="<%= Validator.isNotNull(backURL) %>">
+			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		</c:if>
 	</aui:button-row>
 </aui:form>
 

@@ -42,12 +42,16 @@ else {
 }
 
 String[] types = LayoutTypeControllerTracker.getTypes();
-%>
 
-<portlet:renderURL var="backURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-</portlet:renderURL>
+String backURL = ParamUtil.getString(request, "backURL");
+
+if (Validator.isNull(backURL)) {
+	PortletURL backPortletURL = renderResponse.createRenderURL();
+
+	backPortletURL.setParameter("mvcPath", "/view.jsp");
+	backPortletURL.setParameter("groupId", String.valueOf(groupId));
+}
+%>
 
 <%
 portletDisplay.setShowBackIcon(true);

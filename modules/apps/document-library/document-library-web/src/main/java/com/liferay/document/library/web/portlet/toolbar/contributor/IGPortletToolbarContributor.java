@@ -108,53 +108,6 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 	}
 
-	protected void addPortletTitleAddFileShortcutMenuItem(
-			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"add-shortcut"));
-
-		Folder folder = _getFolder(themeDisplay, portletRequest);
-
-		if ((folder != null) && !folder.isMountPoint() &&
-			folder.isSupportsShortcuts() &&
-			containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folder.getFolderId(),
-				ActionKeys.ADD_SHORTCUT)) {
-
-			PortletURL portletURL = _getShortcutPortletURL(
-				themeDisplay, portletRequest, folder.getFolderId(),
-				folder.getRepositoryId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-		else if ((folder == null) &&
-				 containsPermission(
-					 themeDisplay.getPermissionChecker(),
-					 themeDisplay.getScopeGroupId(),
-					 DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					 ActionKeys.ADD_SHORTCUT)) {
-
-			PortletURL portletURL = _getShortcutPortletURL(
-				themeDisplay, portletRequest,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				themeDisplay.getScopeGroupId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-	}
-
 	protected void addPortletTitleAddFolderMenuItem(
 			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
@@ -252,46 +205,6 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 	}
 
-	protected void addPortletTitleAddRepositoryMenuItem(
-			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		Folder folder = _getFolder(themeDisplay, portletRequest);
-
-		if ((folder == null) &&
-			containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ActionKeys.ADD_REPOSITORY)) {
-
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			urlMenuItem.setLabel(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(portletRequest),
-					"add-repository"));
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/edit_repository");
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter(
-				"folderId",
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-	}
-
 	protected boolean containsPermission(
 		PermissionChecker permissionChecker, long groupId, long folderId,
 		String actionId) {
@@ -334,22 +247,6 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		addPortletTitleAddMulpleFileEntriesMenuItem(
 			menuItems, themeDisplay, portletRequest);
-
-		try {
-			addPortletTitleAddRepositoryMenuItem(
-				menuItems, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add repository menu item", pe);
-		}
-
-		try {
-			addPortletTitleAddFileShortcutMenuItem(
-				menuItems, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add file shortcut menu item", pe);
-		}
 
 		return menuItems;
 	}
@@ -471,25 +368,6 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 
 		return folder;
-	}
-
-	private PortletURL _getShortcutPortletURL(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest, long folderId,
-		long repositoryId) {
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_shortcut");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
-
-		return portletURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

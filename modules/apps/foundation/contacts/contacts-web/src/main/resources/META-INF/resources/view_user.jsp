@@ -39,94 +39,99 @@ request.setAttribute("view_user.jsp-user", user2);
 	<div class="contacts-profile <%= (user.getUserId() == user2.getUserId()) ? "my-profile" : StringPool.BLANK %>" id="<portlet:namespace />contactsProfile">
 		<c:if test="<%= (displayStyle == ContactsConstants.DISPLAY_STYLE_BASIC) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) %>">
 			<aui:row cssClass="social-relations">
+				<aui:col width="<%= 100 %>">
 
-				<%
-				boolean connection = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
-				boolean follower = SocialRelationLocalServiceUtil.hasRelation(user2.getUserId(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
-				boolean following = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
-				%>
+					<%
+					boolean connection = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
+					boolean follower = SocialRelationLocalServiceUtil.hasRelation(user2.getUserId(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
+					boolean following = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
+					%>
 
-				<c:if test="<%= connection || follower || following %>">
-					<div class="lfr-asset-metadata">
-						<c:if test="<%= connection %>">
-							<span class="lfr-asset-icon lfr-asset-connection<%= (following || follower) ? StringPool.BLANK : " last" %>">
-								<i class="icon-user"></i>
+					<c:if test="<%= connection || follower || following %>">
+						<div class="lfr-asset-metadata">
+							<c:if test="<%= connection %>">
+								<span class="lfr-asset-icon lfr-asset-connection<%= (following || follower) ? StringPool.BLANK : " last" %>">
+									<i class="icon-user"></i>
 
-								<liferay-ui:message key="connection" />
-							</span>
-						</c:if>
+									<liferay-ui:message key="connection" />
+								</span>
+							</c:if>
 
-						<c:if test="<%= following %>">
-							<span class="lfr-asset-icon lfr-asset-following<%= follower ? StringPool.BLANK : " last" %>">
-								<i class="icon-user"></i>
+							<c:if test="<%= following %>">
+								<span class="lfr-asset-icon lfr-asset-following<%= follower ? StringPool.BLANK : " last" %>">
+									<i class="icon-user"></i>
 
-								<liferay-ui:message key="following" />
-							</span>
-						</c:if>
+									<liferay-ui:message key="following" />
+								</span>
+							</c:if>
 
-						<c:if test="<%= follower %>">
-							<span class="last lfr-asset-follower lfr-asset-icon">
-								<i class="icon-user"></i>
+							<c:if test="<%= follower %>">
+								<span class="last lfr-asset-follower lfr-asset-icon">
+									<i class="icon-user"></i>
 
-								<liferay-ui:message key="follower" />
-							</span>
-						</c:if>
-					</div>
-				</c:if>
+									<liferay-ui:message key="follower" />
+								</span>
+							</c:if>
+						</div>
+					</c:if>
 
-				<aui:row cssClass="contacts-action">
-					<c:choose>
-						<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
 
-							<%
-							boolean blocked = false;
+					<aui:row cssClass="contacts-action">
+						<aui:col width="<%= 100 %>">
+							<c:choose>
+								<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
 
-							if (SocialRelationLocalServiceUtil.hasRelation(user2.getUserId(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY)) {
-								blocked = true;
-							}
-							else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY)) {
-								blocked = true;
-							}
+									<%
+									boolean blocked = false;
 
-							boolean showConnectedRequestedIcon = !blocked && SocialRequestLocalServiceUtil.hasRequest(themeDisplay.getUserId(), User.class.getName(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION, user2.getUserId(), SocialRequestConstants.STATUS_PENDING);
-							boolean showConnectedIcon = !blocked && SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
-							boolean showFollowingIcon = !blocked && SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
-							boolean showBlockIcon = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY);
-							%>
+									if (SocialRelationLocalServiceUtil.hasRelation(user2.getUserId(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY)) {
+										blocked = true;
+									}
+									else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY)) {
+										blocked = true;
+									}
 
-							<liferay-ui:icon
-								cssClass='<%= showConnectedRequestedIcon ? "action disabled" : "action disabled hide" %>'
-								image="../aui/user"
-								label="<%= true %>"
-								message="connection-requested"
-							/>
+									boolean showConnectedRequestedIcon = !blocked && SocialRequestLocalServiceUtil.hasRequest(themeDisplay.getUserId(), User.class.getName(), themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION, user2.getUserId(), SocialRequestConstants.STATUS_PENDING);
+									boolean showConnectedIcon = !blocked && SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
+									boolean showFollowingIcon = !blocked && SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
+									boolean showBlockIcon = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_UNI_ENEMY);
+									%>
 
-							<liferay-ui:icon
-								cssClass='<%= showConnectedIcon ? "action connected" : "action connected hide" %>'
-								image="../aui/user"
-								label="<%= true %>"
-								message="connected"
-							/>
+									<liferay-ui:icon
+										cssClass='<%= showConnectedRequestedIcon ? "action disabled" : "action disabled hide" %>'
+										image="../aui/user"
+										label="<%= true %>"
+										message="connection-requested"
+									/>
 
-							<liferay-ui:icon
-								cssClass='<%= showFollowingIcon ? "action following" : "action following hide" %>'
-								image="../aui/user"
-								label="<%= true %>"
-								message="following"
-							/>
+									<liferay-ui:icon
+										cssClass='<%= showConnectedIcon ? "action connected" : "action connected hide" %>'
+										image="../aui/user"
+										label="<%= true %>"
+										message="connected"
+									/>
 
-							<liferay-ui:icon
-								cssClass='<%= showBlockIcon ? "action block" : "action block hide" %>'
-								image="../aui/ban-circle"
-								label="<%= true %>"
-								message="blocked"
-							/>
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/user_toolbar.jsp" servletContext="<%= application %>" />
-						</c:otherwise>
-					</c:choose>
-				</aui:row>
+									<liferay-ui:icon
+										cssClass='<%= showFollowingIcon ? "action following" : "action following hide" %>'
+										image="../aui/user"
+										label="<%= true %>"
+										message="following"
+									/>
+
+									<liferay-ui:icon
+										cssClass='<%= showBlockIcon ? "action block" : "action block hide" %>'
+										image="../aui/ban-circle"
+										label="<%= true %>"
+										message="blocked"
+									/>
+								</c:when>
+								<c:otherwise>
+									<liferay-util:include page="/user_toolbar.jsp" servletContext="<%= application %>" />
+								</c:otherwise>
+							</c:choose>
+						</aui:col>
+					</aui:row>
+				</aui:col>
 			</aui:row>
 
 			<div class="field-group lfr-detail-info" data-sectionId="details" data-title="<%= LanguageUtil.get(request, "details") %>">
@@ -159,160 +164,162 @@ request.setAttribute("view_user.jsp-user", user2);
 		<c:if test="<%= ((displayStyle == ContactsConstants.DISPLAY_STYLE_DETAIL) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) || ((themeDisplay.getUserId() == user2.getUserId()) && showCompleteYourProfile)) && UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.VIEW) %>">
 			<div class="user-information" id="<portlet:namespace />userInformation">
 				<aui:row>
-					<c:if test="<%= showUsersInformation %>">
-						<aui:col columnWidth="<%= showSites ? 80 : 100 %>" cssClass="user-information-column-1">
-							<div class="user-information-title">
-								<liferay-ui:message key="about" />
-							</div>
-
-							<div class="lfr-user-info-container">
-								<liferay-util:include page="/view_user_information.jsp" servletContext="<%= application %>" />
-							</div>
-
-							<%
-							Map<String, String> extensions = ContactsExtensionsUtil.getExtensions();
-
-							Set<String> servletContextNames = extensions.keySet();
-
-							request.setAttribute("view_user.jsp-showCompleteYourProfile", String.valueOf(showCompleteYourProfile));
-
-							for (String servletContextName : servletContextNames) {
-								String extensionPath = extensions.get(servletContextName);
-
-								ServletContext extensionServletContext = ServletContextPool.get(servletContextName);
-
-								String title = extensionPath.substring(extensionPath.lastIndexOf(StringPool.SLASH) + 1, extensionPath.lastIndexOf(StringPool.PERIOD));
-
-								title = title.replace(CharPool.UNDERLINE, CharPool.DASH);
-
-								String cssClass = "lfr-" + title + "-container";
-							%>
-
+					<aui:col width="<%= 100 %>">
+						<c:if test="<%= showUsersInformation %>">
+							<aui:col columnWidth="<%= showSites ? 80 : 100 %>" cssClass="user-information-column-1">
 								<div class="user-information-title">
-									<liferay-ui:message key="<%= title %>" />
+									<liferay-ui:message key="about" />
 								</div>
 
-								<liferay-util:include page="<%= extensionPath %>" servletContext="<%= extensionServletContext %>" />
-
-							<%
-							}
-							%>
-
-						</aui:col>
-					</c:if>
-
-					<c:if test="<%= showSites || showTags %>">
-						<aui:col columnWidth="<%= showUsersInformation ? 20 : 100 %>" cssClass="user-information-column-2">
-							<c:if test="<%= showSites %>">
-
-								<%
-								LinkedHashMap groupParams = new LinkedHashMap();
-
-								groupParams.put("site", Boolean.TRUE);
-
-								Group group = themeDisplay.getScopeGroup();
-
-								if (group.isUser()) {
-									groupParams.put("usersGroups", Long.valueOf(group.getClassPK()));
-								}
-								else {
-									groupParams.put("usersGroups", Long.valueOf(themeDisplay.getUserId()));
-								}
-
-								groupParams.put("active", Boolean.TRUE);
-
-								if (group.isUser() && (themeDisplay.getUserId() != group.getClassPK())) {
-									List<Integer> types = new ArrayList<Integer>();
-
-									types.add(GroupConstants.TYPE_SITE_OPEN);
-									types.add(GroupConstants.TYPE_SITE_RESTRICTED);
-
-									groupParams.put("types", types);
-								}
-
-								List<Group> results = GroupLocalServiceUtil.search(company.getCompanyId(), null, null, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-								%>
-
-								<div class="user-sites-title">
-									<liferay-ui:message key="sites" />
-								</div>
-
-								<ul class="user-sites">
-									<c:choose>
-										<c:when test="<%= !results.isEmpty() %>">
-
-											<%
-											for (Group curGroup : results) {
-											%>
-
-												<li class="social-office-disabled user-information-sites"><a href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
-
-											<%
-											}
-											%>
-
-										</c:when>
-										<c:otherwise>
-											<div class="empty">
-												<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-belong-to-any-sites" translateArguments="<%= false %>" />
-											</div>
-										</c:otherwise>
-									</c:choose>
-								</ul>
-							</c:if>
-
-							<c:if test="<%= showTags %>">
-								<div class="user-tags-title">
-									<liferay-ui:message key="tags" />
+								<div class="lfr-user-info-container">
+									<liferay-util:include page="/view_user_information.jsp" servletContext="<%= application %>" />
 								</div>
 
 								<%
-								List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(User.class.getName(), user2.getUserId());
+								Map<String, String> extensions = ContactsExtensionsUtil.getExtensions();
+
+								Set<String> servletContextNames = extensions.keySet();
+
+								request.setAttribute("view_user.jsp-showCompleteYourProfile", String.valueOf(showCompleteYourProfile));
+
+								for (String servletContextName : servletContextNames) {
+									String extensionPath = extensions.get(servletContextName);
+
+									ServletContext extensionServletContext = ServletContextPool.get(servletContextName);
+
+									String title = extensionPath.substring(extensionPath.lastIndexOf(StringPool.SLASH) + 1, extensionPath.lastIndexOf(StringPool.PERIOD));
+
+									title = title.replace(CharPool.UNDERLINE, CharPool.DASH);
+
+									String cssClass = "lfr-" + title + "-container";
 								%>
 
-								<c:choose>
-									<c:when test="<%= !assetTags.isEmpty() %>">
-										<div class="field-group" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
-											<i class="icon-edit"></i>
+									<div class="user-information-title">
+										<liferay-ui:message key="<%= title %>" />
+									</div>
 
-											<ul class="user-tags">
+									<liferay-util:include page="<%= extensionPath %>" servletContext="<%= extensionServletContext %>" />
+
+								<%
+								}
+								%>
+
+							</aui:col>
+						</c:if>
+
+						<c:if test="<%= showSites || showTags %>">
+							<aui:col columnWidth="<%= showUsersInformation ? 20 : 100 %>" cssClass="user-information-column-2">
+								<c:if test="<%= showSites %>">
+
+									<%
+									LinkedHashMap groupParams = new LinkedHashMap();
+
+									groupParams.put("site", Boolean.TRUE);
+
+									Group group = themeDisplay.getScopeGroup();
+
+									if (group.isUser()) {
+										groupParams.put("usersGroups", Long.valueOf(group.getClassPK()));
+									}
+									else {
+										groupParams.put("usersGroups", Long.valueOf(themeDisplay.getUserId()));
+									}
+
+									groupParams.put("active", Boolean.TRUE);
+
+									if (group.isUser() && (themeDisplay.getUserId() != group.getClassPK())) {
+										List<Integer> types = new ArrayList<Integer>();
+
+										types.add(GroupConstants.TYPE_SITE_OPEN);
+										types.add(GroupConstants.TYPE_SITE_RESTRICTED);
+
+										groupParams.put("types", types);
+									}
+
+									List<Group> results = GroupLocalServiceUtil.search(company.getCompanyId(), null, null, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+									%>
+
+									<div class="user-sites-title">
+										<liferay-ui:message key="sites" />
+									</div>
+
+									<ul class="user-sites">
+										<c:choose>
+											<c:when test="<%= !results.isEmpty() %>">
 
 												<%
-												StringBuilder sb = new StringBuilder();
+												for (Group curGroup : results) {
+												%>
 
-												for (AssetTag assetTag : assetTags) {
-													PortletURL searchURL = ((LiferayPortletResponse)renderResponse).createRenderURL("3");
+													<li class="social-office-disabled user-information-sites"><a href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
 
-													searchURL.setWindowState(WindowState.MAXIMIZED);
-
-													searchURL.setParameter("groupId", "0");
-													searchURL.setParameter("keywords", assetTag.getName());
-													searchURL.setParameter("struts_action", "/search/search");
-
-													sb.append("<li><a href=\"");
-													sb.append(searchURL);
-													sb.append("\">");
-													sb.append(assetTag.getName());
-													sb.append("</a></li>");
+												<%
 												}
 												%>
 
-												<%= sb.toString() %>
-											</ul>
-										</div>
-									</c:when>
-									<c:otherwise>
+											</c:when>
+											<c:otherwise>
+												<div class="empty">
+													<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-belong-to-any-sites" translateArguments="<%= false %>" />
+												</div>
+											</c:otherwise>
+										</c:choose>
+									</ul>
+								</c:if>
 
-										<%
-										Group group = themeDisplay.getScopeGroup();
-										%>
+								<c:if test="<%= showTags %>">
+									<div class="user-tags-title">
+										<liferay-ui:message key="tags" />
+									</div>
 
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
-									</c:otherwise>
-								</c:choose>
-							</c:if>
-						</aui:col>
-					</c:if>
+									<%
+									List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(User.class.getName(), user2.getUserId());
+									%>
+
+									<c:choose>
+										<c:when test="<%= !assetTags.isEmpty() %>">
+											<div class="field-group" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
+												<i class="icon-edit"></i>
+
+												<ul class="user-tags">
+
+													<%
+													StringBuilder sb = new StringBuilder();
+
+													for (AssetTag assetTag : assetTags) {
+														PortletURL searchURL = ((LiferayPortletResponse)renderResponse).createRenderURL("3");
+
+														searchURL.setWindowState(WindowState.MAXIMIZED);
+
+														searchURL.setParameter("groupId", "0");
+														searchURL.setParameter("keywords", assetTag.getName());
+														searchURL.setParameter("struts_action", "/search/search");
+
+														sb.append("<li><a href=\"");
+														sb.append(searchURL);
+														sb.append("\">");
+														sb.append(assetTag.getName());
+														sb.append("</a></li>");
+													}
+													%>
+
+													<%= sb.toString() %>
+												</ul>
+											</div>
+										</c:when>
+										<c:otherwise>
+
+											<%
+											Group group = themeDisplay.getScopeGroup();
+											%>
+
+											<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+							</aui:col>
+						</c:if>
+					</aui:col>
 				</aui:row>
 			</div>
 

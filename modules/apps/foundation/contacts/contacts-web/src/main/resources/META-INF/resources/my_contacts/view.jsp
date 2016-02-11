@@ -50,36 +50,40 @@ Group group = themeDisplay.getScopeGroup();
 			</c:when>
 			<c:otherwise>
 				<aui:row cssClass="my-contacts">
+					<aui:col width="<%= 100 %>">
 
-					<%
-					for (User user2 : users) {
-					%>
+						<%
+						for (User user2 : users) {
+						%>
 
-						<aui:row cssClass="lfr-contact-grid-item">
-							<div class="lfr-contact-thumb">
-								<a href="<%= user2.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" /></a>
-							</div>
+							<aui:row cssClass="lfr-contact-grid-item">
+								<aui:col width="<%= 100 %>">
+									<div class="lfr-contact-thumb">
+										<a href="<%= user2.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" /></a>
+									</div>
 
-							<div class="lfr-contact-info">
-								<div class="lfr-contact-name">
-									<a href="<%= user2.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(user2.getFullName()) %></a>
-								</div>
+									<div class="lfr-contact-info">
+										<div class="lfr-contact-name">
+											<a href="<%= user2.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(user2.getFullName()) %></a>
+										</div>
 
-								<div class="lfr-contact-job-title">
-									<%= HtmlUtil.escape(user2.getJobTitle()) %>
-								</div>
-							</div>
+										<div class="lfr-contact-job-title">
+											<%= HtmlUtil.escape(user2.getJobTitle()) %>
+										</div>
+									</div>
 
-							<div class="clear"><!-- --></div>
-						</aui:row>
+									<div class="clear"><!-- --></div>
+								</aui:col>
+							</aui:row>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-					<c:if test="<%= portletURL != null %>">
-						<a class="lfr-contact-grid-item" href="<%= portletURL %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="view-all-x-connections" translateArguments="<%= false %>" /></a>
-					</c:if>
+						<c:if test="<%= portletURL != null %>">
+							<a class="lfr-contact-grid-item" href="<%= portletURL %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="view-all-x-connections" translateArguments="<%= false %>" /></a>
+						</c:if>
+					</aui:col>
 				</aui:row>
 			</c:otherwise>
 		</c:choose>

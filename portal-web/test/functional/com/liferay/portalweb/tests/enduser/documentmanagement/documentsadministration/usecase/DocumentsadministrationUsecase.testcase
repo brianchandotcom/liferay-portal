@@ -323,7 +323,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<var name="key_dmDocumentTitle" value="Document1" />
+		<var name="key_dmDocumentTitle" value="Document_1.doc" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Document1" />
 

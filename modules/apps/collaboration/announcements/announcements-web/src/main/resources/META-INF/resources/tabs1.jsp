@@ -33,5 +33,6 @@ if (AnnouncementsEntryPermission.contains(permissionChecker, layout, portletName
 
 <liferay-ui:tabs
 	names="<%= tabs1Names %>"
+	type="tabs nav-tabs-default"
 	url="<%= tabs1URL.toString() %>"
 />

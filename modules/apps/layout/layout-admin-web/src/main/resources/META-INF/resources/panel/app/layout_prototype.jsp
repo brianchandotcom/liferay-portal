@@ -16,48 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+LayoutsPrototypeTreeDisplayContext layoutsTreeDisplayContext = new LayoutsPrototypeTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
+%>
+
 <div class="tree-container tree-pages">
 	<li class="tree-node">
-
-		<%
-		boolean selected = false;
-
-		Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
-			selected = true;
-		}
-		%>
-
-		<div class="tree-node-content <%= selected ? "tree-node-selected" : StringPool.BLANK %>">
+		<div class="tree-node-content <%= layoutsTreeDisplayContext.isLayoutSelected() ? "tree-node-selected" : StringPool.BLANK %>">
 			<span class="tree-label">
+				<aui:a cssClass="layout-tree" href="<%= layoutsTreeDisplayContext.getLayoutURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutName() %>" />
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("url", selLayout.getFriendlyURL(locale));
-				data.put("uuid", selLayout.getUuid());
-				%>
-
-				<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
-
-				<%
-				PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
-
-				editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-				editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-				editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
-				editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-				%>
-
-				<liferay-ui:icon
-					cssClass="layout-tree-edit"
-					icon="cog"
-					label="<%= false %>"
-					markupView="lexicon"
-					message='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'
-					url="<%= editLayoutURL.toString() %>"
-				/>
+				<a class="layout-tree-edit" href="<%= layoutsTreeDisplayContext.getEditLayoutURL() %>" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="edit" unicode="<%= true %>" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="<%= layoutsTreeDisplayContext.getLayoutName() %>" key="edit-x" /></span></a>
 			</span>
 		</div>
 	</li>

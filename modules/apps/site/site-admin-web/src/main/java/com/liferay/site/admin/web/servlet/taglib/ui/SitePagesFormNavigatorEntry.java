@@ -15,24 +15,26 @@
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=60"},
+	property = {"service.ranking:Integer=50"},
 	service = FormNavigatorEntry.class
 )
-public class SiteDetailsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+public class SitePagesFormNavigatorEntry
+	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -41,12 +43,12 @@ public class SiteDetailsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "details";
+		return "pages";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return LanguageUtil.get(locale, "pages");
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class SiteDetailsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/site/details.jsp";
+		return "/site/pages.jsp";
 	}
 
 }

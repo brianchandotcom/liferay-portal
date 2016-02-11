@@ -99,6 +99,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectCopyright() throws Exception {
+		test("IncorrectCopyright.testjava", "File must start with copyright:");
+	}
+
+	@Test
 	public void testIncorrectImports() throws Exception {
 		test("IncorrectImports1.testjava");
 		test(

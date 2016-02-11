@@ -23,6 +23,15 @@ public class CompanyServiceSettingsLocator implements SettingsLocator {
 	public CompanyServiceSettingsLocator(long companyId, String settingsId) {
 		_companyId = companyId;
 		_settingsId = settingsId;
+		_configurationPid = settingsId;
+	}
+
+	public CompanyServiceSettingsLocator(
+		long companyId, String settingsId, String configurationPid) {
+
+		_companyId = companyId;
+		_settingsId = settingsId;
+		_configurationPid = configurationPid;
 	}
 
 	@Override
@@ -32,7 +41,7 @@ public class CompanyServiceSettingsLocator implements SettingsLocator {
 
 		Settings configurationBeanSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_settingsId, portalPropertiesSettings);
+				_configurationPid, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings =
 			_settingsLocatorHelper.getPortalPreferencesSettings(
@@ -48,6 +57,7 @@ public class CompanyServiceSettingsLocator implements SettingsLocator {
 	}
 
 	private final long _companyId;
+	private final String _configurationPid;
 	private final String _settingsId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
 		SettingsLocatorHelperUtil.getSettingsLocatorHelper();

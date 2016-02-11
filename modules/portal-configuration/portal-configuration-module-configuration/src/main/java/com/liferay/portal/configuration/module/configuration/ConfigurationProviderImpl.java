@@ -16,13 +16,21 @@ package com.liferay.portal.configuration.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -35,6 +43,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = ConfigurationProvider.class)
 public class ConfigurationProviderImpl implements ConfigurationProvider {
+
+	public <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+		String settingsId = _getConfigurationSettingsId(clazz);
+
+		return getConfiguration(
+			clazz,
+			new CompanyServiceSettingsLocator(
+				companyId, settingsId, configurationPid));
+	}
 
 	@Override
 	public <T> T getConfiguration(
@@ -76,14 +96,37 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 	}
 
-	public String getConfigurationPid(Class<?> clazz) {
-		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
+	public <T> T getGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException {
 
-		if (ocd == null) {
-			return null;
+		String configurationPid = _getConfigurationPid(clazz);
+		String settingsId = _getConfigurationSettingsId(clazz);
+
+		return getConfiguration(
+			clazz,
+			new GroupServiceSettingsLocator(
+				groupId, settingsId, configurationPid));
+	}
+
+	public <T> T getPortletInstanceConfiguration(
+			Class<T> clazz, Layout layout, PortletInstance portletInstance)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String portletInstanceKey = portletInstance.getPortletInstanceKey();
+
+		if (Validator.isNotNull(configurationPid)) {
+			return ConfigurationProviderUtil.getConfiguration(
+				clazz,
+				new PortletInstanceSettingsLocator(
+					layout, portletInstanceKey, configurationPid));
 		}
-
-		return ocd.id();
+		else {
+			return ConfigurationProviderUtil.getConfiguration(
+				clazz,
+				new PortletInstanceSettingsLocator(layout, portletInstanceKey));
+		}
 	}
 
 	protected <T> Class<?> getOverrideClass(Class<T> clazz) {
@@ -99,6 +142,33 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 
 		return overrideClass.value();
+	}
+
+	private String _getConfigurationPid(Class<?> clazz) {
+		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
+
+		if (ocd == null) {
+			return null;
+		}
+
+		return ocd.id();
+	}
+
+	private <T> String _getConfigurationSettingsId(Class<T> clazz) {
+		ExtendedObjectClassDefinition eocd = clazz.getAnnotation(
+			ExtendedObjectClassDefinition.class);
+
+		String settingsId = null;
+
+		if (eocd != null) {
+			settingsId = eocd.settingsId();
+		}
+
+		if (Validator.isNull(settingsId)) {
+			settingsId = _getConfigurationPid(clazz);
+		}
+
+		return settingsId;
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.module.configuration;
 
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 
 /**
@@ -21,10 +23,18 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
  */
 public interface ConfigurationProvider {
 
+	public <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
+		throws ConfigurationException;
+
 	public <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ConfigurationException;
 
-	public String getConfigurationPid(Class<?> clazz);
+	public <T> T getGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException;
+
+	public <T> T getPortletInstanceConfiguration(
+			Class<T> clazz, Layout layout, PortletInstance portletInstance)
+		throws ConfigurationException;
 
 }

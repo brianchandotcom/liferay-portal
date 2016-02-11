@@ -43,6 +43,8 @@ public @interface ExtendedObjectClassDefinition {
 
 	public Scope scope() default Scope.SYSTEM;
 
+	public String settingsId() default "";
+
 	public enum Scope {
 
 		COMPANY("company"), GROUP("group"),

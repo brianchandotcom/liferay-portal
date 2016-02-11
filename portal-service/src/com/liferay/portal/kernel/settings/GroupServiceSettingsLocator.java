@@ -27,6 +27,15 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 	public GroupServiceSettingsLocator(long groupId, String settingsId) {
 		_groupId = groupId;
 		_settingsId = settingsId;
+		_configurationPid = settingsId;
+	}
+
+	public GroupServiceSettingsLocator(
+		long groupId, String settingsId, String configurationPid) {
+
+		_groupId = groupId;
+		_settingsId = settingsId;
+		_configurationPid = configurationPid;
 	}
 
 	@Override
@@ -38,7 +47,7 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 
 		Settings configurationBeanSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_settingsId, portalPropertiesSettings);
+				_configurationPid, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings =
 			_settingsLocatorHelper.getPortalPreferencesSettings(
@@ -68,6 +77,7 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 		}
 	}
 
+	private final String _configurationPid;
 	private final long _groupId;
 	private final String _settingsId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =

@@ -64,7 +64,17 @@ for (long defaultTeamId : defaultTeamIds) {
 <aui:input name="siteRolesRoleIds" type="hidden" value="<%= ListUtil.toString(defaultSiteRoles, Role.ROLE_ID_ACCESSOR) %>" />
 <aui:input name="teamsTeamIds" type="hidden" value="<%= ListUtil.toString(defaultTeams, TeamImpl.TEAM_ID_ACCESSOR) %>" />
 
-<h3><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h3>
+<p class="text-muted">
+	<liferay-ui:message key="default-roles-and-teams-for-new-members" />
+</p>
+
+<h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
+
+<c:if test="<%= defaultSiteRoles.size() <= 0 %>">
+	<p class="text-muted">
+		<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
+	</p>
+</c:if>
 
 <liferay-ui:search-container
 	headerNames="title,null"
@@ -100,7 +110,13 @@ for (long defaultTeamId : defaultTeamIds) {
 	<aui:button cssClass="btn-lg modify-link" id="selectSiteRoleLink" value="select" />
 </div>
 
-<h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
+<h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
+
+<c:if test="<%= defaultSiteRoles.size() <= 0 %>">
+	<p class="text-muted">
+		<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
+	</p>
+</c:if>
 
 <liferay-ui:search-container
 	headerNames="title,null"

@@ -89,20 +89,20 @@ else if (group != null) {
 
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
+<c:if test="<%= liveGroup != null %>">
+	<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
+</c:if>
+
 <c:choose>
 	<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 		<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
 	</c:when>
 	<c:when test="<%= (liveGroup == null) || (!liveGroup.isCompany() && !PortalUtil.isSystemGroup(liveGroup.getGroupKey())) %>">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 	</c:when>
 </c:choose>
 
-<aui:input name="description" />
-
-<c:if test="<%= liveGroup != null %>">
-	<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
-</c:if>
+<aui:input name="description" placeholder="description" />
 
 <c:if test="<%= (group == null) || !group.isCompany() %>">
 	<aui:input name="active" type="toggle-switch" value="<%= (group == null) ? true : group.isActive() %>" />
@@ -121,7 +121,7 @@ else if (group != null) {
 	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
 </c:if>
 
-<h3><liferay-ui:message key="membership-options" /></h3>
+<h4 class="text-default"><liferay-ui:message key="membership-options" /></h4>
 
 <c:if test="<%= (group == null) || !group.isCompany() %>">
 	<aui:select label="membership-type" name="type">
@@ -159,7 +159,13 @@ else if (group != null) {
 		/>
 	</liferay-util:buffer>
 
-	<h3><liferay-ui:message key="parent-site" /></h3>
+	<h4 class="text-default"><liferay-ui:message key="parent-site" /></h4>
+
+	<c:if test="<%= parentGroups.size() <= 0 %>">
+		<p class="text-muted">
+			<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+		</p>
+	</c:if>
 
 	<liferay-ui:search-container
 		headerNames="name,type,null"

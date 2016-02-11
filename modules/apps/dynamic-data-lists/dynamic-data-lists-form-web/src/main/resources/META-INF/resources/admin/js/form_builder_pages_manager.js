@@ -156,7 +156,7 @@ AUI.add(
 						var instance = this;
 						var title;
 
-						var strings = instance.get('strings')
+						var strings = instance.get('strings');
 
 						title = A.Lang.sub(
 							strings.untitledPage,
@@ -166,8 +166,8 @@ AUI.add(
 							]
 						);
 
-				        return title;
-				    },
+						return title;
+					},
 
 					_createWizardItems: function() {
 						var instance = this;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.audit;
+package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;

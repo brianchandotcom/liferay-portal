@@ -45,17 +45,11 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 String backURL = ParamUtil.getString(request, "backURL");
 
-if (Validator.isNull(backURL)) {
-	PortletURL backPortletURL = renderResponse.createRenderURL();
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
 
-	backPortletURL.setParameter("mvcPath", "/view.jsp");
-	backPortletURL.setParameter("groupId", String.valueOf(groupId));
+	portletDisplay.setURLBack(backURL);
 }
-%>
-
-<%
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 %>

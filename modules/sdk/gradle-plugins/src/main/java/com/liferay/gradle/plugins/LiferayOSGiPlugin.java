@@ -538,7 +538,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			description = getBundleInstruction(project, Constants.BUNDLE_NAME);
 		}
 
-		project.setDescription(description);
+		if (Validator.isNotNull(description)) {
+			project.setDescription(description);
+		}
 	}
 
 	protected void configureSourceSetMain(Project project) {

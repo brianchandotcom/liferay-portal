@@ -202,7 +202,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcPath", "/document_library/upload_multiple_file_entries.jsp");
+			"mvcRenderCommandName",
+			"/document_library/upload_multiple_file_entries");
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(

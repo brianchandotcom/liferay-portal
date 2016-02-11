@@ -479,6 +479,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		String bundleSymbolicName = getBundleInstruction(
 			project, Constants.BUNDLE_SYMBOLICNAME);
 
+		if (Validator.isNull(bundleSymbolicName)) {
+			return;
+		}
+
 		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
 	}
 

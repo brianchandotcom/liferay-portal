@@ -91,8 +91,10 @@ public class LayoutsPrototypeTreeDisplayContext
 		Layout layout = getLayout();
 
 		if ((layout.getPlid() == themeDisplay.getPlid()) ||
-			Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE,
+			Validator.equals(
+				LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE,
 				themeDisplay.getPpid())) {
+
 			return true;
 		}
 

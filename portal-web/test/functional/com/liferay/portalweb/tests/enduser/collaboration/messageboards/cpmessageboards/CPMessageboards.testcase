@@ -103,6 +103,32 @@
 		</execute>
 	</command>
 
+	<command name="DeleteMBCategories" priority="4">
+		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
+
+		<execute macro="Navigator#openURL" />
+
+		<for list="${categoryNameList}" param="categoryName" >
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Message Boards" />
+			</execute>
+
+			<execute macro="MessageboardsCategory#addCP">
+				<var name="categoryName" value="${categoryName}" />
+			</execute>
+		</for>
+
+		<execute macro="MessageboardsCategory#tearDownCP">
+			<var name="assetType" value="3 items" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads nor categories." />
+	</command>
+
 	<command name="EditMBThreadBody" priority="5">
 		<execute macro="Navigator#openURL" />
 

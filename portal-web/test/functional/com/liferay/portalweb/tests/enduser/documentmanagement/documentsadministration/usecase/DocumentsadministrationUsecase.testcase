@@ -337,6 +337,10 @@
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoDocumentPG">
+			<var name="dmDocumentTitle" value="Document1" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version 1.1" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 

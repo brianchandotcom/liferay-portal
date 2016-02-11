@@ -93,7 +93,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 			PortletURL rowURL = renderResponse.createRenderURL();
 
 			rowURL.setParameter("mvcRenderCommandName", "/announcements/edit_entry");
-			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("redirect", announcementsRequestHelper.getCurrentURL());
 			rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 			// Title
@@ -132,7 +132,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 <aui:script>
 	function <portlet:namespace />addEntry() {
-		location.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="distributionScope" value="<%= distributionScope %>" /></portlet:renderURL>';
+		location.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /><portlet:param name="redirect" value="<%= announcementsRequestHelper.getCurrentURL() %>" /><portlet:param name="distributionScope" value="<%= distributionScope %>" /></portlet:renderURL>';
 	}
 
 	function <portlet:namespace />selectDistributionScope(distributionScope) {

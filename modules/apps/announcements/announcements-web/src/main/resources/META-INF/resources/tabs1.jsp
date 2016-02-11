@@ -16,23 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String tabs1 = ParamUtil.getString(request, "tabs1", "entries");
-
-PortletURL tabs1URL = renderResponse.createRenderURL();
-
-tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
-tabs1URL.setParameter("tabs1", tabs1);
-
-String tabs1Names = "entries";
-
-if (AnnouncementsEntryPermission.contains(permissionChecker, layout, portletName, ActionKeys.ADD_ENTRY)) {
-	tabs1Names += ",manage-entries";
-}
-%>
-
 <liferay-ui:tabs
-	names="<%= tabs1Names %>"
+	names="<%= announcementsDisplayContext.getTabs1Names() %>"
 	type="tabs nav-tabs-default"
-	url="<%= tabs1URL.toString() %>"
+	url="<%= announcementsDisplayContext.getTabs1PortletURL() %>"
 />

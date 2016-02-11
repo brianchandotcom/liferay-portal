@@ -23,17 +23,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
-
-String cssText = null;
-
-if ((selLayout != null) && !selLayout.isInheritLookAndFeel()) {
-	cssText = selLayout.getCssText();
-}
-else {
-	LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-	cssText = selLayoutSet.getCss();
-}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
@@ -78,10 +67,6 @@ else {
 
 <div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
 	<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
-
-	<legend><liferay-ui:message key="css" /></legend>
-
-	<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= cssText %>" />
 </div>
 
 <aui:script>

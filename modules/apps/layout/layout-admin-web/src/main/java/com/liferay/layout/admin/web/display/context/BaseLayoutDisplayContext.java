@@ -15,9 +15,9 @@
 package com.liferay.layout.admin.web.display.context;
 
 import com.liferay.application.list.GroupProvider;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,7 +51,7 @@ public class BaseLayoutDisplayContext {
 		this.liferayPortletResponse = liferayPortletResponse;
 
 		groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
-			LayoutAdminWebKeys.GROUP_PROVIDER);
+			ApplicationListWebKeys.GROUP_PROVIDER);
 		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

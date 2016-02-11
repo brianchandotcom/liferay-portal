@@ -86,7 +86,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
 		request.setAttribute(
-			SiteAdministrationWebKeys.GROUP_PROVIDER, _groupProvider);
+			ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 		request.setAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 		request.setAttribute(

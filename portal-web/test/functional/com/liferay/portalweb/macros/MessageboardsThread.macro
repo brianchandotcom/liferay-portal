@@ -367,10 +367,13 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-		<execute function="Click" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
+
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -433,7 +436,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="markAsAnswerPG">
@@ -443,7 +446,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="movePG">
@@ -859,11 +862,11 @@
 	<command name="viewAnswerPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_FLAG" value1="Resolved" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_ANSWER" value1="Answer" />
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="Back" />
 	</command>
@@ -965,13 +968,15 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="viewMarkAsQuestionCheckedCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+
+		<execute function="AssertVisible" locator1="Button#PUBLISH" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="More Settings" />
@@ -986,6 +991,8 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+
+		<execute function="AssertVisible" locator1="Button#PUBLISH" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="More Settings" />
@@ -1191,7 +1198,7 @@
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="2" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="2 Posts" />
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
@@ -1213,11 +1220,12 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
+		<var name="key_postsNumber" value="1" />
 		<var name="key_threadBody" value="${threadReplyBody}" />
 		<var name="key_threadSubject" value="${threadSplitReplySubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSplitReplySubject}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="1" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_POSTS" value1="1" />
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSplitReplySubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSplitReplySubject}" />
@@ -1240,7 +1248,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no top posters." />
+		<execute function="AssertTextEquals" locator1="Message#NO_TOP_POSTERS" value1="There are no top posters." />
 	</command>
 
 	<command name="viewStatisticsPostsCountPG">

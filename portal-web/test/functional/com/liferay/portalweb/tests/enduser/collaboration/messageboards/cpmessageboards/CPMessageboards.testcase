@@ -268,10 +268,6 @@
 
 		<execute macro="MessageboardsThread#viewAnonymousPostingCheckboxCP" />
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
 		<execute macro="MessageboardsPortlet#configureAnonymousPostingCP">
 			<var name="anonymousPostingEnabled" value="false" />
 		</execute>

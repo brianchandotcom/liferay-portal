@@ -76,14 +76,6 @@
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Announcements" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

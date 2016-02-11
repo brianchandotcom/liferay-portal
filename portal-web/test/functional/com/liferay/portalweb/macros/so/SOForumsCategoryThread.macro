@@ -79,10 +79,10 @@
 				<if>
 					<isset var="categoryPostCount" />
 					<then>
-						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="${categoryPostCount}" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="${categoryPostCount} Posts" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="1" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="1 Post" />
 					</else>
 				</if>
 
@@ -267,7 +267,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<if>
@@ -451,7 +451,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<if>
@@ -592,7 +592,7 @@
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 			</then>
 		</if>
 	</command>

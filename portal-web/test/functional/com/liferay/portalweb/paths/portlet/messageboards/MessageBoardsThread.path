@@ -271,7 +271,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_ANSWER_1</td>
-	<td>xpath=(//span[.='Answer'])[3]</td>
+	<td>//h4[contains(.,'Answer')]</td>
 	<td></td>
 </tr>
 <tr>

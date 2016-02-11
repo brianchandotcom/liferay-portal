@@ -52,12 +52,12 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_ICON</td>
-	<td>//tr[contains(.,'${key_userName}')]//div[contains(@class,'user-icon')]</td>
+	<td>//span[contains(.,'${key_userName}')]/../..//div[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_NAME</td>
-	<td>//tr[contains(.,'${key_userName}')]//span[@class='user-name']</td>
+	<td>//span[@class='user-name' and contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_RANK</td>
-	<td>//tr[contains(.,'${key_userName}')]//div[@class='thread-user-rank']</td>
+	<td>//span[contains(.,'${key_userName}')]/../..//div[@class='thread-user-rank']</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_POSTS</td>
-	<td>//tr[contains(.,'${key_userName}')]//div[@class='thread-user-post-count']</td>
+	<td>//span[contains(.,'${key_userName}')]/../..//div[@class='thread-user-post-count']</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_JOIN_DATE</td>
-	<td>//tr[contains(.,'${key_userName}')]//div[@class='thread-user-join-date']</td>
+	<td>//span[contains(.,'${key_userName}')]/../..//div[@class='thread-user-join-date']</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE</td>
-	<td>//tr[contains(.,'${key_userName}')]//div[@class='thread-user-last-post-date']</td>
+	<td>//span[contains(.,'${key_userName}')]/../..//div[@class='thread-user-last-post-date']</td>
 	<td></td>
 </tr>
 <tr>

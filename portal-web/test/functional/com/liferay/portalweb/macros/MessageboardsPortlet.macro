@@ -1,5 +1,15 @@
 <definition>
 	<command name="configureAnonymousPostingCP">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
 		<execute function="Pause" locator1="10000" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />

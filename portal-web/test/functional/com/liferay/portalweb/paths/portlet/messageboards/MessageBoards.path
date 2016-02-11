@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_threadSubject}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//li[contains(.,'${key_threadSubject}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -372,6 +372,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_LIST_ANSWER</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/span[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_LIST_CHECKBOX</td>
 	<td>//li[contains(.,'${key_threadSubject}')]/div/label/input[contains(@type,'checkbox')]</td>
 	<td></td>
@@ -460,7 +465,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_POSTS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[4]/a</td>
+	<td>//a[contains(.,'${key_threadSubject}')]/../../span[contains(.,'Posts')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -835,9 +835,9 @@
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title 1" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
@@ -870,9 +870,9 @@
 			<var name="postCount" value="1" />
 		</execute>
 
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title 1" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
@@ -914,9 +914,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1,Blogs Entry Title 2" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title 1" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title 2" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 2" />
 
 		<execute macro="BlogsAggregatorPortlet#configureSelectionMethod">
 			<var name="selectionMethod" value="Scope" />
@@ -929,10 +933,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title 1" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title 2" />
+
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 2" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
 			<var name="page" value="Public Pages" />
@@ -970,10 +977,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
-		</execute>
+		<var name="key_entryTitle" value="Blogs Entry Title 1" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title 2" />
+
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 2" />
 	</command>
 
 	<command name="StagingBlogsCP" priority="3">
@@ -1706,9 +1716,19 @@
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewEntryViaBlogsAggregatorPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
+
+		<var name="key_entryAbstractDescription" value="Blogs Entry Abstract Description" />
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry Title" />
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="User#loginPG">
@@ -1720,13 +1740,14 @@
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
-		<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
 
-		<execute function="AssertTextEquals" locator1="BlogsAggregator#ENTRY_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry Title" />
 
-		<execute macro="BlogsEntry#viewEntryViaBlogsAggregatorPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 

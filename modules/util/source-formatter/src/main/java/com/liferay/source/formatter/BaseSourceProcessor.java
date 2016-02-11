@@ -626,6 +626,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if (!content.contains(copyright)) {
 				processErrorMessage(fileName, "(c): " + fileName);
 			}
+			else if (!content.startsWith(copyright) &&
+					 !content.startsWith("<%--\n" + copyright)) {
+
+				processErrorMessage(
+					fileName, "File must start with copyright: " + fileName);
+			}
+		}
+		else if (!content.startsWith(copyright) &&
+				 !content.startsWith("<%--\n" + copyright)) {
+
+			processErrorMessage(
+				fileName, "File must start with copyright: " + fileName);
 		}
 
 		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {

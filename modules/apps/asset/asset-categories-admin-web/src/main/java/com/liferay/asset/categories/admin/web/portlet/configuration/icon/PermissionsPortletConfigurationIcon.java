@@ -47,7 +47,7 @@ public class PermissionsPortletConfigurationIcon
 
 		try {
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, "com.liferay.asset.kernel",
+				StringPool.BLANK, "com.liferay.asset",
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getSiteGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,

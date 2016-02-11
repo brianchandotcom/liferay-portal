@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"resource.name=com.liferay.journal"},
+	property = {"resource.name=" + JournalPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class JournalPermission extends BaseResourcePermissionChecker {

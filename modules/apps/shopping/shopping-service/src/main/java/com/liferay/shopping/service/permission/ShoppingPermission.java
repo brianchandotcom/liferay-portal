@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true, property = {"resource.name=com.liferay.shopping"},
+	immediate = true,
+	property = {"resource.name= " + ShoppingPermission.RESOURCE_NAME},
 	service = ShoppingPermission.class
 )
 public class ShoppingPermission {

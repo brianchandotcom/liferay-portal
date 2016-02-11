@@ -46,7 +46,7 @@ public class PermissionsPortletConfigurationIcon
 
 		try {
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, "com.liferay.document.library.kernel",
+				StringPool.BLANK, "com.liferay.document.library",
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,

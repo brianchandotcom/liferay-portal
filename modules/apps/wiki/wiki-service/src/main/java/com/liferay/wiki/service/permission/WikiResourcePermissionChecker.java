@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, property = {"resource.name=com.liferay.wiki"})
+@Component(
+	immediate = true,
+	property = {"resource.name=" + WikiResourcePermissionChecker.RESOURCE_NAME}
+)
 public class WikiResourcePermissionChecker
 	implements ResourcePermissionChecker {
 

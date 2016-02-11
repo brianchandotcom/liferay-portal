@@ -37,7 +37,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="ratings" />
 
-<p><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
+<p class="text-muted"><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id="ratingsSettingsContainer">
 
@@ -48,9 +48,9 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
-		<p>
-			<strong><%= PortalUtil.getPortletTitle(portlet, application, locale) %></strong>
-		</p>
+		<h4 class="text-default">
+			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+		</h4>
 
 		<%
 		Map<String, RatingsType> ratingsTypeMap = groupRatingsTypeMaps.get(portletId);

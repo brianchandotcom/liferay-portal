@@ -54,20 +54,6 @@ body {
 			}
 		}
 
-		.nav > li {
-			& > a {
-				@include media-query(null, $screen-xs-max) {
-					border-bottom: 1px solid #E1E1E1;
-				}
-			}
-
-			&:last-child > a {
-				@include media-query(null, $screen-xs-max) {
-					border-bottom: none;
-				}
-			}
-		}
-
 		.navbar-blank > li {
 			& > a {
 				color: $solid-color;
@@ -76,6 +62,18 @@ body {
 			&:hover, &.hover, &.active, .dropdown-menu .active {
 				& > a {
 					color: #000;
+				}
+			}
+		}
+
+		@include media-query(null, $screen-xs-max) {
+			.nav > li {
+				> a {
+					border-bottom: 1px solid #E1E1E1;
+				}
+
+				&:last-child > a {
+					border-bottom-width: 0;
 				}
 			}
 		}

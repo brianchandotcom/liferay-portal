@@ -572,18 +572,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			incompleteLayoutRevision.getCss(), serviceContext);
 	}
 
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		super.processAction(actionRequest, actionResponse);
-
-		MultiSessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
-	}
-
 	public void resetCustomizationView(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -816,6 +804,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 					serviceContext);
 			}
 		}
+	}
+
+	@Override
+	protected boolean isAlwaysSendRedirect() {
+		return true;
 	}
 
 	@Override

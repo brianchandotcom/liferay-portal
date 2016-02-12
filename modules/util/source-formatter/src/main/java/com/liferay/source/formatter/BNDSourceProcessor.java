@@ -67,6 +67,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = sortDefinitions(content);
 
+		content = BNDImportsFormatter.formatBNDImports(content);
+
 		return trimContent(content, false);
 	}
 

@@ -66,13 +66,38 @@
 	</command>
 
 	<command name="ValidateCannotStealAdminAccount" priority="4">
-		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.UserServiceUtil&amp;serviceMethodName=updateStatus&amp;serviceParameters=[userId,status]&amp;userId=10202&amp;status=6&amp;p_auth=" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
 
-		<execute macro="Api#gotoPAuthURL" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
 
-		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="companyId" />
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Api#gotoPAuthURL">
+			<var name="url" value="http://localhost:8080/api/jsonws/user/update-status/user-id/20250/status/6?p_auth=" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="{&quot;exception&quot;:&quot;User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;throwable&quot;:&quot;com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission: User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;error&quot;:{&quot;message&quot;:&quot;User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;type&quot;:&quot;com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission&quot;}}" />
+
+		<execute function="AssertConsoleTextPresent" value1="User  must have DELETE permission for com.liferay.portal.kernel.model.User" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">

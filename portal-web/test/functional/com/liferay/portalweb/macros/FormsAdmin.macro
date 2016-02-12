@@ -110,13 +110,6 @@
 		</execute>
 	</command>
 
-	<command name="viewTableEntryNotPresent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
-	</command>
-
 	<command name="viewForm">
 		<var name="key_formName" value="${formName}" />
 
@@ -131,19 +124,19 @@
 		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 	</command>
 
-	<command name="viewFormTableEntry">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
-	</command>
-
 	<command name="viewFormIcon">
 		<var name="key_formName" value="${formName}" />
 
 		<execute function="AssertElementPresent" locator1="FormsAdmin#FORM_ICON_DISPLAY_THUMBNAIL" />
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ICON_DISPLAY_NAME" value1="${formName}" />
+	</command>
+
+	<command name="viewFormTableEntry">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
 	</command>
 
 	<command name="viewNoFormEntries">
@@ -184,6 +177,13 @@
 		<execute macro="FormFields#viewSelectValue">
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
+	</command>
+
+	<command name="viewTableEntryNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
 	</command>
 
 	<command name="viewTextEntry">

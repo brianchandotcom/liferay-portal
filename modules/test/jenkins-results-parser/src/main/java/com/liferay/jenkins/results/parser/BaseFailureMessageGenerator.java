@@ -43,9 +43,7 @@ public abstract class BaseFailureMessageGenerator
 			start = consoleOutput.indexOf("\n", start);
 		}
 
-		return "<pre>" +
-			JenkinsResultsParserUtil.fixJSON(
-				consoleOutput.substring(start, end)) + "</pre>";
+		return "<pre>" + consoleOutput.substring(start, end) + "</pre>";
 	}
 
 	protected int getSnippetStart(String consoleOutput, int end) {

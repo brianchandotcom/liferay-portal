@@ -1297,13 +1297,7 @@ public class JavaClass {
 		JavaTerm previousJavaTerm, JavaTerm javaTerm,
 		List<String> javaTermSortExcludes) {
 
-		if (_fileName.endsWith("Configuration.java") &&
-			_classContent.contains("@Meta.OCD(")) {
-
-			return;
-		}
-
-		if (previousJavaTerm == null) {
+		if ((previousJavaTerm == null) || _content.contains("@Meta.OCD(")) {
 			return;
 		}
 

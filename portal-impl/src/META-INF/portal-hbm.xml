@@ -64,9 +64,9 @@
 	<import class="com.liferay.portal.kernel.model.LayoutTemplate" />
 	<import class="com.liferay.portal.kernel.model.ListType" />
 	<import class="com.liferay.portal.kernel.model.MembershipRequest" />
-	<import class="com.liferay.portal.kernel.model.Organization" />
 	<import class="com.liferay.portal.kernel.model.OrgGroupRole" />
 	<import class="com.liferay.portal.kernel.model.OrgLabor" />
+	<import class="com.liferay.portal.kernel.model.Organization" />
 	<import class="com.liferay.portal.kernel.model.PasswordPolicy" />
 	<import class="com.liferay.portal.kernel.model.PasswordPolicyRel" />
 	<import class="com.liferay.portal.kernel.model.PasswordTracker" />

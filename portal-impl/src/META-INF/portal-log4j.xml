@@ -196,6 +196,14 @@
 		<priority value="DEBUG" />
 	</category>
 
+	<category name="com.liferay.portal.events.LogSessionIdAction">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="com.liferay.portal.events.LogThreadCountAction">
+		<priority value="DEBUG" />
+	</category>
+
 	<category name="com.liferay.portal.events.LoginPostAction">
 		<priority value="ERROR" />
 	</category>
@@ -210,14 +218,6 @@
 
 	<category name="com.liferay.portal.events.LogoutPreAction">
 		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.events.LogSessionIdAction">
-		<priority value="DEBUG" />
-	</category>
-
-	<category name="com.liferay.portal.events.LogThreadCountAction">
-		<priority value="DEBUG" />
 	</category>
 
 	<category name="com.liferay.portal.events.ServicePreAction">
@@ -284,8 +284,16 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
 		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.model.Image">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.kernel.portlet.InvokerPortlet">
@@ -302,10 +310,6 @@
 
 	<category name="com.liferay.portal.kernel.process.LoggingOutputProcessor">
 		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator">
-		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.kernel.resiliency">
@@ -340,12 +344,24 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.servlet.ServletRequestUtil">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.servlet.ServletResponseUtil">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
 		<priority value="FATAL" />
 	</category>
 
 	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper">
 		<priority value="FATAL" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener">
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.kernel.upgrade">
@@ -372,22 +388,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.model.Image">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.kernel.servlet.ServletRequestUtil">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.kernel.servlet.ServletResponseUtil">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.lar">
 		<priority value="ERROR" />
 	</category>
@@ -408,12 +408,12 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.plugin.PluginPackageUtil">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.patcher.PatcherImpl">
 		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.portal.plugin.PluginPackageUtil">
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.pop">
@@ -560,15 +560,15 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security.pacl.checker.SQLChecker">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.pacl.checker.SecurityChecker">
 		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.SocketChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.SQLChecker">
 		<priority value="ERROR" />
 	</category>
 
@@ -868,12 +868,12 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.util.PortalInstances">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.util.PortalImpl">
 		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.util.PortalInstances">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.util.PropsUtil">
@@ -896,11 +896,11 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.webserver.WebServerServlet">
+	<category name="com.liferay.portal.webdav">
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.webdav">
+	<category name="com.liferay.portal.webserver.WebServerServlet">
 		<priority value="ERROR" />
 	</category>
 
@@ -1132,11 +1132,11 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.commons.digester">
+	<category name="org.apache.commons.beanutils">
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.commons.beanutils">
+	<category name="org.apache.commons.digester">
 		<priority value="ERROR" />
 	</category>
 

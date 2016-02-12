@@ -89,6 +89,10 @@ body {
 			border-bottom-width: 1px;
 			border-color: #D6DCE2;
 			margin-top: 2px;
+
+			@include media-query(null, $screen-xs-max) {
+				border-width: 0;
+			}
 		}
 
 		.search-select {

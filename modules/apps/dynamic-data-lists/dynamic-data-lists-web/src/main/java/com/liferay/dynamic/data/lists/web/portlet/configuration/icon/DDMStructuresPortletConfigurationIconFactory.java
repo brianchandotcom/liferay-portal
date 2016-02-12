@@ -15,17 +15,14 @@
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -36,33 +33,18 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIconFactory.class
 )
 public class DDMStructuresPortletConfigurationIconFactory
-	extends BaseJSPPortletConfigurationIconFactory {
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return new DDMStructuresPortletConfigurationIcon(
-			getServletContext(), getJspPath(), portletRequest);
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/configuration/icon/structures.jsp";
+		return new DDMStructuresPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
 		return 102;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 }

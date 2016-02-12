@@ -4,7 +4,6 @@
 	<var name="ddlListName" value="List Name" />
 
 	<command name="_add">
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
@@ -16,8 +15,6 @@
 				<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="_select">
@@ -60,10 +57,8 @@
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="IFrame#COPY_STRUCTURE" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDataDefinitionCopyName}" />
@@ -87,19 +82,14 @@
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_2" />
-
 		<execute macro="DDLDataDefinition#viewName">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
@@ -115,18 +105,14 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextNotPresent" value1="${ddlDataDefinitionName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteNoCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
@@ -136,14 +122,11 @@
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The structure cannot be deleted because it is required by one or more structure links." />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
@@ -154,8 +137,6 @@
 		<execute macro="DDLDataDefinition#_showDetails" />
 
 		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPermissionsCP">
@@ -168,8 +149,6 @@
 	</command>
 
 	<command name="save">
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
-
 		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -177,8 +156,6 @@
 		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
@@ -224,8 +201,6 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
-
 		<if>
 			<not>
 				<isset var="ddlDataDefinitionName" />
@@ -265,13 +240,12 @@
 	<command name="viewCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
-
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${ddlDataDefinitionName}" />
 
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlDataDefinitionName}" />
+
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
 
 		<if>
@@ -291,8 +265,6 @@
 				<execute function="AssertElementPresent" locator1="DDMEditStructure#FORM_FIELD" value1="${fieldFieldLabel}" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewName">

@@ -30,6 +30,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(groupId));
+
+StructureSearch structureSearch = new StructureSearch(renderRequest, portletURL);
+
+OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
+
+structureSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
+structureSearch.setOrderByComparator(orderByComparator);
+structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 %>
 
 <c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
@@ -51,30 +59,14 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 
-	<%
-	String orderByCol = ParamUtil.getString(request, "orderByCol");
-	String orderByType = ParamUtil.getString(request, "orderByType");
-
-	if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-		portalPreferences.setValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", orderByCol);
-		portalPreferences.setValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
-	}
-	else {
-		orderByCol = portalPreferences.getValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "id");
-		orderByType = portalPreferences.getValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
-	}
-
-	OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
-	%>
-
 	<c:if test="<%= showToolbar %>">
 		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>
 
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+			<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
+			<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
 			<liferay-util:param name="searchContainerId" value="ddmStructures" />
 		</liferay-util:include>
 	</c:if>
@@ -82,11 +74,8 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmStructures"
-			orderByCol="<%= orderByCol %>"
-			orderByComparator="<%= orderByComparator %>"
-			orderByType="<%= orderByType %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
+			searchContainer="<%= structureSearch %>"
 		>
 
 			<liferay-ui:search-container-results>

@@ -51,6 +51,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 TemplateSearch templateSearch = new TemplateSearch(renderRequest, portletURL);
 
+OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
+
+templateSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
+templateSearch.setOrderByComparator(orderByComparator);
+templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
+
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
 %>
 
@@ -67,22 +73,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
-
-	<%
-	String orderByCol = ParamUtil.getString(request, "orderByCol");
-	String orderByType = ParamUtil.getString(request, "orderByType");
-
-	if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-		portalPreferences.setValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", orderByCol);
-		portalPreferences.setValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
-	}
-	else {
-		orderByCol = portalPreferences.getValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "id");
-		orderByType = portalPreferences.getValue(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
-	}
-
-	OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(orderByCol, orderByType);
-	%>
 
 	<c:if test="<%= showHeader %>">
 		<c:choose>
@@ -113,9 +103,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmTemplates"
-			orderByCol="<%= orderByCol %>"
-			orderByComparator="<%= orderByComparator %>"
-			orderByType="<%= orderByType %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= templateSearch %>"
 		>

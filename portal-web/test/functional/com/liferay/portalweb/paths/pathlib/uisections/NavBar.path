@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_TITLE</td>
+	<td>//a[@title='${key_assetTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE_SITES</td>
 	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
 	<td></td>

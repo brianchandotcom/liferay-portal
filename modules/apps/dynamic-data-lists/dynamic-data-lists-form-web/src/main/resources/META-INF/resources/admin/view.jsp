@@ -25,14 +25,11 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
-String orderByCol = ddlFormAdminDisplayContext.getOrderByCol();
-String orderByType = ddlFormAdminDisplayContext.getOrderByType();
+OrderByComparator<DDLRecordSet> orderByComparator = DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(ddlFormAdminDisplayContext.getOrderByCol(), ddlFormAdminDisplayContext.getOrderByType());
 
-OrderByComparator<DDLRecordSet> orderByComparator = DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
-
-recordSetSearch.setOrderByCol(orderByCol);
+recordSetSearch.setOrderByCol(ddlFormAdminDisplayContext.getOrderByCol());
 recordSetSearch.setOrderByComparator(orderByComparator);
-recordSetSearch.setOrderByType(orderByType);
+recordSetSearch.setOrderByType(ddlFormAdminDisplayContext.getOrderByType());
 
 if (recordSetSearch.isSearch()) {
 	recordSetSearch.setEmptyResultsMessage("no-forms-were-found");

@@ -66,18 +66,15 @@ headerNames.add(StringPool.BLANK);
 
 SearchContainer recordSearchContainer = new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found", HtmlUtil.escape(ddmStructure.getName(locale)), false));
 
-String orderByCol = ddlViewRecordsDisplayContext.getOrderByCol();
-String orderByType = ddlViewRecordsDisplayContext.getOrderByType();
-
 if (!user.isDefaultUser()) {
 	recordSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 }
 
-OrderByComparator<DDLRecord> orderByComparator = DDLPortletUtil.getDDLRecordOrderByComparator(orderByCol, orderByType);
+OrderByComparator<DDLRecord> orderByComparator = DDLPortletUtil.getDDLRecordOrderByComparator(ddlViewRecordsDisplayContext.getOrderByCol(), ddlViewRecordsDisplayContext.getOrderByType());
 
-recordSearchContainer.setOrderByCol(orderByCol);
+recordSearchContainer.setOrderByCol(ddlViewRecordsDisplayContext.getOrderByCol());
 recordSearchContainer.setOrderByComparator(orderByComparator);
-recordSearchContainer.setOrderByType(orderByType);
+recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType());
 %>
 
 <portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addRecordURL">

@@ -74,6 +74,7 @@ page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurat
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper" %><%@
+page import="com.liferay.dynamic.data.mapping.web.display.context.DDMDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
@@ -90,8 +91,6 @@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
@@ -143,8 +142,6 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
@@ -174,6 +171,7 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
+DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(renderRequest);
 DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
 
 DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmWebRequestHelper.getDDMGroupServiceConfiguration();

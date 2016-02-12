@@ -150,6 +150,20 @@ public class DDMDataProviderDisplayContext {
 		return _ddmDataProviderTracker.getDDMDataProviderTypes();
 	}
 
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(
+			_renderRequest, "orderByCol", "modified-date");
+
+		return orderByCol;
+	}
+
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
+
+		return orderByType;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 

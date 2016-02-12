@@ -141,15 +141,45 @@ public class DDLFormViewRecordsDisplayContext {
 	}
 
 	public String getOrderByCol() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_liferayPortletRequest);
+
 		String orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol", "modified-date");
+			_liferayPortletRequest, "orderByCol");
+
+		if (Validator.isNull(orderByCol)) {
+			orderByCol = portalPreferences.getValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"view-entries-order-by-col", "modified-date");
+		}
+		else {
+			portalPreferences.setValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"view-entries-order-by-col", orderByCol);
+		}
 
 		return orderByCol;
 	}
 
 	public String getOrderByType() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_liferayPortletRequest);
+
 		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType", "asc");
+			_liferayPortletRequest, "orderByType");
+
+		if (Validator.isNull(orderByType)) {
+			orderByType = portalPreferences.getValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"view-entries-order-by-type", "asc");
+		}
+		else {
+			portalPreferences.setValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"view-entries-order-by-type", orderByType);
+		}
 
 		return orderByType;
 	}
@@ -193,39 +223,13 @@ public class DDLFormViewRecordsDisplayContext {
 		_recordSearchContainer = new RecordSearch(
 			_liferayPortletRequest, portletURL, headerNames);
 
-		String orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_liferayPortletRequest);
-
-		if (Validator.isNull(orderByCol)) {
-			orderByCol = portalPreferences.getValue(
-				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-				"view-entries-order-by-col", "modified-date");
-			orderByType = portalPreferences.getValue(
-				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-				"view-entries-order-by-type", "asc");
-		}
-		else {
-			portalPreferences.setValue(
-				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-				"view-entries-order-by-col", orderByCol);
-			portalPreferences.setValue(
-				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-				"view-entries-order-by-type", orderByType);
-		}
-
 		OrderByComparator<DDLRecord> orderByComparator =
 			DDLFormAdminPortletUtil.getRecordOrderByComparator(
-				orderByCol, orderByType);
+				getOrderByCol(), getOrderByType());
 
-		_recordSearchContainer.setOrderByCol(orderByCol);
+		_recordSearchContainer.setOrderByCol(getOrderByCol());
 		_recordSearchContainer.setOrderByComparator(orderByComparator);
-		_recordSearchContainer.setOrderByType(orderByType);
+		_recordSearchContainer.setOrderByType(getOrderByType());
 
 		updateSearchContainerResults();
 	}

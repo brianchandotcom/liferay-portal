@@ -63,4 +63,9 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
 
+	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
+	}
+
 }

@@ -12,8 +12,6 @@
 	</command>
 
 	<command name="addField">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
@@ -35,8 +33,6 @@
 
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFieldFormTemplateSpecific">

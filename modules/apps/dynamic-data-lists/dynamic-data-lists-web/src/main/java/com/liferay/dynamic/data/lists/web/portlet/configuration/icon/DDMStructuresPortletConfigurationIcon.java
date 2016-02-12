@@ -15,35 +15,60 @@
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import javax.portlet.PortletRequest;
-
-import javax.servlet.ServletContext;
+import javax.portlet.PortletURL;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDMStructuresPortletConfigurationIcon
-	extends BaseJSPPortletConfigurationIcon {
+	extends BasePortletConfigurationIcon {
 
 	public DDMStructuresPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest) {
 
-		super(servletContext, jspPath, portletRequest);
+		super(portletRequest);
 	}
 
 	@Override
 	public String getMessage() {
-		return "data-definitions";
+		return "manage-data-definitions";
 	}
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDisplay.getId());
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest,
+			PortletProviderUtil.getPortletId(
+				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		portletURL.setParameter(
+			"refererPortletName", DDLPortletKeys.DYNAMIC_DATA_LISTS);
+		portletURL.setParameter(
+			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
+		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+
+		return portletURL.toString();
 	}
 
 	@Override

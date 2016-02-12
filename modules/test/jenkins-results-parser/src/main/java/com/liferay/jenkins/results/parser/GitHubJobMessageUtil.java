@@ -151,7 +151,7 @@ public class GitHubJobMessageUtil {
 					javacOutputFileContent.length() - 5000);
 			}
 
-			sb.append(JenkinsResultsParserUtil.fixJSON(javacOutputFileContent));
+			sb.append(javacOutputFileContent);
 			sb.append("</pre>");
 		}
 

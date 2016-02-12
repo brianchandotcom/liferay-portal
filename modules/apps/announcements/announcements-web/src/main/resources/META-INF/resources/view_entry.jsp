@@ -80,7 +80,7 @@ if (entry.getPriority() > 0) {
 						</c:otherwise>
 					</c:choose>
 
-					<c:if test="<%= entry.isAlert() %>">
+					<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
 						<span class="badge badge-danger badge-sm">
 							<liferay-ui:message key="important" />
 						</span>

@@ -68,9 +68,7 @@ if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 					</c:if>
 				</h4>
 
-				<div class="<%= (flagValue == AnnouncementsFlagConstants.HIDDEN) ? "hide" : StringPool.BLANK %> entry-scope">
-					<%@ include file="/entry_scope.jspf" %>
-				</div>
+				<%@ include file="/entry_scope.jspf" %>
 			</div>
 
 			<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
@@ -81,7 +79,7 @@ if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 		</div>
 	</div>
 
-	<div class="entry-content <%= (flagValue == AnnouncementsFlagConstants.HIDDEN) ? "hide" : StringPool.BLANK %> panel-body">
+	<div class="entry-content panel-body">
 		<%= entry.getContent() %>
 	</div>
 </div>

@@ -51,9 +51,9 @@ public interface AnnouncementsDisplayContext extends DisplayContext {
 
 	public boolean isScopeUserGroupSelected(UserGroup userGroup);
 
-	public boolean isShowEntries();
-
 	public boolean isShowManageEntries();
+
+	public boolean isShowNewEntries();
 
 	public boolean isShowPreview();
 

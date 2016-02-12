@@ -32,10 +32,10 @@ portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
 </c:if>
 
 <c:choose>
-	<c:when test="<%= announcementsDisplayContext.isShowEntries() %>">
-		<%@ include file="/view_entries.jspf" %>
-	</c:when>
 	<c:when test="<%= announcementsDisplayContext.isShowManageEntries() %>">
 		<%@ include file="/view_manage_entries.jspf" %>
 	</c:when>
+	<c:otherwise>
+		<%@ include file="/view_entries.jspf" %>
+	</c:otherwise>
 </c:choose>

@@ -129,7 +129,7 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1Names() {
-		String tabs1Names = "entries";
+		String tabs1Names = "new,previous";
 
 		if (AnnouncementsEntryPermission.contains(
 				_announcementsRequestHelper.getPermissionChecker(),
@@ -203,17 +203,17 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public boolean isShowEntries() {
-		String tabs1 = _announcementsRequestHelper.getTabs1();
-
-		return tabs1.equals("entries");
-	}
-
-	@Override
 	public boolean isShowManageEntries() {
 		String tabs1 = _announcementsRequestHelper.getTabs1();
 
 		return tabs1.equals("manage-entries");
+	}
+
+	@Override
+	public boolean isShowNewEntries() {
+		String tabs1 = _announcementsRequestHelper.getTabs1();
+
+		return tabs1.equals("new");
 	}
 
 	@Override

@@ -130,10 +130,10 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, with no direct replacement</description>
 		<name>icon-back</name>
 		<tag-class>com.liferay.taglib.portletext.IconBackTag</tag-class>
 		<body-content>JSP</body-content>
+		<description>Deprecated as of 7.0.0, with no direct replacement</description>
 	</tag>
 	<tag>
 		<name>icon-options</name>

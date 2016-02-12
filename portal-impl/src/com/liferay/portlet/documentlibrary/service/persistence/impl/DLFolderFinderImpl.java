@@ -250,19 +250,12 @@ public class DLFolderFinderImpl
 
 			qPos.add(groupId);
 
-			if (showHiddenMountFolders) {
-				if (!includeMountFolders) {
-					qPos.add(false);
-				}
+			if (!showHiddenMountFolders || !includeMountFolders) {
+				qPos.add(false);
 			}
-			else {
-				if (includeMountFolders) {
-					qPos.add(false);
-				}
-				else {
-					qPos.add(false);
-					qPos.add(false);
-				}
+
+			if (!showHiddenMountFolders && !includeMountFolders) {
+				qPos.add(false);
 			}
 
 			qPos.add(queryDefinition.getStatus());
@@ -507,19 +500,12 @@ public class DLFolderFinderImpl
 
 			qPos.add(groupId);
 
-			if (showHiddenMountFolders) {
-				if (!includeMountFolders) {
-					qPos.add(false);
-				}
+			if (!showHiddenMountFolders || !includeMountFolders) {
+				qPos.add(false);
 			}
-			else {
-				if (includeMountFolders) {
-					qPos.add(false);
-				}
-				else {
-					qPos.add(false);
-					qPos.add(false);
-				}
+
+			if (!showHiddenMountFolders && !includeMountFolders) {
+				qPos.add(false);
 			}
 
 			qPos.add(queryDefinition.getStatus());

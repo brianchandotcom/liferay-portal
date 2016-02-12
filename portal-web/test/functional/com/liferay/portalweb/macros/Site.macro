@@ -605,8 +605,6 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertClick" locator1="SiteSettingsSiteURL#SITE_URL_LABEL" value1="Site URL" />
-
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
 				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>

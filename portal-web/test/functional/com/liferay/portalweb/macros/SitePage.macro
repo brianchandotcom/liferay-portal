@@ -355,11 +355,10 @@
 	<command name="viewChildPage">
 		<var name="key_page" value="${sitePageName}" />
 
+		<execute macro="ProductMenuHelper#expandPageTree" />
+
 		<execute function="AssertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
-
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_ARROW_2" />
-
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PAGES" value1="${sitePageName}" />
 	</command>
 
 	<command name="viewChildPG">

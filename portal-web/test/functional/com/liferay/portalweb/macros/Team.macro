@@ -81,7 +81,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="Button#ADD_TEAM_MEMBERS" value1="Add Team Members" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

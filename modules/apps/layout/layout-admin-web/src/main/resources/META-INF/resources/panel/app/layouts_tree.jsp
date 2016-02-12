@@ -189,7 +189,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="delete" unicode="<%= true %>" />')"><aui:icon image="trash" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="delete-x" /></span></a>
 	</liferay-util:buffer>
 
-	<liferay-ui:success key="layoutAdded" message="the-page-has-been-created-succesfully" targetContainer="#controlMenuAlertContainer" />
+	<liferay-ui:success key="layoutAdded" message="the-page-has-been-created-succesfully" targetNode="#controlMenuAlertsContainer" />
 
 	<c:if test="<%= layoutsTreeDisplayContext.isShowStagingProcessMessage() %>">
 		<div class="alert alert-default alert-dismissible" data-dismiss="alert" role="alert">

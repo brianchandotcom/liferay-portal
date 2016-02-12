@@ -157,8 +157,6 @@ AUI.add(
 							instance._customizationsHandle = null;
 						}
 
-						instance._manageCustomization.html(customizationString).toggleClass(CSS_ACTIVE);
-
 						var columns = A.all('.portlet-column');
 
 						columns.each(
@@ -172,8 +170,6 @@ AUI.add(
 								overlayMask.toggle();
 							}
 						);
-
-						event.halt();
 					},
 
 					_onPanelStateChange: function(event) {

@@ -55,11 +55,6 @@ public class CustomizationSettingsControlMenuEntry
 		"CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION";
 
 	@Override
-	public String getBodyJspPath() {
-		return "/control/menu/customization_settings_body.jsp";
-	}
-
-	@Override
 	public String getIconJspPath() {
 		return "/control/menu/customization_settings_icon.jsp";
 	}
@@ -78,7 +73,7 @@ public class CustomizationSettingsControlMenuEntry
 	}
 
 	@Override
-	public boolean includeBody(
+	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -94,7 +89,7 @@ public class CustomizationSettingsControlMenuEntry
 			_log.error(pe);
 		}
 
-		return super.includeBody(request, response);
+		return super.includeIcon(request, response);
 	}
 
 	@Override

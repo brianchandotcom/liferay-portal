@@ -237,17 +237,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			boolean showHiddenMountFolders = false;
-
-			try {
-				DLGroupServiceSettings dlGroupServiceSettings =
-					DLGroupServiceSettings.getInstance(groupId);
-
-				showHiddenMountFolders =
-					dlGroupServiceSettings.isShowHiddenMountFolders();
-			}
-			catch (PortalException pe) {
-			}
+			boolean showHiddenMountFolders = isShowHiddenMountFolders(groupId);
 
 			sql = updateSQL(
 				sql, folderId, includeMountFolders, showHiddenMountFolders);
@@ -322,6 +312,19 @@ public class DLFolderFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected boolean isShowHiddenMountFolders(long groupId) {
+		try {
+			DLGroupServiceSettings dlGroupServiceSettings =
+				DLGroupServiceSettings.getInstance(groupId);
+
+			return dlGroupServiceSettings.isShowHiddenMountFolders();
+		}
+		catch (PortalException pe) {
+		}
+
+		return false;
 	}
 
 	protected int doCountFE_ByG_F(
@@ -485,17 +488,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			boolean showHiddenMountFolders = false;
-
-			try {
-				DLGroupServiceSettings dlGroupServiceSettings =
-					DLGroupServiceSettings.getInstance(groupId);
-
-				showHiddenMountFolders =
-					dlGroupServiceSettings.isShowHiddenMountFolders();
-			}
-			catch (PortalException pe) {
-			}
+			boolean showHiddenMountFolders = isShowHiddenMountFolders(groupId);
 
 			sql = updateSQL(
 				sql, folderId, includeMountFolders, showHiddenMountFolders);

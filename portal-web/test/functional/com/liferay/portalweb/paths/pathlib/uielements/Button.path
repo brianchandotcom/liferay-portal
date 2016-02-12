@@ -454,6 +454,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN</td>
+	<td>//a[@data-qa-id='recycle-binButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE</td>
 	<td>//button[contains(.,'Remove')]</td>
 	<td></td>

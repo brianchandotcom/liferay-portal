@@ -139,6 +139,24 @@ public class LoggerElement {
 		return null;
 	}
 
+	public LoggerElement loggerElement(String name, String className) {
+		List<LoggerElement> loggerElements = loggerElements(name);
+
+		for (LoggerElement loggerElement : loggerElements) {
+			String childLoggerElementClassName = loggerElement.getClassName();
+
+			List<String> childLoggerElementClassNames =
+				Arrays.asList(
+					StringUtil.split(childLoggerElementClassName, " "));
+
+			if (childLoggerElementClassNames.contains(className)) {
+				return loggerElement;
+			}
+		}
+
+		return null;
+	}
+
 	public List<LoggerElement> loggerElements() {
 		return _childLoggerElements;
 	}

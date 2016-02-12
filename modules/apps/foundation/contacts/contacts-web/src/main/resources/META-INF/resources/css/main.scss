@@ -35,10 +35,6 @@ $section-header-bg: #CCE6F7;
 	}
 
 	.contact-group-filter {
-		font-size: 14px;
-		min-height: 31px;
-		padding: 5px;
-
 		.contact-group-filter-select {
 			width: 224px;
 		}
@@ -144,7 +140,6 @@ $section-header-bg: #CCE6F7;
 	.contacts-result, .my-contacts {
 		.lfr-contact-grid-item {
 			cursor: pointer;
-			height: 35px;
 			padding: 5px;
 
 			.lfr-contact-thumb {
@@ -164,6 +159,7 @@ $section-header-bg: #CCE6F7;
 		bottom: 0;
 		overflow-x: hidden;
 		overflow-y: scroll;
+		padding-right: 0;
 		position: absolute;
 		top: 40px;
 
@@ -285,22 +281,11 @@ $section-header-bg: #CCE6F7;
 			top: 0;
 			width: 250px;
 
-			.contacts-search {
-				border-bottom: 1px solid $border-color;
-				height: 31px;
-				padding: 4px 5px;
-
-				.search-input {
-					padding-right: 25px;
-					width: 208px;
-				}
-
-				.icon-search {
-					color: $border-color;
-					position: absolute;
-					right: 11px;
-					top: 11px;
-				}
+			.contacts-search .icon-search {
+				color: $border-color;
+				position: absolute;
+				right: 11px;
+				top: 11px;
 			}
 		}
 
@@ -391,9 +376,11 @@ $section-header-bg: #CCE6F7;
 		}
 	}
 
-	.layout.toolbar {
+	.toolbar {
 		border-bottom: 1px solid $border-color;
+		margin-left: 12px;
 		min-height: 31px;
+		width: 98%;
 
 		.add-contact {
 			float: right;
@@ -401,17 +388,13 @@ $section-header-bg: #CCE6F7;
 		}
 	}
 
-	.portlet .portlet-content {
-		padding: 0;
+	.portlet .portlet-content .portlet-body {
+		form {
+			margin: 0;
+		}
 
-		.portlet-body {
-			form {
-				margin: 0;
-			}
-
-			.lfr-app-column-view {
-				border-width: 0;
-			}
+		.lfr-app-column-view {
+			border-width: 0;
 		}
 	}
 

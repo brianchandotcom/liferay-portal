@@ -7184,6 +7184,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<isset property="portal.version" />
 			<then>
 				<antcall target="rebuild-legacy-database" />
+
+				<antcall target="upgrade-legacy-database" />
 			</then>
 			<else>
 				<antcall target="rebuild-database" inheritAll="false" />
@@ -7577,6 +7579,66 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" target="test-unit" inheritAll="false" />
 
 		<ant dir="util-java" target="test-unit" inheritAll="false" />
+	</target>
+
+	<target name="upgrade-legacy-database">
+		<delete file="${liferay.home}/build-db-upgrade.xml" />
+		<delete file="${liferay.home}/db_upgrade_log" />
+		<delete file="${liferay.home}/portal-ext.properties" />
+
+		<copy
+			file="tools/db-upgrade/build.xml"
+			overwrite="true"
+			tofile="${liferay.home}/build-db-upgrade.xml"
+		/>
+
+		<replace file="${liferay.home}/build-db-upgrade.xml">
+			<replacetoken><![CDATA[		<path id="lib.classpath">
+			<fileset dir="lib" includes="*.jar" />
+		</path>]]></replacetoken>
+			<replacevalue expandproperties="true"><![CDATA[		<path id="lib.classpath">
+			<fileset dir="${app.server.dir}/lib" includes="*.jar" />
+			<fileset dir="${app.server.dir}/lib/ext" includes="*.jar" />
+			<fileset dir="${app.server.dir}/webapps/ROOT/WEB-INF/lib" includes="*.jar" />
+		</path>]]></replacevalue>
+		</replace>
+
+		<copy
+			file="portal-impl/src/portal-ext.properties"
+			overwrite="true"
+			tofile="${liferay.home}/portal-ext.properties"
+		/>
+
+		<echo append="true" file="${liferay.home}/portal-ext.properties">
+
+index.read.only=true</echo>
+
+
+		<record action="start" name="${liferay.home}/db_upgrade_log" />
+
+		<parallel>
+			<daemons>
+				<ant antfile="build-db-upgrade.xml" dir="${liferay.home}" target="upgrade" />
+			</daemons>
+			<sequential>
+				<waitfor>
+					<resourcecontains
+						resource="${liferay.home}/db_upgrade_log"
+						substring="Running modules upgrades. Connect to your Gogo Shell to check the status."
+					/>
+				</waitfor>
+
+				<execute>
+					{ echo "upgrade:list"; sleep 10; echo "exit"; sleep 1; echo "y"; } | telnet localhost 11311
+				</execute>
+			</sequential>
+		</parallel>
+
+		<record action="stop" name="${liferay.home}/db_upgrade_log" />
+
+		<delete file="${liferay.home}/build-db-upgrade.xml" />
+		<delete file="${liferay.home}/db_upgrade_log" />
+		<delete file="${liferay.home}/portal-ext.properties" />
 	</target>
 
 	<target name="wait-for-plugins-deployment">

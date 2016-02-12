@@ -89,54 +89,171 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			modelVar="backgroundTask"
 		>
 
-			<liferay-ui:search-container-column-text
-				cssClass="background-task-user-column"
-				name="user"
-			>
-				<liferay-ui:user-display
-					displayStyle="3"
-					showUserDetails="<%= false %>"
-					showUserName="<%= false %>"
-					userId="<%= backgroundTask.getUserId() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<%
+			String backgroundTaskName = backgroundTask.getName();
 
-			<liferay-ui:search-container-column-text
-				name="title"
-			>
+			if (backgroundTask.getGroupId() == liveGroupId) {
+				backgroundTaskName = LanguageUtil.get(request, "initial-publication");
+			}
 
-				<%
-				String backgroundTaskName = backgroundTask.getName();
+			if (backgroundTaskName.equals(StringPool.BLANK)) {
+				backgroundTaskName = LanguageUtil.get(request, "untitled");
+			}
+			%>
 
-				if (backgroundTask.getGroupId() == liveGroupId) {
-					backgroundTaskName = LanguageUtil.get(request, "initial-publication");
-				}
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
+							userId="<%= backgroundTask.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 
-				if (backgroundTaskName.equals(StringPool.BLANK)) {
-					backgroundTaskName = LanguageUtil.get(request, "untitled");
-				}
-				%>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
-				<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
-			</liferay-ui:search-container-column-text>
+						<%
+						User backgroundTaskUser = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="background-task-status-column"
-				name="status"
-				path="/processes_list/publish_process_message.jsp"
-			/>
+						Date createDate = backgroundTask.getCreateDate();
 
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				orderable="<%= true %>"
-				value="<%= backgroundTask.getCreateDate() %>"
-			/>
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
 
-			<liferay-ui:search-container-column-date
-				name="completion-date"
-				orderable="<%= true %>"
-				value="<%= backgroundTask.getCompletionDate() %>"
-			/>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUser.getFullName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+						</h6>
+
+						<h5>
+
+							<%= HtmlUtil.escape(backgroundTaskName) %>
+
+						</h5>
+
+						<c:if test="<%= backgroundTask.isInProgress() %>">
+
+							<%
+							BackgroundTaskStatus backgroundTaskStatus = BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(backgroundTask.getBackgroundTaskId());
+							%>
+
+							<c:if test="<%= backgroundTaskStatus != null %>">
+
+								<%
+								Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+								String cmd = (String)taskContextMap.get(Constants.CMD);
+
+								int percentage = 100;
+
+								long allModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+								long allPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+								long currentModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCountersTotal"));
+								long currentPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+
+								long allProgressBarCountersTotal = allModelAdditionCountersTotal + allPortletAdditionCounter;
+								long currentProgressBarCountersTotal = currentModelAdditionCountersTotal + currentPortletAdditionCounter;
+
+								if (allProgressBarCountersTotal > 0) {
+									int base = 100;
+
+									String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
+
+									if (phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+										base = 50;
+									}
+
+									percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * base);
+								}
+								%>
+
+								<div class="active progress progress-striped progress-xs">
+									<div class="progress-bar" style="width: <%= percentage %>%;">
+										<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
+											<%= percentage + StringPool.PERCENT %>
+										</c:if>
+									</div>
+								</div>
+
+								<%
+								String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
+								String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
+								%>
+
+								<c:choose>
+									<c:when test="<%= Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
+										<div class="progress-current-item">
+											<strong><liferay-ui:message key="please-wait-as-the-publication-processes-on-the-remote-site" /></strong>
+										</div>
+									</c:when>
+									<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+										<div class="progress-current-item">
+											<strong><liferay-ui:message key="publishing" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
+										</div>
+									</c:when>
+								</c:choose>
+							</c:if>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
+
+							<%
+							long[] expandedBackgroundTaskIds = StringUtil.split(GetterUtil.getString(SessionClicks.get(request, "com.liferay.exportimport.web_backgroundTaskIds", null)), 0L);
+							%>
+
+							<a class="details-link toggler-header-<%= ArrayUtil.contains(expandedBackgroundTaskIds, backgroundTask.getBackgroundTaskId()) ? "expanded" : "collapsed" %>" data-persist-id="<%= backgroundTask.getBackgroundTaskId() %>" href="#"><liferay-ui:message key="details" /></a>
+
+							<div class="background-task-status-message toggler-content-<%= ArrayUtil.contains(expandedBackgroundTaskIds, backgroundTask.getBackgroundTaskId()) ? "expanded" : "collapsed" %>">
+								<liferay-util:include page="/publish_process_message_task_details.jsp" servletContext="<%= application %>">
+									<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+								</liferay-util:include>
+							</div>
+						</c:if>
+
+						<h6 class="background-task-status-<%= BackgroundTaskConstants.getStatusLabel(backgroundTask.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(backgroundTask.getStatus()) %>">
+							<liferay-ui:message key="<%= backgroundTask.getStatusLabel() %>" />
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="background-task-user-column"
+						name="user"
+					>
+						<liferay-ui:user-display
+							displayStyle="3"
+							showUserDetails="<%= false %>"
+							showUserName="<%= false %>"
+							userId="<%= backgroundTask.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="background-task-status-column"
+						name="status"
+						path="/processes_list/publish_process_message.jsp"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="create-date"
+						orderable="<%= true %>"
+						value="<%= backgroundTask.getCreateDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="completion-date"
+						orderable="<%= true %>"
+						value="<%= backgroundTask.getCompletionDate() %>"
+					/>
+				</c:when>
+			</c:choose>
 
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -171,7 +288,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new PublishResultRowSplitter() %>" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new PublishResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>
 

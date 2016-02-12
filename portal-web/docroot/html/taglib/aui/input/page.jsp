@@ -167,6 +167,7 @@ boolean choiceField = checkboxField || radioField;
 			classPK="<%= _getClassPK(bean, classPK) %>"
 			classTypePK="<%= classTypePK %>"
 			ignoreRequestValue="<%= ignoreRequestValue %>"
+			showRequiredLabel="<%= showRequiredLabel %>"
 		/>
 	</c:when>
 	<c:when test='<%= (model != null) && type.equals("assetTags") %>'>

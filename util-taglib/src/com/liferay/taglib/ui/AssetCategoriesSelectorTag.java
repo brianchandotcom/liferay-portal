@@ -53,6 +53,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
 
+	public void setShowRequiredLabel(boolean showRequiredLabel) {
+		_showRequiredLabel = showRequiredLabel;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_className = null;
@@ -62,6 +66,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_groupIds = null;
 		_hiddenInput = "assetCategoryIds";
 		_ignoreRequestValue = false;
+		_showRequiredLabel = true;
 	}
 
 	@Override
@@ -89,6 +94,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:asset-categories-selector:ignoreRequestValue",
 			_ignoreRequestValue);
+		request.setAttribute(
+			"liferay-ui:asset-categories-selector:showRequiredLabel",
+			String.valueOf(_showRequiredLabel));
 	}
 
 	private static final String _PAGE =
@@ -101,5 +109,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
 	private boolean _ignoreRequestValue;
+	private boolean _showRequiredLabel;
 
 }

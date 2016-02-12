@@ -27,6 +27,7 @@ String curCategoryNames = StringPool.BLANK;
 long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-categories-selector:ignoreRequestValue"));
+boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-categories-selector:showRequiredLabel"), true);
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
 if (ArrayUtil.isEmpty(groupIds)) {
@@ -82,7 +83,7 @@ if (Validator.isNotNull(className)) {
 					(<%= vocabularyGroup.getDescriptiveName(locale) %>)
 				</c:if>
 
-				<c:if test="<%= vocabulary.isRequired(classNameId, classTypePK) %>">
+				<c:if test="<%= vocabulary.isRequired(classNameId, classTypePK) && showRequiredLabel %>">
 					<span class="icon-asterisk text-warning">
 						<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 					</span>

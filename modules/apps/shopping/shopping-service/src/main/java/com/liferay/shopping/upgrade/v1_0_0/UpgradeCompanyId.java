@@ -54,7 +54,7 @@ public class UpgradeCompanyId
 		sb.append("(select max(ShoppingItem.companyId) ");
 		sb.append("from ShoppingItem ");
 		sb.append("where ShoppingOrderItem.itemId = ");
-		sb.append("CAST_TEXT(ShoppingItem.itemId))");
+		sb.append("CAST_TEXT(ShoppingItem.itemId)) ");
 		sb.append("where ShoppingOrderItem.itemId not like '%|%' ");
 
 		runSQL(sb.toString());

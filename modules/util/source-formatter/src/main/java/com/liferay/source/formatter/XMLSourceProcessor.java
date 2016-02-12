@@ -1424,6 +1424,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			this(_NAME_ATTRIBUTE_DEFAULT);
 		}
 
+		public ElementComparator(boolean importPackage) {
+			this(_NAME_ATTRIBUTE_DEFAULT, importPackage);
+		}
+
 		public ElementComparator(String nameAttribute) {
 			this(nameAttribute, false);
 		}

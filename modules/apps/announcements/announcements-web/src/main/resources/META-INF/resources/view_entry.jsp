@@ -17,34 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = GetterUtil.getString(request.getAttribute("view_entry.jsp-className"));
 AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
 int flagValue = GetterUtil.getInteger(request.getAttribute("view_entry.jsp-flagValue"));
 
-boolean hiddenEntry = false;
-boolean readEntry = false;
-
-if (flagValue == AnnouncementsFlagConstants.HIDDEN) {
-	hiddenEntry = true;
-	readEntry = true;
-}
-else {
+if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 	try {
 		AnnouncementsFlagLocalServiceUtil.getFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
-
-		readEntry = true;
 	}
 	catch (NoSuchFlagException nsfe) {
 		AnnouncementsFlagLocalServiceUtil.addFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 	}
-}
-
-if (readEntry) {
-	className += " read";
-}
-
-if (entry.getPriority() > 0) {
-	className += " important";
 }
 %>
 
@@ -86,7 +68,7 @@ if (entry.getPriority() > 0) {
 					</c:if>
 				</h4>
 
-				<div class="<%= hiddenEntry ? "hide" : StringPool.BLANK %> entry-scope">
+				<div class="<%= (flagValue == AnnouncementsFlagConstants.HIDDEN) ? "hide" : StringPool.BLANK %> entry-scope">
 					<%@ include file="/entry_scope.jspf" %>
 				</div>
 			</div>
@@ -99,7 +81,7 @@ if (entry.getPriority() > 0) {
 		</div>
 	</div>
 
-	<div class="entry-content <%= hiddenEntry ? "hide" : StringPool.BLANK %> panel-body">
+	<div class="entry-content <%= (flagValue == AnnouncementsFlagConstants.HIDDEN) ? "hide" : StringPool.BLANK %> panel-body">
 		<%= entry.getContent() %>
 	</div>
 </div>

@@ -41,7 +41,7 @@
 
 			<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-			<execute function="AssertTextEquals" locator1="NavBar#PERMISSIONS" value1="Permissions" />
+			<execute function="AssertTextEquals" locator1="NavBar#SHARING" value1="Sharing" />
 
 			<execute function="SelectFrame" value1="relative=top" />
 

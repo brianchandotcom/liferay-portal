@@ -20,35 +20,32 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AppTemplatePortletConfigurationIcon
+public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public AppTemplatePortletConfigurationIcon(PortletRequest portletRequest) {
+	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
 	}
 
 	@Override
 	public String getMessage() {
-		return "app-templates";
+		return "permissions";
 	}
 
 	@Override
 	public String getURL() {
 		try {
-			String redirect = ParamUtil.getString(portletRequest, "redirect");
 			String returnToFullPageURL = ParamUtil.getString(
 				portletRequest, "returnToFullPageURL");
 
@@ -58,12 +55,15 @@ public class AppTemplatePortletConfigurationIcon
 					PortletConfiguration.CLASS_NAME,
 				PortletProvider.Action.VIEW);
 
-			portletURL.setParameter("mvcPath", "/edit_app_templates.jsp");
-			portletURL.setParameter("redirect", redirect);
+			portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
 			portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 			portletURL.setParameter(
 				"portletConfiguration", Boolean.TRUE.toString());
 			portletURL.setParameter("portletResource", portletDisplay.getId());
+			portletURL.setParameter(
+				"resourcePrimKey",
+				PortletPermissionUtil.getPrimaryKey(
+					themeDisplay.getPlid(), portletDisplay.getId()));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();
@@ -76,24 +76,17 @@ public class AppTemplatePortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
-			if (!GroupPermissionUtil.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
-					ActionKeys.MANAGE_ARCHIVED_SETUPS)) {
+			if (!PortletPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getLayout(),
+					portletDisplay.getPortletResource(),
+					ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}
 		}
 		catch (PortalException pe) {
-			return false;
-		}
-
-		WindowState windowState = portletRequest.getWindowState();
-
-		if (windowState.equals(LiferayWindowState.EXCLUSIVE)) {
 			return false;
 		}
 

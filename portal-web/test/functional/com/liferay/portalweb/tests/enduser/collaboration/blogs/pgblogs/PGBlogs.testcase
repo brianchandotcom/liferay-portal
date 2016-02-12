@@ -1966,14 +1966,10 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
+			<var name="portletOption" value="Permissions" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
@@ -1998,14 +1994,10 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
+			<var name="portletOption" value="Permissions" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
-			<var name="portletName" value="Blogs" />
-		</execute>
 
 		<execute macro="PermissionsInline#viewPermissionsRemoved">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />

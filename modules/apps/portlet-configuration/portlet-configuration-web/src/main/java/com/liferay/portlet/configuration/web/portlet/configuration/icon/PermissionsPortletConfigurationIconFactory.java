@@ -27,19 +27,19 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class AppTemplatePortletConfigurationIconFactory
+public class PermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return new AppTemplatePortletConfigurationIcon(portletRequest);
+		return new PermissionsPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 12.0;
+		return 13.0;
 	}
 
 }

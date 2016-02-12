@@ -15,6 +15,7 @@ Export-Package:\
 	com.liferay.portal.security.ldap.validator
 Import-Package:\
 	!junit.*,\
+	\
 	!org.junit.*,\
 	*
 Include-Resource:\

@@ -4,9 +4,12 @@ Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Import-Package:\
 	!com.thoughtworks.xstream.*,\
+	\
 	!javax.swing.*,\
+	\
 	!org.apache.commons.cli.*,\
 	!org.apache.ivy.*,\
+	\
 	!org.fusesource.jansi.*,\
 	*
 Include-Resource: @lib/groovy.jar

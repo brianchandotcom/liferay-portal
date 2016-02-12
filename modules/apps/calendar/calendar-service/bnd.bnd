@@ -13,8 +13,11 @@ Export-Package:\
 	com.liferay.calendar.workflow
 Import-Package:\
 	!edu.emory.*,\
+	\
 	!groovy.*,\
+	\
 	!net.fortuna.*,\
+	\
 	!org.codehaus.*,\
 	*
 Include-Resource:\

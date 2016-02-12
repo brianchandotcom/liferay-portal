@@ -4,13 +4,20 @@ Bundle-Version: 1.0.0
 DynamicImport-Package: com.liferay.*
 Import-Package:\
 	!com.ibm.*,\
+	\
 	!com.sun.*,\
+	\
 	!javax.jms.*,\
+	\
 	!javax.swing.*,\
+	\
 	!org.apache.bsf.*,\
 	!org.apache.commons.net.*,\
+	\
 	!org.exolab.castor.xml.*,\
+	\
 	!org.omg.*,\
+	\
 	!sun.awt.image.codec,\
 	*
 Include-Resource:\

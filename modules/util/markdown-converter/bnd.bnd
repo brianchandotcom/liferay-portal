@@ -4,5 +4,6 @@ Bundle-Version: 1.0.3
 Export-Package:\
 	com.liferay.markdown.converter,\
 	com.liferay.markdown.converter.factory,\
+	\
 	org.pegdown.*
 Private-Package: com.liferay.markdown.converter.internal.*

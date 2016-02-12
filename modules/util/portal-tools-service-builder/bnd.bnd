@@ -3,7 +3,9 @@ Bundle-SymbolicName: com.liferay.portal.tools.service.builder
 Bundle-Version: 1.0.99
 Import-Package:\
 	!javax.portlet.*,\
+	\
 	!javax.servlet.*,\
+	\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*

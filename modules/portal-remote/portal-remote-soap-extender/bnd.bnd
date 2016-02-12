@@ -8,7 +8,7 @@ Bundle-Name: Liferay Portal Remote SOAP Extender
 Bundle-SymbolicName: com.liferay.portal.remote.soap.extender
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.remote.soap.extender,
+	com.liferay.portal.remote.soap.extender,\
 	com.liferay.portal.remote.soap.extender.configuration
 Import-Package:\
 	!com.sun.*,\

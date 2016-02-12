@@ -15,8 +15,8 @@ Export-Package:\
 	com.liferay.wiki.social,\
 	com.liferay.wiki.trash,\
 	com.liferay.wiki.util,\
-	com.liferay.wiki.util.comparator
-	com.liferay.wiki.verify,\
+	com.liferay.wiki.util.comparator,\
+	com.liferay.wiki.verify
 Import-Package:\
 	!com.liferay.portal.tools.sql,\
 	\

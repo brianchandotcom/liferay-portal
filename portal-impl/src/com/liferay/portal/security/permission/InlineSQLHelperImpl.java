@@ -536,13 +536,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		long companyId = 0;
+
 		if (groupIds.length == 1) {
 			long groupId = groupIds[0];
 
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 			if (group != null) {
-				long companyId = group.getCompanyId();
+				companyId = group.getCompanyId();
 
 				long[] roleIds = getRoleIds(groupId);
 
@@ -588,6 +590,31 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 			}
 		}
+		else {
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				if (group == null) {
+					continue;
+				}
+
+				if (companyId == 0) {
+					companyId = group.getCompanyId();
+
+					continue;
+				}
+
+				if (group.getCompanyId() != companyId) {
+					throw new IllegalArgumentException(
+						"Permission queries across multiple portal instances " +
+							"are not supported");
+				}
+			}
+		}
+
+		if (companyId == 0) {
+			companyId = permissionChecker.getCompanyId();
+		}
 
 		String permissionJoin = StringPool.BLANK;
 
@@ -632,8 +659,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				className, String.valueOf(permissionChecker.getCompanyId()),
-				sb.toString(), String.valueOf(scope), roleIdsOrOwnerIdSQL
+				className, String.valueOf(companyId), sb.toString(),
+				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

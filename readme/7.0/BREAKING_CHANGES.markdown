@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `20024de`.*
+*This document has been reviewed through commit `1ba366c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3196,14 +3196,14 @@ services from `DLAppService` was the only sensible solution to this circularity.
 
 ---------------------------------------
 
-### The liferay-ui:flags has been deprecated and replaced with liferay-flags:flags
-- **Date:** 2015-Dec-2
+### Deprecated the liferay-ui:flags Tag and Replaced with liferay-flags:flags
+- **Date:** 2015-Dec-02
 - **JIRA Ticket:** LPS-60967
 
 #### What changed?
 
-The `liferay-ui:flags` taglib has been deprecated and replaced with
-`liferay-flags:flags` taglib.
+The `liferay-ui:flags` tag has been deprecated and replaced with the
+`liferay-flags:flags` tag.
 
 #### Who is affected?
 
@@ -3212,8 +3212,8 @@ their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-flags` tag library if it isn't already and
-update the tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
+You should import the `liferay-flags` tag library (if necessary) and update the
+tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
 
 #### Why was this change made?
 

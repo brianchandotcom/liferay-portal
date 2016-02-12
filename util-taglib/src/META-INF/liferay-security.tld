@@ -23,10 +23,10 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, with no direct replacement</description>
 		<name>encrypt</name>
 		<tag-class>com.liferay.taglib.security.EncryptTag</tag-class>
 		<body-content>JSP</body-content>
+		<description>Deprecated as of 7.0.0, with no direct replacement</description>
 		<attribute>
 			<name>className</name>
 			<required>false</required>

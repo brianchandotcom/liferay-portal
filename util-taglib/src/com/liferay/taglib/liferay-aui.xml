@@ -1501,7 +1501,7 @@
 		</attributes>
 	</component>
 	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.taglib.TagSupport" writeBaseClass="false" writeJSP="false">
-	<description>Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.</description>
+		<description>Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.</description>
 	</component>
 	<component name="TranslationManager" dynamicAttributes="false">
 		<description>Creates a UI component for managing translation of associated content.</description>

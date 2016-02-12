@@ -165,9 +165,13 @@
 	</command>
 
 	<command name="makeVisibleClickAt">
+		<execute selenium="waitForElementPresent" />
+
 		<execute selenium="mouseOver" />
 
 		<execute selenium="makeVisible" />
+
+		<execute selenium="waitForVisible" />
 
 		<execute selenium="clickAt" />
 

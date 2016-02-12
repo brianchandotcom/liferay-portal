@@ -164,35 +164,25 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION_LOOK_AND_FEEL-->
+<!--LOOK_AND_FEEL-->
 <tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_PORTLET_CONFIGURATION</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Portlet Configuration')]</td>
+	<td>TEXT_FONT_SELECT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Font')]//select</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_TEXT_STYLES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Text Styles')]</td>
+	<td>TEXT_FONT_SIZE_SELECT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Size')]//select</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_BACKGROUND_STYLES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Background Styles')]</td>
+	<td>BORDER_WIDTH_TOP_INPUT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Top')]//input</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_BORDER_STYLES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Border Styles')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_MARGIN_AND_PADDING</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Margin and Padding')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_LOOK_AND_FEEL_ADVANCED_STYLING</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Advanced Styling')]</td>
+	<td>SIGN_IN_CUSTOM_LOOK_AND_FEEL</td>
+	<td>portal/screenshots/home/sign_in_custom_look_and_feel.png</td>
 	<td></td>
 </tr>
 <tr>

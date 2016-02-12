@@ -158,6 +158,24 @@
 		</if>
 	</command>
 
+	<command name="configureCustomStylesViaLookandfeelPG">
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Text Styles" />
+		</execute>
+
+		<execute function="Select" locator1="BasePortlet#TEXT_FONT_SELECT" value1="Verdana" />
+
+		<execute function="Select" locator1="BasePortlet#TEXT_FONT_SIZE_SELECT" value1="2em" />
+
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Border Styles" />
+		</execute>
+
+		<execute function="Type" locator1="BasePortlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
+
+		<execute function="AssertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="configureCustomTitleViaLookandfeelPG">
 		<execute function="Check#checkToggleSwitch" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
 
@@ -193,15 +211,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<if>
-					<equals arg1="${portletName}" arg2="Navigation Menu" />
-					<then>
-						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
-					</then>
-					<else>
-						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
-					</else>
-				</if>
+				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
 			</then>
 			<else>
 				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
@@ -321,6 +331,10 @@
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
 		<execute function="AssertElementNotPresent" locator1="${portletLocator}" />
+	</command>
+
+	<command name="viewCustomStylesViaLookandfeelPG">
+		<execute function="SikuliClick" locator1="BasePortlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
 	</command>
 
 	<command name="viewDefaultDisplayStyle">

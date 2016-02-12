@@ -73,29 +73,39 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		setLayoutIdMap(actionRequest);
-
 		try {
 			if (cmd.equals("copy_from_live")) {
+				setLayoutIdMap(actionRequest);
+
 				StagingUtil.copyFromLive(actionRequest);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 				hideDefaultSuccessMessage(actionRequest);
+
+				setLayoutIdMap(actionRequest);
 
 				StagingUtil.publishToLive(actionRequest);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 				hideDefaultSuccessMessage(actionRequest);
 
+				setLayoutIdMap(actionRequest);
+
 				StagingUtil.publishToRemote(actionRequest);
 			}
 			else if (cmd.equals("schedule_copy_from_live")) {
+				setLayoutIdMap(actionRequest);
+
 				StagingUtil.scheduleCopyFromLive(actionRequest);
 			}
 			else if (cmd.equals("schedule_publish_to_live")) {
+				setLayoutIdMap(actionRequest);
+
 				StagingUtil.schedulePublishToLive(actionRequest);
 			}
 			else if (cmd.equals("schedule_publish_to_remote")) {
+				setLayoutIdMap(actionRequest);
+
 				StagingUtil.schedulePublishToRemote(actionRequest);
 			}
 			else if (cmd.equals("unschedule_copy_from_live")) {

@@ -119,6 +119,8 @@ public class EditPublishConfigurationMVCActionCommand
 				actionRequest, "exportImportConfigurationId");
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				setLayoutIdMap(actionRequest);
+
 				updatePublishConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {

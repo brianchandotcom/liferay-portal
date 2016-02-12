@@ -131,7 +131,7 @@
 		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 	</command>
 
-	<command name="viewFormEntry">
+	<command name="viewFormTableEntry">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldValue" value="${fieldValue}" />
 

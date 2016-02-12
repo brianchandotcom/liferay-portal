@@ -44,6 +44,10 @@ else if ((extended != null) && !extended) {
 						<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 							<liferay-ui:icon-help message="<%= helpMessage %>" />
 						</c:if>
+
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 					</a>
 				</c:when>
 				<c:otherwise>

@@ -40,6 +40,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = trimContent(content, false);
+
 		// LPS-61288
 
 		if (fileName.endsWith("-web/bnd.bnd") &&
@@ -65,14 +67,12 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				content, matcher.group(1), StringPool.SPACE, matcher.start());
 		}
 
-		content = sortDefinitions(content);
-
 		content = BNDImportsFormatter.formatBNDImports(
 			content, _exportsPattern);
 		content = BNDImportsFormatter.formatBNDImports(
 			content, _importsPattern);
 
-		return trimContent(content, false);
+		return sortDefinitions(content);
 	}
 
 	@Override

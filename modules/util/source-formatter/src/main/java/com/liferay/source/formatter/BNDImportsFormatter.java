@@ -53,7 +53,12 @@ public class BNDImportsFormatter extends ImportsFormatter {
 
 		String newImports = importsFormatter.format(imports);
 
-		newImports = StringUtil.replace(newImports, "\n\n", "\n\t\\\n");
+		newImports = StringUtil.replace(
+			newImports, new String[] {"\n", "\n,\\"},
+			new String[] {",\\\n", "\n\t\\"});
+
+		newImports = StringUtil.replaceLast(
+			newImports, ",\\", StringPool.BLANK);
 
 		if (!imports.equals(newImports)) {
 			content = StringUtil.replaceFirst(content, imports, newImports);
@@ -64,9 +69,17 @@ public class BNDImportsFormatter extends ImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
+		if (line.endsWith(StringPool.BACK_SLASH)) {
+			line = line.substring(0, line.length() - 1);
+		}
+
+		if (line.endsWith(StringPool.COMMA)) {
+			line = line.substring(0, line.length() - 1);
+		}
+
 		String importString = StringUtil.trim(line);
 
-		if (importString.equals(StringPool.BACK_SLASH)) {
+		if (Validator.isNull(importString)) {
 			return null;
 		}
 
@@ -74,9 +87,6 @@ public class BNDImportsFormatter extends ImportsFormatter {
 
 		if (pos != -1) {
 			importString = importString.substring(0, pos);
-		}
-		else if (importString.endsWith(",\\")) {
-			importString = importString.substring(0, importString.length() - 2);
 		}
 
 		return new ImportPackage(importString, false, line);

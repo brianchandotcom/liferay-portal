@@ -29,8 +29,8 @@ Group group = themeDisplay.getScopeGroup();
 		request.setAttribute(WebKeys.CONTACTS_USER, user2);
 		%>
 
-		<aui:row cssClass="contacts-container">
-			<aui:col width="<%= 100 %>">
+		<aui:row>
+			<aui:col cssClass="contacts-container" width="<%= 100 %>">
 				<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
 			</aui:col>
 		</aui:row>

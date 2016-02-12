@@ -74,8 +74,8 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 <c:choose>
 	<c:when test="<%= userPublicPage && (contactsCount <= 0) %>">
-		<aui:row cssClass="contacts-center-home">
-			<aui:col width="<%= 100 %>">
+		<aui:row>
+			<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 				<h3 class="header-title">
 					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>" key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>' translateArguments="<%= false %>" />
 				</h3>
@@ -89,11 +89,11 @@ portletURL.setWindowState(WindowState.NORMAL);
 			<aui:input name="userIds" type="hidden" value="" />
 			<aui:input name="type" type="hidden" value="" />
 
-			<aui:row cssClass="toolbar">
-				<aui:col width="<%= 100 %>">
+			<aui:row>
+				<aui:col cssClass="toolbar" width="<%= 100 %>">
 					<div class="filter-container">
-						<aui:row cssClass="contact-group-filter">
-							<aui:col width="<%= 100 %>">
+						<aui:row>
+							<aui:col cssClass="contact-group-filter" width="<%= 100 %>">
 								<aui:input label="" name="checkAll" type="checkbox" />
 
 								<c:if test="<%= !userPublicPage %>">
@@ -320,8 +320,8 @@ portletURL.setWindowState(WindowState.NORMAL);
 						<c:otherwise>
 
 
-							<aui:row cssClass="contacts-center-home">
-								<aui:col width="<%= 100 %>">
+							<aui:row>
+								<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 									<c:choose>
 										<c:when test="<%= !showOnlySiteMembers %>">
 											<liferay-ui:header title="contacts-center" />
@@ -352,21 +352,21 @@ portletURL.setWindowState(WindowState.NORMAL);
 									int followerUsersCount = SocialRelationLocalServiceUtil.getInverseRelationsCount(themeDisplay.getUserId(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
 									%>
 
-									<aui:row cssClass="connections contacts-count">
-										<aui:col width="<%= 100 %>">
+									<aui:row>
+										<aui:col cssClass="connections contacts-count" width="<%= 100 %>">
 											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= showOnlySiteMembers ? "you-have-x-connections-in-this-site" : "you-have-x-connections" %>' translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 
-									<aui:row cssClass="contacts-count followings">
-										<aui:col width="<%= 100 %>">
+									<aui:row>
+										<aui:col cssClass="contacts-count followings" width="<%= 100 %>">
 											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followingUsersCount) %>" key='<%= showOnlySiteMembers ? "you-are-following-x-people-in-this-site" : "you-are-following-x-people" %>' translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 
 									<c:if test="<%= !showOnlySiteMembers %>">
-										<aui:row cssClass="contacts-count followers">
-											<aui:col width="<%= 100 %>">
+										<aui:row>
+											<aui:col cssClass="contacts-count followers" width="<%= 100 %>">
 												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followerUsersCount) %>" key="you-have-x-followers" translateArguments="<%= false %>" /></a>
 											</aui:col>
 										</aui:row>
@@ -375,22 +375,22 @@ portletURL.setWindowState(WindowState.NORMAL);
 										int myContactsCount = EntryLocalServiceUtil.getEntriesCount(user.getUserId());
 										%>
 
-										<aui:row cssClass="contacts contacts-count">
-											<aui:col width="<%= 100 %>">
+										<aui:row>
+											<aui:col cssClass="contacts contacts-count" width="<%= 100 %>">
 												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key="view-my-x-contacts" translateArguments="<%= false %>" /></a>
 											</aui:col>
 										</aui:row>
 									</c:if>
 
-									<aui:row cssClass="all contacts-count">
-										<aui:col width="<%= 100 %>">
+									<aui:row>
+										<aui:col cssClass="all contacts-count" width="<%= 100 %>">
 											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(allUsersCount) %>" key="view-all-x-users" translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 
 									<c:if test="<%= !showOnlySiteMembers && (connectionUsersCount <= 0) && (followingUsersCount <= 0) %>">
-										<aui:row cssClass="contacts-center-introduction">
-											<aui:col width="<%= 100 %>">
+										<aui:row>
+											<aui:col cssClass="contacts-center-introduction" width="<%= 100 %>">
 												<liferay-ui:message key="contacts-center-lets-you-search-view-and-establish-social-relations-with-other-users" />
 											</aui:col>
 										</aui:row>

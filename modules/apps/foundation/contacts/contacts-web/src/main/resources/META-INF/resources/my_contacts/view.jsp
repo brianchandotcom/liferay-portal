@@ -49,15 +49,15 @@ Group group = themeDisplay.getScopeGroup();
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:row cssClass="my-contacts">
-					<aui:col width="<%= 100 %>">
+				<aui:row>
+					<aui:col cssClass="my-contacts" width="<%= 100 %>">
 
 						<%
 						for (User user2 : users) {
 						%>
 
-							<aui:row cssClass="lfr-contact-grid-item">
-								<aui:col width="<%= 100 %>">
+							<aui:row>
+								<aui:col cssClass="lfr-contact-grid-item" width="<%= 100 %>">
 									<div class="lfr-contact-thumb">
 										<a href="<%= user2.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" /></a>
 									</div>

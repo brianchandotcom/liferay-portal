@@ -46,7 +46,11 @@
 	<c:if test="<%= !announcementsDisplayContext.isShowManageEntries() && themeDisplay.isSignedIn() %>">
 
 		<%
-		String taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "handleEntry(" + entry.getEntryId() + ");";
+		String taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "markEntry(" + entry.getEntryId() + ");";
+
+		if (flagValue == AnnouncementsFlagConstants.HIDDEN) {
+			taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "unmarkEntry(" + entry.getEntryId() + ");";
+		}
 		%>
 
 		<liferay-ui:icon

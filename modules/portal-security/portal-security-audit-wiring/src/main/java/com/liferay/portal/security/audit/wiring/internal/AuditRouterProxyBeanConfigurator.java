@@ -17,6 +17,7 @@ package com.liferay.portal.security.audit.wiring.internal;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler;
+import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
@@ -80,6 +81,15 @@ public class AuditRouterProxyBeanConfigurator {
 		if (_auditRouterSesrviceRegistration != null) {
 			_auditRouterSesrviceRegistration.unregister();
 		}
+	}
+
+	@Reference(
+		service = ProxyMessageListener.class,
+		target = "(destination.name=" + DestinationNames.AUDIT + ")",
+		unbind = "-"
+	)
+	protected void setProxyMessageListener(
+		ProxyMessageListener proxyMessageListener) {
 	}
 
 	@Reference(unbind = "-")

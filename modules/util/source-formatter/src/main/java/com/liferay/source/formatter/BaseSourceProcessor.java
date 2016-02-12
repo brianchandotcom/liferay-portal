@@ -1134,8 +1134,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_annotationsExclusions = SetUtil.fromArray(
 			new String[] {
-				"ArquillianResource", "BeanReference", "Inject", "Mock",
-				"Reference", "ServiceReference", "SuppressWarnings"
+				"ArquillianResource", "BeanReference", "Captor", "Inject",
+				"Mock", "Reference", "ServiceReference", "SuppressWarnings"
 			});
 
 		return _annotationsExclusions;

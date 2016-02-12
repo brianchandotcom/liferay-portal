@@ -14,31 +14,51 @@
 
 package com.liferay.portal.security.audit.wiring.internal.messaging;
 
+import aQute.configurable.Configurable;
+
+import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
+import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.security.audit.configuration.AuditConfiguration;
 
 import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = AuditMessagingConfigurator.class)
+@Component(
+	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
+	immediate = true, service = AuditMessagingConfigurator.class
+)
 public class AuditMessagingConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	protected void activate(ComponentContext componentContext) {
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		AuditConfiguration auditConfiguration = Configurable.createConfigurable(
+			AuditConfiguration.class, properties);
+
+		_bundleContext = componentContext.getBundleContext();
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
@@ -48,12 +68,40 @@ public class AuditMessagingConfigurator {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
+		destinationConfiguration.setMaximumQueueSize(
+			auditConfiguration.auditMessageMaxQueueSize());
+
+		RejectedExecutionHandler rejectedExecutionHandler =
+			new CallerRunsPolicy() {
+
+				@Override
+				public void rejectedExecution(
+					Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("The audit router's task queue is at its ");
+						sb.append("maximum capacity. The current thread will ");
+						sb.append("handle the request.");
+
+						_log.warn(sb.toString());
+					}
+
+					super.rejectedExecution(runnable, threadPoolExecutor);
+				}
+
+			};
+
+		destinationConfiguration.setRejectedExecutionHandler(
+			rejectedExecutionHandler);
+
 		Dictionary<String, Object> destinationDictionary =
 			new HashMapDictionary<>();
 
 		destinationDictionary.put("destination.name", destination.getName());
 
-		_destinationServiceRegistration = bundleContext.registerService(
+		_destinationServiceRegistration = _bundleContext.registerService(
 			Destination.class, destination, destinationDictionary);
 
 		destination.register(_proxyMessageListener);
@@ -72,6 +120,16 @@ public class AuditMessagingConfigurator {
 
 		_bundleContext = null;
 	}
+
+	@Modified
+	protected void modified(ComponentContext componentContext) {
+		deactivate();
+
+		activate(componentContext);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AuditMessagingConfigurator.class);
 
 	private volatile BundleContext _bundleContext;
 

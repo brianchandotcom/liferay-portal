@@ -15,19 +15,19 @@
 		<tag-class>com.liferay.flags.taglib.servlet.taglib.FlagsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The flagged asset's Java class name</description>
+			<description>The flagged asset's Java class name.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The flagged asset's entry ID</description>
+			<description>The flagged asset's entry ID.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The flagged asset's title</description>
+			<description>The flagged asset's title.</description>
 			<name>contentTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -46,7 +46,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The user ID of the user who flagged the asset</description>
+			<description>The user ID of the user who flagged the asset.</description>
 			<name>reportedUserId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -43,7 +43,7 @@
 		/>
 	</c:if>
 
-	<c:if test='<%= tabs1.equals("entries") && themeDisplay.isSignedIn() %>'>
+	<c:if test="<%= announcementsDisplayContext.isShowEntries() && themeDisplay.isSignedIn() %>">
 
 		<%
 		String taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "handleEntry(" + entry.getEntryId() + ");";

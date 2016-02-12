@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = announcementsRequestHelper.getTabs1();
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/announcements/view");
-portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
 %>
 
 <c:if test="<%= announcementsDisplayContext.isTabs1Visible() %>">

@@ -292,6 +292,8 @@
 			<var name="language" value="French (France)" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#expandPanelControlPanel" />
+
 		<execute macro="Page#gotoSALocalizedCP">
 			<var name="adminLocalized" value="Administration du portail" />
 			<var name="portletCategoryName" value="Paramètres" />

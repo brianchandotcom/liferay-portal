@@ -1492,6 +1492,18 @@
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
+	<command name="saveAndCheckinEditedDocumentPG">
+		<execute macro="DMNavigator#gotoEditDocument">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="saveAsDraftPG">
 		<execute function="Click" locator1="Button#PLUS" />
 

@@ -184,7 +184,7 @@
 			<var name="panelHeading" value="Logo" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#CHANGE" value1="Change" />
+		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />
 		<execute function="SelectFrame" locator1="SitePages#LOGO_UPLOAD_IMAGE_IFRAME" />
 		<execute function="UploadCommonFile" locator1="Button#BROWSE" value1="${logoFile}" />
 

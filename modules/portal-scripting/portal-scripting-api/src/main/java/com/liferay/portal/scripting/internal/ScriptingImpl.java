@@ -72,6 +72,39 @@ public class ScriptingImpl implements Scripting {
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
+			ClassLoader... classLoaders)
+		throws ScriptingException {
+
+		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
+
+		if (scriptingExecutor == null) {
+			throw new UnsupportedLanguageException(language);
+		}
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			return scriptingExecutor.eval(
+				allowedClasses, inputObjects, outputNames, script,
+				classLoaders);
+		}
+		catch (Exception e) {
+			throw new ScriptingException(getErrorMessage(script, e), e);
+		}
+		finally {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Evaluated script in " + stopWatch.getTime() + " ms");
+			}
+		}
+	}
+
+	@Override
+	public Map<String, Object> eval(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			Set<String> outputNames, String language, String script,
 			String... servletContextNames)
 		throws ScriptingException {
 
@@ -99,6 +132,16 @@ public class ScriptingImpl implements Scripting {
 					"Evaluated script in " + stopWatch.getTime() + " ms");
 			}
 		}
+	}
+
+	@Override
+	public void exec(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			String language, String script, ClassLoader... classLoaders)
+		throws ScriptingException {
+
+		eval(
+			allowedClasses, inputObjects, null, language, script, classLoaders);
 	}
 
 	@Override

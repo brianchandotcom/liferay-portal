@@ -32,7 +32,18 @@ public interface Scripting {
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
+			ClassLoader... classLoaders)
+		throws ScriptingException;
+
+	public Map<String, Object> eval(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			Set<String> outputNames, String language, String script,
 			String... servletContextNames)
+		throws ScriptingException;
+
+	public void exec(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			String language, String script, ClassLoader... classLoaders)
 		throws ScriptingException;
 
 	public void exec(

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.util;
+package com.liferay.dynamic.data.lists.form.web.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 
 import java.util.Map;
 
@@ -31,9 +29,9 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = DDLFormWebConfigurationManager.class
+	service = DDLFormWebConfigurationActivator.class
 )
-public class DDLFormWebConfigurationManager {
+public class DDLFormWebConfigurationActivator {
 
 	public DDLFormWebConfiguration getDDLFormWebConfiguration() {
 		return _ddlFormWebConfiguration;

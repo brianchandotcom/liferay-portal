@@ -5,12 +5,6 @@ AUI.add(
 		};
 
 		FormTabsSupport.prototype = {
-			initializer: function() {
-				var instance = this;
-
-				instance.after('render', instance._afterTabsRender);
-			},
-
 			getTabView: function() {
 				var instance = this;
 
@@ -25,14 +19,6 @@ AUI.add(
 				}
 
 				return instance.tabView;
-			},
-
-			_afterTabsRender: function() {
-				var instance = this;
-
-				var tabView = instance.getTabView();
-
-				tabView.render();
 			}
 		};
 

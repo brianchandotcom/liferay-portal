@@ -38,8 +38,8 @@ request.setAttribute("view_user.jsp-user", user2);
 <c:if test="<%= user2 != null %>">
 	<div class="contacts-profile <%= (user.getUserId() == user2.getUserId()) ? "my-profile" : StringPool.BLANK %>" id="<portlet:namespace />contactsProfile">
 		<c:if test="<%= (displayStyle == ContactsConstants.DISPLAY_STYLE_BASIC) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) %>">
-			<aui:row cssClass="social-relations">
-				<aui:col width="<%= 100 %>">
+			<aui:row>
+				<aui:col cssClass="social-relations" width="<%= 100 %>">
 
 					<%
 					boolean connection = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
@@ -76,8 +76,8 @@ request.setAttribute("view_user.jsp-user", user2);
 					</c:if>
 
 
-					<aui:row cssClass="contacts-action">
-						<aui:col width="<%= 100 %>">
+					<aui:row>
+						<aui:col cssClass="contacts-action" width="<%= 100 %>">
 							<c:choose>
 								<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
 

@@ -45,8 +45,8 @@ public class JavaClass {
 
 	public JavaClass(
 			String name, String packagePath, File file, String fileName,
-			String absolutePath, String content, int lineCount, String indent,
-			JavaClass outerClass,
+			String absolutePath, String content, String classContent,
+			int lineCount, String indent, JavaClass outerClass,
 			List<String> javaTermAccessLevelModifierExcludes,
 			JavaSourceProcessor javaSourceProcessor)
 		throws Exception {
@@ -57,6 +57,7 @@ public class JavaClass {
 		_fileName = fileName;
 		_absolutePath = absolutePath;
 		_content = content;
+		_classContent = classContent;
 		_lineCount = lineCount;
 		_indent = indent;
 		_outerClass = outerClass;
@@ -85,14 +86,14 @@ public class JavaClass {
 					"Parsing error while retrieving java terms " + _fileName);
 			}
 
-			return _content;
+			return _classContent;
 		}
 
 		if (_javaTerms.isEmpty()) {
-			return _content;
+			return _classContent;
 		}
 
-		String originalContent = _content;
+		String originalContent = _classContent;
 
 		JavaTerm previousJavaTerm = null;
 
@@ -124,16 +125,16 @@ public class JavaClass {
 					javaTerm, annotationsExclusions, immutableFieldTypes);
 			}
 
-			if (!originalContent.equals(_content)) {
-				return _content;
+			if (!originalContent.equals(_classContent)) {
+				return _classContent;
 			}
 
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExcludes);
 			fixTabsAndIncorrectEmptyLines(javaTerm);
 			formatAnnotations(javaTerm, testAnnotationsExcludes);
 
-			if (!originalContent.equals(_content)) {
-				return _content;
+			if (!originalContent.equals(_classContent)) {
+				return _classContent;
 			}
 
 			previousJavaTerm = javaTerm;
@@ -148,16 +149,16 @@ public class JavaClass {
 				testAnnotationsExcludes);
 
 			if (!innerClassContent.equals(newInnerClassContent)) {
-				_content = StringUtil.replace(
-					_content, innerClassContent, newInnerClassContent);
+				_classContent = StringUtil.replace(
+					_classContent, innerClassContent, newInnerClassContent);
 
-				return _content;
+				return _classContent;
 			}
 		}
 
 		fixJavaTermsDividers(_javaTerms, javaTermSortExcludes);
 
-		return _content;
+		return _classContent;
 	}
 
 	public String getClassName() {
@@ -169,7 +170,7 @@ public class JavaClass {
 	}
 
 	public String getContent() {
-		return _content;
+		return _classContent;
 	}
 
 	protected Set<JavaTerm> addStaticBlocks(
@@ -253,8 +254,8 @@ public class JavaClass {
 			String newJavaTermContent = StringUtil.replace(
 				javaTermContent, StringPool.TAB + "super();", StringPool.BLANK);
 
-			_content = StringUtil.replace(
-				_content, javaTermContent, newJavaTermContent);
+			_classContent = StringUtil.replace(
+				_classContent, javaTermContent, newJavaTermContent);
 
 			return;
 		}
@@ -284,7 +285,7 @@ public class JavaClass {
 
 		Pattern pattern = Pattern.compile("class " + _name + "[ \t\n]+extends");
 
-		Matcher matcher = pattern.matcher(_content);
+		Matcher matcher = pattern.matcher(_classContent);
 
 		if (!matcher.find()) {
 			return;
@@ -306,8 +307,8 @@ public class JavaClass {
 		if ((superJavaClassConstructor != null) &&
 			ArrayUtil.isEmpty(superJavaClassConstructor.getExceptions())) {
 
-			_content = StringUtil.replace(
-				_content, javaTermContent, StringPool.BLANK);
+			_classContent = StringUtil.replace(
+				_classContent, javaTermContent, StringPool.BLANK);
 		}
 	}
 
@@ -377,8 +378,8 @@ public class JavaClass {
 		String newJavaTermContent = StringUtil.replaceFirst(
 			javaTermContent, modifierDefinition, modifierDefinition + " final");
 
-		_content = StringUtil.replace(
-			_content, javaTermContent, newJavaTermContent);
+		_classContent = StringUtil.replace(
+			_classContent, javaTermContent, newJavaTermContent);
 	}
 
 	protected void checkImmutableFieldType(String javaTermName) {
@@ -392,7 +393,7 @@ public class JavaClass {
 
 		newName = StringUtil.toUpperCase(newName);
 
-		_content = _content.replaceAll(
+		_classContent = _classContent.replaceAll(
 			"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 	}
 
@@ -424,7 +425,7 @@ public class JavaClass {
 			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
 
 			if (javaTerm.isPrivate()) {
-				_content = _content.replaceAll(
+				_classContent = _classContent.replaceAll(
 					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
 					StringPool.UNDERLINE.concat(javaTermName));
 			}
@@ -495,7 +496,7 @@ public class JavaClass {
 		String newName = sb.toString();
 
 		if (!newName.equals(javaTermName)) {
-			_content = _content.replaceAll(
+			_classContent = _classContent.replaceAll(
 				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 		}
 	}
@@ -508,8 +509,8 @@ public class JavaClass {
 		String newJavaTermContent = StringUtil.replaceFirst(
 			javaTermContent, "private final", "private static final");
 
-		_content = StringUtil.replace(
-			_content, javaTermContent, newJavaTermContent);
+		_classContent = StringUtil.replace(
+			_classContent, javaTermContent, newJavaTermContent);
 	}
 
 	protected void checkTestAnnotations(JavaTerm javaTerm) {
@@ -633,17 +634,18 @@ public class JavaClass {
 			}
 
 			if (requiresEmptyLine) {
-				if (!_content.contains("\n\n" + javaTermContent)) {
-					_content = StringUtil.replace(
-						_content, "\n" + javaTermContent,
+				if (!_classContent.contains("\n\n" + javaTermContent)) {
+					_classContent = StringUtil.replace(
+						_classContent, "\n" + javaTermContent,
 						"\n\n" + javaTermContent);
 
 					return;
 				}
 			}
-			else if (_content.contains("\n\n" + javaTermContent)) {
-				_content = StringUtil.replace(
-					_content, "\n\n" + javaTermContent, "\n" + javaTermContent);
+			else if (_classContent.contains("\n\n" + javaTermContent)) {
+				_classContent = StringUtil.replace(
+					_classContent, "\n\n" + javaTermContent,
+					"\n" + javaTermContent);
 
 				return;
 			}
@@ -654,10 +656,10 @@ public class JavaClass {
 		String lastJavaTermContent = previousJavaTerm.getContent();
 
 		if (!lastJavaTermContent.endsWith("\n\n")) {
-			int x = _content.lastIndexOf(CharPool.CLOSE_CURLY_BRACE);
+			int x = _classContent.lastIndexOf(CharPool.CLOSE_CURLY_BRACE);
 
-			_content = StringUtil.insert(
-				_content, "\n", x - _indent.length() + 1);
+			_classContent = StringUtil.insert(
+				_classContent, "\n", x - _indent.length() + 1);
 		}
 	}
 
@@ -723,8 +725,8 @@ public class JavaClass {
 				if (!trimmedJavaTermContent.endsWith(
 						"\n\n" + _indent + StringPool.CLOSE_CURLY_BRACE)) {
 
-					_content = StringUtil.replace(
-						_content, methodNameAndParameters + "\n",
+					_classContent = StringUtil.replace(
+						_classContent, methodNameAndParameters + "\n",
 						methodNameAndParameters);
 				}
 			}
@@ -738,8 +740,8 @@ public class JavaClass {
 				methodNameAndParameters + _indent +
 					StringPool.CLOSE_CURLY_BRACE)) {
 
-			_content = StringUtil.replace(
-				_content, methodNameAndParameters,
+			_classContent = StringUtil.replace(
+				_classContent, methodNameAndParameters,
 				methodNameAndParameters + "\n");
 		}
 
@@ -791,8 +793,8 @@ public class JavaClass {
 			}
 		}
 
-		_content = StringUtil.replace(
-			_content, methodNameAndParameters, newMethodNameAndParameters);
+		_classContent = StringUtil.replace(
+			_classContent, methodNameAndParameters, newMethodNameAndParameters);
 	}
 
 	protected void formatAnnotations(
@@ -813,12 +815,13 @@ public class JavaClass {
 			_fileName, javaTerm.getName(), javaTermContent, _indent);
 
 		if (!javaTermContent.equals(newJavaTermContent)) {
-			_content = _content.replace(javaTermContent, newJavaTermContent);
+			_classContent = _classContent.replace(
+				javaTermContent, newJavaTermContent);
 		}
 	}
 
 	protected String getAccessModifier() {
-		Matcher matcher = _classPattern.matcher(_content);
+		Matcher matcher = _classPattern.matcher(_classContent);
 
 		if (matcher.find()) {
 			String accessModifier = matcher.group(1);
@@ -874,7 +877,7 @@ public class JavaClass {
 			String name, int type, int lineCount, int startPos, int endPos)
 		throws Exception {
 
-		String javaTermContent = _content.substring(startPos, endPos);
+		String javaTermContent = _classContent.substring(startPos, endPos);
 
 		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
 			return null;
@@ -892,7 +895,7 @@ public class JavaClass {
 		}
 
 		JavaClass innerClass = new JavaClass(
-			name, _packagePath, _file, _fileName, _absolutePath,
+			name, _packagePath, _file, _fileName, _absolutePath, _content,
 			javaTermContent, lineCount, _indent + StringPool.TAB, this,
 			_javaTermAccessLevelModifierExcludes, _javaSourceProcessor);
 
@@ -906,7 +909,7 @@ public class JavaClass {
 		List<JavaTerm> staticBlocks = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(_content));
+			new UnsyncStringReader(_classContent));
 
 		int index = 0;
 		int lineCount = _lineCount - 1;
@@ -939,7 +942,7 @@ public class JavaClass {
 				line.equals(_indent + "public") ||
 				line.equals(_indent + "static {")) {
 
-				Tuple tuple = getJavaTermTuple(line, _content, index);
+				Tuple tuple = getJavaTermTuple(line, _classContent, index);
 
 				if (tuple == null) {
 					return null;
@@ -955,7 +958,7 @@ public class JavaClass {
 				}
 
 				if ((javaTermStartPosition != -1) &&
-					(javaTermEndPosition < _content.length())) {
+					(javaTermEndPosition < _classContent.length())) {
 
 					JavaTerm javaTerm = getJavaTerm(
 						javaTermName, javaTermType, javaTermLineCount,
@@ -992,10 +995,10 @@ public class JavaClass {
 					 !BaseSourceProcessor.isExcludedPath(
 						 _javaTermAccessLevelModifierExcludes, _absolutePath)) {
 
-				Matcher matcher = _classPattern.matcher(_content);
+				Matcher matcher = _classPattern.matcher(_classContent);
 
 				if (matcher.find()) {
-					String insideClass = _content.substring(matcher.end());
+					String insideClass = _classContent.substring(matcher.end());
 
 					if (insideClass.contains(line) &&
 						!isEnumType(line, matcher.group(4))) {
@@ -1013,7 +1016,7 @@ public class JavaClass {
 
 		if (javaTermStartPosition != -1) {
 			int javaTermEndPosition =
-				_content.lastIndexOf(CharPool.CLOSE_CURLY_BRACE) -
+				_classContent.lastIndexOf(CharPool.CLOSE_CURLY_BRACE) -
 					_indent.length() + 1;
 
 			JavaTerm javaTerm = getJavaTerm(
@@ -1294,13 +1297,7 @@ public class JavaClass {
 		JavaTerm previousJavaTerm, JavaTerm javaTerm,
 		List<String> javaTermSortExcludes) {
 
-		if (_fileName.endsWith("Configuration.java") &&
-			_content.contains("@Meta.OCD(")) {
-
-			return;
-		}
-
-		if (previousJavaTerm == null) {
+		if ((previousJavaTerm == null) || _content.contains("@Meta.OCD(")) {
 			return;
 		}
 
@@ -1337,11 +1334,11 @@ public class JavaClass {
 			  javaTermNameLowerCase.startsWith("join")))) {
 		}
 		else {
-			_content = StringUtil.replaceFirst(
-				_content, "\n" + javaTerm.getContent(),
+			_classContent = StringUtil.replaceFirst(
+				_classContent, "\n" + javaTerm.getContent(),
 				"\n" + previousJavaTerm.getContent());
-			_content = StringUtil.replaceLast(
-				_content, "\n" + previousJavaTerm.getContent(),
+			_classContent = StringUtil.replaceLast(
+				_classContent, "\n" + previousJavaTerm.getContent(),
 				"\n" + javaTerm.getContent());
 		}
 	}
@@ -1362,11 +1359,12 @@ public class JavaClass {
 	private final String _absolutePath;
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
+	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
 	private int _constructorCount = 0;
-	private String _content;
+	private final String _content;
 	private final Pattern _enumTypePattern = Pattern.compile(
 		"\t[A-Z0-9]+[ _,;\\(\n]");
 	private final File _file;

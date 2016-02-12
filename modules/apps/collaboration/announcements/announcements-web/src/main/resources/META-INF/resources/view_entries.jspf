@@ -14,22 +14,24 @@
  */
 --%>
 
-<div class="unread-entries">
+<div class="entries">
 
 	<%
+	int flag = announcementsDisplayContext.isShowNewEntries() ? AnnouncementsFlagConstants.NOT_HIDDEN : AnnouncementsFlagConstants.HIDDEN;
+
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 
-	int visibleMessagesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.NOT_HIDDEN);
+	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
 
-	searchContainer.setTotal(visibleMessagesCount);
+	searchContainer.setTotal(entriesCount);
 
-	List<AnnouncementsEntry> visibleMessages = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.NOT_HIDDEN, searchContainer.getStart(), searchContainer.getEnd());
+	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
 
-	searchContainer.setResults(visibleMessages);
+	searchContainer.setResults(entries);
 
-	for (AnnouncementsEntry entry : visibleMessages) {
+	for (AnnouncementsEntry entry : entries) {
 		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.NOT_HIDDEN);
+		request.setAttribute("view_entry.jsp-flagValue", flag);
 	%>
 
 		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
@@ -40,42 +42,12 @@
 
 </div>
 
-<c:if test="<%= visibleMessagesCount > 0 %>">
+<c:if test="<%= entriesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
-<div class="read-entries">
-
-	<%
-	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
-
-	int hiddenMessagesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.HIDDEN);
-
-	searchContainer.setTotal(hiddenMessagesCount);
-
-	List<AnnouncementsEntry> hiddenMessages = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.HIDDEN, searchContainer.getStart(), searchContainer.getEnd());
-
-	searchContainer.setResults(hiddenMessages);
-
-	for (AnnouncementsEntry entry : hiddenMessages) {
-		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.HIDDEN);
-	%>
-
-		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
-
-	<%
-	}
-	%>
-
-</div>
-
-<c:if test="<%= hiddenMessagesCount > 0 %>">
-	<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" type="article" />
-</c:if>
-
 <%
-if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) {
+if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 }
 %>
@@ -86,7 +58,7 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 
 		var container = entry.parent();
 
-		if (container.hasClass('unread-entries')) {
+		if (container.hasClass('entries')) {
 			<portlet:namespace />markEntry(entryId);
 		}
 		else {

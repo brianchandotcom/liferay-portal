@@ -58,6 +58,7 @@ page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryServiceUtil" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
 page import="com.liferay.trash.web.dao.search.TrashResultRowSplitter" %><%@
+page import="com.liferay.trash.web.display.context.TrashDisplayContext" %><%@
 page import="com.liferay.trash.web.search.EntrySearch" %><%@
 page import="com.liferay.trash.web.search.EntrySearchTerms" %>
 
@@ -80,6 +81,8 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_trash_web_portlet_TrashPortlet") + LanguageUtil.format(request, "entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-automatically-deleted", StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription), false);
 
 portletDisplay.setDescription(description);
+
+TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

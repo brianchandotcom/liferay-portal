@@ -101,34 +101,28 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	<liferay-ui:message key="virtual-hosts-must-be-valid-domain-names" />
 </liferay-ui:error>
 
-<aui:fieldset label="friendly-url">
-	<liferay-ui:message key="enter-the-friendly-url-that-is-used-by-both-public-and-private-pages" />
+<aui:fieldset>
+	<p class="text-muted">
+		<liferay-ui:message key="enter-the-friendly-url-that-is-used-by-both-public-and-private-pages" />
 
-	<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-public-pages-and-x-for-private-pages" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-public-pages-and-x-for-private-pages" translateArguments="<%= false %>" />
+	</p>
 
-	<%
-	String taglibLabel = "site-friendly-url";
-
-	if (!liveGroup.hasStagingGroup()) {
-		taglibLabel = "<span class=\"hide-accessible\">" + LanguageUtil.get(request, taglibLabel) + "</span>";
-	}
-	%>
-
-	<aui:input label="<%= taglibLabel %>" name="friendlyURL" />
+	<aui:input label="friendly-url" name="friendlyURL" />
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
 		<aui:input bean="<%= stagingGroup %>" field="friendlyURL" fieldParam="stagingFriendlyURL" label="staging-friendly-url" model="<%= Group.class %>" name="stagingFriendlyURL" />
 	</c:if>
-</aui:fieldset>
 
-<aui:fieldset label="virtual-hosts">
-	<liferay-ui:message key="enter-the-public-and-private-virtual-host-that-map-to-the-public-and-private-friendly-url" />
+	<p class="text-muted">
+		<liferay-ui:message key="enter-the-public-and-private-virtual-host-that-map-to-the-public-and-private-friendly-url" />
 
-	<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
+	</p>
 
-	<aui:input label="public-pages" name="publicVirtualHost" type="text" value="<%= publicVirtualHost %>" />
+	<aui:input label="public-pages" name="publicVirtualHost" placeholder="public-pages" type="text" value="<%= publicVirtualHost %>" />
 
-	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>">
+	<aui:input label="private-pages" name="privateVirtualHost" placeholder="private-pages" type="text" value="<%= privateVirtualHost %>">
 		<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
 			function(val, fieldNode, ruleValue) {
 				return (val != A.one('#<portlet:namespace />publicVirtualHost').val());

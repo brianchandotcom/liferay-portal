@@ -96,6 +96,10 @@
 				<if>
 					<equals arg1="${uncheckPropagation}" arg2="true" />
 					<then>
+						<execute macro="Panel#expandPanel">
+							<var name="panelHeading" value="Pages" />
+						</execute>
+
 						<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_PROPAGATION" />
 					</then>
 				</if>
@@ -485,7 +489,7 @@
 			<condition function="IsNotVisible" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
 			<then>
 				<execute macro="Navigator#gotoTab">
-					<var name="tab" value="Miscellaneous" />
+					<var name="tab" value="Languages" />
 				</execute>
 			</then>
 		</if>
@@ -1098,7 +1102,7 @@
 			<condition function="IsNotVisible" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
 			<then>
 				<execute macro="Navigator#gotoTab">
-					<var name="tab" value="Miscellaneous" />
+					<var name="tab" value="Languages" />
 				</execute>
 			</then>
 		</if>

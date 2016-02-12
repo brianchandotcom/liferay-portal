@@ -98,9 +98,9 @@ public class UnstableMessageUtil {
 		sb.append("</ol>");
 
 		if (failureCount > 3) {
-			sb.append("<p><strong>Click <a href=\\\"");
+			sb.append("<p><strong>Click <a href=\"");
 			sb.append(buildURL);
-			sb.append("/testReport/\\\">here</a> for more failures.</strong>");
+			sb.append("/testReport/\">here</a> for more failures.</strong>");
 			sb.append("</p>");
 		}
 
@@ -147,7 +147,7 @@ public class UnstableMessageUtil {
 						return failureCount;
 					}
 
-					sb.append("<li><a href=\\\"");
+					sb.append("<li><a href=\"");
 
 					String runBuildHREF = runBuildURL;
 
@@ -190,7 +190,7 @@ public class UnstableMessageUtil {
 
 					sb.append(testMethodNameURL);
 
-					sb.append("\\\">");
+					sb.append("\">");
 					sb.append(testSimpleClassName);
 					sb.append(".");
 					sb.append(testMethodName);
@@ -226,15 +226,15 @@ public class UnstableMessageUtil {
 						if (description.length() > x) {
 							description = description.substring(x);
 
-							description = description.replace("\"", "\\\"");
+							description = description.replace("\"", "\"");
 
 							sb.append(description);
 							sb.append(" - ");
 						}
 
-						sb.append("<a href=\\\"");
+						sb.append("<a href=\"");
 						sb.append(runBuildURL);
-						sb.append("/console\\\">Console Output</a>");
+						sb.append("/console\">Console Output</a>");
 					}
 
 					sb.append("</li>");

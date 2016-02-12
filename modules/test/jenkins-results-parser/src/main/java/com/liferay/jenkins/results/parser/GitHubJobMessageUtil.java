@@ -111,9 +111,9 @@ public class GitHubJobMessageUtil {
 							JenkinsResultsParserUtil.getLocalURL(
 								failureBuildURL + "api/json"));
 
-					sb.append("<li><strong><a href=\\\"");
+					sb.append("<li><strong><a href=\"");
 					sb.append(failureBuildURL);
-					sb.append("\\\">");
+					sb.append("\">");
 					sb.append(
 						JenkinsResultsParserUtil.fixJSON(
 							failureJSONObject.getString("fullDisplayName")));

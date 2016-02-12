@@ -44,17 +44,17 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<p>To include a plugin fix for this pull request, ");
-		sb.append("please edit your <a href=\\\"https://github.com/");
+		sb.append("please edit your <a href=\"https://github.com/");
 		sb.append(project.getProperty("github.pull.request.head.username"));
 		sb.append("/");
 		sb.append(project.getProperty("portal.repository"));
 		sb.append("/blob/");
 		sb.append(project.getProperty("github.pull.request.head.branch"));
-		sb.append("/git-commit-plugins\\\">git-commit-plugins</a>. ");
+		sb.append("/git-commit-plugins\">git-commit-plugins</a>. ");
 
-		sb.append("Click <a href=\\\"https://in.liferay.com/web/");
+		sb.append("Click <a href=\"https://in.liferay.com/web/");
 		sb.append("global.engineering/blog/-/blogs/new-tests-for-the-");
-		sb.append("pull-request-tester-\\\">here</a> for more details");
+		sb.append("pull-request-tester-\">here</a> for more details");
 		sb.append(".</p>");
 
 		int end = consoleOutput.indexOf("merge-test-results:");

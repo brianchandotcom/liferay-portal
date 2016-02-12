@@ -192,7 +192,7 @@ AUI.add(
 								{
 									duration: instance.get('duration') / 1000,
 									easing: 'ease-out',
-									height: visible ? instance.get('boundingBox').getComputedStyle('height') : 0
+									height: visible ? instance.get('boundingBox').outerHeight() + 'px' : 0
 								},
 								function() {
 									parentNode.toggleClass('in', visible);

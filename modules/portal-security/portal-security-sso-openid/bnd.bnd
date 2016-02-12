@@ -7,10 +7,13 @@ Export-Package:\
 	com.liferay.portal.security.sso.openid.constants;version=${plugin.full.version}
 Import-Package:\
 	!com.google.inject.internal.asm.util.*,\
+	\
 	!net.sf.ehcache.*,\
+	\
 	!org.apache.avalon.*,\
 	!org.apache.html.dom.*,\
 	!org.apache.log.*,\
+	\
 	!sun.io.*,\
 	*
 Include-Resource:\

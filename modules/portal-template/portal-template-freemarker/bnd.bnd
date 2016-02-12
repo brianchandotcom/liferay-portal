@@ -17,14 +17,20 @@ Import-Package:\
 	!com.sun.org.apache.xpath.internal,\
 	!com.sun.org.apache.xpath.internal.objects,\
 	!com.sun.tools.javadoc,\
+	\
 	!org.apache.crimson.jaxp,\
 	!org.apache.log,\
-	!org.apache.xmlbeans.*,\
 	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
+	\
 	!org.mozilla.*,\
+	\
 	!org.python.*,\
+	\
 	!org.slf4j.spi,\
+	\
 	!org.zeroturnaround.javarebel,\
+	\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\

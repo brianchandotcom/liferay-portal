@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Import-Package:\
 	!javax.swing.*,\
+	\
 	!org.apache.xmlbeans.*,\
 	*
 Include-Resource: @lib/rhino.jar

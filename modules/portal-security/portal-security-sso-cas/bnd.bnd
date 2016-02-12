@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.portal.security.sso.cas.configuration.*;version=${plugin.full.version}
 Import-Package:\
 	!javax.microedition.*,\
+	\
 	!junit.*,\
 	*
 Include-Resource:\

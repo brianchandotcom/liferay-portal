@@ -145,7 +145,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 		</aui:form>
 
 		<aui:row cssClass="contacts-result-container lfr-app-column-view">
-			<aui:col columnWidth="30" cssClass="contacts-list" first="<%= true %>">
+			<aui:col cssClass="contacts-list" first="<%= true %>" width="30">
 				<div class="toggle-user">
 					<i class="icon-chevron-left"></i>
 				</div>
@@ -298,7 +298,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 				</aui:row>
 			</aui:col>
 
-			<aui:col columnWidth="70" cssClass="contacts-container">
+			<aui:col cssClass="contacts-container" width="70">
 				<div id="<portlet:namespace />userToolbarButtons"><!-- --></div>
 
 				<div class="hide" id="<portlet:namespace />contactCenterToolbarButtons">
@@ -318,8 +318,6 @@ portletURL.setWindowState(WindowState.NORMAL);
 							<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-
-
 							<aui:row>
 								<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 									<c:choose>

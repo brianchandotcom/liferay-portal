@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.SetupArquillianTask;
 import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
+import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -28,6 +29,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -47,12 +49,14 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.process.JavaForkOptions;
 
 /**
  * @author Andrea Di Giorgi
@@ -126,6 +130,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		SetupArquillianTask setupArquillianTask = GradleUtil.addTask(
 			project, SETUP_ARQUILLIAN_TASK_NAME, SetupArquillianTask.class);
 
+		setupArquillianTask.setDescription(
+			"Creates the Arquillian container configuration file for this " +
+				"project.");
+
 		setupArquillianTask.setOutputDir(
 			new Callable<File>() {
 
@@ -175,6 +183,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		setupTestableTomcatTask.setDescription(
+			"Configures the local Liferay Tomcat bundle to run integration " +
+				"tests.");
 
 		setupTestableTomcatTask.setDir(
 			new Callable<File>() {
@@ -292,6 +304,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
+		startTestableTomcatTask.setDescription(
+			"Starts the local Liferay Tomcat bundle.");
+		startTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
 		startTestableTomcatTask.setLiferayHome(
 			new Callable<File>() {
 
@@ -360,6 +376,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.doFirst(action);
 
 		stopTestableTomcatTask.mustRunAfter(testIntegrationTask);
+		stopTestableTomcatTask.setDescription(
+			"Stops the local Liferay Tomcat bundle.");
+		stopTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		configureBaseAppServerTask(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);
@@ -468,6 +487,17 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void configureTaskSystemProperty(
+		JavaForkOptions javaForkOptions, String key, File file) {
+
+		Map<String, Object> systemProperties =
+			javaForkOptions.getSystemProperties();
+
+		if (!systemProperties.containsKey(key)) {
+			systemProperties.put(key, FileUtil.getAbsolutePath(file));
+		}
+	}
+
 	protected void configureTaskTestIntegration(
 		final Test test, final SourceSet testIntegrationSourceSet,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension,
@@ -477,32 +507,28 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@SuppressWarnings("unused")
 			public Task doCall(Test test) {
-				FileTree candidateClassFiles = test.getCandidateClassFiles();
+				SourceDirectorySet sourceDirectorySet =
+					testIntegrationSourceSet.getResources();
 
-				File srcDir = getSrcDir(
-					testIntegrationSourceSet.getResources());
+				for (File dir : sourceDirectorySet.getSrcDirs()) {
+					File file = new File(
+						dir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
 
-				File skipManagedAppServerFile = new File(
-					srcDir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
-
-				if (!candidateClassFiles.isEmpty() &&
-					!skipManagedAppServerFile.exists()) {
-
-					return startTestableTomcatTask;
+					if (file.exists()) {
+						return null;
+					}
 				}
 
-				return null;
+				return startTestableTomcatTask;
 			}
 
 		};
 
 		test.dependsOn(closure);
 
-		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-		test.jvmArgs("-Dliferay.mode=test");
-		test.jvmArgs("-Duser.timezone=GMT");
-
-		// GRADLE-2697
+		test.jvmArgs(
+			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
+			"-Duser.timezone=GMT");
 
 		Project project = test.getProject();
 
@@ -511,20 +537,42 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					Map<String, Object> systemProperties =
-						test.getSystemProperties();
+					configureTaskTestIntegrationEnabled(test);
 
-					if (!systemProperties.containsKey(
-							"app.server.tomcat.dir")) {
+					// GRADLE-2697
 
-						systemProperties.put(
-							"app.server.tomcat.dir",
-							FileUtil.getAbsolutePath(
-								testIntegrationTomcatExtension.getDir()));
-					}
+					configureTaskSystemProperty(
+						test, "app.server.tomcat.dir",
+						testIntegrationTomcatExtension.getDir());
 				}
 
 			});
+	}
+
+	protected void configureTaskTestIntegrationEnabled(Test test) {
+		Project project = test.getProject();
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put(
+			"excludes",
+			StringUtil.replaceEnding(test.getExcludes(), ".class", ".java"));
+		args.put(
+			"includes",
+			StringUtil.replaceEnding(test.getIncludes(), ".class", ".java"));
+
+		for (File dir : test.getTestSrcDirs()) {
+			args.put("dir", dir);
+
+			FileTree fileTree = project.fileTree(args);
+
+			if (!fileTree.isEmpty()) {
+				return;
+			}
+		}
+
+		test.setDependsOn(Collections.emptySet());
+		test.setEnabled(false);
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
@@ -535,7 +583,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	private int _updateStartedAppServerStopCounters(
+	private static int _updateStartedAppServerStopCounters(
 		File binDir, boolean increment) {
 
 		int originalCounter = 0;

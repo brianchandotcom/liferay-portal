@@ -34,6 +34,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -126,7 +127,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 		test.setDescription("Runs the integration tests.");
 		test.setForkEvery(null);
-		test.setGroup("verification");
+		test.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		ConventionMapping conventionMapping = test.getConventionMapping();
 

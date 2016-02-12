@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.List;
@@ -48,7 +50,9 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public Object beforeMethod(Description description, Object target) {
+	public Object beforeMethod(Description description, Object target)
+		throws Exception {
+
 		initialize();
 
 		Object instance = ReflectionTestUtil.getFieldValue(
@@ -62,6 +66,8 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>());
 
 		CacheRegistryUtil.setActive(false);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		return modelListeners;
 	}

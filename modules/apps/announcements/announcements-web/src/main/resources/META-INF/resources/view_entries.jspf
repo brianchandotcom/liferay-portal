@@ -24,7 +24,29 @@ int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
 %>
 
 <div class="unread-entries">
-	<%@ include file="/entry_iterator.jspf" %>
+
+	<%
+	total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
+
+	searchContainer.setTotal(total);
+
+	results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
+
+	searchContainer.setResults(results);
+
+	for (int i = 0; i < results.size(); i++) {
+		AnnouncementsEntry entry = results.get(i);
+
+		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+		request.setAttribute("view_entry.jsp-flagValue", flagValue);
+	%>
+
+		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
+
+	<%
+	}
+	%>
+
 </div>
 
 <%
@@ -42,7 +64,29 @@ searchContainer = new SearchContainer(renderRequest, null, null, "cur2", announc
 %>
 
 <div class="read-entries">
-	<%@ include file="/entry_iterator.jspf" %>
+
+	<%
+	total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
+
+	searchContainer.setTotal(total);
+
+	results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
+
+	searchContainer.setResults(results);
+
+	for (int i = 0; i < results.size(); i++) {
+		AnnouncementsEntry entry = results.get(i);
+
+		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+		request.setAttribute("view_entry.jsp-flagValue", flagValue);
+	%>
+
+		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
+
+	<%
+	}
+	%>
+
 </div>
 
 <%

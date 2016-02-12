@@ -186,7 +186,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="edit" unicode="<%= true %>" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
 </liferay-util:buffer>
 
-<liferay-ui:success key="layoutAdded" message="the-page-has-been-created-succesfully" targetContainer="#controlMenuAlertContainer" />
+<liferay-ui:success key="layoutAdded" message="the-page-has-been-created-succesfully" targetNode="#controlMenuAlertsContainer" />
 
 <c:if test="<%= layoutsTreeDisplayContext.isShowStagingProcessMessage() %>">
 	<div class="alert alert-default alert-dismissible" data-dismiss="alert" role="alert">

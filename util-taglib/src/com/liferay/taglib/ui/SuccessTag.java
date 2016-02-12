@@ -36,8 +36,8 @@ public class SuccessTag extends IncludeTag {
 		_message = message;
 	}
 
-	public void setTargetContainer(String targetContainer) {
-		_targetContainer = targetContainer;
+	public void setTargetNode(String targetNode) {
+		_targetNode = targetNode;
 	}
 
 	public void setTranslateMessage(boolean translateMessage) {
@@ -58,7 +58,7 @@ public class SuccessTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:success:key", _key);
 		request.setAttribute("liferay-ui:success:message", _message);
-		request.setAttribute("liferay-ui:success:targetContainer", _targetContainer);
+		request.setAttribute("liferay-ui:success:targetNode", _targetNode);
 		request.setAttribute(
 			"liferay-ui:success:translateMessage",
 			String.valueOf(_translateMessage));
@@ -70,7 +70,7 @@ public class SuccessTag extends IncludeTag {
 
 	private String _key;
 	private String _message;
-	private String _targetContainer;
+	private String _targetNode;
 	private boolean _translateMessage = true;
 
 }

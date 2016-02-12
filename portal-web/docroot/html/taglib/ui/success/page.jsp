@@ -19,7 +19,7 @@
 <%
 String key = (String)request.getAttribute("liferay-ui:success:key");
 String message = (String)request.getAttribute("liferay-ui:success:message");
-String targetContainer = (String)request.getAttribute("liferay-ui:success:targetContainer");
+String targetNode = (String)request.getAttribute("liferay-ui:success:targetNode");
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:success:translateMessage"));
 
 if (translateMessage) {
@@ -31,7 +31,7 @@ if (translateMessage) {
 	<liferay-ui:alert
 		icon="check"
 		message="<%= message %>"
-		targetContainer="<%= targetContainer %>"
+		targetNode="<%= targetNode %>"
 		timeout="5000"
 		type="success"
 	/>

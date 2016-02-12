@@ -51,7 +51,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>targetContainer</name>
+			<name>targetNode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -4907,7 +4907,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>targetContainer</name>
+			<name>targetNode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

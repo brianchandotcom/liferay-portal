@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS</td>
-	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[contains(@class,'status')]</td>
+	<td>//div[contains(@id,'exportProcesses')]//h5[contains(@class,'status') and contains(.,'Successful')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -110,8 +110,9 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		return UnstableMessageUtil.getUnstableMessage(
-			JenkinsResultsParserUtil.getLocalURL(urlString));
+		return formatXML(
+			"<div>" + UnstableMessageUtil.getUnstableMessage(urlString) +
+				"</div>");
 	}
 
 }

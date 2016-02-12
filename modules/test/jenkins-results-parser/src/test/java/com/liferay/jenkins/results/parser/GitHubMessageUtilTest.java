@@ -166,7 +166,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		GitHubMessageUtil.getGitHubMessage(project);
 
-		return project.getProperty("github.post.comment.body");
+		return formatXML(
+			"<html>" + project.getProperty("github.post.comment.body") +
+				"</html>");
 	}
 
 	protected Project getProject(

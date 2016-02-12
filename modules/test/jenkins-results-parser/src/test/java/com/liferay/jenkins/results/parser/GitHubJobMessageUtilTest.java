@@ -123,7 +123,8 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		GitHubJobMessageUtil.getGitHubJobMessage(project);
 
-		return project.getProperty("report.html.content");
+		return formatXML(
+			"<div>" + project.getProperty("report.html.content") + "</div>");
 	}
 
 	protected Project getProject(

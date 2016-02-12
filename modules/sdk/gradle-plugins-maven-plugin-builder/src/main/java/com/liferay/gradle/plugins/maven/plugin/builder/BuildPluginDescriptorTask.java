@@ -387,6 +387,20 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, projectElement, "packaging", "maven-plugin");
 
+		Element repositoriesElement = document.createElement("repositories");
+
+		projectElement.appendChild(repositoriesElement);
+
+		Element repositoryElement = document.createElement("repository");
+
+		repositoriesElement.appendChild(repositoryElement);
+
+		XMLUtil.appendElement(
+			document, repositoryElement, "id", "repository.liferay.com");
+		XMLUtil.appendElement(
+			document, repositoryElement,
+			"url", "http://repository.liferay.com");
+
 		Element buildElement = document.createElement("build");
 
 		projectElement.appendChild(buildElement);
@@ -423,6 +437,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 			XMLUtil.appendElement(
 				document, configurationElement, "goalPrefix", goalPrefix);
+			XMLUtil.appendElement(
+				document, configurationElement,
+				"repository", "http://repository.liferay.com");
 		}
 
 		Element dependenciesElement = document.createElement("dependencies");

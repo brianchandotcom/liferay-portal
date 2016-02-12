@@ -3196,6 +3196,32 @@ services from `DLAppService` was the only sensible solution to this circularity.
 
 ---------------------------------------
 
+### The liferay-ui:flags has been deprecated and replaced with liferay-flags:flags
+- **Date:** 2015-Dec-2
+- **JIRA Ticket:** LPS-60967
+
+#### What changed?
+
+The `liferay-ui:flags` taglib has been deprecated and replaced with
+`liferay-flags:flags` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:flags` tag need to update
+their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-flags` tag library if it isn't already and
+update the tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Removed the liferay-ui:diff Tag and Replaced with liferay-frontend:diff
 - **Date:** 2015-Dec-14
 - **JIRA Ticket:** LPS-61326
@@ -3806,27 +3832,3 @@ There is no direct replacement. You should remove all usages of the `liferay-sec
 This change was made as a part of the ongoing strategy to deprecate unused tags.
 
 ---------------------------------------
-
-### The liferay-ui:flags has been deprecated and replaced with liferay-flags:flags
-- **Date:** 2015-Dec-2
-- **JIRA Ticket:** LPS-60967
-
-#### What changed?
-
-The `liferay-ui:flags` taglib has been deprecated and replaced with
-`liferay-flags:flags` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:flags` tag need to update
-their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-flags` tag library if it isn't already and
-update the tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.

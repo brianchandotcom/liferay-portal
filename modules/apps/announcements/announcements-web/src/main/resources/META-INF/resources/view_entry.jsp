@@ -86,10 +86,6 @@ if (entry.getPriority() > 0) {
 					</c:if>
 				</h4>
 
-				<%
-				boolean showScopeName = false;
-				%>
-
 				<div class="<%= hiddenEntry ? "hide" : StringPool.BLANK %> entry-scope">
 					<%@ include file="/entry_scope.jspf" %>
 				</div>

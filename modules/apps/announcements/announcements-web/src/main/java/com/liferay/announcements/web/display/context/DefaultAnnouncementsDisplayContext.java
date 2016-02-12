@@ -225,6 +225,14 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
+	public boolean isShowScopeName() {
+		String mvcRenderCommandName = ParamUtil.getString(
+			_announcementsRequestHelper.getRequest(), "mvcRenderCommandName");
+
+		return mvcRenderCommandName.equals("/announcements/edit_entry");
+	}
+
+	@Override
 	public boolean isTabs1Visible() {
 		String portletName = _announcementsRequestHelper.getPortletName();
 

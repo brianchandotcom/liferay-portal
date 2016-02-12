@@ -75,7 +75,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker == null) {
-			return false;
+			throw new IllegalStateException(
+				"Unable to use InlineSQLHelper without PermissionChecker " +
+					"being properly initialized");
 		}
 
 		if (groupId > 0) {

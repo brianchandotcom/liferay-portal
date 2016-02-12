@@ -90,9 +90,9 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 		try {
 			ps = connection.prepareStatement(
-				"select Calendar.calendarId from Calendar join " +
-					"CalendarResource where CalendarResource.classNameId = " +
-						"? and CalendarResource.userId = ?");
+				"select Calendar.calendarId from Calendar, CalendarResource " +
+					"where CalendarResource.classNameId = ? " +
+						"and CalendarResource.userId = ?");
 
 			ps.setLong(1, groupClassNameId);
 			ps.setLong(2, defaultUserId);

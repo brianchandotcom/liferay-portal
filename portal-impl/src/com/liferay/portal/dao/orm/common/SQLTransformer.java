@@ -223,6 +223,19 @@ public class SQLTransformer {
 		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
+	private String _replaceInStr(String sql) {
+		Matcher matcher = _instrPattern.matcher(sql);
+
+		if (_vendorPostgreSQL) {
+			return matcher.replaceAll("POSITION($2 in $1)");
+		}
+		else if (_vendorSybase || _vendorSQLServer) {
+			return matcher.replaceAll("CHARINDEX($2, $1)");
+		}
+
+		return sql;
+	}
+
 	private String _replaceIntegerDivision(String sql) {
 		Matcher matcher = _integerDivisionPattern.matcher(sql);
 
@@ -264,6 +277,16 @@ public class SQLTransformer {
 		return newSQL.replaceAll("(?i)replace\\(", "str_replace(");
 	}
 
+	private String _replaceSubstr(String sql) {
+		Matcher matcher = _substrPattern.matcher(sql);
+
+		if (_vendorSybase || _vendorSQLServer) {
+			return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+		}
+
+		return sql;
+	}
+
 	private String _transform(String sql) {
 		if (sql == null) {
 			return sql;
@@ -278,6 +301,8 @@ public class SQLTransformer {
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
+		newSQL = _replaceInStr(newSQL);
+		newSQL = _replaceSubstr(newSQL);
 
 		if (_vendorDB2) {
 			newSQL = _replaceLike(newSQL);
@@ -407,6 +432,8 @@ public class SQLTransformer {
 		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _instrPattern = Pattern.compile(
+		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _jpqlCountPattern = Pattern.compile(
@@ -417,6 +444,8 @@ public class SQLTransformer {
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(
 		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _substrPattern = Pattern.compile(
+		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
 	private DB _db;
 	private Map<String, String> _transformedSqls;

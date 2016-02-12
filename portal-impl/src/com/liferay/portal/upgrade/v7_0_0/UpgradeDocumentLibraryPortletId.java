@@ -81,9 +81,9 @@ public class UpgradeDocumentLibraryPortletId
 						"delete from ResourcePermission where companyId = ? " +
 							"and name = ? and scope = ? and primKey = ?");
 
-					ps2.setString(2, rs.getString("companyId"));
-					ps2.setString(1, _PORTLET_ID_DL_DISPLAY);
-					ps2.setString(3, rs.getString("scope"));
+					ps2.setLong(1, rs.getLong("companyId"));
+					ps2.setString(2, _PORTLET_ID_DL_DISPLAY);
+					ps2.setInt(3, rs.getInt("scope"));
 					ps2.setString(4, rs.getString("primKey"));
 
 					ps2.execute();

@@ -470,8 +470,14 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						}
 					);
 
+					<%
+					String paginationURL = discussionTaglibHelper.getPaginationURL();
+					paginationURL = HttpUtil.addParameter(paginationURL, "namespace", namespace);
+					paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
+					%>
+
 					$.ajax(
-						'<%= HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace) %>',
+						'<%= paginationURL %>',
 						{
 							data: data,
 							error: function() {

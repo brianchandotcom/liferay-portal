@@ -979,6 +979,10 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoMetadataSets" />
 
 		<execute macro="DMMetadataSet#add">

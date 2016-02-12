@@ -17,39 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = trashDisplayContext.getViewContentRedirectURL();
 
-long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
-
-long classNameId = ParamUtil.getLong(request, "classNameId");
-
-String className = StringPool.BLANK;
-
-if (classNameId != 0) {
-	className = PortalUtil.getClassName(classNameId);
-}
-
-long classPK = ParamUtil.getLong(request, "classPK");
-
-TrashEntry entry = null;
-
-if (trashEntryId > 0) {
-	entry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
-}
-else if (Validator.isNotNull(className) && (classPK > 0)) {
-	entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
-}
-
-if (entry != null) {
-	className = entry.getClassName();
-	classPK = entry.getClassPK();
-}
-
-TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
-
-TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+long classPK = trashDisplayContext.getClassPK();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -57,31 +27,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle
 
 PortletURL containerModelURL = renderResponse.createRenderURL();
 
+TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
+
 String trashHandlerContainerModelClassName = trashHandler.getContainerModelClassName(classPK);
 
 containerModelURL.setParameter("mvcPath", "/view_content.jsp");
 containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
 
-TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
-
-if (Validator.isNull(redirect)) {
-	ContainerModel parentContainerModel = trashHandler.getParentContainerModel(classPK);
-
-	PortletURL redirectURL = renderResponse.createRenderURL();
-
-	if ((parentContainerModel != null) && (classNameId > 0)) {
-		String parentContainerModelClassName = parentContainerModel.getModelClassName();
-
-		redirectURL.setParameter("mvcPath", "/view_content.jsp");
-		redirectURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(parentContainerModelClassName)));
-		redirectURL.setParameter("classPK", String.valueOf(parentContainerModel.getContainerModelId()));
-	}
-
-	redirect = redirectURL.toString();
-}
+TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, trashDisplayContext.getClassName(), classPK, containerModelURL);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 
 renderResponse.setTitle(trashRenderer.getTitle(locale));
 %>
@@ -118,10 +76,10 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			PortletURL iteratorURL = renderResponse.createRenderURL();
 
 			iteratorURL.setParameter("mvcPath", "/view_content.jsp");
-			iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
+			iteratorURL.setParameter("classNameId", String.valueOf(trashDisplayContext.getClassNameId()));
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
 
-			String emptyResultsMessage = LanguageUtil.format(request, "this-x-does-not-contain-an-entry", ResourceActionsUtil.getModelResource(locale, className), false);
+			String emptyResultsMessage = LanguageUtil.format(request, "this-x-does-not-contain-an-entry", ResourceActionsUtil.getModelResource(locale, trashDisplayContext.getClassName()), false);
 			%>
 
 			<liferay-ui:search-container

@@ -25,7 +25,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 
-<%@ page import="com.liferay.layout.admin.web.control.menu.CustomizationSettingsControlMenuEntry" %>
+<%@ page import="com.liferay.layout.admin.web.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
@@ -40,7 +40,7 @@
 <portlet:defineObjects />
 
 <%
-boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuEntry.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
+boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsProductNavigationControlMenuEntry.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 Map<String, Object> data = new HashMap<>();
 
 data.put("qa-id", "customizations");

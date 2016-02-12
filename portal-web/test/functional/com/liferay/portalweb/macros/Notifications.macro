@@ -9,6 +9,13 @@
 
 	<command name="gotoNotifications">
 		<if>
+			<condition function="IsElementPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+			<then>
+				<execute function="Click" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+			</then>
+		</if>
+
+		<if>
 			<condition function="IsElementPresent" locator1="Notifications#PROFILE_BADGE_COUNT" />
 			<then>
 				<execute function="Click" locator1="Notifications#PROFILE_BADGE_COUNT" />
@@ -57,23 +64,35 @@
 
 	<command name="viewBadgeCount">
 		<if>
-			<equals arg1="${activePanel}" arg2="Profile" />
+			<condition function="IsElementPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Notifications#USER_BAR_BADGE_COUNT" value1="${notificationCount}" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Notifications#PROFILE_BADGE_COUNT" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Notifications#PROFILE_BADGE_COUNT" value1="${notificationCount}" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${activePanel}" arg2="My Account" />
+			<condition function="IsElementPresent" locator1="Notifications#MY_ACCOUNT_BADGE_COUNT" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Notifications#MY_ACCOUNT_BADGE_COUNT" value1="${notificationCount}" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${activePanel}" arg2="Notifications" />
+			<condition function="IsElementPresent" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" value1="${notificationCount}" />
+				<if>
+					<condition function="IsElementPresent#isVisible" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" />
+					<then>
+						<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" value1="${notificationCount}" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</command>

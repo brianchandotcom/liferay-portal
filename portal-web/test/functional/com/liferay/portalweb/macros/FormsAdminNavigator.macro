@@ -70,4 +70,12 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW_ENTRIES" value1="View Entries" />
 	</command>
+
+	<command name="openPublishURL">
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishFormURL}" />
+		</execute>
+	</command>
 </definition>

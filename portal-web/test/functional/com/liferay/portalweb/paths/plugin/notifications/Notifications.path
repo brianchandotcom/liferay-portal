@@ -9,18 +9,23 @@
 </thead>
 <tbody>
 <tr>
+	<td>USER_BAR_BADGE_COUNT</td>
+	<td>//*[@data-qa-id='openUserMenu']//span[contains(@class,'notifications-count') and contains(@class,'sticker')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_BADGE_COUNT</td>
-	<td>//div[@class='panel-title']//span[contains(@class,'notifications-count')]</td>
+	<td>//div[@class='panel-title']/div[@aria-expanded="false"]//span[contains(@class,'notifications-count')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_ACCOUNT_BADGE_COUNT</td>
-	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='false')]//span[contains(@class,'badge')]</td>
+	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='false')]//span[contains(@class,'panel-notifications-count')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATIONS_BADGE_COUNT</td>
-	<td>//a[contains(@id,'NotificationsPortlet')]//span[contains(@class,'badge')]</td>
+	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='true')]/..//span[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,6 +42,11 @@
 <tr>
 	<td>NOTIFICATIONS_TITLE</td>
 	<td>//div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
+	<td>//div[@class='body-container']</td>
 	<td></td>
 </tr>
 <tr>

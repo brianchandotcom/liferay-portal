@@ -55,10 +55,6 @@ if (entry == null) {
 		<c:choose>
 			<c:when test="<%= entry != null %>">
 
-				<%
-				boolean showScopeName = true;
-				%>
-
 				<%@ include file="/entry_scope.jspf" %>
 
 			</c:when>

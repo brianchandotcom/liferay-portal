@@ -294,6 +294,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		if (Validator.isNull(redirect)) {
 			redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
+
+			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);

@@ -53,7 +53,7 @@ public class SQLSubstrTest {
 
 		_db.runSQL(_CREATE_TABLE_SQL);
 
-		_db.runSQL(_INSER_SQL);
+		_db.runSQL(_INSERT_SQL);
 	}
 
 	@AfterClass
@@ -89,7 +89,7 @@ public class SQLSubstrTest {
 
 	private static final String _DROP_TABLE = "drop table TestSubStr";
 
-	private static final String _INSER_SQL =
+	private static final String _INSERT_SQL =
 		"insert into TestSubStr values (1, 'EXAMPLE'" + ")";
 
 	private static DB _db;

@@ -113,6 +113,12 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewCheckboxValue">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX" />
+	</command>
+
 	<command name="viewDateField">
 		<execute macro="FormFields#viewDateLabel">
 			<var name="fieldLabel" value="${fieldLabel}" />
@@ -130,6 +136,13 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#DATE_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewDateValue">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />
 	</command>
 
 	<command name="viewFormName">
@@ -155,6 +168,17 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#RADIO_LABEL" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewRadioValue">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_radioOption" value="${fieldValue}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#RADIO_OPTION" />
+
+		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldValue" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#RADIO_OPTION" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewRepeatableTextFieldLabel">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
@@ -171,6 +195,12 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SELECT_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewSelectValue">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent" locator1="FormFields#SELECT_OPTION" />
 	</command>
 
 	<command name="viewSwitcherLabel">
@@ -203,5 +233,11 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewTextValue">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 </definition>

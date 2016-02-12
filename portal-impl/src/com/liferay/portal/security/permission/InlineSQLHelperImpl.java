@@ -14,13 +14,20 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -529,16 +536,57 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		long checkGroupId = 0;
-
 		if (groupIds.length == 1) {
-			checkGroupId = groupIds[0];
-		}
+			long groupId = groupIds[0];
 
-		if (permissionChecker.hasPermission(
-				checkGroupId, className, 0, ActionKeys.VIEW)) {
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			return sql;
+			if (group != null) {
+				long companyId = group.getCompanyId();
+
+				long[] roleIds = getRoleIds(groupId);
+
+				try {
+					if (ResourcePermissionLocalServiceUtil.
+							hasResourcePermission(
+								companyId, className,
+								ResourceConstants.SCOPE_GROUP,
+								String.valueOf(groupId), roleIds,
+								ActionKeys.VIEW)) {
+
+						return sql;
+					}
+
+					if (ResourcePermissionLocalServiceUtil.
+							hasResourcePermission(
+								companyId, className,
+								ResourceConstants.SCOPE_GROUP_TEMPLATE,
+								String.valueOf(
+									GroupConstants.DEFAULT_PARENT_GROUP_ID),
+								roleIds, ActionKeys.VIEW)) {
+
+						return sql;
+					}
+
+					if (ResourcePermissionLocalServiceUtil.
+							hasResourcePermission(
+								companyId, className,
+								ResourceConstants.SCOPE_COMPANY,
+								String.valueOf(companyId), roleIds,
+								ActionKeys.VIEW)) {
+
+						return sql;
+					}
+				}
+				catch (PortalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to retrieve resource permissions for " +
+								className + " inside Group " + groupId,
+							pe);
+					}
+				}
+			}
 		}
 
 		String permissionJoin = StringPool.BLANK;
@@ -621,5 +669,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
 
 	private static final String _WHERE_CLAUSE = " WHERE ";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InlineSQLHelperImpl.class);
 
 }

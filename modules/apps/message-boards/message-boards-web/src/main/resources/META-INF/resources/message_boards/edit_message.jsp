@@ -205,13 +205,9 @@ if (portletTitleBasedNavigation) {
 						</span>
 
 						<%
-						MBCategory category = null;
-
-						message = curParentMessage;
-
-						request.setAttribute("edit_message.jsp-category", category);
+						request.setAttribute("edit_message.jsp-category", null);
 						request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
-						request.setAttribute("edit_message.jsp-message", message);
+						request.setAttribute("edit_message.jsp-message", curParentMessage);
 						request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
 						request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
 						request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);

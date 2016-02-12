@@ -33,13 +33,11 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 <div class="card list-group-card panel">
 	<div class="panel-heading">
 		<div class="card-row card-row-padded">
-			<c:if test="<%= !message.isAnonymous() %>">
-				<div class="card-col-field">
-					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= message.getUserId() %>" />
-					</div>
+			<div class="card-col-field">
+				<div class="list-group-card-icon">
+					<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>" />
 				</div>
-			</c:if>
+			</div>
 
 			<div class="card-col-content card-col-gutters">
 

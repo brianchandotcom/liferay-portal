@@ -72,17 +72,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </aui:nav-bar>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS, "entries-display-style", "descriptive");
-}
-else {
-	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS, "entries-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
@@ -102,7 +91,7 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= searchContainer.getIteratorURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -148,7 +137,7 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 </liferay-frontend:management-bar>
 
 <%
-request.setAttribute("view.jsp-displayStyle", displayStyle);
+request.setAttribute("view.jsp-displayStyle", "descriptive");
 request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 

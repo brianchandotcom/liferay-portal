@@ -176,36 +176,49 @@ if (groupThreadsUserId > 0) {
 							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<liferay-ui:search-container-column-user
-							cssClass="user-icon-lg"
-							showDetails="<%= false %>"
-							userId="<%= thread.getLastPostByUserId() %>"
-						/>
+						<liferay-ui:search-container-column-text>
+							<liferay-ui:user-portrait
+								cssClass="user-icon-lg"
+								userId="<%= thread.getLastPostByUserId() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<c:choose>
 								<c:when test="<%= thread.getMessageCount() == 1 %>">
 
 									<%
+									String messageUserName = "anonymous";
+
+									if (!message.isAnonymous()) {
+										messageUserName = message.getUserName();
+									}
+
 									Date modifiedDate = message.getModifiedDate();
 
 									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
 									<h5 class="text-default">
-										<liferay-ui:message arguments="<%= new String[] {message.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+										<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</h5>
 								</c:when>
 								<c:otherwise>
 
 									<%
+									String messageUserName = "anonymous";
+
+									if (thread.getLastPostByUserId() != 0) {
+										messageUserName = PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK);
+									}
+
 									Date lastPostDate = thread.getLastPostDate();
 
 									String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
 									%>
 
 									<h5 class="text-default">
-										<liferay-ui:message arguments="<%= new String[] {PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK), lastPostDateDescription} %>" key="x-replied-x-ago" />
+										<liferay-ui:message arguments="<%= new String[] {messageUserName, lastPostDateDescription} %>" key="x-replied-x-ago" />
 									</h5>
 								</c:otherwise>
 							</c:choose>
@@ -221,13 +234,19 @@ if (groupThreadsUserId > 0) {
 							</h4>
 
 							<%
+							boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+							%>
+
+							<c:if test="<%= portletTitleBasedNavigation %>">
+								<span class="h6">
+									<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+								</span>
+							</c:if>
+
+							<%
 							int messageCount = thread.getMessageCount();
 							int viewCount = thread.getViewCount();
 							%>
-
-							<span class="h6">
-								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
-							</span>
 
 							<span class="h6">
 								<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />

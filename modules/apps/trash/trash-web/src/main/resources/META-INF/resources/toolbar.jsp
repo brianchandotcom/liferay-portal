@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-EntrySearch entrySearch = (EntrySearch)request.getAttribute("view.jsp-recycleBinEntrySearch");
-%>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="trash"
@@ -38,21 +32,21 @@ EntrySearch entrySearch = (EntrySearch)request.getAttribute("view.jsp-recycleBin
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= trashDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= entrySearch.getOrderByCol() %>"
-			orderByType="<%= entrySearch.getOrderByType() %>"
+			orderByCol="<%= trashDisplayContext.getOrderByCol() %>"
+			orderByType="<%= trashDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"removed-date"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= trashDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 

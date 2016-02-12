@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.model;
  */
 public class LayoutConstants {
 
+	public static final String CUSTOMIZABLE_LAYOUT = "CUSTOMIZABLE_LAYOUT";
+
 	public static final long DEFAULT_PARENT_LAYOUT_ID = 0;
 
 	public static final long DEFAULT_PLID = 0;

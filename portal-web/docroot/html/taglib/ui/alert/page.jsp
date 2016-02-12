@@ -31,5 +31,5 @@
 			title: '<%= title %>',
 			type: '<%= type %>'
 		}
-	).render();
+	).render(A.one('<%= targetContainer %>'));
 </aui:script>

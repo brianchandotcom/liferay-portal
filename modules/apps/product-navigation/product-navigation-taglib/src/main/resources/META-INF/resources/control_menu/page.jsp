@@ -79,6 +79,8 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 			%>
 
 		</div>
+
+		<div id="controlMenuAlertContainer"></div>
 	</div>
 
 	<aui:script use="liferay-product-navigation-control-menu">

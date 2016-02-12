@@ -4907,6 +4907,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>targetContainer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to translate the success message into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>translateMessage</name>
 			<required>false</required>

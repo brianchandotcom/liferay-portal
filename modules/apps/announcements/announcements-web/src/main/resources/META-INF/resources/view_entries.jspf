@@ -53,19 +53,6 @@ if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) &
 %>
 
 <aui:script>
-	function <portlet:namespace />handleEntry(entryId) {
-		var entry = AUI.$('#<portlet:namespace />' + entryId);
-
-		var container = entry.parent();
-
-		if (container.hasClass('entries')) {
-			<portlet:namespace />markEntry(entryId);
-		}
-		else {
-			<portlet:namespace />unmarkEntry(entryId);
-		}
-	}
-
 	function <portlet:namespace />markEntry(entryId) {
 		Liferay.Service(
 			'/announcementsflag/add-flag',

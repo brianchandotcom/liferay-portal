@@ -59,56 +59,60 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 <aui:form action="<%= moveCategoryURL %>" cssClass="container-fluid-1280" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
-	<aui:select label="vocabulary" name="vocabularyId">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:select label="vocabulary" name="vocabularyId">
 
-		<%
-		for (AssetVocabulary vocabulary : vocabularies) {
-		%>
+				<%
+				for (AssetVocabulary vocabulary : vocabularies) {
+				%>
 
-			<aui:option label="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</aui:select>
+			</aui:select>
 
-	<label><liferay-ui:message key="parent-category" /></label>
+			<label><liferay-ui:message key="parent-category" /></label>
 
-	<div class="lfr-tags-selector-content">
-		<aui:input name="parentCategoryId" type="hidden" />
+			<div class="lfr-tags-selector-content">
+				<aui:input name="parentCategoryId" type="hidden" />
 
-		<%
-		for (AssetVocabulary curVocabulary : vocabularies) {
-		%>
+				<%
+				for (AssetVocabulary curVocabulary : vocabularies) {
+				%>
 
-			<div class="asset-category-selector <%= (curVocabulary.getVocabularyId() == vocabularyId) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>"></div>
+					<div class="asset-category-selector <%= (curVocabulary.getVocabularyId() == vocabularyId) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>"></div>
 
-			<aui:script use="liferay-asset-categories-selector">
-				new Liferay.AssetCategoriesSelector(
-					{
-						contentBox: '#<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>',
+					<aui:script use="liferay-asset-categories-selector">
+						new Liferay.AssetCategoriesSelector(
+							{
+								contentBox: '#<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>',
 
-						<c:if test="<%= (curVocabulary.getVocabularyId() == vocabularyId) && (parentCategory != null) %>">
-							curEntries: '<%= parentCategory.getTitle(locale) %>',
-							curEntryIds: '<%= parentCategory.getCategoryId() %>',
-						</c:if>
+								<c:if test="<%= (curVocabulary.getVocabularyId() == vocabularyId) && (parentCategory != null) %>">
+									curEntries: '<%= parentCategory.getTitle(locale) %>',
+									curEntryIds: '<%= parentCategory.getCategoryId() %>',
+								</c:if>
 
-						hiddenInput: '#<portlet:namespace />parentCategoryId',
-						instanceVar: '<portlet:namespace />',
-						label: '<%= UnicodeLanguageUtil.format(request, "select-x", curVocabulary.getTitle(locale), false) %>',
-						singleSelect: <%= true %>,
-						vocabularyGroupIds: '<%= scopeGroupId %>',
-						vocabularyIds: '<%= curVocabulary.getVocabularyId() %>'
-					}
-				).render();
-			</aui:script>
+								hiddenInput: '#<portlet:namespace />parentCategoryId',
+								instanceVar: '<portlet:namespace />',
+								label: '<%= UnicodeLanguageUtil.format(request, "select-x", curVocabulary.getTitle(locale), false) %>',
+								singleSelect: <%= true %>,
+								vocabularyGroupIds: '<%= scopeGroupId %>',
+								vocabularyIds: '<%= curVocabulary.getVocabularyId() %>'
+							}
+						).render();
+					</aui:script>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</div>
+			</div>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="move" />

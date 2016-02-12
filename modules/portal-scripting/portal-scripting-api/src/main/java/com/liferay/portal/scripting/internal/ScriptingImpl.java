@@ -72,8 +72,8 @@ public class ScriptingImpl implements Scripting {
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
-			String... servletContextNames)
-			throws ScriptingException {
+			ClassLoader... classLoaders)
+		throws ScriptingException {
 
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
 
@@ -87,8 +87,8 @@ public class ScriptingImpl implements Scripting {
 
 		try {
 			return scriptingExecutor.eval(
-					allowedClasses, inputObjects, outputNames, script,
-					getClassLoaders(servletContextNames));
+				allowedClasses, inputObjects, outputNames, script,
+				classLoaders);
 		}
 		catch (Exception e) {
 			throw new ScriptingException(getErrorMessage(script, e), e);
@@ -96,28 +96,17 @@ public class ScriptingImpl implements Scripting {
 		finally {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-						"Evaluated script in " + stopWatch.getTime() + " ms");
+					"Evaluated script in " + stopWatch.getTime() + " ms");
 			}
 		}
-	}
-
-	@Override
-	public void exec(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script, String... servletContextNames)
-			throws ScriptingException {
-
-		eval(
-				allowedClasses, inputObjects, null, language, script,
-				servletContextNames);
 	}
 
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
-			ClassLoader... classLoaders)
-			throws ScriptingException {
+			String... servletContextNames)
+		throws ScriptingException {
 
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
 
@@ -131,8 +120,8 @@ public class ScriptingImpl implements Scripting {
 
 		try {
 			return scriptingExecutor.eval(
-					allowedClasses, inputObjects, outputNames, script,
-					classLoaders);
+				allowedClasses, inputObjects, outputNames, script,
+				getClassLoaders(servletContextNames));
 		}
 		catch (Exception e) {
 			throw new ScriptingException(getErrorMessage(script, e), e);
@@ -140,7 +129,7 @@ public class ScriptingImpl implements Scripting {
 		finally {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-						"Evaluated script in " + stopWatch.getTime() + " ms");
+					"Evaluated script in " + stopWatch.getTime() + " ms");
 			}
 		}
 	}
@@ -149,11 +138,21 @@ public class ScriptingImpl implements Scripting {
 	public void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			String language, String script, ClassLoader... classLoaders)
-			throws ScriptingException {
+		throws ScriptingException {
 
 		eval(
-				allowedClasses, inputObjects, null, language, script,
-				classLoaders);
+			allowedClasses, inputObjects, null, language, script, classLoaders);
+	}
+
+	@Override
+	public void exec(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			String language, String script, String... servletContextNames)
+		throws ScriptingException {
+
+		eval(
+			allowedClasses, inputObjects, null, language, script,
+			servletContextNames);
 	}
 
 	@Override

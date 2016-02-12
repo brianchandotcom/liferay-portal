@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.scripting;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Map;
@@ -67,8 +66,7 @@ public class ScriptingUtil {
 		throws ScriptingException {
 
 		getScripting().exec(
-			allowedClasses, inputObjects, language, script,
-			classLoaders);
+			allowedClasses, inputObjects, language, script, classLoaders);
 	}
 
 	public static void exec(

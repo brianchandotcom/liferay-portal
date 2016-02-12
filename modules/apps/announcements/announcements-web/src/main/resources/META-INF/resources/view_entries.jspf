@@ -14,31 +14,22 @@
  */
 --%>
 
-<%
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
-
-List<AnnouncementsEntry> results = null;
-int total = 0;
-
-int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
-%>
-
 <div class="unread-entries">
 
 	<%
-	total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 
-	searchContainer.setTotal(total);
+	int visibleMessagesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.NOT_HIDDEN);
 
-	results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
+	searchContainer.setTotal(visibleMessagesCount);
 
-	searchContainer.setResults(results);
+	List<AnnouncementsEntry> visibleMessages = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.NOT_HIDDEN, searchContainer.getStart(), searchContainer.getEnd());
 
-	for (int i = 0; i < results.size(); i++) {
-		AnnouncementsEntry entry = results.get(i);
+	searchContainer.setResults(visibleMessages);
 
+	for (AnnouncementsEntry entry : visibleMessages) {
 		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute("view_entry.jsp-flagValue", flagValue);
+		request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.NOT_HIDDEN);
 	%>
 
 		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
@@ -48,37 +39,27 @@ int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
 	%>
 
 </div>
-
-<%
-int visibleMessagesCount = total;
-%>
 
 <c:if test="<%= visibleMessagesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
-<%
-flagValue = AnnouncementsFlagConstants.HIDDEN;
-
-searchContainer = new SearchContainer(renderRequest, null, null, "cur2", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
-%>
-
 <div class="read-entries">
 
 	<%
-	total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue);
+	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 
-	searchContainer.setTotal(total);
+	int hiddenMessagesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.HIDDEN);
 
-	results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flagValue, searchContainer.getStart(), searchContainer.getEnd());
+	searchContainer.setTotal(hiddenMessagesCount);
 
-	searchContainer.setResults(results);
+	List<AnnouncementsEntry> hiddenMessages = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), AnnouncementsFlagConstants.HIDDEN, searchContainer.getStart(), searchContainer.getEnd());
 
-	for (int i = 0; i < results.size(); i++) {
-		AnnouncementsEntry entry = results.get(i);
+	searchContainer.setResults(hiddenMessages);
 
+	for (AnnouncementsEntry entry : hiddenMessages) {
 		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute("view_entry.jsp-flagValue", flagValue);
+		request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.HIDDEN);
 	%>
 
 		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
@@ -88,10 +69,6 @@ searchContainer = new SearchContainer(renderRequest, null, null, "cur2", announc
 	%>
 
 </div>
-
-<%
-int hiddenMessagesCount = total;
-%>
 
 <c:if test="<%= hiddenMessagesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" type="article" />

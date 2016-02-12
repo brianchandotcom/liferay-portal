@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -213,6 +214,14 @@ public class DefaultAnnouncementsDisplayContext
 		String tabs1 = _announcementsRequestHelper.getTabs1();
 
 		return tabs1.equals("manage-entries");
+	}
+
+	@Override
+	public boolean isShowPreview() {
+		String mvcRenderCommandName = ParamUtil.getString(
+			_announcementsRequestHelper.getRequest(), "mvcRenderCommandName");
+
+		return mvcRenderCommandName.equals("/announcements/preview_entry");
 	}
 
 	@Override

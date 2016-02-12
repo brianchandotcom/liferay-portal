@@ -20,7 +20,6 @@
 String className = GetterUtil.getString(request.getAttribute("view_entry.jsp-className"));
 AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
 int flagValue = GetterUtil.getInteger(request.getAttribute("view_entry.jsp-flagValue"));
-String tabs1 = GetterUtil.getString(request.getAttribute("view_entry.jsp-tabs1"));
 
 boolean hiddenEntry = false;
 boolean readEntry = false;
@@ -96,7 +95,7 @@ if (entry.getPriority() > 0) {
 				</div>
 			</div>
 
-			<c:if test='<%= !tabs1.equals("preview") %>'>
+			<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
 				<div class="card-col-field">
 					<%@ include file="/entry_action.jspf" %>
 				</div>

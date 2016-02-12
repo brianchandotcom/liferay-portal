@@ -31,4 +31,7 @@ public interface AuditConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
 
+	@Meta.AD(deflt = "200", required = false)
+	public int auditMessageMaxQueueSize();
+
 }

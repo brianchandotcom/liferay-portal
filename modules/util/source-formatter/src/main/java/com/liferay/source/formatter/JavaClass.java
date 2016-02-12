@@ -45,8 +45,8 @@ public class JavaClass {
 
 	public JavaClass(
 			String name, String packagePath, File file, String fileName,
-			String absolutePath, String classContent, int lineCount,
-			String indent, JavaClass outerClass,
+			String absolutePath, String content, String classContent,
+			int lineCount, String indent, JavaClass outerClass,
 			List<String> javaTermAccessLevelModifierExcludes,
 			JavaSourceProcessor javaSourceProcessor)
 		throws Exception {
@@ -56,6 +56,7 @@ public class JavaClass {
 		_file = file;
 		_fileName = fileName;
 		_absolutePath = absolutePath;
+		_content = content;
 		_classContent = classContent;
 		_lineCount = lineCount;
 		_indent = indent;
@@ -894,7 +895,7 @@ public class JavaClass {
 		}
 
 		JavaClass innerClass = new JavaClass(
-			name, _packagePath, _file, _fileName, _absolutePath,
+			name, _packagePath, _file, _fileName, _absolutePath, _content,
 			javaTermContent, lineCount, _indent + StringPool.TAB, this,
 			_javaTermAccessLevelModifierExcludes, _javaSourceProcessor);
 
@@ -1369,6 +1370,7 @@ public class JavaClass {
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
 	private int _constructorCount = 0;
+	private final String _content;
 	private final Pattern _enumTypePattern = Pattern.compile(
 		"\t[A-Z0-9]+[ _,;\\(\n]");
 	private final File _file;

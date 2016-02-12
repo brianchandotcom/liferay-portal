@@ -24,9 +24,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import java.io.IOException;
 
@@ -34,6 +33,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,13 +43,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=400"
 	},
-	service = ControlMenuEntry.class
+	service = ProductNavigationControlMenuEntry.class
 )
-public class CustomizationSettingsControlMenuEntry
-	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
+public class CustomizationSettingsProductNavigationControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
 	public static final String CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION =
 		"CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION";
@@ -160,6 +161,6 @@ public class CustomizationSettingsControlMenuEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomizationSettingsControlMenuEntry.class);
+		CustomizationSettingsProductNavigationControlMenuEntry.class);
 
 }

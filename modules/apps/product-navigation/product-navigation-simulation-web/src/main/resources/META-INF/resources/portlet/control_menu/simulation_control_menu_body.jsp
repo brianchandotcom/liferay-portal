@@ -16,36 +16,38 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
-<div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="simulationPanelId">
-	<div class="product-menu sidebar sidebar-body sidebar-inverse">
-		<h4 class="sidebar-header">
-			<span><liferay-ui:message key="simulation" /></span>
+<liferay-util:body-bottom outputKey="simulationMenu">
+	<div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="simulationPanelId">
+		<div class="product-menu sidebar sidebar-body sidebar-inverse">
+			<h4 class="sidebar-header">
+				<span><liferay-ui:message key="simulation" /></span>
 
-			<aui:icon cssClass="close icon-monospaced" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
-		</h4>
+				<aui:icon cssClass="close icon-monospaced" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
+			</h4>
 
-		<div class="loading-animation"></div>
+			<div class="loading-animation"></div>
+		</div>
 	</div>
-</div>
 
-<aui:script use="liferay-store,io-request,parse-content">
-	var simulationToggle = $('#simulationToggleId');
+	<aui:script use="liferay-store,io-request,parse-content">
+		var simulationToggle = $('#simulationToggleId');
 
-	simulationToggle.sideNavigation();
+		simulationToggle.sideNavigation();
 
-	var simulationPanel = $('#simulationPanelId');
+		var simulationPanel = $('#simulationPanelId');
 
-	simulationPanel.on(
-		'urlLoaded.lexicon.sidenav',
-		function() {
-			simulationPanel.find('.loading-animation').remove();
-		}
-	);
+		simulationPanel.on(
+			'urlLoaded.lexicon.sidenav',
+			function() {
+				simulationPanel.find('.loading-animation').remove();
+			}
+		);
 
-	A.one('#<portlet:namespace />closeSimulationPanel').on(
-		'click',
-		function(event) {
-			simulationToggle.sideNavigation('hide');
-		}
-	);
-</aui:script>
+		A.one('#<portlet:namespace />closeSimulationPanel').on(
+			'click',
+			function(event) {
+				simulationToggle.sideNavigation('hide');
+			}
+		);
+	</aui:script>
+</liferay-util:body-bottom>

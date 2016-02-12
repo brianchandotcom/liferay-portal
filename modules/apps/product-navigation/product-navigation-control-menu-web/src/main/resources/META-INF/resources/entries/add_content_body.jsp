@@ -16,36 +16,38 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="closed lfr-add-panel lfr-admin-panel lfr-product-menu-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="addPanelId">
-	<div class="product-menu sidebar sidebar-body sidebar-inverse">
-		<h4 class="sidebar-header">
-			<span><liferay-ui:message key="add" /></span>
+<liferay-util:body-bottom outputKey="addContentMenu">
+	<div class="closed lfr-add-panel lfr-admin-panel lfr-product-menu-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="addPanelId">
+		<div class="product-menu sidebar sidebar-body sidebar-inverse">
+			<h4 class="sidebar-header">
+				<span><liferay-ui:message key="add" /></span>
 
-			<aui:icon cssClass="close icon-monospaced" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
-		</h4>
+				<aui:icon cssClass="close icon-monospaced" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
+			</h4>
 
-		<div class="loading-animation"></div>
+			<div class="loading-animation"></div>
+		</div>
 	</div>
-</div>
 
-<aui:script use="liferay-store,io-request,parse-content">
-	var addToggle = $('#addToggleId');
+	<aui:script use="liferay-store,io-request,parse-content">
+		var addToggle = $('#addToggleId');
 
-	addToggle.sideNavigation();
+		addToggle.sideNavigation();
 
-	var addPanel = $('#addPanelId');
+		var addPanel = $('#addPanelId');
 
-	addPanel.on(
-		'urlLoaded.lexicon.sidenav',
-		function() {
-			addPanel.find('.loading-animation').remove();
-		}
-	);
+		addPanel.on(
+			'urlLoaded.lexicon.sidenav',
+			function() {
+				addPanel.find('.loading-animation').remove();
+			}
+		);
 
-	A.one('#<portlet:namespace />closePanelAdd').on(
-		'click',
-		function(event) {
-			addToggle.sideNavigation('hide');
-		}
-	);
-</aui:script>
+		A.one('#<portlet:namespace />closePanelAdd').on(
+			'click',
+			function(event) {
+				addToggle.sideNavigation('hide');
+			}
+		);
+	</aui:script>
+</liferay-util:body-bottom>

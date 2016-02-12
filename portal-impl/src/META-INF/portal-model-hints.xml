@@ -1143,6 +1143,34 @@
 		<field name="replierUserId" type="long" />
 		<field name="statusId" type="long" />
 	</model>
+	<model name="com.liferay.portal.kernel.model.OrgGroupRole">
+		<field name="mvccVersion" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="roleId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.kernel.model.OrgLabor">
+		<field name="mvccVersion" type="long" />
+		<field name="orgLaborId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="typeId" type="long" />
+		<field name="sunOpen" type="int" />
+		<field name="sunClose" type="int" />
+		<field name="monOpen" type="int" />
+		<field name="monClose" type="int" />
+		<field name="tueOpen" type="int" />
+		<field name="tueClose" type="int" />
+		<field name="wedOpen" type="int" />
+		<field name="wedClose" type="int" />
+		<field name="thuOpen" type="int" />
+		<field name="thuClose" type="int" />
+		<field name="friOpen" type="int" />
+		<field name="friClose" type="int" />
+		<field name="satOpen" type="int" />
+		<field name="satClose" type="int" />
+	</model>
 	<model name="com.liferay.portal.kernel.model.Organization">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -1173,34 +1201,6 @@
 			<hint name="display-width">400</hint>
 		</field>
 		<field name="logoId" type="long" />
-	</model>
-	<model name="com.liferay.portal.kernel.model.OrgGroupRole">
-		<field name="mvccVersion" type="long" />
-		<field name="organizationId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="roleId" type="long" />
-		<field name="companyId" type="long" />
-	</model>
-	<model name="com.liferay.portal.kernel.model.OrgLabor">
-		<field name="mvccVersion" type="long" />
-		<field name="orgLaborId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="organizationId" type="long" />
-		<field name="typeId" type="long" />
-		<field name="sunOpen" type="int" />
-		<field name="sunClose" type="int" />
-		<field name="monOpen" type="int" />
-		<field name="monClose" type="int" />
-		<field name="tueOpen" type="int" />
-		<field name="tueClose" type="int" />
-		<field name="wedOpen" type="int" />
-		<field name="wedClose" type="int" />
-		<field name="thuOpen" type="int" />
-		<field name="thuClose" type="int" />
-		<field name="friOpen" type="int" />
-		<field name="friClose" type="int" />
-		<field name="satOpen" type="int" />
-		<field name="satClose" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.PasswordPolicy">
 		<field name="mvccVersion" type="long" />

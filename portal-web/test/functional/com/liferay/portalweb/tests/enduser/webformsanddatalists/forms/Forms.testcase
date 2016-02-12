@@ -467,7 +467,7 @@
 						<equals arg1="${fieldValueNotVisible}" arg2="${fieldValue}" />
 					</not>
 					<then>
-						<execute macro="FormsAdmin#viewEntryNotPresent">
+						<execute macro="FormsAdmin#viewTableEntryNotPresent">
 							<var name="fieldLabel" value="Text Field" />
 							<var name="fieldValue" value="${fieldValueNotVisible}" />
 						</execute>

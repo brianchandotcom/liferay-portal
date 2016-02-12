@@ -110,7 +110,7 @@
 		</execute>
 	</command>
 
-	<command name="viewEntryNotPresent">
+	<command name="viewTableEntryNotPresent">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldValue" value="${fieldValue}" />
 

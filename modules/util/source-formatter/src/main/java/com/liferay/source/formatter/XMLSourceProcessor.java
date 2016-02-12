@@ -327,6 +327,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("-hbm.xml")) {
 			formatHBMXML(fileName, newContent);
 		}
+		else if (fileName.endsWith("-model-hints.xml")) {
+			formatModelHintsXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
@@ -759,6 +762,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "import", null,
 			new ElementComparator("class", true));
+	}
+
+	protected void formatModelHintsXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "hint-collection", null,
+			new ElementComparator());
 	}
 
 	protected String formatPortletXML(

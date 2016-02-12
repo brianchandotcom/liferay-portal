@@ -327,6 +327,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("-hbm.xml")) {
 			formatHBMXML(fileName, newContent);
 		}
+		else if (fileName.endsWith("-log4j.xml")) {
+			formatLog4jXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("-model-hints.xml")) {
 			formatModelHintsXML(fileName, newContent);
 		}
@@ -762,6 +765,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "import", null,
 			new ElementComparator("class", true));
+	}
+
+	protected void formatLog4jXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "category", null,
+			new ElementComparator(true));
 	}
 
 	protected void formatModelHintsXML(String fileName, String content)

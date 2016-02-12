@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
  */
 public class BNDImportsFormatter extends ImportsFormatter {
 
-	public static String getImports(String content) {
-		Matcher matcher = _importsPattern.matcher(content);
+	public static String getImports(String content, Pattern pattern) {
+		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find()) {
 			return matcher.group(1);
@@ -40,8 +40,10 @@ public class BNDImportsFormatter extends ImportsFormatter {
 		return null;
 	}
 
-	public static String formatBNDImports(String content) throws IOException {
-		String imports = getImports(content);
+	public static String formatBNDImports(String content, Pattern pattern)
+		throws IOException {
+
+		String imports = getImports(content, pattern);
 
 		if (Validator.isNull(imports)) {
 			return content;
@@ -79,9 +81,5 @@ public class BNDImportsFormatter extends ImportsFormatter {
 
 		return new ImportPackage(importString, false, line);
 	}
-
-	private static final Pattern _importsPattern = Pattern.compile(
-		"\nImport-Package:\\\\\n(.*?\n)[^\t]",
-		Pattern.DOTALL | Pattern.MULTILINE);
 
 }

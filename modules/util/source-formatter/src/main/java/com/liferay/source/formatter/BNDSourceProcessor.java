@@ -67,7 +67,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = sortDefinitions(content);
 
-		content = BNDImportsFormatter.formatBNDImports(content);
+		content = BNDImportsFormatter.formatBNDImports(
+			content, _exportsPattern);
+		content = BNDImportsFormatter.formatBNDImports(
+			content, _importsPattern);
 
 		return trimContent(content, false);
 	}
@@ -120,6 +123,12 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+	private Pattern _exportsPattern = Pattern.compile(
+		"\nExport-Package:\\\\\n(.*?\n)[^\t]",
+		Pattern.DOTALL | Pattern.MULTILINE);
+	private Pattern _importsPattern = Pattern.compile(
+		"\nImport-Package:\\\\\n(.*?\n)[^\t]",
+		Pattern.DOTALL | Pattern.MULTILINE);
 	private Pattern _incorrectTabPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(

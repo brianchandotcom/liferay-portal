@@ -54,9 +54,17 @@ body {
 			}
 		}
 
-		.nav > li > a {
-			@include media-query(null, $screen-xs-max) {
-				border-bottom: 1px solid #E1E1E1;
+		.nav > li {
+			& > a {
+				@include media-query(null, $screen-xs-max) {
+					border-bottom: 1px solid #E1E1E1;
+				}
+			}
+
+			&:last-child > a {
+				@include media-query(null, $screen-xs-max) {
+					border-bottom: none;
+				}
 			}
 		}
 
@@ -166,6 +174,12 @@ body {
 			@include sm {
 				display: none;
 			}
+		}
+	}
+
+	.navbar-nav {
+		@include media-query(null, $screen-xs-max) {
+			margin: 0 0;
 		}
 	}
 

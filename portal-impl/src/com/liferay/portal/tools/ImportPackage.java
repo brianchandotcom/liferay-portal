@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Carlos Sierra Andrés
+ * @author Hugo Huijser
  */
 public class ImportPackage implements Comparable<ImportPackage> {
 
@@ -38,7 +39,23 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			}
 		}
 
-		return _importString.compareTo(importPackage.getImportString());
+		String importPackageImportString = importPackage.getImportString();
+
+		int value = _importString.compareTo(importPackageImportString);
+
+		if (_importString.startsWith(StringPool.EXCLAMATION) ||
+			importPackageImportString.startsWith(StringPool.EXCLAMATION)) {
+
+			return value;
+		}
+
+		if (_importString.equals(StringPool.STAR) ||
+			importPackageImportString.equals(StringPool.STAR)) {
+
+			return -value;
+		}
+
+		return value;
 	}
 
 	@Override
@@ -91,6 +108,10 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			pos = _importString.indexOf(StringPool.PERIOD);
 		}
 
+		if (pos == -1) {
+			return _importString;
+		}
+
 		return _importString.substring(0, pos);
 	}
 
@@ -100,6 +121,16 @@ public class ImportPackage implements Comparable<ImportPackage> {
 	}
 
 	public boolean isGroupedWith(ImportPackage importPackage) {
+		if (_importString.equals(StringPool.STAR)) {
+			return true;
+		}
+
+		String importPackageImportString = importPackage.getImportString();
+
+		if (importPackageImportString.equals(StringPool.STAR)) {
+			return true;
+		}
+
 		if (_isStatic != importPackage.isStatic()) {
 			return false;
 		}

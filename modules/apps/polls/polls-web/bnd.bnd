@@ -3,12 +3,14 @@ Bundle-SymbolicName: com.liferay.polls.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.exportimport.kernel.lar,\
-	\
+	com.liferay.polls.constants,\
+	com.liferay.polls.lar,\
+	com.liferay.polls.service.permission,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.model,\
@@ -18,12 +20,7 @@ Import-Package:\
 	com.liferay.portal.struts,\
 	com.liferay.portal.theme,\
 	com.liferay.portal.webserver,\
-	\
 	com.liferay.portlet,\
-	\
-	com.liferay.polls.constants,\
-	com.liferay.polls.lar,\
-	com.liferay.polls.service.permission,\
 	\
 	org.apache.commons.chain,\
 	org.apache.commons.chain.*,\

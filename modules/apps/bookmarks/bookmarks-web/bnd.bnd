@@ -5,6 +5,7 @@ Import-Package:\
 	com.liferay.asset.kernel,\
 	com.liferay.asset.kernel.model,\
 	com.liferay.asset.kernel.service,\
+	com.liferay.bookmarks.*,\
 	com.liferay.bookmarks.asset,\
 	com.liferay.bookmarks.configuration,\
 	com.liferay.bookmarks.constants,\
@@ -13,27 +14,26 @@ Import-Package:\
 	com.liferay.bookmarks.notifications,\
 	com.liferay.bookmarks.opensearch,\
 	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.search,\
 	com.liferay.bookmarks.service,\
 	com.liferay.bookmarks.service.permission,\
 	com.liferay.bookmarks.social,\
-	com.liferay.bookmarks.search,\
 	com.liferay.bookmarks.trash,\
 	com.liferay.bookmarks.util,\
-	com.liferay.bookmarks.*,\
 	com.liferay.expando.kernel.model,\
 	com.liferay.exportimport.kernel.lar,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.servlet.*,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.trash,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.workflow,\
+	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\

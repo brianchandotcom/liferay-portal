@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.journal.test
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.liferay.util.xml,\
+	\
 	!org.junit.experimental.theories,\
 	*
 Include-Resource:\

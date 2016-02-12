@@ -1,6 +1,7 @@
 Bundle-Version: 7.0.0
 Export-Package:\
 	!com.liferay.portal.kernel.test.*,\
+	\
 	com.liferay.*
 Import-Package: *
 Include-Resource: classes

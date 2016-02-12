@@ -6,10 +6,13 @@ Export-Package:\
 	freemarker.cache,\
 	freemarker.core,\
 	freemarker.ext,\
+	\
 	freemarker.ext.beans,\
 	freemarker.ext.jsp,\
 	freemarker.ext.servlet,\
+	\
 	freemarker.template,\
+	\
 	freemarker.template.utility
 Import-Package:\
 	!com.sun.javadoc,\

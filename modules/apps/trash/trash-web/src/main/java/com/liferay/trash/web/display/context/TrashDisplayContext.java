@@ -15,8 +15,14 @@
 package com.liferay.trash.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
@@ -38,6 +44,44 @@ public class TrashDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
+	public String getClassName() {
+		TrashEntry entry = getEntry();
+
+		if (entry != null) {
+			return entry.getClassName();
+		}
+
+		String className = StringPool.BLANK;
+
+		long classNameId = getClassNameId();
+
+		if (classNameId > 0) {
+			className = PortalUtil.getClassName(getClassNameId());
+		}
+
+		return className;
+	}
+
+	public long getClassNameId() {
+		TrashEntry entry = getEntry();
+
+		if (entry != null) {
+			return entry.getClassNameId();
+		}
+
+		return ParamUtil.getLong(_request, "classNameId");
+	}
+
+	public long getClassPK() {
+		TrashEntry entry = getEntry();
+
+		if (entry != null) {
+			return entry.getClassPK();
+		}
+
+		return ParamUtil.getLong(_request, "classPK");
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -55,7 +99,20 @@ public class TrashDisplayContext {
 
 		long trashEntryId = ParamUtil.getLong(_request, "trashEntryId");
 
-		_entry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
+		long classNameId = ParamUtil.getLong(_request, "classNameId");
+		long classPK = ParamUtil.getLong(_request, "classPK");
+
+		if (trashEntryId > 0) {
+			_entry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
+		}
+		else if(classNameId > 0 && classPK > 0) {
+			String className = PortalUtil.getClassName(classNameId);
+
+			if (Validator.isNotNull(className)) {
+				_entry = TrashEntryLocalServiceUtil.fetchEntry(
+					className, classPK);
+			}
+		}
 
 		return _entry;
 	}
@@ -107,11 +164,78 @@ public class TrashDisplayContext {
 		return portletURL;
 	}
 
+	public long getTrashEntryId() {
+		TrashEntry entry = getEntry();
+
+		return (entry != null) ? entry.getEntryId() : 0;
+	}
+
+	public TrashHandler getTrashHandler() {
+		if (_trashHandler != null) {
+			return _trashHandler;
+		}
+
+		_trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getClassName());
+
+		return _trashHandler;
+	}
+
+	public TrashRenderer getTrashRenderer() throws PortalException {
+		if (_trashRenderer != null) {
+			return _trashRenderer;
+		}
+
+		TrashHandler trashHandler = getTrashHandler();
+
+		long classPK = getClassPK();
+
+		if (classPK > 0) {
+			_trashRenderer = trashHandler.getTrashRenderer(getClassPK());
+		}
+
+		return _trashRenderer;
+	}
+
+	public String getViewContentRedirectURL() throws PortalException {
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			TrashHandler trashHandler = getTrashHandler();
+
+			ContainerModel parentContainerModel =
+				trashHandler.getParentContainerModel(getClassPK());
+
+			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+			if ((parentContainerModel != null) && (getClassNameId() > 0)) {
+				String parentContainerModelClassName =
+					parentContainerModel.getModelClassName();
+
+				redirectURL.setParameter("mvcPath", "/view_content.jsp");
+				redirectURL.setParameter(
+					"classNameId",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							parentContainerModelClassName)));
+				redirectURL.setParameter(
+					"classPK",
+					String.valueOf(parentContainerModel.getContainerModelId()));
+			}
+
+			redirect = redirectURL.toString();
+		}
+
+		return redirect;
+	}
+
 	private String _displayStyle;
 	private TrashEntry _entry;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;
+	private TrashHandler _trashHandler;
+	private TrashRenderer _trashRenderer;
 
 }

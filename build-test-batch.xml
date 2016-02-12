@@ -451,11 +451,12 @@ mysql.executable=${mysql.executable}]]></echo>
 
 	<macrodef name="run-integration-test">
 		<attribute name="database.type" />
+		<attribute default="${database.@{database.type}.version}" name="database.version" />
 
 		<sequential>
 			<run-batch-test>
 				<test-action>
-					<database-test-run-test database.type="@{database.type}">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
 						<test-action>
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1265cd6`.*
+*This document has been reviewed through commit `16cdd6b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3764,7 +3764,7 @@ This change was made because WAP is an obsolete functionality.
 ---------------------------------------
 
 ### Removed the aui:layout Tag with No Direct Replacement
-- **Date:** 2015-Feb-08
+- **Date:** 2016-Feb-08
 - **JIRA Ticket:** LPS-62935
 
 #### What changed?
@@ -3789,21 +3789,23 @@ tags.
 ---------------------------------------
 
 ### Deprecated the liferay-portlet:icon-back Tag with No Direct Replacement
-- **Date:** 2015-Feb-10
+- **Date:** 2016-Feb-10
 - **JIRA Ticket:** LPS-63101
 
 #### What changed?
 
-The `liferay-portlet:icon-back` tag has been deprecated with no direct replacement.
+The `liferay-portlet:icon-back` tag has been deprecated with no direct
+replacement.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-portlet:icon-back` tag must remove their usage of the tag.
+Plugins or templates that are using the `liferay-portlet:icon-back` tag must
+remove their usage of the tag.
 
 #### How should I update my code?
 
-There is no direct replacement. You should remove all usages of the `liferay-portlet:icon-back`
-tag.
+There is no direct replacement. You should remove all usages of the
+`liferay-portlet:icon-back` tag.
 
 #### Why was this change made?
 

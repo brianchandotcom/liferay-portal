@@ -764,7 +764,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, document.getRootElement(), "import", null,
-			new ElementComparator("class", true));
+			new ElementComparator("class"));
 	}
 
 	protected void formatLog4jXML(String fileName, String content)
@@ -788,7 +788,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName, rootElement, "hint-collection", null,
 			new ElementComparator());
 		checkOrder(
-			fileName, rootElement, "model", null, new ElementComparator(true));
+			fileName, rootElement, "model", null, new ElementComparator());
 	}
 
 	protected String formatPortletXML(

@@ -293,7 +293,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								</c:when>
 								<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
 									<liferay-ui:search-container-column-text>
-										<div class="sticker sticker-default sticker-lg <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
+										<div class="sticker-default sticker-lg <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
 											<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
 										</div>
 									</liferay-ui:search-container-column-text>

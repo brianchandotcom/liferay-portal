@@ -1210,7 +1210,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addViaCKEditor">
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>

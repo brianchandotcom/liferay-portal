@@ -51,12 +51,12 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LABEL</td>
-	<td>//li[contains(@data-search,'${key_pageType}')]//label[contains(@for,'addLayoutSelectedPageTemplate')]</td>
+	<td>//div[contains(@data-search,'${key_pageType}')]//label[contains(@for,'addLayoutSelectedPageTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_RADIO</td>
-	<td>//li[contains(@data-search,'${key_pageType}')]//input[contains(@id,'addLayoutSelectedPageTemplate')]</td>
+	<td>//div[contains(@data-search,'${key_pageType}')]//input[contains(@id,'addLayoutSelectedPageTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL</td>
-	<td>//li[contains(@data-search,'${key_pageType}')]//label[contains(@for,'addLayoutLayoutPrototypeLinkEnabled')]</td>
+	<td>//div[contains(@data-search,'${key_pageType}')]//label[contains(@for,'addLayoutLayoutPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX</td>
-	<td>//li[contains(@data-search,'${key_pageType}')]//input[contains(@name,'layoutPrototypeLinkEnabled')]</td>
+	<td>//div[contains(@data-search,'${key_pageType}')]//input[contains(@name,'layoutPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

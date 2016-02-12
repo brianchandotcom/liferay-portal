@@ -1399,12 +1399,21 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		public ElementComparator(String nameAttribute) {
+			this(nameAttribute, false);
+		}
+
+		public ElementComparator(String nameAttribute, boolean importPackage) {
 			_nameAttribute = nameAttribute;
+			_importPackage = importPackage;
 		}
 
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
 			String elementName2 = getElementName(element2);
+
+			if (_importPackage) {
+				return elementName1.compareTo(elementName2);
+			}
 
 			return super.compare(elementName1, elementName2);
 		}
@@ -1419,6 +1428,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
 
+		private boolean _importPackage;
 		private String _nameAttribute;
 
 	}

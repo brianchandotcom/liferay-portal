@@ -324,6 +324,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("routes.xml")) {
 			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
 		}
+		else if (fileName.endsWith("-hbm.xml")) {
+			formatHBMXML(fileName, newContent);
+		}
+		else if (fileName.endsWith("-log4j.xml")) {
+			formatLog4jXML(fileName, newContent);
+		}
+		else if (fileName.endsWith("-model-hints.xml")) {
+			formatModelHintsXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
@@ -649,7 +658,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, document.getRootElement(), "sql", null,
-			new CustomSQLElementComparator());
+			new CustomSQLElementComparator("id"));
 
 		Matcher matcher = _whereNotInSQLPattern.matcher(content);
 
@@ -746,6 +755,40 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sb.append(content.substring(pos));
 
 		return sb.toString();
+	}
+
+	protected void formatHBMXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "import", null,
+			new ElementComparator("class"));
+	}
+
+	protected void formatLog4jXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "category", null,
+			new ElementComparator(true));
+	}
+
+	protected void formatModelHintsXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		checkOrder(
+			fileName, rootElement, "hint-collection", null,
+			new ElementComparator());
+		checkOrder(
+			fileName, rootElement, "model", null, new ElementComparator());
 	}
 
 	protected String formatPortletXML(
@@ -868,7 +911,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		ServiceFinderElementComparator serviceFinderElementComparator =
 			new ServiceFinderElementComparator();
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
-			new ServiceReferenceElementComparator();
+			new ServiceReferenceElementComparator("entity");
 
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
@@ -924,7 +967,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
-			new StrutsActionElementComparator());
+			new StrutsActionElementComparator("path"));
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
@@ -1356,6 +1399,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private class CustomSQLElementComparator extends ElementComparator {
 
+		public CustomSQLElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(Element sqlElement1, Element sqlElement2) {
 			String sqlElementName1 = getElementName(sqlElement1);
@@ -1385,21 +1432,35 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return elementName.substring(0, pos);
 		}
 
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "id";
-
 	}
 
 	private static class ElementComparator
 		extends NaturalOrderStringComparator {
 
+		public ElementComparator() {
+			this(_NAME_ATTRIBUTE_DEFAULT);
+		}
+
+		public ElementComparator(boolean importPackage) {
+			this(_NAME_ATTRIBUTE_DEFAULT, importPackage);
+		}
+
+		public ElementComparator(String nameAttribute) {
+			this(nameAttribute, false);
+		}
+
+		public ElementComparator(String nameAttribute, boolean importPackage) {
+			_nameAttribute = nameAttribute;
+			_importPackage = importPackage;
+		}
+
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
 			String elementName2 = getElementName(element2);
+
+			if (_importPackage) {
+				return elementName1.compareTo(elementName2);
+			}
 
 			return super.compare(elementName1, elementName2);
 		}
@@ -1409,10 +1470,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
+			return _nameAttribute;
 		}
 
-		private static final String _NAME_ATTRIBUTE = "name";
+		private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
+
+		private boolean _importPackage;
+		private String _nameAttribute;
 
 	}
 
@@ -1518,6 +1582,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class ServiceReferenceElementComparator
 		extends ElementComparator {
 
+		public ServiceReferenceElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(
 			Element referenceElement1, Element referenceElement2) {
@@ -1536,13 +1604,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return entityName1.compareToIgnoreCase(entityName2);
 		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "entity";
 
 	}
 
@@ -1583,6 +1644,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class StrutsActionElementComparator
 		extends ElementComparator {
 
+		public StrutsActionElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
 		@Override
 		public int compare(Element actionElement1, Element actionElement2) {
 			String path1 = actionElement1.attributeValue("path");
@@ -1598,13 +1663,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return path1.compareTo(path2);
 		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "path";
 
 	}
 

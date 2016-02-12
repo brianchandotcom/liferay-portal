@@ -24,7 +24,11 @@ portletURL.setParameter("tabs1", announcementsRequestHelper.getTabs1());
 %>
 
 <c:if test="<%= announcementsDisplayContext.isTabs1Visible() %>">
-	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
+	<liferay-ui:tabs
+		names="<%= announcementsDisplayContext.getTabs1Names() %>"
+		type="tabs nav-tabs-default"
+		url="<%= announcementsDisplayContext.getTabs1PortletURL() %>"
+	/>
 </c:if>
 
 <c:choose>

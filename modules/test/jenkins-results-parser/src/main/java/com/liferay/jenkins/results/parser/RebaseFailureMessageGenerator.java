@@ -33,13 +33,13 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<p>Please fix <strong>rebase errors</strong> on <strong>");
-		sb.append("<a href=\\\"https://github.com/");
+		sb.append("<a href=\"https://github.com/");
 		sb.append(project.getProperty("github.pull.request.head.username"));
 		sb.append("/");
 		sb.append(project.getProperty("repository"));
 		sb.append("/tree/");
 		sb.append(project.getProperty("github.pull.request.head.branch"));
-		sb.append("\\\">");
+		sb.append("\">");
 		sb.append(project.getProperty("github.pull.request.head.username"));
 		sb.append("/");
 		sb.append(project.getProperty("github.pull.request.head.branch"));

@@ -45,18 +45,18 @@ public class GitHubMessageUtil {
 		if (!rebaseBranchGitCommit.equals("")) {
 			sb.append("<h4>Base Branch:</h4>");
 			sb.append("<p>Branch Name: ");
-			sb.append("<a href=\\\"https://github.com/liferay/");
+			sb.append("<a href=\"https://github.com/liferay/");
 			sb.append(project.getProperty("repository"));
 			sb.append("/tree/");
 			sb.append(project.getProperty("branch.name"));
-			sb.append("\\\">");
+			sb.append("\">");
 			sb.append(project.getProperty("branch.name"));
 			sb.append("</a><br />");
-			sb.append("Branch GIT ID: <a href=\\\"https://github.com/liferay/");
+			sb.append("Branch GIT ID: <a href=\"https://github.com/liferay/");
 			sb.append(project.getProperty("repository"));
 			sb.append("/commit/");
 			sb.append(rebaseBranchGitCommit);
-			sb.append("\\\">");
+			sb.append("\">");
 			sb.append(rebaseBranchGitCommit);
 			sb.append("</a></p>");
 		}
@@ -71,9 +71,9 @@ public class GitHubMessageUtil {
 			sb.append("<strike><strong>");
 		}
 
-		sb.append("<a href=\\\"");
+		sb.append("<a href=\"");
 		sb.append(project.getProperty("env.BUILD_URL"));
-		sb.append("\\\">");
+		sb.append("\">");
 		sb.append(project.getProperty("top.level.build.name"));
 		sb.append("</a>");
 
@@ -93,32 +93,34 @@ public class GitHubMessageUtil {
 			Matcher matcher = _pattern.matcher(content);
 
 			if (matcher.find()) {
-				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
-					sb.append("<li>");
+				sb.append("<li>");
+
+				if (content.contains("job-result=\"SUCCESS\"")) {
 					sb.append(matcher.group(1));
-					sb.append("</li>");
 				}
 				else {
-					sb.append("<li><strike><strong>");
+					sb.append("<strike><strong>");
 					sb.append(matcher.group(1));
-					sb.append("</strong></strike></li>");
+					sb.append("</strong></strike>");
 				}
+
+				sb.append("</li>");
 			}
 		}
 
 		sb.append("</ul>");
 
-		sb.append("<h5>For more details click <a href=\\\"");
+		sb.append("<h5>For more details click <a href=\"");
 		sb.append(project.getProperty("top.level.shared.dir.url"));
-		sb.append("/jenkins-report.html\\\">here</a>.</h5>");
+		sb.append("/jenkins-report.html\">here</a>.</h5>");
 
 		if (!topLevelResult.equals("SUCCESS")) {
 			sb.append("<hr />");
 			sb.append("<h4>Failed Jobs:</h4>");
 			sb.append("<ol>");
-			sb.append("<li><h5><a href=\\\"");
+			sb.append("<li><h5><a href=\"");
 			sb.append(project.getProperty("env.BUILD_URL"));
-			sb.append("\\\">");
+			sb.append("\">");
 			sb.append(project.getProperty("top.level.build.name"));
 			sb.append("</a></h5>");
 			sb.append("<h6>Job Results:</h6>");
@@ -158,7 +160,7 @@ public class GitHubMessageUtil {
 
 				String content = JenkinsResultsParserUtil.read(file);
 
-				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
+				if (content.contains("job-result=\"SUCCESS\"")) {
 					continue;
 				}
 

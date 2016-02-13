@@ -78,6 +78,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			Conf2ScopeMappingContainer.COMPILE);
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
+		_repositoryScopeMappings.put(
+			JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			Conf2ScopeMappingContainer.COMPILE);
+		_repositoryScopeMappings.put(
+			"provided", Conf2ScopeMappingContainer.PROVIDED);
 	}
 
 	@TaskAction
@@ -104,19 +109,25 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);
 		}
-		finally {
+		/*finally {
 			if (preparedSourceDir != null) {
 				project.delete(preparedSourceDir);
 			}
 
 			project.delete(pomFile);
-		}
+		}*/
 	}
 
 	public void configurationScopeMapping(
 		String configurationName, String scope) {
 
 		_configurationScopeMappings.put(configurationName, scope);
+	}
+
+	public void repositoryScopeMapping(
+		String repositoryName, String scope) {
+
+		_repositoryScopeMappings.put(repositoryName, scope);
 	}
 
 	public BuildPluginDescriptorTask forcedExclusions(
@@ -140,6 +151,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public Map<String, String> getConfigurationScopeMappings() {
 		return _configurationScopeMappings;
+	}
+
+	public Map<String, String> getRepositoryScopeMappings() {
+		return _repositoryScopeMappings;
 	}
 
 	@Input
@@ -325,6 +340,38 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(doc, exclusionElement, "groupId", groupId);
 	}
 
+	protected void appendRepositoryElements(
+			Document doc, Element repositoryElement, String configurationName,
+			String scope) {
+
+			Project project = getProject();
+
+			ConfigurationContainer configurationContainer =
+				project.getConfigurations();
+
+			Configuration configuration = configurationContainer.findByName(
+				configurationName);
+
+			if (configuration == null) {
+				return;
+			}
+
+			Set<Dependency> dependencies = configuration.getDependencies();
+
+			Set<String> forcedExclusions = getForcedExclusions();
+
+			for (Dependency entry : dependencies) {
+				Element dependencyElement = doc.createElement("repository");
+
+				repositoryElement.appendChild(repositoryElement);
+
+				XMLUtil.appendElement(
+					doc, dependencyElement, "id", entry.getGroup());
+				XMLUtil.appendElement(
+					doc, dependencyElement, "url", entry.getName());
+			}
+		}
+
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
 		final Project project = getProject();
 
@@ -395,11 +442,15 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		repositoriesElement.appendChild(repositoryElement);
 
-		XMLUtil.appendElement(
-			document, repositoryElement, "id", "repository.liferay.com");
-		XMLUtil.appendElement(
-			document, repositoryElement,
-			"url", "http://repository.liferay.com");
+		Map<String, String> pomRepositoryScopeMappings =
+				getRepositoryScopeMappings();
+
+			for (Map.Entry<String, String> entry :
+					pomRepositoryScopeMappings.entrySet()) {
+
+				String configurationName = entry.getKey();
+				String scope = entry.getValue();
+			}
 
 		Element buildElement = document.createElement("build");
 
@@ -640,6 +691,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _pomGroupId;
 	private Object _pomVersion;
 	private Object _sourceDir;
+	private final Map<String, String> _repositoryScopeMappings =
+		new HashMap<>();
 	private boolean _useSetterComments = true;
 
 }

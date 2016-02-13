@@ -47,6 +47,8 @@
 	</command>
 
 	<command name="gotoManageDataDefinitions">
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_DATA_DEFINTIONS" value1="Manage Data Definitions" />

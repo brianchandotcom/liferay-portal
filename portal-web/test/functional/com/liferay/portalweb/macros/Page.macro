@@ -48,7 +48,7 @@
 
 				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
 				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-				<execute function="Check" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+				<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
 

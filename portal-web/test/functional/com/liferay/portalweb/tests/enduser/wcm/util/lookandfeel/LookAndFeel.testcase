@@ -7,7 +7,20 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
 	<command name="ConfigureCustomStylesViaLookAndFeelPG" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Sign In" />
 			<var name="portletOption" value="Look and Feel" />

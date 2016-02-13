@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.social.kernel.model,\
+	*
 Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

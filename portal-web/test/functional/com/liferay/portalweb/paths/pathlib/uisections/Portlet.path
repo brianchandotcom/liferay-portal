@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>LOADED</td>
-	<td>//div[@data-qa-id='app-loaded']</td>
+	<td>//div[@data-qa-id='app-loaded']//span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

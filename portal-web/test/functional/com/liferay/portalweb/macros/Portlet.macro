@@ -141,6 +141,8 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<var name="key_portletName" value="${portletName}" />
+
 		<execute function="AssertElementPresent" locator1="Portlet#LOADED" />
 	</command>
 

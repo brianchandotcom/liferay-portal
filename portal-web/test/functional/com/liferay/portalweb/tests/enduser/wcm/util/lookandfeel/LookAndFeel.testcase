@@ -8,8 +8,6 @@
 	</set-up>
 
 	<command name="ConfigureCustomStylesViaLookAndFeelPG" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Sign In" />
 			<var name="portletOption" value="Look and Feel" />

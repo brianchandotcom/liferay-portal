@@ -71,9 +71,7 @@ public class JavaFieldsParser {
 				clazz = classLoader.loadClass(className);
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to load class " + className);
-				}
+				_log.error("Unable to load class " + className, e);
 
 				break;
 			}
@@ -100,9 +98,7 @@ public class JavaFieldsParser {
 				}
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to load field " + fieldName);
-				}
+				_log.error("Unable to load field " + fieldName, e);
 
 				break;
 			}

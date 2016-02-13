@@ -10,31 +10,31 @@
 		<tag-class>com.liferay.trash.taglib.servlet.taglib.EmptyTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A message to display to confirm that the user wants to remove the item(s) from the recycle bin</description>
+			<description>A message to display to confirm that the user wants to remove the item(s) from the recycle bin.</description>
 			<name>confirmMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link</description>
+			<description>A message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link.</description>
 			<name>emptyMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to display to give users information about removing items from the recycle bin</description>
+			<description>A message to display to give users information about removing items from the recycle bin.</description>
 			<name>infoMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL for the <![CDATA[<code>empty-trash</code>]]> button/link</description>
+			<description>A URL for the <![CDATA[<code>empty-trash</code>]]> button/link.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of items to be removed from the recycle bin</description>
+			<description>The number of items to be removed from the recycle bin.</description>
 			<name>totalEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -47,13 +47,13 @@
 		<tag-class>com.liferay.trash.taglib.servlet.taglib.UndoTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The URL of the undo link</description>
+			<description>The URL of the undo link.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A redirect URL</description>
+			<description>A redirect URL.</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

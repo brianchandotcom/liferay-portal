@@ -1324,6 +1324,29 @@ public class ArrayUtil {
 		return list.toArray(new String[list.size()]);
 	}
 
+	public static <T> T[] remove(T[] array, T value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
+		List<T> list = new ArrayList<>();
+
+		for (int i = 0; i < array.length; i++) {
+			if (value != array[i]) {
+				list.add(array[i]);
+			}
+		}
+
+		if (array.length == list.size()) {
+			return array;
+		}
+
+		Class<?> arrayClass = array.getClass();
+
+		return list.toArray(
+			(T[])Array.newInstance(arrayClass.getComponentType(), list.size()));
+	}
+
 	public static String[] removeByPrefix(String[] array, String prefix) {
 		List<String> list = new ArrayList<>();
 

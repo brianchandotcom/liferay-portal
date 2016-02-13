@@ -17,7 +17,7 @@
 	</command>
 
 	<command name="viewFormEntryTable">
-		<execute macro="FormsAdmin#viewFormEntry">
+		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="${fieldLabel}" />
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>

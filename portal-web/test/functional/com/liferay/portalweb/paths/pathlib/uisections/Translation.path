@@ -39,8 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_LANGUAGE_SELECT</td>
-	<td>//select[contains(@class,'default-locale')]</td>
+	<td>DEFAULT_LANGUAGE</td>
+	<td>//span[contains(@class,'translation')]</td>
 	<td></td>
 </tr>
 <tr>

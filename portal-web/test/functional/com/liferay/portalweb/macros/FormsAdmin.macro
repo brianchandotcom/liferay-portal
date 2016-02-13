@@ -77,11 +77,37 @@
 		</while>
 	</command>
 
-	<command name="viewEntryNotPresent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
+	<command name="viewCannotEditFormEntries">
+		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertElementNotPresent" locator1="FormFields#FIELD_ADD" />
+	</command>
 
-		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	<command name="viewCheckboxEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX" />
+	</command>
+
+	<command name="viewDateEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewDateLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewDateValue">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
 	</command>
 
 	<command name="viewForm">
@@ -98,13 +124,6 @@
 		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 	</command>
 
-	<command name="viewFormEntry">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
-	</command>
-
 	<command name="viewFormIcon">
 		<var name="key_formName" value="${formName}" />
 
@@ -113,7 +132,71 @@
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ICON_DISPLAY_NAME" value1="${formName}" />
 	</command>
 
+	<command name="viewFormTableEntry">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewNoFormEntries">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
+	</command>
+
+	<command name="viewParagraphEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewParagraphBody">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
+	<command name="viewRadioEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewRadioLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewRadioValue">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
+	<command name="viewSelectEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewSelectLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectValue">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="viewTableEntryNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	</command>
+
+	<command name="viewTextEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
 	</command>
 </definition>

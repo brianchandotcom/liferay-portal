@@ -1597,9 +1597,17 @@
 	</command>
 
 	<command name="EditDefaultLanguageAndPublishRecord" priority="3">
-		<description message="This is a use case for LPS-59154." />
+		<description message="This is a use case for LPS-59154 and LPS-62523." />
 
 		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="defaultPortalLanguage" value="Spanish (Spain)" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1644,13 +1652,13 @@
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
+		<execute macro="DDLRecord#viewDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text Spanish" />
 			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#changeDefaultLanguage">
-			<var name="defaultLanguage" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">
@@ -1734,13 +1742,13 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
+		<execute macro="DDLRecord#viewDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text Spanish" />
 			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLRecord#changeDefaultLanguage">
-			<var name="defaultLanguage" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">

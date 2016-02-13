@@ -90,36 +90,39 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 		String updateSQL = updateSB.toString();
 
-		StringBundler selectSB = new StringBundler(11);
+		StringBundler selectPrefixSB = new StringBundler(7);
+
+		selectPrefixSB.append("select distinct ");
+		selectPrefixSB.append(columnName);
+		selectPrefixSB.append(" from ");
+		selectPrefixSB.append(tableName);
+		selectPrefixSB.append(" where ");
+		selectPrefixSB.append(columnName);
+
+		if (wildcardMode.equals(WildcardMode.LEADING) ||
+			wildcardMode.equals(WildcardMode.SURROUND)) {
+
+			selectPrefixSB.append(" like '%");
+		}
+		else {
+			selectPrefixSB.append(" like '");
+		}
+
+		String selectPrefix = selectPrefixSB.toString();
+
+		String selectPostfix = StringPool.APOSTROPHE;
+
+		if (wildcardMode.equals(WildcardMode.SURROUND) ||
+			wildcardMode.equals(WildcardMode.TRAILING)) {
+
+			selectPostfix = "%'";
+		}
 
 		for (String[] name : names) {
-			selectSB.append("select ");
-			selectSB.append(columnName);
-			selectSB.append(" from ");
-			selectSB.append(tableName);
-			selectSB.append(" where ");
-			selectSB.append(columnName);
-			selectSB.append(" like '");
+			String selectSQL = selectPrefix.concat(name[0]).concat(
+				selectPostfix);
 
-			if (wildcardMode.equals(WildcardMode.LEADING) ||
-				wildcardMode.equals(WildcardMode.SURROUND)) {
-
-				selectSB.append(StringPool.PERCENT);
-			}
-
-			selectSB.append(name[0]);
-
-			if (wildcardMode.equals(WildcardMode.SURROUND) ||
-				wildcardMode.equals(WildcardMode.TRAILING)) {
-
-				selectSB.append(StringPool.PERCENT);
-			}
-
-			selectSB.append(StringPool.APOSTROPHE);
-
-			upgradeTable(columnName, selectSB.toString(), updateSQL, name);
-
-			selectSB.setIndex(0);
+			upgradeTable(columnName, selectSQL, updateSQL, name);
 		}
 	}
 

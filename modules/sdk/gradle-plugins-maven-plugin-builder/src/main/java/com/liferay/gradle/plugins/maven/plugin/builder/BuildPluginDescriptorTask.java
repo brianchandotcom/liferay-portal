@@ -270,8 +270,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	protected void appendDependencyElements(
-		Document doc, Element dependenciesElement, String configurationName,
-		String scope) {
+		Document document, Element dependenciesElement,
+		String configurationName, String scope) {
 
 		Project project = getProject();
 
@@ -290,33 +290,37 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Set<String> forcedExclusions = getForcedExclusions();
 
 		for (Dependency dependency : dependencies) {
-			Element dependencyElement = doc.createElement("dependency");
+			Element dependencyElement = document.createElement("dependency");
 
 			dependenciesElement.appendChild(dependencyElement);
 
 			XMLUtil.appendElement(
-				doc, dependencyElement, "groupId", dependency.getGroup());
+				document, dependencyElement, "groupId", dependency.getGroup());
 			XMLUtil.appendElement(
-				doc, dependencyElement, "artifactId", dependency.getName());
+				document, dependencyElement, "artifactId",
+				dependency.getName());
 			XMLUtil.appendElement(
-				doc, dependencyElement, "version", dependency.getVersion());
-			XMLUtil.appendElement(doc, dependencyElement, "scope", scope);
+				document, dependencyElement, "version",
+				dependency.getVersion());
+			XMLUtil.appendElement(document, dependencyElement, "scope", scope);
 
 			if (!forcedExclusions.isEmpty()) {
-				Element exclusionsElement = doc.createElement("exclusions");
+				Element exclusionsElement = document.createElement(
+					"exclusions");
 
 				dependencyElement.appendChild(exclusionsElement);
 
 				for (String dependencyNotation : forcedExclusions) {
 					appendDependencyExclusionElement(
-						doc, exclusionsElement, dependencyNotation);
+						document, exclusionsElement, dependencyNotation);
 				}
 			}
 		}
 	}
 
 	protected void appendDependencyExclusionElement(
-		Document doc, Element exclusionsElement, String dependencyNotation) {
+		Document document, Element exclusionsElement,
+		String dependencyNotation) {
 
 		String[] tokens = parseDependencyNotation(dependencyNotation);
 
@@ -324,19 +328,20 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		String artifactId = tokens[1];
 
 		appendDependencyExclusionElement(
-			doc, exclusionsElement, groupId, artifactId);
+			document, exclusionsElement, groupId, artifactId);
 	}
 
 	protected void appendDependencyExclusionElement(
-		Document doc, Element exclusionsElement, String groupId,
+		Document document, Element exclusionsElement, String groupId,
 		String artifactId) {
 
-		Element exclusionElement = doc.createElement("exclusion");
+		Element exclusionElement = document.createElement("exclusion");
 
 		exclusionsElement.appendChild(exclusionElement);
 
-		XMLUtil.appendElement(doc, exclusionElement, "artifactId", artifactId);
-		XMLUtil.appendElement(doc, exclusionElement, "groupId", groupId);
+		XMLUtil.appendElement(
+			document, exclusionElement, "artifactId", artifactId);
+		XMLUtil.appendElement(document, exclusionElement, "groupId", groupId);
 	}
 
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {

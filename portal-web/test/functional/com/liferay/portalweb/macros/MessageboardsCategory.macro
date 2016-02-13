@@ -131,10 +131,12 @@
 
 	<command name="deleteCP">
 		<if>
-			<condition function="IsElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
+			<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 			<then>
-				<execute function="Check" locator1="MessageBoards#CATEGORY_LIST_ADMIN_ALL_CHECKBOX" />
-				<execute function="AssertClick" locator1="MessageBoardsAdmin#CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+				<execute function="Click" locator1="Button#RECYCLE_BIN" />
+
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
@@ -165,12 +167,13 @@
 	</command>
 
 	<command name="gotoCP">
-		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${categoryName}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${categoryName}" />
 	</command>
 
 	<command name="gotoPG">

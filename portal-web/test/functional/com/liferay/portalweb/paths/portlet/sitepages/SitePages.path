@@ -233,6 +233,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_NAVIGATION_ADVANCED</td>
+	<td>//li[contains(@id,'GroupPagesPortlet')]//a[contains(.,'Advanced')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX</td>
 	<td>//input[contains(@id,'layoutPrototypeLinkEnabled')]</td>
 	<td></td>

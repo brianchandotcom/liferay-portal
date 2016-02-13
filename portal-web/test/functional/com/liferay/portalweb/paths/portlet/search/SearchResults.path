@@ -18,32 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SCOPE_FACET-->
-<tr>
-	<td>SCOPE_FACET_SEARCH_SCOPES_BOX</td>
-	<td>//div[contains(@class,'search-scopes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_FACET_ANY_SITE</td>
-	<td>//div[contains(@class,'search-scopes')]/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any Site')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-scopes')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_siteName}')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_FACET_SITE_NAME</td>
-	<td>//div[contains(@class,'search-scopes')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_siteName}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_SEARCH_ASSETS_BOX</td>
@@ -138,7 +112,17 @@
 	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6)[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RESULTS_TABLE-->
+<tr>
+	<td>RESULTS_TABLE_GENERIC</td>
+	<td>//div[contains(@class,'lfr-search-container')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>RESULTS_TABLE_NUMBER</td>
 	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[1]</td>

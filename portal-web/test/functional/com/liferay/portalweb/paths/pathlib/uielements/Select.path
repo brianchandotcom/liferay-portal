@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>SCOPE</td>
-	<td>//div[label[contains(.,'Scope')]]/select</td>
+	<td>//div[label[contains(.,'Scope')]]/select | //div/select[@title='Scope']</td>
 	<td></td>
 </tr>
 <tr>

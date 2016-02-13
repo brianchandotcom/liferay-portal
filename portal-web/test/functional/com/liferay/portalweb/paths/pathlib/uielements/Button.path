@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR</td>
+	<td>//button[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE</td>
 	<td>//button[contains(.,'Close')]</td>
 	<td></td>

@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_FACET</td>
+	<td>//div[@style='']//label[contains(.,'Display Facet')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_IMMEDIATELY</td>
 	<td>//input[contains(@name,'displayImmediately')]</td>
 	<td></td>

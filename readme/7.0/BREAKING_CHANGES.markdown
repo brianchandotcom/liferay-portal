@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1265cd6`.*
+*This document has been reviewed through commit `1ba366c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3196,6 +3196,32 @@ services from `DLAppService` was the only sensible solution to this circularity.
 
 ---------------------------------------
 
+### Deprecated the liferay-ui:flags Tag and Replaced with liferay-flags:flags
+- **Date:** 2015-Dec-02
+- **JIRA Ticket:** LPS-60967
+
+#### What changed?
+
+The `liferay-ui:flags` tag has been deprecated and replaced with the
+`liferay-flags:flags` tag.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:flags` tag need to update
+their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-flags` tag library (if necessary) and update the
+tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Removed the liferay-ui:diff Tag and Replaced with liferay-frontend:diff
 - **Date:** 2015-Dec-14
 - **JIRA Ticket:** LPS-61326
@@ -3738,7 +3764,7 @@ This change was made because WAP is an obsolete functionality.
 ---------------------------------------
 
 ### Removed the aui:layout Tag with No Direct Replacement
-- **Date:** 2015-Feb-08
+- **Date:** 2016-Feb-08
 - **JIRA Ticket:** LPS-62935
 
 #### What changed?
@@ -3763,21 +3789,23 @@ tags.
 ---------------------------------------
 
 ### Deprecated the liferay-portlet:icon-back Tag with No Direct Replacement
-- **Date:** 2015-Feb-10
+- **Date:** 2016-Feb-10
 - **JIRA Ticket:** LPS-63101
 
 #### What changed?
 
-The `liferay-portlet:icon-back` tag has been deprecated with no direct replacement.
+The `liferay-portlet:icon-back` tag has been deprecated with no direct
+replacement.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-portlet:icon-back` tag must remove their usage of the tag.
+Plugins or templates that are using the `liferay-portlet:icon-back` tag must
+remove their usage of the tag.
 
 #### How should I update my code?
 
-There is no direct replacement. You should remove all usages of the `liferay-portlet:icon-back`
-tag.
+There is no direct replacement. You should remove all usages of the
+`liferay-portlet:icon-back` tag.
 
 #### Why was this change made?
 
@@ -3786,47 +3814,26 @@ This change was made as a part of the ongoing strategy to deprecate unused tags.
 ---------------------------------------
 
 ### Deprecated the liferay-security:encrypt Tag with No Direct Replacement
-- **Date:** 2015-Feb-10
+- **Date:** 2016-Feb-10
 - **JIRA Ticket:** LPS-63106
 
 #### What changed?
 
-The `liferay-security:encrypt` tag has been deprecated with no direct replacement.
+The `liferay-security:encrypt` tag has been deprecated with no direct
+replacement.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-security:encrypt` tag must remove their usage of the tag.
+Plugins or templates that are using the `liferay-security:encrypt` tag must
+remove their usage of the tag.
 
 #### How should I update my code?
 
-There is no direct replacement. You should remove all usages of the `liferay-security:encrypt` tag.
+There is no direct replacement. You should remove all usages of the
+`liferay-security:encrypt` tag.
 
 #### Why was this change made?
 
 This change was made as a part of the ongoing strategy to deprecate unused tags.
 
 ---------------------------------------
-
-### The liferay-ui:flags has been deprecated and replaced with liferay-flags:flags
-- **Date:** 2015-Dec-2
-- **JIRA Ticket:** LPS-60967
-
-#### What changed?
-
-The `liferay-ui:flags` taglib has been deprecated and replaced with
-`liferay-flags:flags` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:flags` tag need to update
-their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-flags` tag library if it isn't already and
-update the tag namespace from `liferay-ui:flags` to `liferay-flags:flags`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.

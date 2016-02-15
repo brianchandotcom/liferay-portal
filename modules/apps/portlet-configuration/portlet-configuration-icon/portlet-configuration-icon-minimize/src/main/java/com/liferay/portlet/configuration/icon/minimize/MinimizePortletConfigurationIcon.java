@@ -44,7 +44,9 @@ public class MinimizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "Liferay.Portlet.minimize('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_', this); return false;");
 	}

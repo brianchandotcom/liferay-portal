@@ -46,7 +46,9 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "submitForm(document.hrefFm, '".concat(
 			HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
 				"'); return false;");

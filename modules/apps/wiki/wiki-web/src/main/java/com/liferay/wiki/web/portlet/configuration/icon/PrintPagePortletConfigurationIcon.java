@@ -50,7 +50,9 @@ public class PrintPagePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			StringBundler sb = new StringBundler(5);
 

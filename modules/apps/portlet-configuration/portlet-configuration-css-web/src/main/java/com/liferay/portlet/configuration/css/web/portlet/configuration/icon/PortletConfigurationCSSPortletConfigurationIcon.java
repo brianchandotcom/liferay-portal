@@ -46,7 +46,9 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,

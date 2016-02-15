@@ -40,7 +40,9 @@ public class PrintPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "location.href = '".concat(
 			portletDisplay.getURLPrint()).concat("'; return false;");
 	}

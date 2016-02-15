@@ -561,6 +561,26 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public boolean isKeepFileVersionLabel(
+			long fileEntryId, boolean majorVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		DLFileEntryPermission.check(
+			permissionChecker, fileEntryId, ActionKeys.VIEW);
+
+		return dlFileEntryLocalService.isKeepFileVersionLabel(
+			fileEntryId, majorVersion, serviceContext);
+	}
+
+	/**
+	 * As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long, boolean,
+	 *              ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public boolean isKeepFileVersionLabel(
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 

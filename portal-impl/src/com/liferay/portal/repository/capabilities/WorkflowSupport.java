@@ -28,7 +28,8 @@ public interface WorkflowSupport {
 		throws PortalException;
 
 	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void revertFileEntry(
@@ -36,7 +37,8 @@ public interface WorkflowSupport {
 		throws PortalException;
 
 	public void updateFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

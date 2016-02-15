@@ -76,12 +76,13 @@ public class LiferayWorkflowCapability
 
 	@Override
 	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean keepFileVersionLabel =
 			_dlFileEntryServiceAdapter.isKeepFileVersionLabel(
-				fileEntry.getFileEntryId(), serviceContext);
+				fileEntry.getFileEntryId(), majorVersion, serviceContext);
 
 		if ((serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) &&
@@ -114,7 +115,8 @@ public class LiferayWorkflowCapability
 
 	@Override
 	public void updateFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_startWorkflowInstance(userId, fileEntry, serviceContext);

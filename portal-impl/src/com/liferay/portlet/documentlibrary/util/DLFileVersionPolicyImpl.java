@@ -58,13 +58,14 @@ public class DLFileVersionPolicyImpl implements DLFileVersionPolicy {
 	@Override
 	public boolean isKeepFileVersionLabel(
 			DLFileVersion lastDLFileVersion, DLFileVersion latestDLFileVersion,
-			ServiceContext serviceContext)
+			boolean majorVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		for (DLFileVersionPolicy dlFileVersionPolicy : _serviceTrackerList) {
 			if ((dlFileVersionPolicy != this) &&
 				!dlFileVersionPolicy.isKeepFileVersionLabel(
-					lastDLFileVersion, latestDLFileVersion, serviceContext)) {
+					lastDLFileVersion, latestDLFileVersion, majorVersion,
+					serviceContext)) {
 
 				return false;
 			}
@@ -72,7 +73,7 @@ public class DLFileVersionPolicyImpl implements DLFileVersionPolicy {
 
 		return isKeepFileVersionLabel(
 			lastDLFileVersion.getFileEntry(), lastDLFileVersion,
-			latestDLFileVersion, serviceContext);
+			latestDLFileVersion, majorVersion, serviceContext);
 	}
 
 	/**
@@ -83,10 +84,15 @@ public class DLFileVersionPolicyImpl implements DLFileVersionPolicy {
 	 */
 	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
-			DLFileVersion latestDLFileVersion, ServiceContext serviceContext)
+			DLFileVersion latestDLFileVersion, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (PropsValues.DL_FILE_ENTRY_VERSION_POLICY != 1) {
+			return false;
+		}
+
+		if (majorVersion) {
 			return false;
 		}
 

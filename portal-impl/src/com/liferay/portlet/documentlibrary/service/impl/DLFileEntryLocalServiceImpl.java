@@ -318,9 +318,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if (!majorVersion &&
-			dlFileVersionPolicy.isKeepFileVersionLabel(
-				lastDLFileVersion, latestDLFileVersion, serviceContext)) {
+		if (dlFileVersionPolicy.isKeepFileVersionLabel(
+				lastDLFileVersion, latestDLFileVersion, majorVersion,
+				serviceContext)) {
 
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
@@ -1568,7 +1568,8 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public boolean isKeepFileVersionLabel(
-			long fileEntryId, ServiceContext serviceContext)
+			long fileEntryId, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -1582,7 +1583,21 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		return dlFileVersionPolicy.isKeepFileVersionLabel(
-			lastDLFileVersion, latestDLFileVersion, serviceContext);
+			lastDLFileVersion, latestDLFileVersion, majorVersion,
+			serviceContext);
+	}
+
+	/**
+	 * As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long, boolean,
+	 *              ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public boolean isKeepFileVersionLabel(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return isKeepFileVersionLabel(fileEntryId, false, serviceContext);
 	}
 
 	@Override

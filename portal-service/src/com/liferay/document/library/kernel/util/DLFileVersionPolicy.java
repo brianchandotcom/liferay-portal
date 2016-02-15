@@ -25,7 +25,7 @@ public interface DLFileVersionPolicy {
 
 	public boolean isKeepFileVersionLabel(
 			DLFileVersion lastDLFileVersion, DLFileVersion latestDLFileVersion,
-			ServiceContext serviceContext)
+			boolean majorVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 }

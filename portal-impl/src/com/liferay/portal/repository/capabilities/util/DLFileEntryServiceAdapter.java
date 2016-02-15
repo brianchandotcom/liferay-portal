@@ -125,16 +125,17 @@ public class DLFileEntryServiceAdapter {
 	}
 
 	public boolean isKeepFileVersionLabel(
-			long fileEntryId, ServiceContext serviceContext)
+			long fileEntryId, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (_dlFileEntryService != null) {
 			return _dlFileEntryService.isKeepFileVersionLabel(
-				fileEntryId, serviceContext);
+				fileEntryId, majorVersion, serviceContext);
 		}
 		else {
 			return _dlFileEntryLocalService.isKeepFileVersionLabel(
-				fileEntryId, serviceContext);
+				fileEntryId, majorVersion, serviceContext);
 		}
 	}
 

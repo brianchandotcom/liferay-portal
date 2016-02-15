@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.rtl.servlet;
+package com.liferay.frontend.rtl.servlet;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 

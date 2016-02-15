@@ -66,6 +66,12 @@ body {
 }
 
 .product-menu {
+	#productMenuSidebar .panel-group {
+		overflow: hidden;
+	}
+}
+
+.product-menu {
 	small {
 		display: block;
 	}

@@ -93,7 +93,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
-		_workflowSupport.checkInFileEntry(userId, fileEntry, serviceContext);
+		_workflowSupport.checkInFileEntry(
+			userId, fileEntry, major, serviceContext);
 	}
 
 	@Override
@@ -106,7 +107,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
-		_workflowSupport.checkInFileEntry(userId, fileEntry, serviceContext);
+		_workflowSupport.checkInFileEntry(
+			userId, fileEntry, false, serviceContext);
 	}
 
 	@Override
@@ -153,7 +155,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		_workflowSupport.updateFileEntry(userId, fileEntry, serviceContext);
+		_workflowSupport.updateFileEntry(
+			userId, fileEntry, majorVersion, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}
@@ -170,7 +173,8 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		_workflowSupport.updateFileEntry(userId, fileEntry, serviceContext);
+		_workflowSupport.updateFileEntry(
+			userId, fileEntry, majorVersion, serviceContext);
 
 		return super.getFileEntry(fileEntryId);
 	}

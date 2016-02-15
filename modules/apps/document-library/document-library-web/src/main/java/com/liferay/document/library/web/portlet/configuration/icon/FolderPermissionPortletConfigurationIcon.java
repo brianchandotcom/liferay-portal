@@ -43,7 +43,7 @@ public class FolderPermissionPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "permissions";
 	}
 

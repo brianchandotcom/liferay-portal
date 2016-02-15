@@ -33,7 +33,7 @@ public class DDLRecordSetPublishPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "publish";
 	}
 

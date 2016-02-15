@@ -30,7 +30,7 @@ public class EditGuestPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "guest-preferences";
 	}
 

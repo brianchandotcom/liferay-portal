@@ -36,7 +36,7 @@ public class StagingConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "staging-configuration";
 	}
 

@@ -35,7 +35,7 @@ public class PublishTemplatesConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "publish-templates";
 	}
 

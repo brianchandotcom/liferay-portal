@@ -39,7 +39,7 @@ public class DDMDataProviderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "data-providers";
 	}
 

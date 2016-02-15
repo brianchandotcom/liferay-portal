@@ -35,7 +35,7 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-entries";
 	}
 

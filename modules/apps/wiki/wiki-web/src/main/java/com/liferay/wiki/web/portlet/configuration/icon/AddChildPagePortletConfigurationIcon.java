@@ -42,7 +42,7 @@ public class AddChildPagePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-child-page";
 	}
 

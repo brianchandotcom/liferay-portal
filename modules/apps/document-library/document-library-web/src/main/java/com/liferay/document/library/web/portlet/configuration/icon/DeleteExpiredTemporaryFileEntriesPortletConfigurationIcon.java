@@ -44,7 +44,7 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "delete-expired-temporary-files";
 	}
 

@@ -37,7 +37,7 @@ public class ConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "configuration";
 	}
 

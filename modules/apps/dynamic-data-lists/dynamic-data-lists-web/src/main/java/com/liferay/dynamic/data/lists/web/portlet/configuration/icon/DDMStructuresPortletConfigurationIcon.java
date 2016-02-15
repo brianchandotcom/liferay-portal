@@ -44,7 +44,7 @@ public class DDMStructuresPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "manage-data-definitions";
 	}
 

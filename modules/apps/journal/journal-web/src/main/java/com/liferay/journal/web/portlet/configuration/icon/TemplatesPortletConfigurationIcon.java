@@ -44,7 +44,7 @@ public class TemplatesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "templates";
 	}
 

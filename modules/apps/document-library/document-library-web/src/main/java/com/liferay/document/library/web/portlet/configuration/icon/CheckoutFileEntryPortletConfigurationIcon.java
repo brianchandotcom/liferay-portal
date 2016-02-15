@@ -42,7 +42,7 @@ public class CheckoutFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "checkout";
 	}
 

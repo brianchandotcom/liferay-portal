@@ -35,7 +35,7 @@ public class FacebookPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-to-facebook";
 	}
 

@@ -32,7 +32,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-all-settings";
 	}
 

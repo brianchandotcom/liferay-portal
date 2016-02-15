@@ -40,7 +40,7 @@ public class MetadataSetsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "metadata-sets";
 	}
 

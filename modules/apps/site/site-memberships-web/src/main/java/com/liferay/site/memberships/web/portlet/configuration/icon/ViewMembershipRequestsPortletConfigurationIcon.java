@@ -39,7 +39,7 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "view-membership-requests";
 	}
 

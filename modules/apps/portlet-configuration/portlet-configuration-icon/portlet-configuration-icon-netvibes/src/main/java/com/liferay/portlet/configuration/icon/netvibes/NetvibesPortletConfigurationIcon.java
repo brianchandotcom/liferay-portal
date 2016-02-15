@@ -44,7 +44,7 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-to-netvibes";
 	}
 

@@ -35,7 +35,7 @@ public class MinimizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		if (portletDisplay.isStateMin()) {
 			return "restore";
 		}

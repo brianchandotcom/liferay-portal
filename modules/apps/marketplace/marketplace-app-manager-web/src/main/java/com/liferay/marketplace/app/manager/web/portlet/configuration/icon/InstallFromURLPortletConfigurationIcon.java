@@ -35,7 +35,7 @@ public class InstallFromURLPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "install-from-url";
 	}
 

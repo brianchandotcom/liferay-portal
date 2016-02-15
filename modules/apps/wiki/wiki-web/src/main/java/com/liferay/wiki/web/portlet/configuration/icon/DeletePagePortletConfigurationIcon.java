@@ -45,7 +45,7 @@ public class DeletePagePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			return "move-to-the-recycle-bin";
 		}

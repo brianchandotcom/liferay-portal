@@ -33,7 +33,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "settings";
 	}
 

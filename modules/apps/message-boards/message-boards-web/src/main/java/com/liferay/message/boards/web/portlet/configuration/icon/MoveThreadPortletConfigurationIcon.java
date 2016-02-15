@@ -44,7 +44,7 @@ public class MoveThreadPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "move";
 	}
 

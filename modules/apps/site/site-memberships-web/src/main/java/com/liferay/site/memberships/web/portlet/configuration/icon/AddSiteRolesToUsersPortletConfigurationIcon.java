@@ -42,7 +42,7 @@ public class AddSiteRolesToUsersPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-site-roles-to-users";
 	}
 

@@ -40,7 +40,7 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "view-removed-attachments";
 	}
 

@@ -45,7 +45,7 @@ public class PrintPagePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "print";
 	}
 

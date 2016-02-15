@@ -36,7 +36,7 @@
 						"errorMessage": "Integer must be equal to zero.",
 						"expression": "Integer == 0"
 					},
-					"visibilityExpression": "false"
+					"visibilityExpression": "FALSE"
 				}
 			],
 			"predefinedValue": {
@@ -52,9 +52,9 @@
 			"type": "text",
 			"validation": {
 				"errorMessage": "This field is never valid.",
-				"expression": "false"
+				"expression": "FALSE"
 			},
-			"visibilityExpression": "true"
+			"visibilityExpression": "TRUE"
 		},
 		{
 			"dataType": "boolean",
@@ -80,7 +80,7 @@
 				"errorMessage": "This field must be checked.",
 				"expression": "Boolean"
 			},
-			"visibilityExpression": "!Boolean"
+			"visibilityExpression": "NOT(Boolean)"
 		},
 		{
 			"dataType": "string",
@@ -102,7 +102,7 @@
 				"en_US": ""
 			},
 			"type": "text",
-			"visibilityExpression": "true"
+			"visibilityExpression": "TRUE"
 		},
 		{
 			"dataType": "string",
@@ -126,9 +126,9 @@
 			"type": "text",
 			"validation": {
 				"errorMessage": "This field should contain 'Joe'.",
-				"expression": "Text3.contains(\"Joe\")"
+				"expression": "contains(Text3, \"Joe\")"
 			},
-			"visibilityExpression": "true"
+			"visibilityExpression": "TRUE"
 		}
 	]
 }

@@ -142,7 +142,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		ddmFormFieldValidation.setExpression("text.contains(\"test\")");
+		ddmFormFieldValidation.setExpression("contains(text, \"test\")");
 		ddmFormFieldValidation.setErrorMessage(
 			"custom validation error message");
 
@@ -217,7 +217,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		ddmFormFieldValidation.setExpression("!text.isEmpty()");
+		ddmFormFieldValidation.setExpression("NOT(equals(text, \"\"))");
 		ddmFormFieldValidation.setErrorMessage(
 			"custom validation error message");
 

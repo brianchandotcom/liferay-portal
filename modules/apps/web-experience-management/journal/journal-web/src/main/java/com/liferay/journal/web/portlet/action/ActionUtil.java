@@ -474,8 +474,6 @@ public class ActionUtil {
 						sb.append(StringPool.UNDERLINE);
 						sb.append(field.getName());
 						sb.append(StringPool.UNDERLINE);
-						sb.append(i);
-						sb.append(StringPool.UNDERLINE);
 						sb.append(LanguageUtil.getLanguageId(locale));
 
 						FileEntry fileEntry =

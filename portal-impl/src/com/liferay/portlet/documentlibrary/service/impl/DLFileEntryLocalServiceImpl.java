@@ -1597,18 +1597,7 @@ public class DLFileEntryLocalServiceImpl
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-			fileEntryId);
-
-		DLFileVersion lastDLFileVersion =
-			dlFileVersionLocalService.getFileVersion(
-				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
-		DLFileVersion latestDLFileVersion =
-			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
-
-		return dlFileVersionPolicy.isKeepFileVersionLabel(
-			lastDLFileVersion, latestDLFileVersion, false, serviceContext);
+		return isKeepFileVersionLabel(fileEntryId, false, serviceContext);
 	}
 
 	@Override

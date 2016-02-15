@@ -99,9 +99,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		<%
 		Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
-
-		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
+		long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
 		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		request.setAttribute("view.jsp-mediaGalleryMimeTypes", dlPortletInstanceSettings.getMimeTypes());

@@ -140,7 +140,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 						<c:if test="<%= showPermissionsButton %>">
 
 							<%
-							String modelResource = "com.liferay.messageboards";
+							String modelResource = "com.liferay.message.boards";
 							String modelResourceDescription = themeDisplay.getScopeGroupName();
 							String resourcePrimKey = String.valueOf(scopeGroupId);
 

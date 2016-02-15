@@ -68,7 +68,7 @@ public class FileVersionDiscussionDLViewFileVersionDisplayContext
 		String label = "comments-for-version-x";
 
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-			label = "comments-for-private-working-copy";
+			label = "comments-for-draft";
 		}
 
 		return LanguageUtil.format(

@@ -225,6 +225,13 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
+	public boolean isShowPreviousEntries() {
+		String tabs1 = _announcementsRequestHelper.getTabs1();
+
+		return tabs1.equals("previous");
+	}
+
+	@Override
 	public boolean isShowScopeName() {
 		String mvcRenderCommandName = ParamUtil.getString(
 			_announcementsRequestHelper.getRequest(), "mvcRenderCommandName");

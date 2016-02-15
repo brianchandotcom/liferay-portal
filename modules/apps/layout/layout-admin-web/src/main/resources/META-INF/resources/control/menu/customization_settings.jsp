@@ -72,8 +72,10 @@ data.put("qa-id", "customizations");
 			<ul class="control-menu-level-2-nav control-menu-nav">
 				<c:if test="<%= hasUpdateLayoutPermission %>">
 					<li class="control-menu-nav-item">
-						<liferay-ui:message key="you-can-customize-this-page" />
-						<liferay-ui:message key="customizable-user-help" />
+						<p>
+							<liferay-ui:message key="you-can-customize-this-page" />
+							<liferay-ui:message key="customizable-user-help" />
+						</p>
 					</li>
 
 					<c:if test="<%= hasUpdateLayoutPermission %>">

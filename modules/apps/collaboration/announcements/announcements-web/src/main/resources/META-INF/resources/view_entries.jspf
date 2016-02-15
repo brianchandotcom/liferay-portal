@@ -17,7 +17,7 @@
 <div class="entries">
 
 	<%
-	int flag = announcementsDisplayContext.isShowNewEntries() ? AnnouncementsFlagConstants.NOT_HIDDEN : AnnouncementsFlagConstants.HIDDEN;
+	int flag = announcementsDisplayContext.isShowPreviousEntries() ? AnnouncementsFlagConstants.HIDDEN : AnnouncementsFlagConstants.NOT_HIDDEN;
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 

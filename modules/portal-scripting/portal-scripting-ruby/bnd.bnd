@@ -3,11 +3,16 @@ Bundle-SymbolicName: com.liferay.portal.scripting.ruby
 Bundle-Version: 1.0.0
 Import-Package:\
 	!javax.swing.*,\
+	\
 	!org.apache.bsf.*,\
 	!org.apache.tools.ant.*,\
+	\
 	!org.joda.convert.*,\
+	\
 	!sun.management.*,\
+	\
 	!sun.misc.*,\
+	\
 	!sun.nio.cs*,\
 	*
 Include-Resource: @lib/jruby-complete.jar

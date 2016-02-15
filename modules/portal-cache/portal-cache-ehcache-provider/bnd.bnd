@@ -15,10 +15,12 @@ Export-Package:\
 	net.sf.ehcache.util
 Import-Package:\
 	!org.quartz,\
+	\
 	!org.quartz.impl,\
 	!org.quartz.impl.jdbcjobstore,\
 	!org.quartz.impl.matchers,\
 	!org.quartz.simpl,\
+	\
 	!org.terracotta.quartz,\
 	!org.terracotta.toolkit,\
 	!org.terracotta.toolkit.atomic,\
@@ -42,6 +44,7 @@ Import-Package:\
 	!org.terracotta.toolkit.search,\
 	!org.terracotta.toolkit.search.attribute,\
 	!org.terracotta.toolkit.store,\
+	\
 	!sun.misc,\
 	*
 Include-Resource:\

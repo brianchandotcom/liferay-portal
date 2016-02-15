@@ -5,6 +5,7 @@ Import-Package:\
 	!org.apache.commons.codec.*,\
 	!org.apache.commons.logging.*,\
 	!org.apache.xml.resolver.*,\
+	\
 	!sun.io,\
 	*
 Include-Resource:\

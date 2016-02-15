@@ -4,9 +4,13 @@ Export-Package:\
 	com.liferay.taglib.*
 Import-Package:\
 	!com.liferay.portal.freemarker,\
+	\
 	!jodd.*,\
+	\
 	!org.dom4j.*,\
+	\
 	!org.json.*,\
+	\
 	com.liferay.*,\
 	*
 Include-Resource:\

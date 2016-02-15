@@ -5,12 +5,12 @@ Export-Package:\
 	com.liferay.portal.cluster,\
 	com.liferay.portal.convert.database,\
 	com.liferay.portal.convert.util,\
-	com.liferay.portal.increment,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\
 	com.liferay.portal.deploy.hot,\
 	com.liferay.portal.events,\
 	com.liferay.portal.freemarker,\
+	com.liferay.portal.increment,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
 	com.liferay.portal.monitoring.statistics.service,\
@@ -21,9 +21,9 @@ Export-Package:\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
+	com.liferay.portal.service.permission,\
 	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
-	com.liferay.portal.service.permission,\
 	com.liferay.portal.spring.aop,\
 	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.context,\
@@ -54,10 +54,8 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.lar,\
 	com.liferay.portlet.documentlibrary.model,\
 	com.liferay.portlet.documentlibrary.service,\
-	com.liferay.portlet.documentlibrary.store,\
-	com.liferay.portlet.documentlibrary,\
-	com.liferay.portlet.documentlibrary.action,\
 	com.liferay.portlet.documentlibrary.service.permission,\
+	com.liferay.portlet.documentlibrary.store,\
 	com.liferay.portlet.documentlibrary.util,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.service,\

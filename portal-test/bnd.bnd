@@ -16,10 +16,14 @@ Export-Package:\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.ratings.test,\
 	com.liferay.portlet.ratings.util.test,\
+	\
 	junit.*,\
+	\
 	org.hamcrest.*,\
-	org.junit.*,\
+	\
 	org.junit.runner.*,\
+	org.junit.*,\
+	\
 	org.springframework.mock.web,\
 	org.springframework.mock.web.portlet
 Import-Package: *;resolution:=optional

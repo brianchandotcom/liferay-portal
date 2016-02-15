@@ -15,16 +15,25 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Carlos Sierra AndrÃ©s
+ * @author Carlos Sierra Andrés
+ * @author Hugo Huijser
  */
 public class ImportPackage implements Comparable<ImportPackage> {
 
 	public ImportPackage(String importString, boolean isStatic, String line) {
+		this(importString, isStatic, line, false);
+	}
+
+	public ImportPackage(
+		String importString, boolean isStatic, String line, boolean bndImport) {
+
 		_importString = importString;
 		_isStatic = isStatic;
 		_line = line;
+		_bndImport = bndImport;
 	}
 
 	@Override
@@ -38,7 +47,34 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			}
 		}
 
-		return _importString.compareTo(importPackage.getImportString());
+		String importPackageImportString = importPackage.getImportString();
+
+		int value = _importString.compareTo(importPackageImportString);
+
+		if (_importString.startsWith(StringPool.EXCLAMATION) ||
+			importPackageImportString.startsWith(StringPool.EXCLAMATION)) {
+
+			return value;
+		}
+
+		if (!_bndImport) {
+			return value;
+		}
+
+		int startsWithWeight = StringUtil.startsWithWeight(
+			_importString, importPackageImportString);
+
+		String importStringPart1 = _importString.substring(startsWithWeight);
+		String importStringPart2 = importPackageImportString.substring(
+			startsWithWeight);
+
+		if (importStringPart1.equals(StringPool.STAR) ||
+			importStringPart2.equals(StringPool.STAR)) {
+
+			return -value;
+		}
+
+		return value;
 	}
 
 	@Override
@@ -91,6 +127,10 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			pos = _importString.indexOf(StringPool.PERIOD);
 		}
 
+		if (pos == -1) {
+			return _importString;
+		}
+
 		return _importString.substring(0, pos);
 	}
 
@@ -100,6 +140,16 @@ public class ImportPackage implements Comparable<ImportPackage> {
 	}
 
 	public boolean isGroupedWith(ImportPackage importPackage) {
+		if (_importString.equals(StringPool.STAR)) {
+			return true;
+		}
+
+		String importPackageImportString = importPackage.getImportString();
+
+		if (importPackageImportString.equals(StringPool.STAR)) {
+			return true;
+		}
+
 		if (_isStatic != importPackage.isStatic()) {
 			return false;
 		}
@@ -117,6 +167,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _isStatic;
 	}
 
+	private final boolean _bndImport;
 	private final String _importString;
 	private boolean _isStatic;
 	private final String _line;

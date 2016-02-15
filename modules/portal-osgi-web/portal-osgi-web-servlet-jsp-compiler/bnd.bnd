@@ -8,24 +8,29 @@ Import-Package:\
 	com.sun.el.parser;version='[3.0.0,4.0)',\
 	com.sun.el.stream;version='[3.0.0,4.0)',\
 	com.sun.el.util;version='[3.0.0,4.0)',\
+	\
 	javax.el;version='[3.0.0,4.0)',\
 	javax.servlet;version='[2.3.0,4.0.0)',\
+	\
 	javax.servlet.annotation;version='[2.6.0,4.0.0)',\
 	javax.servlet.descriptor;version='[2.6.0,4.0.0)',\
 	javax.servlet.http;version='[2.3.0,4.0.0)',\
 	javax.servlet.jsp;version='[2.3.2,3.0)',\
 	javax.servlet.jsp.el;version='[2.3.2,3.0)',\
-	javax.servlet.jsp.tagext;version='[2.3.2,3.0)',\
 	javax.servlet.jsp.jstl.core;version='[1.2.1,2.0)',\
 	javax.servlet.jsp.jstl.fmt;version='[1.2.1,2.0)',\
 	javax.servlet.jsp.jstl.sql;version='[1.2.1,2.0)',\
 	javax.servlet.jsp.jstl.tlv;version='[1.2.1,2.0)',\
+	javax.servlet.jsp.tagext;version='[2.3.2,3.0)',\
+	\
 	javax.tools,\
+	\
 	javax.xml.parsers,\
 	javax.xml.transform,\
 	javax.xml.transform.dom,\
 	javax.xml.transform.stream,\
 	javax.xml.validation,\
+	\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\
@@ -49,8 +54,10 @@ Import-Package:\
 	org.apache.taglibs.standard.tag.rt.xml;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tei;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
+	\
 	org.w3c.dom,\
 	org.w3c.dom.ls,\
+	\
 	org.xml.sax,\
 	org.xml.sax.ext,\
 	org.xml.sax.helpers,\

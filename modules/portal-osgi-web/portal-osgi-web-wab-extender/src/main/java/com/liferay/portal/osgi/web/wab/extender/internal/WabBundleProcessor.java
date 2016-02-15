@@ -201,6 +201,58 @@ public class WabBundleProcessor implements ServletContextListener {
 		}
 	}
 
+	public static class JspServletWrapper extends HttpServlet {
+
+		public JspServletWrapper() {
+		}
+
+		public JspServletWrapper(String jspFile) {
+			this.jspFile = jspFile;
+		}
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig config) throws ServletException {
+			_servlet.init(config);
+		}
+
+		@Override
+		public void service(ServletRequest request, ServletResponse response)
+			throws IOException, ServletException {
+
+			String curJspFile = (String)request.getAttribute(
+				org.apache.jasper.Constants.JSP_FILE);
+
+			if (jspFile != null) {
+				request.setAttribute(
+					org.apache.jasper.Constants.JSP_FILE, jspFile);
+			}
+
+			try {
+				_servlet.service(request, response);
+			}
+			finally {
+				request.setAttribute(
+					org.apache.jasper.Constants.JSP_FILE, curJspFile);
+			}
+		}
+
+		protected String jspFile;
+
+		private final Servlet _servlet =
+			new com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet();
+
+	}
+
 	protected ServiceRegistration<?> createDefaultServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -503,9 +555,17 @@ public class WabBundleProcessor implements ServletContextListener {
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 				servletDefinition.getName());
+
+			String jspFile = servletDefinition.getJspFile();
+			List<String> urlPatterns = servletDefinition.getURLPatterns();
+
+			if (urlPatterns.isEmpty() && (jspFile != null)) {
+				urlPatterns.add(jspFile);
+			}
+
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-				servletDefinition.getURLPatterns());
+				urlPatterns);
 
 			Map<String, String> initParameters =
 				servletDefinition.getInitParameters();
@@ -582,34 +642,5 @@ public class WabBundleProcessor implements ServletContextListener {
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<ServletContextListener>
 		_thisEventListenerRegistration;
-
-	private static class JspServletWrapper extends HttpServlet {
-
-		@Override
-		public void destroy() {
-			_servlet.destroy();
-		}
-
-		@Override
-		public ServletConfig getServletConfig() {
-			return _servlet.getServletConfig();
-		}
-
-		@Override
-		public void init(ServletConfig config) throws ServletException {
-			_servlet.init(config);
-		}
-
-		@Override
-		public void service(ServletRequest request, ServletResponse response)
-			throws IOException, ServletException {
-
-			_servlet.service(request, response);
-		}
-
-		private final Servlet _servlet =
-			new com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet();
-
-	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
 
 import java.io.InputStream;
 
@@ -162,6 +163,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			_jspConfig = null;
 		}
+		else if (qName.equals("jsp-file")) {
+			String jspFile = String.valueOf(_stack.pop());
+
+			_servletDefinition.setJSPFile(jspFile);
+
+			_servletDefinition.setServlet(
+				new WabBundleProcessor.JspServletWrapper(jspFile));
+		}
 		else if (qName.equals("listener")) {
 			if (_listenerDefinition.getEventListener() != null) {
 				_webXMLDefinition.addListenerDefinition(_listenerDefinition);
@@ -186,10 +195,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_paramValue = _paramValue.trim();
 		}
 		else if (qName.equals("servlet")) {
-			if (_servletDefinition.getServlet() != null) {
-				_webXMLDefinition.setServletDefinition(
-					_servletDefinition.getName(), _servletDefinition);
-			}
+			_webXMLDefinition.setServletDefinition(
+				_servletDefinition.getName(), _servletDefinition);
 
 			_servletDefinition = null;
 		}
@@ -375,7 +382,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	private static final String[] _LEAVES = new String[] {
 		"async-supported", "dispatcher", "error-code", "exception-type",
-		"filter-class", "filter-name", "listener-class", "location",
+		"filter-class", "filter-name", "jsp-file", "listener-class", "location",
 		"param-name", "param-value", "servlet-class", "servlet-name",
 		"taglib-location", "taglib-uri", "url-pattern"
 	};

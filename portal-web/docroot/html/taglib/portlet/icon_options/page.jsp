@@ -48,7 +48,7 @@
 				lang="<%= portletConfigurationIcon.getLang() %>"
 				linkCssClass="<%= portletConfigurationIcon.getLinkCssClass() %>"
 				localizeMessage="<%= portletConfigurationIcon.isLocalizeMessage() %>"
-				message="<%= portletConfigurationIcon.getMessage() %>"
+				message="<%= portletConfigurationIcon.getMessage(portletRequest) %>"
 				method="<%= portletConfigurationIcon.getMethod() %>"
 				onClick="<%= portletConfigurationIcon.getOnClick(portletRequest, portletResponse) %>"
 				src="<%= portletConfigurationIcon.getSrc() %>"

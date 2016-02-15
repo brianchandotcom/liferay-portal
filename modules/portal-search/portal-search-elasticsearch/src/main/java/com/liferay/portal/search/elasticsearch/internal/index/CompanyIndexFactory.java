@@ -25,6 +25,7 @@ import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -215,11 +216,22 @@ public class CompanyIndexFactory implements IndexFactory {
 		liferayDocumentTypeFactory.addTypeMappings(_additionalTypeMappings);
 	}
 
-	protected void loadIndexSettingsContributors(Settings.Builder builder) {
+	protected void loadIndexSettingsContributors(
+		final Settings.Builder builder) {
+
+		IndexSettingsHelper indexSettingsHelper = new IndexSettingsHelper() {
+
+			@Override
+			public void put(String setting, String value) {
+				builder.put(setting, value);
+			}
+
+		};
+
 		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributors) {
 
-			indexSettingsContributor.populate(builder);
+			indexSettingsContributor.populate(indexSettingsHelper);
 		}
 	}
 

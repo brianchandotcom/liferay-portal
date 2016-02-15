@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Future;
@@ -54,22 +57,15 @@ public abstract class BaseElasticsearchConnection
 
 	@Override
 	public void connect() {
-		Settings.Builder builder = Settings.builder();
+		loadOptionalDefaultConfigurations();
 
-		loadOptionalDefaultConfigurations(builder);
+		loadAdditionalConfigurations();
 
-		String additionalConfigurations =
-			elasticsearchConfiguration.additionalConfigurations();
+		loadRequiredDefaultConfigurations();
 
-		if (Validator.isNotNull(additionalConfigurations)) {
-			builder.loadFromSource(additionalConfigurations);
-		}
+		loadSettingsContributors();
 
-		loadRequiredDefaultConfigurations(builder);
-
-		loadSettingsContributors(builder);
-
-		_client = createClient(builder);
+		_client = createClient();
 	}
 
 	@Override
@@ -122,13 +118,22 @@ public abstract class BaseElasticsearchConnection
 		_settingsContributors.add(settingsContributor);
 	}
 
-	protected abstract Client createClient(Settings.Builder builder);
+	protected abstract Client createClient();
 
 	protected IndexFactory getIndexFactory() {
 		return _indexFactory;
 	}
 
-	protected void loadOptionalDefaultConfigurations(Settings.Builder builder) {
+	protected void loadAdditionalConfigurations() {
+		String additionalConfigurations =
+			elasticsearchConfiguration.additionalConfigurations();
+
+		if (Validator.isNotNull(additionalConfigurations)) {
+			settingsBuilder.loadFromSource(additionalConfigurations);
+		}
+	}
+
+	protected void loadOptionalDefaultConfigurations() {
 		try {
 			Class<?> clazz = getClass();
 
@@ -138,7 +143,7 @@ public abstract class BaseElasticsearchConnection
 			InputStream inputStream = clazz.getResourceAsStream(
 				defaultConfiguration);
 
-			builder.loadFromStream(defaultConfiguration, inputStream);
+			settingsBuilder.loadFromStream(defaultConfiguration, inputStream);
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
@@ -147,12 +152,30 @@ public abstract class BaseElasticsearchConnection
 		}
 	}
 
-	protected abstract void loadRequiredDefaultConfigurations(
-		Settings.Builder builder);
+	protected abstract void loadRequiredDefaultConfigurations();
 
-	protected void loadSettingsContributors(Settings.Builder builder) {
+	protected void loadSettingsContributors() {
+		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
+
+			@Override
+			public void addPlugin(String plugin) {
+				transportClientPlugins.add(plugin);
+			}
+
+			@Override
+			public void put(String setting, String value) {
+				settingsBuilder.put(setting, value);
+			}
+
+			@Override
+			public void putArray(String setting, String... values) {
+				settingsBuilder.putArray(setting, values);
+			}
+
+		};
+
 		for (SettingsContributor settingsContributor : _settingsContributors) {
-			settingsContributor.populate(builder);
+			settingsContributor.populate(clientSettingsHelper);
 		}
 	}
 
@@ -163,6 +186,8 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+	protected final Settings.Builder settingsBuilder = Settings.builder();
+	protected final List<String> transportClientPlugins = new ArrayList<>(1);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseElasticsearchConnection.class);

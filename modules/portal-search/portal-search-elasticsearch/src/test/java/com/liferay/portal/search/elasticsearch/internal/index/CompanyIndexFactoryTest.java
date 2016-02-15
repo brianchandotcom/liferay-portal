@@ -21,6 +21,7 @@ import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
 import java.util.HashMap;
@@ -152,9 +153,9 @@ public class CompanyIndexFactoryTest {
 			new BaseIndexSettingsContributor(1) {
 
 				@Override
-				public void populate(Settings.Builder builder) {
-					builder.put("index.number_of_replicas", "2");
-					builder.put("index.number_of_shards", "3");
+				public void populate(IndexSettingsHelper indexSettingsHelper) {
+					indexSettingsHelper.put("index.number_of_replicas", "2");
+					indexSettingsHelper.put("index.number_of_shards", "3");
 				}
 
 			});

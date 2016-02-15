@@ -15,17 +15,25 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Carlos Sierra AndrÃ©s
+ * @author Carlos Sierra Andrés
  * @author Hugo Huijser
  */
 public class ImportPackage implements Comparable<ImportPackage> {
 
 	public ImportPackage(String importString, boolean isStatic, String line) {
+		this(importString, isStatic, line, false);
+	}
+
+	public ImportPackage(
+		String importString, boolean isStatic, String line, boolean bndImport) {
+
 		_importString = importString;
 		_isStatic = isStatic;
 		_line = line;
+		_bndImport = bndImport;
 	}
 
 	@Override
@@ -49,8 +57,19 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			return value;
 		}
 
-		if (_importString.equals(StringPool.STAR) ||
-			importPackageImportString.equals(StringPool.STAR)) {
+		if (!_bndImport) {
+			return value;
+		}
+
+		int startsWithWeight = StringUtil.startsWithWeight(
+			_importString, importPackageImportString);
+
+		String importStringPart1 = _importString.substring(startsWithWeight);
+		String importStringPart2 = importPackageImportString.substring(
+			startsWithWeight);
+
+		if (importStringPart1.equals(StringPool.STAR) ||
+			importStringPart2.equals(StringPool.STAR)) {
 
 			return -value;
 		}
@@ -148,6 +167,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _isStatic;
 	}
 
+	private final boolean _bndImport;
 	private final String _importString;
 	private boolean _isStatic;
 	private final String _line;

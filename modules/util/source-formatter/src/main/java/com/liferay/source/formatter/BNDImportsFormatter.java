@@ -89,7 +89,7 @@ public class BNDImportsFormatter extends ImportsFormatter {
 			importString = importString.substring(0, pos);
 		}
 
-		return new ImportPackage(importString, false, line);
+		return new ImportPackage(importString, false, line, true);
 	}
 
 }

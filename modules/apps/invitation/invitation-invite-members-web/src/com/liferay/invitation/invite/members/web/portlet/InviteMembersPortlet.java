@@ -28,15 +28,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,7 +48,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -269,33 +264,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(themeDisplay.getDefaultUser());
-
-		if (LayoutPermissionUtil.contains(
-				permissionChecker, themeDisplay.getLayout(),
-				themeDisplay.getControlPanelCategory(), true,
-				ActionKeys.VIEW) &&
-			LayoutPermissionUtil.contains(
-				permissionChecker, themeDisplay.getLayout(), false,
-				ActionKeys.VIEW)) {
-
-			return PortalUtil.getCreateAccountURL(request, themeDisplay);
-		}
-
-		Group group = _groupLocalService.getGroup(
-			themeDisplay.getCompanyId(), GroupConstants.GUEST);
-
-		PortletURL createAccountURL = PortletURLFactoryUtil.create(
-			request, com.liferay.portal.util.PortletKeys.LOGIN,
-			group.getDefaultPublicPlid(), PortletRequest.RENDER_PHASE);
-
-		createAccountURL.setParameter("struts_action", "/login/create_account");
-		createAccountURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		createAccountURL.setPortletMode(PortletMode.VIEW);
-		createAccountURL.setWindowState(WindowState.MAXIMIZED);
-
-		return createAccountURL.toString();
+		return PortalUtil.getCreateAccountURL(request, themeDisplay);
 	}
 
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {

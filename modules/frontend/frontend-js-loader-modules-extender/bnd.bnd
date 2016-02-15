@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal JS Loader Modules Extender
-Bundle-SymbolicName: com.liferay.portal.js.loader.modules.extender
+Bundle-Name: Liferay Frontend JS Loader Modules Extender
+Bundle-SymbolicName: com.liferay.frontend.js.loader.modules.extender
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

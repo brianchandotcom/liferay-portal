@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.js.loader.modules.extender;
+package com.liferay.frontend.js.loader.modules.extender;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.js.loader.modules.extender.LoaderModulesServlet",
+	id = "com.liferay.frontend.js.loader.modules.extender.LoaderModulesServlet",
 	localization = "content/Language", name = "%details.configuration.name"
 )
 public @interface Details {

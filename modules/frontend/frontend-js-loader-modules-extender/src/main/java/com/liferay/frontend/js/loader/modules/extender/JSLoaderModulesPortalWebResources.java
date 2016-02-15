@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.js.loader.modules.extender;
+package com.liferay.frontend.js.loader.modules.extender;
 
 import javax.servlet.ServletContext;
 

@@ -63,13 +63,4 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 			</ul>
 		</div>
 	</li>
-
-	<aui:script>
-		$('.layout-set-branch-selector').on(
-			'mouseenter',
-			function(event) {
-				Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="site-pages-variation" />');
-			}
-		);
-	</aui:script>
 </c:if>

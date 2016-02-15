@@ -19,7 +19,6 @@
 <%
 LayoutBranch layoutBranch = (LayoutBranch)request.getAttribute("view.jsp-layoutBranch");
 LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
-LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.jsp-layoutSetBranch");
 String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
 %>
 
@@ -68,12 +67,3 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 		</ul>
 	</div>
 </li>
-
-<aui:script>
-	$('.layout-branch-selector').on(
-		'mouseenter',
-		function(event) {
-			Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="page-variation" />');
-		}
-	);
-</aui:script>

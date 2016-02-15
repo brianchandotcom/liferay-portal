@@ -7,7 +7,7 @@ AUI.add(
 
 		var SELECTOR_LFR_NAV_SORTABLE = '.lfr-nav-sortable';
 
-		var TPL_DRAG_HANDLE = Liferay.Util.getLexiconIconTPL('bars', 'drag-handle');
+		var TPL_DRAG_HANDLE = Util.getLexiconIconTpl('bars', 'drag-handle');
 
 		var afterMakeSortable = Liferay.Navigation.prototype._afterMakeSortable;
 

@@ -73,11 +73,6 @@ public class DLPortletInstanceSettings {
 		_typedSettings = new TypedSettings(settings);
 	}
 
-	public long getDefaultFolderId() {
-		return _typedSettings.getLongValue(
-			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
 	public String[] getDisplayViews() {
 		return _typedSettings.getValues("displayViews");
 	}

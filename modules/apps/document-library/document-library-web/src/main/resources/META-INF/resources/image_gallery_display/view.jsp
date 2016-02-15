@@ -19,13 +19,11 @@
 <%
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
-
-long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
+long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
 boolean defaultFolderView = false;
 
-if ((folder == null) && (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+if ((folder == null) && (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 	defaultFolderView = true;
 }
 
@@ -79,7 +77,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 	request.setAttribute("view.jsp-folder", folder);
 
-	request.setAttribute("view.jsp-defaultFolderId", String.valueOf(defaultFolderId));
+	request.setAttribute("view.jsp-rootFolderId", String.valueOf(rootFolderId));
 
 	request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
@@ -228,11 +226,11 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 			SearchContainer igSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-			int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
+			int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, rootFolderId, mediaGalleryMimeTypes, status);
 
 			igSearchContainer.setTotal(total);
 
-			List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
+			List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, rootFolderId, mediaGalleryMimeTypes, status, igSearchContainer.getStart(), igSearchContainer.getEnd(), igSearchContainer.getOrderByComparator());
 
 			igSearchContainer.setResults(results);
 

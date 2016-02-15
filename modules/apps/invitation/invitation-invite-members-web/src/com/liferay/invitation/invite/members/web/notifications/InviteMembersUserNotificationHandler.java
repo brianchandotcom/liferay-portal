@@ -15,7 +15,7 @@
 package com.liferay.invitation.invite.members.web.notifications;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
-import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,6 +43,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -74,17 +75,16 @@ public class InviteMembersUserNotificationHandler
 		long memberRequestId = jsonObject.getLong("classPK");
 
 		MemberRequest memberRequest =
-			MemberRequestLocalServiceUtil.fetchMemberRequest(memberRequestId);
+			_memberRequestLocalService.fetchMemberRequest(memberRequestId);
 
 		Group group = null;
 
 		if (memberRequest != null) {
-			group = GroupLocalServiceUtil.fetchGroup(
-				memberRequest.getGroupId());
+			group = _groupLocalService.fetchGroup(memberRequest.getGroupId());
 		}
 
 		if ((group == null) || (memberRequest == null)) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
 			return null;
@@ -161,7 +161,7 @@ public class InviteMembersUserNotificationHandler
 			long groupId, ServiceContext serviceContext)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		StringBundler sb = new StringBundler(6);
 
@@ -201,7 +201,7 @@ public class InviteMembersUserNotificationHandler
 				return StringPool.BLANK;
 			}
 
-			User user = UserLocalServiceUtil.getUserById(userId);
+			User user = _userLocalService.getUserById(userId);
 
 			String userName = user.getFullName();
 
@@ -215,5 +215,35 @@ public class InviteMembersUserNotificationHandler
 			return StringPool.BLANK;
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMemberRequestLocalService(
+		MemberRequestLocalService memberRequestLocalService) {
+
+		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private MemberRequestLocalService _memberRequestLocalService;
+	private UserLocalService _userLocalService;
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

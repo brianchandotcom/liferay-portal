@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -127,15 +128,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		String assetClassName = (String)serviceContext.getAttribute(
-			"assetClassName");
-
-		if (assetClassName == null) {
-			assetClassName = DDLRecord.class.getName();
-		}
-
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, assetClassName,
+			user.getCompanyId(), groupId, userId,
+			getWorkflowAssetClassName(recordSet),
 			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
 
 		return record;
@@ -204,20 +199,18 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			// Workflow
 
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			deleteWorkflowInstanceLink(
 				record.getCompanyId(), record.getGroupId(),
-				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
+				recordVersion.getPrimaryKey());
 		}
 
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
-			DDLRecord.class.getName(), record.getRecordId());
+		deleteAssetEntry(record.getRecordId());
 
 		// Ratings
 
-		ratingsStatsLocalService.deleteStats(
-			DDLRecord.class.getName(), record.getRecordId());
+		deleteRatingsStats(record.getRecordId());
 
 		return record;
 	}
@@ -764,6 +757,32 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return recordVersion;
 	}
 
+	protected void deleteAssetEntry(long recordId) throws PortalException {
+		assetEntryLocalService.deleteEntry(
+			DDLFormRecord.class.getName(), recordId);
+
+		assetEntryLocalService.deleteEntry(DDLRecord.class.getName(), recordId);
+	}
+
+	protected void deleteRatingsStats(long recordId) throws PortalException {
+		ratingsStatsLocalService.deleteStats(
+			DDLFormRecord.class.getName(), recordId);
+
+		ratingsStatsLocalService.deleteStats(
+			DDLRecord.class.getName(), recordId);
+	}
+
+	protected void deleteWorkflowInstanceLink(
+			long companyId, long groupId, long recordVersionId)
+		throws PortalException {
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			companyId, groupId, DDLFormRecord.class.getName(), recordVersionId);
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			companyId, groupId, DDLRecord.class.getName(), recordVersionId);
+	}
+
 	protected String getNextVersion(
 		String version, boolean majorVersion, int workflowAction) {
 
@@ -782,6 +801,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected String getWorkflowAssetClassName(DDLRecordSet recordSet) {
+		if (recordSet.getScope() == DDLRecordSetConstants.SCOPE_FORMS) {
+			return DDLFormRecord.class.getName();
+		}
+
+		return DDLRecord.class.getName();
 	}
 
 	/**

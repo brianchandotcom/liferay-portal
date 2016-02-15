@@ -24,17 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -43,7 +39,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,44 +62,14 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"add-file-entry"));
-
 		Folder folder = _getFolder(themeDisplay, portletRequest);
 
-		if ((folder != null) && !folder.isMountPoint() &&
-			containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folder.getFolderId(),
-				ActionKeys.ADD_DOCUMENT)) {
+		List<MenuItem> portletTitleAddDocumentMenuItems =
+			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
+				folder, themeDisplay, portletRequest);
 
-			PortletURL portletURL = _getAddFileEntryPortletURL(
-				themeDisplay, portletRequest, folder.getFolderId(),
-				folder.getRepositoryId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-		else if ((folder == null) &&
-				 containsPermission(
-					 themeDisplay.getPermissionChecker(),
-					 themeDisplay.getScopeGroupId(),
-					 DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					 ActionKeys.ADD_DOCUMENT)) {
-
-			PortletURL portletURL = _getAddFileEntryPortletURL(
-				themeDisplay, portletRequest,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				themeDisplay.getScopeGroupId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
+		if (ListUtil.isNotNull(portletTitleAddDocumentMenuItems)) {
+			menuItems.addAll(portletTitleAddDocumentMenuItems);
 		}
 	}
 
@@ -113,50 +78,14 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
 		Folder folder = _getFolder(themeDisplay, portletRequest);
 
-		if ((folder != null) &&
-			containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folder.getFolderId(),
-				ActionKeys.ADD_FOLDER) &&
-			!folder.isMountPoint()) {
+		MenuItem portletTitleAddFolderMenuItem =
+			_dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
+				themeDisplay, portletRequest, folder);
 
-			urlMenuItem.setLabel(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(portletRequest),
-					"add-subfolder"));
-
-			PortletURL portletURL = _getAddFolderPortletURL(
-				themeDisplay, portletRequest, folder.getFolderId(),
-				folder.getRepositoryId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-		else if ((folder == null) &&
-				 containsPermission(
-					 themeDisplay.getPermissionChecker(),
-					 themeDisplay.getScopeGroupId(),
-					 DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					 ActionKeys.ADD_FOLDER)) {
-
-			urlMenuItem.setLabel(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(portletRequest),
-					"add-folder"));
-
-			PortletURL portletURL = _getAddFolderPortletURL(
-				themeDisplay, portletRequest,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				themeDisplay.getScopeGroupId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
+		if (portletTitleAddFolderMenuItem != null) {
+			menuItems.add(portletTitleAddFolderMenuItem);
 		}
 	}
 
@@ -164,60 +93,19 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
+		Folder folder = _getFolder(themeDisplay, portletRequest);
 
-		urlMenuItem.setLabel(
+		MenuItem portletTitleAddMultipleDocumentsMenuItem =
+			_dlPortletToolbarContributor.
+				getPortletTitleAddMultipleDocumentsMenuItem(
+					themeDisplay, portletRequest, folder);
+
+		portletTitleAddMultipleDocumentsMenuItem.setLabel(
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"multiple-media"));
 
-		Folder folder = _getFolder(themeDisplay, portletRequest);
-
-		if ((folder == null) &&
-			containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			PortletURL portletURL = _getAddMultipleFileEntriesPortletURL(
-				themeDisplay, portletRequest,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				themeDisplay.getScopeGroupId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-		else if (folder.isSupportsMultipleUpload() &&
-				 containsPermission(
-					 themeDisplay.getPermissionChecker(),
-					 themeDisplay.getScopeGroupId(), folder.getFolderId(),
-					 ActionKeys.ADD_DOCUMENT)) {
-
-			PortletURL portletURL = _getAddMultipleFileEntriesPortletURL(
-				themeDisplay, portletRequest, folder.getFolderId(),
-				folder.getRepositoryId());
-
-			urlMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(urlMenuItem);
-		}
-	}
-
-	protected boolean containsPermission(
-		PermissionChecker permissionChecker, long groupId, long folderId,
-		String actionId) {
-
-		try {
-			_baseModelPermissionChecker.checkBaseModel(
-				permissionChecker, groupId, folderId, actionId);
-		}
-		catch (PortalException pe) {
-			return false;
-		}
-
-		return true;
+		menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
 	}
 
 	@Override
@@ -251,80 +139,16 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		return menuItems;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)",
-		unbind = "-"
-	)
-	protected void setBaseModelPermissionChecker(
-		BaseModelPermissionChecker baseModelPermissionChecker) {
-
-		_baseModelPermissionChecker = baseModelPermissionChecker;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	private PortletURL _getAddFileEntryPortletURL(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest, long folderId,
-		long repositoryId) {
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributor(
+		DLPortletToolbarContributor dlPortletToolbarContributor) {
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_file_entry");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
-
-		return portletURL;
-	}
-
-	private PortletURL _getAddFolderPortletURL(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest, long folderId,
-		long repositoryId) {
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/edit_folder");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
-		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
-		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
-
-		return portletURL;
-	}
-
-	private PortletURL _getAddMultipleFileEntriesPortletURL(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest, long folderId,
-		long repositoryId) {
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/document_library/upload_multiple_file_entries");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
-		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
-
-		return portletURL;
+		_dlPortletToolbarContributor = dlPortletToolbarContributor;
 	}
 
 	private Folder _getFolder(
@@ -373,7 +197,7 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IGPortletToolbarContributor.class);
 
-	private BaseModelPermissionChecker _baseModelPermissionChecker;
 	private DLAppLocalService _dlAppLocalService;
+	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 }

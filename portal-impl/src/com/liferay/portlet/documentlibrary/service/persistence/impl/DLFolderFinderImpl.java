@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
@@ -235,7 +237,10 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql, folderId, includeMountFolders);
+			boolean showHiddenMountFolders = isShowHiddenMountFolders(groupId);
+
+			sql = updateSQL(
+				sql, folderId, includeMountFolders, showHiddenMountFolders);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -245,7 +250,11 @@ public class DLFolderFinderImpl
 
 			qPos.add(groupId);
 
-			if (!includeMountFolders) {
+			if (!showHiddenMountFolders || !includeMountFolders) {
+				qPos.add(false);
+			}
+
+			if (!showHiddenMountFolders && !includeMountFolders) {
 				qPos.add(false);
 			}
 
@@ -298,6 +307,90 @@ public class DLFolderFinderImpl
 		}
 	}
 
+	protected List<Object> doFindFE_FS_ByG_F(
+		long groupId, long folderId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("SELECT * FROM (");
+
+			String sql = getFileEntriesSQL(
+				FIND_FE_BY_G_F, groupId, null, queryDefinition,
+				inlineSQLHelper);
+
+			sb.append(sql);
+			sb.append(" UNION ALL ");
+
+			sql = getFileShortcutsSQL(
+				FIND_FS_BY_G_F_A, groupId, null, queryDefinition,
+				inlineSQLHelper);
+
+			sb.append(sql);
+			sb.append(") TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
+
+			sql = sb.toString();
+
+			sql = updateSQL(sql, folderId, false, false);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("modelFolderId", Type.LONG);
+			q.addScalar("name", Type.STRING);
+			q.addScalar("title", Type.STRING);
+			q.addScalar("fileShortcutId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(queryDefinition.getStatus());
+			qPos.add(folderId);
+			qPos.add(groupId);
+			qPos.add(true);
+			qPos.add(queryDefinition.getStatus());
+			qPos.add(folderId);
+
+			List<Object> models = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long folderId2 = (Long)array[0];
+				String name = (String)array[1];
+				//String title = (String)array[2];
+				long fileShortcutId = (Long)array[3];
+
+				Object obj = null;
+
+				if (fileShortcutId > 0) {
+					obj = DLFileShortcutUtil.findByPrimaryKey(fileShortcutId);
+				}
+				else {
+					obj = DLFileEntryUtil.findByG_F_N(groupId, folderId2, name);
+				}
+
+				models.add(obj);
+			}
+
+			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	protected int doCountFE_ByG_F(
 		long groupId, long folderId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
@@ -311,7 +404,7 @@ public class DLFolderFinderImpl
 				COUNT_FE_BY_G_F, groupId, null, queryDefinition,
 				inlineSQLHelper);
 
-			sql = updateSQL(sql, folderId, false);
+			sql = updateSQL(sql, folderId, false, false);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -370,7 +463,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql, folderId, false);
+			sql = updateSQL(sql, folderId, false, false);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -459,7 +552,10 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql, folderId, includeMountFolders);
+			boolean showHiddenMountFolders = isShowHiddenMountFolders(groupId);
+
+			sql = updateSQL(
+				sql, folderId, includeMountFolders, showHiddenMountFolders);
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -475,7 +571,11 @@ public class DLFolderFinderImpl
 
 			qPos.add(groupId);
 
-			if (!includeMountFolders) {
+			if (!showHiddenMountFolders || !includeMountFolders) {
+				qPos.add(false);
+			}
+
+			if (!showHiddenMountFolders && !includeMountFolders) {
 				qPos.add(false);
 			}
 
@@ -532,90 +632,6 @@ public class DLFolderFinderImpl
 				else {
 					obj = DLFileEntryUtil.findByG_F_N(
 						groupId, curFolderId, name);
-				}
-
-				models.add(obj);
-			}
-
-			return models;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected List<Object> doFindFE_FS_ByG_F(
-		long groupId, long folderId, QueryDefinition<?> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("SELECT * FROM (");
-
-			String sql = getFileEntriesSQL(
-				FIND_FE_BY_G_F, groupId, null, queryDefinition,
-				inlineSQLHelper);
-
-			sb.append(sql);
-			sb.append(" UNION ALL ");
-
-			sql = getFileShortcutsSQL(
-				FIND_FS_BY_G_F_A, groupId, null, queryDefinition,
-				inlineSQLHelper);
-
-			sb.append(sql);
-			sb.append(") TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
-
-			sql = sb.toString();
-
-			sql = updateSQL(sql, folderId, false);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar("modelFolderId", Type.LONG);
-			q.addScalar("name", Type.STRING);
-			q.addScalar("title", Type.STRING);
-			q.addScalar("fileShortcutId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(queryDefinition.getStatus());
-			qPos.add(folderId);
-			qPos.add(groupId);
-			qPos.add(true);
-			qPos.add(queryDefinition.getStatus());
-			qPos.add(folderId);
-
-			List<Object> models = new ArrayList<>();
-
-			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
-				q, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-
-			while (itr.hasNext()) {
-				Object[] array = itr.next();
-
-				long folderId2 = (Long)array[0];
-				String name = (String)array[1];
-				//String title = (String)array[2];
-				long fileShortcutId = (Long)array[3];
-
-				Object obj = null;
-
-				if (fileShortcutId > 0) {
-					obj = DLFileShortcutUtil.findByPrimaryKey(fileShortcutId);
-				}
-				else {
-					obj = DLFileEntryUtil.findByG_F_N(groupId, folderId2, name);
 				}
 
 				models.add(obj);
@@ -769,8 +785,22 @@ public class DLFolderFinderImpl
 		return sb.toString();
 	}
 
+	protected boolean isShowHiddenMountFolders(long groupId) {
+		try {
+			DLGroupServiceSettings dlGroupServiceSettings =
+				DLGroupServiceSettings.getInstance(groupId);
+
+			return dlGroupServiceSettings.isShowHiddenMountFolders();
+		}
+		catch (PortalException pe) {
+		}
+
+		return false;
+	}
+
 	protected String updateSQL(
-		String sql, long folderId, boolean includeMountFolders) {
+		String sql, long folderId, boolean includeMountFolders,
+		boolean showHiddenMountFolders) {
 
 		sql = StringUtil.replace(
 			sql,
@@ -785,9 +815,29 @@ public class DLFolderFinderImpl
 				getFolderId(folderId, DLFolderImpl.TABLE_NAME)
 			});
 
-		if (includeMountFolders) {
-			sql = StringUtil.replace(
-				sql, "(DLFolder.mountPoint = ?) AND", StringPool.BLANK);
+		if (showHiddenMountFolders) {
+			if (includeMountFolders) {
+				sql = StringUtil.replace(
+					sql, "([$DL_FOLDER_HIDDEN$]) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "([$DL_FOLDER_HIDDEN$]) AND",
+					"(DLFolder.mountPoint = ?) AND");
+			}
+		}
+		else {
+			if (includeMountFolders) {
+				sql = StringUtil.replace(
+					sql, "([$DL_FOLDER_HIDDEN$]) AND",
+					"(DLFolder.hidden_ = ?) AND");
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "([$DL_FOLDER_HIDDEN$]) AND",
+					"(DLFolder.hidden_ = ?) AND " +
+						"(DLFolder.mountPoint = ?) AND");
+			}
 		}
 
 		return sql;

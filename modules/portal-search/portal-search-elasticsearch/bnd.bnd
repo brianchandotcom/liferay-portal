@@ -39,9 +39,7 @@ Export-Package:\
 	!org.elasticsearch,\
 	!org.elasticsearch.*,\
 	\
-	com.liferay.portal.search.elasticsearch.settings,\
-	\
-	org.elasticsearch.common.settings
+	com.liferay.portal.search.elasticsearch.settings
 Import-Package:\
 	!com.carrotsearch.hppc.*,\
 	\

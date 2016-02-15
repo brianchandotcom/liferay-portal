@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.io.InputStream;
@@ -67,9 +68,12 @@ public abstract class BaseElasticsearchConnection
 
 		loadRequiredDefaultConfigurations(builder);
 
-		loadSettingsContributors(builder);
+		ClientSettingsHelperImpl clientSettingsHelper =
+			new ClientSettingsHelperImpl(builder);
 
-		_client = createClient(builder);
+		loadSettingsContributors(clientSettingsHelper);
+
+		_client = createClient(clientSettingsHelper);
 	}
 
 	@Override
@@ -122,7 +126,8 @@ public abstract class BaseElasticsearchConnection
 		_settingsContributors.add(settingsContributor);
 	}
 
-	protected abstract Client createClient(Settings.Builder builder);
+	protected abstract Client createClient(
+		ClientSettingsHelperImpl clientSettingsHelperImpl);
 
 	protected IndexFactory getIndexFactory() {
 		return _indexFactory;
@@ -150,9 +155,11 @@ public abstract class BaseElasticsearchConnection
 	protected abstract void loadRequiredDefaultConfigurations(
 		Settings.Builder builder);
 
-	protected void loadSettingsContributors(Settings.Builder builder) {
+	protected void loadSettingsContributors(
+		ClientSettingsHelper clientSettingsHelper) {
+
 		for (SettingsContributor settingsContributor : _settingsContributors) {
-			settingsContributor.populate(builder);
+			settingsContributor.populate(clientSettingsHelper);
 		}
 	}
 

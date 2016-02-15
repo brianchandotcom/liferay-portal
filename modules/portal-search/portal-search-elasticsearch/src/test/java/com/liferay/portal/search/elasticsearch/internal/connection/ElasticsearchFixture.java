@@ -21,6 +21,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 
 import java.io.File;
 
@@ -232,8 +233,10 @@ public class ElasticsearchFixture {
 			new BaseSettingsContributor(0) {
 
 				@Override
-				public void populate(Settings.Builder builder) {
-					builder.put(
+				public void populate(
+					ClientSettingsHelper clientSettingsHelper) {
+
+					clientSettingsHelper.put(
 						"cluster.service.slow_task_logging_threshold", "600s");
 				}
 
@@ -247,8 +250,10 @@ public class ElasticsearchFixture {
 			new BaseSettingsContributor(0) {
 
 				@Override
-				public void populate(Settings.Builder builder) {
-					builder.put(
+				public void populate(
+					ClientSettingsHelper clientSettingsHelper) {
+
+					clientSettingsHelper.put(
 						"cluster.routing.allocation.disk.threshold_enabled",
 						"false");
 				}

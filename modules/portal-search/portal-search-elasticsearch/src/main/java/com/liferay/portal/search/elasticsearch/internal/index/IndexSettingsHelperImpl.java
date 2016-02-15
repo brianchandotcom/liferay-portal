@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.settings;
+package com.liferay.portal.search.elasticsearch.internal.index;
+
+import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
+
+import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
  */
-public interface SettingsContributor extends Comparable<SettingsContributor> {
+public class IndexSettingsHelperImpl implements IndexSettingsHelper {
 
-	public int getPriority();
+	public IndexSettingsHelperImpl(Settings.Builder builder) {
+		_builder = builder;
+	}
 
-	public void populate(ClientSettingsHelper clientSettingsHelper);
+	@Override
+	public void put(String setting, String value) {
+		_builder.put(setting, value);
+	}
+
+	private final Settings.Builder _builder;
 
 }

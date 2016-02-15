@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.connection.ClientSettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
@@ -191,7 +192,9 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
-	protected Client createClient(Settings.Builder builder) {
+	protected Client createClient(
+		ClientSettingsHelperImpl clientSettingsHelperImpl) {
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -214,6 +217,8 @@ public class EmbeddedElasticsearchConnection
 				"Starting embedded Elasticsearch cluster " +
 					elasticsearchConfiguration.clusterName());
 		}
+
+		Settings.Builder builder = clientSettingsHelperImpl.getSettingsBuilder();
 
 		_node = new Node(builder.build());
 

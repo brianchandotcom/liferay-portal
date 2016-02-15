@@ -45,7 +45,7 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
-<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTasksURL">
+<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTasksURL">
 	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
 </portlet:actionURL>
 

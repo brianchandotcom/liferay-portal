@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
-		"mvc.command.name=deleteBackgroundTask"
+		"mvc.command.name=deleteBackgroundTasks"
 	},
 	service = MVCActionCommand.class
 )

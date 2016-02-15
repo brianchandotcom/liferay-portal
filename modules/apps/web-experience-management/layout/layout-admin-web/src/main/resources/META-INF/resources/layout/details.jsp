@@ -153,7 +153,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</div>
 </c:if>
 
-<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+<div class="<%= selLayout.isLayoutPrototypeLinkActive() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
 	<aui:select name="type">
 
 		<%
@@ -264,26 +264,26 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		);
 	}
 
-	function togglePropagatableFields(isLayoutPrototypeLinkEnabled) {
-		$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkEnabled);
+	function togglePropagatableFields(isLayoutPrototypeLinkActive) {
+		$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkActive);
 
 		$('#<portlet:namespace />fm').find('.propagatable-field').each(
 			function(index, item) {
 				item = $(item);
 
-				item.prop('disabled', isLayoutPrototypeLinkEnabled);
+				item.prop('disabled', isLayoutPrototypeLinkActive);
 			}
 		);
 	}
 
-	togglePropagatableFields(<%= selLayout.isLayoutPrototypeLinkEnabled() %>);
+	togglePropagatableFields(<%= selLayout.isLayoutPrototypeLinkActive() %>);
 
 	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
 		'change',
 		function(event) {
-			var isLayoutPrototypeLinkEnabled = event.currentTarget.checked;
+			var isLayoutPrototypeLinkActive = event.currentTarget.checked;
 
-			togglePropagatableFields(isLayoutPrototypeLinkEnabled);
+			togglePropagatableFields(isLayoutPrototypeLinkActive);
 		}
 	);
 </aui:script>

@@ -49,7 +49,7 @@ public interface PortletConfigurationIcon {
 
 	public String getLinkCssClass();
 
-	public String getMessage();
+	public String getMessage(PortletRequest portletRequest);
 
 	public String getMethod();
 

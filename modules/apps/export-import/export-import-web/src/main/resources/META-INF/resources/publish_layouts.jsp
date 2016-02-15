@@ -64,6 +64,8 @@ else {
 	}
 }
 
+boolean configuredPublish = (exportImportConfiguration == null) ? false : true;
+
 long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId", ParamUtil.getLong(request, "layoutSetBranchId"));
 String layoutSetBranchName = MapUtil.getString(parameterMap, "layoutSetBranchName", ParamUtil.getString(request, "layoutSetBranchName"));
 
@@ -352,12 +354,13 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 									%>
 
 									<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
-										<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-										<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+										<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
+										<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 										<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 										<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 										<liferay-util:param name="treeId" value="<%= treeId %>" />
 										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+										<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredPublish) %>" />
 									</liferay-util:include>
 								</aui:fieldset>
 							</c:if>

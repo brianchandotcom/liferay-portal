@@ -35,8 +35,6 @@ public abstract class BasePortletConfigurationIcon
 	implements PortletConfigurationIcon {
 
 	public BasePortletConfigurationIcon(PortletRequest portletRequest) {
-		this.portletRequest = portletRequest;
-
 		themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -162,7 +160,6 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	protected PortletDisplay portletDisplay;
-	protected PortletRequest portletRequest;
 	protected ThemeDisplay themeDisplay;
 
 }

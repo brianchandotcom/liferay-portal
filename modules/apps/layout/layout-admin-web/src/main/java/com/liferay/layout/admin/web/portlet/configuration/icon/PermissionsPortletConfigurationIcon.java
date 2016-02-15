@@ -55,7 +55,7 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, Layout.class.getName(),
@@ -73,7 +73,7 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -86,8 +86,8 @@ public class PermissionsPortletConfigurationIcon
 			}
 
 			if (LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), getLayout(),
-					ActionKeys.PERMISSIONS)) {
+					themeDisplay.getPermissionChecker(),
+					getLayout(portletRequest), ActionKeys.PERMISSIONS)) {
 
 				return true;
 			}
@@ -108,7 +108,7 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	protected Layout getLayout() throws Exception {
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
 		long selPlid = ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 

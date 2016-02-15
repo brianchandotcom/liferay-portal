@@ -49,7 +49,7 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			JournalArticle article = getArticle();
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, JournalArticle.class.getName(),
@@ -68,7 +68,7 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			JournalArticle article = getArticle();
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
 
 			if ((article == null) || article.isNew()) {
 				return false;
@@ -95,10 +95,6 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return true;
-	}
-
-	protected JournalArticle getArticle() throws Exception {
-		return ActionUtil.getArticle(portletRequest);
 	}
 
 }

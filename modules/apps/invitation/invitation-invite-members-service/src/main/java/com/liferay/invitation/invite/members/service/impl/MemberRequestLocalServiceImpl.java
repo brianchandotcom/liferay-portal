@@ -22,7 +22,8 @@ import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.base.MemberRequestLocalServiceBaseImpl;
 import com.liferay.invitation.invite.members.util.InviteMembersConstants;
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -38,11 +39,10 @@ import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -281,7 +281,7 @@ public class MemberRequestLocalServiceImpl
 			createAccountURL = serviceContext.getPortalURL();
 		}
 
-		if (!WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+		if (!workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				memberRequest.getCompanyId(),
 				WorkflowConstants.DEFAULT_GROUP_ID, User.class.getName(), 0)) {
 
@@ -405,7 +405,7 @@ public class MemberRequestLocalServiceImpl
 		MailMessage mailMessage = new MailMessage(
 			from, to, subject, body, true);
 
-		MailServiceUtil.sendEmail(mailMessage);
+		mailService.sendEmail(mailMessage);
 	}
 
 	protected void sendNotificationEvent(MemberRequest memberRequest)
@@ -435,7 +435,7 @@ public class MemberRequestLocalServiceImpl
 
 			notificationEvent.setDeliveryRequired(0);
 
-			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+			userNotificationEventLocalService.addUserNotificationEvent(
 				memberRequest.getReceiverUserId(), notificationEvent);
 		}
 	}
@@ -452,5 +452,16 @@ public class MemberRequestLocalServiceImpl
 			throw new MemberRequestInvalidUserException();
 		}
 	}
+
+	@BeanReference(type = MailService.class)
+	protected MailService mailService;
+
+	@BeanReference(type = UserNotificationEventLocalService.class)
+	protected UserNotificationEventLocalService
+		userNotificationEventLocalService;
+
+	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
 
 }

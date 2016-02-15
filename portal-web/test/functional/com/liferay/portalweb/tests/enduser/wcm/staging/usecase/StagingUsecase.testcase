@@ -2638,6 +2638,18 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoEditPage">
 			<var name="page" value="Staging Test Page" />
 		</execute>
@@ -2645,12 +2657,6 @@
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1_column" />
 		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />

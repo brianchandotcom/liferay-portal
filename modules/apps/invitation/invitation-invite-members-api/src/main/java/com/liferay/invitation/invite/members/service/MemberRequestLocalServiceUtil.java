@@ -53,6 +53,36 @@ public class MemberRequestLocalServiceUtil {
 		return getService().addMemberRequest(memberRequest);
 	}
 
+	public static com.liferay.invitation.invite.members.model.MemberRequest addMemberRequest(
+		long userId, long groupId, long receiverUserId,
+		java.lang.String receiverEmailAddress, long invitedRoleId,
+		long invitedTeamId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addMemberRequest(userId, groupId, receiverUserId,
+			receiverEmailAddress, invitedRoleId, invitedTeamId, serviceContext);
+	}
+
+	public static void addMemberRequests(long userId, long groupId,
+		java.lang.String[] emailAddresses, long invitedRoleId,
+		long invitedTeamId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addMemberRequests(userId, groupId, emailAddresses, invitedRoleId,
+			invitedTeamId, serviceContext);
+	}
+
+	public static void addMemberRequests(long userId, long groupId,
+		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addMemberRequests(userId, groupId, receiverUserIds, invitedRoleId,
+			invitedTeamId, serviceContext);
+	}
+
 	/**
 	* Creates a new member request with the primary key. Does not add the member request to the database.
 	*
@@ -188,6 +218,12 @@ public class MemberRequestLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.invitation.invite.members.model.MemberRequest getMemberRequest(
+		long groupId, long receiverUserId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMemberRequest(groupId, receiverUserId, status);
+	}
+
 	/**
 	* Returns the member request with the primary key.
 	*
@@ -241,6 +277,39 @@ public class MemberRequestLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.invitation.invite.members.model.MemberRequest> getReceiverMemberRequest(
+		long receiverUserId, int start, int end) {
+		return getService().getReceiverMemberRequest(receiverUserId, start, end);
+	}
+
+	public static int getReceiverMemberRequestCount(long receiverUserId) {
+		return getService().getReceiverMemberRequestCount(receiverUserId);
+	}
+
+	public static java.util.List<com.liferay.invitation.invite.members.model.MemberRequest> getReceiverStatusMemberRequest(
+		long receiverUserId, int status, int start, int end) {
+		return getService()
+				   .getReceiverStatusMemberRequest(receiverUserId, status,
+			start, end);
+	}
+
+	public static int getReceiverStatusMemberRequestCount(long receiverUserId,
+		int status) {
+		return getService()
+				   .getReceiverStatusMemberRequestCount(receiverUserId, status);
+	}
+
+	public static boolean hasPendingMemberRequest(long groupId,
+		long receiverUserId) {
+		return getService().hasPendingMemberRequest(groupId, receiverUserId);
+	}
+
+	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
+		java.lang.String key, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateMemberRequest(key, receiverUserId);
+	}
+
 	/**
 	* Updates the member request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -250,6 +319,12 @@ public class MemberRequestLocalServiceUtil {
 	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
 		com.liferay.invitation.invite.members.model.MemberRequest memberRequest) {
 		return getService().updateMemberRequest(memberRequest);
+	}
+
+	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
+		long userId, long memberRequestId, int status)
+		throws java.lang.Exception {
+		return getService().updateMemberRequest(userId, memberRequestId, status);
 	}
 
 	public static MemberRequestLocalService getService() {

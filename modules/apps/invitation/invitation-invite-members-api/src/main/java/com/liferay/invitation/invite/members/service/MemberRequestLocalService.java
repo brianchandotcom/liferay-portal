@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -69,6 +70,20 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MemberRequest addMemberRequest(MemberRequest memberRequest);
+
+	public MemberRequest addMemberRequest(long userId, long groupId,
+		long receiverUserId, java.lang.String receiverEmailAddress,
+		long invitedRoleId, long invitedTeamId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void addMemberRequests(long userId, long groupId,
+		java.lang.String[] emailAddresses, long invitedRoleId,
+		long invitedTeamId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void addMemberRequests(long userId, long groupId,
+		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new member request with the primary key. Does not add the member request to the database.
@@ -173,6 +188,10 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MemberRequest getMemberRequest(long groupId, long receiverUserId,
+		int status) throws PortalException;
+
 	/**
 	* Returns the member request with the primary key.
 	*
@@ -218,6 +237,27 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MemberRequest> getReceiverMemberRequest(long receiverUserId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReceiverMemberRequestCount(long receiverUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MemberRequest> getReceiverStatusMemberRequest(
+		long receiverUserId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReceiverStatusMemberRequestCount(long receiverUserId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasPendingMemberRequest(long groupId, long receiverUserId);
+
+	public MemberRequest updateMemberRequest(java.lang.String key,
+		long receiverUserId) throws PortalException;
+
 	/**
 	* Updates the member request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -226,4 +266,7 @@ public interface MemberRequestLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public MemberRequest updateMemberRequest(MemberRequest memberRequest);
+
+	public MemberRequest updateMemberRequest(long userId, long memberRequestId,
+		int status) throws java.lang.Exception;
 }

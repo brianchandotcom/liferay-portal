@@ -45,7 +45,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		if (_subscribed) {
 			return "unsubscribe";
 		}

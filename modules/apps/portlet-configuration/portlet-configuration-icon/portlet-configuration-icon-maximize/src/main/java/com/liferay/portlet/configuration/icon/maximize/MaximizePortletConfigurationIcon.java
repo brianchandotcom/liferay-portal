@@ -36,7 +36,7 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "maximize";
 	}
 

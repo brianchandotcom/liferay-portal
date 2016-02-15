@@ -40,7 +40,7 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export";
 	}
 

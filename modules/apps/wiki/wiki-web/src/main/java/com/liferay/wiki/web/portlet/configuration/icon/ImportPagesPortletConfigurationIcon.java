@@ -40,7 +40,7 @@ public class ImportPagesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "import-pages";
 	}
 

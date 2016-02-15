@@ -41,7 +41,7 @@ public class EditCategoryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "edit";
 	}
 

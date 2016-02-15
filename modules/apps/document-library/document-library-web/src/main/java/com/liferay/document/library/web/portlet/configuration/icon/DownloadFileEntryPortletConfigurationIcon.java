@@ -42,7 +42,7 @@ public class DownloadFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "download";
 	}
 

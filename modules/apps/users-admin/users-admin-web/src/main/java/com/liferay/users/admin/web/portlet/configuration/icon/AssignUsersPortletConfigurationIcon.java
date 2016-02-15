@@ -40,7 +40,7 @@ public class AssignUsersPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "assign-users";
 	}
 

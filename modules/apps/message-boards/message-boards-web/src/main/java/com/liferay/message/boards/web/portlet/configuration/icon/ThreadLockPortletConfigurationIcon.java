@@ -43,7 +43,7 @@ public class ThreadLockPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		if (_thread.isLocked()) {
 			return "unlock";
 		}

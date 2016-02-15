@@ -41,7 +41,7 @@ public class ExportUsersPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-users";
 	}
 

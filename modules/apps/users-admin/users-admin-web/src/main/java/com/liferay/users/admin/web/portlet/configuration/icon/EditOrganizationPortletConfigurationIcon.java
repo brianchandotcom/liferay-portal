@@ -42,7 +42,7 @@ public class EditOrganizationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "edit";
 	}
 

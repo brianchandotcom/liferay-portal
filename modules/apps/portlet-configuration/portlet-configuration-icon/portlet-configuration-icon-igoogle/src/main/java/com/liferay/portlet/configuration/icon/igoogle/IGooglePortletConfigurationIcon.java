@@ -45,7 +45,7 @@ public class IGooglePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-to-igoogle";
 	}
 

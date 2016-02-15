@@ -38,7 +38,7 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-import";
 	}
 

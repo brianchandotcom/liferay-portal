@@ -41,7 +41,7 @@ public class PagePermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "permissions";
 	}
 

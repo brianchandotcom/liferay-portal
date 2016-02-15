@@ -42,7 +42,7 @@ public class CancelCheckoutFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "cancel-checkout[document]";
 	}
 

@@ -35,7 +35,7 @@ public class ClosePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "remove";
 	}
 

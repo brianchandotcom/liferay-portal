@@ -42,7 +42,7 @@ public class AccessFromDesktopPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "access-from-desktop";
 	}
 

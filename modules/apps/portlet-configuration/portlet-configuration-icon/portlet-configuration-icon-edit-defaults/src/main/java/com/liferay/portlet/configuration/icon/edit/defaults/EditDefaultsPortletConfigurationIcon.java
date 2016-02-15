@@ -30,7 +30,7 @@ public class EditDefaultsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "default-preferences";
 	}
 

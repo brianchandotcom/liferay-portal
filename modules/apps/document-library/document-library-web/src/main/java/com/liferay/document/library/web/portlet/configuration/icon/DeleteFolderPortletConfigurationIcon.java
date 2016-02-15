@@ -46,7 +46,7 @@ public class DeleteFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		if ((_folder.getModel() instanceof DLFolder) &&
 			isTrashEnabled(themeDisplay.getScopeGroupId())) {
 

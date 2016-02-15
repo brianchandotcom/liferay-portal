@@ -42,7 +42,7 @@ public class MoveFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "move";
 	}
 

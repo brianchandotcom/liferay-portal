@@ -45,7 +45,7 @@ public class WidgetPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "add-to-any-website";
 	}
 

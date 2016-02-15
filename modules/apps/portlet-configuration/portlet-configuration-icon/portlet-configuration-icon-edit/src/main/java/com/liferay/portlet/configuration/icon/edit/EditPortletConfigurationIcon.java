@@ -29,7 +29,7 @@ public class EditPortletConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "preferences";
 	}
 

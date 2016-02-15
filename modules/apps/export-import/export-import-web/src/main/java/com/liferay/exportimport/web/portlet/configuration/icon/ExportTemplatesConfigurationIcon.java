@@ -34,7 +34,7 @@ public class ExportTemplatesConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-templates";
 	}
 

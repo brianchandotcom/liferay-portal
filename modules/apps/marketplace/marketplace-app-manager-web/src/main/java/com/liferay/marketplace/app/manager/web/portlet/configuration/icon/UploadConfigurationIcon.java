@@ -35,7 +35,7 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "upload";
 	}
 

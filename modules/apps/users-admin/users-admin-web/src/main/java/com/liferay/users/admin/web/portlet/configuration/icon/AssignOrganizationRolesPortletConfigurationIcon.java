@@ -44,7 +44,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "assign-organization-roles";
 	}
 

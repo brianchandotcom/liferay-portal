@@ -46,7 +46,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "embedded-portlets";
 	}
 

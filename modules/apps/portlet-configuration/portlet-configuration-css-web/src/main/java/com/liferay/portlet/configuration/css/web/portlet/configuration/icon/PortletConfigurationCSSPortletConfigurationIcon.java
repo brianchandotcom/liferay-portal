@@ -41,7 +41,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "look-and-feel";
 	}
 

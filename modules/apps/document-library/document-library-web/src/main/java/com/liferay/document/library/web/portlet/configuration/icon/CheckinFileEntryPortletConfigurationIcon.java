@@ -39,7 +39,7 @@ public class CheckinFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "checkin";
 	}
 

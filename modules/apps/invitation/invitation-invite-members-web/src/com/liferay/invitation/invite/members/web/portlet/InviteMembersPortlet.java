@@ -14,7 +14,7 @@
 
 package com.liferay.invitation.invite.members.web.portlet;
 
-import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.web.util.InviteMembersUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,6 +62,7 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -128,7 +129,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 			userJSONObject.put(
 				"hasPendingMemberRequest",
-				MemberRequestLocalServiceUtil.hasPendingMemberRequest(
+				_memberRequestLocalService.hasPendingMemberRequest(
 					themeDisplay.getScopeGroupId(), user.getUserId()));
 			userJSONObject.put("userEmailAddress", user.getEmailAddress());
 			userJSONObject.put("userFullName", user.getFullName());
@@ -192,7 +193,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			MemberRequestLocalServiceUtil.updateMemberRequest(
+			_memberRequestLocalService.updateMemberRequest(
 				themeDisplay.getUserId(), memberRequestId, status);
 
 			jsonObject.put("success", Boolean.TRUE);
@@ -218,7 +219,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!UserLocalServiceUtil.hasGroupUser(
+		if (!_userLocalService.hasGroupUser(
 				groupId, themeDisplay.getUserId())) {
 
 			return;
@@ -229,10 +230,10 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		long plid = themeDisplay.getPlid();
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		if (layout.isPrivateLayout()) {
-			Group guestGroup = GroupLocalServiceUtil.getGroup(
+			Group guestGroup = _groupLocalService.getGroup(
 				themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
 			plid = guestGroup.getDefaultPublicPlid();
@@ -255,11 +256,11 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		serviceContext.setAttribute("loginURL", themeDisplay.getURLSignIn());
 
-		MemberRequestLocalServiceUtil.addMemberRequests(
+		_memberRequestLocalService.addMemberRequests(
 			themeDisplay.getUserId(), groupId, receiverUserIds, invitedRoleId,
 			invitedTeamId, serviceContext);
 
-		MemberRequestLocalServiceUtil.addMemberRequests(
+		_memberRequestLocalService.addMemberRequests(
 			themeDisplay.getUserId(), groupId, receiverEmailAddresses,
 			invitedRoleId, invitedTeamId, serviceContext);
 	}
@@ -282,7 +283,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 			return PortalUtil.getCreateAccountURL(request, themeDisplay);
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
 		PortletURL createAccountURL = PortletURLFactoryUtil.create(
@@ -319,7 +320,36 @@ public class InviteMembersPortlet extends MVCPortlet {
 		return StringUtil.split(GetterUtil.getString(value));
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMemberRequestLocalService(
+		MemberRequestLocalService memberRequestLocalService) {
+
+		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersPortlet.class);
+
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private MemberRequestLocalService _memberRequestLocalService;
+	private UserLocalService _userLocalService;
 
 }

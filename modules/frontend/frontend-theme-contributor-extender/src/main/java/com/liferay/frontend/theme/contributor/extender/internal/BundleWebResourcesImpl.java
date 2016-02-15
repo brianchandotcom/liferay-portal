@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.theme.contributor.extender.internal;
+package com.liferay.frontend.theme.contributor.extender.internal;
 
-import com.liferay.portal.theme.contributor.extender.BundleWebResources;
+import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
 
 import java.util.Collection;
 

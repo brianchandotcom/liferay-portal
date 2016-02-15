@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.theme.contributor.extender.internal;
+package com.liferay.frontend.theme.contributor.extender.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
-import com.liferay.portal.theme.contributor.extender.BundleWebResources;
+import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
 
 import java.util.ArrayList;
 import java.util.Collection;

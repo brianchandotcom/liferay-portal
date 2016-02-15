@@ -84,7 +84,7 @@ public interface TextDDMFormFieldTypeSettings
 	)
 	public LocalizedValue placeholder();
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(visibilityExpression = "FALSE")
 	public LocalizedValue tooltip();
 
 }

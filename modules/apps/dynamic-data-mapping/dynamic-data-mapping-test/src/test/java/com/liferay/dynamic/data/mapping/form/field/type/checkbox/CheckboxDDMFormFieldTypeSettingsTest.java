@@ -64,7 +64,7 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(repeatableDDMFormField);
 		Assert.assertEquals(
-			"false", repeatableDDMFormField.getVisibilityExpression());
+			"FALSE", repeatableDDMFormField.getVisibilityExpression());
 
 		DDMFormField showAsSwitcherDDMFormField = ddmFormFieldsMap.get(
 			"showAsSwitcher");
@@ -82,7 +82,7 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(validationDDMFormField);
 		Assert.assertEquals(
-			"false", validationDDMFormField.getVisibilityExpression());
+			"FALSE", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

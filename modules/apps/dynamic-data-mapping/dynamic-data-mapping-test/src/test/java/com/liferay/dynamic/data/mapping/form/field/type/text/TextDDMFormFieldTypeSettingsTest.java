@@ -67,7 +67,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(tooltipDDMFormField);
 		Assert.assertEquals(
-			"false", tooltipDDMFormField.getVisibilityExpression());
+			"FALSE", tooltipDDMFormField.getVisibilityExpression());
 	}
 
 }

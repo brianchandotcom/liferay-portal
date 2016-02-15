@@ -62,26 +62,26 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(predefinedValueDDMFormField);
 		Assert.assertEquals(
-			"false", predefinedValueDDMFormField.getVisibilityExpression());
+			"FALSE", predefinedValueDDMFormField.getVisibilityExpression());
 
 		DDMFormField repeatableDDMFormField = ddmFormFieldsMap.get(
 			"repeatable");
 
 		Assert.assertNotNull(repeatableDDMFormField);
 		Assert.assertEquals(
-			"false", repeatableDDMFormField.getVisibilityExpression());
+			"FALSE", repeatableDDMFormField.getVisibilityExpression());
 
 		DDMFormField requiredDDMFormField = ddmFormFieldsMap.get("required");
 
 		Assert.assertNotNull(requiredDDMFormField);
 		Assert.assertEquals(
-			"false", requiredDDMFormField.getVisibilityExpression());
+			"FALSE", requiredDDMFormField.getVisibilityExpression());
 
 		DDMFormField showLabelDDMFormField = ddmFormFieldsMap.get("showLabel");
 
 		Assert.assertNotNull(showLabelDDMFormField);
 		Assert.assertEquals(
-			"false", showLabelDDMFormField.getVisibilityExpression());
+			"FALSE", showLabelDDMFormField.getVisibilityExpression());
 
 		DDMFormField textDDMFormField = ddmFormFieldsMap.get("text");
 
@@ -103,7 +103,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 		DDMFormField tipDDMFormField = ddmFormFieldsMap.get("tip");
 
 		Assert.assertNotNull(tipDDMFormField);
-		Assert.assertEquals("false", tipDDMFormField.getVisibilityExpression());
+		Assert.assertEquals("FALSE", tipDDMFormField.getVisibilityExpression());
 
 		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
 			"validation");
@@ -113,7 +113,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 			"ddm-validation", validationDDMFormField.getDataType());
 		Assert.assertEquals("validation", validationDDMFormField.getType());
 		Assert.assertEquals(
-			"false", validationDDMFormField.getVisibilityExpression());
+			"FALSE", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

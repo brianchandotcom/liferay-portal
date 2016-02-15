@@ -50,7 +50,7 @@
 				localizeMessage="<%= portletConfigurationIcon.isLocalizeMessage() %>"
 				message="<%= portletConfigurationIcon.getMessage() %>"
 				method="<%= portletConfigurationIcon.getMethod() %>"
-				onClick="<%= portletConfigurationIcon.getOnClick() %>"
+				onClick="<%= portletConfigurationIcon.getOnClick(portletRequest, portletResponse) %>"
 				src="<%= portletConfigurationIcon.getSrc() %>"
 				srcHover="<%= portletConfigurationIcon.getSrcHover() %>"
 				target="<%= portletConfigurationIcon.getTarget() %>"

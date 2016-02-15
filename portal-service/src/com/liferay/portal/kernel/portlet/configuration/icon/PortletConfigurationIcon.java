@@ -53,7 +53,8 @@ public interface PortletConfigurationIcon {
 
 	public String getMethod();
 
-	public String getOnClick();
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public String getSrc();
 

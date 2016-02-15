@@ -14,12 +14,9 @@
 
 package com.liferay.document.library.web.portlet.toolbar.contributor;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.document.library.web.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -28,7 +25,6 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarC
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -40,6 +36,8 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,12 +55,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_dlPortletToolbarContributorHelper =
+			new DLPortletToolbarContributorHelper(_dlAppLocalService);
+	}
+
 	protected void addPortletTitleAddFileEntryMenuItem(
-			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
+			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
 		throws PortalException {
-
-		Folder folder = _getFolder(themeDisplay, portletRequest);
 
 		List<MenuItem> portletTitleAddDocumentMenuItems =
 			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
@@ -74,11 +76,9 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddFolderMenuItem(
-			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
+			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
 		throws PortalException {
-
-		Folder folder = _getFolder(themeDisplay, portletRequest);
 
 		MenuItem portletTitleAddFolderMenuItem =
 			_dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
@@ -90,10 +90,8 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddMulpleFileEntriesMenuItem(
-		List<MenuItem> menuItems, ThemeDisplay themeDisplay,
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
-
-		Folder folder = _getFolder(themeDisplay, portletRequest);
 
 		MenuItem portletTitleAddMultipleDocumentsMenuItem =
 			_dlPortletToolbarContributor.
@@ -117,9 +115,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
+		Folder folder = _dlPortletToolbarContributorHelper.getFolder(
+			themeDisplay, portletRequest);
+
 		try {
 			addPortletTitleAddFolderMenuItem(
-				menuItems, themeDisplay, portletRequest);
+				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add folder menu item", pe);
@@ -127,14 +128,14 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		try {
 			addPortletTitleAddFileEntryMenuItem(
-				menuItems, themeDisplay, portletRequest);
+				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add file entry menu item", pe);
 		}
 
 		addPortletTitleAddMulpleFileEntriesMenuItem(
-			menuItems, themeDisplay, portletRequest);
+			menuItems, folder, themeDisplay, portletRequest);
 
 		return menuItems;
 	}
@@ -151,53 +152,12 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		_dlPortletToolbarContributor = dlPortletToolbarContributor;
 	}
 
-	private Folder _getFolder(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
-
-		Folder folder = (Folder)portletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER);
-
-		if (folder != null) {
-			return folder;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		try {
-			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLPortletInstanceSettings.getInstance(
-					themeDisplay.getLayout(), portletDisplay.getId());
-
-			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		long folderId = BeanParamUtil.getLong(
-			folder, portletRequest, "folderId", rootFolderId);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				folder = _dlAppLocalService.getFolder(folderId);
-			}
-			catch (NoSuchFolderException nsfe) {
-				folder = null;
-			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
-		}
-
-		return folder;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IGPortletToolbarContributor.class);
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+	private DLPortletToolbarContributorHelper
+		_dlPortletToolbarContributorHelper;
 
 }

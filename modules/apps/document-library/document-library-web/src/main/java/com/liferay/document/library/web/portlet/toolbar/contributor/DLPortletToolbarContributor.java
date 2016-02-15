@@ -14,15 +14,13 @@
 
 package com.liferay.document.library.web.portlet.toolbar.contributor;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.document.library.web.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -50,11 +48,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
@@ -97,7 +98,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(
+				_dlPortletToolbarContributorHelper.getRepositoryId(
+					themeDisplay, folder)));
 		portletURL.setParameter(
 			"folderId", String.valueOf(_getFolderId(folder)));
 		portletURL.setParameter(
@@ -126,7 +129,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			return Collections.emptyList();
 		}
 
-		long repositoryId = _getRepositoryId(themeDisplay, folder);
+		long repositoryId = _dlPortletToolbarContributorHelper.getRepositoryId(
+			themeDisplay, folder);
 
 		if (themeDisplay.getScopeGroupId() != repositoryId) {
 			menuItems.add(
@@ -175,7 +179,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(
+				_dlPortletToolbarContributorHelper.getRepositoryId(
+					themeDisplay, folder)));
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
 
@@ -224,7 +230,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(
+				_dlPortletToolbarContributorHelper.getRepositoryId(
+					themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -308,12 +316,20 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(
+				_dlPortletToolbarContributorHelper.getRepositoryId(
+					themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_dlPortletToolbarContributorHelper =
+			new DLPortletToolbarContributorHelper(_dlAppLocalService);
 	}
 
 	protected void addPortletTitleAddDocumentMenuItems(
@@ -453,7 +469,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Folder folder = _getFolder(themeDisplay, portletRequest);
+		Folder folder = _dlPortletToolbarContributorHelper.getFolder(
+			themeDisplay, portletRequest);
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
@@ -522,49 +539,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		_dlFileEntryTypeService = dlFileEntryTypeService;
 	}
 
-	private Folder _getFolder(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
-
-		Folder folder = (Folder)portletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER);
-
-		if (folder != null) {
-			return folder;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		try {
-			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLPortletInstanceSettings.getInstance(
-					themeDisplay.getLayout(), portletDisplay.getId());
-
-			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		long folderId = BeanParamUtil.getLong(
-			folder, portletRequest, "folderId", rootFolderId);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				folder = _dlAppLocalService.getFolder(folderId);
-			}
-			catch (NoSuchFolderException nsfe) {
-				folder = null;
-			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
-		}
-
-		return folder;
-	}
-
 	private long _getFolderId(Folder folder) {
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
@@ -601,7 +575,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+			String.valueOf(
+				_dlPortletToolbarContributorHelper.getRepositoryId(
+					themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -637,21 +613,13 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		return menuItems;
 	}
 
-	private long _getRepositoryId(ThemeDisplay themeDisplay, Folder folder) {
-		long repositoryId = themeDisplay.getScopeGroupId();
-
-		if (folder != null) {
-			repositoryId = folder.getRepositoryId();
-		}
-
-		return repositoryId;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPortletToolbarContributor.class);
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+	private DLPortletToolbarContributorHelper
+		_dlPortletToolbarContributorHelper;
 
 }

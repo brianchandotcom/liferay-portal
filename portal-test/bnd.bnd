@@ -21,8 +21,8 @@ Export-Package:\
 	\
 	org.hamcrest.*,\
 	\
-	org.junit.*,\
 	org.junit.runner.*,\
+	org.junit.*,\
 	\
 	org.springframework.mock.web,\
 	org.springframework.mock.web.portlet

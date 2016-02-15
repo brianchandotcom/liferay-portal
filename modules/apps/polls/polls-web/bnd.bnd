@@ -9,8 +9,8 @@ Import-Package:\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.model,\
@@ -23,19 +23,19 @@ Import-Package:\
 	com.liferay.portlet,\
 	\
 	org.apache.commons.chain,\
-	org.apache.commons.chain.*,\
 	org.apache.commons.chain.generic,\
 	org.apache.commons.chain.generic.*,\
 	org.apache.commons.chain.impl,\
 	org.apache.commons.chain.impl.*,\
+	org.apache.commons.chain.*,\
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\
 	org.apache.struts.chain,\
-	org.apache.struts.chain.*,\
 	org.apache.struts.chain.commands,\
-	org.apache.struts.chain.commands.*,\
 	org.apache.struts.chain.commands.servlet,\
 	org.apache.struts.chain.commands.servlet.*,\
+	org.apache.struts.chain.commands.*,\
+	org.apache.struts.chain.*,\
 	org.apache.struts.config,\
 	org.apache.struts.config.*,\
 	org.apache.struts.util,\

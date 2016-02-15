@@ -14,7 +14,7 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Portal Remote CXF Common
 Bundle-SymbolicName: com.liferay.portal.remote.cxf.common
 Bundle-Version: 1.0.0
-Export-Package: \
+Export-Package:\
 	javax.wsdl.*;version="1.2",\
 	org.apache.cxf.*;version="3.0.3",\
 	org.apache.ws.commons.schema.*;version="2.1.0"

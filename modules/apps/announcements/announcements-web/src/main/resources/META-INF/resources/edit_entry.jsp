@@ -54,9 +54,7 @@ if (entry == null) {
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= entry != null %>">
-
 				<%@ include file="/entry_scope.jspf" %>
-
 			</c:when>
 			<c:otherwise>
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.taglib.aui.form.extension.sample;
+package com.liferay.frontend.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicInclude;
 import com.liferay.portal.kernel.util.PortletKeys;

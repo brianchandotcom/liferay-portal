@@ -27,6 +27,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.frontend.js.web:1.0.0,\
 	com.liferay.frontend.taglib.freemarker.contributor:1.0.0,\
 	com.liferay.frontend.taglib:1.0.0,\
+	com.liferay.frontend.taglib.aui.form.extension.sample:1.0.0,\
 	com.liferay.frontend.theme.admin.web:1.0.0,\
 	com.liferay.frontend.theme.classic.web:1.0.0,\
 	com.liferay.frontend.theme.styled:1.0.0,\
@@ -140,7 +141,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.store.s3.test:1.0.0,\
 	com.liferay.portal.store.s3:1.0.0,\
 	com.liferay.portal.store.safefilenamewrapper:1.0.0,\
-	com.liferay.portal.taglib.aui.form.extension.sample:1.0.0,\
 	com.liferay.portal.template.freemarker:1.0.0,\
 	com.liferay.portal.template.soy:1.0.0,\
 	com.liferay.portal.template.velocity:1.0.0,\

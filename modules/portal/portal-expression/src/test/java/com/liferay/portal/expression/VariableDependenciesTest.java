@@ -33,10 +33,8 @@ public class VariableDependenciesTest {
 			"var1 + var2 + var3");
 
 		expression.setLongVariableValue("var1", 5l);
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Long.class);
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Long.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		Map<String, VariableDependencies> variableDependenciesMap =
 			expression.getVariableDependenciesMap();

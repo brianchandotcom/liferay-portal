@@ -23,9 +23,6 @@ public interface ExpressionFactory {
 
 	public Expression<Double> createDoubleExpression(String expressionString);
 
-	public <T> Expression<T> createExpression(
-		String expressionString, Class<T> expressionType);
-
 	public Expression<Float> createFloatExpression(String expressionString);
 
 	public Expression<Integer> createIntegerExpression(String expressionString);

@@ -38,13 +38,6 @@ public class ExpressionFactoryImpl implements ExpressionFactory {
 	}
 
 	@Override
-	public <T> Expression<T> createExpression(
-		String expressionString, Class<T> expressionType) {
-
-		return new ExpressionImpl<>(expressionString, expressionType);
-	}
-
-	@Override
 	public Expression<Float> createFloatExpression(String expressionString) {
 		return new ExpressionImpl<>(expressionString, Float.class);
 	}

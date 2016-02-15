@@ -14,6 +14,8 @@
 
 package com.liferay.portal.expression.internal;
 
+import java.math.BigDecimal;
+
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
@@ -21,6 +23,11 @@ public class Variable {
 
 	public Variable(String name) {
 		_name = name;
+	}
+
+	public Variable(String name, BigDecimal value) {
+		_name = name;
+		_value = value;
 	}
 
 	public String getExpressionString() {
@@ -31,12 +38,8 @@ public class Variable {
 		return _name;
 	}
 
-	public Object getValue() {
+	public BigDecimal getValue() {
 		return _value;
-	}
-
-	public Class<?> getVariableClass() {
-		return _variableClass;
 	}
 
 	public void setExpressionString(String expressionString) {
@@ -47,17 +50,12 @@ public class Variable {
 		_name = name;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(BigDecimal value) {
 		_value = value;
-	}
-
-	public void setVariableClass(Class<?> variableClass) {
-		_variableClass = variableClass;
 	}
 
 	private String _expressionString;
 	private String _name;
-	private Object _value;
-	private Class<?> _variableClass;
+	private BigDecimal _value;
 
 }

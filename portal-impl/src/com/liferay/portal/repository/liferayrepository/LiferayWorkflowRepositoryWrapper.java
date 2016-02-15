@@ -84,17 +84,17 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, boolean majorVersion,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		super.checkInFileEntry(
-			userId, fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, majorVersion, changeLog, serviceContext);
 
 		FileEntry fileEntry = super.getFileEntry(fileEntryId);
 
 		_workflowSupport.checkInFileEntry(
-			userId, fileEntry, major, serviceContext);
+			userId, fileEntry, majorVersion, serviceContext);
 	}
 
 	@Override

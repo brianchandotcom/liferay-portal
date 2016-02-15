@@ -74,8 +74,8 @@ public class LiferayProcessorLocalRepositoryWrapper
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, boolean majorVersion,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
@@ -83,7 +83,7 @@ public class LiferayProcessorLocalRepositoryWrapper
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
 
 		super.checkInFileEntry(
-			userId, fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, majorVersion, changeLog, serviceContext);
 
 		_processorCapability.copy(fileEntry, fileEntry.getFileVersion());
 	}

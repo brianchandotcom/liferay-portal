@@ -57,8 +57,8 @@ public interface DocumentRepository extends CapabilityProvider {
 		throws PortalException;
 
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, boolean majorVersion,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkInFileEntry(

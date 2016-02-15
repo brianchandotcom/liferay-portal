@@ -122,14 +122,14 @@ public class CapabilityLocalRepository
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, boolean majorVersion,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		LocalRepository localRepository = getRepository();
 
 		localRepository.checkInFileEntry(
-			userId, fileEntryId, major, changeLog, serviceContext);
+			userId, fileEntryId, majorVersion, changeLog, serviceContext);
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 

@@ -17,8 +17,8 @@
 
 			<#list navItems as navItem>
 				<#if navItem.isBrowsable() || navItem.hasBrowsableChildren() >
-					<#assign nav_item_attr_selected = "" />
 					<#assign nav_item_attr_has_popup = "" />
+					<#assign nav_item_attr_selected = "" />
 					<#assign nav_item_caret = "" />
 					<#assign nav_item_css_class = "lfr-nav-item" />
 					<#assign nav_item_href_link = "" />

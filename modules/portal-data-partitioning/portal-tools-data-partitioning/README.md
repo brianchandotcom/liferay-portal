@@ -26,12 +26,12 @@ tool:
 
 The command to execute the tool should be similar to this:
 
-    java -classpath PATH-TO-LIBS -jar /PATH-TO-TOOL/com.liferay.portal.tools.shard.builder-1.0.0.jar [-P|--properties-file] PATH-TO-DB-PROPERTIES [-S|--schema-name] SCHEMA_NAME [-C|--company-ids] COMMA-SEPARATED-COMPANY_IDS [-O|--output-dir] OUTPUT-DIR [-W|--write-file]
+    java -classpath PATH-TO-LIBS -jar /PATH-TO-TOOL/com.liferay.portal.tools.data.partitioning-1.0.0.jar [-P|--properties-file] PATH-TO-DB-PROPERTIES [-S|--schema-name] SCHEMA_NAME [-C|--company-ids] COMMA-SEPARATED-COMPANY_IDS [-O|--output-dir] OUTPUT-DIR [-W|--write-file]
 
 Here are examples of executing the tool using MySQL as the DB provider:
 
-    java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.shard.builder-1.0.0.jar -P ~/shardingTool/mysql.properties -S lportal -C 20156 -O /tmp [-W]
-    java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.shard.builder-1.0.0.jar --properties-file ~/shardingTool/mysql.properties --schema-name lportal --company-ids 20156 --output-dir /tmp [--write-file]
+    java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.data.partitioning-1.0.0.jar -P ~/dataPartitioningTool/mysql.properties -S lportal -C 20156 -O /tmp [-W]
+    java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.data.partitioning-1.0.0.jar --properties-file ~/dataPartitioningTool/mysql.properties --schema-name lportal --company-ids 20156 --output-dir /tmp [--write-file]
 
 ## Testing
 

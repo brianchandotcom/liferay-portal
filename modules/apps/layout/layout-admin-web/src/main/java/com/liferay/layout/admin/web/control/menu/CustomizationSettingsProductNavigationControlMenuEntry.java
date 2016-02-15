@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.io.IOException;
 
@@ -33,7 +34,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,7 +57,7 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/control/menu/customization_settings_icon.jsp";
+		return "/control/menu/customization_settings.jsp";
 	}
 
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

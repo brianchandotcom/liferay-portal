@@ -40,7 +40,9 @@ public class ClosePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "Liferay.Portlet.close('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_'); return false;");
 	}

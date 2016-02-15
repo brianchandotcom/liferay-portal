@@ -48,7 +48,9 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(11);
 
 		sb.append("Liferay.Portlet.openWindow({namespace: '");

@@ -47,7 +47,9 @@ public class EditTemplatePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(14);
 
 		DDMTemplate ddmTemplate =

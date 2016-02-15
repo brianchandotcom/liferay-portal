@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Alerts", "javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/alerts/view",
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,

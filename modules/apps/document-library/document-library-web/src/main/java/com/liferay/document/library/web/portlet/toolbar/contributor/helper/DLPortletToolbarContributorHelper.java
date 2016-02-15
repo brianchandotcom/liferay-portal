@@ -83,16 +83,6 @@ public class DLPortletToolbarContributorHelper {
 		return folder;
 	}
 
-	public long getRepositoryId(ThemeDisplay themeDisplay, Folder folder) {
-		long repositoryId = themeDisplay.getScopeGroupId();
-
-		if (folder != null) {
-			repositoryId = folder.getRepositoryId();
-		}
-
-		return repositoryId;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPortletToolbarContributorHelper.class);
 

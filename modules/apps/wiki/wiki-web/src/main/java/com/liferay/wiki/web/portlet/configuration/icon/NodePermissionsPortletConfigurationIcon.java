@@ -23,6 +23,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Roberto Díaz
@@ -44,7 +45,9 @@ public class NodePermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String url = StringPool.BLANK;
 
 		try {

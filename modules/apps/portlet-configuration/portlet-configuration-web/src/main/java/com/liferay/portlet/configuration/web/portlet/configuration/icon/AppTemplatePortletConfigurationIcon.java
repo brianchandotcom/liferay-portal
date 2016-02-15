@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -46,7 +47,9 @@ public class AppTemplatePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			String redirect = ParamUtil.getString(portletRequest, "redirect");
 			String returnToFullPageURL = ParamUtil.getString(

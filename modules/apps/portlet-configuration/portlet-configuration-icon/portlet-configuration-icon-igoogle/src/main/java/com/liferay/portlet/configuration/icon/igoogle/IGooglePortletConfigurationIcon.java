@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -49,7 +50,9 @@ public class IGooglePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			Portlet portlet = (Portlet)portletRequest.getAttribute(
 				WebKeys.RENDER_PORTLET);

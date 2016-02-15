@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.ResourceURL;
 
 /**
@@ -50,7 +51,9 @@ public class DownloadFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		ResourceURL portletURL =
 			(ResourceURL)PortalUtil.getControlPanelPortletURL(
 				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,

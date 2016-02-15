@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -46,7 +47,9 @@ public class AccessFromDesktopPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 

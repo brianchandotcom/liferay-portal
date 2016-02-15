@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -44,7 +45,9 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			String returnToFullPageURL = ParamUtil.getString(
 				portletRequest, "returnToFullPageURL");

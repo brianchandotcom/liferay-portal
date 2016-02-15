@@ -77,7 +77,9 @@ public class EditJournalArticlePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return _journalContentDisplayContext.getURLEdit();
 	}
 

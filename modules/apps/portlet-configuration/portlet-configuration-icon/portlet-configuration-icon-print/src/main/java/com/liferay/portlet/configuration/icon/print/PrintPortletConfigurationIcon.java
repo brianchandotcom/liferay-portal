@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.icon.print;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -50,7 +51,9 @@ public class PrintPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return portletDisplay.getURLPrint();
 	}
 

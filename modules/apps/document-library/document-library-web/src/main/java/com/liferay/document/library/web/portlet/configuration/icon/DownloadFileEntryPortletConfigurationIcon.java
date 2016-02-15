@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Roberto Díaz
@@ -51,7 +52,9 @@ public class DownloadFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return DLUtil.getDownloadURL(
 			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}

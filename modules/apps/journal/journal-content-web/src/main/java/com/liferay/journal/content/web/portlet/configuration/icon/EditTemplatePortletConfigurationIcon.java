@@ -78,7 +78,9 @@ public class EditTemplatePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return _journalContentDisplayContext.getURLEditTemplate();
 	}
 

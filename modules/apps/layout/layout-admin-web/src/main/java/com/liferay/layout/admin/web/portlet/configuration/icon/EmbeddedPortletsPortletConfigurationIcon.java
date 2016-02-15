@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -50,7 +51,9 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),

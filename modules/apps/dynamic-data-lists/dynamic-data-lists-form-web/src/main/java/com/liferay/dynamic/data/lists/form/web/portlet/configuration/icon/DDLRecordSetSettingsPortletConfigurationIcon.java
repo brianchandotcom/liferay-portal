@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Marcellus Tavares
@@ -37,7 +38,9 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:Liferay.DDL.openSettings(" +
 			String.valueOf(getRecordSetId()) + ")";
 	}

@@ -55,7 +55,7 @@
 				srcHover="<%= portletConfigurationIcon.getSrcHover() %>"
 				target="<%= portletConfigurationIcon.getTarget() %>"
 				toolTip="<%= portletConfigurationIcon.isToolTip() %>"
-				url="<%= portletConfigurationIcon.getURL() %>"
+				url="<%= portletConfigurationIcon.getURL(portletRequest, portletResponse) %>"
 				useDialog="<%= portletConfigurationIcon.isUseDialog() %>"
 			/>
 

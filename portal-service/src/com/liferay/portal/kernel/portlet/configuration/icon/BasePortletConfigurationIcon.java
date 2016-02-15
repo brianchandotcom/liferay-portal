@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -123,7 +124,9 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return null;
 	}
 

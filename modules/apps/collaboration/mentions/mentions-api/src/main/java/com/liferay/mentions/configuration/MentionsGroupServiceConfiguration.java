@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  */
 @ExtendedObjectClassDefinition(
 	category = "collaboration",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY,
-	settingsId = MentionsConstants.SERVICE_NAME
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",

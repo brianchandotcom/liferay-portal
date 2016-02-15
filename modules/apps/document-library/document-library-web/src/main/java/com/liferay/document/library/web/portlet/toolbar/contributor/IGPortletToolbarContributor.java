@@ -280,7 +280,7 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 
 		return portletURL;

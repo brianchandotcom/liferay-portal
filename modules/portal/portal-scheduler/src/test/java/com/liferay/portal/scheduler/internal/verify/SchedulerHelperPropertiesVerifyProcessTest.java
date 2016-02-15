@@ -136,6 +136,6 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 	}
 
 	@Captor
-	private ArgumentCaptor<Dictionary<String, Object>> _argumentCaptor;
+	private final ArgumentCaptor<Dictionary<String, Object>> _argumentCaptor;
 
 }

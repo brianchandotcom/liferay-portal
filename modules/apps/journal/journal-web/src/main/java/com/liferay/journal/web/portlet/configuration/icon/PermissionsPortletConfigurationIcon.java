@@ -20,11 +20,14 @@ import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -37,16 +40,22 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "permissions";
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String url = StringPool.BLANK;
 
 		try {
-			JournalArticle article = getArticle();
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, JournalArticle.class.getName(),
@@ -63,13 +72,17 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			JournalArticle article = getArticle();
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
 
 			if ((article == null) || article.isNew()) {
 				return false;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (JournalArticlePermission.contains(
 					themeDisplay.getPermissionChecker(), article,
@@ -92,10 +105,6 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return true;
-	}
-
-	protected JournalArticle getArticle() throws Exception {
-		return ActionUtil.getArticle(portletRequest);
 	}
 
 }

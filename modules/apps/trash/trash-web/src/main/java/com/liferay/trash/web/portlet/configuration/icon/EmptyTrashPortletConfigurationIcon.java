@@ -36,7 +36,7 @@ public class EmptyTrashPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {

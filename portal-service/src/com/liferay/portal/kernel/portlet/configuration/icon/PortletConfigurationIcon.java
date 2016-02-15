@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,7 +70,7 @@ public interface PortletConfigurationIcon {
 
 	public boolean isLocalizeMessage();
 
-	public boolean isShow();
+	public boolean isShow(PortletRequest portletRequest);
 
 	public boolean isToolTip();
 

@@ -96,7 +96,7 @@ public class DeleteFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (_folder == null) {
 				return false;

@@ -67,7 +67,7 @@ public class CategoryPermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		User user = themeDisplay.getUser();
 
 		if (user.isDefaultUser()) {

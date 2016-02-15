@@ -55,7 +55,7 @@ public class PrintPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return portletDisplay.isShowPrintIcon();
 	}
 

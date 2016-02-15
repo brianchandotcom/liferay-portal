@@ -61,7 +61,7 @@ public class EditCategoryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (_category.getCategoryId() ==
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {

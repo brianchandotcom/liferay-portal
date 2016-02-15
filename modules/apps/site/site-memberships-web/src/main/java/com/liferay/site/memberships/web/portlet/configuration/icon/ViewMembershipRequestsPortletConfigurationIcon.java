@@ -60,7 +60,7 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		Group group = themeDisplay.getScopeGroup();
 
 		if (group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) {

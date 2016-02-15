@@ -48,7 +48,7 @@ public class CheckinFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(

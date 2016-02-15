@@ -87,7 +87,7 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getId());

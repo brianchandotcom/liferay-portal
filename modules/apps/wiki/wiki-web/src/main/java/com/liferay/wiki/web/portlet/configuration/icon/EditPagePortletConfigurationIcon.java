@@ -58,7 +58,7 @@ public class EditPagePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return WikiPagePermissionChecker.contains(
 			themeDisplay.getPermissionChecker(), _page, ActionKeys.UPDATE);
 	}

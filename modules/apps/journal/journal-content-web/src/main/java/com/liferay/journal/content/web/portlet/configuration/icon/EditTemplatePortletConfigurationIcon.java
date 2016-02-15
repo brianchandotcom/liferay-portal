@@ -83,7 +83,7 @@ public class EditTemplatePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		if (_journalContentDisplayContext.isShowEditTemplateIcon()) {
 			return true;
 		}

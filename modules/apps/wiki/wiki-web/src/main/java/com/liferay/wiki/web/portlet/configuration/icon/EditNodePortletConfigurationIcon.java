@@ -57,7 +57,7 @@ public class EditNodePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return WikiNodePermissionChecker.contains(
 			themeDisplay.getPermissionChecker(), _node, ActionKeys.UPDATE);
 	}

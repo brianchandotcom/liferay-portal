@@ -62,7 +62,7 @@ public class PagePermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return WikiNodePermissionChecker.contains(
 				themeDisplay.getPermissionChecker(), _page.getNodeId(),

@@ -53,7 +53,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
 

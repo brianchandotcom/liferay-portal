@@ -64,7 +64,7 @@ public class AddSiteRolesToUserGroupsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),

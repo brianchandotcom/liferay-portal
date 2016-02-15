@@ -79,7 +79,7 @@ public class MoveFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(

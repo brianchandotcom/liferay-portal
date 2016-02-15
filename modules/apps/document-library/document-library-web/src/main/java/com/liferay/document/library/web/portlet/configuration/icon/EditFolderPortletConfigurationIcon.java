@@ -87,7 +87,7 @@ public class EditFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 

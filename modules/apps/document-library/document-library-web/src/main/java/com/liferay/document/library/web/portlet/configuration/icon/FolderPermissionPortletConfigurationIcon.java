@@ -75,7 +75,7 @@ public class FolderPermissionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (_folder != null) {
 				return DLFolderPermission.contains(

@@ -51,7 +51,7 @@ public class PublishTemplatesConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if ((scopeGroup != null) &&

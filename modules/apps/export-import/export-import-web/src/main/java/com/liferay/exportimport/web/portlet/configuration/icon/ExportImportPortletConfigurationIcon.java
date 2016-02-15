@@ -72,7 +72,7 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return portletDisplay.isShowExportImportIcon();
 	}
 

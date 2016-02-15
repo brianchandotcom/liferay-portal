@@ -62,7 +62,7 @@ public class FileEntryPermissionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		if (_fileEntry != null) {
 			return true;
 		}

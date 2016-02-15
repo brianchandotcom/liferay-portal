@@ -67,7 +67,7 @@ public class CopyPagePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (WikiPagePermissionChecker.contains(
 					themeDisplay.getPermissionChecker(), _page,

@@ -80,7 +80,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				portletRequest);

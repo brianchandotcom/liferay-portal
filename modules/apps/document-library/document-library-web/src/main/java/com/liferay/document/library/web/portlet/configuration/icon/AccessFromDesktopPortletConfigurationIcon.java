@@ -51,7 +51,7 @@ public class AccessFromDesktopPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

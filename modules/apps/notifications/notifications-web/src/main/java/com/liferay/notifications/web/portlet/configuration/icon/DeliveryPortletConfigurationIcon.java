@@ -80,7 +80,7 @@ public class DeliveryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
 

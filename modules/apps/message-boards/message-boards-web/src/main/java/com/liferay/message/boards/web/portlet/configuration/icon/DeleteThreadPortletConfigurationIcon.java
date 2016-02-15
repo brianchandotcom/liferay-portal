@@ -103,7 +103,7 @@ public class DeleteThreadPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			MBMessage message = _messageDisplay.getMessage();
 			MBThread thread = _messageDisplay.getThread();

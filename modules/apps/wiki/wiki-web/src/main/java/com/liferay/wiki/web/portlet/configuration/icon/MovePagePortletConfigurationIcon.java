@@ -60,7 +60,7 @@ public class MovePagePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (WikiPagePermissionChecker.contains(
 					themeDisplay.getPermissionChecker(), _page,

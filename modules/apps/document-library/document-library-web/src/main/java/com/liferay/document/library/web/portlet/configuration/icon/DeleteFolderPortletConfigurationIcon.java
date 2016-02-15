@@ -105,7 +105,7 @@ public class DeleteFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),

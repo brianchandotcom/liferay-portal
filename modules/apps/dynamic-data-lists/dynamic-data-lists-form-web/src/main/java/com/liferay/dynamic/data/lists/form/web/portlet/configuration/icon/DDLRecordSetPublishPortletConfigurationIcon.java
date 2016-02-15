@@ -42,7 +42,7 @@ public class DDLRecordSetPublishPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		long recordSetId = getRecordSetId();
 
 		if (recordSetId == 0) {

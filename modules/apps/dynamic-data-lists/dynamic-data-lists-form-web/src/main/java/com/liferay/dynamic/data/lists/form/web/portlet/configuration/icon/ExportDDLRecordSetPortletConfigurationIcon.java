@@ -49,7 +49,7 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
 		if (recordSetId == 0) {

@@ -105,7 +105,7 @@ public class DeleteCategoryPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (_category == null) {
 				return false;

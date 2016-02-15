@@ -70,7 +70,7 @@ public class ManageSitePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();

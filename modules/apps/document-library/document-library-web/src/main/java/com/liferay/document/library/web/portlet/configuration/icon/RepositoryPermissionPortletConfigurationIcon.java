@@ -62,7 +62,7 @@ public class RepositoryPermissionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		if (_repository != null) {
 			return true;
 		}

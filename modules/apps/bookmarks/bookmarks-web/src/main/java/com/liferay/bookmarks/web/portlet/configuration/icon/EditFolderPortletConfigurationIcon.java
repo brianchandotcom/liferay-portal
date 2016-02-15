@@ -63,7 +63,7 @@ public class EditFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (_folder.getFolderId() ==
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

@@ -88,7 +88,7 @@ public class DeletePagePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (!_page.isDraft() &&
 				WikiPagePermissionChecker.contains(

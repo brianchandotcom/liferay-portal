@@ -70,7 +70,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			Layout layout = getLayout();
 

@@ -79,7 +79,7 @@ public class DeleteNodePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		if (WikiNodePermissionChecker.contains(
 				themeDisplay.getPermissionChecker(), _node,
 				ActionKeys.DELETE) &&

@@ -71,7 +71,7 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return portletDisplay.isShowStagingIcon();
 	}
 

@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action;
+package com.liferay.exportimport.web.portlet.action;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,28 +27,18 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Levente Hudák
+ * @author Daniel Kocsis
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
-		"mvc.command.name=deleteBackgroundTasks"
+		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
+		"mvc.command.name=deleteBackgroundTask"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
-
-	protected void deleteBackgroundTask(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] backgroundTaskIds = ParamUtil.getLongValues(
-			actionRequest, "deleteBackgroundTaskIds");
-
-		for (long backgroundTaskId : backgroundTaskIds) {
-			BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
-		}
-	}
+public class DeletePortletBackgroundTaskMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -59,7 +46,7 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			deleteBackgroundTask(actionRequest);
+			ActionUtil.deleteBackgroundTask(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchBackgroundTaskException ||
@@ -67,8 +54,7 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/error/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw e;

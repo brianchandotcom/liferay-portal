@@ -64,6 +64,7 @@ import javax.mail.internet.InternetAddress;
 public class MemberRequestLocalServiceImpl
 	extends MemberRequestLocalServiceBaseImpl {
 
+	@Override
 	public MemberRequest addMemberRequest(
 			long userId, long groupId, long receiverUserId,
 			String receiverEmailAddress, long invitedRoleId, long invitedTeamId,
@@ -122,6 +123,7 @@ public class MemberRequestLocalServiceImpl
 		return memberRequest;
 	}
 
+	@Override
 	public void addMemberRequests(
 			long userId, long groupId, long[] receiverUserIds,
 			long invitedRoleId, long invitedTeamId,
@@ -143,6 +145,7 @@ public class MemberRequestLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void addMemberRequests(
 			long userId, long groupId, String[] emailAddresses,
 			long invitedRoleId, long invitedTeamId,
@@ -160,6 +163,7 @@ public class MemberRequestLocalServiceImpl
 		}
 	}
 
+	@Override
 	public MemberRequest getMemberRequest(
 			long groupId, long receiverUserId, int status)
 		throws PortalException {
@@ -168,16 +172,19 @@ public class MemberRequestLocalServiceImpl
 			groupId, receiverUserId, status);
 	}
 
+	@Override
 	public List<MemberRequest> getReceiverMemberRequest(
 		long receiverUserId, int start, int end) {
 
 		return memberRequestPersistence.findByReceiverUserId(receiverUserId);
 	}
 
+	@Override
 	public int getReceiverMemberRequestCount(long receiverUserId) {
 		return memberRequestPersistence.countByReceiverUserId(receiverUserId);
 	}
 
+	@Override
 	public List<MemberRequest> getReceiverStatusMemberRequest(
 		long receiverUserId, int status, int start, int end) {
 
@@ -185,12 +192,14 @@ public class MemberRequestLocalServiceImpl
 			receiverUserId, status, start, end);
 	}
 
+	@Override
 	public int getReceiverStatusMemberRequestCount(
 		long receiverUserId, int status) {
 
 		return memberRequestPersistence.countByR_S(receiverUserId, status);
 	}
 
+	@Override
 	public boolean hasPendingMemberRequest(long groupId, long receiverUserId) {
 		MemberRequest memberRequest = memberRequestPersistence.fetchByG_R_S(
 			groupId, receiverUserId, InviteMembersConstants.STATUS_PENDING);
@@ -203,6 +212,7 @@ public class MemberRequestLocalServiceImpl
 		}
 	}
 
+	@Override
 	public MemberRequest updateMemberRequest(
 			long userId, long memberRequestId, int status)
 		throws Exception {
@@ -239,6 +249,7 @@ public class MemberRequestLocalServiceImpl
 		return memberRequest;
 	}
 
+	@Override
 	public MemberRequest updateMemberRequest(String key, long receiverUserId)
 		throws PortalException {
 

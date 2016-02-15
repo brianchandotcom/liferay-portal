@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -409,9 +411,11 @@ public class MemberRequestLocalServiceImpl
 	protected void sendNotificationEvent(MemberRequest memberRequest)
 		throws PortalException {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			MemberRequest.class.getName(), PortletProvider.Action.EDIT);
+
 		if (UserNotificationManagerUtil.isDeliver(
-				memberRequest.getReceiverUserId(),
-				PortletKeys.SO_INVITE_MEMBERS, 0,
+				memberRequest.getReceiverUserId(), portletId, 0,
 				MembershipRequestConstants.STATUS_PENDING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
@@ -426,7 +430,7 @@ public class MemberRequestLocalServiceImpl
 
 			NotificationEvent notificationEvent =
 				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), PortletKeys.SO_INVITE_MEMBERS,
+					System.currentTimeMillis(), portletId,
 					notificationEventJSONObject);
 
 			notificationEvent.setDeliveryRequired(0);

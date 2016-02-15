@@ -22,11 +22,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
-<%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
-<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
 <%@ page import="com.liferay.layout.admin.web.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
-<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
@@ -68,7 +64,7 @@ data.put("qa-id", "info");
 	<div id="<%= portletNamespace %>infoContainer">
 
 		<%
-		boolean modifiedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT));
+		boolean modifiedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT));
 		%>
 
 		<c:if test="<%= modifiedLayout %>">
@@ -98,7 +94,7 @@ data.put("qa-id", "info");
 		</c:if>
 
 		<%
-		boolean linkedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT));
+		boolean linkedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT));
 		%>
 
 		<c:if test="<%= linkedLayout %>">

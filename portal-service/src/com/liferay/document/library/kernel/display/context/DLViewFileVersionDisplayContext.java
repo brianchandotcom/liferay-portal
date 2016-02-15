@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,12 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 	public List<DDMStructure> getDDMStructures() throws PortalException;
 
 	public int getDDMStructuresCount() throws PortalException;
+
+	public String getDiscussionClassName();
+
+	public long getDiscussionClassPK();
+
+	public String getDiscussionLabel(Locale locale);
 
 	public Menu getMenu() throws PortalException;
 

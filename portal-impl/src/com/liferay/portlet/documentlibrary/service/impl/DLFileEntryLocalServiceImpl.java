@@ -31,6 +31,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DL;
+import com.liferay.document.library.kernel.util.DLFileVersionPolicy;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
@@ -44,6 +45,7 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -94,14 +96,12 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -319,9 +319,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		if (!majorVersion &&
-			isKeepFileVersionLabel(
-				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-				serviceContext)) {
+			dlFileVersionPolicy.isKeepFileVersionLabel(
+				lastDLFileVersion, latestDLFileVersion, serviceContext)) {
 
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
@@ -1582,9 +1581,8 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		return isKeepFileVersionLabel(
-			dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-			serviceContext);
+		return dlFileVersionPolicy.isKeepFileVersionLabel(
+			lastDLFileVersion, latestDLFileVersion, serviceContext);
 	}
 
 	@Override
@@ -2359,161 +2357,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
-	 *      com.liferay.dynamic.data.lists.model.DDLRecordVersion,
-	 *      com.liferay.dynamic.data.lists.model.DDLRecordVersion,
-	 *      ServiceContext)
-	 */
-	protected boolean isKeepFileVersionLabel(
-			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
-			DLFileVersion latestDLFileVersion, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (PropsValues.DL_FILE_ENTRY_VERSION_POLICY != 1) {
-			return false;
-		}
-
-		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
-			return false;
-		}
-
-		if (!Validator.equals(
-				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
-
-			return false;
-		}
-
-		if (!Validator.equals(
-				lastDLFileVersion.getDescription(),
-				latestDLFileVersion.getDescription())) {
-
-			return false;
-		}
-
-		if (lastDLFileVersion.getFileEntryTypeId() !=
-				latestDLFileVersion.getFileEntryTypeId()) {
-
-			return false;
-		}
-
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			return false;
-		}
-
-		// File entry type
-
-		DLFileEntryType dlFileEntryType =
-			lastDLFileVersion.getDLFileEntryType();
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata lastFileEntryMetadata =
-				dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					lastDLFileVersion.getFileVersionId());
-
-			if (lastFileEntryMetadata == null) {
-				return false;
-			}
-
-			DLFileEntryMetadata latestFileEntryMetadata =
-				dlFileEntryMetadataLocalService.getFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					latestDLFileVersion.getFileVersionId());
-
-			DDMFormValues lastDDMFormValues =
-				StorageEngineManagerUtil.getDDMFormValues(
-					lastFileEntryMetadata.getDDMStorageId());
-			DDMFormValues latestDDMFormValues =
-				StorageEngineManagerUtil.getDDMFormValues(
-					latestFileEntryMetadata.getDDMStorageId());
-
-			if (!lastDDMFormValues.equals(latestDDMFormValues)) {
-				return false;
-			}
-		}
-
-		// Expando
-
-		ExpandoBridge lastExpandoBridge = lastDLFileVersion.getExpandoBridge();
-		ExpandoBridge latestExpandoBridge =
-			latestDLFileVersion.getExpandoBridge();
-
-		Map<String, Serializable> lastAttributes =
-			lastExpandoBridge.getAttributes();
-		Map<String, Serializable> latestAttributes =
-			latestExpandoBridge.getAttributes();
-
-		if (!lastAttributes.equals(latestAttributes)) {
-			return false;
-		}
-
-		// Size
-
-		long lastSize = lastDLFileVersion.getSize();
-		long latestSize = latestDLFileVersion.getSize();
-
-		if ((lastSize == 0) && (latestSize >= 0)) {
-			return true;
-		}
-
-		if (lastSize != latestSize) {
-			return false;
-		}
-
-		// Checksum
-
-		InputStream lastInputStream = null;
-		InputStream latestInputStream = null;
-
-		try {
-			String lastChecksum = lastDLFileVersion.getChecksum();
-
-			if (Validator.isNull(lastChecksum)) {
-				lastInputStream = DLStoreUtil.getFileAsStream(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					lastDLFileVersion.getVersion());
-
-				lastChecksum = DigesterUtil.digestBase64(lastInputStream);
-
-				lastDLFileVersion.setChecksum(lastChecksum);
-
-				dlFileVersionPersistence.update(lastDLFileVersion);
-			}
-
-			latestInputStream = DLStoreUtil.getFileAsStream(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), latestDLFileVersion.getVersion());
-
-			String latestChecksum = DigesterUtil.digestBase64(
-				latestInputStream);
-
-			if (lastChecksum.equals(latestChecksum)) {
-				return true;
-			}
-
-			latestDLFileVersion.setChecksum(latestChecksum);
-
-			dlFileVersionPersistence.update(latestDLFileVersion);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-		finally {
-			StreamUtil.cleanUp(lastInputStream);
-			StreamUtil.cleanUp(latestInputStream);
-		}
-
-		return false;
-	}
-
 	protected DLFileEntry moveFileEntryImpl(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)
@@ -2846,6 +2689,9 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 	}
+
+	@BeanReference(type = DLFileVersionPolicy.class)
+	protected DLFileVersionPolicy dlFileVersionPolicy;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

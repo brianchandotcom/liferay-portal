@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -67,6 +68,21 @@ public class BaseDLViewFileVersionDisplayContext
 	@Override
 	public int getDDMStructuresCount() throws PortalException {
 		return parentDisplayContext.getDDMStructuresCount();
+	}
+
+	@Override
+	public String getDiscussionClassName() {
+		return parentDisplayContext.getDiscussionClassName();
+	}
+
+	@Override
+	public long getDiscussionClassPK() {
+		return parentDisplayContext.getDiscussionClassPK();
+	}
+
+	@Override
+	public String getDiscussionLabel(Locale locale) {
+		return parentDisplayContext.getDiscussionLabel(locale);
 	}
 
 	@Override

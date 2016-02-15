@@ -515,16 +515,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="comments">
-					<liferay-ui:discussion
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileEntryId %>"
-						formName="fm2"
-						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
-						redirect="<%= currentURL %>"
-						userId="<%= fileEntry.getUserId() %>"
-					/>
-				</liferay-ui:panel>
+				<liferay-util:include page="/document_library/file_entry_discussion.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
 	</div>

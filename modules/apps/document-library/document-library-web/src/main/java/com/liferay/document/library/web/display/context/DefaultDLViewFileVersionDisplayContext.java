@@ -16,6 +16,7 @@ package com.liferay.document.library.web.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
@@ -30,12 +31,14 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -43,6 +46,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -58,20 +63,24 @@ public class DefaultDLViewFileVersionDisplayContext
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut,
-			DLMimeTypeDisplayContext dlMimeTypeDisplayContext)
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
+			ResourceBundleLoader resourceBundleLoader)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			dlMimeTypeDisplayContext);
+			dlMimeTypeDisplayContext, resourceBundleLoader);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
+		ResourceBundleLoader resourceBundleLoader) {
 
-		this(request, response, fileVersion, null, dlMimeTypeDisplayContext);
+		this(
+			request, response, fileVersion, null, dlMimeTypeDisplayContext,
+			resourceBundleLoader);
 	}
 
 	@Override
@@ -120,6 +129,25 @@ public class DefaultDLViewFileVersionDisplayContext
 		List<DDMStructure> ddmStructures = getDDMStructures();
 
 		return ddmStructures.size();
+	}
+
+	@Override
+	public String getDiscussionClassName() {
+		return DLFileEntryConstants.getClassName();
+	}
+
+	@Override
+	public long getDiscussionClassPK() {
+		return _fileVersion.getFileEntryId();
+	}
+
+	@Override
+	public String getDiscussionLabel(Locale locale) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LanguageUtil.getLanguageId(locale));
+
+		return LanguageUtil.get(resourceBundle, "comments");
 	}
 
 	@Override
@@ -194,7 +222,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, FileShortcut fileShortcut,
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -219,6 +248,8 @@ public class DefaultDLViewFileVersionDisplayContext
 			}
 
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+
+			_resourceBundleLoader = resourceBundleLoader;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -277,6 +308,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
+	private final ResourceBundleLoader _resourceBundleLoader;
 	private final UIItemsBuilder _uiItemsBuilder;
 
 }

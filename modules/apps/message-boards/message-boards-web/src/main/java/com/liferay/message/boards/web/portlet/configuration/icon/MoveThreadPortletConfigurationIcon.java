@@ -72,7 +72,7 @@ public class MoveThreadPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			MBCategory category = _messageDisplay.getCategory();
 

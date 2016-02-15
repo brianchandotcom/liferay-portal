@@ -55,7 +55,7 @@ public class StagingConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		Group group = themeDisplay.getScopeGroup();
 
 		if (!group.isStaged()) {

@@ -62,7 +62,7 @@ public class MoveFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (DLFolderPermission.contains(
 					themeDisplay.getPermissionChecker(),

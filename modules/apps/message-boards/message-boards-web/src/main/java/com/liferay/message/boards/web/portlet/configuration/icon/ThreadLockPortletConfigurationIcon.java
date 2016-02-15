@@ -75,7 +75,7 @@ public class ThreadLockPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return MBCategoryPermission.contains(
 				themeDisplay.getPermissionChecker(),

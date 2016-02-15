@@ -50,7 +50,7 @@ public class ExportUsersPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 

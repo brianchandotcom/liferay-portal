@@ -77,7 +77,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return MBCategoryPermission.contains(
 				themeDisplay.getPermissionChecker(), _category,

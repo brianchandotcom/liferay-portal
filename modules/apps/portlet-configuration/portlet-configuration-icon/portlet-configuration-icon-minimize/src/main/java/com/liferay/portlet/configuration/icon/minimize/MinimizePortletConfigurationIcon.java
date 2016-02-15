@@ -54,7 +54,7 @@ public class MinimizePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return portletDisplay.isShowMinIcon();
 	}
 

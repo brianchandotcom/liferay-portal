@@ -46,7 +46,7 @@ public class PreviewPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			JournalArticle article = ActionUtil.getArticle(portletRequest);
 

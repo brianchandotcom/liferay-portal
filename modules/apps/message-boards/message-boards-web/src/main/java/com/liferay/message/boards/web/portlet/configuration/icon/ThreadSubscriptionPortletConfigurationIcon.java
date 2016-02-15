@@ -76,7 +76,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			return MBMessagePermission.contains(
 				themeDisplay.getPermissionChecker(), _message,

@@ -63,7 +63,7 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		ConfigurationModelIterator configurationModelIterator =
 			(ConfigurationModelIterator)portletRequest.getAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);

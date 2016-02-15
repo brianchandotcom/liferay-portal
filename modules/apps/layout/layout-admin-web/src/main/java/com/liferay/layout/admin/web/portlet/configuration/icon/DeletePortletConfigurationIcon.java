@@ -58,7 +58,7 @@ public class DeletePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			Layout layout = getLayout();
 

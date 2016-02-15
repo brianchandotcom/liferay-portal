@@ -63,7 +63,7 @@ public class DDMDataProviderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
 

@@ -57,7 +57,7 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		return ShoppingPermission.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			ActionKeys.PERMISSIONS);

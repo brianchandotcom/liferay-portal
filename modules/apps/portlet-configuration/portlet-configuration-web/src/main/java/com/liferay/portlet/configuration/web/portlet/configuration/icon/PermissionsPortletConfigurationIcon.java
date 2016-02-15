@@ -75,7 +75,7 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			if (!PortletPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),

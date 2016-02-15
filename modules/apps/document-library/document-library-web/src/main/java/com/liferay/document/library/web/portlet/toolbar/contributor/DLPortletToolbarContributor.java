@@ -98,9 +98,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(
-				_dlPortletToolbarContributorHelper.getRepositoryId(
-					themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter(
 			"folderId", String.valueOf(_getFolderId(folder)));
 		portletURL.setParameter(
@@ -129,8 +127,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			return Collections.emptyList();
 		}
 
-		long repositoryId = _dlPortletToolbarContributorHelper.getRepositoryId(
-			themeDisplay, folder);
+		long repositoryId = _getRepositoryId(themeDisplay, folder);
 
 		if (themeDisplay.getScopeGroupId() != repositoryId) {
 			menuItems.add(
@@ -179,9 +176,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(
-				_dlPortletToolbarContributorHelper.getRepositoryId(
-					themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
 
@@ -230,9 +225,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(
-				_dlPortletToolbarContributorHelper.getRepositoryId(
-					themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -316,9 +309,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(
-				_dlPortletToolbarContributorHelper.getRepositoryId(
-					themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -575,9 +566,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
 			"repositoryId",
-			String.valueOf(
-				_dlPortletToolbarContributorHelper.getRepositoryId(
-					themeDisplay, folder)));
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -611,6 +600,16 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		}
 
 		return menuItems;
+	}
+
+	private long _getRepositoryId(ThemeDisplay themeDisplay, Folder folder) {
+		long repositoryId = themeDisplay.getScopeGroupId();
+
+		if (folder != null) {
+			repositoryId = folder.getRepositoryId();
+		}
+
+		return repositoryId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -318,8 +318,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if (!majorVersion &&
-			dlFileVersionPolicy.isKeepFileVersionLabel(
+		if (dlFileVersionPolicy.isKeepFileVersionLabel(
 				lastDLFileVersion, latestDLFileVersion, majorVersion,
 				serviceContext)) {
 

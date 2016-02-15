@@ -20,9 +20,12 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -60,6 +63,12 @@ public class EditJournalArticlePortletConfigurationIcon
 
 		sb.append("Liferay.Util.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', destroyOnHide: true, id: '");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
 		sb.append("editAsset', namespace: '");
 		sb.append(portletDisplay.getNamespace());
@@ -100,6 +109,11 @@ public class EditJournalArticlePortletConfigurationIcon
 
 	protected void createJournalContentDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
 			JournalContentPortletInstanceConfiguration

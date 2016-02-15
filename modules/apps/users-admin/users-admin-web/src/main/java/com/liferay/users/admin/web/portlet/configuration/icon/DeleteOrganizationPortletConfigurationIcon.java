@@ -14,15 +14,15 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
@@ -38,13 +38,6 @@ public class DeleteOrganizationPortletConfigurationIcon
 		PortletRequest portletRequest) {
 
 		super(portletRequest);
-
-		try {
-			_organization = ActionUtil.getOrganization(portletRequest);
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
 	}
 
 	@Override
@@ -58,6 +51,9 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(4);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -65,7 +61,10 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 			sb.append("deleteOrganization('");
 
-			sb.append(_organization.getOrganizationId());
+			Organization organization = ActionUtil.getOrganization(
+				portletRequest);
+
+			sb.append(organization.getOrganizationId());
 
 			sb.append("');");
 		}
@@ -84,9 +83,8 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (_organization == null) {
-			return false;
-		}
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		try {
 			PermissionChecker permissionChecker =
@@ -106,10 +104,5 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteOrganizationPortletConfigurationIcon.class);
-
-	private Organization _organization;
 
 }

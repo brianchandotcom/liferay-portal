@@ -16,8 +16,10 @@ package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -45,6 +47,9 @@ public class DeleteNodePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			return "move-to-the-recycle-bin";
 		}
@@ -61,6 +66,9 @@ public class DeleteNodePortletConfigurationIcon
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_node");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
@@ -83,6 +91,9 @@ public class DeleteNodePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (WikiNodePermissionChecker.contains(
 				themeDisplay.getPermissionChecker(), _node,
 				ActionKeys.DELETE) &&

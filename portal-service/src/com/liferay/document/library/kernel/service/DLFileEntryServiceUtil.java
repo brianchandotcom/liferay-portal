@@ -291,6 +291,20 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static boolean isKeepFileVersionLabel(long fileEntryId,
+		boolean majorVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .isKeepFileVersionLabel(fileEntryId, majorVersion,
+			serviceContext);
+	}
+
+	/**
+	* As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long, boolean,
+	*              ServiceContext)}
+	*/
+	@Deprecated
+	public static boolean isKeepFileVersionLabel(long fileEntryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isKeepFileVersionLabel(fileEntryId, serviceContext);

@@ -4,11 +4,9 @@ Bundle-Version: 1.0.5
 Export-Package: com.liferay.rtl.css
 Import-Package:\
 	!org.junit,\
-	\
 	!org.junit.*,\
 	\
 	!org.slf4j,\
-	\
 	!org.slf4j.*,\
 	*
 Include-Resource:\

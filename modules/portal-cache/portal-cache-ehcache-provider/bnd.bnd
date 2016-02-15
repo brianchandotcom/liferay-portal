@@ -15,7 +15,6 @@ Export-Package:\
 	net.sf.ehcache.util
 Import-Package:\
 	!org.quartz,\
-	\
 	!org.quartz.impl,\
 	!org.quartz.impl.jdbcjobstore,\
 	!org.quartz.impl.matchers,\

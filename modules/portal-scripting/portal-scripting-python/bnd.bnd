@@ -5,13 +5,21 @@ Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Import-Package:\
 	!com.informix.*,\
+	\
 	!com.kenai.jnr.*,\
+	\
 	!junit.framework.*,\
+	\
 	!oracle.*,\
+	\
 	!org.antlr.stringtemplate.*,\
+	\
 	!org.gnu.readline.*,\
+	\
 	!org.python.*,\
+	\
 	!sun.io.*,\
+	\
 	!sun.misc.*,\
 	*
 Include-Resource: lib/jython-standalone.jar=lib/jython-standalone.jar

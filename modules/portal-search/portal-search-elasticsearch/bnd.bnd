@@ -45,7 +45,6 @@ Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
 Bundle-Version: 1.0.0
 Export-Package:\
 	!org.elasticsearch,\
-	\
 	!org.elasticsearch.*,\
 	\
 	com.liferay.portal.search.elasticsearch.settings,\

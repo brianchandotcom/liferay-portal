@@ -10,8 +10,8 @@ Import-Package:\
 	com.sun.el.util;version='[3.0.0,4.0)',\
 	\
 	javax.el;version='[3.0.0,4.0)',\
-	javax.servlet;version='[2.3.0,4.0.0)',\
 	\
+	javax.servlet;version='[2.3.0,4.0.0)',\
 	javax.servlet.annotation;version='[2.6.0,4.0.0)',\
 	javax.servlet.descriptor;version='[2.6.0,4.0.0)',\
 	javax.servlet.http;version='[2.3.0,4.0.0)',\

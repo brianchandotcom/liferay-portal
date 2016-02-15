@@ -35,7 +35,6 @@ Import-Package:\
 	com.liferay.portal.systemevent,\
 	\
 	javax.servlet,\
-	\
 	javax.servlet.http,\
 	\
 	javax.sql,\

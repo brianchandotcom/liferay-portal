@@ -26,6 +26,7 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -44,7 +45,9 @@ public class AssignUsersPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, UsersAdminPortletKeys.USERS_ADMIN,

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -43,7 +44,9 @@ public class CheckinFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 

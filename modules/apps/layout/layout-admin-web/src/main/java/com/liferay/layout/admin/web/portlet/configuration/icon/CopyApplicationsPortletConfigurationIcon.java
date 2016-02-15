@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -56,7 +57,9 @@ public class CopyApplicationsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 

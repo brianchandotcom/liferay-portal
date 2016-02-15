@@ -24,6 +24,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -41,7 +42,9 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String url = StringPool.BLANK;
 
 		try {

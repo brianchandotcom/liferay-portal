@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.icon.edit;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -33,7 +34,9 @@ public class EditPortletConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return portletDisplay.getURLEdit();
 	}
 

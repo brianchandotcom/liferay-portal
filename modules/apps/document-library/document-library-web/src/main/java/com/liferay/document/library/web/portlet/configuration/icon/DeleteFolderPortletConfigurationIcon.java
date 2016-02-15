@@ -28,6 +28,7 @@ import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -56,7 +57,9 @@ public class DeleteFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.ACTION_PHASE);

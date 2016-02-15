@@ -26,6 +26,7 @@ import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Sergio González
@@ -47,7 +48,9 @@ public class CategoryPermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String url = StringPool.BLANK;
 
 		try {

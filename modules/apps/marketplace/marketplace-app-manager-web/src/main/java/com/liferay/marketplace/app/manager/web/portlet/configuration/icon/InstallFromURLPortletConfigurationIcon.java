@@ -17,6 +17,7 @@ package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -39,7 +40,9 @@ public class InstallFromURLPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 

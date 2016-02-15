@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -73,7 +74,9 @@ public class DeliveryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL deliveryURL = getDeliveryURL();
 
 		return deliveryURL.toString();

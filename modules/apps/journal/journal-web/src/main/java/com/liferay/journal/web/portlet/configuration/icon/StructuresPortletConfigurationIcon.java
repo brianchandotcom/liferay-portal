@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -45,7 +46,9 @@ public class StructuresPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

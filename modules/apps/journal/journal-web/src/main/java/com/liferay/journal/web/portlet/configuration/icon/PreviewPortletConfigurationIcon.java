@@ -19,6 +19,7 @@ import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -41,7 +42,9 @@ public class PreviewPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -43,7 +44,9 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
 			PortletRequest.RENDER_PHASE);

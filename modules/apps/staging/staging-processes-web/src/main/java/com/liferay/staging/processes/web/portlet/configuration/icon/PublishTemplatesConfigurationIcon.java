@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -39,7 +40,9 @@ public class PublishTemplatesConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
 			PortletRequest.RENDER_PHASE);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -43,7 +44,9 @@ public class DDMDataProviderPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMDataProviderInstance.class.getName(),
 			PortletProvider.Action.EDIT);

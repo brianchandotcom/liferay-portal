@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -38,7 +39,9 @@ public class ExportTemplatesConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, ExportImportPortletKeys.EXPORT,
 			PortletRequest.RENDER_PHASE);

@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.icon.refresh;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -45,7 +46,9 @@ public class RefreshPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return portletDisplay.getURLRefresh();
 	}
 

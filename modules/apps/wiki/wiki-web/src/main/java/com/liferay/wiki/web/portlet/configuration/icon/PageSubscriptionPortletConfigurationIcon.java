@@ -26,6 +26,7 @@ import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,9 @@ public class PageSubscriptionPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.ACTION_PHASE);

@@ -25,6 +25,7 @@ import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -51,7 +52,9 @@ public class ThreadLockPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 			PortletRequest.ACTION_PHASE);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.theme.contributor.extender.internal;
+package com.liferay.frontend.theme.contributor.extender.internal;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.contributor.extender.BundleWebResources;
+import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
 
 import java.io.IOException;
 import java.io.PrintWriter;

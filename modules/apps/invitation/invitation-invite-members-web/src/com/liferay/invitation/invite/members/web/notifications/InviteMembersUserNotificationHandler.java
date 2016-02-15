@@ -20,6 +20,7 @@ import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletK
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -30,8 +31,9 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -168,19 +170,14 @@ public class InviteMembersUserNotificationHandler
 		if (group.hasPublicLayouts()) {
 			sb.append(" href=\"");
 
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
+			LayoutSet layoutSet = group.getPublicLayoutSet();
 
-			PortletURL portletURL = liferayPortletResponse.createActionURL(
-				PortletKeys.SITE_REDIRECTOR);
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			portletURL.setWindowState(WindowState.NORMAL);
+			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+				layoutSet, themeDisplay);
 
-			portletURL.setParameter("struts_action", "/my_sites/view");
-			portletURL.setParameter("groupId", String.valueOf(groupId));
-			portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
-
-			sb.append(portletURL);
+			sb.append(groupFriendlyURL);
 
 			sb.append("\">");
 		}

@@ -38,9 +38,7 @@ public class EditJournalArticlePortletConfigurationIcon
 
 		super(portletRequest);
 
-		this._portletResponse = portletResponse;
-
-		createJournalContentDisplayContext(portletRequest);
+		createJournalContentDisplayContext(portletRequest, portletResponse);
 	}
 
 	@Override
@@ -70,7 +68,8 @@ public class EditJournalArticlePortletConfigurationIcon
 		sb.append("', title: '");
 		sb.append(article.getTitle(themeDisplay.getLocale()));
 		sb.append("', uri: '");
-		sb.append(HtmlUtil.escapeJS(getURL()));
+		sb.append(
+			HtmlUtil.escapeJS(_journalContentDisplayContext.getURLEdit()));
 		sb.append("'}); return false;");
 
 		return sb.toString();
@@ -98,7 +97,7 @@ public class EditJournalArticlePortletConfigurationIcon
 	}
 
 	protected void createJournalContentDisplayContext(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
 			JournalContentPortletInstanceConfiguration
@@ -107,7 +106,7 @@ public class EditJournalArticlePortletConfigurationIcon
 						JournalContentPortletInstanceConfiguration.class);
 
 			_journalContentDisplayContext = new JournalContentDisplayContext(
-				portletRequest, _portletResponse,
+				portletRequest, portletResponse,
 				journalContentPortletInstanceConfiguration);
 		}
 		catch (Exception e) {
@@ -119,6 +118,5 @@ public class EditJournalArticlePortletConfigurationIcon
 		EditJournalArticlePortletConfigurationIcon.class);
 
 	private JournalContentDisplayContext _journalContentDisplayContext;
-	private final PortletResponse _portletResponse;
 
 }

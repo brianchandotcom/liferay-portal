@@ -46,7 +46,7 @@ public class DDLRecordSetPublishPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		long recordSetId = getRecordSetId();
+		long recordSetId = getRecordSetId(portletRequest);
 
 		if (recordSetId == 0) {
 			return false;
@@ -65,7 +65,7 @@ public class DDLRecordSetPublishPortletConfigurationIcon
 		return false;
 	}
 
-	protected long getRecordSetId() {
+	protected long getRecordSetId(PortletRequest portletRequest) {
 		return ParamUtil.getLong(portletRequest, "recordSetId");
 	}
 

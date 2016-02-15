@@ -14,9 +14,7 @@
 
 package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -79,10 +77,6 @@ public class FeedsPermissionsPortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return true;
-	}
-
-	protected JournalArticle getArticle() throws Exception {
-		return ActionUtil.getArticle(portletRequest);
 	}
 
 }

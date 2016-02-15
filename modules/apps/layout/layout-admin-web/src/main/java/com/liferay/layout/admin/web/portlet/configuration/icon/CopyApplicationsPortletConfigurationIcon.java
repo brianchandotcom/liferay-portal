@@ -66,7 +66,7 @@ public class CopyApplicationsPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -116,7 +116,7 @@ public class CopyApplicationsPortletConfigurationIcon
 		return false;
 	}
 
-	protected Layout getLayout() throws Exception {
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
 		long selPlid = ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 

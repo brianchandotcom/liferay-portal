@@ -42,7 +42,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return "javascript:Liferay.DDL.openSettings(" +
-			String.valueOf(getRecordSetId()) + ")";
+			String.valueOf(getRecordSetId(portletRequest)) + ")";
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 		return false;
 	}
 
-	protected long getRecordSetId() {
+	protected long getRecordSetId(PortletRequest portletRequest) {
 		return ParamUtil.getLong(portletRequest, "recordSetId");
 	}
 

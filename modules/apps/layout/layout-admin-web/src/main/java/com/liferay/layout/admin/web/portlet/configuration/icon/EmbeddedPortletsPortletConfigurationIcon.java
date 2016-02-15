@@ -61,7 +61,8 @@ public class EmbeddedPortletsPortletConfigurationIcon
 
 			portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter("selPlid", String.valueOf(getSelPlid()));
+			portletURL.setParameter(
+				"selPlid", String.valueOf(getSelPlid(portletRequest)));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();
@@ -75,7 +76,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -106,13 +107,13 @@ public class EmbeddedPortletsPortletConfigurationIcon
 		return true;
 	}
 
-	protected Layout getLayout() throws Exception {
-		long selPlid = getSelPlid();
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
+		long selPlid = getSelPlid(portletRequest);
 
 		return _layoutLocalService.fetchLayout(selPlid);
 	}
 
-	protected long getSelPlid() {
+	protected long getSelPlid(PortletRequest portletRequest) {
 		return ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +61,8 @@ public interface PortletConfigurationIcon {
 
 	public String getTarget();
 
-	public String getURL();
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)

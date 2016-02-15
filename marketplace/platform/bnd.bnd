@@ -20,6 +20,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.frontend.editor.simple.web:1.0.0,\
 	com.liferay.frontend.editor.tinymce.web:1.0.0,\
 	com.liferay.frontend.js.bundle.config.extender:1.0.0,\
+	com.liferay.frontend.js.loader.modules.extender:1.0.0,\
 	com.liferay.frontend.js.metal.web:1.0.0,\
 	com.liferay.frontend.js.polyfill.babel.web:1.0.0,\
 	com.liferay.frontend.js.soyutils.web:1.0.0,\
@@ -73,7 +74,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.http.service.api:1.0.0,\
 	com.liferay.portal.instances.web:1.0.0,\
 	com.liferay.portal.jmx:1.0.0,\
-	com.liferay.portal.js.loader.modules.extender:1.0.0,\
 	com.liferay.portal.language.resource.bundle:1.0.0,\
 	com.liferay.portal.language.servlet.filter:1.0.0,\
 	com.liferay.portal.ldap.test:1.0.0,\

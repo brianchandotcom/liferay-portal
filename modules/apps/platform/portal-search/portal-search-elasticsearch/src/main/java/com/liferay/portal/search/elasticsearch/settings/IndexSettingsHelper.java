@@ -17,10 +17,8 @@ package com.liferay.portal.search.elasticsearch.settings;
 /**
  * @author André de Oliveira
  */
-public interface SettingsContributor extends Comparable<SettingsContributor> {
+public interface IndexSettingsHelper {
 
-	public int getPriority();
-
-	public void populate(ClientSettingsHelper clientSettingsHelper);
+	public void put(String setting, String value);
 
 }

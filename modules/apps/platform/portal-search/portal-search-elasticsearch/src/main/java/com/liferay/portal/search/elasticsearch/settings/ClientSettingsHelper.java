@@ -17,10 +17,12 @@ package com.liferay.portal.search.elasticsearch.settings;
 /**
  * @author André de Oliveira
  */
-public interface SettingsContributor extends Comparable<SettingsContributor> {
+public interface ClientSettingsHelper {
 
-	public int getPriority();
+	public void addPlugin(String plugin);
 
-	public void populate(ClientSettingsHelper clientSettingsHelper);
+	public void put(String setting, String value);
+
+	public void putArray(String setting, String... values);
 
 }

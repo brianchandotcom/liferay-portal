@@ -10,7 +10,7 @@
 	<#assign navbarId = "navbar_" + portletDisplay.getId() />
 
 	<div class="navbar" id="${navbarId}">
-		<ul aria-label="<@liferay.language key="site-pages" />" class="nav navbar-blank navbar-nav navbar-site" role="menubar">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav navbar-blank nav-justified navbar-site" role="menubar">
 			<h1 class="hide-accessible"><@liferay.language key="navigation" /></h1>
 
 			<#assign navItems = entries />

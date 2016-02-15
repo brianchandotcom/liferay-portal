@@ -24,6 +24,7 @@ import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleImage;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticles;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
@@ -97,7 +98,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 					}
 				}
 
-			});
+			},
+			new UpgradeJournalArticleImage());
 	}
 
 	protected void deleteTempImages() throws Exception {

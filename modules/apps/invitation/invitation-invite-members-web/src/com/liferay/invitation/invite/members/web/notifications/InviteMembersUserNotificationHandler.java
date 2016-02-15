@@ -16,6 +16,7 @@ package com.liferay.invitation.invite.members.web.notifications;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,15 +40,24 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Lee
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + InviteMembersPortletKeys.INVITE_MEMBERS
+	},
+	service = UserNotificationHandler.class
+)
 public class InviteMembersUserNotificationHandler
 	extends BaseUserNotificationHandler {
 
 	public InviteMembersUserNotificationHandler() {
 		setActionable(true);
-		setPortletId(PortletKeys.SO_INVITE_MEMBERS);
+		setPortletId(InviteMembersPortletKeys.INVITE_MEMBERS);
 	}
 
 	@Override
@@ -95,7 +106,7 @@ public class InviteMembersUserNotificationHandler
 			serviceContext.getLiferayPortletResponse();
 
 		PortletURL confirmURL = liferayPortletResponse.createActionURL(
-			PortletKeys.SO_INVITE_MEMBERS);
+			InviteMembersPortletKeys.INVITE_MEMBERS);
 
 		confirmURL.setParameter(
 			ActionRequest.ACTION_NAME, "updateMemberRequest");
@@ -110,7 +121,7 @@ public class InviteMembersUserNotificationHandler
 		confirmURL.setWindowState(WindowState.NORMAL);
 
 		PortletURL ignoreURL = liferayPortletResponse.createActionURL(
-			PortletKeys.SO_INVITE_MEMBERS);
+			InviteMembersPortletKeys.INVITE_MEMBERS);
 
 		ignoreURL.setParameter(
 			ActionRequest.ACTION_NAME, "updateMemberRequest");

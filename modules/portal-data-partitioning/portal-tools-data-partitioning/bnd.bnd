@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Tools Data Partitioning
+Bundle-SymbolicName: com.liferay.portal.tools.data.partitioning
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.data.partitioning.exporter
+Include-Resource:\
+	@lib/HikariCP.jar,\
+	@lib/jcommander.jar,\
+	@lib/slf4j-api.jar
+Main-Class: com.liferay.portal.tools.data.partitioning.Main

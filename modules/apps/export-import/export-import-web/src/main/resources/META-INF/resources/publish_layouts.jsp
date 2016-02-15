@@ -196,10 +196,15 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 					<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="publishLayoutsSimple" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 						<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
+						<portlet:param name="lastImportUserName" value="<%= user.getFullName() %>" />
+						<portlet:param name="lastImportUserUuid" value="<%= String.valueOf(user.getUserUuid()) %>" />
+						<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+						<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 						<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
+						<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
 						<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
 						<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />

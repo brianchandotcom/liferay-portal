@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.js.bundle.config.extender;
+package com.liferay.frontend.js.bundle.config.extender;
 
 import javax.servlet.ServletContext;
 

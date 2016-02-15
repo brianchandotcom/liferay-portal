@@ -49,8 +49,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 			processErrorMessage(
 				fileName,
-				"Do not include the header Liferay-Require-SchemaVersion in web " +
-					"modules: " + fileName);
+				"Do not include the header Liferay-Require-SchemaVersion in " +
+					"web modules: " + fileName);
 		}
 
 		content = StringUtil.replace(content, " \\\n", "\\\n");

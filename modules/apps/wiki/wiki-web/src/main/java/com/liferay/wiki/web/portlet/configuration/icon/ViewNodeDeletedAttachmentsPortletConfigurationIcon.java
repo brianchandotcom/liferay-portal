@@ -16,7 +16,9 @@ package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
@@ -54,6 +56,10 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 		portletURL.setParameter(
@@ -64,6 +70,9 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return WikiNodePermissionChecker.contains(
 			themeDisplay.getPermissionChecker(), _node, ActionKeys.UPDATE);
 	}

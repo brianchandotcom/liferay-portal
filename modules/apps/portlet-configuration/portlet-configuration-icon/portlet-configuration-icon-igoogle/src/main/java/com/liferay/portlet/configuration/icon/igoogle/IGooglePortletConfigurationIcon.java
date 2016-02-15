@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,7 +43,7 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public String getCssClass() {
-		return portletDisplay.getNamespace() + "expose-as-widget";
+		return "expose-as-widget";
 	}
 
 	@Override
@@ -56,6 +58,10 @@ public class IGooglePortletConfigurationIcon
 		try {
 			Portlet portlet = (Portlet)portletRequest.getAttribute(
 				WebKeys.RENDER_PORTLET);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			return "http://fusion.google.com/add?source=atgs&moduleurl=" +
 				PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
@@ -76,6 +82,11 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getId());

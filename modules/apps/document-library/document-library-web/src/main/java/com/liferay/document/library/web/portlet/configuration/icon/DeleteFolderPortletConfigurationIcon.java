@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -47,6 +49,9 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if ((_folder.getModel() instanceof DLFolder) &&
 			isTrashEnabled(themeDisplay.getScopeGroupId())) {
 
@@ -72,6 +77,9 @@ public class DeleteFolderPortletConfigurationIcon
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (_folder.isMountPoint() ||
 				!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
@@ -109,6 +117,9 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),

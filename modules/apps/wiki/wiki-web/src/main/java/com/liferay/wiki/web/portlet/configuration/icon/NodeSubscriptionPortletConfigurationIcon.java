@@ -16,8 +16,10 @@ package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -72,6 +74,9 @@ public class NodeSubscriptionPortletConfigurationIcon
 			portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 
@@ -88,6 +93,9 @@ public class NodeSubscriptionPortletConfigurationIcon
 		WikiGroupServiceOverriddenConfiguration
 			wikiGroupServiceOverriddenConfiguration =
 				wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (WikiNodePermissionChecker.contains(
 				themeDisplay.getPermissionChecker(), _node,

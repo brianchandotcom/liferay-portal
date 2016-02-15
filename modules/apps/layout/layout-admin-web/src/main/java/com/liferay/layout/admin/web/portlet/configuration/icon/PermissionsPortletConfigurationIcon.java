@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -57,6 +59,10 @@ public class PermissionsPortletConfigurationIcon
 		try {
 			Layout layout = getLayout(portletRequest);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, Layout.class.getName(),
 				layout.getName(themeDisplay.getLocale()), null,
@@ -84,6 +90,10 @@ public class PermissionsPortletConfigurationIcon
 			if (group.isLayoutPrototype()) {
 				return false;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),

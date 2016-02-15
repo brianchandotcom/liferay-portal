@@ -17,9 +17,11 @@ package com.liferay.wiki.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -46,6 +48,9 @@ public class DeletePagePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			return "move-to-the-recycle-bin";
 		}
@@ -63,6 +68,9 @@ public class DeletePagePortletConfigurationIcon
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
 		portletURL.setParameter(Constants.CMD, Constants.DELETE);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (!_page.isDraft() &&
 			isTrashEnabled(themeDisplay.getScopeGroupId())) {
@@ -92,6 +100,9 @@ public class DeletePagePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			if (!_page.isDraft() &&
 				WikiPagePermissionChecker.contains(

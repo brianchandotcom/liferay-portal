@@ -20,8 +20,10 @@ import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
@@ -45,6 +47,9 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			return "move-to-the-recycle-bin";
 		}
@@ -64,6 +69,9 @@ public class DeleteFolderPortletConfigurationIcon
 			ActionRequest.ACTION_NAME, "/bookmarks/edit_folder");
 
 		String cmd = Constants.DELETE;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			cmd = Constants.MOVE_TO_TRASH;
@@ -104,6 +112,10 @@ public class DeleteFolderPortletConfigurationIcon
 			if (_folder == null) {
 				return false;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (BookmarksFolderPermissionChecker.contains(
 					themeDisplay.getPermissionChecker(), _folder,

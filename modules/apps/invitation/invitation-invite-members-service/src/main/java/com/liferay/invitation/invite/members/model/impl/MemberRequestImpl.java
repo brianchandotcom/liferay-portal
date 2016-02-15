@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class MemberRequestImpl extends MemberRequestBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a member request model instance should use the {@link com.liferay.invitation.invite.members.model.MemberRequest} interface instead.
 	 */
 	public MemberRequestImpl() {
 	}
+
 }

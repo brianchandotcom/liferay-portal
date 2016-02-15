@@ -61,7 +61,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	/>
 </c:if>
 
-<div class="asset-full-content <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
+<div class="asset-full-content clearfix <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<c:if test="<%= !print %>">
 		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 	</c:if>

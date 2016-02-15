@@ -60,7 +60,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 		%>
 
 		<liferay-ui:icon
-			cssClass="visible-interaction"
+			cssClass="icon-monospaced visible-interaction"
 			data="<%= data %>"
 			icon="pencil"
 			label="<%= false %>"

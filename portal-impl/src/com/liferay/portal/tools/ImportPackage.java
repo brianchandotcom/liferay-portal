@@ -123,7 +123,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		pos = _importString.indexOf(StringPool.PERIOD, pos + 1);
 
-		if (pos == -1) {
+		if ((pos == -1) && !_bndImport) {
 			pos = _importString.indexOf(StringPool.PERIOD);
 		}
 

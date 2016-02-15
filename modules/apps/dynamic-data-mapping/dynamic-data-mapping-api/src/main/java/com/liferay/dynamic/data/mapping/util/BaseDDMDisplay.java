@@ -319,6 +319,31 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return false;
 	}
 
+	protected ResourceBundle getBaseDDMDisplayResourceBundle(
+		String languageId) {
+
+		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", LocaleUtil.fromLanguageId(languageId),
+			baseDDMDisplayClazz.getClassLoader());
+	}
+
+	protected ResourceBundle getDDMDisplayResourceBundle(String languageId) {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					bundle.getSymbolicName());
+
+		if (resourceBundleLoader == null) {
+			return null;
+		}
+
+		return resourceBundleLoader.loadResourceBundle(languageId);
+	}
+
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
@@ -329,50 +354,29 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return LanguageUtil.get(locale, "templates");
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
-
-		//This is OK because it is our own bundle
-		ResourceBundle baseDDMDisplayResourceBundle =
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				baseDDMDisplayClazz.getClassLoader());
-
-		//In this case it is best to look for a ResourceBundleLoader installed
-		//for the class' bundle. It would be better if the API would allow
-		//for the users to provide their ResourceBundles
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		//LanguageFilterTracker installs a ResourceBundleLoader for all the
-		//modules that register a ServletContext is OSGi
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					bundle.getSymbolicName());
-
+	protected ResourceBundle getPortalResourceBundle(String languageId) {
 		ResourceBundleLoader portalResourceBundleLoader =
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
+		return portalResourceBundleLoader.loadResourceBundle(languageId);
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		if (resourceBundleLoader == null) {
-			return new AggregateResourceBundle(
-				baseDDMDisplayResourceBundle,
-				portalResourceBundleLoader.loadResourceBundle(languageId));
-		}
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+		ResourceBundle ddmDisplayResourceBundle = getDDMDisplayResourceBundle(
 			languageId);
 
-		if (resourceBundle == null) {
+		if (ddmDisplayResourceBundle == null) {
 			return new AggregateResourceBundle(
-				baseDDMDisplayResourceBundle,
-				portalResourceBundleLoader.loadResourceBundle(languageId));
+				getBaseDDMDisplayResourceBundle(languageId),
+				getPortalResourceBundle(languageId));
 		}
 
 		return new AggregateResourceBundle(
-			resourceBundle, baseDDMDisplayResourceBundle,
-			portalResourceBundleLoader.loadResourceBundle(languageId));
+			ddmDisplayResourceBundle,
+			getBaseDDMDisplayResourceBundle(languageId),
+			getPortalResourceBundle(languageId));
 	}
 
 	protected String getViewTemplatesURL(

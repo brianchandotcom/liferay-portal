@@ -15,6 +15,7 @@
 package com.liferay.invitation.invite.members.web.portlet;
 
 import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.web.util.InviteMembersUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,6 +50,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -59,9 +61,33 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=so-portlet-invite-members",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/invite_members/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/invite_members/css/main.css",
+		"com.liferay.portlet.icon=/invite_members/icon.png",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Invite Members",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/invite_members/view.jsp",
+		"javax.portlet.name=" + InviteMembersPortletKeys.INVITE_MEMBERS,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=invitedMembersCount",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class InviteMembersPortlet extends MVCPortlet {
 
 	public void getAvailableUsers(

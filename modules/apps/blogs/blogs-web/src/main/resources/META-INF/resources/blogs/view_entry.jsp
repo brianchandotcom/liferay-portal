@@ -88,10 +88,9 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 			<aui:row>
 				<c:if test="<%= previousEntry != null %>">
 					<aui:col cssClass="entry-navigation-item" md="4" sm="6">
-						<portlet:renderURL var="previousEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:renderURL var="previousEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
+							<portlet:param name="urlTitle" value="<%= previousEntry.getUrlTitle() %>" />
 						</portlet:renderURL>
 
 						<%
@@ -127,10 +126,9 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 				<c:if test="<%= nextEntry != null %>">
 					<aui:col cssClass="entry-navigation-item" md="4" sm="6">
-						<portlet:renderURL var="nextEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:renderURL var="nextEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
+							<portlet:param name="urlTitle" value="<%= nextEntry.getUrlTitle() %>" />
 						</portlet:renderURL>
 
 						<%

@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=categoryId",

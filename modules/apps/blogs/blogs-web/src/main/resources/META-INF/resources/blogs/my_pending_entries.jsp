@@ -49,9 +49,8 @@ int myPendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scope
 				keyProperty="entryId"
 				modelVar="entry"
 			>
-				<portlet:renderURL var="viewEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
 

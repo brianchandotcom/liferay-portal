@@ -32,7 +32,7 @@ public class DiscussionDLFileVersionPolicy implements DLFileVersionPolicy {
 	@Override
 	public boolean isKeepFileVersionLabel(
 			DLFileVersion lastDLFileVersion, DLFileVersion latestDLFileVersion,
-			ServiceContext serviceContext)
+			boolean majorVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		int commentsCount = _commentManager.getCommentsCount(

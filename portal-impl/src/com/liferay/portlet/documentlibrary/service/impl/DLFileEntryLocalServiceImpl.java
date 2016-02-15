@@ -320,7 +320,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!majorVersion &&
 			dlFileVersionPolicy.isKeepFileVersionLabel(
-				lastDLFileVersion, latestDLFileVersion, serviceContext)) {
+				lastDLFileVersion, latestDLFileVersion, majorVersion,
+				serviceContext)) {
 
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
@@ -1582,7 +1583,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		return dlFileVersionPolicy.isKeepFileVersionLabel(
-			lastDLFileVersion, latestDLFileVersion, serviceContext);
+			lastDLFileVersion, latestDLFileVersion, false, serviceContext);
 	}
 
 	@Override

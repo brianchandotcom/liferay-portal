@@ -15,6 +15,7 @@
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
@@ -22,16 +23,15 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Map" %>
-
 <%@ page import="com.liferay.layout.admin.web.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
+
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -88,12 +88,12 @@ data.put("qa-id", "customizations");
 
 						<c:if test="<%= hasUpdateLayoutPermission %>">
 							<li class="control-menu-nav-item">
-								<aui:input 
+								<aui:input
 									id="manageCustomization"
 									inlineField="<%= true %>"
 									label="<%= StringPool.BLANK %>"
-									labelOff="<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>"
-									labelOn="<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>"
+									labelOff="hide-customizable-zones"
+									labelOn="view-customizable-zones"
 									name="manageCustomization"
 									type="toggle-switch"
 									useNamespace="<%= false %>"
@@ -130,13 +130,13 @@ data.put("qa-id", "customizations");
 							<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 								<liferay-ui:icon
 									linkCssClass="toggle-customized-view"
-									message='<%= LanguageUtil.get(resourceBundle, "view-default-page") %>'
+									message="view-default-page"
 									url="javascript:;"
 								/>
 
 								<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 									<liferay-ui:icon
-										message="<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>"
+										message="reset-my-customizations"
 										url="<%= taglibURL %>"
 									/>
 								</c:if>
@@ -145,7 +145,7 @@ data.put("qa-id", "customizations");
 
 						<li class="control-menu-nav-item visible-xs">
 							<div class="btn-group dropdown">
-								<button class="btn btn-primary toggle-customized-view" type="button"><%= LanguageUtil.get(resourceBundle, "view-default-page") %></button>
+								<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="view-default-page" /></button>
 								<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
 									<span class="caret"></span>
 									<span class="sr-only">Toggle Dropdown</span>
@@ -153,7 +153,7 @@ data.put("qa-id", "customizations");
 								<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 									<ul class="dropdown-menu" role="menu">
 										<li>
-											<a href="<%= taglibURL %>"><%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %></a>
+											<aui:a href="<%= taglibURL %>" label="reset-my-customizations" />
 										</li>
 									</ul>
 								</c:if>

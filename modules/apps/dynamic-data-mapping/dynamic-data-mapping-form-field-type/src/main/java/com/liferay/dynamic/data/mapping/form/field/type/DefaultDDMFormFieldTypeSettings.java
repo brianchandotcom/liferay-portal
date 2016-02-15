@@ -66,7 +66,7 @@ import com.liferay.portal.kernel.util.StringPool;
 public interface DefaultDDMFormFieldTypeSettings
 	extends DDMFormFieldTypeSettings {
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(visibilityExpression = "FALSE")
 	public String fieldNamespace();
 
 	@DDMFormField(
@@ -75,7 +75,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
 		optionValues = {StringPool.BLANK, "keyword", "text"}, type = "select",
-		visibilityExpression = "false"
+		visibilityExpression = "FALSE"
 	)
 	public String indexType();
 
@@ -89,7 +89,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue label();
 
-	@DDMFormField(label = "%localizable", visibilityExpression = "false")
+	@DDMFormField(label = "%localizable", visibilityExpression = "FALSE")
 	public boolean localizable();
 
 	@DDMFormField(
@@ -102,7 +102,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField(label = "%read-only", visibilityExpression = "false")
+	@DDMFormField(label = "%read-only", visibilityExpression = "FALSE")
 	public boolean readOnly();
 
 	@DDMFormField(label = "%repeatable", properties = {"showAsSwitcher=true"})
@@ -134,7 +134,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%field-visibility-expression",
 		properties = {
-			"placeholder=%Country.equals(\"US\")",
+			"placeholder=%equals(Country, \"US\")",
 			"tooltip=%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
 		}
 	)

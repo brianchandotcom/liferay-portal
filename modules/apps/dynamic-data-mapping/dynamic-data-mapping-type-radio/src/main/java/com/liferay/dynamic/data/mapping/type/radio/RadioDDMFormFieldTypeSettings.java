@@ -75,7 +75,7 @@ public interface RadioDDMFormFieldTypeSettings
 	)
 	public DDMFormFieldOptions options();
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public DDMFormFieldValidation validation();
 

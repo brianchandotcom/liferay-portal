@@ -14,7 +14,6 @@
 
 package com.liferay.staging.processes.web.portlet.action;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,19 +36,22 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
-		"mvc.command.name=deleteBackgroundTask"
+		"mvc.command.name=deleteBackgroundTasks"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteLayoutPublishBackgroundTaskMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	protected void deleteBackgroundTask(ActionRequest actionRequest)
 		throws PortalException {
 
-		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
+		long[] backgroundTaskIds = ParamUtil.getLongValues(
+			actionRequest, "deleteBackgroundTaskIds");
 
-		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+		for (long backgroundTaskId : backgroundTaskIds) {
+			BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+		}
 	}
 
 	@Override

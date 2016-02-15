@@ -16,4 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/scheduled_list/scheduled_publish_processes.jsp" servletContext="<%= application %>" />
+<div class="container-fluid-1280" id="<portlet:namespace />scheduledProcessesContainer">
+	<liferay-util:include page="/scheduled_list/scheduled_publish_processes.jsp" servletContext="<%= application %>" />
+</div>

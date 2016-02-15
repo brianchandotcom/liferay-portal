@@ -18,25 +18,35 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-String tabs1 = ParamUtil.getString(request, "tabs1");
 %>
 
-<div id="<portlet:namespace />publishProcessesSearchContainer">
+<div id="<portlet:namespace />exportProcessesSearchContainer">
 	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="mvcRenderCommandName" value="viewPublishLayouts" />
+		<liferay-util:param name="mvcRenderCommandName" value="exportLayoutsView" />
+		<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+		<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
 		<liferay-util:param name="navigation" value="<%= navigation %>" />
 		<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
 		<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-		<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
 	</liferay-util:include>
 
 	<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
-		<liferay-util:include page="/processes_list/publish_layouts_processes.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+			<liferay-util:param name="navigation" value="<%= navigation %>" />
+			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		</liferay-util:include>
 	</div>
 </div>

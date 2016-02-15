@@ -39,7 +39,15 @@ portletURL.setParameter("searchContainerId", searchContainerId);
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
-<div id="<portlet:namespace />exportProcessesSearchContainer">
+<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTasksURL">
+	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteBackgroundTasksURL %>" method="get" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL.toString() %>" />
+	<aui:input name="deleteBackgroundTaskIds" type="hidden" />
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-export-processes-were-found"
 		id="<%= searchContainerId %>"
@@ -307,7 +315,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new ExportImportResultRowSplitter() %>" />
 	</liferay-ui:search-container>
-</div>
+</aui:form>
 
 <%
 int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
@@ -318,3 +326,17 @@ int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasks
 		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 	</liferay-util:include>
 </div>
+
+<aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteBackgroundTaskIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
+		}
+	}
+</aui:script>

@@ -227,8 +227,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 											function(calendar) {
 												var activeCalendarId = activeCalendar.get('calendarId');
 
-												var calendars = A.Array.map(
-													calendarList.get('calendars'),
+												var calendars = calendarList.get('calendars').map(
 													function(item) {
 														if (activeCalendarId === item.get('calendarId')) {
 															item = calendar;

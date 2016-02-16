@@ -11,17 +11,17 @@
 <!--SEARCH_RESULTS-->
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_TITLE</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_threadSubject}')]</td>
+	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_DESCRIPTION</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_threadSubject}')]//..//span[@class='entry-description']</td>
+	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]//..//span[@class='entry-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_HIGHLIGHTED</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_threadSubject}')]//..//..//..//span[@class='highlight']</td>
+	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]//..//..//..//span[@class='highlight']</td>
 	<td></td>
 </tr>
 <tr>

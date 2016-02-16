@@ -684,9 +684,9 @@
 			<isset var="mbThreadAttachment" />
 			<then>
 				<if>
-					<condition function="IsElementPresent" locator1="MessageBoardsEditMessage#ATTACHMENTS_DROPDOWN_COLLAPSED" />
+					<condition function="IsNotVisible" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" />
 					<then>
-						<execute function="AssertClick" locator1="MessageBoardsEditMessage#ATTACHMENTS_DROPDOWN" value1="Attachments" />
+						<execute function="AssertClick" locator1="Panel#ENTRY_ATTACHMENTS" value1="Attachments" />
 					</then>
 				</if>
 

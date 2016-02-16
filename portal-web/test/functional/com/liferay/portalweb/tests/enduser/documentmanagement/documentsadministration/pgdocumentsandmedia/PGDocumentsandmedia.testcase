@@ -28,7 +28,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+		<execute macro="DMPortlet#setDescriptiveView" />
 	</set-up>
 
 	<tear-down>

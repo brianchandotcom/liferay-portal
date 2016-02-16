@@ -133,6 +133,24 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="setDescriptiveView">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE_ACTIVE" />
+	</command>
+
+	<command name="setIconView">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_ICON" />
+
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ICON_ACTIVE" />
+	</command>
+
+	<command name="setListView">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_LIST_ACTIVE" />
+	</command>
+
 	<command name="viewDefaultConfigurationDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />

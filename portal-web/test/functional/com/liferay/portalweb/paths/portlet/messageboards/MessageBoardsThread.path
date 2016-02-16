@@ -451,7 +451,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_ATTACHMENT_IMAGE</td>
-	<td>//div[@class='message-attachments']/div/img[contains(@src,'${key_mbThreadAttachment}')]</td>
+	<td>//div[@class='message-attachments']//img[contains(@src,'${key_mbThreadAttachment}')]</td>
 	<td></td>
 </tr>
 <tr>

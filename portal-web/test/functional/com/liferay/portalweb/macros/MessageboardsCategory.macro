@@ -180,6 +180,7 @@
 		<if>
 			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
+				<var name="key_categoryDescription" value="${categoryDescription}" />
 				<var name="key_categoryName" value="${categoryName}" />
 
 				<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
@@ -345,6 +346,7 @@
 
 	<command name="viewPG">
 		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_threadsNumber" value="${threadsNumber}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 

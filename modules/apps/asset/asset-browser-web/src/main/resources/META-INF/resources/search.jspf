@@ -31,21 +31,4 @@ AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)assetBrowserSe
 
 		<aui:input inlineField="<%= true %>" name="<%= AssetBrowserDisplayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 	</aui:fieldset>
-
-	<aui:fieldset>
-		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= AssetBrowserDisplayTerms.GROUP_ID %>">
-
-			<%
-			for (long curGroupId : selectedGroupIds) {
-				Group group = GroupLocalServiceUtil.getGroup(curGroupId);
-			%>
-
-				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</aui:fieldset>
 </liferay-ui:search-toggle>

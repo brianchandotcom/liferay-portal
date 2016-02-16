@@ -92,6 +92,30 @@ else {
 	assetBrowserSearch.setResults(assetEntries);
 	assetBrowserSearch.setTotal(assetEntriesTotal);
 }
+
+List<ManagementBarFilterItem> managementBarFilterItems = new ArrayList<>();
+
+for (long curGroupId : selectedGroupIds) {
+	Group curGroup = GroupLocalServiceUtil.fetchGroup(curGroupId);
+
+	if (curGroup == null) {
+		continue;
+	}
+
+	boolean active = false;
+
+	if (groupId == curGroupId) {
+		active = true;
+	}
+
+	PortletURL groupURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+	groupURL.setParameter("groupId", String.valueOf(curGroupId));
+
+	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, HtmlUtil.escape(curGroup.getDescriptiveName(locale)), groupURL.toString());
+
+	managementBarFilterItems.add(managementBarFilterItem);
+}
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -114,6 +138,16 @@ else {
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+
+			<%
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			%>
+
+			<liferay-frontend:management-bar-filter
+				label="my-sites"
+				managementBarFilterItems="<%= managementBarFilterItems %>"
+				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 

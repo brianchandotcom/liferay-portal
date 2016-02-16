@@ -68,19 +68,19 @@ public interface DDLRecordSetSettings {
 		label = "%from-address",
 		validationErrorMessage = "%please-enter-a-valid-email-address",
 		validationExpression = "isEmailAddress(emailFromAddress)",
-		visibilityExpression = "sendEmailNotification == true"
+		visibilityExpression = "sendEmailNotification == TRUE"
 	)
 	public String emailFromAddress();
 
 	@DDMFormField(
 		label = "%from-name",
-		visibilityExpression = "sendEmailNotification == true"
+		visibilityExpression = "sendEmailNotification == TRUE"
 	)
 	public String emailFromName();
 
 	@DDMFormField(
 		label = "%subject",
-		visibilityExpression = "sendEmailNotification == true"
+		visibilityExpression = "sendEmailNotification == TRUE"
 	)
 	public String emailSubject();
 
@@ -88,11 +88,11 @@ public interface DDLRecordSetSettings {
 		label = "%to-address",
 		validationErrorMessage = "%please-enter-a-valid-email-address",
 		validationExpression = "isEmailAddress(emailToAddress)",
-		visibilityExpression = "sendEmailNotification == true"
+		visibilityExpression = "sendEmailNotification == TRUE"
 	)
 	public String emailToAddress();
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(visibilityExpression = "FALSE")
 	public boolean published();
 
 	@DDMFormField(

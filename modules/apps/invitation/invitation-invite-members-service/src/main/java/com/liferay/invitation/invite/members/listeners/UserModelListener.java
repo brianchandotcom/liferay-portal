@@ -14,7 +14,7 @@
 
 package com.liferay.invitation.invite.members.listeners;
 
-import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -22,13 +22,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Norbert Kocsis
@@ -59,15 +60,14 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			String redirectURL = HttpUtil.getParameter(
 				refererURL,
-				PortalUtil.getPortletNamespace(portletId) + "redirectURL",
-				false);
+				_portal.getPortletNamespace(portletId) + "redirectURL", false);
 
 			String key = HttpUtil.getParameter(
-				redirectURL, PortalUtil.getPortletNamespace(portletId) + "key",
+				redirectURL, _portal.getPortletNamespace(portletId) + "key",
 				false);
 
 			if (Validator.isNotNull(key)) {
-				MemberRequestLocalServiceUtil.updateMemberRequest(
+				_memberRequestLocalService.updateMemberRequest(
 					key, user.getUserId());
 			}
 		}
@@ -75,5 +75,20 @@ public class UserModelListener extends BaseModelListener<User> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMemberRequestLocalService(
+		MemberRequestLocalService memberRequestLocalService) {
+
+		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	private MemberRequestLocalService _memberRequestLocalService;
+	private Portal _portal;
 
 }

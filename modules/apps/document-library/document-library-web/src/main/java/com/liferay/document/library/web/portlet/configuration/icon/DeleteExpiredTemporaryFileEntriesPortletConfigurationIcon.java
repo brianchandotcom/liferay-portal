@@ -26,7 +26,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -51,9 +54,11 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"delete-expired-temporary-files");
+			resourceBundle, "delete-expired-temporary-files");
 	}
 
 	@Override

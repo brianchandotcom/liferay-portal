@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -50,8 +53,10 @@ public class MetadataSetsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "metadata-sets");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "metadata-sets");
 	}
 
 	@Override

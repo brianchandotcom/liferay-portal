@@ -130,6 +130,25 @@
 	}
 }
 
+.staging-configuration-control-toggle{
+	div {
+		margin-bottom: 0px;
+
+		label {
+			margin-bottom: 0px;
+
+			span {
+				span {
+					color: white;
+					font-size: 14px;
+					font-weight: 500;
+					text-transform: none !important;
+				}
+			}
+		}
+	}
+}
+
 .staging-ready {
 	padding-top: 55px;
 }

@@ -14,37 +14,46 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN, "path=/wiki/view"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeletePagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DeletePagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiPage page) {
-
-		super(portletRequest);
-
-		_page = page;
-	}
-
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			return "move-to-the-recycle-bin";
 		}
@@ -53,59 +62,85 @@ public class DeletePagePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.ACTION_PHASE);
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
-		portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (!_page.isDraft() &&
-			isTrashEnabled(themeDisplay.getScopeGroupId())) {
+		try {
+			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
-		}
-		else {
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.ACTION_PHASE);
+
 			portletURL.setParameter(
-				"version", String.valueOf(_page.getVersion()));
+				ActionRequest.ACTION_NAME, "/wiki/edit_page");
+			portletURL.setParameter(Constants.CMD, Constants.DELETE);
+
+			if (!page.isDraft() &&
+				isTrashEnabled(themeDisplay.getScopeGroupId())) {
+
+				portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+			}
+			else {
+				portletURL.setParameter(
+					"version", String.valueOf(page.getVersion()));
+			}
+
+			PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.ACTION_PHASE);
+
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/wiki/view_pages");
+			redirectURL.setParameter("navigation", "all-pages");
+			redirectURL.setParameter(
+				"nodeId", String.valueOf(page.getNodeId()));
+
+			portletURL.setParameter("redirect", redirectURL.toString());
+
+			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
+			portletURL.setParameter("title", page.getTitle());
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
 		}
 
-		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.ACTION_PHASE);
-
-		redirectURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		redirectURL.setParameter("navigation", "all-pages");
-		redirectURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
-
-		return portletURL.toString();
+		return StringPool.BLANK;
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 100;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
-			if (!_page.isDraft() &&
+			WikiPage page = ActionUtil.getPage(portletRequest);
+
+			if (!page.isDraft() &&
 				WikiPagePermissionChecker.contains(
-					themeDisplay.getPermissionChecker(), _page.getNodeId(),
-					HtmlUtil.unescape(_page.getTitle()), ActionKeys.DELETE)) {
+					themeDisplay.getPermissionChecker(), page.getNodeId(),
+					HtmlUtil.unescape(page.getTitle()), ActionKeys.DELETE)) {
 
 				return true;
 			}
-			else if (_page.isDraft() &&
+			else if (page.isDraft() &&
 					 WikiPagePermissionChecker.contains(
-						 themeDisplay.getPermissionChecker(), _page,
+						 themeDisplay.getPermissionChecker(), page,
 						 ActionKeys.DELETE)) {
 
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -122,7 +157,5 @@ public class DeletePagePortletConfigurationIcon
 
 		return false;
 	}
-
-	private final WikiPage _page;
 
 }

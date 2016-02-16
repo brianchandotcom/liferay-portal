@@ -15,28 +15,41 @@
 package com.liferay.trash.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + TrashPortletKeys.TRASH},
+	service = PortletConfigurationIcon.class
+)
 public class EmptyTrashPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public EmptyTrashPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/empty_trash.jsp";
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 100.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
@@ -44,6 +57,14 @@ public class EmptyTrashPortletConfigurationIcon
 		}
 
 		return true;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.trash.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

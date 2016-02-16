@@ -19,6 +19,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -54,11 +55,14 @@ public class DeleteFolderPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String key = "delete";
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			return "move-to-the-recycle-bin";
+			key = "move-to-the-recycle-bin";
 		}
 
-		return "delete";
+		return LanguageUtil.get(
+			getResourceBundle(themeDisplay.getLocale()), key);
 	}
 
 	@Override

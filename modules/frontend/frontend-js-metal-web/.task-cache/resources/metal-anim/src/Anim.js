@@ -1,15 +1,11 @@
-define("frontend-js-metal-web@1.0.0/metal-anim/src/Anim", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/dom/features', 'metal/src/dom/events'], function (exports, _core, _dom, _features) {
+define("frontend-js-metal-web@1.0.0/metal-anim/src/Anim", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom'], function (exports, _metal, _dom) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
-
-	var _dom2 = _interopRequireDefault(_dom);
-
-	var _features2 = _interopRequireDefault(_features);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -46,21 +42,19 @@ define("frontend-js-metal-web@1.0.0/metal-anim/src/Anim", ['exports', 'metal/src
 
 		Anim.emulateEnd_ = function emulateEnd_(element, type, opt_durationMs) {
 			var duration = opt_durationMs;
-
-			if (!_core2.default.isDef(opt_durationMs)) {
+			if (!_metal2.default.isDef(opt_durationMs)) {
 				duration = this.getComputedDurationMs(element, type);
 			}
 
 			var delayed = setTimeout(function () {
-				_dom2.default.triggerEvent(element, _features2.default.checkAnimationEventName()[type]);
+				_dom.dom.triggerEvent(element, _dom.features.checkAnimationEventName()[type]);
 			}, duration);
 
 			var abort = function abort() {
 				clearTimeout(delayed);
 				hoistedEvtHandler.removeListener();
 			};
-
-			var hoistedEvtHandler = _dom2.default.once(element, type + 'end', abort);
+			var hoistedEvtHandler = _dom.dom.once(element, type + 'end', abort);
 
 			return {
 				abort: abort

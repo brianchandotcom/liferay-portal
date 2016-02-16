@@ -1,19 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  var _Component3 = _interopRequireDefault(_Component2);
-
-  var _SoyAop2 = _interopRequireDefault(_SoyAop);
-
-  var _SoyRenderer2 = _interopRequireDefault(_SoyRenderer);
-
-  var _SoyTemplates2 = _interopRequireDefault(_SoyTemplates);
+  var _component2 = _interopRequireDefault(_component);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -32,7 +24,7 @@ define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy", ['ex
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
   }
 
   function _inherits(subClass, superClass) {
@@ -51,16 +43,28 @@ define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy", ['ex
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _SoyTemplates2.default.get();
+  var Templates = _soy.SoyTemplates.get();
+  // This file was automatically generated from ProgressBar.soy.
+  // Please don't edit this file by hand.
+
+  /**
+   * @fileoverview Templates in namespace Templates.ProgressBar.
+   */
 
   if (typeof Templates.ProgressBar == 'undefined') {
     Templates.ProgressBar = {};
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.ProgressBar.render = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="progress component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="progressbar" tabindex="0"><div class="progress-bar"></div></div>');
   };
-
   if (goog.DEBUG) {
     Templates.ProgressBar.render.soyTemplateName = 'Templates.ProgressBar.render';
   }
@@ -77,13 +81,12 @@ define("frontend-js-metal-web@1.0.0/metal-progressbar/src/ProgressBar.soy", ['ex
     }
 
     return ProgressBar;
-  }(_Component3.default);
+  }(_component2.default);
 
   ProgressBar.prototype.registerMetalComponent && ProgressBar.prototype.registerMetalComponent(ProgressBar, 'ProgressBar')
-  ProgressBar.RENDERER = _SoyRenderer2.default;
 
-  _SoyAop2.default.registerTemplates('ProgressBar');
-
+  ProgressBar.RENDERER = _soy.SoyRenderer;
+  _soy.SoyAop.registerTemplates('ProgressBar');
   exports.default = ProgressBar;
 });
 //# sourceMappingURL=ProgressBar.soy.js.map

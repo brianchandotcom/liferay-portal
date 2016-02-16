@@ -1,13 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['exports', 'metal/src/core', 'metal/src/dom/dom', './ButtonGroup.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _ButtonGroup, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ButtonGroup.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _ButtonGroup, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
@@ -32,7 +30,7 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -54,6 +52,10 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 	var ButtonGroup = function (_ButtonGroupBase) {
 		_inherits(ButtonGroup, _ButtonGroupBase);
 
+		/**
+   * @inheritDoc
+   */
+
 		function ButtonGroup(opt_config) {
 			_classCallCheck(this, ButtonGroup);
 
@@ -62,9 +64,16 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 			_this.buttonElements_ = null;
 
 			_this.on('selectedChanged', _this.defaultSelectedChanged_, true);
-
 			return _this;
 		}
+
+		/**
+   * The default behavior of the `selectedChanged` event. Adds or removes the CSS
+   * class defined by `ButtonGroup.SELECTED_CLASS` to each button.
+   * @param {!Object} event
+   * @protected
+   */
+
 
 		ButtonGroup.prototype.defaultSelectedChanged_ = function defaultSelectedChanged_(event) {
 			for (var i = 0; i < this.buttonElements_.length; i++) {
@@ -80,7 +89,6 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 			var button = event.delegateTarget;
 			var index = button.getAttribute('data-index');
 			var selectedIndex = this.selected.indexOf(this.buttons[index].label);
-
 			if (selectedIndex === -1) {
 				this.selected.push(this.buttons[index].label);
 				this.selected = this.selected;
@@ -93,15 +101,12 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 		ButtonGroup.prototype.setterSelectedFn_ = function setterSelectedFn_(selected) {
 			var minSelected = Math.min(this.minSelected, this.buttons.length);
 			var i = 0;
-
 			while (selected.length < minSelected) {
 				if (selected.indexOf(this.buttons[i].label) === -1) {
 					selected.push(this.buttons[i].label);
 				}
-
 				i++;
 			}
-
 			return selected;
 		};
 
@@ -113,7 +118,21 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 	}(_ButtonGroup2.default);
 
 	ButtonGroup.prototype.registerMetalComponent && ButtonGroup.prototype.registerMetalComponent(ButtonGroup, 'ButtonGroup')
+
+
+	/**
+  * Attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	ButtonGroup.ATTRS = {
+		/**
+   * Configuration for the buttons that should be rendered in this group.
+   * Each button config should be given as an object. Supported options are:
+   * label, type and cssClass.
+   * @type {!Array<!Object>}
+   * @default []
+   */
 		buttons: {
 			validator: function validator(val) {
 				return val instanceof Array;
@@ -122,11 +141,24 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 				return [];
 			}
 		},
+
+		/**
+   * The minimum number of buttons that need to be selected at a time. If the
+   * minimum number of buttons is not already initially selected, this will
+   * automaticaly select the first `minSelected` buttons.
+   * @type {number}
+   * @default 0
+   */
 		minSelected: {
-			validator: _core2.default.isNumber,
+			validator: _metal2.default.isNumber,
 			value: 0,
 			writeOnce: true
 		},
+
+		/**
+   * An array with the labels of the buttons that should be selected.
+   * @type {!Array<string>}
+   */
 		selected: {
 			setter: 'setterSelectedFn_',
 			validator: Array.isArray,
@@ -135,10 +167,22 @@ define("frontend-js-metal-web@1.0.0/metal-button-group/src/ButtonGroup", ['expor
 			}
 		}
 	};
-	ButtonGroup.ELEMENT_CLASSES = 'btn-group';
-	ButtonGroup.SELECTED_CLASS = 'btn-group-selected';
-	exports.default = ButtonGroup;
 
+	/**
+  * Default element classes.
+  * @type {string}
+  * @static
+  */
+	ButtonGroup.ELEMENT_CLASSES = 'btn-group';
+
+	/**
+  * The CSS class added to selected buttons.
+  * @type {string}
+  * @static
+  */
+	ButtonGroup.SELECTED_CLASS = 'btn-group-selected';
+
+	exports.default = ButtonGroup;
 	_JQueryAdapter2.default.register('buttonGroup', ButtonGroup);
 });
 //# sourceMappingURL=ButtonGroup.js.map

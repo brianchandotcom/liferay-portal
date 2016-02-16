@@ -17,6 +17,7 @@ package com.liferay.exportimport.web.portlet.configuration.icon;
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,15 +26,18 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + ExportImportPortletKeys.EXPORT},
+	service = PortletConfigurationIcon.class
+)
 public class ExportTemplatesConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public ExportTemplatesConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -56,6 +60,11 @@ public class ExportTemplatesConfigurationIcon
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 102.0;
 	}
 
 	@Override

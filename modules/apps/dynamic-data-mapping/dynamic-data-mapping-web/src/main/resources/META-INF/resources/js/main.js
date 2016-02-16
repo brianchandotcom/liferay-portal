@@ -257,6 +257,7 @@ AUI.add(
 						instance.translationManager.after('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 
+						instance.on('datatable:render', instance._onDataTableRender);
 						instance.on('drag:drag', A.DD.DDM.syncActiveShims, A.DD.DDM, true);
 						instance.on('model:change', instance._onPropertyModelChange);
 					},
@@ -466,6 +467,12 @@ AUI.add(
 						return fields;
 					},
 
+					_onDataTableRender: function(event) {
+						var instance = this;
+
+						A.on(instance._onGetEditor, event.target, 'getEditor', instance);
+					},
+
 					_onDefaultLocaleChange: function(event) {
 						var instance = this;
 
@@ -487,6 +494,30 @@ AUI.add(
 							translationManager.addAvailableLocale(newVal);
 
 							instance._updateLocalizationMaps(config);
+						}
+					},
+
+					_onGetEditor: function(record, column) {
+						var instance = this;
+
+						var columnEditor = column.editor;
+
+						var recordEditor = record.get('editor');
+
+						var editor = recordEditor || columnEditor;
+
+						if (instanceOf(editor, A.BaseOptionsCellEditor)) {
+							if (editor.get('rendered')) {
+								instance._toggleOptionsEditorInputs(editor);
+							}
+							else {
+								editor.after(
+									'render',
+									function() {
+										instance._toggleOptionsEditorInputs(editor);
+									}
+								);
+							}
 						}
 					},
 
@@ -629,6 +660,21 @@ AUI.add(
 
 						BODY.toggleClass('form-builder-ltr-inputs', !rtl);
 						BODY.toggleClass('form-builder-rtl-inputs', rtl);
+					},
+
+					_toggleOptionsEditorInputs: function(editor) {
+						var instance = this;
+
+						var boundingBox = editor.get('boundingBox');
+
+						if (boundingBox.hasClass('radiocelleditor')) {
+							var defaultLocale = instance.translationManager.get('defaultLocale');
+							var editingLocale = instance.translationManager.get('editingLocale');
+
+							var inputs = boundingBox.all('.celleditor-edit-input-value');
+
+							Liferay.Util.toggleDisabled(inputs, defaultLocale !== editingLocale);
+						}
 					},
 
 					_updateLocalizationMaps: function(config) {

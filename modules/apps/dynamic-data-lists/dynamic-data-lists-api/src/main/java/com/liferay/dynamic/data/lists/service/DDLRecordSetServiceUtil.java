@@ -58,6 +58,12 @@ public class DDLRecordSetServiceUtil {
 		getService().deleteRecordSet(recordSetId);
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchRecordSet(recordSetId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

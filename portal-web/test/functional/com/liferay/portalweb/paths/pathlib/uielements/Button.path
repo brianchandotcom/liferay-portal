@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_LOGO</td>
+	<td>//button[contains(@class,'edit-logo') and contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_NODE</td>
 	<td>//button[contains(.,'Change Node')]</td>
 	<td></td>

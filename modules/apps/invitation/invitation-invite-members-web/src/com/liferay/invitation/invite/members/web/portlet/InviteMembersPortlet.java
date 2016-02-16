@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -140,7 +139,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		throws Exception {
 
 		try {
-			doSendInvite(actionRequest, actionResponse);
+			doSendInvite(actionRequest);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -179,8 +178,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 		long memberRequestId = ParamUtil.getLong(
 			actionRequest, "memberRequestId");
 		int status = ParamUtil.getInteger(actionRequest, "status");
-		long userNotificationEventId = ParamUtil.getLong(
-			actionRequest, "userNotificationEventId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -197,10 +194,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	protected void doSendInvite(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
+	protected void doSendInvite(ActionRequest actionRequest) throws Exception {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long[] receiverUserIds = getLongArray(actionRequest, "receiverUserIds");
 		String[] receiverEmailAddresses = getStringArray(
@@ -275,13 +269,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setMemberRequestLocalService(
 		MemberRequestLocalService memberRequestLocalService) {
 
@@ -297,7 +284,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 		InviteMembersPortlet.class);
 
 	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
 	private MemberRequestLocalService _memberRequestLocalService;
 	private UserLocalService _userLocalService;
 

@@ -41,7 +41,7 @@ public class SpringContextHeaderParser {
 			beanDefinitionFileNames.add("META-INF/spring/parent");
 		}
 
-		String springContext = headers.get("Spring-Context");
+		String springContext = headers.get("Liferay-Spring-Context");
 
 		if (springContext != null) {
 			Collections.addAll(

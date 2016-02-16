@@ -25,6 +25,9 @@ long classPK = BeanParamUtil.getLong(template, request, "classPK");
 long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
 
 DDMTemplateVersion templateVersion = template.getTemplateVersion();
+
+String redirect = ParamUtil.getString(request, "redirect");
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 %>
 
 <portlet:actionURL name="copyTemplate" var="copyTemplateURL">
@@ -32,16 +35,7 @@ DDMTemplateVersion templateVersion = template.getTemplateVersion();
 </portlet:actionURL>
 
 <aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-	<portlet:renderURL var="closeRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view_template.jsp" />
-		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-	</portlet:renderURL>
-
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirectURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
@@ -49,17 +43,32 @@ DDMTemplateVersion templateVersion = template.getTemplateVersion();
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 
+	<c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
+
+		<%
+		String title = LanguageUtil.get(request, "copy-template");
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(redirect);
+
+		renderResponse.setTitle(title);
+		%>
+
+	</c:if>
+
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:input name="description" />
-	</aui:fieldset>
+			<aui:input name="description" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="copy" />
 
-		<aui:button cssClass="btn-lg" onClick="Liferay.Util.getWindow().hide();" value="close" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

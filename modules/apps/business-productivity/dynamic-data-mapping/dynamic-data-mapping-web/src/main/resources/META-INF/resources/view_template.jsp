@@ -252,16 +252,3 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 </liferay-util:include>
-
-<aui:script>
-	function <portlet:namespace />copyTemplate(uri) {
-		Liferay.Util.openWindow(
-			{
-				id: '<portlet:namespace />copyTemplate',
-				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(request, "copy-template") %>',
-				uri: uri
-			}
-		);
-	}
-</aui:script>

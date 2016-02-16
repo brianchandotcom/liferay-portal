@@ -3,7 +3,7 @@
 import App from 'senna/src/app/App';
 import dom from 'metal-dom/src/dom';
 import globals from 'senna/src/globals/globals';
-import Uri from 'metal-uri/src/Uri';
+import Uri from 'metal-uri/src/Uri'
 import Utils from '../util/Utils.es';
 
 class LiferayApp extends App {
@@ -83,6 +83,8 @@ class LiferayApp extends App {
 		}
 
 		AUI().Get._insertCache = {};
+
+		Liferay.DOMTaskRunner.reset();
 
 		dom.removeClasses(document.body, 'lfr-surface-loading');
 	}

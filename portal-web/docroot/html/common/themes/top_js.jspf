@@ -379,7 +379,7 @@
 		for (String javaScriptFile : javaScriptFiles) {
 		%>
 
-			<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, path + "/" + javaScriptFile, "minifierType=", jsLastModified)) %>" type="text/javascript"></script>
+			<script data-senna-track="permanent" src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, path + "/" + javaScriptFile, "minifierType=", jsLastModified)) %>" type="text/javascript"></script>
 
 		<%
 		}
@@ -470,7 +470,7 @@ for (String analyticsType : analyticsTypes) {
 			%>
 
 			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
-				<script type="text/javascript">
+				<script data-senna-track="permanent" id="googleAnalyticsScript" type="text/javascript">
 					(function(i, s, o, g, r, a, m) {
 						i['GoogleAnalyticsObject'] = r;
 

@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	content=../frontend-editor-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	META-INF/resources=tmp/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class

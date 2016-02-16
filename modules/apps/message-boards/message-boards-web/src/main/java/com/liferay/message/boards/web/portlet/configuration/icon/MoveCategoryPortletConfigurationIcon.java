@@ -17,8 +17,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -29,19 +30,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_category"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class MoveCategoryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public MoveCategoryPortletConfigurationIcon(
-		PortletRequest portletRequest, MBCategory category) {
-
-		super(portletRequest);
-
-		_category = category;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -60,16 +63,33 @@ public class MoveCategoryPortletConfigurationIcon
 			"mvcRenderCommandName", "/message_boards/move_category");
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
+
+		MBCategory category = null;
+
+		try {
+			category = ActionUtil.getCategory(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(getCategoryId(_category)));
+			"mbCategoryId", String.valueOf(getCategoryId(category)));
 
 		return portletURL.toString();
 	}
 
 	@Override
+	public double getWeight() {
+		return 103;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (_category.getCategoryId() ==
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
+			if (category.getCategoryId() ==
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 				return false;
@@ -80,13 +100,13 @@ public class MoveCategoryPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			if (MBCategoryPermission.contains(
-					themeDisplay.getPermissionChecker(), _category,
+					themeDisplay.getPermissionChecker(), category,
 					ActionKeys.UPDATE)) {
 
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -101,7 +121,5 @@ public class MoveCategoryPortletConfigurationIcon
 
 		return categoryId;
 	}
-
-	private final MBCategory _category;
 
 }

@@ -17,8 +17,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -33,19 +34,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_category"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteCategoryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteCategoryPortletConfigurationIcon(
-		PortletRequest portletRequest, MBCategory category) {
-
-		super(portletRequest);
-
-		_category = category;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -87,8 +90,9 @@ public class DeleteCategoryPortletConfigurationIcon
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 				PortletRequest.RENDER_PHASE);
 
-			long parentCategoryId = getCategoryId(
-				_category.getParentCategory());
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
+			long parentCategoryId = getCategoryId(category.getParentCategory());
 
 			if (parentCategoryId ==
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -106,20 +110,27 @@ public class DeleteCategoryPortletConfigurationIcon
 			deleteURL.setParameter("redirect", parentCategoryURL.toString());
 
 			deleteURL.setParameter(
-				"mbCategoryId", String.valueOf(_category.getCategoryId()));
+				"mbCategoryId", String.valueOf(category.getCategoryId()));
 
 			return deleteURL.toString();
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return StringPool.BLANK;
 	}
 
 	@Override
+	public double getWeight() {
+		return 100;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (_category == null) {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
+			if (category == null) {
 				return false;
 			}
 
@@ -128,7 +139,7 @@ public class DeleteCategoryPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			if (MBCategoryPermission.contains(
-					themeDisplay.getPermissionChecker(), _category,
+					themeDisplay.getPermissionChecker(), category,
 					ActionKeys.DELETE)) {
 
 				return true;
@@ -161,7 +172,5 @@ public class DeleteCategoryPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final MBCategory _category;
 
 }

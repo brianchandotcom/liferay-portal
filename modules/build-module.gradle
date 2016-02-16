@@ -12,3 +12,7 @@ configurations {
 		}
 	}
 }
+
+configurations.provided.dependencies.withType(ProjectDependency) {
+	configurations.default.exclude module: it.name
+}

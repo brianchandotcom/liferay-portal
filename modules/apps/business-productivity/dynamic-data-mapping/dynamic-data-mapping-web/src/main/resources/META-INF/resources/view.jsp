@@ -40,7 +40,7 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 
 	<%
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
+	portletDisplay.setURLBack(ddmDisplay.getViewStructuresBackURL(liferayPortletRequest, liferayPortletResponse));
 
 	renderResponse.setTitle(ddmDisplay.getTitle(locale));
 	%>

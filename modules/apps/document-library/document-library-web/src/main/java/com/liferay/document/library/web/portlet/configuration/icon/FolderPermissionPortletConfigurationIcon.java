@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,19 +32,22 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/edit_folder",
+		"path=/document_library/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class FolderPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public FolderPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -59,11 +64,13 @@ public class FolderPermissionPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_folder != null) {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder != null) {
 				url = PermissionsURLTag.doTag(
 					null, DLFolderConstants.getClassName(),
-					HtmlUtil.unescape(_folder.getName()), null,
-					String.valueOf(_folder.getFolderId()),
+					HtmlUtil.unescape(folder.getName()), null,
+					String.valueOf(folder.getFolderId()),
 					LiferayWindowState.POP_UP.toString(), null,
 					themeDisplay.getRequest());
 			}
@@ -83,19 +90,26 @@ public class FolderPermissionPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_folder != null) {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder != null) {
 				return DLFolderPermission.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+					themeDisplay.getScopeGroupId(), folder.getFolderId(),
 					ActionKeys.PERMISSIONS);
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -110,7 +124,5 @@ public class FolderPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final Folder _folder;
 
 }

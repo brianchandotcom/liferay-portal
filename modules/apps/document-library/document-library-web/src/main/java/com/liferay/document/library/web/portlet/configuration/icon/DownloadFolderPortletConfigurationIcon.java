@@ -15,8 +15,9 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,19 +29,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DownloadFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DownloadFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -62,12 +65,27 @@ public class DownloadFolderPortletConfigurationIcon
 				PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setResourceID("/document_library/edit_folder");
+
+		Folder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		portletURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
+			"folderId", String.valueOf(folder.getFolderId()));
 		portletURL.setParameter(
-			"repositoryId", String.valueOf(_folder.getRepositoryId()));
+			"repositoryId", String.valueOf(folder.getRepositoryId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 107;
 	}
 
 	@Override
@@ -76,12 +94,14 @@ public class DownloadFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+				themeDisplay.getScopeGroupId(), folder.getFolderId(),
 				ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -91,7 +111,5 @@ public class DownloadFolderPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private final Folder _folder;
 
 }

@@ -17,8 +17,10 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -31,19 +33,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_file_entry"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
-
-		super(portletRequest);
-
-		_fileEntry = fileEntry;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -82,7 +86,16 @@ public class DeleteFileEntryPortletConfigurationIcon
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		long folderId = _fileEntry.getFolderId();
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = ActionUtil.getFileEntry(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		long folderId = fileEntry.getFolderId();
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			redirectURL.setParameter(
@@ -98,9 +111,14 @@ public class DeleteFileEntryPortletConfigurationIcon
 		portletURL.setParameter("redirect", redirectURL.toString());
 
 		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 100;
 	}
 
 	@Override
@@ -109,19 +127,20 @@ public class DeleteFileEntryPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), _fileEntry);
+					themeDisplay.getPermissionChecker(), fileEntry);
 
 			return fileEntryDisplayContextHelper.isFileEntryDeletable();
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
 	}
 
-	@Override
 	public boolean isToolTip() {
 		return false;
 	}
@@ -137,7 +156,5 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final FileEntry _fileEntry;
 
 }

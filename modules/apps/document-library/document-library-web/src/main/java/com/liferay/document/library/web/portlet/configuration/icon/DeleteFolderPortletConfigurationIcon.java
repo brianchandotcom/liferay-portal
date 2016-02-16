@@ -17,8 +17,10 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,26 +35,37 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if ((_folder.getModel() instanceof DLFolder) &&
+		Folder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		if ((folder.getModel() instanceof DLFolder) &&
 			isTrashEnabled(themeDisplay.getScopeGroupId())) {
 
 			return "move-to-the-recycle-bin";
@@ -61,7 +74,6 @@ public class DeleteFolderPortletConfigurationIcon
 		return "delete";
 	}
 
-	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
@@ -69,7 +81,16 @@ public class DeleteFolderPortletConfigurationIcon
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		if (_folder.isMountPoint()) {
+		Folder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		if (folder.isMountPoint()) {
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/document_library/edit_repository");
 		}
@@ -81,9 +102,9 @@ public class DeleteFolderPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_folder.isMountPoint() ||
+		if (folder.isMountPoint() ||
 				!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
-					!(_folder.getModel() instanceof DLFolder)) {
+					!(folder.getModel() instanceof DLFolder)) {
 
 			portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		}
@@ -95,7 +116,7 @@ public class DeleteFolderPortletConfigurationIcon
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		long parentFolderId = _folder.getParentFolderId();
+		long parentFolderId = folder.getParentFolderId();
 
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			redirectURL.setParameter(
@@ -110,9 +131,14 @@ public class DeleteFolderPortletConfigurationIcon
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 		portletURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
+			"folderId", String.valueOf(folder.getFolderId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 100;
 	}
 
 	@Override
@@ -121,12 +147,14 @@ public class DeleteFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+				themeDisplay.getScopeGroupId(), folder.getFolderId(),
 				ActionKeys.DELETE);
 		}
-		catch (PortalException pe) {
+		catch (Exception pe) {
 		}
 
 		return false;
@@ -148,7 +176,5 @@ public class DeleteFolderPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final Folder _folder;
 
 }

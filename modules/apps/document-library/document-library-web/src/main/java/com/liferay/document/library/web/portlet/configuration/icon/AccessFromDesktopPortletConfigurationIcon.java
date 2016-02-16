@@ -15,7 +15,10 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -28,19 +31,27 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view", "path=/document_library/view_folder",
+		"path=-"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class AccessFromDesktopPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public AccessFromDesktopPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest, Folder folder) {
-
-		super(servletContext, jspPath, portletRequest);
-
-		_folder = folder;
+	@Override
+	public String getJspPath() {
+		return "/document_library/access_from_desktop.jsp";
 	}
 
 	@Override
@@ -56,6 +67,11 @@ public class AccessFromDesktopPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 102;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			ThemeDisplay themeDisplay =
@@ -66,8 +82,10 @@ public class AccessFromDesktopPortletConfigurationIcon
 
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (_folder != null) {
-				folderId = _folder.getFolderId();
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder != null) {
+				folderId = folder.getFolderId();
 			}
 
 			if (DLFolderPermission.contains(
@@ -75,8 +93,8 @@ public class AccessFromDesktopPortletConfigurationIcon
 					themeDisplay.getScopeGroupId(), folderId,
 					ActionKeys.VIEW) &&
 				portletDisplay.isWebDAVEnabled() &&
-				((_folder == null) ||
-				 (_folder.getRepositoryId() ==
+				((folder == null) ||
+				 (folder.getRepositoryId() ==
 					 themeDisplay.getScopeGroupId()))) {
 
 				return true;
@@ -93,6 +111,13 @@ public class AccessFromDesktopPortletConfigurationIcon
 		return false;
 	}
 
-	private final Folder _folder;
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 }

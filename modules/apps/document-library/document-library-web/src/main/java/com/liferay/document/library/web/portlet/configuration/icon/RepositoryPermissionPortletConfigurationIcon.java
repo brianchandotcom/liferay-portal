@@ -15,9 +15,12 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,19 +30,21 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/edit_repository"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class RepositoryPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public RepositoryPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest, Repository repository) {
-
-		super(portletRequest);
-
-		_repository = repository;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -56,10 +61,12 @@ public class RepositoryPermissionPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			Repository repository = ActionUtil.getRepository(portletRequest);
+
 			url = PermissionsURLTag.doTag(
 				null, DLFolderConstants.getClassName(),
-				HtmlUtil.unescape(_repository.getName()), null,
-				String.valueOf(_repository.getDlFolderId()),
+				HtmlUtil.unescape(repository.getName()), null,
+				String.valueOf(repository.getDlFolderId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -70,9 +77,20 @@ public class RepositoryPermissionPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (_repository != null) {
-			return true;
+		try {
+			Repository repository = ActionUtil.getRepository(portletRequest);
+
+			if (repository != null) {
+				return true;
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return false;
@@ -87,7 +105,5 @@ public class RepositoryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final Repository _repository;
 
 }

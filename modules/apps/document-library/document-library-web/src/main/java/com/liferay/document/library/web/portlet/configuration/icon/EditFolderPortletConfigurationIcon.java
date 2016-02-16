@@ -17,8 +17,9 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -32,19 +33,22 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view", "path=/document_library/view_folder",
+		"path=-"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class EditFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public EditFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -64,7 +68,16 @@ public class EditFolderPortletConfigurationIcon
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-		if (_folder == null) {
+		Folder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		if (folder == null) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
 			portletURL.setParameter(
@@ -75,7 +88,7 @@ public class EditFolderPortletConfigurationIcon
 			portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
 		}
 		else {
-			if (_folder.isMountPoint()) {
+			if (folder.isMountPoint()) {
 				portletURL.setParameter(
 					"mvcRenderCommandName",
 					"/document_library/edit_repository");
@@ -86,12 +99,17 @@ public class EditFolderPortletConfigurationIcon
 			}
 
 			portletURL.setParameter(
-				"folderId", String.valueOf(_folder.getFolderId()));
+				"folderId", String.valueOf(folder.getFolderId()));
 			portletURL.setParameter(
-				"repositoryId", String.valueOf(_folder.getRepositoryId()));
+				"repositoryId", String.valueOf(folder.getRepositoryId()));
 		}
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 106;
 	}
 
 	@Override
@@ -99,7 +117,9 @@ public class EditFolderPortletConfigurationIcon
 		try {
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (_folder == null) {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder == null) {
 				if (!WorkflowEngineManagerUtil.isDeployed() ||
 					(WorkflowHandlerRegistryUtil.getWorkflowHandler(
 						DLFileEntry.class.getName()) == null)) {
@@ -108,7 +128,7 @@ public class EditFolderPortletConfigurationIcon
 				}
 			}
 			else {
-				folderId = _folder.getFolderId();
+				folderId = folder.getFolderId();
 			}
 
 			ThemeDisplay themeDisplay =
@@ -119,7 +139,7 @@ public class EditFolderPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), folderId, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -129,7 +149,5 @@ public class EditFolderPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private final Folder _folder;
 
 }

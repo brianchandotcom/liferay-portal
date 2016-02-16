@@ -15,8 +15,9 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,19 +29,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class MoveFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public MoveFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -61,12 +64,27 @@ public class MoveFolderPortletConfigurationIcon
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/move_entry");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		Folder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		portletURL.setParameter(
-			"repositoryId", String.valueOf(_folder.getRepositoryId()));
+			"repositoryId", String.valueOf(folder.getRepositoryId()));
 		portletURL.setParameter(
-			"rowIdsFolder", String.valueOf(_folder.getFolderId()));
+			"rowIdsFolder", String.valueOf(folder.getFolderId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 105;
 	}
 
 	@Override
@@ -75,16 +93,18 @@ public class MoveFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
 			if (DLFolderPermission.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+					themeDisplay.getScopeGroupId(), folder.getFolderId(),
 					ActionKeys.UPDATE) &&
-				!_folder.isMountPoint()) {
+				!folder.isMountPoint()) {
 
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -94,7 +114,5 @@ public class MoveFolderPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private final Folder _folder;
 
 }

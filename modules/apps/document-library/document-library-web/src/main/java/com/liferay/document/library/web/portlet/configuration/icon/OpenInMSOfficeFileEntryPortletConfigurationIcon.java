@@ -16,7 +16,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -38,16 +38,6 @@ import javax.servlet.http.HttpServletRequest;
 public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public OpenInMSOfficeFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry,
-		FileVersion fileVersion) {
-
-		super(portletRequest);
-
-		_fileEntry = fileEntry;
-		_fileVersion = fileVersion;
-	}
-
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return "open-in-ms-office";
@@ -63,8 +53,10 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			String webDavURL = DLUtil.getWebDavURL(
-				themeDisplay, _fileEntry.getFolder(), _fileEntry,
+				themeDisplay, fileEntry.getFolder(), fileEntry,
 				PropsValues.
 					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
 
@@ -76,7 +68,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			sb.append(webDavURL);
 			sb.append("');");
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return sb.toString();
@@ -90,17 +82,27 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 107;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				portletRequest);
 
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
+			FileVersion fileVersion = ActionUtil.getFileVersion(
+				portletRequest, fileEntry);
+
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
-				request, _fileVersion);
+				request, fileVersion);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -115,8 +117,5 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final FileEntry _fileEntry;
-	private final FileVersion _fileVersion;
 
 }

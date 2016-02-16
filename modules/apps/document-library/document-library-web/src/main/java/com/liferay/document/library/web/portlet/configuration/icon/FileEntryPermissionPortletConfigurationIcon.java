@@ -15,8 +15,11 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -27,19 +30,22 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/edit_file_entry",
+		"path=/document_library/view_file_entry"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class FileEntryPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public FileEntryPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
-
-		super(portletRequest);
-
-		_fileEntry = fileEntry;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -56,10 +62,12 @@ public class FileEntryPermissionPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			url = PermissionsURLTag.doTag(
 				null, DLFileEntryConstants.getClassName(),
-				HtmlUtil.unescape(_fileEntry.getTitle()), null,
-				String.valueOf(_fileEntry.getFileEntryId()),
+				HtmlUtil.unescape(fileEntry.getTitle()), null,
+				String.valueOf(fileEntry.getFileEntryId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -70,9 +78,22 @@ public class FileEntryPermissionPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (_fileEntry != null) {
-			return true;
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = ActionUtil.getFileEntry(portletRequest);
+
+			if (fileEntry != null) {
+				return true;
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return false;
@@ -87,7 +108,5 @@ public class FileEntryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final FileEntry _fileEntry;
 
 }

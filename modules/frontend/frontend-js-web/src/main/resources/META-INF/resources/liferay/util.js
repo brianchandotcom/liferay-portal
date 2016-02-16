@@ -933,6 +933,10 @@
 			return 0;
 		},
 
+		submitForm: function(form) {
+			form.submit();
+		},
+
 		toCharCode: _.memoize(
 			function(name) {
 				return _.invoke(name, 'charCodeAt').join('');
@@ -1117,7 +1121,7 @@
 
 				form.attr('action', action);
 
-				form.submit();
+				Util.submitForm(form);
 
 				form.attr('target', '');
 			}

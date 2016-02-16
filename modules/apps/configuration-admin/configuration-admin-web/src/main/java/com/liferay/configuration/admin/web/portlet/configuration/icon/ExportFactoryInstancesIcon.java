@@ -25,14 +25,21 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" +
+			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+		"path=/view_factory_instances"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
-
-	public ExportFactoryInstancesIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -63,6 +70,11 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 		liferayPortletURL.setResourceID("export");
 
 		return liferayPortletURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 1;
 	}
 
 	@Override

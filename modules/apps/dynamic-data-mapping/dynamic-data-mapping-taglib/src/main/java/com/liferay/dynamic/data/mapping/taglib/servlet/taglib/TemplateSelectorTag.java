@@ -19,9 +19,13 @@ import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateSelectorTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -80,6 +84,17 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			displayStyle, true);
 	}
 
+	protected ResourceBundle getResourceBundle() {
+		Locale locale = PortalUtil.getLocale(request);
+
+		Class<?> clazz = getClass();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		return resourceBundle;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
@@ -90,6 +105,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		setNamespacedAttribute(
 			request, "portletDisplayDDMTemplate",
 			getPortletDisplayDDMTemplate());
+		setNamespacedAttribute(request, "resourceBundle", getResourceBundle());
 	}
 
 }

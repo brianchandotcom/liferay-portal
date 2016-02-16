@@ -14,6 +14,7 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -42,7 +43,8 @@ public class PublishTemplatesConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "publish-templates";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "publish-templates");
 	}
 
 	@Override

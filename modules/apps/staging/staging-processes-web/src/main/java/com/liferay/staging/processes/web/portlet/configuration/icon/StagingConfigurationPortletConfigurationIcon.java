@@ -14,6 +14,7 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -42,7 +43,9 @@ public class StagingConfigurationPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "staging-configuration";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"staging-configuration");
 	}
 
 	@Override

@@ -42,7 +42,8 @@ public class StagingPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "staging";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "staging");
 	}
 
 	@Override

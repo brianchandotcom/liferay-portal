@@ -42,7 +42,8 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "export-import";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "export-import");
 	}
 
 	@Override

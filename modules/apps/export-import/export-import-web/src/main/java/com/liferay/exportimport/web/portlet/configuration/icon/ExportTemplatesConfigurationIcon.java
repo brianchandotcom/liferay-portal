@@ -15,6 +15,7 @@
 package com.liferay.exportimport.web.portlet.configuration.icon;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -41,7 +42,8 @@ public class ExportTemplatesConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "export-templates";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "export-templates");
 	}
 
 	@Override

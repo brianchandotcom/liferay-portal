@@ -22,12 +22,16 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -45,12 +49,19 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "embedded-portlets";
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
@@ -58,7 +69,8 @@ public class EmbeddedPortletsPortletConfigurationIcon
 
 			portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			portletURL.setParameter("selPlid", String.valueOf(getSelPlid()));
+			portletURL.setParameter(
+				"selPlid", String.valueOf(getSelPlid(portletRequest)));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();
@@ -70,9 +82,9 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -103,13 +115,13 @@ public class EmbeddedPortletsPortletConfigurationIcon
 		return true;
 	}
 
-	protected Layout getLayout() throws Exception {
-		long selPlid = getSelPlid();
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
+		long selPlid = getSelPlid(portletRequest);
 
 		return _layoutLocalService.fetchLayout(selPlid);
 	}
 
-	protected long getSelPlid() {
+	protected long getSelPlid(PortletRequest portletRequest) {
 		return ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}

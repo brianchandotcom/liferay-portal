@@ -20,9 +20,12 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -38,18 +41,18 @@ public class EditJournalArticlePortletConfigurationIcon
 
 		super(portletRequest);
 
-		this._portletResponse = portletResponse;
-
-		createJournalContentDisplayContext(portletRequest);
+		createJournalContentDisplayContext(portletRequest, portletResponse);
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "edit-web-content";
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(14);
 
 		JournalArticle article = _journalContentDisplayContext.getArticle();
@@ -60,6 +63,12 @@ public class EditJournalArticlePortletConfigurationIcon
 
 		sb.append("Liferay.Util.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', destroyOnHide: true, id: '");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
 		sb.append("editAsset', namespace: '");
 		sb.append(portletDisplay.getNamespace());
@@ -70,19 +79,22 @@ public class EditJournalArticlePortletConfigurationIcon
 		sb.append("', title: '");
 		sb.append(article.getTitle(themeDisplay.getLocale()));
 		sb.append("', uri: '");
-		sb.append(HtmlUtil.escapeJS(getURL()));
+		sb.append(
+			HtmlUtil.escapeJS(_journalContentDisplayContext.getURLEdit()));
 		sb.append("'}); return false;");
 
 		return sb.toString();
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return _journalContentDisplayContext.getURLEdit();
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		if (_journalContentDisplayContext.isShowEditArticleIcon()) {
 			return true;
 		}
@@ -96,7 +108,12 @@ public class EditJournalArticlePortletConfigurationIcon
 	}
 
 	protected void createJournalContentDisplayContext(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
 			JournalContentPortletInstanceConfiguration
@@ -105,7 +122,7 @@ public class EditJournalArticlePortletConfigurationIcon
 						JournalContentPortletInstanceConfiguration.class);
 
 			_journalContentDisplayContext = new JournalContentDisplayContext(
-				portletRequest, _portletResponse,
+				portletRequest, portletResponse,
 				journalContentPortletInstanceConfiguration);
 		}
 		catch (Exception e) {
@@ -117,6 +134,5 @@ public class EditJournalArticlePortletConfigurationIcon
 		EditJournalArticlePortletConfigurationIcon.class);
 
 	private JournalContentDisplayContext _journalContentDisplayContext;
-	private final PortletResponse _portletResponse;
 
 }

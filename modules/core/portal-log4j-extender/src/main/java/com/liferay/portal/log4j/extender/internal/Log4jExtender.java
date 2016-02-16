@@ -14,8 +14,13 @@
 
 package com.liferay.portal.log4j.extender.internal;
 
+import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -45,6 +50,7 @@ public class Log4jExtender implements BundleActivator {
 				try {
 					_configureLog4j(bundle, "META-INF/module-log4j.xml");
 					_configureLog4j(bundle, "META-INF/module-log4j-ext.xml");
+					_configureLog4j(bundle.getSymbolicName());
 				}
 				catch (IOException ioe) {
 					_logger.error(
@@ -80,6 +86,25 @@ public class Log4jExtender implements BundleActivator {
 					LogManager.getLoggerRepository());
 			}
 		}
+	}
+
+	private void _configureLog4j(String symbolicName)
+		throws MalformedURLException {
+
+		File configFile = new File(
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/log4j/" + symbolicName +
+				"-log4j-ext.xml");
+
+		if (!configFile.exists()) {
+			return;
+		}
+
+		DOMConfigurator domConfigurator = new DOMConfigurator();
+
+		URI uri = configFile.toURI();
+
+		domConfigurator.doConfigure(
+			uri.toURL(), LogManager.getLoggerRepository());
 	}
 
 	private static final Logger _logger = Logger.getLogger(Log4jExtender.class);

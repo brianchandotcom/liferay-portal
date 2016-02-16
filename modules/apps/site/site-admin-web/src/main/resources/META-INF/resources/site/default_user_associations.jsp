@@ -61,9 +61,6 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-util:buffer>
 
-<aui:input name="siteRolesRoleIds" type="hidden" value="<%= ListUtil.toString(defaultSiteRoles, Role.ROLE_ID_ACCESSOR) %>" />
-<aui:input name="teamsTeamIds" type="hidden" value="<%= ListUtil.toString(defaultTeams, TeamImpl.TEAM_ID_ACCESSOR) %>" />
-
 <p class="text-muted">
 	<liferay-ui:message key="select-the-default-roles-and-teams-for-new-members" />
 </p>
@@ -171,8 +168,6 @@ for (long defaultTeamId : defaultTeamIds) {
 
 			searchContainer.deleteRow(tr, rowId);
 
-			<portlet:namespace />deleteRole(rowId);
-
 			if (searchContainer.getSize() <= 0) {
 				A.one('#<portlet:namespace />siteRolesEmptyResultMessage').show();
 			}
@@ -220,8 +215,6 @@ for (long defaultTeamId : defaultTeamIds) {
 			}
 
 			searchContainer.deleteRow(tr, rowId);
-
-			<portlet:namespace />deleteTeam(rowId);
 
 			if (searchContainer.getSize() <= 0) {
 				A.one('#<portlet:namespace />teamsEmptyResultMessage').show();
@@ -272,28 +265,12 @@ for (long defaultTeamId : defaultTeamIds) {
 					uri: '<%= selectSiteRoleURL.toString() %>'
 				},
 				function(event) {
-					for (var i = 0; i < <portlet:namespace />siteRolesRoleIds.length; i++) {
-						if (<portlet:namespace />siteRolesRoleIds[i] == event.roleid) {
-							return;
-						}
-					}
-
 					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.searchcontainername + 'SearchContainer');
 
 					var rowColumns = [];
 
 					rowColumns.push(A.Escape.html(event.roletitle));
-
-					if (event.groupid) {
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-
-						<portlet:namespace />siteRolesRoleIds.push(event.roleid);
-
-						document.<portlet:namespace />fm.<portlet:namespace />siteRolesRoleIds.value = <portlet:namespace />siteRolesRoleIds.join(',');
-					}
-					else {
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-					}
+					rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
 					searchContainer.addRow(rowColumns, event.roleid);
 
@@ -333,19 +310,10 @@ for (long defaultTeamId : defaultTeamIds) {
 					var rowColumns = [];
 
 					rowColumns.push(event.teamname);
-
-					if (event.teamid) {
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.teamid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-
-						<portlet:namespace />teamsTeamIds.push(event.teamid);
-
-						document.<portlet:namespace />fm.<portlet:namespace />teamsTeamIds.value = <portlet:namespace />teamsTeamIds.join(',');
-					}
-					else {
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.teamid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-					}
+					rowColumns.push('<a class="modify-link" data-rowId="' + event.teamid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
 					searchContainer.addRow(rowColumns, event.teamid);
+
 					searchContainer.updateDataStore();
 
 					A.one('#<portlet:namespace />teamsEmptyResultMessage').hide();
@@ -353,33 +321,4 @@ for (long defaultTeamId : defaultTeamIds) {
 			);
 		}
 	);
-</aui:script>
-
-<aui:script>
-	var <portlet:namespace />siteRolesRoleIds = ['<%= ListUtil.toString(defaultSiteRoles, Role.ROLE_ID_ACCESSOR, "', '") %>'];
-	var <portlet:namespace />teamsTeamIds = ['<%= ListUtil.toString(defaultTeams, Team.TEAM_ID_ACCESSOR, "', '") %>'];
-
-	function <portlet:namespace />deleteRole(roleId) {
-		for (var i = 0; i < <portlet:namespace />siteRolesRoleIds.length; i++) {
-			if (<portlet:namespace />siteRolesRoleIds[i] == roleId) {
-				<portlet:namespace />siteRolesRoleIds.splice(i, 1);
-
-				break;
-			}
-		}
-
-		document.<portlet:namespace />fm.<portlet:namespace />siteRolesRoleIds.value = <portlet:namespace />siteRolesRoleIds.join(',');
-	}
-
-	function <portlet:namespace />deleteTeam(teamId) {
-		for (var i = 0; i < <portlet:namespace />teamsTeamIds.length; i++) {
-			if (<portlet:namespace />teamsTeamIds[i] == teamId) {
-				<portlet:namespace />teamsTeamIds.splice(i, 1);
-
-				break;
-			}
-		}
-
-		document.<portlet:namespace />fm.<portlet:namespace />teamsTeamIds.value = <portlet:namespace />teamsTeamIds.join(',');
-	}
 </aui:script>

@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -65,13 +66,16 @@ public class DeleteFolderPortletConfigurationIcon
 			return null;
 		}
 
+		String key = "delete";
+
 		if ((folder.getModel() instanceof DLFolder) &&
 			isTrashEnabled(themeDisplay.getScopeGroupId())) {
 
-			return "move-to-the-recycle-bin";
+			key = "move-to-the-recycle-bin";
 		}
 
-		return "delete";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	public String getURL(

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -40,7 +41,8 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "open-in-ms-office";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "open-in-ms-office");
 	}
 
 	@Override

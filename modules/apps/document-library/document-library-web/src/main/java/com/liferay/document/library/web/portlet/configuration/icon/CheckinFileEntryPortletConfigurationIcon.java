@@ -17,6 +17,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,7 +53,8 @@ public class CheckinFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "checkin";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "checkin");
 	}
 
 	@Override

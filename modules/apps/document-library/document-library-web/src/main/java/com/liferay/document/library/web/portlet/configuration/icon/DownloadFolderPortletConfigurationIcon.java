@@ -16,6 +16,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -47,7 +48,8 @@ public class DownloadFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "download";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "download");
 	}
 
 	@Override

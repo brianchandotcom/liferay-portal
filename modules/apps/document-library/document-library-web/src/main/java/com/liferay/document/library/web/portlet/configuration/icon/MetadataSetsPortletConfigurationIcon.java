@@ -16,6 +16,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -49,7 +50,8 @@ public class MetadataSetsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "metadata-sets";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "metadata-sets");
 	}
 
 	@Override

@@ -161,11 +161,9 @@ else if (group != null) {
 
 	<h4 class="text-default"><liferay-ui:message key="parent-site" /></h4>
 
-	<c:if test="<%= parentGroups.size() <= 0 %>">
-		<p class="text-muted">
-			<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
-		</p>
-	</c:if>
+	<p class="text-muted <%= parentGroups.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />parentSiteEmptyResultMessage">
+		<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+	</p>
 
 	<liferay-ui:search-container
 		headerNames="name,type,null"
@@ -278,9 +276,9 @@ else if (group != null) {
 						searchContainer.addRow(rowColumns, event.groupid);
 						searchContainer.updateDataStore(event.groupid);
 
-						var membershipRestrictionContainer = A.one('#<portlet:namespace />membershipRestrictionContainer');
+						A.one('#<portlet:namespace />membershipRestrictionContainer').show();
 
-						membershipRestrictionContainer.show();
+						A.one('#<portlet:namespace />parentSiteEmptyResultMessage').hide();
 					}
 				);
 			}
@@ -297,9 +295,9 @@ else if (group != null) {
 
 				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
-				var membershipRestrictionContainer = A.one('#<portlet:namespace />membershipRestrictionContainer');
+				A.one('#<portlet:namespace />membershipRestrictionContainer').hide();
 
-				membershipRestrictionContainer.hide();
+				A.one('#<portlet:namespace />parentSiteEmptyResultMessage').show();
 			},
 			'.modify-link'
 		);

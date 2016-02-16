@@ -633,8 +633,6 @@ public class JournalConverterImpl implements JournalConverter {
 					dynamicElementElement.addElement("dynamic-element");
 
 				childDynamicElementElement.addAttribute("name", childFieldName);
-				childDynamicElementElement.addAttribute(
-					"index", String.valueOf(i));
 
 				String instanceId = getFieldInstanceId(
 					ddmFields, fieldName, (count + i));
@@ -676,8 +674,6 @@ public class JournalConverterImpl implements JournalConverter {
 		dynamicElementElement.addAttribute("index-type", indexType);
 
 		int count = ddmFieldsCounter.get(fieldName);
-
-		dynamicElementElement.addAttribute("index", String.valueOf(count));
 
 		String instanceId = getFieldInstanceId(ddmFields, fieldName, count);
 

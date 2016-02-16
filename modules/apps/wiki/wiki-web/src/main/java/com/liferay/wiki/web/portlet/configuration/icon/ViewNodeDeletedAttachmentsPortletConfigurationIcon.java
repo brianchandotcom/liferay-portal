@@ -14,57 +14,95 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"path=/wiki/view_pages"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public ViewNodeDeletedAttachmentsPortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node) {
-
-		super(portletRequest);
-
-		_node = node;
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"view-removed-attachments");
 	}
 
 	@Override
-	public String getMessage() {
-		return "view-removed-attachments";
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+			portletURL.setParameter(
+				"viewTrashAttachments", Boolean.TRUE.toString());
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
-	public String getURL() {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
-		portletURL.setParameter(
-			"viewTrashAttachments", Boolean.TRUE.toString());
-
-		return portletURL.toString();
+	public double getWeight() {
+		return 101;
 	}
 
 	@Override
-	public boolean isShow() {
-		return WikiNodePermissionChecker.contains(
-			themeDisplay.getPermissionChecker(), _node, ActionKeys.UPDATE);
-	}
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-	private final WikiNode _node;
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
+			return WikiNodePermissionChecker.contains(
+				themeDisplay.getPermissionChecker(), node, ActionKeys.UPDATE);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
 
 }

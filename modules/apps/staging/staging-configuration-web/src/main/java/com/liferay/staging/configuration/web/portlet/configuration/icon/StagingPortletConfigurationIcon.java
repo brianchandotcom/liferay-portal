@@ -16,20 +16,24 @@ package com.liferay.staging.configuration.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class StagingPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public StagingPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getCssClass() {
@@ -37,8 +41,9 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
-		return "staging";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "staging");
 	}
 
 	@Override
@@ -47,10 +52,18 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(11);
 
 		sb.append("Liferay.Portlet.openWindow({namespace: '");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', portlet: '#p_p_id_");
 		sb.append(portletDisplay.getId());
@@ -66,12 +79,29 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.getURLStaging();
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 10.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.isShowStagingIcon();
 	}
 

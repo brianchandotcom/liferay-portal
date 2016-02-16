@@ -14,43 +14,78 @@
 
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
+import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Douglas Wong
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER,
+		"path=/view.jsp"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class InstallFromURLPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public InstallFromURLPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/install_from_url.jsp";
 	}
 
 	@Override
-	public String getMessage() {
-		return "install-from-url";
+	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "install-from-url");
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 102;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.marketplace.app.manager.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

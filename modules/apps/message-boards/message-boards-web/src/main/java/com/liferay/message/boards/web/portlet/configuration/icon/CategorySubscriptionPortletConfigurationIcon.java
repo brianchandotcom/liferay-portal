@@ -16,16 +16,25 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -33,27 +42,24 @@ import javax.portlet.PortletURL;
 public class CategorySubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public CategorySubscriptionPortletConfigurationIcon(
-		PortletRequest portletRequest, MBCategory category,
-		boolean subscribed) {
-
-		super(portletRequest);
-
-		_category = category;
-		_subscribed = subscribed;
-	}
-
 	@Override
-	public String getMessage() {
-		if (_subscribed) {
-			return "unsubscribe";
+	public String getMessage(PortletRequest portletRequest) {
+		MBCategory category = getCategory(portletRequest);
+
+		String key = "subscribe";
+
+		if (isSubscribed(portletRequest, category)) {
+			key = "unsubscribe";
 		}
 
-		return "subscribe";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 			PortletRequest.ACTION_PHASE);
@@ -61,7 +67,9 @@ public class CategorySubscriptionPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/edit_category");
 
-		if (_subscribed) {
+		MBCategory category = getCategory(portletRequest);
+
+		if (isSubscribed(portletRequest, category)) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
 		else {
@@ -71,17 +79,25 @@ public class CategorySubscriptionPortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(_category.getCategoryId()));
+			"mbCategoryId", String.valueOf(category.getCategoryId()));
 
 		return portletURL.toString();
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			return MBCategoryPermission.contains(
-				themeDisplay.getPermissionChecker(), _category,
-				ActionKeys.SUBSCRIBE);
+				themeDisplay.getPermissionChecker(),
+				getCategory(portletRequest), ActionKeys.SUBSCRIBE);
 		}
 		catch (PortalException pe) {
 		}
@@ -89,7 +105,47 @@ public class CategorySubscriptionPortletConfigurationIcon
 		return false;
 	}
 
-	private final MBCategory _category;
-	private final boolean _subscribed;
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	private MBCategory getCategory(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(
+					themeDisplay.getScopeGroupId());
+
+			if (!mbGroupServiceSettings.isEmailMessageAddedEnabled() &&
+				!mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
+
+				return null;
+			}
+
+			return ActionUtil.getCategory(portletRequest);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	private boolean isSubscribed(
+		PortletRequest portletRequest, MBCategory category) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _subscriptionLocalService.isSubscribed(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			MBCategory.class.getName(), category.getCategoryId());
+	}
+
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

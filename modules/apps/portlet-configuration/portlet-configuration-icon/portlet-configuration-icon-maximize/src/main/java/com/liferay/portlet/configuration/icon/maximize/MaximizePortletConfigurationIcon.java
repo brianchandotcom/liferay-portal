@@ -14,20 +14,25 @@
 
 package com.liferay.portlet.configuration.icon.maximize;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class MaximizePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public MaximizePortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getCssClass() {
@@ -35,8 +40,9 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
-		return "maximize";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "maximize");
 	}
 
 	@Override
@@ -45,19 +51,43 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return "submitForm(document.hrefFm, '".concat(
 			HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
 				"'); return false;");
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.getURLMax();
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 7.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.isShowMaxIcon();
 	}
 

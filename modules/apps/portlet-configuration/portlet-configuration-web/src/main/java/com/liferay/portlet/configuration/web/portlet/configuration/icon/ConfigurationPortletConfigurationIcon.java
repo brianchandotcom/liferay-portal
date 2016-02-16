@@ -14,21 +14,24 @@
 
 package com.liferay.portlet.configuration.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ConfigurationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public ConfigurationPortletConfigurationIcon(
-		PortletRequest portletRequest) {
-
-		super(portletRequest);
-	}
 
 	@Override
 	public String getCssClass() {
@@ -36,8 +39,9 @@ public class ConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
-		return "configuration";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "configuration");
 	}
 
 	@Override
@@ -46,17 +50,41 @@ public class ConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.getURLConfigurationJS();
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.getURLConfiguration();
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 14.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.isShowConfigurationIcon();
 	}
 

@@ -15,34 +15,41 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_file_entry"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DownloadFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DownloadFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry,
-		FileVersion fileVersion) {
-
-		super(portletRequest);
-
-		_fileEntry = fileEntry;
-		_fileVersion = fileVersion;
-	}
-
 	@Override
-	public String getMessage() {
-		return "download";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "download");
 	}
 
 	@Override
@@ -51,32 +58,54 @@ public class DownloadFileEntryPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		FileEntry fileEntry = null;
+		FileVersion fileVersion = null;
+
+		try {
+			fileEntry = ActionUtil.getFileEntry(portletRequest);
+			fileVersion = ActionUtil.getFileVersion(portletRequest, fileEntry);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		return DLUtil.getDownloadURL(
-			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
+			fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 108;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), _fileEntry);
+					themeDisplay.getPermissionChecker(), fileEntry);
 
 			return fileEntryDisplayContextHelper.isDownloadActionAvailable();
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
 	}
 
-	@Override
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private final FileEntry _fileEntry;
-	private final FileVersion _fileVersion;
 
 }

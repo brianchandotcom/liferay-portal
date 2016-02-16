@@ -20,44 +20,60 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_message"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteThreadPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DeleteThreadPortletConfigurationIcon(
-		PortletRequest portletRequest, MBMessageDisplay messageDisplay) {
-
-		super(portletRequest);
-
-		_messageDisplay = messageDisplay;
-	}
-
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String key = "delete";
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			return "move-to-the-recycle-bin";
+			key = "move-to-the-recycle-bin";
 		}
 
-		return "delete";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL deleteURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 			PortletRequest.ACTION_PHASE);
@@ -67,13 +83,25 @@ public class DeleteThreadPortletConfigurationIcon
 
 		String cmd = Constants.DELETE;
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			cmd = Constants.MOVE_TO_TRASH;
 		}
 
 		deleteURL.setParameter(Constants.CMD, cmd);
 
-		MBCategory category = _messageDisplay.getCategory();
+		MBMessageDisplay messageDisplay = null;
+
+		try {
+			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+
+		MBCategory category = messageDisplay.getCategory();
 
 		PortletURL parentCategoryURL = PortletURLFactoryUtil.create(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -94,7 +122,7 @@ public class DeleteThreadPortletConfigurationIcon
 
 		deleteURL.setParameter("redirect", parentCategoryURL.toString());
 
-		MBThread thread = _messageDisplay.getThread();
+		MBThread thread = messageDisplay.getThread();
 
 		deleteURL.setParameter(
 			"threadId", String.valueOf(thread.getThreadId()));
@@ -103,10 +131,22 @@ public class DeleteThreadPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 100;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			MBMessage message = _messageDisplay.getMessage();
-			MBThread thread = _messageDisplay.getThread();
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBMessage message = messageDisplay.getMessage();
+			MBThread thread = messageDisplay.getThread();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (MBMessagePermission.contains(
 					themeDisplay.getPermissionChecker(), message,
@@ -143,7 +183,5 @@ public class DeleteThreadPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final MBMessageDisplay _messageDisplay;
 
 }

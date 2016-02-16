@@ -14,45 +14,73 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_file_entry"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class CheckinFileEntryPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public CheckinFileEntryPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest, FileEntry fileEntry) {
-
-		super(servletContext, jspPath, portletRequest);
-
-		_fileEntry = fileEntry;
+	@Override
+	public String getJspPath() {
+		return "/document_library/configuration/icon/checkin.jsp";
 	}
 
 	@Override
-	public String getMessage() {
-		return "checkin";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "checkin");
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 102;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), _fileEntry);
+					themeDisplay.getPermissionChecker(), fileEntry);
 
 			return fileEntryDisplayContextHelper.isCheckinActionAvailable();
 		}
@@ -67,6 +95,13 @@ public class CheckinFileEntryPortletConfigurationIcon
 		return false;
 	}
 
-	private final FileEntry _fileEntry;
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 }

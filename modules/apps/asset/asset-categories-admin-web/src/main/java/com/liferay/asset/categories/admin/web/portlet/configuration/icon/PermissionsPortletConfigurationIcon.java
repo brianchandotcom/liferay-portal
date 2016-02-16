@@ -14,36 +14,52 @@
 
 package com.liferay.asset.categories.admin.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
+	},
+	service = PortletConfigurationIcon.class
+)
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override
-	public String getMessage() {
-		return "permissions";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		String url = StringPool.BLANK;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		try {
 			url = PermissionsURLTag.doTag(
@@ -60,7 +76,15 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		User user = themeDisplay.getUser();
 
 		if (user.isDefaultUser()) {

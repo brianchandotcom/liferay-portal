@@ -19,36 +19,47 @@ import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_message"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class MoveThreadPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public MoveThreadPortletConfigurationIcon(
-		PortletRequest portletRequest, MBMessageDisplay messageDisplay) {
-
-		super(portletRequest);
-
-		_messageDisplay = messageDisplay;
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "move");
 	}
 
 	@Override
-	public String getMessage() {
-		return "move";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 			PortletRequest.RENDER_PHASE);
@@ -58,12 +69,21 @@ public class MoveThreadPortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		MBCategory category = _messageDisplay.getCategory();
+		MBMessageDisplay messageDisplay = null;
+
+		try {
+			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+
+		MBCategory category = messageDisplay.getCategory();
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(getCategoryId(category)));
 
-		MBThread thread = _messageDisplay.getThread();
+		MBThread thread = messageDisplay.getThread();
 
 		portletURL.setParameter(
 			"threadId", String.valueOf(thread.getThreadId()));
@@ -72,9 +92,21 @@ public class MoveThreadPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 104;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			MBCategory category = _messageDisplay.getCategory();
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBCategory category = messageDisplay.getCategory();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (MBCategoryPermission.contains(
 					themeDisplay.getPermissionChecker(),
@@ -99,7 +131,5 @@ public class MoveThreadPortletConfigurationIcon
 
 		return categoryId;
 	}
-
-	private final MBMessageDisplay _messageDisplay;
 
 }

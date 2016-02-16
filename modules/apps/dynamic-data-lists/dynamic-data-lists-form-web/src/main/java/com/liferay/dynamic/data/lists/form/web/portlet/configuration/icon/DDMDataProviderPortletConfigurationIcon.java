@@ -15,38 +15,56 @@
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Rafael Praxedes
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN},
+	service = PortletConfigurationIcon.class
+)
 public class DDMDataProviderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DDMDataProviderPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
 
-		super(portletRequest);
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "data-providers");
 	}
 
 	@Override
-	public String getMessage() {
-		return "data-providers";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMDataProviderInstance.class.getName(),
 			PortletProvider.Action.EDIT);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, portletId, themeDisplay.getPlid(),
@@ -63,7 +81,12 @@ public class DDMDataProviderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 103;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
 

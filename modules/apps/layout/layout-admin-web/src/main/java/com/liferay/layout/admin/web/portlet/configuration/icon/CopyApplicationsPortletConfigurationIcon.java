@@ -16,34 +16,42 @@ package com.liferay.layout.admin.web.portlet.configuration.icon;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
+	service = PortletConfigurationIcon.class
+)
 public class CopyApplicationsPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
-
-	public CopyApplicationsPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest, LayoutLocalService layoutLocalService) {
-
-		super(servletContext, jspPath, portletRequest);
-
-		_layoutLocalService = layoutLocalService;
-	}
 
 	@Override
 	public String getId() {
@@ -51,19 +59,34 @@ public class CopyApplicationsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
-		return "copy-applications";
+	public String getJspPath() {
+		return "/configuration/icon/copy_applications.jsp";
 	}
 
 	@Override
-	public String getURL() {
+	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "copy-applications");
+	}
+
+	@Override
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 101.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -95,6 +118,10 @@ public class CopyApplicationsPortletConfigurationIcon
 				return false;
 			}
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)) {
@@ -113,13 +140,28 @@ public class CopyApplicationsPortletConfigurationIcon
 		return false;
 	}
 
-	protected Layout getLayout() throws Exception {
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
 		long selPlid = ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		return _layoutLocalService.fetchLayout(selPlid);
 	}
 
-	private final LayoutLocalService _layoutLocalService;
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private LayoutLocalService _layoutLocalService;
 
 }

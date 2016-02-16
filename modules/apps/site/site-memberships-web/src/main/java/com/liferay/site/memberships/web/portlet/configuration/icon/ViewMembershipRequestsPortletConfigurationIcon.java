@@ -14,36 +14,50 @@
 
 package com.liferay.site.memberships.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
+import java.util.ResourceBundle;
+
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN},
+	service = PortletConfigurationIcon.class
+)
 public class ViewMembershipRequestsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public ViewMembershipRequestsPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
 
-		super(portletRequest);
+		return LanguageUtil.get(resourceBundle, "view-membership-requests");
 	}
 
 	@Override
-	public String getMessage() {
-		return "view-membership-requests";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
 			PortletRequest.RENDER_PHASE);
@@ -60,7 +74,15 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 100;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Group group = themeDisplay.getScopeGroup();
 
 		if (group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) {

@@ -18,34 +18,45 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
+import com.liferay.bookmarks.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
+		"path=/bookmarks/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class EditFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public EditFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, BookmarksFolder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
-	public String getMessage() {
-		return "edit";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
@@ -54,8 +65,18 @@ public class EditFolderPortletConfigurationIcon
 			"mvcRenderCommandName", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
+
+		BookmarksFolder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		portletURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
+			"folderId", String.valueOf(folder.getFolderId()));
 		portletURL.setParameter(
 			"mergeWithParentFolderDisabled", Boolean.TRUE.toString());
 
@@ -63,16 +84,27 @@ public class EditFolderPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 103;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (_folder.getFolderId() ==
+			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder.getFolderId() ==
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				return false;
 			}
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (BookmarksFolderPermissionChecker.contains(
-					themeDisplay.getPermissionChecker(), _folder,
+					themeDisplay.getPermissionChecker(), folder,
 					ActionKeys.UPDATE)) {
 
 				return true;
@@ -83,7 +115,5 @@ public class EditFolderPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final BookmarksFolder _folder;
 
 }

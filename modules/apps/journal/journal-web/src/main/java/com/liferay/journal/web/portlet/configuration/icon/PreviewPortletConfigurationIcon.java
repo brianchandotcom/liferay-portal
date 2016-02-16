@@ -14,39 +14,60 @@
 
 package com.liferay.journal.web.portlet.configuration.icon;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"path=/edit_article.jsp"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class PreviewPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public PreviewPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/preview.jsp";
 	}
 
 	@Override
-	public String getMessage() {
-		return "preview";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "preview");
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 100.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			JournalArticle article = ActionUtil.getArticle(portletRequest);
 
@@ -63,6 +84,14 @@ public class PreviewPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

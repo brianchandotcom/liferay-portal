@@ -16,20 +16,24 @@ package com.liferay.exportimport.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ExportImportPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public ExportImportPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getCssClass() {
@@ -37,8 +41,9 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
-		return "export-import";
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "export-import");
 	}
 
 	@Override
@@ -47,11 +52,19 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(12);
 
 		sb.append("Liferay.Portlet.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', namespace: '");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', portlet: '#p_p_id_");
 		sb.append(portletDisplay.getId());
@@ -67,12 +80,29 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.getURLExportImport();
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 15.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		return portletDisplay.isShowExportImportIcon();
 	}
 

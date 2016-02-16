@@ -15,45 +15,62 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/viewcategory"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class CategoryPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public CategoryPermissionsPortletConfigurationIcon(
-		PortletRequest portletRequest, MBCategory category) {
-
-		super(portletRequest);
-
-		_category = category;
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override
-	public String getMessage() {
-		return "permissions";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
 		String url = StringPool.BLANK;
 
 		try {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
 			String modelResource = MBCategory.class.getName();
-			String modelResourceDescription = _category.getName();
-			String resourcePrimKey = String.valueOf(_category.getCategoryId());
+			String modelResourceDescription = category.getName();
+			String resourcePrimKey = String.valueOf(category.getCategoryId());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
@@ -67,7 +84,15 @@ public class CategoryPermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 102;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		User user = themeDisplay.getUser();
 
 		if (user.isDefaultUser()) {
@@ -78,13 +103,15 @@ public class CategoryPermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
 			if (!MBCategoryPermission.contains(
-					permissionChecker, _category, ActionKeys.PERMISSIONS)) {
+					permissionChecker, category, ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return false;
 		}
 
@@ -100,7 +127,5 @@ public class CategoryPermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final MBCategory _category;
 
 }

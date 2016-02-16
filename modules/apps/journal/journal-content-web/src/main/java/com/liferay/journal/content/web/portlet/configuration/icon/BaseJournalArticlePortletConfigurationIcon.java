@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.edit.guest;
+package com.liferay.journal.content.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,23 +27,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
-public class EditGuestPortletConfigurationIcon
+public abstract class BaseJournalArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	@Override
-	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "guest-preferences");
-	}
-
-	@Override
-	public String getURL(
+	protected JournalContentDisplayContext getJournalContentDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -48,27 +41,24 @@ public class EditGuestPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return portletDisplay.getURLEditGuest();
+		try {
+			JournalContentPortletInstanceConfiguration
+				journalContentPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						JournalContentPortletInstanceConfiguration.class);
+
+			return new JournalContentDisplayContext(
+				portletRequest, portletResponse,
+				journalContentPortletInstanceConfiguration);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to create display context", pe);
+		}
+
+		return null;
 	}
 
-	@Override
-	public double getWeight() {
-		return 11.0;
-	}
-
-	@Override
-	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.isShowEditGuestIcon();
-	}
-
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseJournalArticlePortletConfigurationIcon.class);
 
 }

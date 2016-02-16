@@ -18,6 +18,9 @@ import java.io.IOException;
 
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,11 +49,12 @@ public interface PortletConfigurationIcon {
 
 	public String getLinkCssClass();
 
-	public String getMessage();
+	public String getMessage(PortletRequest portletRequest);
 
 	public String getMethod();
 
-	public String getOnClick();
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public String getSrc();
 
@@ -58,7 +62,10 @@ public interface PortletConfigurationIcon {
 
 	public String getTarget();
 
-	public String getURL();
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse);
+
+	public double getWeight();
 
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)
@@ -66,9 +73,7 @@ public interface PortletConfigurationIcon {
 
 	public boolean isLabel();
 
-	public boolean isLocalizeMessage();
-
-	public boolean isShow();
+	public boolean isShow(PortletRequest portletRequest);
 
 	public boolean isToolTip();
 

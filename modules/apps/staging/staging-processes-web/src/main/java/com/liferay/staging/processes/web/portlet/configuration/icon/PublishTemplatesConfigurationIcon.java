@@ -14,32 +14,51 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
+import java.util.ResourceBundle;
+
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES},
+	service = PortletConfigurationIcon.class
+)
 public class PublishTemplatesConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PublishTemplatesConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "publish-templates");
 	}
 
 	@Override
-	public String getMessage() {
-		return "publish-templates";
-	}
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-	@Override
-	public String getURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
 			PortletRequest.RENDER_PHASE);
@@ -51,7 +70,15 @@ public class PublishTemplatesConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public double getWeight() {
+		return 102.0;
+	}
+
+	@Override
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if ((scopeGroup != null) &&

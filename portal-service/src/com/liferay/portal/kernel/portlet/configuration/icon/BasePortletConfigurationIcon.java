@@ -14,15 +14,18 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,15 +35,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BasePortletConfigurationIcon
 	implements PortletConfigurationIcon {
-
-	public BasePortletConfigurationIcon(PortletRequest portletRequest) {
-		this.portletRequest = portletRequest;
-
-		themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletDisplay = themeDisplay.getPortletDisplay();
-	}
 
 	@Override
 	public String getAlt() {
@@ -93,7 +87,7 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return null;
 	}
 
@@ -103,8 +97,14 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick() {
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return null;
+	}
+
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return PortalUtil.getResourceBundle(locale);
 	}
 
 	@Override
@@ -123,8 +123,15 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return null;
+	}
+
+	@Override
+	public double getWeight() {
+		return 0;
 	}
 
 	/**
@@ -144,11 +151,6 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isLocalizeMessage() {
-		return true;
-	}
-
-	@Override
 	public boolean isToolTip() {
 		return false;
 	}
@@ -158,8 +160,11 @@ public abstract class BasePortletConfigurationIcon
 		return false;
 	}
 
-	protected PortletDisplay portletDisplay;
-	protected PortletRequest portletRequest;
-	protected ThemeDisplay themeDisplay;
+	protected Locale getLocale(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getLocale();
+	}
 
 }

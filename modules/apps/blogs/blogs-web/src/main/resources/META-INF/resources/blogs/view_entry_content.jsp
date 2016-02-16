@@ -82,9 +82,8 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<portlet:renderURL var="viewEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
 
@@ -95,31 +94,12 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								<h2>
 									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
 								</h2>
+
 								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 									<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-									<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-										<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="backURL" value="<%= currentURL %>" />
-										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-									</portlet:renderURL>
-
-									<div class="entry-options">
-										<div class="status">
-											<small class="text-capitalize text-muted">
-												<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
-
-												<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-											</small>
-										</div>
-										<aui:button cssClass="icon-monospaced" href="<%= editEntryURL %>" icon="icon-pencil" />
-									</div>
-								</c:if>
-
 								<h1><%= HtmlUtil.escape(entry.getTitle()) %></h1>
 							</c:otherwise>
 						</c:choose>
@@ -242,9 +222,8 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
 						%>
 
-						<portlet:renderURL var="viewEntryCommentsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:renderURL var="viewEntryCommentsURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />
 							<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 						</portlet:renderURL>

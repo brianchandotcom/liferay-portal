@@ -333,12 +333,11 @@
 		position: relative;
 
 		h1 {
-			@include ellipsis;
-
 			font-size: 60px;
 			line-height: 80px;
 			margin-bottom: 25px;
 			text-align: center;
+			word-wrap: break-word;
 		}
 
 		h2 {

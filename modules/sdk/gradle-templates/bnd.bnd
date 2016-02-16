@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Gradle Temaplates
+Bundle-SymbolicName: com.liferay.gradle.templates
+Bundle-Version: 1.0.0

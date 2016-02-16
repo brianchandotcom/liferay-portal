@@ -1,0 +1,20 @@
+Bundle-Version: 1.0.0.${tstamp}
+
+Import-Package: \
+	_package_.*,\
+	com.liferay.portal.service;version="7.0.0",\
+	org.osgi.framework;version="[1.7,2)",\
+	*
+
+Private-Package: \
+	_package_.model.impl,\
+	_package_.service.base,\
+	_package_.service.http,\
+	_package_.service.impl,\
+	_package_.service.persistence.impl,\
+	_package_.service.util
+
+-includeresource: src/main/resources
+Liferay-Service: true
+Require-Capability: liferay.extender;filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring

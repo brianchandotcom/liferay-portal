@@ -180,13 +180,7 @@ else if (group != null) {
 			keyProperty="groupId"
 			modelVar="curGroup"
 		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/edit_site.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
 				name="name"
 				value="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
 			/>
@@ -234,10 +228,6 @@ else if (group != null) {
 	</div>
 
 	<aui:script use="liferay-search-container">
-		var createURL = function(href, value, onclick) {
-			return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
-		};
-
 		A.one('#<portlet:namespace />selectParentSiteLink').on(
 			'click',
 			function(event) {
@@ -268,7 +258,7 @@ else if (group != null) {
 
 						var href = '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_site.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=' + event.groupid;
 
-						rowColumns.push(createURL(href, event.groupdescriptivename));
+						rowColumns.push(event.groupdescriptivename);
 						rowColumns.push(event.grouptype);
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 

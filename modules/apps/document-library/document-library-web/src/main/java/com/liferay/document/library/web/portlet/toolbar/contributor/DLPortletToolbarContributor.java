@@ -112,8 +112,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		List<MenuItem> menuItems = new ArrayList<>();
-
 		long folderId = _getFolderId(folder);
 
 		if (!containsPermission(
@@ -123,6 +121,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 			return Collections.emptyList();
 		}
+
+		List<MenuItem> menuItems = new ArrayList<>();
 
 		long repositoryId = _getRepositoryId(themeDisplay, folder);
 
@@ -333,11 +333,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			getPortletTitleAddFolderMenuItem(
 				themeDisplay, portletRequest, folder);
 
-		if (portletTitleAddFolderMenuItem == null) {
-			return;
+		if (portletTitleAddFolderMenuItem != null) {
+			menuItems.add(portletTitleAddFolderMenuItem);
 		}
-
-		menuItems.add(portletTitleAddFolderMenuItem);
 	}
 
 	protected void addPortletTitleAddMultipleDocumentsMenuItem(
@@ -349,16 +347,14 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 			getPortletTitleAddMultipleDocumentsMenuItem(
 				themeDisplay, portletRequest, folder);
 
-		if (portletTitleAddMultipleDocumentsMenuItem == null) {
-			return;
+		if (portletTitleAddMultipleDocumentsMenuItem != null) {
+			portletTitleAddMultipleDocumentsMenuItem.setLabel(
+				LanguageUtil.get(
+					PortalUtil.getHttpServletRequest(portletRequest),
+					"multiple-documents"));
+
+			menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
 		}
-
-		portletTitleAddMultipleDocumentsMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"multiple-documents"));
-
-		menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
 	}
 
 	protected void addPortletTitleAddRepositoryMenuItem(
@@ -369,11 +365,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = getPortletTitleAddRepositoryMenuItem(
 			folder, themeDisplay, portletRequest);
 
-		if (urlMenuItem == null) {
-			return;
+		if (urlMenuItem != null) {
+			menuItems.add(urlMenuItem);
 		}
-
-		menuItems.add(urlMenuItem);
 	}
 
 	protected void addPortletTitleAddShortcutMenuItem(
@@ -384,11 +378,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = getPortletTitleAddShortcutMenuItem(
 			folder, themeDisplay, portletRequest);
 
-		if (urlMenuItem == null) {
-			return;
+		if (urlMenuItem != null) {
+			menuItems.add(urlMenuItem);
 		}
-
-		menuItems.add(urlMenuItem);
 	}
 
 	protected boolean containsPermission(

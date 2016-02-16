@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.browser.web.configuration.AssetBrowserWebConfigurationValues" %><%@
-page import="com.liferay.asset.browser.web.search.AssetBrowserDisplayTerms" %><%@
 page import="com.liferay.asset.browser.web.search.AssetBrowserSearch" %><%@
 page import="com.liferay.asset.browser.web.search.AssetBrowserSearchTerms" %><%@
 page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@

@@ -5,14 +5,18 @@ Import-Package:\
 	!com.sun.org.apache.xml.internal.utils,\
 	!com.sun.org.apache.xpath.internal,\
 	!com.sun.org.apache.xpath.internal.objects,\
+	\
 	!com.werken.xpath,\
+	\
 	!org.apache.commons.digester,\
 	!org.apache.commons.validator,\
 	!org.apache.log,\
 	!org.apache.log.format,\
 	!org.apache.log.output.io,\
 	!org.apache.oro.text.perl,\
+	\
 	!org.slf4j.spi,\
+	\
 	!org.zeroturnaround.javarebel,\
 	*
 Include-Resource:\

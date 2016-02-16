@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.comment.sanitizer
 Bundle-Version: 1.0.0
 Import-Package:\
 	!javax.annotation,\
+	\
 	!sun.misc,\
 	*
 Include-Resource:\

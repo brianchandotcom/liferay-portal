@@ -64,8 +64,6 @@ AUI.add(
 
 						instance._config = config;
 
-						instance._toggleTrashAction();
-
 						var hasPermission = themeDisplay.isSignedIn() && instance.one('#addButtonContainer');
 
 						if (HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
@@ -201,16 +199,6 @@ AUI.add(
 						form.get(namespace + 'redirect').val(redirectUrl);
 
 						submitForm(form, url);
-					},
-
-					_toggleTrashAction: function() {
-						var instance = this;
-
-						var trashEnabled = instance._config.trashEnabled;
-
-						instance.one('#deleteAction').toggle(!trashEnabled);
-
-						instance.one('#moveToTrashAction').toggle(trashEnabled);
 					}
 				}
 			}

@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//*[@data-qa-id='deleteButton'] | //a[contains(@title,'Delete')]/span[contains(@class,'icon-monospaced')]</td>
+	<td>//*[contains(@data-qa-id,'deleteButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -166,6 +166,11 @@
 <tr>
 	<td>MOVE</td>
 	<td>//*[@data-qa-id='moveButton'] | //a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_RECYCLE_BIN</td>
+	<td>//a[contains(@data-qa-id,'recycle-binButton')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>

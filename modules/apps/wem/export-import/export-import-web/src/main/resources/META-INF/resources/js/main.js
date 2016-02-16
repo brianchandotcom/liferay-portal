@@ -66,7 +66,7 @@ AUI.add(
 
 						instance._processesResourceURL = config.processesResourceURL;
 
-						A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
+						instance._laterTimeout = A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
 					},
 
 					destructor: function() {
@@ -91,6 +91,8 @@ AUI.add(
 						if (instance._scheduledPublishingEventsDialog) {
 							instance._scheduledPublishingEventsDialog.destroy();
 						}
+
+						A.clearTimeout(instance._laterTimeout);
 					},
 
 					_bindUI: function() {
@@ -812,7 +814,7 @@ AUI.add(
 							renderInterval = RENDER_INTERVAL_IN_PROGRESS;
 						}
 
-						A.later(renderInterval, instance, instance._renderProcesses);
+						instance._laterTimeout = A.later(renderInterval, instance, instance._renderProcesses);
 					},
 
 					_setConfigurationLabels: function(portletId) {

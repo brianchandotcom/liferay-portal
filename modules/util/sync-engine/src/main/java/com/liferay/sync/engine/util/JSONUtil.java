@@ -75,7 +75,7 @@ public class JSONUtil {
 		ObjectReader objectReader = _classObjectReaderMap.get(clazz);
 
 		if (objectReader == null) {
-			objectReader = _objectMapper.reader(clazz);
+			objectReader = _objectMapper.readerFor(clazz);
 
 			_classObjectReaderMap.put(clazz, objectReader);
 		}
@@ -90,7 +90,7 @@ public class JSONUtil {
 			typeReference);
 
 		if (objectReader == null) {
-			objectReader = _objectMapper.reader(typeReference);
+			objectReader = _objectMapper.readerFor(typeReference);
 
 			_typeReferenceObjectReaderMap.put(typeReference, objectReader);
 		}

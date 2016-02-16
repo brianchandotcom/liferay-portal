@@ -29,7 +29,7 @@ public class StateAwareModel extends BaseModel {
 		this.state = state;
 	}
 
-	@DatabaseField(useGetSet = true)
+	@DatabaseField(index = true, useGetSet = true)
 	protected int state;
 
 }

@@ -136,10 +136,10 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		throws Exception {
 
 		if (classPK <= 0) {
-			String redirect = ParamUtil.getString(
-				liferayPortletRequest, "redirect");
+			String backURL = ParamUtil.getString(
+				liferayPortletRequest, "backURL");
 
-			return redirect;
+			return backURL;
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(

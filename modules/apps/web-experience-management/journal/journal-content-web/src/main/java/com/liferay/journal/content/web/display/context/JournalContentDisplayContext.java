@@ -601,7 +601,7 @@ public class JournalContentDisplayContext {
 			"referringPortletResource", portletDisplay.getId());
 
 		portletURL.setParameter("mvcPath", "/edit_template.jsp");
-		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter("backURL", redirectURL.toString());
 		portletURL.setParameter("showBackURL", Boolean.FALSE.toString());
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter(

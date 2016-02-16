@@ -55,7 +55,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 				</c:if>
 
 				<liferay-ui:search-container
-					emptyResultsMessage="no-assets-selected"
 					iteratorURL="<%= configurationRenderURL %>"
 					total="<%= assetEntries.size() %>"
 				>

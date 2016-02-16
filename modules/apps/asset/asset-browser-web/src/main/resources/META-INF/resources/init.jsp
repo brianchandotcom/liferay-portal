@@ -25,13 +25,13 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.browser.web.configuration.AssetBrowserWebConfigurationValues" %><%@
-page import="com.liferay.asset.browser.web.search.AssetBrowserDisplayTerms" %><%@
 page import="com.liferay.asset.browser.web.search.AssetBrowserSearch" %><%@
 page import="com.liferay.asset.browser.web.search.AssetBrowserSearchTerms" %><%@
 page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
+page import="com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
@@ -47,7 +47,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 

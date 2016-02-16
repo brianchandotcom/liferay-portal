@@ -79,9 +79,9 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="text-muted">
+		<p class="text-muted">
 			<liferay-ui:message key="customizable-help" />
-		</div>
+		</p>
 
 		<div class="customization-settings">
 

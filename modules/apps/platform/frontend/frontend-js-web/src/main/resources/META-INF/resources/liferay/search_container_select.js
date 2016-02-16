@@ -66,7 +66,7 @@ AUI.add(
 						instance._eventHandles = [
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowCSSFn, instance.get(STR_ROW_SELECTOR) + ' ' + STR_CHECKBOX_SELECTOR, instance),
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowFn, instance.get(STR_ROW_SELECTOR) + ' ' + instance.get('rowCheckerSelector'), instance),
-							Liferay.on('startNavigate', instance._onSurfaceStartNavigate, instance)
+							Liferay.on('startNavigate', instance._onStartNavigate, instance)
 						];
 					},
 
@@ -211,7 +211,7 @@ AUI.add(
 						instance.toggleRow(config, row);
 					},
 
-					_onSurfaceStartNavigate: function(event) {
+					_onStartNavigate: function(event) {
 						var instance = this;
 
 						instance._addRestoreTask();
@@ -220,7 +220,7 @@ AUI.add(
 				},
 
 				restoreTask: function(state, params, node) {
-					var container = node.one('#' + params.containerId);
+					var container = A.one(node).one('#' + params.containerId);
 
 					var offScreenElementsHtml = '';
 
@@ -243,7 +243,7 @@ AUI.add(
 				},
 
 				testRestoreTask: function(state, params, node) {
-					return state.owner === params.searchContainerId && node.one('#' + params.containerId);
+					return state.owner === params.searchContainerId && A.one(node).one('#' + params.containerId);
 				}
 			}
 		);

@@ -131,7 +131,7 @@ data.put("qa-id", "customizations");
 				</portlet:actionURL>
 
 				<%
-				String toggleCustomizedViewMessage = "view-default-page";
+				String toggleCustomizedViewMessage = "view-page-without-my-customizations";
 
 				if (!layoutTypePortlet.isCustomizedView()) {
 					toggleCustomizedViewMessage = "view-my-customized-page";

@@ -106,24 +106,24 @@ else {
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= assetEntriesTotal > 0 %>">
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				/>
-			</liferay-frontend:management-bar-filters>
-
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+<liferay-frontend:management-bar
+	disabled="<%= (assetEntriesTotal <= 0) && Validator.isNull(searchTerms.getKeywords()) %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
 	<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -30,15 +31,18 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS},
+	service = PortletConfigurationIcon.class
+)
 public class DeliveryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeliveryPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -90,6 +94,11 @@ public class DeliveryPortletConfigurationIcon
 		PortletURL deliveryURL = getDeliveryURL(portletRequest);
 
 		return deliveryURL.toString();
+	}
+
+	@Override
+	public double getWeight() {
+		return 100;
 	}
 
 	@Override

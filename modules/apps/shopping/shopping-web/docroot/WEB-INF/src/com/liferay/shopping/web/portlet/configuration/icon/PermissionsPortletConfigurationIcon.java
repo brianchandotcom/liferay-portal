@@ -14,6 +14,7 @@
 
 package com.liferay.shopping.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -42,7 +43,8 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "permissions";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override

@@ -46,19 +46,14 @@ public class OutputTag extends PositionTagSupport {
 	public int doEndTag() throws JspException {
 		try {
 			if (_output) {
+				String bodyContentString =
+					getBodyContentAsStringBundler().toString();
+
+				bodyContentString = StringUtil.replace(
+					bodyContentString, "<script",
+					"<script data-senna-track=\"permanent\" ");
+
 				if (isPositionInLine()) {
-					StringBundler replaceSb = new StringBundler(3);
-
-					replaceSb.append("<script data-outputkey=\"");
-					replaceSb.append(_outputKey);
-					replaceSb.append("\" ");
-
-					String bodyContentString =
-						getBodyContentAsStringBundler().toString();
-
-					bodyContentString = StringUtil.replace(
-						bodyContentString, "<script", replaceSb.toString());
-
 					JspWriter jspWriter = pageContext.getOut();
 
 					jspWriter.write(bodyContentString);
@@ -68,7 +63,8 @@ public class OutputTag extends PositionTagSupport {
 						pageContext.getRequest());
 
 					outputData.addData(
-						_outputKey, _webKey, getBodyContentAsStringBundler());
+						_outputKey, _webKey,
+						new StringBundler(bodyContentString));
 				}
 			}
 

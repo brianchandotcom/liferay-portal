@@ -108,6 +108,20 @@ public class DDLRecordSetServiceSoap {
 		}
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap fetchRecordSet(
+		long recordSetId) throws RemoteException {
+		try {
+			com.liferay.dynamic.data.lists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
+
+			return com.liferay.dynamic.data.lists.model.DDLRecordSetSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap getRecordSet(
 		long recordSetId) throws RemoteException {
 		try {

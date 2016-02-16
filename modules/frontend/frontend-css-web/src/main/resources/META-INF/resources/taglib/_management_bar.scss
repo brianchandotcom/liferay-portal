@@ -6,6 +6,10 @@
 
 		> .container-fluid-1280 {
 			padding-left: 0;
+
+			> .management-bar-header .checkbox {
+				padding-left: 30px;
+			}
 		}
 
 		&.management-bar-no-collapse {

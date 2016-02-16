@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="image" fieldNamespace="ddm" indexType="" name="image_1" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-image">
+	<dynamic-element dataType="image" fieldNamespace="ddm" indexType="" instance-id="uewn" name="image_1" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-image">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Image Field]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

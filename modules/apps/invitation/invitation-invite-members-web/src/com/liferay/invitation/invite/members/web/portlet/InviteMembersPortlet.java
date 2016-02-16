@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,7 +50,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.WindowState;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -219,27 +217,14 @@ public class InviteMembersPortlet extends MVCPortlet {
 			return;
 		}
 
+		Group group = _groupLocalService.getGroup(groupId);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			actionRequest, group, UserNotificationEvent.class.getName(),
+			PortletProvider.Action.VIEW);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
-
-		long plid = themeDisplay.getPlid();
-
-		Layout layout = _layoutLocalService.getLayout(plid);
-
-		if (layout.isPrivateLayout()) {
-			Group guestGroup = _groupLocalService.getGroup(
-				themeDisplay.getCompanyId(), GroupConstants.GUEST);
-
-			plid = guestGroup.getDefaultPublicPlid();
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.NOTIFICATIONS, plid,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/notifications/view.jsp");
-		portletURL.setParameter("actionable", StringPool.TRUE);
-		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		serviceContext.setAttribute("redirectURL", portletURL.toString());
 

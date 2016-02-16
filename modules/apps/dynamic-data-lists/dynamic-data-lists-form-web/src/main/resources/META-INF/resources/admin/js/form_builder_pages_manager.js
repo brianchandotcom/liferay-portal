@@ -79,7 +79,7 @@ AUI.add(
 
 						instance.after('titlesChange', A.bind('_afterTitlesChange', instance));
 
-						A.on("windowresize", A.bind('_syncPageInformationHeight', instance));
+						A.on('windowresize', A.bind('_syncPageInformationHeight', instance));
 					},
 
 					_addWizardPage: function() {
@@ -352,7 +352,7 @@ AUI.add(
 						);
 
 						node.autosize._uiAutoSize();
-						
+
 						node.autosize._uiAutoSize();
 
 						node.height(height);
@@ -426,7 +426,7 @@ AUI.add(
 						var instance = this;
 
 						var pageTitle = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
-						
+
 						var pageDescription = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
 
 						if (!pageTitle.autosize) {
@@ -435,7 +435,7 @@ AUI.add(
 						}
 
 						pageTitle.autosize._uiAutoSize();
-						
+
 						pageDescription.autosize._uiAutoSize();
 					},
 
@@ -496,6 +496,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder-page-manager', 'liferay-ddm-form-renderer-wizard', 'aui-autosize-deprecated']
+		requires: ['aui-autosize-deprecated', 'aui-form-builder-page-manager', 'liferay-ddm-form-renderer-wizard']
 	}
 );

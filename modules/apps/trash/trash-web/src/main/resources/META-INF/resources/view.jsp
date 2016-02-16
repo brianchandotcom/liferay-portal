@@ -121,10 +121,11 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 </portlet:actionURL>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="trash"
 	>
 		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
@@ -146,6 +147,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					className="com.liferay.trash.kernel.model.TrashEntry"
 					keyProperty="entryId"
 					modelVar="entry"
+					rowVar="row"
 				>
 
 					<%

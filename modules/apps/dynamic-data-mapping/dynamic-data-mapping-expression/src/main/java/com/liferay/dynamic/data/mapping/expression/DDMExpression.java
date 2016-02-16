@@ -21,20 +21,20 @@ import java.util.Map;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface Expression<T> {
+public interface DDMExpression<T> {
 
-	public T evaluate() throws ExpressionEvaluationException;
+	public T evaluate() throws DDMExpressionEvaluationException;
 
 	public Map<String, VariableDependencies> getVariableDependenciesMap();
 
 	public void setBooleanVariableValue(
 		String variableName, Boolean variableValue);
 
+	public void setDDMExpressionStringVariableValue(
+		String variableName, String variableValue);
+
 	public void setDoubleVariableValue(
 		String variableName, Double variableValue);
-
-	public void setExpressionStringVariableValue(
-		String variableName, String variableValue);
 
 	public void setFloatVariableValue(String variableName, Float variableValue);
 

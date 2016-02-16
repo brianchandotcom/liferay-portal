@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
-import com.liferay.dynamic.data.mapping.expression.Expression;
-import com.liferay.dynamic.data.mapping.expression.ExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionEvaluationException;
 import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,9 +34,11 @@ import java.util.TreeMap;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class ExpressionImpl<T> implements Expression<T> {
+public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
-	public ExpressionImpl(String expressionString, Class<T> expressionClass) {
+	public DDMExpressionImpl(
+		String expressionString, Class<T> expressionClass) {
+
 		List<String> stringConstants = _stringConstantsExtractor.extract(
 			expressionString);
 
@@ -72,7 +74,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T evaluate() throws ExpressionEvaluationException {
+	public T evaluate() throws DDMExpressionEvaluationException {
 		try {
 			com.udojava.evalex.Expression expression =
 				new com.udojava.evalex.Expression(_expressionString);
@@ -88,7 +90,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 			return (T)toRetunType(result);
 		}
 		catch (Exception e) {
-			throw new ExpressionEvaluationException(e);
+			throw new DDMExpressionEvaluationException(e);
 		}
 	}
 
@@ -112,14 +114,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	}
 
 	@Override
-	public void setDoubleVariableValue(
-		String variableName, Double variableValue) {
-
-		setVariableValue(variableName, new BigDecimal(variableValue));
-	}
-
-	@Override
-	public void setExpressionStringVariableValue(
+	public void setDDMExpressionStringVariableValue(
 		String variableName, String variableValue) {
 
 		Variable variable = _variables.get(variableName);
@@ -129,6 +124,13 @@ public class ExpressionImpl<T> implements Expression<T> {
 		}
 
 		variable.setExpressionString(variableValue);
+	}
+
+	@Override
+	public void setDoubleVariableValue(
+		String variableName, Double variableValue) {
+
+		setVariableValue(variableName, new BigDecimal(variableValue));
 	}
 
 	@Override

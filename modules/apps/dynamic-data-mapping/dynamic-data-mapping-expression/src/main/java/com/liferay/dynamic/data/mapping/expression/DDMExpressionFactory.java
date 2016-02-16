@@ -17,18 +17,24 @@ package com.liferay.dynamic.data.mapping.expression;
 /**
  * @author Marcellus Tavares
  */
-public interface ExpressionFactory {
+public interface DDMExpressionFactory {
 
-	public Expression<Boolean> createBooleanExpression(String expressionString);
+	public DDMExpression<Boolean> createBooleanDDMExpression(
+		String ddmExpressionString);
 
-	public Expression<Double> createDoubleExpression(String expressionString);
+	public DDMExpression<Double> createDoubleDDMExpression(
+		String ddmExpressionString);
 
-	public Expression<Float> createFloatExpression(String expressionString);
+	public DDMExpression<Float> createFloatDDMExpression(
+		String ddmExpressionString);
 
-	public Expression<Integer> createIntegerExpression(String expressionString);
+	public DDMExpression<Integer> createIntegerDDMExpression(
+		String ddmExpressionString);
 
-	public Expression<Long> createLongExpression(String expressionString);
+	public DDMExpression<Long> createLongDDMExpression(
+		String ddmExpressionString);
 
-	public Expression<String> createStringExpression(String expressionString);
+	public DDMExpression<String> createStringDDMExpression(
+		String ddmExpressionString);
 
 }

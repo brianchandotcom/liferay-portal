@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marcellus Tavares
  */
-public class ExpressionEvaluationException extends PortalException {
+public class DDMExpressionEvaluationException extends PortalException {
 
-	public ExpressionEvaluationException() {
+	public DDMExpressionEvaluationException() {
 	}
 
-	public ExpressionEvaluationException(String msg) {
+	public DDMExpressionEvaluationException(String msg) {
 		super(msg);
 	}
 
-	public ExpressionEvaluationException(String msg, Throwable cause) {
+	public DDMExpressionEvaluationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public ExpressionEvaluationException(Throwable cause) {
+	public DDMExpressionEvaluationException(Throwable cause) {
 		super(cause);
 	}
 

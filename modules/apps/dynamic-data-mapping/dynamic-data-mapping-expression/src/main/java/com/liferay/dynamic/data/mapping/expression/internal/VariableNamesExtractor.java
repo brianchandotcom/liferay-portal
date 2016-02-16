@@ -27,14 +27,14 @@ import java.util.regex.Pattern;
  */
 public class VariableNamesExtractor {
 
-	public List<String> extract(String expressionString) {
-		if (expressionString == null) {
+	public List<String> extract(String ddmExpressionString) {
+		if (ddmExpressionString == null) {
 			return Collections.emptyList();
 		}
 
 		List<String> variableNames = new ArrayList<>();
 
-		Matcher matcher = _pattern.matcher(expressionString);
+		Matcher matcher = _pattern.matcher(ddmExpressionString);
 
 		while (matcher.find()) {
 			String match = matcher.group(1);

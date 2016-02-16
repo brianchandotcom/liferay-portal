@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
-import com.liferay.dynamic.data.mapping.expression.internal.ExpressionFactoryImpl;
+import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -29,15 +29,16 @@ public class VariableDependenciesTest {
 
 	@Test
 	public void testVariableDependenciesMap() {
-		Expression<Long> expression = _expressionFactory.createLongExpression(
-			"var1 + var2 + var3");
+		DDMExpression<Long> ddmExpression =
+			_ddmExpressionFactory.createLongDDMExpression("var1 + var2 + var3");
 
-		expression.setLongVariableValue("var1", 5l);
-		expression.setExpressionStringVariableValue("var2", "var1 + 3");
-		expression.setExpressionStringVariableValue("var3", "var2 + var1");
+		ddmExpression.setLongVariableValue("var1", 5l);
+		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setDDMExpressionStringVariableValue(
+			"var3", "var2 + var1");
 
 		Map<String, VariableDependencies> variableDependenciesMap =
-			expression.getVariableDependenciesMap();
+			ddmExpression.getVariableDependenciesMap();
 
 		VariableDependencies var1VariableDependencies =
 			variableDependenciesMap.get("var1");
@@ -92,7 +93,7 @@ public class VariableDependenciesTest {
 		return requiredVariableNames.contains(variableName);
 	}
 
-	private final ExpressionFactory _expressionFactory =
-		new ExpressionFactoryImpl();
+	private final DDMExpressionFactory _ddmExpressionFactory =
+		new DDMExpressionFactoryImpl();
 
 }

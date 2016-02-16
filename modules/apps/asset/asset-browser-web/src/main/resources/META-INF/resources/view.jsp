@@ -24,7 +24,6 @@ String typeSelection = ParamUtil.getString(request, "typeSelection");
 long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 boolean showNonindexable = ParamUtil.getBoolean(request, "showNonindexable");
 boolean showScheduled = ParamUtil.getBoolean(request, "showScheduled");
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 Boolean listable = null;
 
@@ -120,7 +119,7 @@ for (long curGroupId : selectedGroupIds) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= assetBrowserSearch %>">
-		<aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
+		<aui:nav-item href="<%= portletURL %>" label="entries" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -176,6 +175,7 @@ for (long curGroupId : selectedGroupIds) {
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="title"
 			>
 				<c:choose>

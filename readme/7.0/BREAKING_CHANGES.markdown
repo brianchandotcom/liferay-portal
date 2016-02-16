@@ -3371,8 +3371,7 @@ view, you need to add the init parameter
 
 Lexicon patterns require the ability to specify different configuration options
 depending on the view of the portlet by adding or removing options. This can be
-easily achieved by using the `PortletConfigurationIcon` and
-`PortletConfigurationIconFactory` classes.
+easily achieved by using the `PortletConfigurationIcon` classes.
 
 ---------------------------------------
 

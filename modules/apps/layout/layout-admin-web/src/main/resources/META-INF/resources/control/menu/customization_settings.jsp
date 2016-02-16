@@ -69,118 +69,120 @@ data.put("qa-id", "customizations");
 					<aui:icon image="times" markupView="lexicon" />
 				</button>
 			</div>
+
 			<ul class="control-menu-level-2-nav control-menu-nav">
+				<li class="control-menu-nav-item">
+					<p>
+						<liferay-ui:message key="you-can-customize-this-page" />
+						<liferay-ui:message key="customizable-user-help" />
+					</p>
+				</li>
+
 				<c:if test="<%= hasUpdateLayoutPermission %>">
 					<li class="control-menu-nav-item">
-						<p>
-							<liferay-ui:message key="you-can-customize-this-page" />
-							<liferay-ui:message key="customizable-user-help" />
-						</p>
-					</li>
+						<aui:input
+							id="manageCustomization"
+							inlineField="<%= true %>"
+							label="<%= StringPool.BLANK %>"
+							labelOff="hide-customizable-zones"
+							labelOn="view-customizable-zones"
+							name="manageCustomization"
+							type="toggle-switch"
+							useNamespace="<%= false %>"
+							wrappedField="<%= true %>"
+						/>
 
-					<c:if test="<%= hasUpdateLayoutPermission %>">
-						<li class="control-menu-nav-item">
-							<aui:input
-								id="manageCustomization"
-								inlineField="<%= true %>"
-								label="<%= StringPool.BLANK %>"
-								labelOff="hide-customizable-zones"
-								labelOn="view-customizable-zones"
-								name="manageCustomization"
-								type="toggle-switch"
-								useNamespace="<%= false %>"
-								wrappedField="<%= true %>"
-							/>
-
-							<div class="hide layout-customizable-controls-container" id="<portlet:namespace />layoutCustomizableControls">
-								<div class="layout-customizable-controls">
-									<span title="<liferay-ui:message key="customizable-help" />">
-										<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="no-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
-									</span>
-								</div>
+						<div class="hide layout-customizable-controls-container" id="<portlet:namespace />layoutCustomizableControls">
+							<div class="layout-customizable-controls">
+								<span title="<liferay-ui:message key="customizable-help" />">
+									<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="no-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
+								</span>
 							</div>
-						</li>
-
-						<aui:script use="liferay-layout-customization-settings">
-							new Liferay.LayoutCustomizationSettings(
-								{
-									namespace: '<portlet:namespace />'
-								}
-							);
-						</aui:script>
-					</c:if>
-
-					<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
-						<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-					</portlet:actionURL>
-
-					<%
-					String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
-					%>
-
-					<li class="control-menu-nav-item hidden-xs">
-						<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-							<liferay-ui:icon
-								linkCssClass="toggle-customized-view"
-								message="view-default-page"
-								url="javascript:;"
-							/>
-
-							<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-								<liferay-ui:icon
-									message="reset-my-customizations"
-									url="<%= taglibURL %>"
-								/>
-							</c:if>
-						</liferay-ui:icon-menu>
-					</li>
-
-					<li class="control-menu-nav-item visible-xs">
-						<div class="btn-group dropdown">
-							<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="view-default-page" /></button>
-							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<aui:a href="<%= taglibURL %>" label="reset-my-customizations" />
-									</li>
-								</ul>
-							</c:if>
 						</div>
 					</li>
 
-					<aui:script>
-						$('#customizationButton, #closeCustomizationOptions').on(
-							'click',
-							function(event) {
-								$('#customizationBar .control-menu-level-2').toggleClass('open');
-							}
-						);
-
-						$('#customizationBar').delegate(
-							'.toggle-customized-view',
-							'click',
-							function(event) {
-								$.ajax(
-									themeDisplay.getPathMain() + '/portal/update_layout',
-									{
-										data: {
-											cmd: 'toggle_customized_view',
-											customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-											p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-										},
-										success: function() {
-											window.location.href = themeDisplay.getLayoutURL();
-										}
-									}
-								);
+					<aui:script use="liferay-layout-customization-settings">
+						new Liferay.LayoutCustomizationSettings(
+							{
+								namespace: '<portlet:namespace />'
 							}
 						);
 					</aui:script>
 				</c:if>
+
+				<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
+					<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+				</portlet:actionURL>
+
+				<%
+				String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+				%>
+
+				<li class="control-menu-nav-item hidden-xs">
+					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon
+							linkCssClass="toggle-customized-view"
+							message="view-default-page"
+							url="javascript:;"
+						/>
+
+						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+							<liferay-ui:icon
+								message="reset-my-customizations"
+								url="<%= taglibURL %>"
+							/>
+						</c:if>
+					</liferay-ui:icon-menu>
+				</li>
+
+				<li class="control-menu-nav-item visible-xs">
+					<div class="btn-group dropdown">
+						<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="view-default-page" /></button>
+
+						<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+							<span class="caret"></span>
+
+							<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>
+						</button>
+
+						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<aui:a href="<%= taglibURL %>" label="reset-my-customizations" />
+								</li>
+							</ul>
+						</c:if>
+					</div>
+				</li>
+
+				<aui:script>
+					$('#customizationButton, #closeCustomizationOptions').on(
+						'click',
+						function(event) {
+							$('#customizationBar .control-menu-level-2').toggleClass('open');
+						}
+					);
+
+					$('#customizationBar').delegate(
+						'.toggle-customized-view',
+						'click',
+						function(event) {
+							$.ajax(
+								themeDisplay.getPathMain() + '/portal/update_layout',
+								{
+									data: {
+										cmd: 'toggle_customized_view',
+										customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
+										p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+									},
+									success: function() {
+										window.location.href = themeDisplay.getLayoutURL();
+									}
+								}
+							);
+						}
+					);
+				</aui:script>
 			</ul>
 		</div>
 	</div>

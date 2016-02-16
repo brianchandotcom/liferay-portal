@@ -112,8 +112,7 @@ AUI.add(
 							{
 								cache: false,
 								dialog: {
-									destroyOnHide: true,
-									width: 600
+									destroyOnHide: true
 								},
 								dialogIframe: {
 									bodyCssClass: 'dialog-with-footer'

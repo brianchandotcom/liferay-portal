@@ -55,7 +55,4 @@ public interface DDMDataProviderInstance extends DDMDataProviderInstanceModel,
 				return DDMDataProviderInstance.class;
 			}
 		};
-
-	public java.util.List<com.liferay.portal.kernel.util.KeyValuePair> getData()
-		throws com.liferay.portal.kernel.exception.PortalException;
 }

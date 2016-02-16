@@ -16,40 +16,25 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTrackerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.KeyValuePair;
-
-import java.util.List;
-
 /**
- * @author Marcellus Tavares
+ * The extended model implementation for the DDMDataProviderInstance service. Represents a row in the &quot;DDMDataProviderInstance&quot; database table, with each column mapped to a property of this class.
+ *
+ * <p>
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance} interface.
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMDataProviderInstanceImpl
 	extends DDMDataProviderInstanceBaseImpl {
 
-	@Override
-	public List<KeyValuePair> getData() throws PortalException {
-		DDMDataProvider ddmDataProvider =
-			DDMDataProviderTrackerUtil.getDDMDataProvider(getType());
-
-		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
-
-		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
-				ddmForm, getDefinition());
-
-		DDMDataProviderContext ddmDataProviderContext =
-			new DDMDataProviderContext(ddmFormValues);
-
-		return ddmDataProvider.getData(ddmDataProviderContext);
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. All methods that expect a d d m data provider instance model instance should use the {@link com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance} interface instead.
+	 */
+	public DDMDataProviderInstanceImpl() {
 	}
 
 }

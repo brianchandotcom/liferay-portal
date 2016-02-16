@@ -14,11 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.internal.servlet;
 
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -136,8 +142,21 @@ public class DDMDataProviderServlet extends HttpServlet {
 				_ddmDataProviderInstanceService.getDataProviderInstance(
 					ddmDataProviderInstanceId);
 
+			DDMDataProvider ddmDataProvider =
+				_ddmDataProviderTracker.getDDMDataProvider(
+					ddmDataProviderInstance.getType());
+
+			ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
+
+			DDMFormValues ddmFormValues =
+				DDMFormValuesJSONDeserializerUtil.deserialize(
+					ddmForm, ddmDataProviderInstance.getDefinition());
+
+			DDMDataProviderContext ddmDataProviderContext =
+				new DDMDataProviderContext(ddmFormValues);
+
 			JSONArray jsonArray = toJSONArray(
-				ddmDataProviderInstance.getData());
+				ddmDataProvider.getData(ddmDataProviderContext));
 
 			return jsonArray.toString();
 		}
@@ -155,6 +174,13 @@ public class DDMDataProviderServlet extends HttpServlet {
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
 
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMDataProviderTracker(
+		DDMDataProviderTracker ddmDataProviderTracker) {
+
+		_ddmDataProviderTracker = ddmDataProviderTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -196,6 +222,7 @@ public class DDMDataProviderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private JSONFactory _jsonFactory;
 

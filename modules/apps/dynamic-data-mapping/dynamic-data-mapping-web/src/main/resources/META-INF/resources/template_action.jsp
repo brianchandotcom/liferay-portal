@@ -61,28 +61,18 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, template.getClassNameId(), template.getResourceClassNameId()) %>">
-		<portlet:renderURL var="copyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:renderURL var="copyURL">
 			<portlet:param name="mvcPath" value="/copy_template.jsp" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(template.getClassNameId()) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(template.getClassPK()) %>" />
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(template.getResourceClassNameId()) %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
-
-		<%
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("javascript:");
-		sb.append(renderResponse.getNamespace());
-		sb.append("copyTemplate");
-		sb.append("('");
-		sb.append(copyURL);
-		sb.append("');");
-		%>
 
 		<liferay-ui:icon
 			message="copy"
-			url="<%= sb.toString() %>"
+			url="<%= copyURL %>"
 		/>
 	</c:if>
 

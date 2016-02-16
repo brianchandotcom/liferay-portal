@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -32,15 +33,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -85,6 +85,11 @@ public class PermissionsPortletConfigurationIcon
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public double getWeight() {
+		return 13.0;
 	}
 
 	@Override

@@ -7,7 +7,6 @@
 				'soyutils': {
 					base: PATH_SOYUTILS + '/',
 					combine: Liferay.AUI.getCombine(),
-					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'soyutils': {
 							path: 'soyutils.js'

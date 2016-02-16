@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.portlet.configuration.icon;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -52,7 +53,8 @@ public class EmbeddedPortletsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "embedded-portlets";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "embedded-portlets");
 	}
 
 	@Override

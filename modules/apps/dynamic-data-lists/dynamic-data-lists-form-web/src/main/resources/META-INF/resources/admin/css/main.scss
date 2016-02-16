@@ -501,6 +501,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-add-button {
+			padding: 16px 0;
 			position: relative;
 		}
 
@@ -569,6 +570,10 @@ $horizontal-spacing: 35px;
 		word-break: break-all;
 	}
 
+	.form-builder-field-list-container {
+		padding: 0;
+	}
+
 	.form-builder-page-header {
 		padding-top: 25px;
 	}
@@ -588,6 +593,12 @@ $horizontal-spacing: 35px;
 		font-size: 14px;
 	}
 
+	.form-builder-field-list-empty .form-builder-field-move-target {
+		margin-top: 0;
+		padding: 37px 0 36px 0;
+		position: static;
+	}
+
 	.form-group {
 		margin: 0;
 
@@ -595,13 +606,12 @@ $horizontal-spacing: 35px;
 		.radio-options,
 		.input-select-wrapper,
 		.checkbox {
-			margin-bottom: 50px;
+			margin: 0;
 		}
 	}
 
-	.help-block {
-		font-size: 14px;
-		margin-top: -45px;
+	.lfr-ddm-form-field-container {
+		padding: 23px 0;
 	}
 
 	.lfr-ddm-form-page-title {
@@ -611,6 +621,13 @@ $horizontal-spacing: 35px;
 
 	.multi-step-progress-bar .progress-bar-title {
 		word-break: break-all;
+	}
+}
+
+.portlet-forms,
+.lfr-ddl-field-settings-modal {
+	.help-block {
+		font-size: 14px;
 	}
 }
 
@@ -651,7 +668,11 @@ $horizontal-spacing: 35px;
 		border-width: 0;
 		box-shadow: none;
 		margin: 0;
-		padding: 0;
+	}
+
+	.form-builder-field-list-add-container,
+	.form-builder-field-move-target {
+		position: absolute;
 	}
 
 	.form-builder-field-list-add-button {
@@ -661,15 +682,16 @@ $horizontal-spacing: 35px;
 
 	.form-builder-field-list-add-button-label {
 		color: #4A90E2;
-		margin-bottom: 5px;
 	}
 
 	.form-builder-field-list-add-container,
-	.form-builder-field + .form-builder-field-list-add-container {
-		margin-top: -34px;
+	.form-builder-field + .form-builder-field-list-add-container,
+	.form-builder-choose-col-move-target .form-builder-field-move-target {
+		margin-top: -7px;
 	}
 
-	.form-builder-field-list-empty .form-builder-field-list-add-container {
+	.form-builder-field-list-empty .form-builder-field-list-add-container,
+	.form-builder-field-list-empty .form-builder-field-move-target {
 		margin-top: 0;
 	}
 
@@ -685,12 +707,8 @@ $horizontal-spacing: 35px;
 		margin: 0 auto;
 		width: auto;
 
-		.form-builder-field-list-container {
-			padding: 36px 0 0 0;
-		}
-
 		.form-builder-field-list-empty .form-builder-field-list-container {
-			padding: 26px 0;
+			padding: 23px 0;
 		}
 
 		.layout-builder-add-row-area {
@@ -796,12 +814,27 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.form-builder-field-toolbar-toggle,
+	.form-builder-field-toolbar {
+		z-index: 20;
+	}
+
 	.form-builder-tabview {
 		padding-right: 70px;
 
 		.form-builder-controls-trigger {
 			top: 34px;
 		}
+	}
+
+	.form-builder-field-list-add-button-label,
+	.form-builder-field-move-target-label,
+	.layout-builder-move-target-label {
+		font-size: 11px;
+	}
+
+	.lfr-ddm-form-field-container + .form-builder-field-list-add-container {
+		display: none;
 	}
 
 	.lfr-ddm-repeatable-add-button {

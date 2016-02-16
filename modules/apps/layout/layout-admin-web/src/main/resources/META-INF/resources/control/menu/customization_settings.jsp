@@ -73,8 +73,24 @@ data.put("qa-id", "customizations");
 			<ul class="control-menu-level-2-nav control-menu-nav">
 				<li class="control-menu-nav-item">
 					<p>
-						<liferay-ui:message key="you-can-customize-this-page" />
-						<liferay-ui:message key="customizable-user-help" />
+						<c:choose>
+							<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
+								<liferay-ui:message key="you-can-customize-this-page" />
+
+								<span class="text-muted">
+									<liferay-ui:message key="customizable-user-help" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+
+								<c:if test="<%= hasUpdateLayoutPermission %>">
+									<span class="text-muted">
+										<liferay-ui:message key="customizable-admin-help" />
+									</span>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 					</p>
 				</li>
 
@@ -115,21 +131,30 @@ data.put("qa-id", "customizations");
 				</portlet:actionURL>
 
 				<%
-				String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+				String toggleCustomizedViewMessage = "view-default-page";
+
+				if (!layoutTypePortlet.isCustomizedView()) {
+					toggleCustomizedViewMessage = "view-my-customized-page";
+				}
+				else if (layoutTypePortlet.isDefaultUpdated()) {
+					toggleCustomizedViewMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
+				}
+
+				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
 				%>
 
 				<li class="control-menu-nav-item hidden-xs">
 					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<liferay-ui:icon
 							linkCssClass="toggle-customized-view"
-							message="view-default-page"
+							message="<%= toggleCustomizedViewMessage %>"
 							url="javascript:;"
 						/>
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 							<liferay-ui:icon
 								message="reset-my-customizations"
-								url="<%= taglibURL %>"
+								url="<%= resetCustomizationsViewURLString %>"
 							/>
 						</c:if>
 					</liferay-ui:icon-menu>
@@ -137,18 +162,18 @@ data.put("qa-id", "customizations");
 
 				<li class="control-menu-nav-item visible-xs">
 					<div class="btn-group dropdown">
-						<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="view-default-page" /></button>
-
-						<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
-							<span class="caret"></span>
-
-							<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>
-						</button>
+						<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="<%= toggleCustomizedViewMessage %>" /></button>
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+								<span class="caret"></span>
+
+								<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>
+							</button>
+
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<aui:a href="<%= taglibURL %>" label="reset-my-customizations" />
+									<aui:a href="<%= resetCustomizationsViewURLString %>" label="reset-my-customizations" />
 								</li>
 							</ul>
 						</c:if>

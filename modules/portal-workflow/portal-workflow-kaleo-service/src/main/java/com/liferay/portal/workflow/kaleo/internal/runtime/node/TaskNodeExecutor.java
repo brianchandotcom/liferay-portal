@@ -42,7 +42,6 @@ import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
-import com.liferay.portal.workflow.kaleo.runtime.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -111,17 +110,9 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 				configuredKaleoTaskAssignments) {
 
-			String[] assigneeScriptRequiredContexts = StringUtil.split(
-				configuredKaleoTaskAssignment.
-					getAssigneeScriptRequiredContexts());
-
-			ClassLoader[] classLoaders = ClassLoaderUtil.getClassLoaders(
-				assigneeScriptRequiredContexts);
-
 			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
 				_taskAssignmentSelector.calculateTaskAssignments(
-					configuredKaleoTaskAssignment, executionContext,
-					classLoaders);
+					configuredKaleoTaskAssignment, executionContext);
 
 			kaleoTaskAssignments.addAll(calculatedKaleoTaskAssignments);
 		}

@@ -58,7 +58,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script, ClassLoader... classLoaders)
+			Set<String> outputNames, String script)
 		throws ScriptingException {
 
 		if (allowedClasses != null) {

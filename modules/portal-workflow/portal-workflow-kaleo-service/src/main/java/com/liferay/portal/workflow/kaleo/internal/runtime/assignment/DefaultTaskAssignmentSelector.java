@@ -30,7 +30,7 @@ public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 	@Override
 	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
 		KaleoTaskAssignment kaleoTaskAssignment,
-		ExecutionContext executionContext, ClassLoader... classLoaders) {
+		ExecutionContext executionContext) {
 
 		List<KaleoTaskAssignment> taskAssignments = new ArrayList<>(1);
 

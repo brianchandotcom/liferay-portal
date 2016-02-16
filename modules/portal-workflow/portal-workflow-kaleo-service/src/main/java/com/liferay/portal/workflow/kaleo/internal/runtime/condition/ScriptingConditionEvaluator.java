@@ -15,7 +15,8 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.condition;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.ScriptingUtil;
+import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
@@ -35,17 +36,15 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 
 	@Override
 	public String evaluate(
-			KaleoCondition kaleoCondition, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
 		Map<String, Object> inputObjects =
 			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
 
-		Map<String, Object> results = ScriptingUtil.eval(
+		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputNames,
-			kaleoCondition.getScriptLanguage(), kaleoCondition.getScript(),
-			classLoaders);
+			kaleoCondition.getScriptLanguage(), kaleoCondition.getScript());
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -73,5 +72,8 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 		_outputNames.add(_RETURN_VALUE);
 		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
+
+	@ServiceReference(type = Scripting.class)
+	private Scripting _scripting;
 
 }

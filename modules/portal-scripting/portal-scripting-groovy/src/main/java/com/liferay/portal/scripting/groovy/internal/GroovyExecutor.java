@@ -14,12 +14,9 @@
 
 package com.liferay.portal.scripting.groovy.internal;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.scripting.BaseScriptingExecutor;
 
 import groovy.lang.Binding;
@@ -29,7 +26,6 @@ import groovy.lang.Script;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -50,7 +46,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script, ClassLoader... classLoaders)
+			Set<String> outputNames, String script)
 		throws ScriptingException {
 
 		if (allowedClasses != null) {
@@ -58,9 +54,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Groovy");
 		}
 
-		GroovyShell groovyShell = getGroovyShell(classLoaders);
-
-		Script compiledScript = groovyShell.parse(script);
+		Script compiledScript = _groovyShell.parse(script);
 
 		Binding binding = new Binding(inputObjects);
 
@@ -92,48 +86,10 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
-		initScriptingExecutorClassLoader();
-
-		_groovyShell = new GroovyShell(getScriptingExecutorClassLoader());
-	}
-
-	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
-		if (ArrayUtil.isEmpty(classLoaders)) {
-			if (_groovyShell == null) {
-				synchronized (this) {
-					if (_groovyShell == null) {
-						_groovyShell = new GroovyShell(
-							getScriptingExecutorClassLoader());
-					}
-				}
-			}
-
-			return _groovyShell;
-		}
-
-		ClassLoader aggregateClassLoader = getAggregateClassLoader(
-			classLoaders);
-
-		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
-
-		if (groovyShell == null) {
-			groovyShell = new GroovyShell(aggregateClassLoader);
-
-			GroovyShell oldGroovyShell = _groovyShells.putIfAbsent(
-				aggregateClassLoader, groovyShell);
-
-			if (oldGroovyShell != null) {
-				groovyShell = oldGroovyShell;
-			}
-		}
-
-		return groovyShell;
+	protected void activate() {
+		_groovyShell = new GroovyShell(getClass().getClassLoader());
 	}
 
 	private volatile GroovyShell _groovyShell;
-	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
-		new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

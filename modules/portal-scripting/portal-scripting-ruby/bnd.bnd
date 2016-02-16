@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Scripting Ruby
 Bundle-SymbolicName: com.liferay.portal.scripting.ruby
 Bundle-Version: 1.0.0
+DynamicImport-Package: *
 Import-Package:\
 	!javax.swing.*,\
 	\

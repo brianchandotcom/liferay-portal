@@ -19,14 +19,12 @@ import bsh.Interpreter;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.scripting.BaseScriptingExecutor;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -44,7 +42,7 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script, ClassLoader... classLoaders)
+			Set<String> outputNames, String script)
 		throws ScriptingException {
 
 		if (allowedClasses != null) {
@@ -59,10 +57,7 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 				interpreter.set(entry.getKey(), entry.getValue());
 			}
 
-			if (ArrayUtil.isNotEmpty(classLoaders)) {
-				interpreter.setClassLoader(
-					getAggregateClassLoader(classLoaders));
-			}
+			interpreter.setClassLoader(getClass().getClassLoader());
 
 			interpreter.eval(script);
 
@@ -91,11 +86,6 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 	@Override
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
 		return new BeanShellExecutor();
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		initScriptingExecutorClassLoader();
 	}
 
 }

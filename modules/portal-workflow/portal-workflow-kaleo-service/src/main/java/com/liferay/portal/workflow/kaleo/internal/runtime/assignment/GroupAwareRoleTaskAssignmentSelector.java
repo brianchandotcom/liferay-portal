@@ -39,7 +39,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 	@Override
 	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
-			ExecutionContext executionContext, ClassLoader... classLoaders)
+			ExecutionContext executionContext)
 		throws PortalException {
 
 		KaleoInstanceToken kaleoInstanceToken =

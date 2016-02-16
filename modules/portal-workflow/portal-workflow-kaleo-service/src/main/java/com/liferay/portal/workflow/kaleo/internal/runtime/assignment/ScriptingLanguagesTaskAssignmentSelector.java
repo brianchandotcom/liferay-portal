@@ -15,7 +15,8 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.scripting.ScriptingUtil;
+import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
@@ -38,7 +39,7 @@ public class ScriptingLanguagesTaskAssignmentSelector
 	@Override
 	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
-			ExecutionContext executionContext, ClassLoader... classLoaders)
+			ExecutionContext executionContext)
 		throws PortalException {
 
 		Map<String, Object> inputObjects =
@@ -49,9 +50,9 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		String assigneeScriptingLanguage =
 			kaleoTaskAssignment.getAssigneeScriptLanguage();
 
-		Map<String, Object> results = ScriptingUtil.eval(
+		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputNames, assigneeScriptingLanguage,
-			assigneeScript, classLoaders);
+			assigneeScript);
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -70,5 +71,8 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		_outputNames.add(USER_ASSIGNMENT);
 		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
+
+	@ServiceReference(type = Scripting.class)
+	private Scripting _scripting;
 
 }

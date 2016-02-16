@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Scripting Executor Extender
+Bundle-SymbolicName: com.liferay.portal.scripting.executor.extender
+Bundle-Version: 1.0.0
+DynamicImport-Package: *
+Export-Package:\
+	com.liferay.portal.scripting.executor.constants,\
+	com.liferay.portal.scripting.executor.groovy
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Scripting Executor
+-include: ../../../marketplace/platform/bnd.bnd

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -71,8 +70,7 @@ public class ScriptingImpl implements Scripting {
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String language, String script,
-			String... servletContextNames)
+			Set<String> outputNames, String language, String script)
 		throws ScriptingException {
 
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
@@ -87,8 +85,7 @@ public class ScriptingImpl implements Scripting {
 
 		try {
 			return scriptingExecutor.eval(
-				allowedClasses, inputObjects, outputNames, script,
-				getClassLoaders(servletContextNames));
+				allowedClasses, inputObjects, outputNames, script);
 		}
 		catch (Exception e) {
 			throw new ScriptingException(getErrorMessage(script, e), e);
@@ -101,32 +98,47 @@ public class ScriptingImpl implements Scripting {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #eval(Set, Map, Set, String,
+	 *             String)}
+	 */
+	@Deprecated
+	public Map<String, Object> eval(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			Set<String> outputNames, String language, String script,
+			String... servletContextNames)
+		throws ScriptingException {
+
+		return eval(
+			allowedClasses, inputObjects, outputNames, language, script);
+	}
+
+	@Override
+	public void exec(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			String language, String script)
+		throws ScriptingException {
+
+		eval(allowedClasses, inputObjects, null, language, script);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #exec(Set, Map, String,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			String language, String script, String... servletContextNames)
 		throws ScriptingException {
 
-		eval(
-			allowedClasses, inputObjects, null, language, script,
-			servletContextNames);
+		eval(allowedClasses, inputObjects, null, language, script);
 	}
 
 	@Override
 	public Set<String> getSupportedLanguages() {
 		return _scriptingExecutors.keySet();
-	}
-
-	protected ClassLoader[] getClassLoaders(String[] servletContextNames) {
-		ClassLoader[] classLoaders =
-			new ClassLoader[servletContextNames.length];
-
-		for (int i = 0; i < servletContextNames.length; i++) {
-			classLoaders[i] = ClassLoaderPool.getClassLoader(
-				servletContextNames[i]);
-		}
-
-		return classLoaders;
 	}
 
 	protected String getErrorMessage(String script, Exception e) {

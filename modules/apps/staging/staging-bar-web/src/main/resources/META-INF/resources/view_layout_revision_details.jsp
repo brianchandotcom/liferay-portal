@@ -63,6 +63,13 @@ else {
 			List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
 			%>
 
+			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
+				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+				<portlet:param name="major" value="true" />
+				<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+			</portlet:actionURL>
+
 			<c:choose>
 				<c:when test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 
@@ -85,13 +92,12 @@ else {
 						);
 					</aui:script>
 				</c:when>
+				<c:when test="<%= !workflowEnabled && !layoutRevision.isIncomplete() %>">
+					<span class="staging-configuration-control-toggle">
+						<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publication" labelOn="ready-for-publication" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
+					</span>
+				</c:when>
 				<c:otherwise>
-					<portlet:actionURL name="updateLayoutRevision" var="publishURL">
-						<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-						<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-						<portlet:param name="major" value="true" />
-						<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-					</portlet:actionURL>
 
 					<%
 					String label = null;
@@ -99,13 +105,8 @@ else {
 					if (layoutRevision.isIncomplete()) {
 						label = LanguageUtil.format(request, "enable-in-x", layoutSetBranch.getName(), false);
 					}
-					else {
-						if (workflowEnabled) {
-							label = "submit-for-publication";
-						}
-						else {
-							label = "mark-as-ready-for-publication";
-						}
+					else if (workflowEnabled) {
+						label = "submit-for-publication";
 					}
 					%>
 
@@ -122,7 +123,11 @@ else {
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">
 		<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+		<c:if test="<%= layoutRevision.isHead() %>">
+			<span class="staging-configuration-control-toggle">
+				<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publication" name="readyToggle" type="toggle-switch" value="<%= true %>" />
+			</span>
+		</c:if>
 
 		<aui:script>
 			AUI.$('.layout-revision-info .taglib-workflow-status').on(
@@ -311,5 +316,18 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 				uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
 			}
 		);
+	}
+
+	function <portlet:namespace />submitLayoutRevision(publishURL) {
+		Liferay.fire(
+			'<portlet:namespace />submit',
+			{
+				incomplete: <%= layoutRevision.isIncomplete() %>,
+				publishURL: publishURL,
+				currentURL: '<%= currentURL %>'
+			}
+		);
+
+		Liferay.Util.toggleDisabled('#<portlet:namespace />readyToggle', true);
 	}
 </aui:script>

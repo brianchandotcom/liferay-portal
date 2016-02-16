@@ -186,16 +186,3 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 		</liferay-frontend:add-menu>
 	</c:if>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />copyStructure(uri) {
-		Liferay.Util.openWindow(
-			{
-				id: '<portlet:namespace />copyStructure',
-				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false) %>',
-				uri: uri
-			}
-		);
-	}
-</aui:script>

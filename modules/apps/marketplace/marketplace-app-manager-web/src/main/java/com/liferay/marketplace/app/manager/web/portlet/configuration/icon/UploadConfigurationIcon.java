@@ -14,8 +14,10 @@
 
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
+import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -24,16 +26,22 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Enoch Chu
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER},
+	service = PortletConfigurationIcon.class
+)
 public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 
-	public UploadConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/install_from_file.jsp";
 	}
 
 	@Override
@@ -46,6 +54,11 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return "javascript:;";
+	}
+
+	@Override
+	public double getWeight() {
+		return 102;
 	}
 
 	@Override
@@ -65,6 +78,15 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.marketplace.app.manager.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

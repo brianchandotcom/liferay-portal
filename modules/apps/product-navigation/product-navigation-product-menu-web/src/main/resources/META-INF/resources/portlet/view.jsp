@@ -20,7 +20,7 @@
 String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
 %>
 
-<div id="productMenuSidebar" class="lfr-product-menu-sidebar">
+<div class="lfr-product-menu-sidebar" id="productMenuSidebar">
 	<h4 class="sidebar-header">
 		<a href="<%= themeDisplay.getURLPortal() %>">
 			<span class="company-details">

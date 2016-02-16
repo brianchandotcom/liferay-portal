@@ -8,10 +8,10 @@ configurations {
 
 task buildMetalComponents(type: Copy)
 
-String defineRegex = "define(['exports', '../core', '../dom/dom', '../object/object', '../component/Component', '../component/ComponentRegistry', '../component/ComponentRenderer', './SoyAop', './SoyTemplates'], function (exports, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
-String defineReplace = "define(['exports', 'soyutils', '../core', '../dom/dom', '../object/object', '../component/Component', '../component/ComponentRegistry', '../component/ComponentRenderer', './SoyAop', './SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
+String defineRegex = "define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './SoyAop', './SoyTemplates'], function (exports, _metal, _dom, _component, _SoyAop, _SoyTemplates) {";
+String defineReplace = "define(['exports', 'soyutils', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './SoyAop', './SoyTemplates'], function (exports, soyutils, _metal, _dom, _component, _SoyAop, _SoyTemplates) {";
 
-String metalComponentsVersion = "1.0.0-rc.8"
+String metalComponentsVersion = "1.0.0-rc.8.3"
 
 buildMetalComponents {
 	eachFile new StripPathSegmentsAction(7)
@@ -28,7 +28,7 @@ buildMetalComponents {
 			filter {
 				String line ->
 
-				line.replace("import core from '../core';", "import soyutils from 'soyutils';\\nimport core from '../core';")
+				line.replace("import core from 'metal/src/metal';", "import soyutils from 'soyutils';\\nimport core from '../core';")
 			}
 		}
 	}
@@ -58,12 +58,11 @@ cache {
 configJSModules {
 	dependsOn buildMetalComponents
 
-	include "**/*.js"
-	include "**/*.js.map"
+	include "**/*.js*"
 }
 
 dependencies {
-	metalComponents group: "com.liferay.webjars", name: "com.liferay.webjars.metal-components", transitive: false, version: metalComponentsVersion
+	metalComponents group: "com.liferay.webjars", name: "metal-components", transitive: false, version: metalComponentsVersion
 }
 
 liferay {

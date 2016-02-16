@@ -52,7 +52,7 @@ if (userNotificationEvent.isArchived()) {
 		</portlet:actionURL>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-			<a data-navigation="<%= Boolean.TRUE.toString() %>" href="<%= markAsReadURL.toString() %>">
+			<a href="<%= markAsReadURL.toString() %>">
 				<div class="body-container">
 					<%= userNotificationFeedEntry.getBody() %>
 				</div>

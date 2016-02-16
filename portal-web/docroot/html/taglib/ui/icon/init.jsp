@@ -57,6 +57,16 @@ String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
 boolean useDialog = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:useDialog"));
+
+if (forcePost || useDialog) {
+	if (data == null) {
+		data = new HashMap<String, Object>();
+	}
+
+	data.put("senna-off", "true");
+}
+
+linkCssClass += " lfr-icon-item";
 %>
 
 <%!

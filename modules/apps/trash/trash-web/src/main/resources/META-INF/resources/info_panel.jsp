@@ -17,20 +17,37 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TrashEntry entry = trashDisplayContext.getEntry();
+long classPK = trashDisplayContext.getClassPK();
+
+TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
+
+TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 %>
 
 <c:choose>
-	<c:when test="<%= entry != null %>">
-
-		<%
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
-
-		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
-		%>
-
+	<c:when test="<%= trashRenderer != null %>">
 		<div class="sidebar-header">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+					<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
+
 			<h4><%= trashRenderer.getTitle(locale) %></h4>
+		</div>
+
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
+		<div class="sidebar-body">
+			<h5><liferay-ui:message key="num-of-items" /></h5>
+
+			<p>
+				<%= trashHandler.getTrashModelsCount(classPK) %>
+			</p>
 		</div>
 	</c:when>
 	<c:otherwise>

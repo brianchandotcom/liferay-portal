@@ -26,17 +26,17 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.model.Group" %><%@
-page import="com.liferay.portal.model.Role" %><%@
-page import="com.liferay.portal.model.Team" %><%@
-page import="com.liferay.portal.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.TeamLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
-page import="com.liferay.portal.util.comparator.RoleNameComparator" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
-page import="com.liferay.so.util.RoleConstants" %>
+page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.Role" %><%@
+page import="com.liferay.portal.kernel.model.Team" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.TeamLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.util.comparator.RoleNameComparator" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
+page import="com.liferay.portal.kernel.model.RoleConstants" %>
 
 <%@ page import="java.util.List" %>
 

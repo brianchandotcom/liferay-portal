@@ -130,13 +130,13 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<aui:script>
 			function <portlet:namespace />OnChangeEditor(html) {
-				Liferay.Util.toggleDisabled('#<portlet:namespace />submit', html.trim() === '');
+				Liferay.Util.toggleDisabled('#<portlet:namespace />submit', !html.trim());
 			}
 
 			function <portlet:namespace />OnInitEditor() {
 				var html = window['<portlet:namespace />nameEditor'].getHTML();
 
-				Liferay.Util.toggleDisabled('#<portlet:namespace />submit', html.trim() === '');
+				Liferay.Util.toggleDisabled('#<portlet:namespace />submit', !html.trim());
 			}
 		</aui:script>
 

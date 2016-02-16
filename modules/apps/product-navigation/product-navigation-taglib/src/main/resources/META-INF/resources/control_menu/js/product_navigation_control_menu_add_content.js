@@ -33,6 +33,12 @@ AUI.add(
 						instance._bindUI();
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
 					_afterSuccess: function(event) {
 						var instance = this;
 

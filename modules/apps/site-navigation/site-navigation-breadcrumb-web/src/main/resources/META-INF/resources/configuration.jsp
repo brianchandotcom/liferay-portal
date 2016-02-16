@@ -101,10 +101,14 @@
 		}
 	);
 
-	Liferay.once(
+	var handler = Liferay.on(
 		'portletReady',
 		function(event) {
-			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+			if (event.portletId === '<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>') {
+				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+
+				handler.detach();
+			}
 		}
 	);
 </aui:script>

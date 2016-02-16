@@ -14,6 +14,7 @@
 
 package com.liferay.site.memberships.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -44,7 +45,9 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "view-membership-requests";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"view-membership-requests");
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -48,7 +49,9 @@ public class AddSiteRolesToUsersPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "add-site-roles-to-users";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"add-site-roles-to-users");
 	}
 
 	@Override

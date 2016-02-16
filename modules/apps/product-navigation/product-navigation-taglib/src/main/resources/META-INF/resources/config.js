@@ -35,7 +35,6 @@
 								'aui-base',
 								'liferay-layout',
 								'liferay-layout-column',
-								'liferay-layout-freeform',
 								'liferay-product-navigation-control-menu',
 								'transition'
 							]
@@ -58,7 +57,6 @@
 								'dd',
 								'liferay-layout',
 								'liferay-layout-column',
-								'liferay-layout-freeform',
 								'liferay-portlet-base',
 								'liferay-product-navigation-control-menu'
 							]
@@ -85,7 +83,6 @@
 								'dd',
 								'liferay-layout',
 								'liferay-layout-column',
-								'liferay-layout-freeform',
 								'liferay-portlet-base',
 								'liferay-product-navigation-control-menu'
 							]

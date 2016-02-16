@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.portlet.configuration.icon;
 
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -40,7 +41,9 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "export-all-settings";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"export-all-settings");
 	}
 
 	@Override

@@ -78,11 +78,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			Conf2ScopeMappingContainer.COMPILE);
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
-		_repositoryScopeMappings.put(
-			JavaPlugin.COMPILE_CONFIGURATION_NAME,
-			Conf2ScopeMappingContainer.COMPILE);
-		_repositoryScopeMappings.put(
-			"provided", Conf2ScopeMappingContainer.PROVIDED);
+		_pomRepositories.put("provided", Conf2ScopeMappingContainer.PROVIDED);
 	}
 
 	@TaskAction
@@ -110,23 +106,19 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			throw new GradleException(e.getMessage(), e);
 		}
 
-		/*finally {
+		finally {
 			if (preparedSourceDir != null) {
 				project.delete(preparedSourceDir);
 			}
 
 			project.delete(pomFile);
-		}*/
+		}
 	}
 
 	public void configurationScopeMapping(
 		String configurationName, String scope) {
 
 		_configurationScopeMappings.put(configurationName, scope);
-	}
-
-	public void repositoryScopeMapping(String repositoryName, String scope) {
-		_repositoryScopeMappings.put(repositoryName, scope);
 	}
 
 	public BuildPluginDescriptorTask forcedExclusions(
@@ -150,10 +142,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public Map<String, String> getConfigurationScopeMappings() {
 		return _configurationScopeMappings;
-	}
-
-	public Map<String, String> getRepositoryScopeMappings() {
-		return _repositoryScopeMappings;
 	}
 
 	@Input
@@ -196,6 +184,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
+	public Map<String, String> getPomRepositories() {
+		return _pomRepositories;
+	}
+
 	@Input
 	public String getPomVersion() {
 		return GradleUtil.toString(_pomVersion);
@@ -209,6 +201,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	@Input
 	public boolean isUseSetterComments() {
 		return _useSetterComments;
+	}
+
+	public void pomRepositories(String repositoryName, String scope) {
+		_pomRepositories.put(repositoryName, scope);
 	}
 
 	public void setClassesDir(Object classesDir) {
@@ -339,9 +335,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(doc, exclusionElement, "groupId", groupId);
 	}
 
-	protected void appendRepositoryElements(
-		Document doc, Element repositoryElement,
-		String configurationName, String scope) {
+	protected void appendPomRepositoryElements(
+		Document doc, Element repositoryElement, String configurationName,
+		String scope) {
 
 		Project project = getProject();
 
@@ -356,8 +352,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 
 		Set<Dependency> dependencies = configuration.getDependencies();
-
-		Set<String> forcedExclusions = getForcedExclusions();
 
 		for (Dependency entry : dependencies) {
 			Element dependencyElement = doc.createElement("repository");
@@ -441,15 +435,15 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		repositoriesElement.appendChild(repositoryElement);
 
-		Map<String, String> pomRepositoryScopeMappings =
-			getRepositoryScopeMappings();
+		Map<String, String> pomRepositories = getPomRepositories();
 
-			for (Map.Entry<String, String> entry :
-				pomRepositoryScopeMappings.entrySet()) {
+		for (Map.Entry<String, String> entry : pomRepositories.entrySet()) {
+			String configurationName = entry.getKey();
+			String scope = entry.getValue();
 
-				String configurationName = entry.getKey();
-				String scope = entry.getValue();
-			}
+			appendPomRepositoryElements(
+				document, repositoryElement, configurationName, scope);
+		}
 
 		Element buildElement = document.createElement("build");
 
@@ -487,9 +481,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 			XMLUtil.appendElement(
 				document, configurationElement, "goalPrefix", goalPrefix);
-			XMLUtil.appendElement(
-				document, configurationElement, "repository",
-				"http://repository.liferay.com");
 		}
 
 		Element dependenciesElement = document.createElement("dependencies");
@@ -688,10 +679,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;
+	private final Map<String, String> _pomRepositories = new HashMap<>();
 	private Object _pomVersion;
 	private Object _sourceDir;
-	private final Map<String, String> _repositoryScopeMappings =
-		new HashMap<>();
 	private boolean _useSetterComments = true;
 
 }

@@ -14,11 +14,13 @@
 
 package com.liferay.layout.admin.web.portlet.configuration.icon;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -31,19 +33,19 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
+	service = PortletConfigurationIcon.class
+)
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public PermissionsPortletConfigurationIcon(
-		PortletRequest portletRequest, LayoutLocalService layoutLocalService) {
-
-		super(portletRequest);
-
-		_layoutLocalService = layoutLocalService;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -74,6 +76,11 @@ public class PermissionsPortletConfigurationIcon
 		}
 
 		return url;
+	}
+
+	@Override
+	public double getWeight() {
+		return 100.0;
 	}
 
 	@Override
@@ -125,6 +132,13 @@ public class PermissionsPortletConfigurationIcon
 		return _layoutLocalService.fetchLayout(selPlid);
 	}
 
-	private final LayoutLocalService _layoutLocalService;
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private LayoutLocalService _layoutLocalService;
 
 }

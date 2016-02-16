@@ -30,11 +30,11 @@ public interface DDMExpression<T> {
 	public void setBooleanVariableValue(
 		String variableName, Boolean variableValue);
 
-	public void setDDMExpressionStringVariableValue(
-		String variableName, String variableValue);
-
 	public void setDoubleVariableValue(
 		String variableName, Double variableValue);
+
+	public void setExpressionStringVariableValue(
+		String variableName, String variableValue);
 
 	public void setFloatVariableValue(String variableName, Float variableValue);
 

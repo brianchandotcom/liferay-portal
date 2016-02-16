@@ -114,7 +114,14 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	@Override
-	public void setDDMExpressionStringVariableValue(
+	public void setDoubleVariableValue(
+		String variableName, Double variableValue) {
+
+		setVariableValue(variableName, new BigDecimal(variableValue));
+	}
+
+	@Override
+	public void setExpressionStringVariableValue(
 		String variableName, String variableValue) {
 
 		Variable variable = _variables.get(variableName);
@@ -124,13 +131,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 
 		variable.setExpressionString(variableValue);
-	}
-
-	@Override
-	public void setDoubleVariableValue(
-		String variableName, Double variableValue) {
-
-		setVariableValue(variableName, new BigDecimal(variableValue));
 	}
 
 	@Override

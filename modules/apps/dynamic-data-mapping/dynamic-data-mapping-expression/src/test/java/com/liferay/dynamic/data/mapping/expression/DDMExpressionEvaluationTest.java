@@ -114,9 +114,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setDoubleVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		double var2 = var1 + 3;
 
@@ -178,9 +177,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setFloatVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		float var2 = var1 + 3;
 
@@ -211,9 +209,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setIntegerVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		int var2 = var1 + 3;
 
@@ -271,9 +268,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setLongVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		long var2 = var1 + 3;
 
@@ -311,9 +307,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setDoubleVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3.5");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3.5");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		double var2 = var1 + 3.5;
 
@@ -333,9 +328,8 @@ public class DDMExpressionEvaluationTest {
 
 		ddmExpression.setLongVariableValue("var1", var1);
 
-		ddmExpression.setDDMExpressionStringVariableValue("var2", "var1 + 3");
-		ddmExpression.setDDMExpressionStringVariableValue(
-			"var3", "var2 + var1");
+		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");
+		ddmExpression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		long var2 = var1 + 3;
 

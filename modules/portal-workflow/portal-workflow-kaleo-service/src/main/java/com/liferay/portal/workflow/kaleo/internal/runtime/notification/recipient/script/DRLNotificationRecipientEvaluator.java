@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.bi.rules.RulesEngineUtil;
 import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
-import com.liferay.portal.workflow.kaleo.runtime.util.ClassLoaderUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.RulesContextBuilder;
 
 import java.util.List;
@@ -50,14 +48,7 @@ public class DRLNotificationRecipientEvaluator
 			executionContext);
 		Query query = Query.createStandardQuery();
 
-		String[] recipientScriptRequiredContexts = StringUtil.split(
-			kaleoNotificationRecipient.getRecipientScriptContexts());
-
-		ClassLoader[] classLoaders = ClassLoaderUtil.getClassLoaders(
-			recipientScriptRequiredContexts);
-
-		return RulesEngineUtil.execute(
-			rulesResourceRetriever, facts, query, classLoaders);
+		return RulesEngineUtil.execute(rulesResourceRetriever, facts, query);
 	}
 
 }

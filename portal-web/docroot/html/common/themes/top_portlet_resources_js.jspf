@@ -28,7 +28,7 @@
 	for (String url : urls) {
 	%>
 
-		<script src="<%= HtmlUtil.escapeAttribute(url) %>" type="text/javascript"></script>
+		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(url) %>" type="text/javascript"></script>
 
 	<%
 	}

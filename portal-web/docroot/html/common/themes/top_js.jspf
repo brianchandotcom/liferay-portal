@@ -14,7 +14,7 @@
  */
 --%>
 
-<script type="text/javascript">
+<script data-senna-track="temporary" type="text/javascript">
 	// <![CDATA[
 		var Liferay = {
 			Browser: {
@@ -397,7 +397,7 @@
 	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) + "/js_bundle_config?t=" + jsBundleConfigLastModified) %>" type="text/javascript"></script>
 </c:if>
 
-<script type="text/javascript">
+<script data-senna-track="temporary" type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= layoutTypePortlet != null %>">
 

@@ -46,10 +46,16 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
 		<execute macro="DDLDataDefinition#_add">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 	</command>
 
 	<command name="copyCP">

@@ -48,6 +48,7 @@ AUI.add(
 						var instance = this;
 
 						instance._cropRegionNode = instance.one('#cropRegion');
+						instance._emptyResultMessage = instance.one('#emptyResultMessage');
 						instance._fileNameNode = instance.one('#fileName');
 						instance._formNode = instance.one('#fm');
 						instance._portraitPreviewImg = instance.one('#portraitPreviewImg');
@@ -127,6 +128,10 @@ AUI.add(
 						}
 
 						portraitPreviewImg.removeClass('loading');
+
+						if (instance._emptyResultMessage) {
+							instance._emptyResultMessage.hide();
+						}
 					},
 
 					_defUploadStartFn: function(event, id, obj) {

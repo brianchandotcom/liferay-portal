@@ -56,12 +56,19 @@ else {
 		<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
 			<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
 				<a class='lfr-change-logo <%= showBackground ? "show-background" : StringPool.BLANK %>' href="javascript:;">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-thumbnail" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
 				</a>
 
+				<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
+					<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
+						<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+					</p>
+				</c:if>
+
 				<div class="portrait-icons">
-					<div class="btn-group">
+					<div class="btn-group button-holder">
 						<aui:button cssClass="btn btn-default edit-logo modify-link" value="change" />
+
 						<aui:button cssClass="btn btn-default delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
 					</div>
 

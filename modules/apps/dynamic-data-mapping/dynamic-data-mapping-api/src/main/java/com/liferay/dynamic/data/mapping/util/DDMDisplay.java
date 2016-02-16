@@ -83,6 +83,11 @@ public interface DDMDisplay {
 
 	public String getTitle(Locale locale);
 
+	public String getViewStructuresBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception;
+
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classPK)

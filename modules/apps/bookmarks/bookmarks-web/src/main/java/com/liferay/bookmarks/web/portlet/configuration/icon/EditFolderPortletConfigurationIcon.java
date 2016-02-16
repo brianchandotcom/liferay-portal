@@ -64,7 +64,14 @@ public class EditFolderPortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+		BookmarksFolder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
@@ -81,9 +88,9 @@ public class EditFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
-
 		try {
+			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 			if (folder.getFolderId() ==
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 

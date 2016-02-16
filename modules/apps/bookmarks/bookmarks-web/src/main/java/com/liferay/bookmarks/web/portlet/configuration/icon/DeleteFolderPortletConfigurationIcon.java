@@ -87,7 +87,14 @@ public class DeleteFolderPortletConfigurationIcon
 			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+		BookmarksFolder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
 
 		long parentFolderId = folder.getParentFolderId();
 
@@ -119,9 +126,9 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
-
 		try {
+			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 			if (folder == null) {
 				return false;
 			}

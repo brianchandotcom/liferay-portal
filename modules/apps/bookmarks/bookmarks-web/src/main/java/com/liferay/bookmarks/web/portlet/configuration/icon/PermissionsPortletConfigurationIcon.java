@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.web.portlet.configuration.icon;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;

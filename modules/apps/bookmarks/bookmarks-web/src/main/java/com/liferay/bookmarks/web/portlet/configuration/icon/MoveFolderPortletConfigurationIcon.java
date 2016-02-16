@@ -19,7 +19,6 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -65,7 +64,14 @@ public class MoveFolderPortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+		BookmarksFolder folder = null;
+
+		try {
+			folder = ActionUtil.getFolder(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
 
 		portletURL.setParameter(
 			"rowIdsBookmarksFolder", String.valueOf(folder.getFolderId()));
@@ -80,9 +86,9 @@ public class MoveFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
-
 		try {
+			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 			if (folder.getFolderId() ==
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -100,7 +106,7 @@ public class MoveFolderPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;

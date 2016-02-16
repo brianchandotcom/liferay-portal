@@ -7,6 +7,7 @@
 
 	.icon-vertical-card-image .lexicon-icon {
 		height: 80px;
+		opacity: 0.2;
 		width: 80px;
 	}
 
@@ -17,7 +18,6 @@
 
 		@include transform(translate(-50%, -50%));
 	}
-
 
 	.user-vertical-card-initials {
 		color: #FFF;

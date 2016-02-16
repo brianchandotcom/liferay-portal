@@ -28,7 +28,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateBasicBooleanEqualsExpression() throws Exception {
 		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression("var1 == true");
+			_expressionFactory.createBooleanExpression("var1 == TRUE");
 
 		expression.setBooleanVariableValue("var1", true);
 
@@ -38,11 +38,24 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateBasicBooleanNotEqualsExpression() throws Exception {
 		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression("var1 != true");
+			_expressionFactory.createBooleanExpression("var1 != TRUE");
 
 		expression.setBooleanVariableValue("var1", true);
 
 		Assert.assertFalse(expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateBetweenExpression() throws Exception {
+		Expression<Boolean> expression1 =
+			_expressionFactory.createBooleanExpression("between(22, 20, 25)");
+
+		Assert.assertTrue(expression1.evaluate());
+
+		Expression<Boolean> expression2 =
+			_expressionFactory.createBooleanExpression("between(19, 20, 25)");
+
+		Assert.assertFalse(expression2.evaluate());
 	}
 
 	@Test(expected = ExpressionEvaluationException.class)
@@ -57,6 +70,37 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
+	public void testEvaluateConcatExpression1() throws Exception {
+		Expression<String> expression =
+			_expressionFactory.createStringExpression("concat(var1, var2)");
+
+		expression.setStringVariableValue("var1", "Life");
+		expression.setStringVariableValue("var2", "ray");
+
+		Assert.assertEquals("Liferay", expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateConcatExpression2() throws Exception {
+		Expression<String> expression =
+			_expressionFactory.createStringExpression(
+				"concat(\"Hello \", \"World!\")");
+
+		Assert.assertEquals("Hello World!", expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateContainsExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("contains(var1, var2)");
+
+		expression.setStringVariableValue("var1", "Liferay");
+		expression.setStringVariableValue("var2", "ray");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
 	public void testEvaluateDoubleExpression() throws Exception {
 		Expression<Double> expression =
 			_expressionFactory.createDoubleExpression("var1 + var2 + var3");
@@ -65,11 +109,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setDoubleVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Double.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Double.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		double var2 = var1 + 3;
 
@@ -80,7 +121,7 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
-	public void testEvaluateEqualsExpression() throws Exception {
+	public void testEvaluateEqualsExpression1() throws Exception {
 		Expression<Boolean> expression =
 			_expressionFactory.createBooleanExpression("var1 == var2");
 
@@ -91,9 +132,31 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
+	public void testEvaluateEqualsExpression2() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("equals(var1, var2)");
+
+		expression.setStringVariableValue("var1", "Liferay");
+		expression.setStringVariableValue("var2", "Liferay");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateEqualsExpression3() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression(
+				"equals(var1, \"Liferay\")");
+
+		expression.setStringVariableValue("var1", "Liferay");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
 	public void testEvaluateFalseConstantExpression() throws Exception {
 		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression("false");
+			_expressionFactory.createBooleanExpression("FALSE");
 
 		Assert.assertFalse(expression.evaluate());
 	}
@@ -107,11 +170,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setFloatVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Float.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Float.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		float var2 = var1 + 3;
 
@@ -140,11 +200,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setIntegerVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Integer.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Integer.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		int var2 = var1 + 3;
 
@@ -165,6 +222,34 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
+	public void testEvaluateIsEmailAddressExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("isEmailAddress(var1)");
+
+		expression.setStringVariableValue("var1", "invalid_email");
+
+		Assert.assertFalse(expression.evaluate());
+
+		expression.setStringVariableValue("var1", "test@liferay.com");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateIsURLExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("isURL(var1)");
+
+		expression.setStringVariableValue("var1", "invalid_url");
+
+		Assert.assertFalse(expression.evaluate());
+
+		expression.setStringVariableValue("var1", "http://www.liferay.com");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
 	public void testEvaluateLongExpression() throws Exception {
 		Expression<Long> expression = _expressionFactory.createLongExpression(
 			"var1 + var2 + var3");
@@ -173,11 +258,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setLongVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Long.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", long.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		long var2 = var1 + 3;
 
@@ -188,8 +270,8 @@ public class ExpressionEvaluationTest {
 
 	@Test(expected = ExpressionEvaluationException.class)
 	public void testEvaluateNullExpression() throws Exception {
-		Expression<Boolean> expression = _expressionFactory.createExpression(
-			null, Boolean.class);
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression(null);
 
 		expression.setIntegerVariableValue("var1", 5);
 		expression.setIntegerVariableValue("var2", 6);
@@ -198,31 +280,9 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
-	public void testEvaluateStringExpression() throws Exception {
-		Expression<String> expression =
-			_expressionFactory.createStringExpression("var1 + var2");
-
-		expression.setStringVariableValue("var1", "Life");
-		expression.setStringVariableValue("var2", "ray");
-
-		Assert.assertEquals("Liferay", expression.evaluate());
-	}
-
-	@Test
 	public void testEvaluateTrueConstantExpression() throws Exception {
 		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression("true");
-
-		Assert.assertTrue(expression.evaluate());
-	}
-
-	@Test
-	public void testEvaluateWithStringConstant() throws Exception {
-		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression(
-				"var1.equals(\"Life\" + \"ray\")");
-
-		expression.setStringVariableValue("var1", "Liferay");
+			_expressionFactory.createBooleanExpression("TRUE");
 
 		Assert.assertTrue(expression.evaluate());
 	}
@@ -236,11 +296,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setDoubleVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3.5", Double.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Double.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3.5");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		double var2 = var1 + 3.5;
 
@@ -259,11 +316,8 @@ public class ExpressionEvaluationTest {
 
 		expression.setLongVariableValue("var1", var1);
 
-		expression.setExpressionStringVariableValue(
-			"var2", "var1 + 3", Long.class);
-
-		expression.setExpressionStringVariableValue(
-			"var3", "var2 + var1", Long.class);
+		expression.setExpressionStringVariableValue("var2", "var1 + 3");
+		expression.setExpressionStringVariableValue("var3", "var2 + var1");
 
 		long var2 = var1 + 3;
 

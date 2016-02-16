@@ -14,6 +14,8 @@
 
 package com.liferay.portal.expression;
 
+import java.math.MathContext;
+
 import java.util.Map;
 
 /**
@@ -32,7 +34,7 @@ public interface Expression<T> {
 		String variableName, Double variableValue);
 
 	public void setExpressionStringVariableValue(
-		String variableName, String variableValue, Class<?> variableClass);
+		String variableName, String variableValue);
 
 	public void setFloatVariableValue(String variableName, Float variableValue);
 
@@ -41,10 +43,9 @@ public interface Expression<T> {
 
 	public void setLongVariableValue(String variableName, Long variableValue);
 
+	public void setMathContext(MathContext mathContext);
+
 	public void setStringVariableValue(
 		String variableName, String variableValue);
-
-	public void setVariableValue(
-		String variableName, Object variableValue, Class<?> variableClass);
 
 }

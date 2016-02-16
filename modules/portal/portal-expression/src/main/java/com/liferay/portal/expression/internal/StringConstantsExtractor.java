@@ -14,8 +14,6 @@
 
 package com.liferay.portal.expression.internal;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,30 +23,25 @@ import java.util.regex.Pattern;
 /**
  * @author Marcellus Tavares
  */
-public class VariableNamesExtractor {
+public class StringConstantsExtractor {
 
 	public List<String> extract(String expressionString) {
 		if (expressionString == null) {
 			return Collections.emptyList();
 		}
 
-		List<String> variableNames = new ArrayList<>();
+		List<String> stringConstants = new ArrayList<>();
 
 		Matcher matcher = _pattern.matcher(expressionString);
 
 		while (matcher.find()) {
-			String match = matcher.group(1);
-
-			if (!ArrayUtil.contains(_reservedWords, match)) {
-				variableNames.add(matcher.group(1));
-			}
+			stringConstants.add(matcher.group(1));
 		}
 
-		return variableNames;
+		return stringConstants;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\b([a-zA-Z]+[\\w_]*)(?!\\()\\b", Pattern.MULTILINE);
-	private static final String[] _reservedWords = {"FALSE", "TRUE"};
+		"\"([^\"]*)\"", Pattern.MULTILINE);
 
 }

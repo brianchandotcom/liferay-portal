@@ -51,15 +51,15 @@ AUI.add(
 					label: Liferay.Language.get('contains'),
 					name: 'contains',
 					parameterMessage: Liferay.Language.get('this-text'),
-					regex: /^(\w+)\.contains\("(\w+)"\)$/,
-					template: '{name}.contains("{parameter}")'
+					regex: /^contains\((\w+), "(\w+)"\)$/,
+					template: 'contains({name}, "{parameter}")'
 				},
 				{
 					label: Liferay.Language.get('does-not-contain'),
 					name: 'notContains',
 					parameterMessage: Liferay.Language.get('this-text'),
-					regex: /^\!(\w+)\.contains\("(\w+)"\)$/,
-					template: '!{name}.contains("{parameter}")'
+					regex: /^NOT\(contains\((\w+), "(\w+)"\)\)$/,
+					template: 'NOT(contains({name}, "{parameter}"))'
 				},
 				{
 					label: Liferay.Language.get('url'),

@@ -58,7 +58,7 @@ public class KeyValueDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(tooltipDDMFormField);
 		Assert.assertEquals(
-			"false", tooltipDDMFormField.getVisibilityExpression());
+			"FALSE", tooltipDDMFormField.getVisibilityExpression());
 	}
 
 }

@@ -82,6 +82,8 @@ class LiferayApp extends App {
 		}
 
 		AUI().Get._insertCache = {};
+
+		Liferay.DOMTaskRunner.reset();
 	}
 
 	onLiferayIOComplete() {

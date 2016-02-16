@@ -869,34 +869,19 @@
 	</command>
 
 	<command name="searchCP">
-		<var name="key_siteName" value="${siteName}" />
+		<execute macro="Site#searchInputCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
 
+		<execute macro="Site#viewSearchResultsCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="searchInputCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
-
-		<if>
-			<equals arg1="${siteMember}" arg2="Organization" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_MEMBERS_ORGS" value1="1 ${siteMember}" />
-			</then>
-			<elseif>
-				<equals arg1="${siteMember}" arg2="User" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var siteMember. Must be (Organization|User)." />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
-		<execute function="AssertVisible" locator1="Sites#SITE_TABLE_ACTIONS" />
 	</command>
 
 	<command name="searchMemberCP">
@@ -1218,6 +1203,18 @@
 	<command name="viewPrivateVirtualHostUrlUserLoginRedirect">
 		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="AssertElementPresent" locator1="TextInput#PASSWORD" />
+	</command>
+
+	<command name="viewSearchResultsCP">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
+		<execute function="AssertVisible" locator1="Sites#SITE_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewSiteAdminPermissionsCP">

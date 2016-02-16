@@ -16,6 +16,7 @@ package com.liferay.portlet.configuration.css.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -26,17 +27,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class PortletConfigurationCSSPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public PortletConfigurationCSSPortletConfigurationIcon(
-		PortletRequest portletRequest) {
-
-		super(portletRequest);
-	}
 
 	@Override
 	public String getCssClass() {
@@ -98,6 +96,11 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLPortletCss();
+	}
+
+	@Override
+	public double getWeight() {
+		return 16.0;
 	}
 
 	@Override

@@ -26,6 +26,9 @@ long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
 boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
 boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
+
+String redirect = ParamUtil.getString(request, "redirect");
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 %>
 
 <portlet:actionURL name="copyStructure" var="copyStructureURL">
@@ -33,13 +36,7 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 </portlet:actionURL>
 
 <aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-	<portlet:renderURL var="closeRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view.jsp" />
-	</portlet:renderURL>
-
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirectURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
@@ -49,25 +46,55 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
+	<c:if test="<%= showBackURL %>">
+
+		<%
+		String title = LanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false);
+		%>
+
+		<c:choose>
+			<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
+
+				<%
+				portletDisplay.setShowBackIcon(true);
+				portletDisplay.setURLBack(redirect);
+
+				renderResponse.setTitle(title);
+				%>
+
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:header
+					backURL="<%= redirect %>"
+					localizeTitle="<%= true %>"
+					showBackURL="<%= showBackURL %>"
+					title="<%= title %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
 
-		<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-			<aui:input checked="<%= copyFormTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>' name="copyFormTemplates" type="checkbox" />
-		</c:if>
+			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+				<aui:input checked="<%= copyFormTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>' name="copyFormTemplates" type="checkbox" />
+			</c:if>
 
-		<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-			<aui:input checked="<%= copyDisplayTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>' name="copyDisplayTemplates" type="checkbox" />
-		</c:if>
-	</aui:fieldset>
+			<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
+				<aui:input checked="<%= copyDisplayTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>' name="copyDisplayTemplates" type="checkbox" />
+			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="copy" />
 
-		<aui:button cssClass="btn-lg" onClick="Liferay.Util.getWindow().hide();" value="close" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

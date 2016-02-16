@@ -76,6 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.autopropagated-parameters=backURL",
 		"com.liferay.portlet.autopropagated-parameters=refererPortletName",
 		"com.liferay.portlet.autopropagated-parameters=refererWebDAVToken",
 		"com.liferay.portlet.autopropagated-parameters=scopeTitle",

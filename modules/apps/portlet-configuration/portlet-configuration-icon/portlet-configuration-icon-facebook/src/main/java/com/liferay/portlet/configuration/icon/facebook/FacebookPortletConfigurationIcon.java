@@ -16,6 +16,7 @@ package com.liferay.portlet.configuration.icon.facebook;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,15 +28,14 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class FacebookPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public FacebookPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -65,6 +65,11 @@ public class FacebookPortletConfigurationIcon
 
 		return "http://www.facebook.com/add.php?api_key=" + lfrFacebookAPIKey +
 			"&ref=pd";
+	}
+
+	@Override
+	public double getWeight() {
+		return 4.0;
 	}
 
 	@Override

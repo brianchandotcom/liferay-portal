@@ -18,6 +18,7 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
@@ -45,11 +46,14 @@ public class CategorySubscriptionPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		MBCategory category = getCategory(portletRequest);
 
+		String key = "subscribe";
+
 		if (isSubscribed(portletRequest, category)) {
-			return "unsubscribe";
+			key = "unsubscribe";
 		}
 
-		return "subscribe";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override

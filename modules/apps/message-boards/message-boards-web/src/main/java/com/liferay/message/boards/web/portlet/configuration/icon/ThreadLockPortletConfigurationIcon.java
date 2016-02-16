@@ -19,6 +19,7 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -62,11 +63,14 @@ public class ThreadLockPortletConfigurationIcon
 
 		MBThread thread = messageDisplay.getThread();
 
+		String key = "lock";
+
 		if (thread.isLocked()) {
-			return "unlock";
+			key = "unlock";
 		}
 
-		return "lock";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override

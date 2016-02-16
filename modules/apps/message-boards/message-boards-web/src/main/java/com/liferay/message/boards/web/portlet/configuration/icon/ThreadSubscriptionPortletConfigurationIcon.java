@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -57,11 +58,14 @@ public class ThreadSubscriptionPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		MBMessage message = getMBMessage(portletRequest);
 
+		String key = "subscribe";
+
 		if (isSubscribed(portletRequest, message)) {
-			return "unsubscribe";
+			key = "unsubscribe";
 		}
 
-		return "subscribe";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override

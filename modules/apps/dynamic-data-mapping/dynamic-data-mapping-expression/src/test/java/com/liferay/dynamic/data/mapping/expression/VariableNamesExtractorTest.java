@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.expression;
+package com.liferay.dynamic.data.mapping.expression;
 
-import com.liferay.portal.expression.internal.VariableNamesExtractor;
+import com.liferay.dynamic.data.mapping.expression.internal.VariableNamesExtractor;
 
 import java.util.List;
 

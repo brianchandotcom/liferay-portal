@@ -12,28 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.expression;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.dynamic.data.mapping.expression;
 
 /**
  * @author Marcellus Tavares
  */
-public class ExpressionEvaluationException extends PortalException {
+public interface ExpressionFactory {
 
-	public ExpressionEvaluationException() {
-	}
+	public Expression<Boolean> createBooleanExpression(String expressionString);
 
-	public ExpressionEvaluationException(String msg) {
-		super(msg);
-	}
+	public Expression<Double> createDoubleExpression(String expressionString);
 
-	public ExpressionEvaluationException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+	public Expression<Float> createFloatExpression(String expressionString);
 
-	public ExpressionEvaluationException(Throwable cause) {
-		super(cause);
-	}
+	public Expression<Integer> createIntegerExpression(String expressionString);
+
+	public Expression<Long> createLongExpression(String expressionString);
+
+	public Expression<String> createStringExpression(String expressionString);
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.expression;
+package com.liferay.dynamic.data.mapping.expression;
 
 import java.util.ArrayList;
 import java.util.List;

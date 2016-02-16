@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.expression;
+package com.liferay.dynamic.data.mapping.expression;
 
-import com.liferay.portal.expression.internal.StringConstantsExtractor;
+import com.liferay.dynamic.data.mapping.expression.internal.StringConstantsExtractor;
 
 import java.util.List;
 

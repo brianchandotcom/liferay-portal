@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.Expression;
+import com.liferay.dynamic.data.mapping.expression.ExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.ExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -24,9 +27,6 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.expression.Expression;
-import com.liferay.portal.expression.ExpressionEvaluationException;
-import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

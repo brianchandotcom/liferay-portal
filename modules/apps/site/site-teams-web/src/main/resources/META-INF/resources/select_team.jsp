@@ -59,6 +59,13 @@ teamSearch.setTotal(teamsCount);
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= teamSearch.getOrderByCol() %>"
+				orderByType="<%= teamSearch.getOrderByType() %>"
+				orderColumns='<%= new String[] {"name"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons

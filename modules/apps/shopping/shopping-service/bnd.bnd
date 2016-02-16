@@ -19,8 +19,8 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Spring-Context: META-INF/spring
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -48,12 +48,18 @@ public class CharsetDecoderUtil {
 	}
 
 	public static CharsetDecoder getCharsetDecoder(String charsetName) {
+		return getCharsetDecoder(charsetName, CodingErrorAction.REPLACE);
+	}
+
+	public static CharsetDecoder getCharsetDecoder(
+		String charsetName, CodingErrorAction codingErrorAction) {
+
 		Charset charset = Charset.forName(charsetName);
 
 		CharsetDecoder charsetDecoder = charset.newDecoder();
 
-		charsetDecoder.onMalformedInput(CodingErrorAction.REPLACE);
-		charsetDecoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
+		charsetDecoder.onMalformedInput(codingErrorAction);
+		charsetDecoder.onUnmappableCharacter(codingErrorAction);
 
 		return charsetDecoder;
 	}

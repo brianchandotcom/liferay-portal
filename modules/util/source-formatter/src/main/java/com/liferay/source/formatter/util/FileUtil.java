@@ -28,6 +28,10 @@ import org.apache.commons.io.FileUtils;
  */
 public class FileUtil {
 
+	public static byte[] getBytes(File file) throws IOException {
+		return FileUtils.readFileToByteArray(file);
+	}
+
 	public static String read(File file) throws IOException {
 		try {
 			String s = FileUtils.readFileToString(file, StringPool.UTF8);

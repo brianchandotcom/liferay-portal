@@ -1,8 +1,8 @@
-Bundle-Name: Liferay Portal Expression
-Bundle-SymbolicName: com.liferay.portal.expression
+Bundle-Name: Liferay Dynamic Data Mapping Expression
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.expression
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.expression
+Export-Package: com.liferay.dynamic.data.mapping.expression
 Include-Resource: @lib/EvalEx.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
--include: ../../../marketplace/platform/bnd.bnd
+-include: ../../../../marketplace/business-productivity/bnd.bnd

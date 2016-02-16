@@ -18,7 +18,9 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
+import com.liferay.bookmarks.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -31,19 +33,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
+		"path=/bookmarks/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, BookmarksFolder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -83,7 +87,9 @@ public class DeleteFolderPortletConfigurationIcon
 			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		long parentFolderId = _folder.getParentFolderId();
+		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
+		long parentFolderId = folder.getParentFolderId();
 
 		if (parentFolderId ==
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -101,15 +107,22 @@ public class DeleteFolderPortletConfigurationIcon
 		deleteURL.setParameter("redirect", parentFolderURL.toString());
 
 		deleteURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
+			"folderId", String.valueOf(folder.getFolderId()));
 
 		return deleteURL.toString();
 	}
 
 	@Override
+	public double getWeight() {
+		return 100;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 		try {
-			if (_folder == null) {
+			if (folder == null) {
 				return false;
 			}
 
@@ -118,7 +131,7 @@ public class DeleteFolderPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			if (BookmarksFolderPermissionChecker.contains(
-					themeDisplay.getPermissionChecker(), _folder,
+					themeDisplay.getPermissionChecker(), folder,
 					ActionKeys.DELETE)) {
 
 				return true;
@@ -141,7 +154,5 @@ public class DeleteFolderPortletConfigurationIcon
 
 		return false;
 	}
-
-	private final BookmarksFolder _folder;
 
 }

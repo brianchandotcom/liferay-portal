@@ -16,10 +16,12 @@ package com.liferay.bookmarks.web.portlet.configuration.icon;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
+import com.liferay.bookmarks.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,19 +32,21 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
+		"path=/bookmarks/view_folder"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class FolderPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public FolderPermissionsPortletConfigurationIcon(
-		PortletRequest portletRequest, BookmarksFolder folder) {
-
-		super(portletRequest);
-
-		_folder = folder;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -55,10 +59,12 @@ public class FolderPermissionsPortletConfigurationIcon
 
 		String url = StringPool.BLANK;
 
+		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 		try {
 			String modelResource = BookmarksFolder.class.getName();
-			String modelResourceDescription = _folder.getName();
-			String resourcePrimKey = String.valueOf(_folder.getFolderId());
+			String modelResourceDescription = folder.getName();
+			String resourcePrimKey = String.valueOf(folder.getFolderId());
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
@@ -76,6 +82,11 @@ public class FolderPermissionsPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 101;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -89,9 +100,11 @@ public class FolderPermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
+		BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
+
 		try {
 			if (!BookmarksFolderPermissionChecker.contains(
-					permissionChecker, _folder, ActionKeys.PERMISSIONS)) {
+					permissionChecker, folder, ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}
@@ -112,7 +125,5 @@ public class FolderPermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final BookmarksFolder _folder;
 
 }

@@ -29,16 +29,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
+@Component(service = DLPortletToolbarContributorHelper.class)
 public class DLPortletToolbarContributorHelper {
-
-	public DLPortletToolbarContributorHelper(
-		DLAppLocalService dlAppLocalService) {
-
-		_dlAppLocalService = dlAppLocalService;
-	}
 
 	public Folder getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
@@ -83,9 +81,14 @@ public class DLPortletToolbarContributorHelper {
 		return folder;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPortletToolbarContributorHelper.class);
 
-	private final DLAppLocalService _dlAppLocalService;
+	private DLAppLocalService _dlAppLocalService;
 
 }

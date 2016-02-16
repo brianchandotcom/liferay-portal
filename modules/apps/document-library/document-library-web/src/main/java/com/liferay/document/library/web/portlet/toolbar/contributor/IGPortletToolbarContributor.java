@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.portlet.toolbar.contributor;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,8 +35,6 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -54,12 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {PortletToolbarContributor.class}
 )
 public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_dlPortletToolbarContributorHelper =
-			new DLPortletToolbarContributorHelper(_dlAppLocalService);
-	}
 
 	protected void addPortletTitleAddFileEntryMenuItem(
 			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
@@ -141,21 +132,22 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDLPortletToolbarContributor(
 		DLPortletToolbarContributor dlPortletToolbarContributor) {
 
 		_dlPortletToolbarContributor = dlPortletToolbarContributor;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributorHelper(
+		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
+
+		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IGPortletToolbarContributor.class);
 
-	private DLAppLocalService _dlAppLocalService;
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;

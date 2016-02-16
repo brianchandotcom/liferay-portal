@@ -17,7 +17,6 @@ package com.liferay.document.library.web.portlet.toolbar.contributor;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
@@ -48,8 +47,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -317,12 +314,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		return urlMenuItem;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_dlPortletToolbarContributorHelper =
-			new DLPortletToolbarContributorHelper(_dlAppLocalService);
-	}
-
 	protected void addPortletTitleAddDocumentMenuItems(
 			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
@@ -519,15 +510,17 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDLFileEntryTypeService(
 		DLFileEntryTypeService dlFileEntryTypeService) {
 
 		_dlFileEntryTypeService = dlFileEntryTypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributorHelper(
+		DLPortletToolbarContributorHelper dlPortletToolbarContributorHelper) {
+
+		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
 	}
 
 	private long _getFolderId(Folder folder) {
@@ -616,7 +609,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		DLPortletToolbarContributor.class);
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
-	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;

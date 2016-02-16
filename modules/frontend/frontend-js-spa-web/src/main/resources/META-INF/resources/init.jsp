@@ -20,8 +20,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.theme.ThemeDisplay" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %>
+page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
 
 <%@ page import="java.util.List" %>
 

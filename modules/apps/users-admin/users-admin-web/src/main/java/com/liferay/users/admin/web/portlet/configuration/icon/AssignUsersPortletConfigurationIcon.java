@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -50,7 +51,8 @@ public class AssignUsersPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "assign-users";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "assign-users");
 	}
 
 	@Override

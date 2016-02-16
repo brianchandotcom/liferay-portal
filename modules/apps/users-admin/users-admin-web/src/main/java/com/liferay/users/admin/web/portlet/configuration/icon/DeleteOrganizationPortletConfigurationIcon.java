@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -48,7 +49,8 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "delete";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "delete");
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -53,7 +54,9 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "assign-organization-roles";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"assign-organization-roles");
 	}
 
 	@Override

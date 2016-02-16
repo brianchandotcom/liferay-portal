@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -51,7 +52,8 @@ public class ExportUsersPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "export-users";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "export-users");
 	}
 
 	@Override

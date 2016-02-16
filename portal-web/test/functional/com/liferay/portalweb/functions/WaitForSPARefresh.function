@@ -1,0 +1,10 @@
+<definition default="waitForSPARefresh">
+	<command name="waitForSPARefresh">
+		<if>
+			<condition argument1="//div[@class='lfr-surface-loading-bar']" selenium="isElementPresent" />
+			<then>
+				<execute argument1="//div[@class='lfr-surface-loading-bar']" selenium="waitForNotVisible" />
+			</then>
+		</if>
+	</command>
+</definition>

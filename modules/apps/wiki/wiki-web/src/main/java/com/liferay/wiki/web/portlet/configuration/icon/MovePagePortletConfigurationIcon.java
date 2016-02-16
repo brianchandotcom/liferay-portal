@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -48,7 +49,8 @@ public class MovePagePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "move";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "move");
 	}
 
 	@Override

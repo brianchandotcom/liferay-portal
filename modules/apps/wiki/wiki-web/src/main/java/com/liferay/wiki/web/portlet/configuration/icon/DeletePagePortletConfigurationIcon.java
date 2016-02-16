@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -54,11 +55,14 @@ public class DeletePagePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String key = "delete";
+
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			return "move-to-the-recycle-bin";
+			key = "move-to-the-recycle-bin";
 		}
 
-		return "delete";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override

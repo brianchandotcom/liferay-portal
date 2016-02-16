@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -48,7 +49,9 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "view-removed-attachments";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"view-removed-attachments");
 	}
 
 	@Override

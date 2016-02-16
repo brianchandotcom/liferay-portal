@@ -1074,7 +1074,7 @@ public class WebDriverHelper {
 			(JavascriptExecutor)wrappedWebDriver;
 
 		javascriptExecutor.executeScript(
-			"arguments[0].scrollIntoView();", webElement);
+			"arguments[0].scrollIntoView(false);", webElement);
 	}
 
 	protected static void selectByRegexpText(

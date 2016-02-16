@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -48,19 +51,21 @@ public class DeletePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "delete";
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			Layout layout = getLayout();
+			Layout layout = getLayout(portletRequest);
 
 			if (layout == null) {
 				return false;
@@ -71,6 +76,10 @@ public class DeletePortletConfigurationIcon
 			if (group.isLayoutPrototype()) {
 				return false;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
@@ -90,7 +99,7 @@ public class DeletePortletConfigurationIcon
 		return false;
 	}
 
-	protected Layout getLayout() throws Exception {
+	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
 		long selPlid = ParamUtil.getLong(
 			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 

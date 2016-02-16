@@ -16,12 +16,15 @@ package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -39,17 +42,23 @@ public class EditNodePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "edit";
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 
@@ -57,7 +66,10 @@ public class EditNodePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return WikiNodePermissionChecker.contains(
 			themeDisplay.getPermissionChecker(), _node, ActionKeys.UPDATE);
 	}

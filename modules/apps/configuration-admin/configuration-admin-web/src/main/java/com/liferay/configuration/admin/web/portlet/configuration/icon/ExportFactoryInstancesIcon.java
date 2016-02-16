@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Jorge Ferrer
@@ -34,7 +35,7 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getMessage(PortletRequest portletRequest) {
 		return "export-entries";
 	}
 
@@ -44,7 +45,9 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getURL() {
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		LiferayPortletURL liferayPortletURL =
 			(LiferayPortletURL)PortalUtil.getControlPanelPortletURL(
 				portletRequest, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
@@ -63,7 +66,7 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public boolean isShow() {
+	public boolean isShow(PortletRequest portletRequest) {
 		ConfigurationModelIterator configurationModelIterator =
 			(ConfigurationModelIterator)portletRequest.getAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);

@@ -88,7 +88,7 @@ public class PortletConfigurationIconTracker {
 					portletRequest, portletResponse);
 
 			if ((portletConfigurationIcon != null) &&
-				portletConfigurationIcon.isShow()) {
+				portletConfigurationIcon.isShow(portletRequest)) {
 
 				portletConfigurationIcons.add(portletConfigurationIcon);
 			}

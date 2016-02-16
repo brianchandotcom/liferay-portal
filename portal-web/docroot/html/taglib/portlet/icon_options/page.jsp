@@ -48,14 +48,14 @@
 				lang="<%= portletConfigurationIcon.getLang() %>"
 				linkCssClass="<%= portletConfigurationIcon.getLinkCssClass() %>"
 				localizeMessage="<%= portletConfigurationIcon.isLocalizeMessage() %>"
-				message="<%= portletConfigurationIcon.getMessage() %>"
+				message="<%= portletConfigurationIcon.getMessage(portletRequest) %>"
 				method="<%= portletConfigurationIcon.getMethod() %>"
-				onClick="<%= portletConfigurationIcon.getOnClick() %>"
+				onClick="<%= portletConfigurationIcon.getOnClick(portletRequest, portletResponse) %>"
 				src="<%= portletConfigurationIcon.getSrc() %>"
 				srcHover="<%= portletConfigurationIcon.getSrcHover() %>"
 				target="<%= portletConfigurationIcon.getTarget() %>"
 				toolTip="<%= portletConfigurationIcon.isToolTip() %>"
-				url="<%= portletConfigurationIcon.getURL() %>"
+				url="<%= portletConfigurationIcon.getURL(portletRequest, portletResponse) %>"
 				useDialog="<%= portletConfigurationIcon.isUseDialog() %>"
 			/>
 

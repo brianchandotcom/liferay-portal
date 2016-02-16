@@ -365,7 +365,7 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//li[contains(@class,'open')]//a[contains(.,'Folder')] | //div[contains(@class,'open')]//a[contains(.,'Folder')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Folder')] | //div[contains(@class,'open')]//a[contains(.,'Folder')] | //a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>

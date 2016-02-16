@@ -1,6 +1,7 @@
 apply plugin: "com.liferay.lang.merger"
 
 dependencies {
+	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")

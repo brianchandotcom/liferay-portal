@@ -18,7 +18,7 @@ import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
+import com.liferay.sync.engine.filesystem.util.WatcherManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -68,6 +68,10 @@ public class DownloadFileHandler extends BaseHandler {
 
 	@Override
 	public void handleException(Exception e) {
+		if (isEventCancelled()) {
+			return;
+		}
+
 		if (e instanceof ConnectionClosedException) {
 			String message = e.getMessage();
 
@@ -166,7 +170,7 @@ public class DownloadFileHandler extends BaseHandler {
 
 		OutputStream outputStream = null;
 
-		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
+		Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 		List<String> downloadedFilePathNames =
 			watcher.getDownloadedFilePathNames();

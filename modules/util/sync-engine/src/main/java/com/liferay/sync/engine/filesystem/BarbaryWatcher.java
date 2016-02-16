@@ -39,8 +39,8 @@ import org.slf4j.LoggerFactory;
  */
 public class BarbaryWatcher extends Watcher {
 
-	public BarbaryWatcher(Path filePath, WatchEventListener watchEventListener)
-		throws IOException {
+	public BarbaryWatcher(
+		Path filePath, WatchEventListener watchEventListener) {
 
 		super(filePath, watchEventListener);
 	}

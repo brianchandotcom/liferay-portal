@@ -17,7 +17,7 @@ package com.liferay.sync.engine.service;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
+import com.liferay.sync.engine.filesystem.util.WatcherManager;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
@@ -344,7 +344,7 @@ public class SyncSiteService {
 			return;
 		}
 
-		final Watcher watcher = WatcherRegistry.getWatcher(
+		final Watcher watcher = WatcherManager.getWatcher(
 			syncSite.getSyncAccountId());
 
 		final List<String> deletedFilePathNames =

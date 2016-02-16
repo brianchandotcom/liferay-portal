@@ -20,7 +20,7 @@ import com.liferay.sync.engine.documentlibrary.model.SyncDLObjectUpdate;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.documentlibrary.util.comparator.SyncFileComparator;
 import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
+import com.liferay.sync.engine.filesystem.util.WatcherManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
@@ -288,7 +288,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			tempFilePath, String.valueOf(targetSyncFile.getSyncFileId()),
 			false);
 
-		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
+		Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 		List<String> downloadedFilePathNames =
 			watcher.getDownloadedFilePathNames();
@@ -344,7 +344,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			return;
 		}
 
-		final Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
+		final Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 		final List<String> deletedFilePathNames =
 			watcher.getDeletedFilePathNames();

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
+import com.liferay.sync.engine.filesystem.util.WatcherManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -184,8 +184,7 @@ public class BaseJSONHandler extends BaseHandler {
 			Path filePath = Paths.get(syncFile.getFilePathName());
 
 			if (Files.exists(filePath)) {
-				Watcher watcher = WatcherRegistry.getWatcher(
-					getSyncAccountId());
+				Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 				List<String> deletedFilePathNames =
 					watcher.getDeletedFilePathNames();

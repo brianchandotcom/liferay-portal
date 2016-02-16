@@ -1,6 +1,7 @@
 dependencies {
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testCompile project(":apps:journal:journal-api")
 	testCompile project(":portal-search:portal-search")
 

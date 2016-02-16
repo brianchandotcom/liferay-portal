@@ -21,29 +21,35 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
+		"path=/users_admin/view"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class AssignOrganizationRolesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public AssignOrganizationRolesPortletConfigurationIcon(
-		PortletRequest portletRequest) {
-
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -75,6 +81,11 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public double getWeight() {
+		return 104;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.users.admin.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -23,22 +24,27 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
+		"path=/users_admin/view"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteOrganizationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteOrganizationPortletConfigurationIcon(
-		PortletRequest portletRequest) {
-
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -79,6 +85,11 @@ public class DeleteOrganizationPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return "javascript:;";
+	}
+
+	@Override
+	public double getWeight() {
+		return 102;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.users.admin.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -29,17 +30,23 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pei-Jung Lan
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	service = PortletConfigurationIcon.class
+)
 public class ExportUsersPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
-	public ExportUsersPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/export_users.jsp";
 	}
 
 	@Override
@@ -52,6 +59,11 @@ public class ExportUsersPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return "javascript:;";
+	}
+
+	@Override
+	public double getWeight() {
+		return 101;
 	}
 
 	@Override
@@ -77,6 +89,15 @@ public class ExportUsersPortletConfigurationIcon
 		}
 
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.users.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.users.admin.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -31,17 +32,21 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
+		"path=/users_admin/view"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class EditOrganizationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public EditOrganizationPortletConfigurationIcon(
-		PortletRequest portletRequest) {
-
-		super(portletRequest);
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -78,6 +83,11 @@ public class EditOrganizationPortletConfigurationIcon
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public double getWeight() {
+		return 106;
 	}
 
 	@Override

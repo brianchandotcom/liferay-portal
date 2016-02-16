@@ -940,15 +940,12 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		cssClasses += StringPool.SPACE + portletResourcePortlet.getCssClassWrapper();
 	}
 
-	String defaultScreenCssClasses = StringPool.BLANK;
-
 	if ((portletVisibility != null) && !layout.isTypeControlPanel()) {
-		defaultScreenCssClasses += " lfr-configurator-visibility";
+		cssClasses += " lfr-configurator-visibility";
 	}
 	%>
 
 	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
-		<div class="<%= defaultScreenCssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>-defaultScreen">
 </c:if>
 
 <c:choose>
@@ -1100,7 +1097,6 @@ else {
 </aui:script>
 
 <c:if test="<%= renderPortletBoundary %>">
-		</div>
 	</div>
 </c:if>
 

@@ -51,7 +51,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
+		<aui:form action="<%= uploadImageURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="cropRegion" type="hidden" />
 			<aui:input name="currentLogoURL" type="hidden" value="<%= currentImageURL %>" />
 			<aui:input name="previewURL" type="hidden" value="<%= previewURL %>" />
@@ -74,23 +74,39 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<aui:fieldset cssClass="lfr-portrait-editor">
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" label='<%= LanguageUtil.format(request, "upload-images-no-larger-than-x", TextFormatter.formatStorageSize(maxFileSize, locale), false) %>' name="fileName" size="50" type="file">
-					<aui:validator name="acceptFiles">
-						'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
-					</aui:validator>
-				</aui:input>
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset cssClass="lfr-portrait-editor">
+					<h4 class="text-default">
+						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
+					</h4>
 
-				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
-				</div>
+					<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
+					</div>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" name="submitButton" type="submit" />
+					<c:if test='<%= Validator.isNull(currentImageURL) || currentImageURL.contains("/spacer.png") %>'>
+						<p class="text-muted" id="<portlet:namespace />emptyResultMessage">
+							<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+						</p>
+					</c:if>
 
-					<aui:button cssClass="btn-lg" onClick="window.close();" type="cancel" value="close" />
-				</aui:button-row>
-			</aui:fieldset>
+					<div class="button-holder">
+						<label class="btn btn-default" for="<portlet:namespace />fileName"><liferay-ui:message key="select" /></label>
+
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="hide" label="" name="fileName" type="file">
+							<aui:validator name="acceptFiles">
+								'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+							</aui:validator>
+						</aui:input>
+					</div>
+
+					<aui:button-row>
+						<aui:button cssClass="btn-lg" name="submitButton" type="submit" />
+
+						<aui:button cssClass="btn-lg" onClick="window.close();" type="cancel" value="close" />
+					</aui:button-row>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</aui:form>
 
 		<aui:script use="liferay-logo-editor">

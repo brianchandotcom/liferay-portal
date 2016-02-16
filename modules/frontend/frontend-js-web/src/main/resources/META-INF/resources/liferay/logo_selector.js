@@ -75,6 +75,7 @@ AUI.add(
 						var contentBox = instance.get('contentBox');
 
 						instance._avatar = contentBox.one('#' + randomNamespace + 'avatar');
+						instance._emptyResultMessage = contentBox.one('#' + randomNamespace + 'emptyResultMessage');
 						instance._deleteLogoButton = contentBox.one('.delete-logo');
 						instance._deleteLogoInput = contentBox.one('#' + portletNamespace + 'deleteLogo');
 						instance._fileEntryIdInput = contentBox.one('#' + portletNamespace + 'fileEntryId');
@@ -101,6 +102,10 @@ AUI.add(
 						var instance = this;
 
 						instance.set('logoURL', instance.get('defaultLogoURL'), MAP_DELETE_LOGO);
+
+						if (instance._emptyResultMessage) {
+							instance._emptyResultMessage.show();
+						}
 					},
 
 					_openEditLogoWindow: function(event) {
@@ -112,8 +117,10 @@ AUI.add(
 							{
 								cache: false,
 								dialog: {
-									destroyOnHide: true,
-									width: 600
+									destroyOnHide: true
+								},
+								dialogIframe: {
+									bodyCssClass: 'dialog-with-footer'
 								},
 								id: instance._portletNamespace + 'changeLogo',
 								title: Liferay.Language.get('upload-image'),
@@ -148,6 +155,10 @@ AUI.add(
 						instance._deleteLogoInput.val(deleteLogo);
 						instance._deleteLogoButton.attr('disabled', deleteLogo ? 'disabled' : '');
 						instance._deleteLogoButton.toggleClass('disabled', deleteLogo);
+
+						if (instance._emptyResultMessage) {
+							instance._emptyResultMessage.hide();
+						}
 					}
 				}
 			}

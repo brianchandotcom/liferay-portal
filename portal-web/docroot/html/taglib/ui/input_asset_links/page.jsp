@@ -16,40 +16,17 @@
 
 <%@ include file="/html/taglib/ui/input_asset_links/init.jsp" %>
 
-<liferay-ui:icon-menu
-	cssClass="select-existing-selector"
-	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
-	message="select"
-	showArrow="<%= false %>"
-	showWhenSingleIcon="<%= true %>"
->
-
-	<%
-	for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {
-	%>
-
-		<liferay-ui:icon
-			cssClass="asset-selector"
-			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
-			id='<%= (String)selectorEntry.get("id") %>'
-			message='<%= (String)selectorEntry.get("message") %>'
-			url="javascript:;"
-		/>
-
-	<%
-	}
-	%>
-
-</liferay-ui:icon-menu>
-
 <liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon
 		icon="times"
-		label="<%= true %>"
 		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>
+
+<p class="text-muted <%= (inputAssetLinksDisplayContext.getAssetLinksCount() <= 0) ? StringPool.BLANK : "hide" %>" id="<%= inputAssetLinksDisplayContext.getRandomNamespace() + "emptyResultMessage" %>">
+	<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+</p>
 
 <liferay-ui:search-container
 	headerNames="type,title,scope,null"
@@ -94,6 +71,33 @@
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
+<liferay-ui:icon-menu
+	cssClass="select-existing-selector"
+	direction="right"
+	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
+	message="select"
+	showArrow="<%= false %>"
+	showWhenSingleIcon="<%= true %>"
+>
+
+	<%
+	for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {
+	%>
+
+		<liferay-ui:icon
+			cssClass="asset-selector"
+			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
+			id='<%= (String)selectorEntry.get("id") %>'
+			message='<%= (String)selectorEntry.get("message") %>'
+			url="javascript:;"
+		/>
+
+	<%
+	}
+	%>
+
+</liferay-ui:icon-menu>
+
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
 <aui:script use="aui-base,escape,liferay-search-container">
@@ -133,6 +137,8 @@
 					searchContainer.addRow([event.assettype, A.Escape.html(event.assettitle), A.Escape.html(event.groupdescriptivename), entryLink], event.assetentryid);
 
 					searchContainer.updateDataStore();
+
+					A.one('#<%= inputAssetLinksDisplayContext.getRandomNamespace() %>emptyResultMessage').hide();
 				}
 			);
 		},
@@ -151,6 +157,10 @@
 			var tr = link.ancestor('tr');
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+			if (searchContainer.getSize()) {
+				A.one('#<%= inputAssetLinksDisplayContext.getRandomNamespace() %>emptyResultMessage').show();
+			}
 		},
 		'.modify-link'
 	);

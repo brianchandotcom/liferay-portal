@@ -109,7 +109,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
 
-<p class="text-muted <%= defaultSiteRoles.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />teamsEmptyResultMessage">
+<p class="text-muted <%= defaultTeams.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />teamsEmptyResultMessage">
 	<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
 </p>
 

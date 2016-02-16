@@ -17,6 +17,7 @@ package com.liferay.journal.web.portlet.configuration.icon;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 
@@ -49,7 +50,8 @@ public class PreviewPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "preview";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "preview");
 	}
 
 	@Override

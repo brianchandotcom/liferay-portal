@@ -15,6 +15,7 @@
 package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -41,7 +42,8 @@ public class FeedsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "feeds";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "feeds");
 	}
 
 	@Override

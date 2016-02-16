@@ -17,6 +17,7 @@ package com.liferay.journal.content.web.portlet.configuration.icon;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,7 +47,8 @@ public class EditJournalArticlePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "edit-web-content";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "edit-web-content");
 	}
 
 	@Override

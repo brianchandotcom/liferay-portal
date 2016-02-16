@@ -17,6 +17,7 @@ package com.liferay.journal.content.web.portlet.configuration.icon;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,7 +47,8 @@ public class EditTemplatePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "edit-template";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "edit-template");
 	}
 
 	@Override

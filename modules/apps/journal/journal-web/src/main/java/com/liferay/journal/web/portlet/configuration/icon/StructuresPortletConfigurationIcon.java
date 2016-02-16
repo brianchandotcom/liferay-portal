@@ -16,6 +16,7 @@ package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -49,7 +50,8 @@ public class StructuresPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "structures";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "structures");
 	}
 
 	@Override

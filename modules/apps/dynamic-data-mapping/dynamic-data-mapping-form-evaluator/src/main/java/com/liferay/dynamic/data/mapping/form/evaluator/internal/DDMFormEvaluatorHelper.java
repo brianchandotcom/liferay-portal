@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -24,9 +27,6 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.expression.Expression;
-import com.liferay.portal.expression.ExpressionEvaluationException;
-import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -107,16 +107,16 @@ public class DDMFormEvaluatorHelper {
 			return true;
 		}
 
-		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression(expressionString);
+		DDMExpression<Boolean> ddmExpression =
+			_ddmExpressionFactory.createBooleanDDMExpression(expressionString);
 
-		setExpressionVariables(
-			expression, _rootDDMFormFieldValues, ancestorDDMFormFieldValues);
+		setDDMExpressionVariables(
+			ddmExpression, _rootDDMFormFieldValues, ancestorDDMFormFieldValues);
 
 		try {
-			return expression.evaluate();
+			return ddmExpression.evaluate();
 		}
-		catch (ExpressionEvaluationException eee) {
+		catch (DDMExpressionEvaluationException ddmeee) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Invalid expression or expression that is making " +
@@ -256,12 +256,14 @@ public class DDMFormEvaluatorHelper {
 		return false;
 	}
 
-	protected void setExpressionFactory(ExpressionFactory expressionFactory) {
-		_expressionFactory = expressionFactory;
+	protected void setDDMExpressionFactory(
+		DDMExpressionFactory ddmExpressionFactory) {
+
+		_ddmExpressionFactory = ddmExpressionFactory;
 	}
 
-	protected void setExpressionVariables(
-		Expression<Boolean> expression,
+	protected void setDDMExpressionVariables(
+		DDMExpression<Boolean> ddmExpression,
 		List<DDMFormFieldValue> ddmFormFieldValues,
 		Set<DDMFormFieldValue> ancestorDDMFormFieldValues) {
 
@@ -280,38 +282,38 @@ public class DDMFormEvaluatorHelper {
 
 			if (value != null) {
 				setExpressionVariableValue(
-					expression, name, ddmFormField.getDataType(),
+					ddmExpression, name, ddmFormField.getDataType(),
 					value.getString(_locale));
 			}
 
-			setExpressionVariables(
-				expression, ddmFormFieldValue.getNestedDDMFormFieldValues(),
+			setDDMExpressionVariables(
+				ddmExpression, ddmFormFieldValue.getNestedDDMFormFieldValues(),
 				ancestorDDMFormFieldValues);
 		}
 	}
 
 	protected void setExpressionVariableValue(
-		Expression<Boolean> expression, String variableName,
+		DDMExpression<Boolean> ddmExpression, String variableName,
 		String variableType, String variableValue) {
 
 		if (variableType.equals("boolean")) {
-			expression.setBooleanVariableValue(
+			ddmExpression.setBooleanVariableValue(
 				variableName, GetterUtil.getBoolean(variableValue));
 		}
 		else if (variableType.equals("integer")) {
-			expression.setIntegerVariableValue(
+			ddmExpression.setIntegerVariableValue(
 				variableName, GetterUtil.getInteger(variableValue));
 		}
 		else if (variableType.equals("string")) {
-			expression.setStringVariableValue(variableName, variableValue);
+			ddmExpression.setStringVariableValue(variableName, variableValue);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEvaluatorHelper.class);
 
+	private DDMExpressionFactory _ddmExpressionFactory;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
-	private ExpressionFactory _expressionFactory;
 	private final Locale _locale;
 	private final List<DDMFormFieldValue> _rootDDMFormFieldValues;
 

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -44,7 +45,8 @@ public class DDMDataProviderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "data-providers";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "data-providers");
 	}
 
 	@Override

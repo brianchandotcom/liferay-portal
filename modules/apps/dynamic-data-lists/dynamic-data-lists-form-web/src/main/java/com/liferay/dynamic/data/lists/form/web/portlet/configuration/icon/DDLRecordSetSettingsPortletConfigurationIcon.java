@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,7 +40,8 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "settings";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "settings");
 	}
 
 	@Override

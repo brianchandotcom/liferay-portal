@@ -73,8 +73,6 @@ public interface PortletConfigurationIcon {
 
 	public boolean isLabel();
 
-	public boolean isLocalizeMessage();
-
 	public boolean isShow(PortletRequest portletRequest);
 
 	public boolean isToolTip();

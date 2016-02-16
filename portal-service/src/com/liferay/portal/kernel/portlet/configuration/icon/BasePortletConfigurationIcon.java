@@ -14,9 +14,15 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.io.IOException;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -97,6 +103,10 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return PortalUtil.getResourceBundle(locale);
+	}
+
 	@Override
 	public String getSrc() {
 		return null;
@@ -141,11 +151,6 @@ public abstract class BasePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isLocalizeMessage() {
-		return true;
-	}
-
-	@Override
 	public boolean isToolTip() {
 		return false;
 	}
@@ -153,6 +158,13 @@ public abstract class BasePortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return false;
+	}
+
+	protected Locale getLocale(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getLocale();
 	}
 
 }

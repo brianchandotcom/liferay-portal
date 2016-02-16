@@ -16,16 +16,12 @@ package com.liferay.document.library.web.portlet.toolbar.contributor;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,9 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 	protected void addPortletTitleAddFileEntryMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		List<MenuItem> portletTitleAddDocumentMenuItems =
 			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
@@ -65,9 +60,8 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddFolderMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		MenuItem portletTitleAddFolderMenuItem =
 			_dlPortletToolbarContributor.getPortletTitleAddFolderMenuItem(
@@ -109,21 +103,11 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 		Folder folder = _dlPortletToolbarContributorHelper.getFolder(
 			themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddFolderMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add folder menu item", pe);
-		}
+		addPortletTitleAddFolderMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddFileEntryMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add file entry menu item", pe);
-		}
+		addPortletTitleAddFileEntryMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
 		addPortletTitleAddMulpleFileEntriesMenuItem(
 			menuItems, folder, themeDisplay, portletRequest);
@@ -144,9 +128,6 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		_dlPortletToolbarContributorHelper = dlPortletToolbarContributorHelper;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		IGPortletToolbarContributor.class);
 
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 	private DLPortletToolbarContributorHelper

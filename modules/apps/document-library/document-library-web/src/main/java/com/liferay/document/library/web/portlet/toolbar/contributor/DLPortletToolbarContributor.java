@@ -208,6 +208,11 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				"multiple-documents"));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -344,11 +349,6 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 				themeDisplay, portletRequest, folder);
 
 		if (portletTitleAddMultipleDocumentsMenuItem != null) {
-			portletTitleAddMultipleDocumentsMenuItem.setLabel(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(portletRequest),
-					"multiple-documents"));
-
 			menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
 		}
 	}

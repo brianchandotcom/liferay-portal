@@ -15,31 +15,36 @@
 package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"path=/wiki/view_pages"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class EditNodePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public EditNodePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node) {
-
-		super(portletRequest);
-
-		_node = node;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -50,19 +55,31 @@ public class EditNodePortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
 
-		return portletURL.toString();
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public double getWeight() {
+		return 105;
 	}
 
 	@Override
@@ -70,10 +87,16 @@ public class EditNodePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return WikiNodePermissionChecker.contains(
-			themeDisplay.getPermissionChecker(), _node, ActionKeys.UPDATE);
-	}
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
 
-	private final WikiNode _node;
+			return WikiNodePermissionChecker.contains(
+				themeDisplay.getPermissionChecker(), node, ActionKeys.UPDATE);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
 
 }

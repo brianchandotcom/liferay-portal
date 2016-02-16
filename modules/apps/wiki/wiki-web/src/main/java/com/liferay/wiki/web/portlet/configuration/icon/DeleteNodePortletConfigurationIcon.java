@@ -15,35 +15,41 @@
 package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"path=/wiki/view_pages"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class DeleteNodePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public DeleteNodePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node) {
-
-		super(portletRequest);
-
-		_node = node;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -61,32 +67,47 @@ public class DeleteNodePortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_node");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
+
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.ACTION_PHASE);
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/wiki/edit_node");
+
+			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+				portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+			}
+			else {
+				portletURL.setParameter(Constants.CMD, Constants.DELETE);
+			}
+
+			PortletURL viewNodesURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			viewNodesURL.setParameter(
+				"mvcRenderCommandName", "/wiki_admin/view");
+
+			portletURL.setParameter("redirect", viewNodesURL.toString());
+			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+
+			return portletURL.toString();
 		}
-		else {
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		catch (Exception e) {
 		}
 
-		PortletURL viewNodesURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
+		return StringPool.BLANK;
+	}
 
-		viewNodesURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
-
-		portletURL.setParameter("redirect", viewNodesURL.toString());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
-
-		return portletURL.toString();
+	@Override
+	public double getWeight() {
+		return 100;
 	}
 
 	@Override
@@ -94,13 +115,19 @@ public class DeleteNodePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (WikiNodePermissionChecker.contains(
-				themeDisplay.getPermissionChecker(), _node,
-				ActionKeys.DELETE) &&
-			(WikiNodeServiceUtil.getNodesCount(
-				themeDisplay.getScopeGroupId()) > 1)) {
+		try {
+			WikiNode node = ActionUtil.getNode(portletRequest);
 
-			return true;
+			if (WikiNodePermissionChecker.contains(
+					themeDisplay.getPermissionChecker(), node,
+					ActionKeys.DELETE) &&
+				(_wikiNodeService.getNodesCount(
+					themeDisplay.getScopeGroupId()) > 1)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return false;
@@ -118,6 +145,11 @@ public class DeleteNodePortletConfigurationIcon
 		return false;
 	}
 
-	private final WikiNode _node;
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	private WikiNodeService _wikiNodeService;
 
 }

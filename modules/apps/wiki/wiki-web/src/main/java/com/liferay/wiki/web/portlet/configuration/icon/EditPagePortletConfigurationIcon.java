@@ -15,31 +15,35 @@
 package com.liferay.wiki.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN, "path=/wiki/view"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class EditPagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
-
-	public EditPagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiPage page) {
-
-		super(portletRequest);
-
-		_page = page;
-	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -50,20 +54,32 @@ public class EditPagePortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, WikiPortletKeys.WIKI_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
-		portletURL.setParameter("title", _page.getTitle());
+		try {
+			WikiPage page = ActionUtil.getPage(portletRequest);
 
-		return portletURL.toString();
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
+			portletURL.setParameter("title", page.getTitle());
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public double getWeight() {
+		return 105;
 	}
 
 	@Override
@@ -71,15 +87,21 @@ public class EditPagePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return WikiPagePermissionChecker.contains(
-			themeDisplay.getPermissionChecker(), _page, ActionKeys.UPDATE);
+		try {
+			WikiPage page = ActionUtil.getPage(portletRequest);
+
+			return WikiPagePermissionChecker.contains(
+				themeDisplay.getPermissionChecker(), page, ActionKeys.UPDATE);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private final WikiPage _page;
 
 }

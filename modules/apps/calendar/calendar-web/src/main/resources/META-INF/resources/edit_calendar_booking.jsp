@@ -223,7 +223,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
-	<aui:fieldset>
+	<aui:fieldset markupView="lexicon">
 		<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
 
 		<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
@@ -245,7 +245,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="description" />
 	</aui:fieldset>
 
-	<aui:fieldset>
+	<aui:fieldset markupView="lexicon">
 		<liferay-ui:panel-container extended="<%= true %>" id="calendarBookingDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingDetailsPanel" persistState="<%= true %>" title="details">
 				<aui:select label="calendar" name="calendarId">

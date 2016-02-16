@@ -61,9 +61,7 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 			_dlPortletToolbarContributor.getPortletTitleAddDocumentMenuItems(
 				folder, themeDisplay, portletRequest);
 
-		if (ListUtil.isNotNull(portletTitleAddDocumentMenuItems)) {
-			menuItems.addAll(portletTitleAddDocumentMenuItems);
-		}
+		menuItems.addAll(portletTitleAddDocumentMenuItems);
 	}
 
 	protected void addPortletTitleAddFolderMenuItem(

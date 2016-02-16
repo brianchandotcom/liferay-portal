@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.web.util;
+package com.liferay.invitation.invite.members.util;
 
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -24,12 +24,16 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
- * @author Jonathan Lee
- */
-public class InviteMembersUtil {
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-	public static List<User> getAvailableUsers(
+/**
+ * @author Adolfo Pérez
+ */
+@Component(immediate = true, service = InviteMembersUserHelper.class)
+public class InviteMembersUserHelper {
+
+	public List<User> getAvailableUsers(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws Exception {
 
@@ -43,12 +47,12 @@ public class InviteMembersUtil {
 						"filterByUsersGroupsGroupId"),
 				groupId));
 
-		return UserLocalServiceUtil.search(
+		return _userLocalService.search(
 			companyId, keywords, WorkflowConstants.STATUS_APPROVED, usersParams,
 			start, end, new UserFirstNameComparator(true));
 	}
 
-	public static int getAvailableUsersCount(
+	public int getAvailableUsersCount(
 			long companyId, long groupId, String keywords)
 		throws Exception {
 
@@ -62,9 +66,16 @@ public class InviteMembersUtil {
 						"filterByUsersGroupsGroupId"),
 				groupId));
 
-		return UserLocalServiceUtil.searchCount(
+		return _userLocalService.searchCount(
 			companyId, keywords, WorkflowConstants.STATUS_APPROVED,
 			usersParams);
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private UserLocalService _userLocalService;
 
 }

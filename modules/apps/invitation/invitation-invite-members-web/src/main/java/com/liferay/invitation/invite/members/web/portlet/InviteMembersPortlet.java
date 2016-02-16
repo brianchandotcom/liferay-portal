@@ -15,8 +15,8 @@
 package com.liferay.invitation.invite.members.web.portlet;
 
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
+import com.liferay.invitation.invite.members.util.InviteMembersUserHelper;
 import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
-import com.liferay.invitation.invite.members.web.util.InviteMembersUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -97,7 +97,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		jsonObject.put(
 			"count",
-			InviteMembersUtil.getAvailableUsersCount(
+			_inviteMembersUserHelper.getAvailableUsersCount(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				keywords));
 
@@ -109,7 +109,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		jsonObject.put("options", optionsJSONObject);
 
-		List<User> users = InviteMembersUtil.getAvailableUsers(
+		List<User> users = _inviteMembersUserHelper.getAvailableUsers(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			keywords, start, end);
 
@@ -269,6 +269,13 @@ public class InviteMembersPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setInviteMembersUserHelper(
+		InviteMembersUserHelper inviteMembersUserHelper) {
+
+		_inviteMembersUserHelper = inviteMembersUserHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMemberRequestLocalService(
 		MemberRequestLocalService memberRequestLocalService) {
 
@@ -284,6 +291,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		InviteMembersPortlet.class);
 
 	private GroupLocalService _groupLocalService;
+	private InviteMembersUserHelper _inviteMembersUserHelper;
 	private MemberRequestLocalService _memberRequestLocalService;
 	private UserLocalService _userLocalService;
 

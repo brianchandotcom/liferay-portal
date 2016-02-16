@@ -66,7 +66,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -480,7 +479,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			dlFileEntryMetadata);
 	}
 
-	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();

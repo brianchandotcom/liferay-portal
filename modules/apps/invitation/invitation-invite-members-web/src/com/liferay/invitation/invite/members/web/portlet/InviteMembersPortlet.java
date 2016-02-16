@@ -53,7 +53,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -244,8 +243,11 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		serviceContext.setAttribute("redirectURL", portletURL.toString());
 
-		String createAccountURL = getCreateAccountURL(
-			PortalUtil.getHttpServletRequest(actionRequest), themeDisplay);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		String createAccountURL = PortalUtil.getCreateAccountURL(
+			request, themeDisplay);
 
 		serviceContext.setAttribute("createAccountURL", createAccountURL);
 
@@ -258,13 +260,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 		_memberRequestLocalService.addMemberRequests(
 			themeDisplay.getUserId(), groupId, receiverEmailAddresses,
 			invitedRoleId, invitedTeamId, serviceContext);
-	}
-
-	protected String getCreateAccountURL(
-			HttpServletRequest request, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return PortalUtil.getCreateAccountURL(request, themeDisplay);
 	}
 
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {

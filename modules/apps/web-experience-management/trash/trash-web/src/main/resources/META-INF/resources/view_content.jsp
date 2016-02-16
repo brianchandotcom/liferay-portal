@@ -51,7 +51,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
@@ -67,10 +67,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 				showLayout="<%= false %>"
 				showParentGroups="<%= false %>"
 			/>
-
-			<liferay-util:include page="/info_panel_content.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="redirect" value="<%= redirect %>" />
-			</liferay-util:include>
 
 			<%
 			PortletURL iteratorURL = renderResponse.createRenderURL();

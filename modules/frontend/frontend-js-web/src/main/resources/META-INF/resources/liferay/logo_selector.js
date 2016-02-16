@@ -115,6 +115,9 @@ AUI.add(
 									destroyOnHide: true,
 									width: 600
 								},
+								dialogIframe: {
+									bodyCssClass: 'dialog-with-footer'
+								},
 								id: instance._portletNamespace + 'changeLogo',
 								title: Liferay.Language.get('upload-image'),
 								uri: editLogoURL

@@ -109,7 +109,8 @@ AUI.add(
 								{
 									builder: instance,
 									dataProviders: instance.get('dataProviders'),
-									portletNamespace: instance.get('portletNamespace')
+									portletNamespace: instance.get('portletNamespace'),
+									readOnly: true
 								}
 							)
 						);

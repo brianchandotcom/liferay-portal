@@ -85,6 +85,7 @@ AUI.add(
 						fieldDefinition.dataProviders = builder.get('dataProviders');
 						fieldDefinition.parent = builder;
 						fieldDefinition.portletNamespace = builder.get('portletNamespace');
+						fieldDefinition.readOnly = true;
 
 						var fieldClass = FormBuilderUtil.getFieldClass(fieldDefinition.type);
 

@@ -156,6 +156,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		close();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected Class<? extends Plugin> getPluginClass(String plugin) {
 		try {
 			return (Class<? extends Plugin>)Class.forName(plugin);

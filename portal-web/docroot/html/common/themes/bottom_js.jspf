@@ -158,6 +158,13 @@ if (layout != null) {
 				}
 			);
 		}
+
+		A.on(
+			'io:complete',
+			function() {
+				Liferay.fire('io:complete');
+			}
+		);
 	</aui:script>
 </c:if>
 

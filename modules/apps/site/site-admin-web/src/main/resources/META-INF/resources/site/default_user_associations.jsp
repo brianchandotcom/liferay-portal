@@ -70,11 +70,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
 
-<c:if test="<%= defaultSiteRoles.size() <= 0 %>">
-	<p class="text-muted">
-		<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
-	</p>
-</c:if>
+<p class="text-muted <%= defaultSiteRoles.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />siteRolesEmptyResultMessage">
+	<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
+</p>
 
 <liferay-ui:search-container
 	headerNames="title,null"
@@ -111,11 +109,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
 
-<c:if test="<%= defaultSiteRoles.size() <= 0 %>">
-	<p class="text-muted">
-		<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
-	</p>
-</c:if>
+<p class="text-muted <%= defaultSiteRoles.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />teamsEmptyResultMessage">
+	<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
+</p>
 
 <liferay-ui:search-container
 	headerNames="title,null"
@@ -176,6 +172,10 @@ for (long defaultTeamId : defaultTeamIds) {
 			searchContainer.deleteRow(tr, rowId);
 
 			<portlet:namespace />deleteRole(rowId);
+
+			if (searchContainer.getSize() <= 0) {
+				A.one('#<portlet:namespace />siteRolesEmptyResultMessage').show();
+			}
 		},
 		'.modify-link'
 	);
@@ -222,6 +222,10 @@ for (long defaultTeamId : defaultTeamIds) {
 			searchContainer.deleteRow(tr, rowId);
 
 			<portlet:namespace />deleteTeam(rowId);
+
+			if (searchContainer.getSize() <= 0) {
+				A.one('#<portlet:namespace />teamsEmptyResultMessage').show();
+			}
 		},
 		'.modify-link'
 	);
@@ -294,6 +298,8 @@ for (long defaultTeamId : defaultTeamIds) {
 					searchContainer.addRow(rowColumns, event.roleid);
 
 					searchContainer.updateDataStore();
+
+					A.one('#<portlet:namespace />siteRolesEmptyResultMessage').hide();
 				}
 			);
 		}
@@ -341,6 +347,8 @@ for (long defaultTeamId : defaultTeamIds) {
 
 					searchContainer.addRow(rowColumns, event.teamid);
 					searchContainer.updateDataStore();
+
+					A.one('#<portlet:namespace />teamsEmptyResultMessage').hide();
 				}
 			);
 		}

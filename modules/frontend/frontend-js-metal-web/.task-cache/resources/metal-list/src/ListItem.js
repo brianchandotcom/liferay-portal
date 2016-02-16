@@ -1,5 +1,3 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem", ['exports', './ListItem.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _ListItemSoy, _JQueryAdapter) {
   'use strict';
 
@@ -28,7 +26,7 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem", ['exports', './Lis
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
   }
 
   function _inherits(subClass, superClass) {
@@ -60,15 +58,30 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem", ['exports', './Lis
   }(_ListItemSoy2.default);
 
   ListItem.prototype.registerMetalComponent && ListItem.prototype.registerMetalComponent(ListItem, 'ListItem')
+
+
+  /**
+   * Default list elementClasses.
+   * @default list
+   * @type {String}
+   * @static
+   */
   ListItem.ELEMENT_CLASSES = 'listitem';
+
+  /**
+   * List attributes definition.
+   * @type {Object}
+   * @static
+   */
   ListItem.ATTRS = {
     item: {},
+
     index: {
       value: -1
     }
   };
-  exports.default = ListItem;
 
+  exports.default = ListItem;
   _JQueryAdapter2.default.register('listItem', ListItem);
 });
 //# sourceMappingURL=ListItem.js.map

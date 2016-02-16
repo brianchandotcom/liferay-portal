@@ -27,13 +27,13 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 		Align.align = function align(element, alignElement, position) {
 			var suggestion = this.suggestAlignBestRegion(element, alignElement, position);
 			var bestRegion = suggestion.region;
-			var computedStyle = window.getComputedStyle(element, null);
 
+			var computedStyle = window.getComputedStyle(element, null);
 			if (computedStyle.getPropertyValue('position') !== 'fixed') {
 				bestRegion.top += window.pageYOffset;
 				bestRegion.left += window.pageXOffset;
-				var offsetParent = element;
 
+				var offsetParent = element;
 				while (offsetParent = offsetParent.offsetParent) {
 					bestRegion.top -= _Position2.default.getOffsetTop(offsetParent);
 					bestRegion.left -= _Position2.default.getOffsetLeft(offsetParent);
@@ -51,9 +51,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 
 		Align.getAlignRegion = function getAlignRegion(element, alignElement, position) {
 			var r1 = _Position2.default.getRegion(alignElement);
-
 			var r2 = _Position2.default.getRegion(element);
-
 			var top = 0;
 			var left = 0;
 
@@ -62,37 +60,30 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 					top = r1.top - r2.height;
 					left = r1.left + r1.width / 2 - r2.width / 2;
 					break;
-
 				case Align.RightCenter:
 					top = r1.top + r1.height / 2 - r2.height / 2;
 					left = r1.left + r1.width;
 					break;
-
 				case Align.BottomCenter:
 					top = r1.bottom;
 					left = r1.left + r1.width / 2 - r2.width / 2;
 					break;
-
 				case Align.LeftCenter:
 					top = r1.top + r1.height / 2 - r2.height / 2;
 					left = r1.left - r2.width;
 					break;
-
 				case Align.TopRight:
 					top = r1.top - r2.height;
 					left = r1.right - r2.width;
 					break;
-
 				case Align.BottomRight:
 					top = r1.bottom;
 					left = r1.right - r2.width;
 					break;
-
 				case Align.BottomLeft:
 					top = r1.bottom;
 					left = r1.left;
 					break;
-
 				case Align.TopLeft:
 					top = r1.top - r2.height;
 					left = r1.left;
@@ -119,26 +110,21 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 			var bestRegion = this.getAlignRegion(element, alignElement, bestPosition);
 			var tryPosition = bestPosition;
 			var tryRegion = bestRegion;
-
 			var viewportRegion = _Position2.default.getRegion(window);
 
 			for (var i = 0; i < 8;) {
 				if (_Position2.default.intersectRegion(viewportRegion, tryRegion)) {
 					var visibleRegion = _Position2.default.intersection(viewportRegion, tryRegion);
-
 					var area = visibleRegion.width * visibleRegion.height;
-
 					if (area > bestArea) {
 						bestArea = area;
 						bestRegion = tryRegion;
 						bestPosition = tryPosition;
 					}
-
 					if (_Position2.default.insideViewport(tryRegion)) {
 						break;
 					}
 				}
-
 				tryPosition = (position + ++i) % 8;
 				tryRegion = this.getAlignRegion(element, alignElement, tryPosition);
 			}
@@ -152,6 +138,12 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 		return Align;
 	}();
 
+	/**
+  * Constants that represent the supported positions for `Align`.
+  * @type {number}
+  * @static
+  */
+
 	Align.TopCenter = 0;
 	Align.TopRight = 1;
 	Align.RightCenter = 2;
@@ -160,10 +152,17 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Po
 	Align.BottomLeft = 5;
 	Align.LeftCenter = 6;
 	Align.TopLeft = 7;
+
+	/**
+  * Aliases for position constants.
+  * @type {number}
+  * @static
+  */
 	Align.Top = Align.TopCenter;
 	Align.Right = Align.RightCenter;
 	Align.Bottom = Align.BottomCenter;
 	Align.Left = Align.LeftCenter;
+
 	exports.default = Align;
 });
 //# sourceMappingURL=Align.js.map

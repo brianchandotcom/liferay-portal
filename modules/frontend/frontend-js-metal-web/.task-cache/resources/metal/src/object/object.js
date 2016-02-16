@@ -26,15 +26,12 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', '../co
 
 		object.mixin = function mixin(target) {
 			var key, source;
-
 			for (var i = 1; i < arguments.length; i++) {
 				source = arguments[i];
-
 				for (key in source) {
 					target[key] = source[key];
 				}
 			}
-
 			return target;
 		};
 
@@ -42,7 +39,6 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', '../co
 			var parts = name.split('.');
 			var cur = opt_obj || window;
 			var part;
-
 			while (part = parts.shift()) {
 				if (_core2.default.isDefAndNotNull(cur[part])) {
 					cur = cur[part];
@@ -50,18 +46,15 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', '../co
 					return null;
 				}
 			}
-
 			return cur;
 		};
 
 		object.map = function map(obj, fn) {
 			var mappedObj = {};
 			var keys = Object.keys(obj);
-
 			for (var i = 0; i < keys.length; i++) {
 				mappedObj[keys[i]] = fn(keys[i], obj[keys[i]]);
 			}
-
 			return mappedObj;
 		};
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.minimize;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -44,11 +45,14 @@ public class MinimizePortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		String key = "minimize";
+
 		if (portletDisplay.isStateMin()) {
-			return "restore";
+			key = "restore";
 		}
 
-		return "minimize";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.refresh;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -39,7 +40,8 @@ public class RefreshPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "refresh";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "refresh");
 	}
 
 	@Override

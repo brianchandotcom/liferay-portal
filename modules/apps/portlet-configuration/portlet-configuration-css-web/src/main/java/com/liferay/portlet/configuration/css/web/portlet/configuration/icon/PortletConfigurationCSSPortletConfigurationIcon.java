@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.css.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -43,7 +44,8 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "look-and-feel";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "look-and-feel");
 	}
 
 	@Override

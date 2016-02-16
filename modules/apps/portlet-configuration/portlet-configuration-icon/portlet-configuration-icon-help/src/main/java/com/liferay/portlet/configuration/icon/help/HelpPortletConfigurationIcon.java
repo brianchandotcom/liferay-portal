@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.help;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -38,7 +39,8 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "help";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "help");
 	}
 
 	@Override

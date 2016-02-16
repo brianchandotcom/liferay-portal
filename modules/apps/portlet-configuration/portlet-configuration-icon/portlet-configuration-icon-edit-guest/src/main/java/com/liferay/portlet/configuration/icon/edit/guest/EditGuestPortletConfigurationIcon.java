@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.edit.guest;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -34,7 +35,8 @@ public class EditGuestPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "guest-preferences";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "guest-preferences");
 	}
 
 	@Override

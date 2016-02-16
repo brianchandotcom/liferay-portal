@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.print;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -39,7 +40,8 @@ public class PrintPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "print";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "print");
 	}
 
 	@Override

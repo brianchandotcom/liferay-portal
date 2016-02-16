@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.facebook;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -39,7 +40,8 @@ public class FacebookPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "add-to-facebook";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "add-to-facebook");
 	}
 
 	@Override

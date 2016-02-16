@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.maximize;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -40,7 +41,8 @@ public class MaximizePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "maximize";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "maximize");
 	}
 
 	@Override

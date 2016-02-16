@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -39,7 +40,8 @@ public class ConfigurationPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "configuration";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "configuration");
 	}
 
 	@Override

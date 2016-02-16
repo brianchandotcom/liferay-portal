@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.edit.defaults;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -34,7 +35,9 @@ public class EditDefaultsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "default-preferences";
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)),
+			"default-preferences");
 	}
 
 	@Override

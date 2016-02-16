@@ -108,9 +108,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	public List<MenuItem> getPortletTitleAddDocumentMenuItems(
-			Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		long folderId = _getFolderId(folder);
 
@@ -315,9 +314,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddDocumentMenuItems(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		menuItems.addAll(
 			getPortletTitleAddDocumentMenuItems(
@@ -325,9 +323,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddFolderMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		MenuItem portletTitleAddFolderMenuItem =
 			getPortletTitleAddFolderMenuItem(
@@ -339,9 +336,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddMultipleDocumentsMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		MenuItem portletTitleAddMultipleDocumentsMenuItem =
 			getPortletTitleAddMultipleDocumentsMenuItem(
@@ -358,9 +354,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddRepositoryMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		URLMenuItem urlMenuItem = getPortletTitleAddRepositoryMenuItem(
 			folder, themeDisplay, portletRequest);
@@ -371,9 +366,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	}
 
 	protected void addPortletTitleAddShortcutMenuItem(
-			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
-		throws PortalException {
+		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		URLMenuItem urlMenuItem = getPortletTitleAddShortcutMenuItem(
 			folder, themeDisplay, portletRequest);
@@ -448,45 +442,20 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		try {
-			addPortletTitleAddFolderMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add folder menu item", pe);
-		}
+		addPortletTitleAddFolderMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddShortcutMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add shortcut menu item", pe);
-		}
+		addPortletTitleAddShortcutMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddRepositoryMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add repository menu item", pe);
-		}
+		addPortletTitleAddRepositoryMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddMultipleDocumentsMenuItem(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add multiple documents menu item", pe);
-		}
+		addPortletTitleAddMultipleDocumentsMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
 
-		try {
-			addPortletTitleAddDocumentMenuItems(
-				menuItems, folder, themeDisplay, portletRequest);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to add add document menu item", pe);
-		}
+		addPortletTitleAddDocumentMenuItems(
+			menuItems, folder, themeDisplay, portletRequest);
 
 		return menuItems;
 	}

@@ -29,9 +29,14 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,10 +45,14 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo Garcia
@@ -99,8 +108,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 				template.getName(locale), structure.getName(locale));
 		}
 		else if (structure != null) {
+			ResourceBundle resourceBundle = getResourceBundle(locale);
+
 			return LanguageUtil.format(
-				locale, "new-template-for-structure-x",
+				resourceBundle, "new-template-for-structure-x",
 				structure.getName(locale), false);
 		}
 		else if (template != null) {
@@ -132,7 +143,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "structure");
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "structure");
 	}
 
 	@Override
@@ -251,9 +264,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		Locale locale) {
 
 		if (structure != null) {
+			ResourceBundle resourceBundle = getResourceBundle(locale);
+
 			return LanguageUtil.format(
-				locale, "templates-for-structure-x", structure.getName(locale),
-				false);
+				resourceBundle, "templates-for-structure-x",
+				structure.getName(locale), false);
 		}
 
 		return getDefaultViewTemplateTitle(locale);
@@ -304,12 +319,64 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return false;
 	}
 
+	protected ResourceBundle getBaseDDMDisplayResourceBundle(
+		String languageId) {
+
+		Class<?> baseDDMDisplayClazz = BaseDDMDisplay.class;
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", LocaleUtil.fromLanguageId(languageId),
+			baseDDMDisplayClazz.getClassLoader());
+	}
+
+	protected ResourceBundle getDDMDisplayResourceBundle(String languageId) {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					bundle.getSymbolicName());
+
+		if (resourceBundleLoader == null) {
+			return null;
+		}
+
+		return resourceBundleLoader.loadResourceBundle(languageId);
+	}
+
 	protected String getDefaultEditTemplateTitle(Locale locale) {
-		return LanguageUtil.get(locale, "new-template");
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "new-template");
 	}
 
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "templates");
+	}
+
+	protected ResourceBundle getPortalResourceBundle(String languageId) {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		return portalResourceBundleLoader.loadResourceBundle(languageId);
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		ResourceBundle ddmDisplayResourceBundle = getDDMDisplayResourceBundle(
+			languageId);
+
+		if (ddmDisplayResourceBundle == null) {
+			return new AggregateResourceBundle(
+				getBaseDDMDisplayResourceBundle(languageId),
+				getPortalResourceBundle(languageId));
+		}
+
+		return new AggregateResourceBundle(
+			ddmDisplayResourceBundle,
+			getBaseDDMDisplayResourceBundle(languageId),
+			getPortalResourceBundle(languageId));
 	}
 
 	protected String getViewTemplatesURL(

@@ -357,11 +357,12 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		URLMenuItem urlMenuItem = getPortletTitleAddRepositoryMenuItem(
-			folder, themeDisplay, portletRequest);
+		URLMenuItem portletTitleAddRepositoryMenuItem =
+			getPortletTitleAddRepositoryMenuItem(
+				folder, themeDisplay, portletRequest);
 
-		if (urlMenuItem != null) {
-			menuItems.add(urlMenuItem);
+		if (portletTitleAddRepositoryMenuItem != null) {
+			menuItems.add(portletTitleAddRepositoryMenuItem);
 		}
 	}
 
@@ -369,11 +370,12 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		URLMenuItem urlMenuItem = getPortletTitleAddShortcutMenuItem(
-			folder, themeDisplay, portletRequest);
+		URLMenuItem portletTitleAddShortcutMenuItem =
+			getPortletTitleAddShortcutMenuItem(
+				folder, themeDisplay, portletRequest);
 
-		if (urlMenuItem != null) {
-			menuItems.add(urlMenuItem);
+		if (portletTitleAddShortcutMenuItem != null) {
+			menuItems.add(portletTitleAddShortcutMenuItem);
 		}
 	}
 

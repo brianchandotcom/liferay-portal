@@ -87,12 +87,14 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 				getPortletTitleAddMultipleDocumentsMenuItem(
 					themeDisplay, portletRequest, folder);
 
-		portletTitleAddMultipleDocumentsMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"multiple-media"));
+		if (portletTitleAddMultipleDocumentsMenuItem != null) {
+			portletTitleAddMultipleDocumentsMenuItem.setLabel(
+				LanguageUtil.get(
+					PortalUtil.getHttpServletRequest(portletRequest),
+					"multiple-media"));
 
-		menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
+			menuItems.add(portletTitleAddMultipleDocumentsMenuItem);
+		}
 	}
 
 	@Override

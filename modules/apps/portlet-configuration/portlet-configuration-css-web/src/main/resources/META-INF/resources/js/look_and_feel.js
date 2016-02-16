@@ -1310,7 +1310,7 @@ AUI.add(
 
 						var curPorlet = instance._curPortlet;
 
-						var portletTitle = curPorlet.one('.portlet-title, .portlet-title-default');
+						var portletTitle = curPorlet.one('.portlet-title, .portlet-title-text');
 
 						if (portletTitle) {
 							var cruft = portletTitle.html().match(/<\/?[^>]+>|\n|\r|\t/gim);

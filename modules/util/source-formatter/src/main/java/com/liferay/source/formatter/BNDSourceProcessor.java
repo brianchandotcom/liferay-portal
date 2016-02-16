@@ -74,7 +74,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		content = BNDImportsFormatter.formatBNDImports(
 			content, _importsPattern);
 
-		content = formatIncludeResource(content);
+		if (portalSource && isModulesFile(absolutePath) &&
+			!fileName.contains("/registry-test/")) {
+
+			content = formatIncludeResource(content);
+		}
 
 		return sortDefinitions(content);
 	}

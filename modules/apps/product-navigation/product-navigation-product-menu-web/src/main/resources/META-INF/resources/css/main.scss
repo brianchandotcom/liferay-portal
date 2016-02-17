@@ -219,15 +219,129 @@ body {
 		}
 	}
 
-	$increase-left: -20px;
-	$initial-left: -20px;
-	$nodeSelected: ".tree-container";
+	.tree-container {
+		.layout-tree-delete {
+			left: -40px;
+		}
 
-	@for $i from 1 through 10 {
-		$node: if($i == 1, $nodeSelected, selector-nest($node, $nodeSelected));
+		.tree-container {
+			.layout-tree-delete {
+				left: -60px;
+			}
 
-		#{$node} .layout-tree-delete {
-			left: $initial-left + ($increase-left * $i);
+			.tree-container {
+				.layout-tree-delete {
+					left: -80px;
+				}
+
+				.tree-container {
+					.layout-tree-delete {
+						left: -100px;
+					}
+
+					.tree-container {
+						.layout-tree-delete {
+							left: -120px;
+						}
+
+						.tree-container {
+							.layout-tree-delete {
+								left: -140px;
+							}
+
+							.tree-container {
+								.layout-tree-delete {
+									left: -160px;
+								}
+
+								.tree-container {
+									.layout-tree-delete {
+										left: -180px;
+									}
+
+									.tree-container {
+										.layout-tree-delete {
+											left: -200px;
+										}
+
+										.tree-container {
+											.layout-tree-delete {
+												left: -220px;
+											}
+
+											.tree-container {
+												.layout-tree-delete {
+													left: -240px;
+												}
+
+												.tree-container {
+													.layout-tree-delete {
+														left: -260px;
+													}
+
+													.tree-container {
+														.layout-tree-delete {
+															left: -280px;
+														}
+
+														.tree-container {
+															.layout-tree-delete {
+																left: -300px;
+															}
+
+															.tree-container {
+																.layout-tree-delete {
+																	left: -320px;
+																}
+
+																.tree-container {
+																	.layout-tree-delete {
+																		left: -340px;
+																	}
+
+																	.tree-container {
+																		.layout-tree-delete {
+																			left: -360px;
+																		}
+
+																		.tree-container {
+																			.layout-tree-delete {
+																				left: -380px;
+																			}
+
+																			.tree-container {
+																				.layout-tree-delete {
+																					left: -400px;
+																				}
+
+																				.tree-container {
+																					.layout-tree-delete {
+																						left: -420px;
+																					}
+
+																					.tree-container {
+																						.layout-tree-delete {
+																							left: -440px;
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

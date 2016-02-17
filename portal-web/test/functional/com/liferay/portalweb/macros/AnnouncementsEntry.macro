@@ -111,19 +111,6 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
-	<command name="hidePG">
-		<var name="key_entryContent" value="${entryContent}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#HIDE" value1="Hide" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-	</command>
-
 	<command name="markAsReadPG">
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -133,8 +120,6 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_READ" value1="Mark as Read" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 	</command>
 
 	<command name="showPG">

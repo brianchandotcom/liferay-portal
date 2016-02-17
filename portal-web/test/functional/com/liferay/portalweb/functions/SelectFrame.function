@@ -19,6 +19,8 @@
 				<execute function="SelectFrame#selectFrameTop" />
 			</else>
 		</if>
+
+		<execute function="WaitForSPARefresh" />
 	</command>
 
 	<command name="selectFrameTop">
@@ -27,5 +29,7 @@
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
 	</command>
 </definition>

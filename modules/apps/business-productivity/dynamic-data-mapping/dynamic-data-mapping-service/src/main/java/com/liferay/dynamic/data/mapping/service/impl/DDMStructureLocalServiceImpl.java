@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementExcep
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -222,7 +222,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -345,7 +345,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -1331,7 +1331,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -1374,7 +1374,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -1409,7 +1409,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -1761,5 +1761,8 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMFormValidator.class)
 	protected DDMFormValidator ddmFormValidator;
+
+	@ServiceReference(type = DDMFormXSDDeserializer.class)
+	protected DDMFormXSDDeserializer ddmFormXSDDeserializer;
 
 }

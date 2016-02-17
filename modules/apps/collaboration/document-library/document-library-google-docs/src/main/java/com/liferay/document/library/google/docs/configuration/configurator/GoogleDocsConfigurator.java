@@ -19,6 +19,7 @@ import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHe
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -56,6 +57,7 @@ public class GoogleDocsConfigurator {
 						googleDocsDLFileEntryTypeHelper =
 							new GoogleDocsDLFileEntryTypeHelper(
 								company, _classNameLocalService,
+								_ddmFormXSDDeserializer,
 								_ddmStructureLocalService,
 								_dlFileEntryTypeLocalService,
 								_userLocalService);
@@ -95,6 +97,13 @@ public class GoogleDocsConfigurator {
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormXSDDeserializer(
+		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
+
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -147,6 +156,7 @@ public class GoogleDocsConfigurator {
 
 	private ClassNameLocalService _classNameLocalService;
 	private CompanyLocalService _companyLocalService;
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

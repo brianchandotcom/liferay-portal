@@ -1,5 +1,7 @@
 <definition default="keyPress">
 	<command name="keyPress">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="mouseOver" />
 
 		<execute selenium="keyPress" />
@@ -10,6 +12,8 @@
 	</command>
 
 	<command name="keyPressNoError">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="mouseOver" />
 
 		<execute selenium="keyPress" />

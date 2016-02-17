@@ -1,5 +1,7 @@
 <definition default="doubleClick">
 	<command name="doubleClick">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -12,6 +14,8 @@
 	</command>
 
 	<command name="doubleClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

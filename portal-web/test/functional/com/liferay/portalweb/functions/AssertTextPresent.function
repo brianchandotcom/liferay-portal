@@ -1,5 +1,7 @@
 <definition default="assertTextPresent">
 	<command name="assertTextPresent">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForTextPresent" />
 
 		<execute selenium="assertTextPresent" />

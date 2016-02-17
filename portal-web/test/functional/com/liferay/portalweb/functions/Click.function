@@ -1,5 +1,7 @@
 <definition default="click" summary="Click on '${locator1}'">
 	<command name="click">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -12,6 +14,8 @@
 	</command>
 
 	<command name="clickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -24,6 +28,8 @@
 	</command>
 
 	<command name="clickAtAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -36,6 +42,8 @@
 	</command>
 
 	<command name="clickAtAndWaitCPNavigation">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAtAndWait" />
@@ -46,6 +54,8 @@
 	</command>
 
 	<command name="clickAtClickDockbar">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
@@ -60,6 +70,8 @@
 	</command>
 
 	<command name="clickAtNavigation">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="Click#clickAtNonLiferayNavigation" />
 
 		<execute argument1="//script[contains(@src,'/aui/aui-url/aui-url')]" selenium="waitForElementPresent" />
@@ -70,6 +82,8 @@
 	</command>
 
 	<command name="clickAtNonLiferayNavigation">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<if>
@@ -95,6 +109,8 @@
 	</command>
 
 	<command name="clickAtSidebarClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute argument1="//ul[contains(@data-namespace,'ControlMenuPortlet')]" selenium="clickAt" />
@@ -111,6 +127,8 @@
 	</command>
 
 	<command name="clickAtSidebarClickAtWaitForScript">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute argument1="//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']" selenium="waitForElementPresent" />
@@ -127,6 +145,8 @@
 	</command>
 
 	<command name="clickNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="click" />
@@ -137,6 +157,8 @@
 	</command>
 
 	<command name="clickWaitForInlineCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<if>
 			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
 			<then>
@@ -152,6 +174,8 @@
 	</command>
 
 	<command name="clickWaitForInlineCKEditorNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
 		<if>
 			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
 			<then>
@@ -165,6 +189,8 @@
 	</command>
 
 	<command name="makeVisibleClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -181,6 +207,8 @@
 	</command>
 
 	<command name="mouseOverClick">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -195,6 +223,8 @@
 	</command>
 
 	<command name="partialTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="mouseOver" />
@@ -207,6 +237,8 @@
 	</command>
 
 	<command name="partialTextClickAtAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="mouseOver" />
@@ -219,6 +251,8 @@
 	</command>
 
 	<command name="pauseClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="mouseOver" />
@@ -231,6 +265,8 @@
 	</command>
 
 	<command name="pauseMakeVisibleClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#makeVisibleClickAt" />
@@ -241,6 +277,8 @@
 	</command>
 
 	<command name="pauseTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAt" />
@@ -251,6 +289,8 @@
 	</command>
 
 	<command name="pauseTextClickAtAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAtAndWait" />
@@ -261,6 +301,8 @@
 	</command>
 
 	<command name="textClick">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
@@ -273,6 +315,8 @@
 	</command>
 
 	<command name="textClickAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
@@ -285,6 +329,8 @@
 	</command>
 
 	<command name="textClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
@@ -297,6 +343,8 @@
 	</command>
 
 	<command name="textClickAtAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
@@ -309,6 +357,8 @@
 	</command>
 
 	<command name="textClickAtAndWaitCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#textClickAtAndWait" />
@@ -319,6 +369,8 @@
 	</command>
 
 	<command name="textClickAtClickDockbar">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
 
 		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
@@ -331,6 +383,8 @@
 	</command>
 
 	<command name="valueClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertValue" />
 
 		<execute selenium="mouseOver" />
@@ -343,6 +397,8 @@
 	</command>
 
 	<command name="valueClickAtAndWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute function="AssertTextEquals#assertValue" />
 
 		<execute selenium="mouseOver" />
@@ -355,6 +411,8 @@
 	</command>
 
 	<command name="valueClickAtAndWaitCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#valueClickAtAndWait" />
@@ -376,7 +434,21 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="waitForMenuToggleJSClick">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]" selenium="waitForElementPresent" />
+
+		<execute function="Click" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="waitForNavigationInteractionTouchScriptTap">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//script[contains(@src,'liferay/dockbar_keyboard_interaction.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />

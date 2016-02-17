@@ -1,5 +1,7 @@
 <definition default="sikuliType">
 	<command name="sikuliType">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliType" />
 
 		<execute argument1="2000" selenium="pause" />

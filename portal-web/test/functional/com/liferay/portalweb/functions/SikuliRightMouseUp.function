@@ -1,5 +1,7 @@
 <definition default="sikuliRightMouseUp">
 	<command name="sikuliRightMouseUp">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliRightMouseUp" />
 
 		<execute selenium="assertJavaScriptErrors" />

@@ -1,5 +1,7 @@
 <definition default="type" summary="Type to '${locator1}' the value '${value1}'">
 	<command name="clickAtSendKeys">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -26,6 +28,8 @@
 	</command>
 
 	<command name="clickAtType">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -52,6 +56,8 @@
 	</command>
 
 	<command name="mouseOverFocusType">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -66,6 +72,8 @@
 	</command>
 
 	<command name="sendKeys">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -78,6 +86,8 @@
 	</command>
 
 	<command name="sendKeysAceEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -90,6 +100,8 @@
 	</command>
 
 	<command name="sendKeysAceEditorNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="sendKeysAceEditor" />
@@ -100,6 +112,8 @@
 	</command>
 
 	<command name="sendKeysApplicationSearch">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]" selenium="waitForElementPresent" />
 
 		<execute function="Type#sendKeys" />
@@ -110,6 +124,8 @@
 	</command>
 
 	<command name="sendKeysNoWait">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="mouseOver" />
 
 		<execute selenium="sendKeys" />
@@ -120,6 +136,8 @@
 	</command>
 
 	<command name="type">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -132,6 +150,8 @@
 	</command>
 
 	<command name="typeAceEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -144,6 +164,8 @@
 	</command>
 
 	<command name="typeAceEditorNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="typeAceEditor" />
@@ -154,6 +176,8 @@
 	</command>
 
 	<command name="typeAlloyEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -166,6 +190,8 @@
 	</command>
 
 	<command name="typeCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -178,6 +204,8 @@
 	</command>
 
 	<command name="typeCKEditorWaitForCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute argument1="1000" selenium="pause" />
@@ -192,6 +220,8 @@
 	</command>
 
 	<command name="typeClickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -206,6 +236,8 @@
 	</command>
 
 	<command name="typeEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -218,6 +250,8 @@
 	</command>
 
 	<command name="typePause">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -232,6 +266,8 @@
 	</command>
 
 	<command name="typeWaitForCKEditor">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute argument1="1000" selenium="pause" />

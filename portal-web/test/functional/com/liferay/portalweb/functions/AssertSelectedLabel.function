@@ -1,5 +1,7 @@
 <definition default="assertSelectedLabel">
 	<command name="assertSelectedLabel">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="assertSelectedLabel" />

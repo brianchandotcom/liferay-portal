@@ -1,5 +1,7 @@
 <definition default="assertConsoleTextNotPresent">
 	<command name="assertConsoleTextNotPresent">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="assertConsoleTextNotPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />

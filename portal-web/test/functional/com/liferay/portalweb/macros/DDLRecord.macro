@@ -769,7 +769,7 @@
 	<command name="viewViaAnchorLink">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertClick" locator1="DDLRecord#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>

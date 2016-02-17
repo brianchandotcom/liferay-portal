@@ -276,8 +276,6 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		);
 	}
 
-	togglePropagatableFields(<%= selLayout.isLayoutPrototypeLinkActive() %>);
-
 	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
 		'change',
 		function(event) {

@@ -288,6 +288,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
+</div>
 
 <aui:script use="liferay-url-preview">
 	A.one('#<portlet:namespace />fm').delegate(

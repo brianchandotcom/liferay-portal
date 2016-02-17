@@ -1,11 +1,3 @@
-compileJava.doLast {
-	copy {
-		from 'src/main/java'
-		into 'classes'
-		exclude '**/*.java'
-	}
-}
-
 dependencies {
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

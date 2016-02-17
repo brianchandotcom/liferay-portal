@@ -1,5 +1,7 @@
 <definition default="addSelection">
 	<command name="addSelection">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

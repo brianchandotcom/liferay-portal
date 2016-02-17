@@ -1,5 +1,7 @@
 <definition default="sikuliMouseMove">
 	<command name="sikuliMouseMove">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliMouseMove" />
 
 		<execute selenium="assertJavaScriptErrors" />

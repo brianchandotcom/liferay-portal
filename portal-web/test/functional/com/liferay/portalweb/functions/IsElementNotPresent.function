@@ -1,5 +1,7 @@
 <definition default="isElementNotPresent">
 	<command name="isElementNotPresent">
+		<execute function="WaitForSPARefresh" />
+
 		<if>
 			<condition selenium="isElementPresent" />
 			<then>
@@ -12,6 +14,8 @@
 	</command>
 
 	<command name="isNotVisible">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="isNotVisible" />

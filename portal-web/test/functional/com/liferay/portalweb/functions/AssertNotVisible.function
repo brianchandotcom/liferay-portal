@@ -1,5 +1,7 @@
 <definition default="assertNotVisible">
 	<command name="assertNotVisible">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForNotVisible" />
 
 		<execute selenium="assertNotVisible" />

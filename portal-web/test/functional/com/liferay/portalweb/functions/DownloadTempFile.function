@@ -1,5 +1,7 @@
 <definition default="downloadTempFile">
 	<command name="downloadTempFile">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="5000" selenium="pause" />
 
 		<execute selenium="assertJavaScriptErrors" />

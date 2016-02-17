@@ -1,5 +1,7 @@
 <definition default="mouseDown">
 	<command name="javaScriptMouseDown">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="javaScriptMouseDown" />
 
 		<execute selenium="assertJavaScriptErrors" />
@@ -8,6 +10,8 @@
 	</command>
 
 	<command name="mouseDown">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="mouseDown" />
 
 		<execute selenium="assertJavaScriptErrors" />
@@ -16,6 +20,8 @@
 	</command>
 
 	<command name="mouseDownAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="mouseDownAt" />
 
 		<execute selenium="assertJavaScriptErrors" />

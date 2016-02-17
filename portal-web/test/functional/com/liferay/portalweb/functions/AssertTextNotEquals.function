@@ -1,5 +1,7 @@
 <definition default="assertTextNotEquals" summary="Assert that '${locator1}' does not equal the value '${value1}'">
 	<command name="assertNotPartialText" summary="Assert that '${locator1}' does not contain the value '${value1}'">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="waitForNotPartialText" />
@@ -12,6 +14,8 @@
 	</command>
 
 	<command name="assertNotText">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="waitForNotText" />
@@ -24,6 +28,8 @@
 	</command>
 
 	<command name="assertNotValue">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="waitForNotValue" />
@@ -36,6 +42,8 @@
 	</command>
 
 	<command name="assertTextNotEquals">
+		<execute function="WaitForSPARefresh" />
+
 		<if>
 			<contains string="${locator1}" substring="/input" />
 			<then>

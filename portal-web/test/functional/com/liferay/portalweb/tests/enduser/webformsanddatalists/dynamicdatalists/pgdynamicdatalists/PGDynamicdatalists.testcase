@@ -1906,8 +1906,10 @@
 
 		<execute macro="DDLRecord#publish" />
 
-		<execute function="AssertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${ddlRecordFieldData}" />
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="Text ${ddlRecordFieldData}" />
+		<execute macro="DDLRecord#viewViaAnchorLink">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 	</command>
 
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">

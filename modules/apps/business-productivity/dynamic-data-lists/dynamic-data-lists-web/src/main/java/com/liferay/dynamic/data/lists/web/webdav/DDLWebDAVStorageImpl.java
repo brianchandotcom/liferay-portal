@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.webdav.DDMWebDavUtil;
+import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -53,7 +53,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return DDMWebDavUtil.deleteResource(
+		return _ddmWebDav.deleteResource(
 			webDAVRequest, getRootPath(), getToken(),
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 	}
@@ -62,7 +62,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return DDMWebDavUtil.getResource(
+		return _ddmWebDav.getResource(
 			webDAVRequest, getRootPath(), getToken(),
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 	}
@@ -80,10 +80,10 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			else if (pathArray.length == 3) {
 				String type = pathArray[2];
 
-				if (type.equals(DDMWebDavUtil.TYPE_STRUCTURES)) {
+				if (type.equals(DDMWebDav.TYPE_STRUCTURES)) {
 					return getStructures(webDAVRequest);
 				}
-				else if (type.equals(DDMWebDavUtil.TYPE_TEMPLATES)) {
+				else if (type.equals(DDMWebDav.TYPE_TEMPLATES)) {
 					return getTemplates(webDAVRequest);
 				}
 			}
@@ -97,7 +97,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Override
 	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
-		return DDMWebDavUtil.putResource(
+		return _ddmWebDav.putResource(
 			webDAVRequest, getRootPath(), getToken(),
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 	}
@@ -108,13 +108,11 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		resources.add(
-			DDMWebDavUtil.toResource(
-				webDAVRequest, DDMWebDavUtil.TYPE_STRUCTURES, getRootPath(),
-				true));
+			_ddmWebDav.toResource(
+				webDAVRequest, DDMWebDav.TYPE_STRUCTURES, getRootPath(), true));
 		resources.add(
-			DDMWebDavUtil.toResource(
-				webDAVRequest, DDMWebDavUtil.TYPE_TEMPLATES, getRootPath(),
-				true));
+			_ddmWebDav.toResource(
+				webDAVRequest, DDMWebDav.TYPE_TEMPLATES, getRootPath(), true));
 
 		return resources;
 	}
@@ -130,7 +128,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				PortalUtil.getClassNameId(DDLRecordSet.class));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = DDMWebDavUtil.toResource(
+			Resource resource = _ddmWebDav.toResource(
 				webDAVRequest, ddmStructure, getRootPath(), true);
 
 			resources.add(resource);
@@ -152,7 +150,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				QueryUtil.ALL_POS, null);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = DDMWebDavUtil.toResource(
+			Resource resource = _ddmWebDav.toResource(
 				webDAVRequest, ddmTemplate, getRootPath(), true);
 
 			resources.add(resource);
@@ -175,7 +173,13 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMWebDav(DDMWebDav ddmWebDav) {
+		_ddmWebDav = ddmWebDav;
+	}
+
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMWebDav _ddmWebDav;
 
 }

@@ -77,9 +77,16 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.after('titlesChange', A.bind('_afterTitlesChange', instance));
+						instance._eventHandlers = [
+							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
+							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
+						];
+					},
 
-						A.on('windowresize', A.bind('_syncPageInformationHeight', instance));
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
 					_addWizardPage: function() {
@@ -342,20 +349,17 @@ AUI.add(
 						instance.set('titles', titles);
 					},
 
-					_plugAutoSizeOnPageHeaderInformation: function(node) {
+					_plugAutoSize: function(node) {
 						var instance = this;
 
-						var height = node.get('scrollHeight');
+						if (!node.autosize) {
+							var height = node.get('scrollHeight');
 
-						node.plug(
-							A.Plugin.Autosize
-						);
+							node.plug(A.Plugin.Autosize);
+							node.height(height);
+						}
 
 						node.autosize._uiAutoSize();
-
-						node.autosize._uiAutoSize();
-
-						node.height(height);
 					},
 
 					_removeWizardPage: function(index) {
@@ -425,18 +429,13 @@ AUI.add(
 					_syncPageInformationHeight: function() {
 						var instance = this;
 
-						var pageTitle = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
+						var pageHeader = instance.get('pageHeader');
 
-						var pageDescription = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
+						var pageDescription = pageHeader.one('.' + CSS_PAGE_HEADER_DESCRIPTION);
+						var pageTitle = pageHeader.one('.' + CSS_PAGE_HEADER_TITLE);
 
-						if (!pageTitle.autosize) {
-							instance._plugAutoSizeOnPageHeaderInformation(pageTitle);
-							instance._plugAutoSizeOnPageHeaderInformation(pageDescription);
-						}
-
-						pageTitle.autosize._uiAutoSize();
-
-						pageDescription.autosize._uiAutoSize();
+						instance._plugAutoSize(pageDescription);
+						instance._plugAutoSize(pageTitle);
 					},
 
 					_syncWizardItems: function() {

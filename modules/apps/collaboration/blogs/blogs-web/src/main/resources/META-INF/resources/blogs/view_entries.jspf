@@ -14,14 +14,16 @@
  */
 --%>
 
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
-	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
-	</portlet:renderURL>
+<c:if test='<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
+	<div class="button-holder">
+		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+		</portlet:renderURL>
 
-	<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />
+		<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />
+	</div>
 </c:if>
 
 <div class="subscribe">
@@ -70,8 +72,6 @@
 	assetType="entries"
 	portletURL="<%= portletURL %>"
 />
-
-<liferay-util:include page="/blogs/my_pending_entries.jsp" servletContext="<%= application %>" />
 
 <%
 Map<String, Object> contextObjects = new HashMap<String, Object>();

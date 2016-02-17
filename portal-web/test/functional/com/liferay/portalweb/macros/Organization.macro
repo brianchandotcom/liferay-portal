@@ -221,7 +221,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_TAB" value1="Organization Site" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Organization Site" />
+		</execute>
+
 		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 
 		<if>
@@ -245,7 +248,11 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Organization Site" />
+		</execute>
 
 		<if>
 			<condition function="IsElementPresent" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_PUBLIC_PAGES_SELECT" />
@@ -599,7 +606,6 @@
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Edit ${orgName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgName}" />
 		<execute function="AssertTextEquals#assertValue" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE" value1="${orgType}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_NAME" value1="${orgName}" />
 	</command>
 
 	<command name="viewMembersNotFoundCP">

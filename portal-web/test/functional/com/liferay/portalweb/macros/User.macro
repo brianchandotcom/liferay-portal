@@ -223,7 +223,10 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_TAB" value1="Personal Site" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Personal Site" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_LABEL" value1="Personal site" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES_LABEL" value1="My Dashboard" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES" value1="${siteTemplateName}" />
@@ -725,7 +728,10 @@
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Roles" />
+		</execute>
+
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK" value1="Select" />
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_IFRAME" />
 
@@ -751,7 +757,10 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Roles" />
+		</execute>
+
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK" value1="Select" />
 
 		<execute function="Pause" locator1="5000" />
@@ -778,7 +787,10 @@
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Roles" />
+		</execute>
+
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_SELECT_LINK" value1="Select" />
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_IFRAME" />
 
@@ -1147,10 +1159,15 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="UsersAndOrganizationsEditUser#PASSWORD_TAB" value1="Password" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Password" />
+		</execute>
+
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="User#logoutPG" />
@@ -1193,7 +1210,10 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="UsersAndOrganizationsEditUser#PASSWORD_TAB" value1="Password" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Password" />
+		</execute>
+
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -1246,7 +1266,11 @@
 	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
 
 	<command name="editUserDisplaySettingsTimeZonePacific">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TAB" value1="Display Settings" />
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Display Settings" />
+		</execute>
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
@@ -1315,7 +1339,9 @@
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_TAB" value1="Organizations" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Organizations" />
+		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_SELECT_LINK" value1="Select" />
 
@@ -1348,7 +1374,10 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_TAB" value1="Sites" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Sites" />
+		</execute>
+
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#SITES_SELECT_IFRAME" />
 
@@ -1741,7 +1770,9 @@
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Roles" />
+		</execute>
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -1807,7 +1838,6 @@
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#USER_NAME" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 	</command>
@@ -1853,7 +1883,9 @@
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_TAB" value1="Sites" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Sites" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -1861,7 +1893,9 @@
 	</command>
 
 	<command name="viewUserInfomationRolesCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_TAB" value1="Roles" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Roles" />
+		</execute>
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -1869,7 +1903,9 @@
 	</command>
 
 	<command name="viewUserInfomationSitesCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_TAB" value1="Sites" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Sites" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -1877,7 +1913,9 @@
 	</command>
 
 	<command name="viewUserInfomationUserGroupsCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#USER_GROUPS_TAB" value1="User Groups" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="User Groups" />
+		</execute>
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -1885,7 +1923,11 @@
 	</command>
 
 	<command name="viewUserMiscellaneousCustomFieldsCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#CUSTOM_FIELDS_TAB" value1="Custom Fields" />
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Custom Fields" />
+		</execute>
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
@@ -1900,7 +1942,9 @@
 	</command>
 
 	<command name="viewUserSiteCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_TAB" value1="Sites" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Sites" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 

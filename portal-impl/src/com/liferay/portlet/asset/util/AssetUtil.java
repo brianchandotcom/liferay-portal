@@ -862,7 +862,7 @@ public class AssetUtil {
 		return sortType;
 	}
 
-	private String _getClassName(String className) {
+	public static String getClassName(String className) {
 		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
@@ -872,18 +872,21 @@ public class AssetUtil {
 		return className;
 	}
 
-	private String _getMessage(String className, Locale locale) {
+	public static String getClassNameMessage(String className, Locale locale) {
 		String message = null;
 
 		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
-			message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+			message = className.substring(
+				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
 			className = className.substring(0, pos);
 		}
 
-		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
 		if (pos == -1) {
 			message = assetRendererFactory.getTypeName(locale);
@@ -892,14 +895,28 @@ public class AssetUtil {
 		return message;
 	}
 
-	private String _getURL(long groupId, long plid, PortletURL addPortletURL) {
-		addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		addPortletURL.setParameter("groupId", String.valueOf(groupId));
+	public static String getAddURLPopUp(
+		long groupId, long plid, PortletURL addPortletURL, String portletId,
+		boolean addDisplayPageParameter, Layout layout) {
+
+		addPortletURL.setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		addPortletURL.setParameter(
+			"groupId", String.valueOf(groupId));
 		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 		String addPortletURLString = addPortletURL.toString();
 
-		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+		addPortletURLString = HttpUtil.addParameter(
+			addPortletURLString, "refererPlid", plid);
+
+		if (addDisplayPageParameter && (layout != null)) {
+			String namespace = PortalUtil.getPortletNamespace(portletId);
+
+			addPortletURLString = HttpUtil.addParameter(
+				addPortletURLString, namespace + "layoutUuid",
+				layout.getUuid());
+		}
 
 		return addPortletURLString;
 	}

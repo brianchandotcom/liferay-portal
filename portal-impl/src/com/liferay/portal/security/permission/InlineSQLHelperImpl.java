@@ -62,11 +62,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	@Override
 	public boolean isEnabled() {
-		return isEnabled(0);
+		return isEnabled(0, 0);
 	}
 
 	@Override
 	public boolean isEnabled(long groupId) {
+		return isEnabled(0, groupId);
+	}
+
+	@Override
+	public boolean isEnabled(long companyId, long groupId) {
 		if (!PropsValues.PERMISSIONS_INLINE_SQL_CHECK_ENABLED) {
 			return false;
 		}
@@ -85,8 +90,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				return false;
 			}
 		}
+		else if (companyId > 0) {
+			if (permissionChecker.isCompanyAdmin(companyId)) {
+				return false;
+			}
+		}
 		else {
-			if (permissionChecker.isCompanyAdmin()) {
+			if (permissionChecker.isOmniadmin()) {
 				return false;
 			}
 		}

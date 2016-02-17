@@ -1596,7 +1596,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public List<PasswordPolicy> filterFindByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1708,7 +1708,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		long passwordPolicyId, String uuid, long companyId,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(passwordPolicyId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1992,7 +1992,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2546,7 +2546,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public List<PasswordPolicy> filterFindByCompanyId(long companyId,
 		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2639,7 +2639,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		long passwordPolicyId, long companyId,
 		OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(passwordPolicyId, companyId,
 				orderByComparator);
 		}
@@ -2884,7 +2884,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 

@@ -659,7 +659,13 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#list>
 
 		int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-			if (!InlineSQLHelperUtil.isEnabled(<#if finder.hasColumn("groupId")>groupId</#if>)) {
+			<#if finder.hasColumn("groupId")>
+				if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			<#elseif finder.hasColumn("companyId")>
+				if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			<#else>
+				if (!InlineSQLHelperUtil.isEnabled()) {
+			</#if>
 				return findBy${finder.name}(
 
 				<#list finderColsList as finderCol>
@@ -788,7 +794,13 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#list>
 
 			OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
-				if (!InlineSQLHelperUtil.isEnabled(<#if finder.hasColumn("groupId")>groupId</#if>)) {
+				<#if finder.hasColumn("groupId")>
+					if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+				<#elseif finder.hasColumn("companyId")>
+					if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+				<#else>
+					if (!InlineSQLHelperUtil.isEnabled()) {
+				</#if>
 					return findBy${finder.name}_PrevAndNext(${entity.PKVarName},
 
 					<#list finderColsList as finderCol>
@@ -1135,14 +1147,19 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#list>
 
 			int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+				<#if finder.hasColumn("groupId")>
 				if (!InlineSQLHelperUtil.isEnabled(
-					<#if finder.hasColumn("groupId")>
-						<#if finder.getColumn("groupId").hasArrayableOperator()>
-							groupIds
-						<#else>
-							groupId
-						</#if>
-					</#if>)) {
+					<#if finder.getColumn("groupId").hasArrayableOperator()>
+						groupIds
+					<#else>
+						groupId
+					</#if>
+				)) {
+				<#elseif finder.hasColumn("companyId")>
+					if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+				<#else>
+					if (!InlineSQLHelperUtil.isEnabled()) {
+				</#if>
 
 					return findBy${finder.name}(
 

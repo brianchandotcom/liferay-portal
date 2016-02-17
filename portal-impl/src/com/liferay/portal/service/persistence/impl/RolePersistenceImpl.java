@@ -1576,7 +1576,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1685,7 +1685,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByUuid_C_PrevAndNext(long roleId, String uuid,
 		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(roleId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1968,7 +1968,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2511,7 +2511,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2601,7 +2601,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByCompanyId_PrevAndNext(long roleId,
 		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(roleId, companyId,
 				orderByComparator);
 		}
@@ -2845,7 +2845,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 
@@ -6362,7 +6362,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int type, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_T(companyId, type, start, end, orderByComparator);
 		}
 
@@ -6457,7 +6457,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByC_T_PrevAndNext(long roleId, long companyId,
 		int type, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_T_PrevAndNext(roleId, companyId, type,
 				orderByComparator);
 		}
@@ -6682,7 +6682,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int[] types, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_T(companyId, types, start, end, orderByComparator);
 		}
 
@@ -7128,7 +7128,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByC_T(long companyId, int type) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByC_T(companyId, type);
 		}
 
@@ -7180,7 +7180,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByC_T(long companyId, int[] types) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return countByC_T(companyId, types);
 		}
 

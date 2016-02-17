@@ -101,7 +101,7 @@ AUI.add(
 									targetNode.prepend(alertsContainer);
 								}
 								else {
-									var navbar = rootNode.one('.navbar');
+									var navbar = rootNode.one('.portlet-body > .navbar');
 
 									if (navbar) {
 										navbar.placeAfter(alertsContainer);

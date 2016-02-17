@@ -230,13 +230,8 @@ if (step == 1) {
 				>
 					<liferay-ui:search-container-column-text
 						name="title"
-					>
-						<liferay-ui:icon
-							iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
-					</liferay-ui:search-container-column-text>
+						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					/>
 
 					<liferay-ui:search-container-column-text>
 						<c:if test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId(), role.getRoleId()) %>">

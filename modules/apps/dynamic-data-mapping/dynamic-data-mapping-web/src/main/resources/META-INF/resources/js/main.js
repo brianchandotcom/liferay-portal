@@ -347,6 +347,30 @@ AUI.add(
 						}
 					},
 
+					_beforeGetEditor: function(record, column) {
+						var instance = this;
+
+						var columnEditor = column.editor;
+
+						var recordEditor = record.get('editor');
+
+						var editor = recordEditor || columnEditor;
+
+						if (instanceOf(editor, A.BaseOptionsCellEditor)) {
+							if (editor.get('rendered')) {
+								instance._toggleOptionsEditorInputs(editor);
+							}
+							else {
+								editor.after(
+									'render',
+									function() {
+										instance._toggleOptionsEditorInputs(editor);
+									}
+								);
+							}
+						}
+					},
+
 					_deserializeField: function(fieldJSON, availableLanguageIds) {
 						var instance = this;
 
@@ -470,7 +494,7 @@ AUI.add(
 					_onDataTableRender: function(event) {
 						var instance = this;
 
-						A.on(instance._onGetEditor, event.target, 'getEditor', instance);
+						A.on(instance._beforeGetEditor, event.target, 'getEditor', instance);
 					},
 
 					_onDefaultLocaleChange: function(event) {
@@ -494,30 +518,6 @@ AUI.add(
 							translationManager.addAvailableLocale(newVal);
 
 							instance._updateLocalizationMaps(config);
-						}
-					},
-
-					_onGetEditor: function(record, column) {
-						var instance = this;
-
-						var columnEditor = column.editor;
-
-						var recordEditor = record.get('editor');
-
-						var editor = recordEditor || columnEditor;
-
-						if (instanceOf(editor, A.BaseOptionsCellEditor)) {
-							if (editor.get('rendered')) {
-								instance._toggleOptionsEditorInputs(editor);
-							}
-							else {
-								editor.after(
-									'render',
-									function() {
-										instance._toggleOptionsEditorInputs(editor);
-									}
-								);
-							}
 						}
 					},
 

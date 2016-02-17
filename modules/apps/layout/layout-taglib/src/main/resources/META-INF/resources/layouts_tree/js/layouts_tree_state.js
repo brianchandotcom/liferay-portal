@@ -120,8 +120,6 @@ AUI.add(
 					_onCheckContentDisplayTreeAppend: function(event) {
 						var instance = this;
 
-						var node = event.node;
-
 						var host = instance.get(STR_HOST);
 
 						host.restoreSelectedNode();
@@ -129,8 +127,6 @@ AUI.add(
 
 					_onNodeChildrenChange: function(event) {
 						var instance = this;
-
-						var host = instance.get(STR_HOST);
 
 						var target = event.target;
 

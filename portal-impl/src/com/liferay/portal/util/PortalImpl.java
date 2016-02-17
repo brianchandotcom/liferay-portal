@@ -3951,15 +3951,25 @@ public class PortalImpl implements Portal {
 
 			LayoutSet virtualHostLayoutSet = virtualHostLayout.getLayoutSet();
 
-			String virtualHostname = virtualHostLayoutSet.getVirtualHostname();
+			return getPortalURL(virtualHostLayoutSet, themeDisplay);
+		}
 
-			String domain = HttpUtil.getDomain(themeDisplay.getURLPortal());
+		return getPortalURL(
+			serverName, themeDisplay.getServerPort(), themeDisplay.isSecure());
+	}
 
-			if (Validator.isNotNull(virtualHostname) &&
-				domain.startsWith(virtualHostname)) {
+	@Override
+	public String getPortalURL(LayoutSet layoutSet, ThemeDisplay themeDisplay) {
+		String serverName = themeDisplay.getServerName();
 
-				serverName = virtualHostname;
-			}
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		String domain = HttpUtil.getDomain(themeDisplay.getURLPortal());
+
+		if (Validator.isNotNull(virtualHostname) &&
+			domain.startsWith(virtualHostname)) {
+
+			serverName = virtualHostname;
 		}
 
 		return getPortalURL(
@@ -4043,7 +4053,7 @@ public class PortalImpl implements Portal {
 	public String getPortalURL(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getPortalURL(null, themeDisplay);
+		return getPortalURL((Layout)null, themeDisplay);
 	}
 
 	@Override

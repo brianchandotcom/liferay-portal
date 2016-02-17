@@ -90,7 +90,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		if (headers.get("Spring-Context") == null) {
+		if (headers.get("Liferay-Spring-Context") == null) {
 			return null;
 		}
 

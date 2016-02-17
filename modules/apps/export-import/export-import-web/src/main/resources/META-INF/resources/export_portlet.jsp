@@ -435,51 +435,20 @@ portletURL.setParameter("portletResource", portletResource);
 					</aui:button-row>
 				</aui:fieldset-group>
 			</div>
+
+			<aui:script use="aui-base">
+				var form = A.one('#<portlet:namespace />fm1');
+
+				form.on(
+					'submit',
+					function(event) {
+						event.preventDefault();
+
+						submitForm(form, form.attr('action'), false);
+					}
+				);
+			</aui:script>
 		</aui:form>
-
-		<aui:script use="liferay-export-import">
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="exportProcessesURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-				<portlet:param name="tabs2" value="export" />
-				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
-				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
-				<portlet:param name="portletResource" value="<%= portletResource %>" />
-			</liferay-portlet:resourceURL>
-
-			var exportImport = new Liferay.ExportImport(
-				{
-					commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
-					form: document.<portlet:namespace />fm1,
-					incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-					locale: '<%= locale.toLanguageTag() %>',
-					namespace: '<portlet:namespace />',
-					processesNode: '#exportProcesses',
-					processesResourceURL: '<%= exportProcessesURL.toString() %>',
-					rangeAllNode: '#rangeAll',
-					rangeDateRangeNode: '#rangeDateRange',
-					rangeLastNode: '#rangeLast',
-					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
-					timeZone: '<%= timeZone.getID() %>'
-				}
-			);
-
-			var form = A.one('#<portlet:namespace />fm1');
-
-			form.on(
-				'submit',
-				function(event) {
-					event.preventDefault();
-
-					submitForm(form, form.attr('action'), false);
-				}
-			);
-
-			Liferay.once('destroyPortlet', function() {
-				exportImport.destroy();
-			});
-		</aui:script>
 	</c:when>
 
 	<c:when test='<%= tabs3.equals("current-and-previous") %>'>
@@ -488,6 +457,42 @@ portletURL.setParameter("portletResource", portletResource);
 		</div>
 	</c:when>
 </c:choose>
+
+<aui:script use="liferay-export-import">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="exportProcessesURL">
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+		<portlet:param name="tabs2" value="export" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
+		<portlet:param name="portletResource" value="<%= portletResource %>" />
+	</liferay-portlet:resourceURL>
+
+	var exportImport = new Liferay.ExportImport(
+		{
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+			form: document.<portlet:namespace />fm1,
+			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
+			locale: '<%= locale.toLanguageTag() %>',
+			namespace: '<portlet:namespace />',
+			processesNode: '#exportProcesses',
+			processesResourceURL: '<%= exportProcessesURL.toString() %>',
+			rangeAllNode: '#rangeAll',
+			rangeDateRangeNode: '#rangeDateRange',
+			rangeLastNode: '#rangeLast',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
+			timeZone: '<%= timeZone.getID() %>'
+		}
+	);
+
+	Liferay.once(
+		'destroyPortlet',
+		function() {
+			exportImport.destroy();
+		}
+	);
+</aui:script>
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);

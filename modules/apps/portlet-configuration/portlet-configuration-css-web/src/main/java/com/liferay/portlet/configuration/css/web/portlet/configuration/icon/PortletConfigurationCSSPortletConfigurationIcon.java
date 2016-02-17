@@ -45,7 +45,8 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "look-and-feel");
+			getResourceBundle(getLocale(portletRequest)),
+			"look-and-feel-configuration");
 	}
 
 	@Override

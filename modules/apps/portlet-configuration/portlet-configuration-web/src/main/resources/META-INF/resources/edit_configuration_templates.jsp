@@ -26,7 +26,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/edit_app_templates.jsp");
+portletURL.setParameter("mvcPath", "/edit_configuration_templates.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
@@ -65,7 +65,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="app-templates" selected="<%= true %>" />
+		<aui:nav-item label="configuration-templates" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -103,17 +103,17 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 <div class="container-fluid-1280">
 	<div class="button-holder text-center">
-		<portlet:renderURL var="addAppTemplateURL">
-			<portlet:param name="mvcPath" value="/add_app_template.jsp" />
+		<portlet:renderURL var="addConfigurationTemplateURL">
+			<portlet:param name="mvcPath" value="/add_configuration_template.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="portletResource" value="<%= portletResource %>" />
 		</portlet:renderURL>
 
-		<aui:button href="<%= addAppTemplateURL %>" value="create-app-template" />
+		<aui:button href="<%= addConfigurationTemplateURL %>" value="create-configuration-template" />
 	</div>
 
 	<portlet:actionURL name="deleteArchivedSetups" var="deleteArchivedSetupsURL">
-		<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
+		<portlet:param name="mvcPath" value="/edit_configuration_templates.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -146,7 +146,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="list-group-item-field"
-					path="/app_template_action.jsp"
+					path="/configuration_template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

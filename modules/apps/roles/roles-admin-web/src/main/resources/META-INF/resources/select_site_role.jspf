@@ -230,13 +230,8 @@ if (step == 1) {
 				>
 					<liferay-ui:search-container-column-text
 						name="title"
-					>
-						<liferay-ui:icon
-							iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
-					</liferay-ui:search-container-column-text>
+						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					/>
 
 					<liferay-ui:search-container-column-text>
 						<c:if test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId(), role.getRoleId()) %>">
@@ -267,15 +262,9 @@ if (step == 1) {
 							else {
 								long[] defaultSiteRoleIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultSiteRoleIds"), 0L);
 
-								for (long defaultSiteRoleId : defaultSiteRoleIds) {
-									Role curRole = RoleLocalServiceUtil.getRole(defaultSiteRoleId);
+								long[] siteRolesIds = ParamUtil.getLongValues(request, "roleIds", defaultSiteRoleIds);
 
-									if (curRole.getRoleId() == role.getRoleId()) {
-										disabled = true;
-
-										break;
-									}
-								}
+								disabled = ArrayUtil.contains(siteRolesIds, role.getRoleId());
 							}
 							%>
 

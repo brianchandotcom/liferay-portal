@@ -140,6 +140,7 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
 						name="name"
 					>
 						<c:choose>

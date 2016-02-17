@@ -228,6 +228,14 @@ if (groupThreadsUserId > 0) {
 									<%= message.getSubject() %>
 								</aui:a>
 
+								<%
+								String[] threadPriority = MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority());
+								%>
+
+								<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
+									<span class="text-default <%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></span>
+								</c:if>
+
 								<c:if test="<%= thread.isQuestion() %>">
 									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
 								</c:if>

@@ -14,7 +14,7 @@
 
 package com.liferay.invitation.invite.members.web.notifications;
 
-import com.liferay.invitation.invite.members.web.constants.InviteMembersPortletKeys;
+import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;

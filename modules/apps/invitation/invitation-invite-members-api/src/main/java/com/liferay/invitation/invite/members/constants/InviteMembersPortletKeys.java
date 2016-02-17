@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.web.constants;
+package com.liferay.invitation.invite.members.constants;
 
 /**
  * @author Adolfo Pérez

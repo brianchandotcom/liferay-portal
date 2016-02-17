@@ -622,17 +622,14 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-controls-trigger  {
-		$height: 48px;
-
 		display: block;
 		font-size: 20px;
-		height: $height;
-		margin-top: - $height / 2;
+		height: 48px;
 		padding: 12px;
 		position: absolute;
 		right: 0;
 		text-decoration: none;
-		top: 50%;
+		top: 13px;
 
 		&:hover .icon-monospaced {
 			color: inherit;
@@ -750,7 +747,6 @@ $horizontal-spacing: 35px;
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-left: 34px;
-		padding-right: 34px;
 		width: auto;
 
 		input {
@@ -795,6 +791,10 @@ $horizontal-spacing: 35px;
 
 	.form-builder-tabview {
 		padding-right: 70px;
+
+		.form-builder-controls-trigger {
+			top: 34px;
+		}
 	}
 
 	.lfr-ddm-repeatable-add-button {

@@ -148,7 +148,7 @@ List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.T
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<h4><%= LanguageUtil.get(request, "home") %></h4>
+					<h4><liferay-ui:message key="home" /></h4>
 				</div>
 
 				<aui:nav-bar>

@@ -20,6 +20,7 @@ package com.liferay.portal.workflow.definition.web.portlet.constants;
 public class WorkflowDefinitionPortletKeys {
 
 	public static final String WORKFLOW_DEFINITION =
-		"com_liferay_workflow_definition_web_portlet_WorkflowDefinitionPortlet";
+		"com_liferay_portal_workflow_definition_web_portlet_" +
+			"WorkflowDefinitionPortlet";
 
 }

@@ -66,7 +66,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,7 +76,11 @@ import org.springframework.context.ApplicationContext;
  * @author Douglas Wong
  * @author Alexander Chow
  */
-@Component(immediate = true, service = DLServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.document.library.service"},
+	service = VerifyProcess.class
+)
 public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void addDLFileVersion(DLFileEntry dlFileEntry) {
@@ -480,7 +483,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			dlFileEntryMetadata);
 	}
 
-	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();

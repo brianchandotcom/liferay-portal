@@ -27,7 +27,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.document.library.verify.DLServiceVerifyProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
@@ -64,8 +63,10 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.ByteArrayInputStream;
 
@@ -78,6 +79,7 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -98,6 +100,19 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + VerifyProcess.class.getName() +
+				")(verify.process.name=com.liferay.document.library.service))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
 
 	@Before
 	@Override
@@ -456,9 +471,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(DLServiceVerifyProcess.class);
+		return _serviceTracker.getService();
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {
@@ -496,6 +509,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
+
+	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
 
 	@DeleteAfterTestRun
 	private Group _group;

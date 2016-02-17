@@ -187,7 +187,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
-	public Map<String, String> getPomRepositories() {
+	public Map<String, Object> getPomRepositories() {
 		return _pomRepositories;
 	}
 
@@ -206,7 +206,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _useSetterComments;
 	}
 
-	public void pomRepository(String id, String url) {
+	public void pomRepository(String id, Object url) {
 		_pomRepositories.put(id, url);
 	}
 
@@ -474,11 +474,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		repositoriesElement.appendChild(repositoryElement);
 
-		Map<String, String> pomRepositories = getPomRepositories();
+		Map<String, Object> pomRepositories = getPomRepositories();
 
-		for (Map.Entry<String, String> entry : pomRepositories.entrySet()) {
+		for (Map.Entry<String, Object> entry : pomRepositories.entrySet()) {
 			String id = entry.getKey();
-			String url = entry.getValue();
+			String url = GradleUtil.toString(entry.getValue());
 
 			XMLUtil.appendElement(document, repositoryElement, "id", id);
 			XMLUtil.appendElement(document, repositoryElement, "url", url);
@@ -663,7 +663,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;
-	private final Map<String, String> _pomRepositories = new LinkedHashMap<>();
+	private final Map<String, Object> _pomRepositories = new LinkedHashMap<>();
 	private Object _pomVersion;
 	private Object _sourceDir;
 	private boolean _useSetterComments = true;

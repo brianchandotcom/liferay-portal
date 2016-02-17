@@ -862,6 +862,48 @@ public class AssetUtil {
 		return sortType;
 	}
 
+	private String _getClassName(String className) {
+		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+		if (pos != -1) {
+			className = className.substring(0, pos);
+		}
+
+		return className;
+	}
+
+	private String _getMessage(String className, Locale locale) {
+		String message = null;
+
+		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+		if (pos != -1) {
+			message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+
+			className = className.substring(0, pos);
+		}
+
+		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+		if (pos == -1) {
+			message = assetRendererFactory.getTypeName(locale);
+		}
+
+		return message;
+	}
+
+	private String _getURL(long groupId, long plid, PortletURL addPortletURL) {
+		addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		addPortletURL.setParameter("groupId", String.valueOf(groupId));
+		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
+		String addPortletURLString = addPortletURL.toString();
+
+		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+
+		return addPortletURLString;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(AssetUtil.class);
 
 }

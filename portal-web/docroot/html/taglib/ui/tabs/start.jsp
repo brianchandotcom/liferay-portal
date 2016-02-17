@@ -124,7 +124,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 								<c:if test="<%= names.length > 1 %>">
 									<li class="active dropdown">
 										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-											<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(request, name) %></span>
+											<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, name) %></span>
 
 											<span class="caret"></span>
 										</a>
@@ -208,13 +208,13 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					align="left"
 					href="<%= curURL %>"
 					selected="<%= selected %>"
-					title="<%= LanguageUtil.get(request, names[i]) %>"
+					title="<%= LanguageUtil.get(resourceBundle, names[i]) %>"
 				/>
 			</c:when>
 			<c:otherwise>
 				<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
 					<a href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
-						<%= LanguageUtil.get(request, names[i]) %>
+						<%= LanguageUtil.get(resourceBundle, names[i]) %>
 					</a>
 				</li>
 			</c:otherwise>
@@ -231,12 +231,12 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					align="left"
 					href="<%= backURL %>"
 					selected="<%= false %>"
-					title='<%= Validator.isNotNull(backLabel) ? HtmlUtil.escapeAttribute(backLabel) : "&laquo;" + LanguageUtil.get(request, "back") %>'
+					title='<%= Validator.isNotNull(backLabel) ? HtmlUtil.escapeAttribute(backLabel) : "&laquo;" + LanguageUtil.get(resourceBundle, "back") %>'
 				/>
 			</c:when>
 			<c:otherwise>
 				<li>
-					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(request, "back") %></a>
+					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(resourceBundle, "back") %></a>
 				</li>
 			</c:otherwise>
 		</c:choose>

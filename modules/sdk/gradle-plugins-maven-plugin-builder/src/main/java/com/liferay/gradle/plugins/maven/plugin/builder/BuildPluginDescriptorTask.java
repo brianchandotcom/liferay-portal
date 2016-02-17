@@ -207,6 +207,14 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _useSetterComments;
 	}
 
+	public BuildPluginDescriptorTask pomRepositories(
+		Map<String, ?> pomRepositories) {
+
+		_pomRepositories.putAll(pomRepositories);
+
+		return this;
+	}
+
 	public BuildPluginDescriptorTask pomRepository(String id, Object url) {
 		_pomRepositories.put(id, url);
 
@@ -257,6 +265,12 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setPomGroupId(Object pomGroupId) {
 		_pomGroupId = pomGroupId;
+	}
+
+	public void setPomRepositories(Map<String, ?> pomRepositories) {
+		_pomRepositories.clear();
+
+		pomRepositories(pomRepositories);
 	}
 
 	public void setPomVersion(Object pomVersion) {

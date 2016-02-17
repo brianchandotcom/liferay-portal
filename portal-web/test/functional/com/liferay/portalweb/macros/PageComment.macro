@@ -53,9 +53,10 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="Comments#DELETE_LINK_GENERIC" />
+			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="ClickNoError" locator1="Comments#DELETE_LINK_GENERIC" />
+				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+				<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>

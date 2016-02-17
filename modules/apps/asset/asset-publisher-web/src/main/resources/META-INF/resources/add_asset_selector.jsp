@@ -56,19 +56,39 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<%
 	for (Long groupId : addPortletURLsGroupIds) {
+		Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), redirectURL.toString());
 	%>
 
-		<div class='<%= (groupId == scopeGroupId) ? StringPool.BLANK : "hide" %>' id="<%= liferayPortletResponse.getNamespace() + groupId %>">
-			<liferay-ui:asset-add-button
-				addDisplayPageParameter="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>"
-				allAssetCategoryIds="<%= assetPublisherDisplayContext.getAllAssetCategoryIds() %>"
-				allAssetTagNames="<%= assetPublisherDisplayContext.getAllAssetTagNames() %>"
-				classNameIds="<%= assetPublisherDisplayContext.getClassNameIds() %>"
-				classTypeIds="<%= assetPublisherDisplayContext.getClassTypeIds() %>"
-				groupIds="<%= new long[] {groupId} %>"
-				redirect="<%= redirectURL.toString() %>"
-				useDialog="<%= false %>"
-			/>
+		<div class='asset-entry-type <%= (groupId == scopeGroupId) ? StringPool.BLANK : "hide" %>' id="<%= liferayPortletResponse.getNamespace() + groupId %>">
+			<aui:select cssClass="asset-entry-type-select" label="asset-entry-type" name="selectAssetEntryType">
+
+				<%
+				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+
+					String message = _getMessage(entry.getKey(), locale);
+
+					long curGroupId = groupId;
+
+					Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+					if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) && !group.isStagedRemotely()) {
+						curGroupId = group.getLiveGroupId();
+					}
+
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("title", LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false));
+					data.put("url", _getURL(curGroupId, plid, entry.getValue()));
+				%>
+
+					<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(message) %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
 		</div>
 
 		<aui:script>
@@ -79,4 +99,78 @@ String redirect = ParamUtil.getString(request, "redirect");
 	}
 	%>
 
+	<aui:button-row>
+
+		<%
+		String taglibOnClick = renderResponse.getNamespace() + "addAssetEntry();";
+		%>
+
+		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="add" />
+	</aui:button-row>
 </aui:fieldset>
+
+<aui:script>
+	function <portlet:namespace />addAssetEntry() {
+		var A = AUI();
+
+		var visibleItem = A.one('.asset-entry-type:not(.hide)');
+
+		var assetEntryTypeSelector = visibleItem.one('.asset-entry-type-select');
+
+		var index = assetEntryTypeSelector.get('selectedIndex');
+
+		var selectedOption = assetEntryTypeSelector.get('options').item(index);
+
+		var title = selectedOption.attr('data-title');
+		var url = selectedOption.attr('data-url');
+
+		var dialog = Liferay.Util.getWindow();
+
+		dialog.iframe.set('uri', url);
+		dialog.titleNode.html(title);
+	}
+</aui:script>
+
+<%!
+private String _getClassName(String className) {
+	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+	if (pos != -1) {
+		className = className.substring(0, pos);
+	}
+
+	return className;
+}
+
+private String _getMessage(String className, Locale locale) {
+	String message = null;
+
+	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+	if (pos != -1) {
+		message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+
+		className = className.substring(0, pos);
+	}
+
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+	if (pos == -1) {
+		message = assetRendererFactory.getTypeName(locale);
+	}
+
+	return message;
+}
+
+private String _getURL(long groupId, long plid, PortletURL addPortletURL) {
+	addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
+	addPortletURL.setParameter("groupId", String.valueOf(groupId));
+	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
+	String addPortletURLString = addPortletURL.toString();
+
+	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+
+	return addPortletURLString;
+}
+%>

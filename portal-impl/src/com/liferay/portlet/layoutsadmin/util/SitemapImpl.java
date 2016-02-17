@@ -191,31 +191,19 @@ public class SitemapImpl implements Sitemap {
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			groupId, privateLayout);
 
 		List<SitemapURLProvider> sitemapURLProviders =
 			SitemapURLProviderRegistryUtil.getSitemapURLProviders();
 
-		visitLayouts(rootElement, layouts, sitemapURLProviders, themeDisplay);
-
-		return document.asXML();
-	}
-
-	protected void visitLayouts(
-			Element element, List<Layout> layouts,
-			List<SitemapURLProvider> sitemapURLProviders,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
 		for (Layout layout : layouts) {
 			for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-				sitemapURLProvider.visitLayout(element, layout, themeDisplay);
+				sitemapURLProvider.visitLayout(
+					rootElement, layout, themeDisplay);
 			}
-
-			visitLayouts(
-				element, layout.getChildren(), sitemapURLProviders,
-				themeDisplay);
 		}
+
+		return document.asXML();
 	}
 
 }

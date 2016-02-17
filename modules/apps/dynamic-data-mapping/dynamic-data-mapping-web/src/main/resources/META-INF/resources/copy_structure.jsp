@@ -27,8 +27,8 @@ long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
 boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
 
-String redirect = ParamUtil.getString(request, "redirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+String backURL = ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK);
 %>
 
 <portlet:actionURL name="copyStructure" var="copyStructureURL">
@@ -36,8 +36,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 </portlet:actionURL>
 
 <aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-
+	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
@@ -57,7 +56,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 				<%
 				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(redirect);
+				portletDisplay.setURLBack(backURL);
 
 				renderResponse.setTitle(title);
 				%>
@@ -65,7 +64,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:header
-					backURL="<%= redirect %>"
+					backURL="<%= backURL %>"
 					localizeTitle="<%= true %>"
 					showBackURL="<%= showBackURL %>"
 					title="<%= title %>"
@@ -95,6 +94,6 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="copy" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
@@ -77,6 +76,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
 %>
 
 <portlet:actionURL name="addTemplate" var="addTemplateURL">
@@ -89,7 +90,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 		<aui:input name="portletResourceNamespace" type="hidden" value="<%= portletResourceNamespace %>" />
@@ -135,8 +136,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			else {
 				title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
 			}
-
-			String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
 			%>
 
 			<c:choose>
@@ -172,7 +171,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				var toolbarChildren = [
 					<portlet:renderURL var="viewHistoryURL">
 						<portlet:param name="mvcPath" value="/view_template_history.jsp" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="redirect" value="<%= backURL %>" />
 						<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 					</portlet:renderURL>
 
@@ -446,6 +445,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveDraftTemplate();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 	</c:if>
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </div>

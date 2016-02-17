@@ -124,7 +124,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcPath", "/edit_template.jsp");
-					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 					rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 					rowURL.setParameter("classNameId", String.valueOf(classNameId));
@@ -246,7 +245,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 </aui:form>
 
 <liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="redirect" value="<%= currentURL %>" />
 	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />

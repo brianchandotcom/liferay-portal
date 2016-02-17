@@ -360,6 +360,17 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(document, exclusionElement, "groupId", groupId);
 	}
 
+	protected void appendRepositoryElement(
+		Document document, Element repositoriesElement, String id, String url) {
+
+		Element repositoryElement = document.createElement("repository");
+
+		repositoriesElement.appendChild(repositoryElement);
+
+		XMLUtil.appendElement(document, repositoryElement, "id", id);
+		XMLUtil.appendElement(document, repositoryElement, "url", url);
+	}
+
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
 		final Project project = getProject();
 
@@ -487,18 +498,13 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		projectElement.appendChild(repositoriesElement);
 
-		Element repositoryElement = document.createElement("repository");
-
-		repositoriesElement.appendChild(repositoryElement);
-
 		Map<String, Object> pomRepositories = getPomRepositories();
 
 		for (Map.Entry<String, Object> entry : pomRepositories.entrySet()) {
 			String id = entry.getKey();
 			String url = GradleUtil.toString(entry.getValue());
 
-			XMLUtil.appendElement(document, repositoryElement, "id", id);
-			XMLUtil.appendElement(document, repositoryElement, "url", url);
+			appendRepositoryElement(document, repositoriesElement, id, url);
 		}
 
 		XMLUtil.write(document, pomFile);

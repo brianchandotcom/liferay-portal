@@ -187,6 +187,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
+	@Input
 	public Map<String, Object> getPomRepositories() {
 		return _pomRepositories;
 	}

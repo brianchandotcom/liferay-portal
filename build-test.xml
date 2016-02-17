@@ -7636,7 +7636,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</waitfor>
 
 				<execute>
-					{echo "upgrade:list"; sleep 10; echo "exit"; sleep 1; echo "y";} | telnet localhost 11311
+					{ echo "upgrade:list"; sleep 10; echo "exit"; sleep 1; echo "y"; } | telnet localhost 11311
 				</execute>
 			</sequential>
 		</parallel>

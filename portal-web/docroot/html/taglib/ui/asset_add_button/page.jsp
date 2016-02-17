@@ -48,9 +48,9 @@ for (long groupId : groupIds) {
 
 					Map.Entry<String, PortletURL> entry = iterator.next();
 
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
 
-					String message = _getMessage(entry.getKey(), locale);
+					String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
 
 					long curGroupId = groupId;
 
@@ -74,9 +74,9 @@ for (long groupId : groupIds) {
 
 						<%
 						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
 
-							String message = _getMessage(entry.getKey(), locale);
+							String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
 
 							long curGroupId = groupId;
 
@@ -109,50 +109,8 @@ request.setAttribute("liferay-ui:asset-add-button:hasAddPortletURLs", hasAddPort
 %>
 
 <%!
-private String _getClassName(String className) {
-	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-	if (pos != -1) {
-		className = className.substring(0, pos);
-	}
-
-	return className;
-}
-
-private String _getMessage(String className, Locale locale) {
-	String message = null;
-
-	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-	if (pos != -1) {
-		message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
-
-		className = className.substring(0, pos);
-	}
-
-	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-	if (pos == -1) {
-		message = assetRendererFactory.getTypeName(locale);
-	}
-
-	return message;
-}
-
 private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse, boolean useDialog) {
-	addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-	addPortletURL.setParameter("groupId", String.valueOf(groupId));
-	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-	String addPortletURLString = addPortletURL.toString();
-
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-
-	String namespace = PortalUtil.getPortletNamespace(portletId);
-
-	if (addDisplayPageParameter) {
-		addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "layoutUuid", layout.getUuid());
-	}
+	String addPortletURLString = AssetUtil.getAddURLPopUp(groupId, plid, addPortletURL, portletId, addDisplayPageParameter, layout);
 
 	if (useDialog) {
 		return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, dialogIframe: {bodyCssClass: 'dialog-with-footer'}, id: '" + portletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest) pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";

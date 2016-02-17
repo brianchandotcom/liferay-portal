@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,7 +47,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -257,39 +254,6 @@ public class AssetPublisherPortletToolbarContributor
 		_groupLocalService = groupLocalService;
 	}
 
-	private String _getClassName(String className) {
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-		if (pos != -1) {
-			className = className.substring(0, pos);
-		}
-
-		return className;
-	}
-
-	private String _getMessage(String className, Locale locale) {
-		String message = null;
-
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-		if (pos != -1) {
-			message = className.substring(
-				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
-
-			className = className.substring(0, pos);
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (pos == -1) {
-			message = assetRendererFactory.getTypeName(locale);
-		}
-
-		return message;
-	}
-
 	private URLMenuItem _getPortletTitleAddAssetEntryMenuItem(
 		ThemeDisplay themeDisplay,
 		AssetPublisherDisplayContext assetPublisherDisplayContext, long groupId,
@@ -304,7 +268,8 @@ public class AssetPublisherPortletToolbarContributor
 		data.put(
 			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
-		String message = _getMessage(className, themeDisplay.getLocale());
+		String message = AssetUtil.getClassNameMessage(
+			className, themeDisplay.getLocale());
 
 		String title = LanguageUtil.format(
 			themeDisplay.getLocale(), "new-x", message, false);
@@ -321,7 +286,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_getClassName(className));
+				AssetUtil.getClassName(className));
 
 		if (!group.isStagedPortlet(
 				assetRendererFactory.getPortletId()) &&
@@ -334,7 +299,7 @@ public class AssetPublisherPortletToolbarContributor
 			themeDisplay.getLayout(), portletDisplay.getId(),
 			assetPublisherDisplayContext.getPortletResource());
 
-		String url = _getURL(
+		String url = AssetUtil.getAddURLPopUp(
 			curGroupId, themeDisplay.getPlid(), portletURL,
 			assetRendererFactory.getPortletId(), addDisplayPageParameter,
 			themeDisplay.getLayout());
@@ -401,31 +366,6 @@ public class AssetPublisherPortletToolbarContributor
 		}
 
 		return scopeAddPortletURLs;
-	}
-
-	private String _getURL(
-		long groupId, long plid, PortletURL addPortletURL, String portletId,
-		boolean addDisplayPageParameter, Layout layout) {
-
-		addPortletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		addPortletURL.setParameter("groupId", String.valueOf(groupId));
-		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-		String addPortletURLString = addPortletURL.toString();
-
-		addPortletURLString = HttpUtil.addParameter(
-			addPortletURLString, "refererPlid", plid);
-
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		if (addDisplayPageParameter) {
-			addPortletURLString = HttpUtil.addParameter(
-				addPortletURLString, namespace + "layoutUuid",
-				layout.getUuid());
-		}
-
-		return addPortletURLString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

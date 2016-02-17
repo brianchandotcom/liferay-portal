@@ -64,9 +64,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<%
 				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
 
-					String message = _getMessage(entry.getKey(), locale);
+					String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
 
 					long curGroupId = groupId;
 
@@ -79,7 +79,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("title", LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false));
-					data.put("url", _getURL(curGroupId, plid, entry.getValue()));
+					data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), false, null));
 				%>
 
 					<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(message) %>" />

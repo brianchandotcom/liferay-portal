@@ -958,6 +958,9 @@ public interface JournalArticleService extends BaseService {
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getLayoutArticles(long groupId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

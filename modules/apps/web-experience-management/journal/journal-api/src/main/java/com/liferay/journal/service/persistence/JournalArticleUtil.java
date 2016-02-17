@@ -4260,6 +4260,270 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns all the journal articles where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @return the matching journal articles
+	*/
+	public static List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String layoutUuid) {
+		return getPersistence().findByG_NotL(groupId, layoutUuid);
+	}
+
+	/**
+	* Returns a range of all the journal articles where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String layoutUuid, int start, int end) {
+		return getPersistence().findByG_NotL(groupId, layoutUuid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String layoutUuid, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .findByG_NotL(groupId, layoutUuid, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching journal articles
+	*/
+	public static List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String layoutUuid, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_NotL(groupId, layoutUuid, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article
+	* @throws NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static JournalArticle findByG_NotL_First(long groupId,
+		java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_NotL_First(groupId, layoutUuid, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static JournalArticle fetchByG_NotL_First(long groupId,
+		java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_NotL_First(groupId, layoutUuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static JournalArticle findByG_NotL_Last(long groupId,
+		java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_NotL_Last(groupId, layoutUuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static JournalArticle fetchByG_NotL_Last(long groupId,
+		java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_NotL_Last(groupId, layoutUuid, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static JournalArticle[] findByG_NotL_PrevAndNext(long id,
+		long groupId, java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .findByG_NotL_PrevAndNext(id, groupId, layoutUuid,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @return the matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String layoutUuid) {
+		return getPersistence().filterFindByG_NotL(groupId, layoutUuid);
+	}
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String layoutUuid, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_NotL(groupId, layoutUuid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles that the user has permission to view
+	*/
+	public static List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String layoutUuid, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_NotL(groupId, layoutUuid, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static JournalArticle[] filterFindByG_NotL_PrevAndNext(long id,
+		long groupId, java.lang.String layoutUuid,
+		OrderByComparator<JournalArticle> orderByComparator)
+		throws com.liferay.journal.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_NotL_PrevAndNext(id, groupId, layoutUuid,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where groupId = &#63; and layoutUuid &ne; &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	*/
+	public static void removeByG_NotL(long groupId, java.lang.String layoutUuid) {
+		getPersistence().removeByG_NotL(groupId, layoutUuid);
+	}
+
+	/**
+	* Returns the number of journal articles where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @return the number of matching journal articles
+	*/
+	public static int countByG_NotL(long groupId, java.lang.String layoutUuid) {
+		return getPersistence().countByG_NotL(groupId, layoutUuid);
+	}
+
+	/**
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @return the number of matching journal articles that the user has permission to view
+	*/
+	public static int filterCountByG_NotL(long groupId,
+		java.lang.String layoutUuid) {
+		return getPersistence().filterCountByG_NotL(groupId, layoutUuid);
+	}
+
+	/**
 	* Returns all the journal articles where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

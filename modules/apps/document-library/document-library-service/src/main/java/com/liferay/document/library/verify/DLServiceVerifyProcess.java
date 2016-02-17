@@ -76,7 +76,11 @@ import org.springframework.context.ApplicationContext;
  * @author Douglas Wong
  * @author Alexander Chow
  */
-@Component(immediate = true, service = DLServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.document.library.service"},
+	service = VerifyProcess.class
+)
 public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void addDLFileVersion(DLFileEntry dlFileEntry) {

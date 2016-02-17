@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -149,7 +149,7 @@ public class DDMDataProviderServlet extends HttpServlet {
 			ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
 			DDMFormValues ddmFormValues =
-				DDMFormValuesJSONDeserializerUtil.deserialize(
+				_ddmFormValuesJSONDeserializer.deserialize(
 					ddmForm, ddmDataProviderInstance.getDefinition());
 
 			DDMDataProviderContext ddmDataProviderContext =
@@ -191,6 +191,13 @@ public class DDMDataProviderServlet extends HttpServlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -224,6 +231,7 @@ public class DDMDataProviderServlet extends HttpServlet {
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 	private DDMDataProviderTracker _ddmDataProviderTracker;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private JSONFactory _jsonFactory;
 
 }

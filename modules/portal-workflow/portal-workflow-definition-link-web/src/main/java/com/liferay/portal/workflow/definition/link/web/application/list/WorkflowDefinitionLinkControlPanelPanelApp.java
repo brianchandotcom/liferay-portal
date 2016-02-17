@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.application.list;
+package com.liferay.portal.workflow.definition.link.web.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
+import com.liferay.portal.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

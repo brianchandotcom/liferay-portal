@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.util;
+package com.liferay.portal.workflow.instance.web.util;
 
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 
 import javax.portlet.PortletRequest;
 

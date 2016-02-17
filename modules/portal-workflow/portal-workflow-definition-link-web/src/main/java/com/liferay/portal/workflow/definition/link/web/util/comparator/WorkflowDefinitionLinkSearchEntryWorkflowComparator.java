@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.util.comparator;
+package com.liferay.portal.workflow.definition.link.web.util.comparator;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
+import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
 
 /**
  * @author Leonardo Barros

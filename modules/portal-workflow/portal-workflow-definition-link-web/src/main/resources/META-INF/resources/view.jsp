@@ -44,7 +44,7 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearch = new WorkflowDefiniti
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry"
+			className="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry"
 			modelVar="workflowDefinitionLinkSearchEntry"
 		>
 

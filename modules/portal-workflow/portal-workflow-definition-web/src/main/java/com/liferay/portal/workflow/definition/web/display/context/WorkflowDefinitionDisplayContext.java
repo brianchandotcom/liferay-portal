@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.display.context;
+package com.liferay.portal.workflow.definition.web.display.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
-import com.liferay.workflow.definition.web.display.context.util.WorkflowDefinitionRequestHelper;
-import com.liferay.workflow.definition.web.search.WorkflowDefinitionSearchTerms;
-import com.liferay.workflow.definition.web.util.WorkflowDefinitionPortletUtil;
-import com.liferay.workflow.definition.web.util.filter.WorkflowDefinitionNamePredicateFilter;
-import com.liferay.workflow.definition.web.util.filter.WorkflowDefinitionTitlePredicateFilter;
+import com.liferay.portal.workflow.definition.web.display.context.util.WorkflowDefinitionRequestHelper;
+import com.liferay.portal.workflow.definition.web.search.WorkflowDefinitionSearchTerms;
+import com.liferay.portal.workflow.definition.web.util.WorkflowDefinitionPortletUtil;
+import com.liferay.portal.workflow.definition.web.util.filter.WorkflowDefinitionNamePredicateFilter;
+import com.liferay.portal.workflow.definition.web.util.filter.WorkflowDefinitionTitlePredicateFilter;
 
 import java.util.List;
 

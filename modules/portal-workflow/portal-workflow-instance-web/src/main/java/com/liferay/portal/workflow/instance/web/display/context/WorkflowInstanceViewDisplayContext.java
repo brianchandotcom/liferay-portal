@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.display.context;
+package com.liferay.portal.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
-import com.liferay.workflow.instance.web.util.WorkflowInstancePortletUtil;
+import com.liferay.portal.workflow.instance.web.search.WorkflowInstanceSearch;
+import com.liferay.portal.workflow.instance.web.util.WorkflowInstancePortletUtil;
 
 import java.io.Serializable;
 

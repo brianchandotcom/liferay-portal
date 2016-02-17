@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.search;
+package com.liferay.portal.workflow.instance.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.workflow.instance.web.util.WorkflowInstancePortletUtil;
+import com.liferay.portal.workflow.instance.web.util.WorkflowInstancePortletUtil;
 
 import java.util.ArrayList;
 import java.util.List;

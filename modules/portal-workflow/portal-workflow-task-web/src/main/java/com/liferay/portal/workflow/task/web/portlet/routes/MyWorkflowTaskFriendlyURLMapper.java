@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.routes;
+package com.liferay.portal.workflow.task.web.portlet.routes;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;

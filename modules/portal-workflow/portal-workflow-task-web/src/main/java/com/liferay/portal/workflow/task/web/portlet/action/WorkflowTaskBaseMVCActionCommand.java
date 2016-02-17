@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.action;
+package com.liferay.portal.workflow.task.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

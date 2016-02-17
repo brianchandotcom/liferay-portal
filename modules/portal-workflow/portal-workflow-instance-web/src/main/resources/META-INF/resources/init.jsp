@@ -35,14 +35,14 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
+page import="com.liferay.portal.workflow.instance.web.constants.WorkflowInstancePortletKeys" %><%@
+page import="com.liferay.portal.workflow.instance.web.dao.search.WorkflowInstanceResultRowSplitter" %><%@
+page import="com.liferay.portal.workflow.instance.web.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
+page import="com.liferay.portal.workflow.instance.web.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
+page import="com.liferay.portal.workflow.instance.web.display.context.WorkflowInstanceEditDisplayContext" %><%@
+page import="com.liferay.portal.workflow.instance.web.display.context.WorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys" %><%@
-page import="com.liferay.workflow.instance.web.dao.search.WorkflowInstanceResultRowSplitter" %><%@
-page import="com.liferay.workflow.instance.web.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.workflow.instance.web.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
-page import="com.liferay.workflow.instance.web.display.context.WorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.workflow.instance.web.display.context.WorkflowInstanceViewDisplayContext" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

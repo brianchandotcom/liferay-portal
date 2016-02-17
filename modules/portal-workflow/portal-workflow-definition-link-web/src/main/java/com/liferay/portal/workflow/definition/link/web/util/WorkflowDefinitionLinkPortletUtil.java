@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.util;
+package com.liferay.portal.workflow.definition.link.web.util;
 
-import com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
-import com.liferay.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryResourceComparator;
-import com.liferay.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryWorkflowComparator;
+import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
+import com.liferay.portal.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryResourceComparator;
+import com.liferay.portal.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryWorkflowComparator;
 
 import java.util.Comparator;
 

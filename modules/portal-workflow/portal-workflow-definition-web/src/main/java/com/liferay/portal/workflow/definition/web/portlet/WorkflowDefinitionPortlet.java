@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.portlet;
+package com.liferay.portal.workflow.definition.web.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.workflow.definition.web.display.context.WorkflowDefinitionDisplayContext;
+import com.liferay.portal.workflow.definition.web.display.context.WorkflowDefinitionDisplayContext;
 
 import java.io.IOException;
 

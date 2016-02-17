@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.display.context;
+package com.liferay.portal.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
+import com.liferay.portal.workflow.instance.web.search.WorkflowInstanceSearch;
 
 import java.util.List;
 

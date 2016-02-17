@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.display.context;
+package com.liferay.portal.workflow.instance.web.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;

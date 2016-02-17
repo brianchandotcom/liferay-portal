@@ -106,6 +106,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 		<portlet:renderURL var="addAppTemplateURL">
 			<portlet:param name="mvcPath" value="/add_app_template.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
 		</portlet:renderURL>
 
 		<aui:button href="<%= addAppTemplateURL %>" value="create-app-template" />

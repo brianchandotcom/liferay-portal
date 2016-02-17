@@ -6,8 +6,6 @@
 
 	<property file="nexus.report.properties" />
 
-	<target name="build-nexus-report" depends="build-module-availability-report,build-module-stale-report" />
-
 	<target name="build-module-availability-report" depends="get-repository-index,init-report-files">
 		<subant target="build-module-availability-report">
 			<fileset dir=".">
@@ -43,6 +41,8 @@
 			</sequential>
 		</for>
 	</target>
+
+	<target name="build-nexus-report" depends="build-module-availability-report,build-module-stale-report" />
 
 	<target name="clean">
 		<delete dir="${basedir}/nexus.reports" />

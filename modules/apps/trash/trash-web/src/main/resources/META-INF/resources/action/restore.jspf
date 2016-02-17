@@ -26,7 +26,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 		</portlet:actionURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -44,7 +44,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 		</portlet:renderURL>
 
 		<%
-		String taglibOnClick = renderResponse.getNamespace() + "restoreDialog('" + moveURL + "')";
+		String taglibOnClick = liferayPortletResponse.getNamespace() + "restoreDialog('" + moveURL + "')";
 		%>
 
 		<liferay-ui:icon

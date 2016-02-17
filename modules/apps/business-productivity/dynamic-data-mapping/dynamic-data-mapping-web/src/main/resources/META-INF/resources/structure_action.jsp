@@ -85,7 +85,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -96,7 +95,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteStructure" var="deleteURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:actionURL>

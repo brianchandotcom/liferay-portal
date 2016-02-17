@@ -30,7 +30,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 			<portlet:param name="type" value="<%= template.getType() %>" />
@@ -67,7 +66,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 			<portlet:param name="classNameId" value="<%= String.valueOf(template.getClassNameId()) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(template.getClassPK()) %>" />
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(template.getResourceClassNameId()) %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -79,7 +77,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTemplate" var="deleteURL">
 			<portlet:param name="mvcPath" value="/view_template.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />

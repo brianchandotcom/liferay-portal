@@ -24,10 +24,13 @@ long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
 long classPK = BeanParamUtil.getLong(template, request, "classPK");
 long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
 DDMTemplateVersion templateVersion = template.getTemplateVersion();
 
-String redirect = ParamUtil.getString(request, "redirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+
+String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
 %>
 
 <portlet:actionURL name="copyTemplate" var="copyTemplateURL">
@@ -35,7 +38,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 </portlet:actionURL>
 
 <aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
@@ -49,7 +52,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 		String title = LanguageUtil.get(request, "copy-template");
 
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
+		portletDisplay.setURLBack(backURL);
 
 		renderResponse.setTitle(title);
 		%>
@@ -69,6 +72,6 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="copy" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

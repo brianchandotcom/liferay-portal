@@ -80,7 +80,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
 
-		_pomRepository.put(
+		_pomRepositories.put(
 			"liferay-public",
 			"http://cdn.repository.liferay.com/nexus/content/groups/public");
 	}
@@ -187,8 +187,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
-	public Map<String, String> getPomRepository() {
-		return _pomRepository;
+	public Map<String, String> getPomRepositories() {
+		return _pomRepositories;
 	}
 
 	@Input
@@ -207,7 +207,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	public void pomRepository(String repositoryName, String repositoryUrl) {
-		_pomRepository.put(repositoryName, repositoryUrl);
+		_pomRepositories.put(repositoryName, repositoryUrl);
 	}
 
 	public void setClassesDir(Object classesDir) {
@@ -474,9 +474,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		repositoriesElement.appendChild(repositoryElement);
 
-		Map<String, String> pomRepository = getPomRepository();
+		Map<String, String> pomRepositories = getPomRepositories();
 
-		for (Map.Entry<String, String> entry : pomRepository.entrySet()) {
+		for (Map.Entry<String, String> entry : pomRepositories.entrySet()) {
 			String repositoryName = entry.getKey();
 			String repositoryUrl = entry.getValue();
 
@@ -665,7 +665,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;
-	private final Map<String, String> _pomRepository = new LinkedHashMap<>();
+	private final Map<String, String> _pomRepositories = new LinkedHashMap<>();
 	private Object _pomVersion;
 	private Object _sourceDir;
 	private boolean _useSetterComments = true;

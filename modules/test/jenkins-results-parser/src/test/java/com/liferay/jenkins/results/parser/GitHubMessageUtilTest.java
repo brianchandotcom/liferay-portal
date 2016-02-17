@@ -40,14 +40,20 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"generic-1", "1609", "test-portal-acceptance-pullrequest(master)",
+			"generic-1", "631", "test-portal-acceptance-pullrequest(master)",
+			"test-1-11");
+		downloadSample(
+			"jspc-1", "1799", "test-portal-acceptance-pullrequest(master)",
+			"test-1-4");
+		downloadSample(
+			"max-fails-1", "672", "test-portal-acceptance-pullrequest(master)",
+			"test-1-9");
+		downloadSample(
+			"rebase-1", "330", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-1");
 		downloadSample(
-			"jspc-1", "1672", "test-portal-acceptance-pullrequest(master)",
-			"test-1-5");
-		downloadSample(
-			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
-			"test-1-19");
+			"unstable-1", "1790", "test-portal-acceptance-pullrequest(master)",
+			"test-1-4");
 	}
 
 	@Test
@@ -123,10 +129,11 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			JenkinsResultsParserUtil.write(
 				reportFile,
-				"<h5 job-result=\"" + jsonObject.getString("result") +
+				formatXML(
+					"<div><h5 job-result=\"" + jsonObject.getString("result") +
 					"\"><a href=\"" + urlString + "\">" +
-						jobNameMatcher.group("jobName") + "</a></h5>" +
-				project.getProperty("report.html.content"));
+					jobNameMatcher.group("jobName") + "</a></h5>" +
+					project.getProperty("report.html.content") + "</div>"));
 
 			if (reportFilesSB.length() > 0) {
 				reportFilesSB.append(" ");

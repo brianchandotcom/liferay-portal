@@ -17,10 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.net.URL;
-import java.net.URLDecoder;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,14 +29,15 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"1-of-1", "5141",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-9");
-		downloadSample(
-			"2-of-3888", "3415",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-18");
-		downloadSample(
-			"6-of-6", "1287",
+			"junit-exception-1", "4,label_exp=!master", "6890",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
+		downloadSample(
+			"poshi-1", "UIInfrastructureUsecase#Smoke,label_exp=!master",
+			"9616", "test-portal-acceptance-pullrequest-batch(master)",
+			"test-1-13");
+		downloadSample(
+			"sourceformat-1", "0,label_exp=!master", "17503",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-5");
 	}
 
 	@Test
@@ -52,6 +49,7 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
 		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
+		downloadSampleURL(sampleDir, url, "/testReport/api/json");
 	}
 
 	protected void downloadSample(

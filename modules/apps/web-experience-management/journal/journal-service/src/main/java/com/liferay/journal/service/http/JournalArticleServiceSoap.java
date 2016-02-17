@@ -899,6 +899,21 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.journal.model.JournalArticleSoap[] getArticlesWithLayouts(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getArticlesWithLayouts(groupId);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.

@@ -740,6 +740,9 @@ public interface JournalArticleService extends BaseService {
 	public int getArticlesCountByStructureId(long groupId,
 		java.lang.String ddmStructureKey, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesWithLayouts(long groupId);
+
 	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.display.context;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -36,10 +36,13 @@ import javax.portlet.RenderRequest;
  */
 public class DDLFormDisplayContext {
 
-	public DDLFormDisplayContext(RenderRequest renderRequest)
+	public DDLFormDisplayContext(
+			RenderRequest renderRequest,
+			DDLRecordSetLocalService ddlRecordSetLocalService)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -65,8 +68,7 @@ public class DDLFormDisplayContext {
 			return _recordSet;
 		}
 
-		_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
-			getRecordSetId());
+		_recordSet = _ddlRecordSetLocalService.fetchRecordSet(getRecordSetId());
 
 		return _recordSet;
 	}
@@ -197,6 +199,7 @@ public class DDLFormDisplayContext {
 		return urlCurrent.contains("/shared");
 	}
 
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private Boolean _hasViewPermission;
 	private DDLRecordSet _recordSet;
 	private long _recordSetId;

@@ -405,6 +405,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, projectElement, "packaging", "maven-plugin");
 
+		// Repositories
+
 		Element repositoriesElement = document.createElement("repositories");
 
 		projectElement.appendChild(repositoriesElement);
@@ -424,6 +426,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			XMLUtil.appendElement(
 				document, repositoryElement, "url", repositoryUrl);
 		}
+
+		// Build
 
 		Element buildElement = document.createElement("build");
 
@@ -462,6 +466,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			XMLUtil.appendElement(
 				document, configurationElement, "goalPrefix", goalPrefix);
 		}
+
+		// Dependencies
 
 		Element dependenciesElement = document.createElement("dependencies");
 

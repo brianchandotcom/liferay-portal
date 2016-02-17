@@ -17,56 +17,128 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classPK = trashDisplayContext.getClassPK();
-
-TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
-
-TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
+List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.TRASH_ENTRIES);
 %>
 
 <c:choose>
-	<c:when test="<%= trashRenderer != null %>">
-		<div class="sidebar-header">
-			<ul class="list-inline list-unstyled sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+	<c:when test="<%= ListUtil.isNotEmpty(entries) %>">
+		<c:choose>
+			<c:when test="<%= entries.size() == 1 %>">
 
-			<h4><%= trashRenderer.getTitle(locale) %></h4>
-		</div>
+				<%
+				TrashEntry entry = entries.get(0);
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+				TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
+				%>
 
-			<p>
-				<%= trashHandler.getTrashModelsCount(classPK) %>
-			</p>
-		</div>
+				<div class="sidebar-header">
+					<h4><%= trashRenderer.getTitle(locale) %></h4>
+				</div>
+
+				<aui:nav-bar>
+					<aui:nav cssClass="navbar-nav">
+						<aui:nav-item label="details" selected="<%= true %>" />
+					</aui:nav>
+				</aui:nav-bar>
+
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="type" /></h5>
+
+					<p>
+						<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>
+					</p>
+
+					<h5><liferay-ui:message key="removed-date" /></h5>
+
+					<p>
+						<%= dateFormatDateTime.format(entry.getCreateDate()) %>
+					</p>
+
+					<h5><liferay-ui:message key="removed-by" /></h5>
+
+					<p>
+						<%= HtmlUtil.escape(entry.getUserName()) %>
+					</p>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="sidebar-header">
+					<h4><liferay-ui:message arguments="<%= entries.size() %>" key="x-items-are-selected" /></h4>
+				</div>
+
+				<aui:nav-bar>
+					<aui:nav cssClass="navbar-nav">
+						<aui:nav-item label="details" selected="<%= true %>" />
+					</aui:nav>
+				</aui:nav-bar>
+
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-items" /></h5>
+
+					<p>
+						<%= entries.size() %>
+					</p>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
-		<div class="sidebar-header">
-			<h4><%= LanguageUtil.get(request, "home") %></h4>
-		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<%
+		long classPK = trashDisplayContext.getClassPK();
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+		TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 
-			<p>
-				<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId())  %>
-			</p>
-		</div>
+		TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
+		%>
+
+		<c:choose>
+			<c:when test="<%= trashRenderer != null %>">
+				<div class="sidebar-header">
+					<ul class="list-inline list-unstyled sidebar-header-actions">
+						<li>
+							<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+
+					<h4><%= trashRenderer.getTitle(locale) %></h4>
+				</div>
+
+				<aui:nav-bar>
+					<aui:nav cssClass="navbar-nav">
+						<aui:nav-item label="details" selected="<%= true %>" />
+					</aui:nav>
+				</aui:nav-bar>
+
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-items" /></h5>
+
+					<p>
+						<%= trashHandler.getTrashModelsCount(classPK) %>
+					</p>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="sidebar-header">
+					<h4><%= LanguageUtil.get(request, "home") %></h4>
+				</div>
+
+				<aui:nav-bar>
+					<aui:nav cssClass="navbar-nav">
+						<aui:nav-item label="details" selected="<%= true %>" />
+					</aui:nav>
+				</aui:nav-bar>
+
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-items" /></h5>
+
+					<p>
+						<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
+					</p>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

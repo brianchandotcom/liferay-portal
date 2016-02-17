@@ -51,18 +51,25 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
-		downloadSampleURL(sampleDir, url, "/testReport/api/json");
-
-		downloadSampleAxisURLs(sampleDir, new File(sampleDir, "/api/json"));
+		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
 	}
 
 	protected void downloadSample(
-			String sampleKey, String buildNumber, String jobName,
-			String hostName)
+			String sampleKey, String axisVariable, String buildNumber,
+			String jobName, String hostName)
 		throws Exception {
 
 		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";
+			"https://${hostName}.liferay.com/job/${jobName}/" +
+				"/${buildNumber}/";
+
+		if (axisVariable != null) {
+			urlString =
+				"https://${hostName}.liferay.com/job/${jobName}/" +
+					"AXIS_VARIABLE=${axis}/${buildNumber}/";
+
+			urlString = replaceToken(urlString, "axis", axisVariable);
+		}
 
 		urlString = replaceToken(urlString, "buildNumber", buildNumber);
 		urlString = replaceToken(urlString, "hostName", hostName);
@@ -70,42 +77,7 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
-		downloadSample(sampleKey, url);
-	}
-
-	protected void downloadSampleAxisURLs(File sampleDir, File jobJSONFile)
-		throws Exception {
-
-		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(toURLString(jobJSONFile)));
-
-		int number = jobJSONObject.getInt("number");
-
-		JSONArray runsJSONArray = jobJSONObject.getJSONArray("runs");
-
-		for (int i = 0; i < runsJSONArray.length(); i++) {
-			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
-
-			if (number != runJSONObject.getInt("number")) {
-				continue;
-			}
-
-			String runURLString = URLDecoder.decode(
-				runJSONObject.getString("url"), "UTF-8");
-
-			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
-
-			downloadSampleURL(
-				runDir, JenkinsResultsParserUtil.createURL(runURLString),
-				"/api/json");
-			downloadSampleURL(
-				runDir, JenkinsResultsParserUtil.createURL(runURLString),
-				"/testReport/api/json");
-
-			runJSONObject.put("url", toURLString(runDir));
-		}
-
-		JenkinsResultsParserUtil.write(jobJSONFile, jobJSONObject.toString(4));
+		downloadSample(sampleKey + "-" + jobName, url);
 	}
 
 	@Override

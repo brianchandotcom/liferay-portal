@@ -51,13 +51,7 @@ CKEDITOR.dialog.add(
 
 										var val = instance.getValue();
 
-										var address = val;
-
-										if (val.indexOf('www.') === 0) {
-											address = 'http://' + val;
-										}
-
-										data.address = address;
+										data.address = val;
 										data.text = val;
 									},
 									id: 'linkAddress',

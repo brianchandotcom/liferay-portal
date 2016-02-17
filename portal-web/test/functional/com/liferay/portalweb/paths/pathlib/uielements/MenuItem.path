@@ -884,6 +884,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_CHILD_SITES</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Child Sites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_PAGES</td>
 	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
 	<td></td>

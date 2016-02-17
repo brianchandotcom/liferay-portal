@@ -264,24 +264,14 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		);
 	}
 
-	function togglePropagatableFields(isLayoutPrototypeLinkActive) {
-		$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkActive);
-
-		$('#<portlet:namespace />fm').find('.propagatable-field').each(
-			function(index, item) {
-				item = $(item);
-
-				item.prop('disabled', isLayoutPrototypeLinkActive);
-			}
-		);
-	}
-
 	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
 		'change',
 		function(event) {
 			var isLayoutPrototypeLinkActive = event.currentTarget.checked;
 
-			togglePropagatableFields(isLayoutPrototypeLinkActive);
+			$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkActive);
+
+			$('#<portlet:namespace />fm .propagatable-field').prop('disabled', isLayoutPrototypeLinkActive);
 		}
 	);
 </aui:script>

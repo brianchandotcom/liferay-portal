@@ -16,22 +16,12 @@ package org.gradle.internal.resource.transport.http;
 
 import org.gradle.internal.resource.connector.ResourceConnectorFactory;
 import org.gradle.internal.service.ServiceRegistration;
-import org.gradle.internal.service.scopes.PluginServiceRegistry;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayHttpResourcesPluginServiceRegistry
-	implements PluginServiceRegistry {
-
-	@Override
-	public void registerBuildServices(ServiceRegistration serviceRegistration) {
-	}
-
-	@Override
-	public void registerBuildSessionServices(
-		ServiceRegistration serviceRegistration) {
-	}
+	extends HttpResourcesPluginServiceRegistry {
 
 	@Override
 	public void registerGlobalServices(
@@ -40,21 +30,18 @@ public class LiferayHttpResourcesPluginServiceRegistry
 		serviceRegistration.addProvider(new GlobalScopeServices());
 	}
 
-	@Override
-	public void registerGradleServices(
-		ServiceRegistration serviceRegistration) {
-	}
-
-	@Override
-	public void registerProjectServices(
-		ServiceRegistration serviceRegistration) {
-	}
-
 	private static class GlobalScopeServices {
 
 		@SuppressWarnings("unused")
-		public ResourceConnectorFactory createHttpConnectorFactory() {
-			return new LiferayHttpConnectorFactory();
+		public ResourceConnectorFactory createHttpConnectorFactory(
+			SslContextFactory sslContextFactory) {
+
+			return new LiferayHttpConnectorFactory(sslContextFactory);
+		}
+
+		@SuppressWarnings("unused")
+		public SslContextFactory createSslContextFactory() {
+			return new DefaultSslContextFactory();
 		}
 
 	}

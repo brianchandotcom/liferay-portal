@@ -1095,6 +1095,12 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		return _journalArticleService.getLatestArticle(resourcePrimKey);
 	}
 
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalArticle> getLayoutArticles(
+		long groupId) {
+		return _journalArticleService.getLayoutArticles(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

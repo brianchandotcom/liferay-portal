@@ -452,6 +452,15 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_NotL() throws Exception {
+		_persistence.countByG_NotL(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByG_NotL(0L, StringPool.NULL);
+
+		_persistence.countByG_NotL(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_ST() throws Exception {
 		_persistence.countByG_ST(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());

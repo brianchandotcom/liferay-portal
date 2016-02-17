@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @author André de Oliveira
  */
@@ -26,6 +24,6 @@ public interface IndexSettingsContributor
 
 	public int getPriority();
 
-	public void populate(Settings.Builder builder);
+	public void populate(IndexSettingsHelper indexSettingsHelper);
 
 }

@@ -26,14 +26,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +43,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.plugins.Plugin;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -82,6 +84,17 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		replaceElasticsearchConfiguration(properties);
 	}
 
+	protected void addPlugins(
+		TransportClient.Builder transportClientBuilder,
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper) {
+
+		Collection<String> plugins = clientSettingsHelper.getPlugins();
+
+		for (String plugin : plugins) {
+			transportClientBuilder.addPlugin(getPluginClass(plugin));
+		}
+	}
+
 	@Override
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
@@ -96,7 +109,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	@Override
-	protected Client createClient(Settings.Builder builder) {
+	protected Client createClient(
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper) {
+
 		if (_transportAddresses.isEmpty()) {
 			throw new IllegalStateException(
 				"There must be at least one transport address");
@@ -105,7 +120,10 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		TransportClient.Builder transportClientBuilder =
 			TransportClient.builder();
 
-		transportClientBuilder.settings(builder);
+		transportClientBuilder.settings(
+			clientSettingsHelper.getSettingsBuilder());
+
+		addPlugins(transportClientBuilder, clientSettingsHelper);
 
 		TransportClient transportClient = transportClientBuilder.build();
 
@@ -137,6 +155,17 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	@Deactivate
 	protected void deactivate(Map<String, Object> properties) {
 		close();
+	}
+
+	@SuppressWarnings("unchecked")
+	protected Class<? extends Plugin> getPluginClass(String plugin) {
+		try {
+			return (Class<? extends Plugin>)Class.forName(plugin);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new IllegalArgumentException(
+				"Elasticsearch plugin class not found: " + plugin, cnfe);
+		}
 	}
 
 	@Override

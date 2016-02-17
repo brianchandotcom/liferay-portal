@@ -19,7 +19,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Portlet#HEADER" value1="Templates for Structure: ${ddlDataDefinitionName}" />
@@ -87,7 +87,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Portlet#HEADER" value1="Templates for Structure: Data Definition" />
@@ -116,7 +116,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
@@ -143,7 +143,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
@@ -163,7 +163,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
@@ -176,7 +176,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<var name="key_ddlTemplateName" value="${ddlDisplayTemplateName}" />
@@ -201,7 +201,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />

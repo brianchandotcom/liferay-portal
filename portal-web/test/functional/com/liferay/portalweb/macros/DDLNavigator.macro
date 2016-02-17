@@ -17,7 +17,7 @@
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 	</command>

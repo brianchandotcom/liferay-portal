@@ -363,6 +363,8 @@
 	<command name="waitForMenuToggleJSClick">
 		<execute argument1="//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]" selenium="waitForElementPresent" />
 
+		<execute argument1="3000" selenium="pause" />
+
 		<execute function="Click" />
 
 		<execute selenium="assertJavaScriptErrors" />

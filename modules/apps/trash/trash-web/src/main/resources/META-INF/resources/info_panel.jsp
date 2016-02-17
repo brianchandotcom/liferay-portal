@@ -34,6 +34,32 @@ List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.T
 				%>
 
 				<div class="sidebar-header">
+					<ul class="list-inline list-unstyled sidebar-header-actions">
+						<li>
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+									<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" servletContext="<%= application %>" />
+								</c:when>
+								<c:when test="<%= entry.getRootEntry() == null %>">
+
+									<%
+									request.setAttribute(WebKeys.TRASH_ENTRY, entry);
+									%>
+
+									<liferay-util:include page="/entry_action.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:otherwise>
+
+									<%
+									request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
+									%>
+
+									<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />
+								</c:otherwise>
+							</c:choose>
+						</li>
+					</ul>
+
 					<h4><%= trashRenderer.getTitle(locale) %></h4>
 				</div>
 

@@ -41,7 +41,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 					String[] parameterNames = convertProcess.getParameterNames();
 				%>
 
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= "convert" + i + "Panel" %>' markupView="lexicon" persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "convert" + i + "Panel" %>' markupView="lexicon" persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
 						<c:choose>
 							<c:when test="<%= parameterNames == null %>">
 								<div class="alert alert-info">

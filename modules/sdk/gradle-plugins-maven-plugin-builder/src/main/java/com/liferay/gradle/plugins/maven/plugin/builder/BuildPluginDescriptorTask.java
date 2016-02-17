@@ -82,7 +82,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		_pomRepositories.put(
 			"liferay-public",
-			"http://cdn.repository.liferay.com/nexus/content/groups/public");
+			"http://repository.liferay.com/nexus/content/groups/public");
 	}
 
 	@TaskAction

@@ -494,17 +494,20 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		// Repositories
 
-		Element repositoriesElement = document.createElement("repositories");
-
-		projectElement.appendChild(repositoriesElement);
-
 		Map<String, Object> pomRepositories = getPomRepositories();
 
-		for (Map.Entry<String, Object> entry : pomRepositories.entrySet()) {
-			String id = entry.getKey();
-			String url = GradleUtil.toString(entry.getValue());
+		if (!pomRepositories.isEmpty()) {
+			Element repositoriesElement = document.createElement(
+				"repositories");
 
-			appendRepositoryElement(document, repositoriesElement, id, url);
+			projectElement.appendChild(repositoriesElement);
+
+			for (Map.Entry<String, Object> entry : pomRepositories.entrySet()) {
+				String id = entry.getKey();
+				String url = GradleUtil.toString(entry.getValue());
+
+				appendRepositoryElement(document, repositoriesElement, id, url);
+			}
 		}
 
 		XMLUtil.write(document, pomFile);

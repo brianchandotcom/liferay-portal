@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.storage.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
@@ -122,9 +122,8 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStorageLink.getStructureId());
 
-		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
-				ddmStructure.getDDMForm(), ddmContent.getData());
+		DDMFormValues ddmFormValues = ddmFormValuesJSONDeserializer.deserialize(
+			ddmStructure.getDDMForm(), ddmContent.getData());
 
 		return ddmFormValues;
 	}
@@ -142,6 +141,9 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 
 		ddmFormValuesValidator.validate(ddmFormValues);
 	}
+
+	@ServiceReference(type = DDMFormValuesJSONDeserializer.class)
+	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
 
 	@ServiceReference(type = DDMFormValuesJSONSerializer.class)
 	protected DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer;

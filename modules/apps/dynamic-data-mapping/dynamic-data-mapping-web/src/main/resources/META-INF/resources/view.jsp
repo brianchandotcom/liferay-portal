@@ -25,13 +25,9 @@ long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId
 
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL iteratorURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("groupId", String.valueOf(groupId));
-
-StructureSearch structureSearch = new StructureSearch(renderRequest, portletURL);
+StructureSearch structureSearch = new StructureSearch(renderRequest, iteratorURL);
 
 OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
 
@@ -54,6 +50,12 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
+
+<portlet:renderURL var="portletURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

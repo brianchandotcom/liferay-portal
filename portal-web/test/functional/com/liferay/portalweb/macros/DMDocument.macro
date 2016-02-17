@@ -469,7 +469,7 @@
 	</command>
 
 	<command name="addPGViaMG">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_FILE_ENTRY" value1="Add File Entry" />
 
@@ -766,7 +766,7 @@
 	<command name="deletePGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -1018,7 +1018,7 @@
 	<command name="editPGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" value1="Edit" />
 

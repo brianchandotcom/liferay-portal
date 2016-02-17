@@ -200,7 +200,7 @@
 
 		<var name="key_rowEntry" value="${substructureName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -212,7 +212,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -234,7 +234,7 @@
 			<then>
 				<var name="key_rowEntry" value="${structureName}" />
 
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />

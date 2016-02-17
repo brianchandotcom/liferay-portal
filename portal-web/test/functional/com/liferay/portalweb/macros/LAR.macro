@@ -465,7 +465,7 @@
 	<command name="exportExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
@@ -559,7 +559,7 @@
 	<command name="moveToTheRecycleBinExportTemplate">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
 

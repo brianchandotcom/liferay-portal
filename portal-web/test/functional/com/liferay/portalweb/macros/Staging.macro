@@ -567,7 +567,7 @@
 
 		<var name="key_rowEntry" value="${publishTemplateName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The Export Import Template ${publishTemplateName} was moved to the Recycle Bin." />
 	</command>

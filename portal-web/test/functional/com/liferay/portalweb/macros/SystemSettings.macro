@@ -2,7 +2,7 @@
 	<command name="editConfiguration">
 		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
@@ -20,7 +20,7 @@
 
 		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#RESET_DEFAULT_VALUES" value1="Reset Default Values" />
 
@@ -37,7 +37,7 @@
 			</then>
 		</while>
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 

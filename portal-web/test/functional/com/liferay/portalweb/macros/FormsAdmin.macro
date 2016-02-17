@@ -5,7 +5,7 @@
 	<command name="deleteForm">
 		<var name="key_rowEntry" value="${formName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -66,7 +66,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 

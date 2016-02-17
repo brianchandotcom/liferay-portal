@@ -271,7 +271,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 			$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkActive);
 
-			$('#<portlet:namespace />fm .propagatable-field').prop('disabled', isLayoutPrototypeLinkActive);
+			var propagatableFields = $('#<portlet:namespace />fm .propagatable-field');
+
+			propagatableFields.prop('disabled', isLayoutPrototypeLinkActive);
+			propagatableFields.toggleClass('disabled', isLayoutPrototypeLinkActive);
 		}
 	);
 </aui:script>

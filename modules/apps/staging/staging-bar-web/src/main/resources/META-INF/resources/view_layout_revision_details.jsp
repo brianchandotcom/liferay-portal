@@ -93,7 +93,7 @@ else {
 					</aui:script>
 				</c:when>
 				<c:when test="<%= !workflowEnabled && !layoutRevision.isIncomplete() %>">
-					<span class="staging-configuration-control-toggle">
+					<span class="staging-bar-control-toggle">
 						<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publication" labelOn="ready-for-publication" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
 					</span>
 				</c:when>
@@ -124,7 +124,7 @@ else {
 		<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 		<c:if test="<%= layoutRevision.isHead() %>">
-			<span class="staging-configuration-control-toggle">
+			<span class="staging-bar-control-toggle">
 				<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publication" name="readyToggle" type="toggle-switch" value="<%= true %>" />
 			</span>
 		</c:if>

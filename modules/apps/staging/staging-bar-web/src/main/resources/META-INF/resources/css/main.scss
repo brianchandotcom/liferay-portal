@@ -130,7 +130,7 @@
 	}
 }
 
-.staging-configuration-control-toggle{
+.staging-bar-control-toggle {
 	div {
 		margin-bottom: 0px;
 
@@ -138,11 +138,11 @@
 			margin-bottom: 0px;
 
 			span {
-				span {
-					color: white;
+				span.toggle-switch-handle {
+					color: #FFF;
 					font-size: 14px;
 					font-weight: 500;
-					text-transform: none !important;
+					text-transform: none;
 				}
 			}
 		}

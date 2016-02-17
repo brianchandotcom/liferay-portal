@@ -4,7 +4,7 @@
 <#assign layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")>
 
 <@liferay_aui["field-wrapper"] data=data>
-	<#assign selectedPlid = 0>
+	<#assign selectedLayoutName = "">
 
 	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
@@ -22,21 +22,20 @@
 		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), selectedLayoutLayoutId)!"">
 
 		<#if (validator.isNotNull(selectedLayout))>
-			<#assign selectedPlid = selectedLayout.getPlid()>
+			<#assign selectedLayoutName = selectedLayout.getName(requestedLocale)>
 		</#if>
 	</#if>
 
 	<div class="form-group">
-		
-		<@liferay_aui.input cssClass='link-to-page-value' dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName required=required type="text" value=fieldValue>
-			
-		</@liferay_aui.input>
-		
+		<@liferay_aui.input dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name="${namespacedFieldName}LayoutName" readonly="readonly" required=required type="text" value=selectedLayoutName />
+
+		<@liferay_aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+
 		<@liferay_aui["button-row"]>
 			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
-				value="link-to-page"
+				value="select-page"
 			/>
 
 			<@liferay_aui.button
@@ -45,9 +44,7 @@
 				value="clear"
 			/>
 		</@>
-		
 	</div>
 
 	${fieldStructure.children}
 </@>
-

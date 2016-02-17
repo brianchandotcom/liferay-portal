@@ -31,6 +31,8 @@ if (selUser != null) {
 }
 
 portletURL.setParameter("eventName", eventName);
+
+long[] defaultRoleIds = selUser.getRoleIds();
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -125,15 +127,7 @@ portletURL.setParameter("eventName", eventName);
 					data.put("roletitle", role.getTitle(locale));
 					data.put("searchcontainername", "roles");
 
-					boolean disabled = false;
-
-					for (long curRoleId : selUser.getRoleIds()) {
-						if (curRoleId == role.getRoleId()) {
-							disabled = true;
-
-							break;
-						}
-					}
+					boolean disabled = ArrayUtil.contains(defaultRoleIds, role.getRoleId());
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />

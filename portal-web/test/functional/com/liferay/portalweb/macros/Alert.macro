@@ -1,4 +1,10 @@
 <definition>
+	<command name="viewLocalizedPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localized}" />
+	</command>
+
 	<command name="viewPageAddedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 

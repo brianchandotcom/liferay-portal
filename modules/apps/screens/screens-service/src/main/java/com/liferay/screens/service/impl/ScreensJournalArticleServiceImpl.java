@@ -17,7 +17,9 @@ package com.liferay.screens.service.impl;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.screens.service.base.ScreensJournalArticleServiceBaseImpl;
 
@@ -33,6 +35,9 @@ public class ScreensJournalArticleServiceImpl
 	public String getJournalArticleContent(long classPK, Locale locale)
 		throws PortalException {
 
+		JournalArticlePermission.check(
+			getPermissionChecker(), classPK, ActionKeys.VIEW);
+
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
 
@@ -46,6 +51,9 @@ public class ScreensJournalArticleServiceImpl
 	public String getJournalArticleContent(
 			long classPK, long ddmTemplateId, Locale locale)
 		throws PortalException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), classPK, ActionKeys.VIEW);
 
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
@@ -61,6 +69,9 @@ public class ScreensJournalArticleServiceImpl
 	public String getJournalArticleContent(
 			long groupId, String articleId, long ddmTemplateId, Locale locale)
 		throws PortalException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
 			groupId, articleId, null, getDDMTemplateKey(ddmTemplateId),

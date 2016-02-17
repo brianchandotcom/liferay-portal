@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
 import java.util.List;
@@ -61,6 +64,8 @@ public class ScreensAssetEntryServiceImpl
 
 		List<AssetEntry> assetEntries = assetEntryLocalService.getEntries(
 			assetEntryQuery);
+
+		checkAssetEntriesPermissions(assetEntries);
 
 		return toJSONArray(assetEntries, locale);
 	}
@@ -112,6 +117,8 @@ public class ScreensAssetEntryServiceImpl
 					AssetPublisherUtil.getAssetEntries(
 						portletPreferences, layout, groupId, max, false);
 
+				checkAssetEntriesPermissions(assetEntries);
+
 				return toJSONArray(assetEntries, locale);
 			}
 			else {
@@ -128,6 +135,8 @@ public class ScreensAssetEntryServiceImpl
 						null, portletPreferences, permissionChecker,
 						new long[] {groupId}, false, false, false);
 
+				checkAssetEntriesPermissions(assetEntries);
+
 				return toJSONArray(assetEntries, locale);
 			}
 			catch (PortalException | SystemException e) {
@@ -139,8 +148,20 @@ public class ScreensAssetEntryServiceImpl
 		}
 	}
 
+	protected void checkAssetEntriesPermissions(List<AssetEntry> assetEntries)
+		throws PortalException {
+
+		for (AssetEntry assetEntry : assetEntries) {
+			AssetEntryPermission.check(
+				getPermissionChecker(), assetEntry, ActionKeys.VIEW);
+		}
+	}
+
 	protected JSONObject getAssetObjectJSONObject(AssetEntry assetEntry)
 		throws PortalException {
+
+		AssetEntryPermission.check(
+			getPermissionChecker(), assetEntry, ActionKeys.VIEW);
 
 		String className = assetEntry.getClassName();
 
@@ -192,6 +213,9 @@ public class ScreensAssetEntryServiceImpl
 		throws PortalException {
 
 		JournalArticle journalArticle = null;
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), assetEntry.getClassPK(), ActionKeys.VIEW);
 
 		try {
 			journalArticle = journalArticleLocalService.getArticle(

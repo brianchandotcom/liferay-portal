@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.display.context;
+package com.liferay.portal.workflow.definition.link.web.display.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,13 +37,13 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.definition.link.web.display.context.util.WorkflowDefinitionLinkRequestHelper;
-import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
-import com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
-import com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchTerms;
-import com.liferay.workflow.definition.link.web.util.WorkflowDefinitionLinkPortletUtil;
-import com.liferay.workflow.definition.link.web.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicateFilter;
-import com.liferay.workflow.definition.link.web.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicateFilter;
+import com.liferay.portal.workflow.definition.link.web.display.context.util.WorkflowDefinitionLinkRequestHelper;
+import com.liferay.portal.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
+import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
+import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchTerms;
+import com.liferay.portal.workflow.definition.link.web.util.WorkflowDefinitionLinkPortletUtil;
+import com.liferay.portal.workflow.definition.link.web.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicateFilter;
+import com.liferay.portal.workflow.definition.link.web.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicateFilter;
 
 import java.util.ArrayList;
 import java.util.Collections;

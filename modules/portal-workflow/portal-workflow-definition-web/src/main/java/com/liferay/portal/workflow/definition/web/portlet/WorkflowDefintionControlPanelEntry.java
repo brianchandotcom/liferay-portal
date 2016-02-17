@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.portlet;
+package com.liferay.portal.workflow.definition.web.portlet;
 
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.util.PortletKeys;

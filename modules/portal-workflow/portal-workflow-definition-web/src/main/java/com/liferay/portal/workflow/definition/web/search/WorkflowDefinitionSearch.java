@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.search;
+package com.liferay.portal.workflow.definition.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet.action;
+package com.liferay.portal.workflow.instance.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
+import com.liferay.portal.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import java.io.Serializable;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.notifications;
+package com.liferay.portal.workflow.task.web.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

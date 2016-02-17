@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.display.context;
+package com.liferay.portal.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.workflow.instance.web.display.context.util.WorkflowInstanceRequestHelper;
+import com.liferay.portal.workflow.instance.web.display.context.util.WorkflowInstanceRequestHelper;
 
 import java.text.Format;
 

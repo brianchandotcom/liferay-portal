@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.util.filter;
+package com.liferay.portal.workflow.definition.web.util.filter;
 
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.util.filter;
+package com.liferay.portal.workflow.definition.link.web.util.filter;
 
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
+import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
 
 /**
  * @author Marcellus Tavares

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet;
+package com.liferay.portal.workflow.instance.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
-import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
+import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+import com.liferay.portal.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Leonardo Barros
  */
 @Component(
-	configurationPid = "com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
+	configurationPid = "com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-instance",

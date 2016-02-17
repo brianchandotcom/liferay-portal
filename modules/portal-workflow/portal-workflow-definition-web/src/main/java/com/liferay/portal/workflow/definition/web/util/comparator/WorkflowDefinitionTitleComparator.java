@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.util.comparator;
+package com.liferay.portal.workflow.definition.web.util.comparator;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;

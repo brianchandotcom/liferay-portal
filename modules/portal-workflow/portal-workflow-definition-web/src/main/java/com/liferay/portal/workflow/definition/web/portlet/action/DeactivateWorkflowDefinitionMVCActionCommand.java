@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.portlet.action;
+package com.liferay.portal.workflow.definition.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.PortletKeys;

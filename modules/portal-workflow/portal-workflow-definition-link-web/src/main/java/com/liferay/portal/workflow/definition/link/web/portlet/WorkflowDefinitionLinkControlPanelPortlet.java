@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.portlet;
+package com.liferay.portal.workflow.definition.link.web.portlet;
 
-import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
+import com.liferay.portal.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import javax.portlet.Portlet;
 

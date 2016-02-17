@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.display.context.util;
+package com.liferay.portal.workflow.instance.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 

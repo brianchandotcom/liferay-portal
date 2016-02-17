@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.dao.search;
+package com.liferay.portal.workflow.task.web.dao.search;
 
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;

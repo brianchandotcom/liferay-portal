@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.display.context;
+package com.liferay.portal.workflow.task.web.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -59,9 +59,9 @@ import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.task.web.display.context.util.WorkflowTaskRequestHelper;
-import com.liferay.workflow.task.web.search.WorkflowTaskSearch;
-import com.liferay.workflow.task.web.util.WorkflowTaskPortletUtil;
+import com.liferay.portal.workflow.task.web.display.context.util.WorkflowTaskRequestHelper;
+import com.liferay.portal.workflow.task.web.search.WorkflowTaskSearch;
+import com.liferay.portal.workflow.task.web.util.WorkflowTaskPortletUtil;
 
 import java.io.Serializable;
 

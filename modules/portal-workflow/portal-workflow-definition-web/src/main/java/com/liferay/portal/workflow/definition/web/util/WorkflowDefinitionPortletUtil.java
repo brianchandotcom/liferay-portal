@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.workflow.definition.web.util;
+package com.liferay.portal.workflow.definition.web.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionActiveComparator;
-import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionNameComparator;
-import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionTitleComparator;
+import com.liferay.portal.workflow.definition.web.util.comparator.WorkflowDefinitionActiveComparator;
+import com.liferay.portal.workflow.definition.web.util.comparator.WorkflowDefinitionNameComparator;
+import com.liferay.portal.workflow.definition.web.util.comparator.WorkflowDefinitionTitleComparator;
 
 import java.util.Locale;
 

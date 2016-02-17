@@ -28,25 +28,25 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MonitoringConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorPortalRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorPortletActionRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorPortletEventRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorPortletRenderRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorPortletResourceRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean monitorServiceRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showPerRequestDataSample();
 
 }

@@ -2,8 +2,11 @@ AUI.add(
 	'liferay-ddl-form-builder',
 	function(A) {
 		var AArray = A.Array;
+
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
+
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
+
 		var Lang = A.Lang;
 
 		var CSS_FORM_BUILDER_TABS = A.getClassName('form', 'builder', 'tabs');

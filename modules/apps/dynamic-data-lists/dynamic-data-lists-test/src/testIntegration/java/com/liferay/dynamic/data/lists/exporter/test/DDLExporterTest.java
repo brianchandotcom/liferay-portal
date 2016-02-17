@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
-import com.liferay.dynamic.data.lists.exporter.DDLExporterFactoryUtil;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -60,10 +60,15 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 
 import java.io.File;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -99,6 +104,20 @@ public class DDLExporterTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		Collection<ServiceReference<DDLExporterFactory>> serviceReferences =
+			registry.getServiceReferences(
+				DDLExporterFactory.class,
+				"(component.name=" + DDLExporterFactory.class.getName() +")");
+
+		Iterator<ServiceReference<DDLExporterFactory>> iterator =
+			serviceReferences.iterator();
+
+		_serviceReference = iterator.next();
+
+		_ddlExporterFactory = registry.getService(_serviceReference);
+
 		setUpDDMFormFieldDataTypes();
 		setUpDDMFormFieldValues();
 		setUpPermissionChecker();
@@ -110,6 +129,10 @@ public class DDLExporterTest {
 		FileUtil.delete("record-set.csv");
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.ungetService(_serviceReference);
 	}
 
 	@Test
@@ -132,7 +155,7 @@ public class DDLExporterTest {
 		recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
 
-		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter("csv");
+		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("csv");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 
@@ -166,7 +189,7 @@ public class DDLExporterTest {
 		recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
 
-		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter("xml");
+		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("xml");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 
@@ -381,6 +404,7 @@ public class DDLExporterTest {
 	}
 
 	private Set<Locale> _availableLocales;
+	private DDLExporterFactory _ddlExporterFactory;
 	private Map<DDMFormFieldType, String> _ddmFormFieldDataTypes;
 	private Locale _defaultLocale;
 	private Map<DDMFormFieldType, String> _fieldValues;
@@ -389,6 +413,7 @@ public class DDLExporterTest {
 	private Group _group;
 
 	private PermissionChecker _originalPermissionChecker;
+	private ServiceReference<DDLExporterFactory> _serviceReference;
 
 	private enum DDMFormFieldType {
 

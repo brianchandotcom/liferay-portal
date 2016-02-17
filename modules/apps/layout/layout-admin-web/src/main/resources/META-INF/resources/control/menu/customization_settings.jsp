@@ -24,6 +24,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.layout.admin.web.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
@@ -100,8 +101,8 @@ data.put("qa-id", "customizations");
 							id="manageCustomization"
 							inlineField="<%= true %>"
 							label="<%= StringPool.BLANK %>"
-							labelOff="hide-customizable-zones"
-							labelOn="view-customizable-zones"
+							labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>'
+							labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>'
 							name="manageCustomization"
 							type="toggle-switch"
 							useNamespace="<%= false %>"

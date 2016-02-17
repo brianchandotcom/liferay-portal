@@ -977,6 +977,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ddmStructureKey, status);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesWithLayouts(long groupId) {
+		return journalArticlePersistence.filterFindByG_NotL(groupId, null);
+	}
+
 	/**
 	 * Returns the web content article matching the URL title that is currently
 	 * displayed or next to be displayed if no article is currently displayed.

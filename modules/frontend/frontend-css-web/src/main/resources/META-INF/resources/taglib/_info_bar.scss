@@ -1,0 +1,40 @@
+.info-bar-container {
+	border-bottom: 1px solid #EDF0F2;
+	min-height: 47px;
+
+	.info-bar {
+		padding: 0;
+	}
+
+	@include sm() {
+		min-height: 59px;
+	}
+
+	.info-bar-default {
+		.btn-default {
+			background-color: transparent;
+			border-color: #E4E9EC;
+			color: #869CAD;
+			margin: 7px 0 7px 15px;
+
+			&.active {
+				background-color: #E4E9EC;
+			}
+
+			@include sm() {
+				margin: 13px 0 13px 15px;
+			}
+		}
+	}
+
+	.info-bar-center {
+		left: 50%;
+		margin-top: 16px;
+		position: absolute;
+		transform: translate(-50%);
+
+		@include sm() {
+			margin-top: 20px;
+		}
+	}
+}

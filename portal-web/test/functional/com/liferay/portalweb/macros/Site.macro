@@ -1006,58 +1006,24 @@
 		</if>
 	</command>
 
-	<command name="viewChildChildCP">
-		<var name="key_childSiteName" value="${childSiteName}" />
-
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_NAME" value1="${childSiteName}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_TYPE" value1="${siteType}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_TAGS" value1="" />
-		<execute function="AssertElementPresent" locator1="SitesChildSite#SITE_TABLE_ACTIONS" />
-		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="MenuItem#VIEW_CHILD_SITES" value1="View Child Sites" />
-
-		<var name="key_childChildSiteName" value="${childChildSiteName}" />
-		<var name="key_childSiteName" value="${childSiteName}" />
-
-		<var method="StringUtil#upperCase('${childSiteName}')" name="childSiteNameUppercase" />
-
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_NAME" value1="${childSiteNameUppercase}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_NAME" value1="${childChildSiteName}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_TYPE" value1="${siteType}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_MEMBERS_USERS" value1="1 User" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="SitesChildSiteChildSite#SITE_TABLE_TAGS" value1="" />
-		<execute function="AssertVisible" locator1="SitesChildSiteChildSite#SITE_TABLE_ACTIONS" />
-	</command>
-
 	<command name="viewChildCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
-		<execute function="AssertVisible" locator1="Sites#SITE_TABLE_ACTIONS" />
-		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="MenuItem#VIEW_CHILD_SITES" value1="View Child Sites" />
-	
-		<var name="key_childSiteName" value="${childSiteName}" />
-		<var name="key_siteName" value="${siteName}" />
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
+		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW_CHILD_SITES" value1="View Child Sites" />
+	
 		<var method="StringUtil#upperCase('${siteName}')" name="siteNameUppercase" />
 
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_NAME" value1="${siteNameUppercase}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_NAME" value1="${childSiteName}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_TYPE" value1="${siteType}" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_MEMBERS_USERS" value1="1 User" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="SitesChildSite#SITE_TABLE_TAGS" value1="" />
-		<execute function="AssertElementPresent" locator1="SitesChildSite#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="Sites#SITE_NAME_BREADCRUMB" value1="${siteNameUppercase}" />
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${childSiteName}" />
+		</execute>
 	</command>
 
 	<command name="viewCP">

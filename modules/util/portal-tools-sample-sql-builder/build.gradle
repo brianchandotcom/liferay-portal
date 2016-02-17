@@ -1,23 +1,23 @@
 dependencies {
 	compile group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
-	compile project(":collaboration:blogs:blogs-api")
-	compile project(":collaboration:blogs:blogs-web")
-	compile project(":collaboration:document-library:document-library-api")
-	compile project(":collaboration:document-library:document-library-web")
+	compile project(":admin:login:login-web")
 	compile project(":business-productivity:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":business-productivity:dynamic-data-lists:dynamic-data-lists-service")
 	compile project(":business-productivity:dynamic-data-lists:dynamic-data-lists-web")
 	compile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-web")
-	compile project(":wem:journal:journal-api")
-	compile project(":wem:journal:journal-service")
-	compile project(":admin:login:login-web")
+	compile project(":collaboration:blogs:blogs-api")
+	compile project(":collaboration:blogs:blogs-web")
+	compile project(":collaboration:document-library:document-library-api")
+	compile project(":collaboration:document-library:document-library-web")
 	compile project(":collaboration:message-boards:message-boards-api")
 	compile project(":collaboration:message-boards:message-boards-web")
 	compile project(":collaboration:wiki:wiki-api")
 	compile project(":collaboration:wiki:wiki-service")
+	compile project(":wem:journal:journal-api")
+	compile project(":wem:journal:journal-service")
 
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

@@ -2,8 +2,8 @@ dependencies {
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 
 	testCompile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
-	testCompile project(":wem:journal:journal-api")
 	testCompile project(":portal-search:portal-search")
+	testCompile project(":wem:journal:journal-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 	testIntegrationCompile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")

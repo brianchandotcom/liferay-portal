@@ -9,9 +9,9 @@ dependencies {
 	provided project(":business-productivity:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-io")
+	provided project(":collaboration:wiki:wiki-api")
 	provided project(":wem:journal:journal-api")
 	provided project(":wem:journal:journal-service")
-	provided project(":collaboration:wiki:wiki-api")
 }
 
 liferay {

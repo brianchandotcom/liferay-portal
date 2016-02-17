@@ -3,8 +3,8 @@ dependencies {
 	provided project(":wem:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
-	testIntegrationCompile project(":wem:asset:asset-categories-admin-web")
-	testIntegrationCompile project(":collaboration:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":collaboration:bookmarks:bookmarks-api")
+	testIntegrationCompile project(":wem:asset:asset-categories-admin-web")
 	testIntegrationCompile project(":wem:journal:journal-api")
 }

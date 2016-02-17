@@ -12,14 +12,14 @@ dependencies {
 	provided project(":business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":export-import:export-import:export-import-api")
 	provided project(":export-import:export-import:export-import-service")
+	provided project(":frontend:frontend-taglib")
+	provided project(":portal-configuration:portal-configuration-metatype")
+	provided project(":portal:portal-upgrade")
 	provided project(":wem:journal:journal-api")
 	provided project(":wem:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
 	provided project(":wem:journal:journal-lang")
 	provided project(":wem:journal:journal-service")
 	provided project(":wem:journal:journal-web")
-	provided project(":frontend:frontend-taglib")
-	provided project(":portal-configuration:portal-configuration-metatype")
-	provided project(":portal:portal-upgrade")
 }
 
 liferay {

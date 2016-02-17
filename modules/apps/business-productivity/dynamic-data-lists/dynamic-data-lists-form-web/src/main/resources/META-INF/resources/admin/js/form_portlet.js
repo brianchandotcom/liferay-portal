@@ -98,6 +98,29 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					getState: function() {
+						var instance = this;
+
+						var formBuilder = instance.get('formBuilder');
+
+						var pages = formBuilder.get('layouts');
+
+						instance.definitionSerializer.set('pages', pages);
+
+						var definition = JSON.parse(instance.definitionSerializer.serialize());
+
+						instance.layoutSerializer.set('pages', pages);
+
+						var layout = JSON.parse(instance.layoutSerializer.serialize());
+
+						return {
+							definition: definition,
+							description: window[instance.ns('descriptionEditor')].getHTML(),
+							layout: layout.pages,
+							name: window[instance.ns('nameEditor')].getHTML()
+						}
+					},
+
 					openPublishModal: function() {
 						var instance = this;
 

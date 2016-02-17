@@ -42,7 +42,9 @@ page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.trash.TrashRenderer" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -57,10 +59,13 @@ page import="com.liferay.trash.kernel.model.TrashEntryList" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryServiceUtil" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
+page import="com.liferay.trash.web.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.display.context.TrashDisplayContext" %><%@
 page import="com.liferay.trash.web.search.EntrySearch" %><%@
 page import="com.liferay.trash.web.search.EntrySearchTerms" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
@@ -83,6 +88,8 @@ String description = LanguageUtil.get(request, "javax.portlet.description.com_li
 portletDisplay.setDescription(description);
 
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletResponse);
+
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/init-ext.jsp" %>

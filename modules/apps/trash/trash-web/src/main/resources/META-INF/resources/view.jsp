@@ -141,10 +141,12 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		<aui:form action="<%= deleteEntriesURL %>" name="fm">
 			<liferay-ui:search-container
 				id="trash"
+				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 				searchContainer="<%= entrySearch %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.trash.kernel.model.TrashEntry"
+					cssClass="entry-display-style"
 					keyProperty="entryId"
 					modelVar="entry"
 					rowVar="row"

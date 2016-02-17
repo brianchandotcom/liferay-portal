@@ -180,24 +180,6 @@
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 	</command>
 
-	<command name="viewEditPG">
-		<var name="key_entryTitle" value="${entryTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
-
-		<var name="key_entryContent" value="${entryContentEdit}" />
-
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
-
-		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
-
-		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
-	</command>
-
 	<command name="viewHiddenPG">
 		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />

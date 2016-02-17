@@ -154,6 +154,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new TrashResultRowSplitter() %>" />
 			</liferay-ui:search-container>
+		</div>
 	</div>
 </div>
 

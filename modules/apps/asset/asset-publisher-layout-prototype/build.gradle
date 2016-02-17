@@ -5,7 +5,7 @@ dependencies {
 	provided project(":apps:asset:asset-categories-navigation-web")
 	provided project(":apps:asset:asset-publisher-web")
 	provided project(":apps:asset:asset-tags-navigation-web")
-	provided project(":apps:search:search-web")
+	provided project(":portal-search:portal-search-web")
 	provided project(":portal:portal-instance-lifecycle")
 }
 

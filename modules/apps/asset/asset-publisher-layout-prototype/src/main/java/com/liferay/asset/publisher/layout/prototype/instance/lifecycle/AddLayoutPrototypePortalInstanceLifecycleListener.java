@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.search.web.constants.SearchPortletKeys;
+import com.liferay.portal.search.web.constants.SearchPortletKeys;
 
 import java.util.List;
 import java.util.Locale;

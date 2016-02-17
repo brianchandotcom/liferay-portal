@@ -1739,7 +1739,7 @@ public class VerifyProperties extends VerifyProcess {
 		"default.user.public.layout.wap.theme.id",
 		"default.wap.color.scheme.id", "default.wap.theme.id",
 		"discussion.thread.view", "dl.file.entry.read.count.enabled",
-		"dockbar.administrative.links.show.in.pop.up",
+		"dl.folder.menu.visible", "dockbar.administrative.links.show.in.pop.up",
 		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",

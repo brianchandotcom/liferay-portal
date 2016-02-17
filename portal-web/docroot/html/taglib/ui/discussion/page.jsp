@@ -471,8 +471,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					);
 
 					<%
-					String paginationURL = discussionTaglibHelper.getPaginationURL();
-					paginationURL = HttpUtil.addParameter(paginationURL, "namespace", namespace);
+					String paginationURL = HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace);
+
 					paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
 					%>
 

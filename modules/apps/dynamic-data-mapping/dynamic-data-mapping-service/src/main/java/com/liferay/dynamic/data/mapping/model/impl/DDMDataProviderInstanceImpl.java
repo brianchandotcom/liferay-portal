@@ -16,40 +16,10 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTrackerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.KeyValuePair;
-
-import java.util.List;
-
 /**
- * @author Marcellus Tavares
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMDataProviderInstanceImpl
 	extends DDMDataProviderInstanceBaseImpl {
-
-	@Override
-	public List<KeyValuePair> getData() throws PortalException {
-		DDMDataProvider ddmDataProvider =
-			DDMDataProviderTrackerUtil.getDDMDataProvider(getType());
-
-		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
-
-		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
-				ddmForm, getDefinition());
-
-		DDMDataProviderContext ddmDataProviderContext =
-			new DDMDataProviderContext(ddmFormValues);
-
-		return ddmDataProvider.getData(ddmDataProviderContext);
-	}
-
 }

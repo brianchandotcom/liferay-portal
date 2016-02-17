@@ -23,7 +23,7 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Sign In" />
-			<var name="portletOption" value="Look and Feel" />
+			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
 		<execute macro="Portlet#configureCustomStylesViaLookandfeelPG" />

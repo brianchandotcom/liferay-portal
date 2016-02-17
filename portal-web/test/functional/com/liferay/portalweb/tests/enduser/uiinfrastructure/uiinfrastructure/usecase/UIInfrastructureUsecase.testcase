@@ -51,7 +51,7 @@
 		<task summary="Assert the 'Look and Feel' modal of the Hello World portlet">
 			<execute macro="Portlet#gotoPortletOptions">
 				<var name="portletName" value="Hello World" />
-				<var name="portletOption" value="Look and Feel" />
+				<var name="portletOption" value="Look and Feel Configuration" />
 			</execute>
 
 			<execute function="AssertTextEquals" locator1="NavTab#PORTLET_CONFIGURATION" value1="Portlet Configuration" />

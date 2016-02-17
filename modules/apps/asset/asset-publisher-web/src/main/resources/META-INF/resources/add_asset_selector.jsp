@@ -64,9 +64,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<%
 				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(AssetUtil.getClassName(entry.getKey()));
 
-					String message = _getMessage(entry.getKey(), locale);
+					String message = AssetUtil.getClassNameMessage(entry.getKey(), locale);
 
 					long curGroupId = groupId;
 
@@ -79,7 +79,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("title", LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false));
-					data.put("url", _getURL(curGroupId, plid, entry.getValue()));
+					data.put("url", AssetUtil.getAddURLPopUp(curGroupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), false, null));
 				%>
 
 					<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(message) %>" />
@@ -130,47 +130,3 @@ String redirect = ParamUtil.getString(request, "redirect");
 		dialog.titleNode.html(title);
 	}
 </aui:script>
-
-<%!
-private String _getClassName(String className) {
-	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-	if (pos != -1) {
-		className = className.substring(0, pos);
-	}
-
-	return className;
-}
-
-private String _getMessage(String className, Locale locale) {
-	String message = null;
-
-	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
-
-	if (pos != -1) {
-		message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
-
-		className = className.substring(0, pos);
-	}
-
-	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-	if (pos == -1) {
-		message = assetRendererFactory.getTypeName(locale);
-	}
-
-	return message;
-}
-
-private String _getURL(long groupId, long plid, PortletURL addPortletURL) {
-	addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-	addPortletURL.setParameter("groupId", String.valueOf(groupId));
-	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-	String addPortletURLString = addPortletURL.toString();
-
-	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-
-	return addPortletURLString;
-}
-%>

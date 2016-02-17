@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.lists.form.web.portlet;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
+import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormDisplayContext;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -359,6 +361,13 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
@@ -399,6 +408,12 @@ public class DDLFormPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+
+		DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(
+			renderRequest, _ddlRecordSetLocalService);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormDisplayContext);
 	}
 
 	@Reference(unbind = "-")
@@ -413,6 +428,7 @@ public class DDLFormPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
 
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
 	private DDMFormRenderer _ddmFormRenderer;
 	private DDMFormValuesFactory _ddmFormValuesFactory;

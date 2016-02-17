@@ -23,9 +23,11 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
 <%@ page import="com.liferay.layout.admin.web.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
+<%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
@@ -33,6 +35,10 @@
 
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.ActionRequest" %>
+<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 
@@ -127,10 +133,6 @@ data.put("qa-id", "customizations");
 					</aui:script>
 				</c:if>
 
-				<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
-					<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-				</portlet:actionURL>
-
 				<%
 				String toggleCustomizedViewMessage = "view-page-without-my-customizations";
 
@@ -141,7 +143,11 @@ data.put("qa-id", "customizations");
 					toggleCustomizedViewMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
 				}
 
-				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+				PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+
+				resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
+
+				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
 				%>
 
 				<li class="control-menu-nav-item hidden-xs">

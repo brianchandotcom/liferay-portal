@@ -20,11 +20,6 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_ENTRIES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Entries')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_ENTRIES_NEW</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'New')]</td>
 	<td></td>

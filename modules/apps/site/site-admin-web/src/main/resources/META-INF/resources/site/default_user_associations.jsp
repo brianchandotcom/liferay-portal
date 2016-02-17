@@ -154,40 +154,14 @@ for (long defaultTeamId : defaultTeamIds) {
 		'click',
 		function(event) {
 			var link = event.currentTarget;
-			var tr = link.ancestor('tr');
 
-			var rowId = link.getAttribute('data-rowId');
-
-			var selectSiteRole = Util.getWindow('<portlet:namespace />selectSiteRole');
-
-			if (selectSiteRole) {
-				var selectButton = selectSiteRole.iframe.node.get('contentWindow.document').one('.selector-button[data-roleid="' + rowId + '"]');
-
-				Util.toggleDisabled(selectButton, false);
-			}
-
-			searchContainer.deleteRow(tr, rowId);
+			searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
 
 			if (searchContainer.getSize() <= 0) {
 				A.one('#<portlet:namespace />siteRolesEmptyResultMessage').show();
 			}
 		},
 		'.modify-link'
-	);
-
-	Liferay.on(
-		'<portlet:namespace />syncSiteRoles',
-		function(event) {
-			event.selectors.each(
-				function(item, index, collection) {
-					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-roleid') + '"]');
-
-					if (!modifyLink) {
-						Util.toggleDisabled(item, false);
-					}
-				}
-			);
-		}
 	);
 </aui:script>
 
@@ -202,19 +176,8 @@ for (long defaultTeamId : defaultTeamIds) {
 		'click',
 		function(event) {
 			var link = event.currentTarget;
-			var tr = link.ancestor('tr');
 
-			var rowId = link.getAttribute('data-rowId');
-
-			var selectTeam = Util.getWindow('<portlet:namespace />selectTeam');
-
-			if (selectTeam) {
-				var selectButton = selectTeam.iframe.node.get('contentWindow.document').one('.selector-button[data-teamid="' + rowId + '"]');
-
-				Util.toggleDisabled(selectButton, false);
-			}
-
-			searchContainer.deleteRow(tr, rowId);
+			searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
 
 			if (searchContainer.getSize() <= 0) {
 				A.one('#<portlet:namespace />teamsEmptyResultMessage').show();
@@ -222,27 +185,25 @@ for (long defaultTeamId : defaultTeamIds) {
 		},
 		'.modify-link'
 	);
-
-	Liferay.on(
-		'<portlet:namespace />enableRemovedTeams',
-		function(event) {
-			event.selectors.each(
-				function(item, index, collection) {
-					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-teamid') + '"]');
-
-					if (!modifyLink) {
-						Util.toggleDisabled(item, false);
-					}
-				}
-			);
-		}
-	);
 </aui:script>
 
 <aui:script use="liferay-search-container,escape">
+
+	<%
+	PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+	selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
+	selectSiteRoleURL.setParameter("step", "2");
+	selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
+	selectSiteRoleURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
+	selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
+
 	A.one('#<portlet:namespace />selectSiteRoleLink').on(
 		'click',
 		function(event) {
+	        var uri = '<%= selectSiteRoleURL.toString() %>';
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -251,18 +212,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					},
 					id: '<portlet:namespace />selectSiteRole',
 					title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-
-					<%
-					PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
-
-					selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
-					selectSiteRoleURL.setParameter("step", "2");
-					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
-					selectSiteRoleURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
-					selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
-					uri: '<%= selectSiteRoleURL.toString() %>'
+					uri: uri
 				},
 				function(event) {
 					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.searchcontainername + 'SearchContainer');
@@ -282,9 +232,19 @@ for (long defaultTeamId : defaultTeamIds) {
 		}
 	);
 
+	<%
+	PortletURL selectTeamURL = PortletProviderUtil.getPortletURL(request, Team.class.getName(), PortletProvider.Action.BROWSE);
+
+	selectTeamURL.setParameter("groupId", String.valueOf(groupId));
+	selectTeamURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectTeam");
+	selectTeamURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
+
 	A.one('#<portlet:namespace />selectTeamLink').on(
 		'click',
 		function(event) {
+			var uri = '<%= selectTeamURL.toString() %>';
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -293,16 +253,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					},
 					id: '<portlet:namespace />selectTeam',
 					title: '<liferay-ui:message arguments="team" key="select-x" />',
-
-					<%
-					PortletURL selectTeamURL = PortletProviderUtil.getPortletURL(request, Team.class.getName(), PortletProvider.Action.BROWSE);
-
-					selectTeamURL.setParameter("groupId", String.valueOf(groupId));
-					selectTeamURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectTeam");
-					selectTeamURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
-					uri: '<%= selectTeamURL.toString() %>'
+					uri: uri
 				},
 				function(event) {
 					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.teamsearchcontainername + 'SearchContainer');

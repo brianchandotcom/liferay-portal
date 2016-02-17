@@ -60,72 +60,21 @@ public class UnstableMessageUtil {
 					return sb.toString();
 				}
 
-				sb.append("<li><a href=\"");
-
-				String runBuildHREF = runBuildURL;
-
-				runBuildHREF = runBuildHREF.replace("[", "_");
-				runBuildHREF = runBuildHREF.replace("]", "_");
-				runBuildHREF = runBuildHREF.replace("#", "_");
-
-				sb.append(runBuildHREF);
-
-				sb.append("/testReport/");
-
-				String testClassName = caseJSONObject.getString("className");
-
-				int x = testClassName.lastIndexOf(".");
-
-				String testPackageName = testClassName.substring(0, x);
-
-				sb.append(testPackageName);
-
-				sb.append("/");
-
-				String testSimpleClassName = testClassName.substring(x + 1);
-
-				sb.append(testSimpleClassName);
-
-				sb.append("/");
-
-				String testMethodName = caseJSONObject.getString("name");
-
-				String testMethodNameURL = testMethodName;
-
-				testMethodNameURL = testMethodNameURL.replace("[", "_");
-				testMethodNameURL = testMethodNameURL.replace("]", "_");
-				testMethodNameURL = testMethodNameURL.replace("#", "_");
-
-				if (testPackageName.equals("junit.framework")) {
-					testMethodNameURL = testMethodNameURL.replace(".", "_");
-				}
-
-				sb.append(testMethodNameURL);
-
-				sb.append("\\\">");
-				sb.append(testSimpleClassName);
-				sb.append(".");
-				sb.append(testMethodName);
-
 				JSONObject runBuildURLJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(
 						JenkinsResultsParserUtil.getLocalURL(
 							runBuildURL + "api/json"));
 
+				String axis = JenkinsResultsParserUtil.getAxisVariable(
+					runBuildURLJSONObject);
+
 				String jobVariant = JenkinsResultsParserUtil.getJobVariant(
 					runBuildURLJSONObject);
 
-				if (jobVariant.contains("functional") &&
-					testClassName.contains("EvaluateLogTest")) {
-
-					sb.append("[");
-					sb.append(
-						JenkinsResultsParserUtil.getAxisVariable(
-							runBuildURLJSONObject));
-					sb.append("]");
-				}
-
-				sb.append("</a>");
+				sb.append("<li>");
+				sb.append(
+					_getRunBuildAnchor(
+						axis, caseJSONObject, jobVariant, runBuildURL));
 
 				if (jobVariant.contains("functional")) {
 					sb.append(" - ");
@@ -133,27 +82,25 @@ public class UnstableMessageUtil {
 					String description = runBuildURLJSONObject.getString(
 						"description");
 
-					x = description.indexOf(">Jenkins Report<") + 22;
+					int x = description.indexOf(">Jenkins Report<") + 22;
 
 					if (description.length() > x) {
 						description = description.substring(x);
-
-						description = description.replace("\"", "\\\"");
 
 						sb.append(description);
 						sb.append(" - ");
 					}
 
-					sb.append("<a href=\\\"");
+					sb.append("<a href=\"");
 					sb.append(runBuildURL);
-					sb.append("/console\\\">Console Output</a>");
+					sb.append("/console\">Console Output</a>");
 				}
 
 				sb.append("<pre>");
 				sb.append(
-					_truncate(
-						(2500 / _MAX_MESSAGE_COUNT),
-						caseJSONObject.getString("errorDetails")));
+					_processError(
+						caseJSONObject.getString("errorDetails"),
+						caseJSONObject.getString("errorStackTrace")));
 				sb.append("</pre>");
 
 				sb.append("</li>");
@@ -162,6 +109,96 @@ public class UnstableMessageUtil {
 
 		sb.append("</ul>");
 		return sb.toString();
+	}
+
+	private static String _fixURL(String link) {
+		String newLink = link;
+
+		newLink = newLink.replace("[", "_");
+		newLink = newLink.replace("]", "_");
+		newLink = newLink.replace("#", "_");
+
+		return newLink;
+	}
+
+	private static String _getRunBuildAnchor(
+		String axis, JSONObject caseJSONObject, String jobVariant,
+		String runBuildURL) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<a href=\"");
+
+		String runBuildHREF = runBuildURL;
+
+		runBuildHREF = _fixURL(runBuildHREF);
+
+		sb.append(runBuildHREF);
+
+		sb.append("/testReport/");
+
+		String testClassName = caseJSONObject.getString("className");
+
+		int x = testClassName.lastIndexOf(".");
+
+		String testPackageName = testClassName.substring(0, x);
+
+		sb.append(testPackageName);
+
+		sb.append("/");
+
+		String testSimpleClassName = testClassName.substring(x + 1);
+
+		sb.append(testSimpleClassName);
+
+		sb.append("/");
+
+		String testMethodName = caseJSONObject.getString("name");
+
+		String testMethodNameURL = testMethodName;
+
+		testMethodNameURL = _fixURL(testMethodNameURL);
+
+		if (testPackageName.equals("junit.framework")) {
+			testMethodNameURL = testMethodNameURL.replace(".", "_");
+		}
+
+		sb.append(testMethodNameURL);
+
+		sb.append("\">");
+		sb.append(testSimpleClassName);
+		sb.append(".");
+		sb.append(testMethodName);
+
+		if (jobVariant.contains("functional") &&
+			testClassName.contains("EvaluateLogTest")) {
+
+			sb.append("[");
+			sb.append(axis);
+			sb.append("]");
+		}
+
+		sb.append("</a>");
+
+		return sb.toString();
+}
+
+	private static String _processError(
+		String errorDetails, String errorStackTrace) {
+
+		String message = errorStackTrace;
+
+		int x = message.indexOf("Caused by:");
+
+		if (x != -1) {
+			message = message.substring(message.lastIndexOf("\n", x));
+		}
+
+		if (!message.contains(errorDetails)) {
+			message = errorDetails + "\n" + message;
+		}
+
+		return _truncate((2500/_MAX_MESSAGE_COUNT), message);
 	}
 
 	private static String _truncate(int maxLength, String message) {

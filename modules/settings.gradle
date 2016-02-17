@@ -16,7 +16,7 @@ FileTree fileTree = fileTree(rootDir) {
 	}
 	else {
 		include "*/**/build.gradle"
-		include "themes/*/package.json"
+		include "frontend/frontend-theme/*/package.json"
 	}
 }
 

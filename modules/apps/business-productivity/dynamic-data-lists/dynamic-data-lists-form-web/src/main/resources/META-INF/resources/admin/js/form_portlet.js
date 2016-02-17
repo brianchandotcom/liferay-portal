@@ -67,6 +67,8 @@ AUI.add(
 						instance.renderUI();
 
 						instance.bindUI();
+
+						instance.initialState = instance.getState();
 					},
 
 					renderUI: function() {
@@ -86,7 +88,8 @@ AUI.add(
 
 						instance._eventHandlers = [
 							instance.one('#publishCheckbox').on('change', A.bind('_onChangePublishCheckbox', instance)),
-							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance)),
+							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance))
 						];
 					},
 
@@ -255,6 +258,31 @@ AUI.add(
 						var editForm = instance.get('editForm');
 
 						submitForm(editForm.form);
+					},
+
+					_onCancel: function(event) {
+						var instance = this;
+
+						var currentState = instance.getState();
+
+						if (!_.isEqual(currentState, instance.initialState)) {
+							var url = event.currentTarget.get('href');
+
+							event.preventDefault();
+							event.stopPropagation();
+
+							instance.openConfirmDialog(
+								{
+									message: Liferay.Language.get('are-you-sure-you-want-to-cancel'),
+									cancelLabel: Liferay.Language.get('no-keep'),
+									confirm: function() {
+										window.location.href = url;
+									},
+									confirmLabel: Liferay.Language.get('yes-cancel'),
+									title: Liferay.Language.get('confirm')
+								}
+							);
+						}
 					},
 
 					_onChangePublishCheckbox: function(event) {

@@ -150,6 +150,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public void checkPortlet(Portlet portlet) throws PortalException {
 		initPortletDefaultPermissions(portlet);
 
+		initPortletModelDefaultPermissions(portlet);
+
 		initPortletAddToPagePermissions(portlet);
 	}
 
@@ -1166,6 +1168,45 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
 			rootPortletId, siteMemberRole.getRoleId(),
 			groupActionIds.toArray(new String[0]));
+	}
+
+	protected void initPortletModelDefaultPermissions(Portlet portlet)
+		throws PortalException {
+
+		long companyId = portlet.getCompanyId();
+		String rootPortletId = portlet.getRootPortletId();
+
+		List<String> modelResources = new ArrayList<>();
+		modelResources.add(
+			ResourceActionsUtil.getPortletRootModelResource(rootPortletId));
+		modelResources.addAll(
+			ResourceActionsUtil.getPortletModelResources(rootPortletId));
+
+		for (String modelResource : modelResources) {
+			if (Validator.isBlank(modelResource)) {
+				continue;
+			}
+
+			boolean resourcePermissionUnsupported =
+				resourceBlockLocalService.isSupported(modelResource);
+
+			if (resourcePermissionUnsupported) {
+				continue;
+			}
+
+			int count =
+				resourcePermissionLocalService.getResourcePermissionsCount(
+					companyId, modelResource,
+					ResourceConstants.SCOPE_INDIVIDUAL, modelResource);
+
+			if (count > 0) {
+				continue;
+			}
+
+			resourceLocalService.addResources(
+				companyId, 0, 0, modelResource, modelResource, false, false,
+				true);
+		}
 	}
 
 	protected void readLiferayDisplay(

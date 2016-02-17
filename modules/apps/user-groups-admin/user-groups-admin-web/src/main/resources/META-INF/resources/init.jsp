@@ -95,19 +95,19 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 boolean filterManageableOrganizations = true;
 
-if (permissionChecker.hasPermission(scopeGroupId, User.class.getName(), company.getCompanyId(), ActionKeys.VIEW)) {
+if (permissionChecker.hasPermission(scopeGroupId, User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
 	filterManageableOrganizations = false;
 }
 
 String portletId = PortletProviderUtil.getPortletId(PortalMyAccountApplicationType.MyAccount.CLASS_NAME, PortletProvider.Action.VIEW);
 
-if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroupId, Organization.class.getName(), company.getCompanyId(), ActionKeys.VIEW)) {
+if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroupId, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW)) {
 	filterManageableOrganizations = false;
 }
 
 boolean filterManageableUserGroups = true;
 
-if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroupId, UserGroup.class.getName(), company.getCompanyId(), ActionKeys.VIEW)) {
+if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroupId, UserGroup.class.getName(), UserGroup.class.getName(), ActionKeys.VIEW)) {
 	filterManageableUserGroups = false;
 }
 %>

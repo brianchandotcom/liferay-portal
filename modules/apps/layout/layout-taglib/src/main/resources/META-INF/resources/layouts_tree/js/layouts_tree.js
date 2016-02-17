@@ -262,7 +262,7 @@ AUI.add(
 					expanded: expanded,
 					id: id,
 					io: instance._getNodeIOConfig(),
-					leaf: !node.parentable,
+					leaf: !hasChildren,
 					paginator: {
 						limit: maxChildren,
 						offsetParam: 'start',

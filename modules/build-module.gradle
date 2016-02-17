@@ -1,18 +1,18 @@
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
 
-configurations {
-	compile {
-		if (!project.path.startsWith(":sdk:") &&
-			!project.path.startsWith(":test:") &&
-			!project.path.startsWith(":third-party:") &&
-			!project.path.startsWith(":util:")) {
+if (!project.path.startsWith(":sdk:") && !project.path.startsWith(":test:") && !project.path.startsWith(":third-party:") && !project.path.startsWith(":util:")) {
+	configurations {
+		compile {
+			transitive = false
+		}
 
+		testCompile.dependencies.withType(ProjectDependency) {
+			transitive = false
+		}
+
+		testIntegrationCompile.dependencies.withType(ProjectDependency) {
 			transitive = false
 		}
 	}
-}
-
-configurations.provided.dependencies.withType(ProjectDependency) {
-	configurations.default.exclude module: it.name
 }

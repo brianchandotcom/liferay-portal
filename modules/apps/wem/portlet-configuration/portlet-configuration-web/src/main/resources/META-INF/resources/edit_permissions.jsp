@@ -112,6 +112,12 @@ definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="<%= selResourceDescription %>" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <div class="container-fluid-1280 edit-permissions">
 	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
 		<portlet:param name="mvcPath" value="/edit_permissions.jsp" />

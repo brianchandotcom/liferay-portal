@@ -47,9 +47,9 @@ if (layout != null) {
 	controlPanel = group.isControlPanel();
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL iteratorURL = renderResponse.createRenderURL();
 
-TemplateSearch templateSearch = new TemplateSearch(renderRequest, portletURL);
+TemplateSearch templateSearch = new TemplateSearch(renderRequest, iteratorURL);
 
 OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
 

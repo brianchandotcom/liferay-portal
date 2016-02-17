@@ -138,7 +138,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<aui:input label='<%= LanguageUtil.format(request, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
 
 	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
+		<%= LanguageUtil.format(request, "some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x", LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template"), false) %>
 	</div>
 
 	<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">

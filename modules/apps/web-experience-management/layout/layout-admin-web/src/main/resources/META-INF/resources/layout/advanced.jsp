@@ -35,7 +35,7 @@ Group group = layoutsAdminDisplayContext.getGroup();
 <c:if test="<%= !group.isLayoutPrototype() %>">
 
 	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
+		<%= LanguageUtil.format(request, "some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x", LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template"), false) %>
 	</div>
 
 	<%

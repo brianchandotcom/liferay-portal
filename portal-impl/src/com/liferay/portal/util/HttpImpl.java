@@ -588,7 +588,7 @@ public class HttpImpl implements Http {
 
 		if (url.startsWith(Http.HTTP)) {
 			int pos = url.indexOf(
-				StringPool.SLASH, Http.HTTPS_WITH_SLASH.length());
+				CharPool.SLASH, Http.HTTPS_WITH_SLASH.length());
 
 			url = url.substring(pos);
 		}
@@ -752,21 +752,19 @@ public class HttpImpl implements Http {
 			path = uri;
 		}
 
-		String[] uriParts = StringUtil.split(
-			path.substring(1), StringPool.SLASH);
+		String[] uriParts = StringUtil.split(path.substring(1), CharPool.SLASH);
 
 		List<String> parts = new ArrayList<>(uriParts.length);
 
-		for (int i = 0; i < uriParts.length; i++) {
-			String curUriPart = URLCodec.decodeURL(uriParts[i]);
-			String prevUriPart = null;
+		String prevUriPart = null;
 
-			if (i > 0) {
-				prevUriPart = URLCodec.decodeURL(uriParts[i - 1]);
-			}
+		for (String uriPart : uriParts) {
+			String curUriPart = URLCodec.decodeURL(uriPart);
 
 			if (curUriPart.equals(StringPool.DOUBLE_PERIOD)) {
-				if (!prevUriPart.equals(StringPool.PERIOD)) {
+				if ((prevUriPart != null) &&
+					!prevUriPart.equals(StringPool.PERIOD)) {
+
 					parts.remove(parts.size() - 1);
 				}
 			}
@@ -775,6 +773,8 @@ public class HttpImpl implements Http {
 
 				parts.add(URLCodec.encodeURL(curUriPart));
 			}
+
+			prevUriPart = curUriPart;
 		}
 
 		if (parts.isEmpty()) {
@@ -1045,19 +1045,18 @@ public class HttpImpl implements Http {
 			return uri;
 		}
 
-		int pos = uri.indexOf(StringPool.SEMICOLON);
+		int pos = uri.indexOf(CharPool.SEMICOLON);
 
 		if (pos == -1) {
 			return uri;
 		}
 
-		String[] uriParts = StringUtil.split(
-			uri.substring(1), StringPool.SLASH);
+		String[] uriParts = StringUtil.split(uri.substring(1), CharPool.SLASH);
 
 		StringBundler sb = new StringBundler(uriParts.length * 2);
 
 		for (String uriPart : uriParts) {
-			pos = uriPart.indexOf(StringPool.SEMICOLON);
+			pos = uriPart.indexOf(CharPool.SEMICOLON);
 
 			if (pos == -1) {
 				sb.append(StringPool.SLASH);
@@ -1167,7 +1166,7 @@ public class HttpImpl implements Http {
 
 		StringBundler sb = new StringBundler();
 
-		String[] params = url.split(StringPool.AMPERSAND);
+		String[] params = StringUtil.split(url, CharPool.AMPERSAND);
 
 		for (int i = 0; i < params.length; i++) {
 			String param = params[i];
@@ -1176,7 +1175,7 @@ public class HttpImpl implements Http {
 				param.contains("_returnToFullPageURL=") ||
 				param.startsWith("redirect")) {
 
-				int pos = param.indexOf(StringPool.EQUAL);
+				int pos = param.indexOf(CharPool.EQUAL);
 
 				String qName = param.substring(0, pos);
 

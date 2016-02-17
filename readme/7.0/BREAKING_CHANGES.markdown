@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1ba366c`.*
+*This document has been reviewed through commit `d756263`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3837,29 +3837,32 @@ This change was made as a part of the ongoing strategy to deprecate unused tags.
 
 ---------------------------------------
 
-### Removed ability to specify classloaders in Scripting
+### Removed the Ability to Specify Class Loaders in Scripting
 - **Date:** 2016-Feb-17
 - **JIRA Ticket:** LPS-63180
 
 #### What changed?
-- `com.liferay.portal.kernel.scripting.ScriptingExecutor` no longer uses
-provided ClassLoaders in the eval methods
-- `com.liferay.portal.kernel.scripting.Scripting` no longer uses
-the provided ClassLoaders or servletContextNames in eval and exec methods.
+
+- `com.liferay.portal.kernel.scripting.ScriptingExecutor` no longer uses the
+provided class loaders in the eval methods.
+- `com.liferay.portal.kernel.scripting.Scripting` no longer uses the provided
+class loaders and servlet context names in eval and exec methods.
 
 #### Who is affected?
 
 - All implementations of `com.liferay.portal.kernel.scripting.ScriptingExecutor`
-- All classes calling `com.liferay.portal.kernel.scripting.Scripting`
+are affected.
+- All classes that call `com.liferay.portal.kernel.scripting.Scripting` are
+affected.
 
 #### How should I update my code?
 
-You should remove ClassLoader and servletContext from the parameters used when
-calling
+You should remove class loader and servlect context parameters from calls to the
+modified methods.
 
 #### Why was this change made?
 
-This change was made since custom classloader management is no longer necessary
+This change was made since custom class loader management is no longer necessary
 in the OSGi container.
 
 ---------------------------------------

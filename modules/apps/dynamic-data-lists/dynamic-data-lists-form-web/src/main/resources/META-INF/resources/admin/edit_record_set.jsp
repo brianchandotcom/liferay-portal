@@ -162,11 +162,13 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<div class="form-group">
 				<label><liferay-ui:message key="copy-this-url-to-share-the-form" /></label>
 
-				<input class="form-control" id="<portlet:namespace />clipboard" readOnly type="text" value="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" />
+				<div class="input-group">
+					<input class="form-control" id="<portlet:namespace />clipboard" readOnly type="text" value="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" />
 
-				<span class="input-group-btn">
-					<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button"><liferay-ui:message key="copy-url" /></button>
-				</span>
+					<span class="input-group-btn">
+						<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button"><liferay-ui:message key="copy-url" /></button>
+					</span>
+				</div>
 			</div>
 		</div>
 

@@ -141,7 +141,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<%= LanguageUtil.format(request, "some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x", LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template"), false) %>
 	</div>
 
-	<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
+	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace/>layoutPrototypeMergeAlert">
 
 		<%
 		request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
@@ -194,7 +194,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			}
 		%>
 
-			<div class="layout-type-form layout-type-form-<%= type %> <%= selLayout.getType().equals(type) ? "" : "hide" %>">
+			<div class="layout-type-form layout-type-form-<%= type %> <%= selLayout.getType().equals(type) ? StringPool.BLANK : "hide" %>">
 
 				<%
 				request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);

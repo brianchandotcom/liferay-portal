@@ -16,6 +16,39 @@
 		<print-gradle-alternative args="buildLang" />
 	</target>
 
+	<target name="build-module-availability-report">
+		<if>
+			<available file="bnd.bnd" />
+			<then>
+				<property file="bnd.bnd" />
+
+				<echo
+					append="true"
+					file="${nexus.reports.dir}/modules.symbolic.names.list"
+					message="${Bundle-SymbolicName}${line.separator}"
+				/>
+
+				<if>
+					<contains string="${repository.index}" substring="${Bundle-SymbolicName}" />
+					<then>
+						<echo
+							append="true"
+							file="${nexus.reports.dir}/available.modules.txt"
+							message="${line.separator}${Bundle-SymbolicName}"
+						/>
+					</then>
+					<else>
+						<echo
+							append="true"
+							file="${nexus.reports.dir}/unavailable.modules.txt"
+							message="${line.separator}${Bundle-SymbolicName}"
+						/>
+					</else>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="build-service">
 		<print-gradle-alternative args="buildService" />
 	</target>

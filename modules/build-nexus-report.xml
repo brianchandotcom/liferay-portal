@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-nexus-report">
+	<taskdef classpath="../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+
+	<property file="nexus.report.properties" />
+
+	<target name="build-module-availability-report" depends="get-repository-index,init-report-files">
+		<subant target="build-module-availability-report">
+			<fileset dir=".">
+				<exclude name="**/samples/**/*" />
+				<exclude name="themes/**/*" />
+				<include name="**/build.xml" />
+			</fileset>
+
+			<property name="nexus.reports.dir" value="${nexus.reports.dir}" />
+			<property name="repository.index" value="${repository.index}" />
+		</subant>
+	</target>
+
+	<target name="build-module-stale-report" depends="get-repository-index,init-report-files">
+		<loadfile property="modules.symbolic.names.list" srcFile="${nexus.reports.dir}/modules.symbolic.names.list" />
+
+		<delete file="${nexus.reports.dir}/modules.symbolic.names.list" />
+
+		<for delimiter="${line.separator}" list="${repository.index}" param="nexus.module">
+			<sequential>
+				<if>
+					<not>
+						<contains string="${modules.symbolic.names.list}" substring="@{nexus.module}" />
+					</not>
+					<then>
+						<echo
+							append="true"
+							file="${nexus.reports.dir}/stale.modules.txt"
+							message="${line.separator}@{nexus.module}"
+						/>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="build-nexus-report" depends="build-module-availability-report,build-module-stale-report" />
+
+	<target name="clean">
+		<delete dir="${basedir}/nexus.reports" />
+	</target>
+
+	<target name="get-repository-index" depends="prepare-report-dir">
+		<get
+			dest="${nexus.reports.dir}/${repository.name}.index"
+			src="https://repository.liferay.com/nexus/content/repositories/${repository.name}/com/liferay"
+		/>
+
+		<replaceregexp
+			file="${nexus.reports.dir}/${repository.name}.index"
+			flags="gm"
+			match="[\s\S]*?https:\/\/repository\.liferay\.com\/nexus\/content\/repositories\/${repository.name}\/com\/liferay\/([0-9a-z.]+)\/[\s\S]*?"
+			replace="\1${line.separator}"
+		/>
+
+		<replaceregexp
+			file="${nexus.reports.dir}/${repository.name}.index"
+			flags="m"
+			match="&quot;[\s\S]*"
+			replace=""
+		/>
+
+		<loadfile property="repository.index" srcFile="${nexus.reports.dir}/${repository.name}.index" />
+
+		<delete file="${nexus.reports.dir}/${repository.name}.index" />
+	</target>
+
+	<target name="init-report-files" depends="prepare-report-dir">
+		<echo
+			file="${nexus.reports.dir}/available.modules.txt"
+			message="The following modules were found in ${repository.name}:${line.separator}"
+		/>
+
+		<echo
+			file="${nexus.reports.dir}/stale.modules.txt"
+			message="The following modules were found in ${repository.name}, but do not currently exist in the source code:${line.separator}"
+		/>
+
+		<echo
+			file="${nexus.reports.dir}/unavailable.modules.txt"
+			message="The following modules were not found in ${repository.name}:${line.separator}"
+		/>
+	</target>
+
+	<target name="prepare-report-dir">
+		<property name="nexus.reports.dir" value="${basedir}/nexus.reports/${repository.name}" />
+
+		<delete dir="${nexus.reports.dir}" />
+		<mkdir dir="${nexus.reports.dir}" />
+	</target>
+</project>

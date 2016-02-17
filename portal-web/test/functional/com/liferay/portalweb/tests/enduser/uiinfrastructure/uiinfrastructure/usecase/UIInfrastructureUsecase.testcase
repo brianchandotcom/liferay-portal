@@ -30,7 +30,7 @@
 		</execute>
 
 		<task summary="Close the Add Panel">
-			<execute function="Click" locator1="Icon#CLOSE" />
+			<execute function="Click" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
 		</task>
 
 		<task summary="Assert the 'Configuration' iframe of the Hello World portlet">

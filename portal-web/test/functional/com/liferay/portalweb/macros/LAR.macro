@@ -487,6 +487,8 @@
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="exportSiteCP">

@@ -100,8 +100,6 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
-
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />

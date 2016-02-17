@@ -1,7 +1,6 @@
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile project(":portal-configuration:portal-configuration-metatype")
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided project(":portal-configuration:portal-configuration-metatype")
 }
 
 liferay {

@@ -1,5 +1,6 @@
 dependencies {
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Remote Axis Extender
-Bundle-SymbolicName: com.liferay.portal.remote.axis.extender
+Bundle-Name: Liferay Portal Axis Extender
+Bundle-SymbolicName: com.liferay.portal.axis.extender
 Bundle-Version: 1.0.0
 DynamicImport-Package: com.liferay.*
 Import-Package:\
@@ -22,8 +22,8 @@ Import-Package:\
 	*
 Include-Resource:\
 	@lib/util-java.jar!/com/liferay/util/axis/*.class,\
-	@../../../lib/portal/axis.jar,\
-	@../../../lib/portal/wsdl4j.jar
+	@lib/axis-wsdl4j.jar,\
+	@lib/org.apache.axis.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../../marketplace/platform/bnd.bnd

@@ -1,9 +1,3 @@
-configurations {
-	compile {
-		transitive = false
-	}
-}
-
 dependencies {
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "util-bridges", version: liferay.portalVersion

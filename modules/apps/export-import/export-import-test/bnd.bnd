@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Export Import Test
 Bundle-SymbolicName: com.liferay.exportimport.test
 Bundle-Version: 1.0.0
-Import-Package: *;resolution:=optional
 Include-Resource:\
 	test-classes/integration,\
 	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\

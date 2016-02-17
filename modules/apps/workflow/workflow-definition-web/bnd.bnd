@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Workflow Definition Web
 Bundle-SymbolicName: com.liferay.workflow.definition.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.frontend.taglib.servlet.taglib,\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
 -include: ../../../../marketplace/business-productivity/bnd.bnd

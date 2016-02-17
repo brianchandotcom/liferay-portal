@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Social Networking Web
 Bundle-SymbolicName: com.liferay.social.networking.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.portlet.messageboards.model,\
-	*
 Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

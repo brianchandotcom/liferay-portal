@@ -7,8 +7,6 @@ Bundle-ClassPath:\
 	lib/cxf-rt-wsdl.jar,\
 	lib/cxf-tools-common.jar,\
 	lib/cxf-tools-validator.jar,\
-	lib/stax2-api.jar,\
-	lib/woodstox-core-asl.jar,\
 	lib/wsdl4j.jar,\
 	lib/xmlschema-core.jar
 Bundle-Name: Liferay Portal Remote CXF Common
@@ -56,8 +54,6 @@ Include-Resource:\
 	lib/=lib/cxf-rt-wsdl.jar,\
 	lib/=lib/cxf-tools-common.jar,\
 	lib/=lib/cxf-tools-validator.jar,\
-	lib/=lib/stax2-api.jar,\
-	lib/=lib/woodstox-core-asl.jar,\
 	lib/=lib/wsdl4j.jar,\
 	lib/=lib/xmlschema-core.jar
 Liferay-Releng-Module-Group-Description:

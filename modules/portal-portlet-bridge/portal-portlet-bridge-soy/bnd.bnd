@@ -2,15 +2,6 @@ Bundle-Name: Liferay Portal Portlet Bridge Soy
 Bundle-SymbolicName: com.liferay.portal.portlet.bridge.soy
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.portlet.bridge.soy
-Import-Package:\
-	com.liferay.portal.kernel.*,\
-	\
-	javax.portlet;version='[2.0,3)',\
-	\
-	javax.servlet;version='[2.5,4)',\
-	\
-	org.osgi.framework,\
-	org.osgi.framework.wiring
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../../marketplace/platform/bnd.bnd

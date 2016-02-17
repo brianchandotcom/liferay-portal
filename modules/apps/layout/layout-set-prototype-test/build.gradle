@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile project(":apps:export-import:export-import-service")
 	testIntegrationCompile project(":apps:layout:layout-set-prototype-api")
 	testIntegrationCompile project(":apps:layout:layout-set-prototype-impl")
 }

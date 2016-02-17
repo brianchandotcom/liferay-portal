@@ -1,11 +1,12 @@
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
-	compile project(":core:osgi-service-tracker-collections")
-	compile project(":portal-configuration:portal-configuration-metatype")
-	compile project(":portal:portal-output-stream-container")
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":core:osgi-service-tracker-collections")
+	provided project(":portal-configuration:portal-configuration-metatype")
+	provided project(":portal:portal-output-stream-container")
 }
 
 liferay {

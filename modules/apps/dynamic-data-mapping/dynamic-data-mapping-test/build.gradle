@@ -15,6 +15,7 @@ dependencies {
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-radio")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-select")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-text")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 }

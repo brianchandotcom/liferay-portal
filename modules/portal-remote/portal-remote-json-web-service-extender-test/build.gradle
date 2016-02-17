@@ -1,6 +1,6 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.5"
 	testIntegrationCompile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-20150827.124553-23"

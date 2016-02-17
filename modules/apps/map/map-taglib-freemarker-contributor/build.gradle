@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":apps:map:map-taglib")
+	provided project(":apps:map:map-taglib")
 }
 
 liferay {

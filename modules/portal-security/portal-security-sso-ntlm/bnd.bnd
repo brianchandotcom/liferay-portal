@@ -6,9 +6,6 @@ Export-Package:\
 	com.liferay.portal.security.sso.ntlm.constants.*;version=${plugin.full.version}
 Import-Package:\
 	!javax.microedition.*,\
-	\
-	com.liferay.portal.language.resource.bundle,\
-	com.liferay.portal.settings.portlet.action,\
 	*
 Include-Resource: @lib/jcifs.jar
 Liferay-Releng-Module-Group-Description:

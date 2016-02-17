@@ -1,9 +1,3 @@
-configurations {
-	compile {
-		transitive = false
-	}
-}
-
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

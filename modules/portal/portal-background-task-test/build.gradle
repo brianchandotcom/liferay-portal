@@ -1,4 +1,6 @@
 dependencies {
+	testCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	testCompile project(":portal:portal-background-task-api")
 	testCompile project(":portal:portal-background-task-service")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"

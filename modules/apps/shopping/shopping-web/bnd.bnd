@@ -2,62 +2,18 @@ Bundle-Name: Liferay Shopping Web
 Bundle-SymbolicName: com.liferay.shopping.web
 Bundle-Version: 1.0.0
 Import-Package:\
-	com.liferay.exportimport.kernel.lar,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portal.kernel.servlet.*,\
-	com.liferay.portal.kernel.settings,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.model,\
-	com.liferay.portal.security.auth,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.service.permission,\
-	com.liferay.portal.struts,\
-	com.liferay.portal.theme,\
-	com.liferay.portal.webserver,\
-	com.liferay.shopping.configuration,\
-	com.liferay.shopping.exception,\
-	com.liferay.shopping.lar,\
-	com.liferay.shopping.model,\
-	com.liferay.shopping.model.impl,\
-	com.liferay.shopping.service,\
-	com.liferay.shopping.service.base,\
-	com.liferay.shopping.service.http,\
-	com.liferay.shopping.service.impl,\
-	com.liferay.shopping.service.permission,\
-	com.liferay.shopping.service.permission.impl,\
-	com.liferay.shopping.service.persistence,\
-	com.liferay.shopping.upgrade,\
-	com.liferay.shopping.upgrade.v1_0_0,\
-	com.liferay.shopping.util,\
-	com.liferay.shopping.util.comparator,\
-	com.liferay.shopping.verify,\
-	com.liferay.shopping.verify.model,\
-	\
-	javax.portlet,\
 	\
 	org.apache.commons.chain,\
 	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.generic.*,\
 	org.apache.commons.chain.impl,\
-	org.apache.commons.chain.impl.*,\
-	org.apache.commons.chain.*,\
+	org.apache.struts,\
 	org.apache.struts.action,\
-	org.apache.struts.action.*,\
 	org.apache.struts.chain,\
 	org.apache.struts.chain.commands,\
 	org.apache.struts.chain.commands.servlet,\
-	org.apache.struts.chain.commands.servlet.*,\
-	org.apache.struts.chain.commands.*,\
-	org.apache.struts.chain.*,\
 	org.apache.struts.config,\
-	org.apache.struts.config.*,\
+	org.apache.struts.config.impl,\
 	org.apache.struts.util,\
 	*
 Include-Resource:\

@@ -9,18 +9,17 @@ classes {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.7"
-	compile group: "com.liferay", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02.LIFERAY-PATCHED-1"
-	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
-	compile group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"
-	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
-	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-
+	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.7"
+	provided group: "com.liferay", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02.LIFERAY-PATCHED-1"
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
-	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", transitive: false, version: "1.2.1"
+	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
+	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.1"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+	provided group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
+	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
+	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
 downloadSchemas {

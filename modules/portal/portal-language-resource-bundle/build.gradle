@@ -1,6 +1,6 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
 liferay {

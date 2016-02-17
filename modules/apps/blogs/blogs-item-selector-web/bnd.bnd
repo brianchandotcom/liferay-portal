@@ -1,11 +1,6 @@
 Bundle-Name: Liferay Blogs Item Selector Web
 Bundle-SymbolicName: com.liferay.blogs.item.selector.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.blogs.item.selector.criterion,\
-	com.liferay.item.selector.taglib,\
-	com.liferay.item.selector.taglib.servlet.taglib,\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-item-selector-web

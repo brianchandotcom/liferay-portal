@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:	\
 	com.liferay.shopping,\
 	com.liferay.shopping.configuration,\
+	com.liferay.shopping.configuration.definition,\
 	com.liferay.shopping.constants,\
 	com.liferay.shopping.exception,\
 	com.liferay.shopping.model,\

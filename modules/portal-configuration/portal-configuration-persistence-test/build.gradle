@@ -1,4 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.7"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
 	testIntegrationCompile project(":portal-configuration:portal-configuration-persistence")
 }

@@ -15,9 +15,6 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.util.impl,\
 	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav
-Import-Package:\
-	com.liferay.portal.xml,\
-	*
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\

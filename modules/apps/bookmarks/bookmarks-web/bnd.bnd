@@ -2,67 +2,7 @@ Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.0
 Import-Package:\
-	com.liferay.asset.kernel,\
-	com.liferay.asset.kernel.model,\
-	com.liferay.asset.kernel.service,\
-	com.liferay.bookmarks.asset,\
-	com.liferay.bookmarks.configuration,\
-	com.liferay.bookmarks.constants,\
-	com.liferay.bookmarks.lar,\
-	com.liferay.bookmarks.model,\
-	com.liferay.bookmarks.notifications,\
-	com.liferay.bookmarks.opensearch,\
-	com.liferay.bookmarks.routes,\
-	com.liferay.bookmarks.search,\
-	com.liferay.bookmarks.service,\
-	com.liferay.bookmarks.service.permission,\
-	com.liferay.bookmarks.social,\
-	com.liferay.bookmarks.trash,\
-	com.liferay.bookmarks.util,\
-	com.liferay.bookmarks.*,\
-	com.liferay.expando.kernel.model,\
-	com.liferay.exportimport.kernel.lar,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.notifications,\
-	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.search,\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portal.kernel.servlet.*,\
-	com.liferay.portal.kernel.trash,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.workflow,\
-	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.model,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.service.permission,\
-	com.liferay.portal.struts,\
-	com.liferay.portal.theme,\
-	com.liferay.portal.util,\
-	com.liferay.portal.webserver,\
-	com.liferay.portlet,\
 	com.liferay.social.kernel.model,\
-	com.liferay.trash.kernel.model,\
-	\
-	org.apache.commons.chain,\
-	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.generic.*,\
-	org.apache.commons.chain.impl,\
-	org.apache.commons.chain.impl.*,\
-	org.apache.commons.chain.*,\
-	org.apache.struts.action,\
-	org.apache.struts.action.*,\
-	org.apache.struts.chain,\
-	org.apache.struts.chain.commands,\
-	org.apache.struts.chain.commands.servlet,\
-	org.apache.struts.chain.commands.servlet.*,\
-	org.apache.struts.chain.commands.*,\
-	org.apache.struts.chain.*,\
-	org.apache.struts.config,\
-	org.apache.struts.config.*,\
-	org.apache.struts.util,\
 	*
 Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\

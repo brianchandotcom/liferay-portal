@@ -2,9 +2,6 @@ Bundle-Name: Liferay Announcements Web
 Bundle-SymbolicName: com.liferay.announcements.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.announcements.web.constants
-Import-Package:\
-	com.liferay.portal.kernel.exception,\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /announcements-web

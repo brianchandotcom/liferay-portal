@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":apps:item-selector:item-selector-taglib")
+	provided project(":apps:item-selector:item-selector-taglib")
 }
 
 liferay {

@@ -7,11 +7,7 @@ Export-Package:\
 	com.liferay.journal.web.dynamic.data.mapping.util,\
 	com.liferay.journal.web.social,\
 	com.liferay.journal.web.util
-Import-Package:\
-	javax.servlet;version='[2.3.0,4.0.0)',\
-	*
 Include-Resource:\
-	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class

@@ -1,11 +1,6 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.sun.syndication,\
-	com.sun.syndication.feed,\
-	com.sun.syndication.feed.module,\
-	*
 Include-Resource: @../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools

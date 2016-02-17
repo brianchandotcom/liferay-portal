@@ -1,9 +1,0 @@
-rootDir.eachDirMatch(
-	{
-		File bndBndFile = new File(it, "bnd.bnd")
-
-		bndBndFile.exists()
-	},
-	{
-		include it.name
-	})

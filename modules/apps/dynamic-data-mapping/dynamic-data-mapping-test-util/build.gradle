@@ -1,11 +1,12 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
-	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
+	provided group: "commons-lang", name: "commons-lang", version: "2.6"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
 
 liferay {

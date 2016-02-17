@@ -2,42 +2,23 @@ Bundle-Name: Liferay Polls Web
 Bundle-SymbolicName: com.liferay.polls.web
 Bundle-Version: 1.0.0
 Import-Package:\
-	com.liferay.exportimport.kernel.lar,\
-	com.liferay.polls.constants,\
-	com.liferay.polls.lar,\
-	com.liferay.polls.service.permission,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.portlet,\
+	!javax.accessibility.*,\
+	\
+	!javax.swing.*,\
+	\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portal.kernel.servlet.*,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.model,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.service.permission,\
-	com.liferay.portal.struts,\
-	com.liferay.portal.theme,\
-	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
 	\
 	org.apache.commons.chain,\
 	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.generic.*,\
 	org.apache.commons.chain.impl,\
-	org.apache.commons.chain.impl.*,\
-	org.apache.commons.chain.*,\
+	org.apache.struts,\
 	org.apache.struts.action,\
-	org.apache.struts.action.*,\
 	org.apache.struts.chain,\
 	org.apache.struts.chain.commands,\
 	org.apache.struts.chain.commands.servlet,\
-	org.apache.struts.chain.commands.servlet.*,\
-	org.apache.struts.chain.commands.*,\
-	org.apache.struts.chain.*,\
 	org.apache.struts.config,\
-	org.apache.struts.config.*,\
+	org.apache.struts.config.impl,\
 	org.apache.struts.util,\
 	*
 Include-Resource:\

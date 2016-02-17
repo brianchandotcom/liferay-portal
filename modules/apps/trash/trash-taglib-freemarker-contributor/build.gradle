@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":apps:trash:trash-taglib")
+	provided project(":apps:trash:trash-taglib")
 }
 
 liferay {

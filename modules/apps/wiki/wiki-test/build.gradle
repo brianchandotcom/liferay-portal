@@ -1,6 +1,7 @@
 dependencies {
 	testCompile project(":apps:export-import:export-import-api")
 	testCompile project(":apps:export-import:export-import-service")
+	testCompile project(":apps:wiki:wiki-api")
 	testCompile project(":apps:wiki:wiki-service")
 	testCompile project(":apps:wiki:wiki-web")
 

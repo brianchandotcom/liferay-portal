@@ -1,7 +1,12 @@
 dependencies {
-	compile project(":apps:blogs:blogs-web")
-	compile project(":apps:mentions:mentions-api")
-	compile project(":apps:message-boards:message-boards-web")
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:blogs:blogs-web")
+	provided project(":apps:mentions:mentions-api")
+	provided project(":apps:message-boards:message-boards-web")
 }
 
 liferay {

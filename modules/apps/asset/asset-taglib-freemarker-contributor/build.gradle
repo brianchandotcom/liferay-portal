@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":apps:asset:asset-taglib")
+	provided project(":apps:asset:asset-taglib")
 }
 
 liferay {

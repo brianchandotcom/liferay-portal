@@ -230,7 +230,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		validateTypeSettingsProperties(typeSettingsProperties);
+		validateTypeSettingsProperties(layout, typeSettingsProperties);
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 
@@ -2346,10 +2346,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		validateTypeSettingsProperties(typeSettingsProperties);
-
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
+
+		validateTypeSettingsProperties(layout, typeSettingsProperties);
 
 		layout.setModifiedDate(now);
 		layout.setTypeSettings(typeSettingsProperties.toString());
@@ -2893,7 +2893,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	protected void validateTypeSettingsProperties(
-			UnicodeProperties typeSettingsProperties)
+			Layout layout, UnicodeProperties typeSettingsProperties)
 		throws PortalException {
 
 		String sitemapChangeFrequency = typeSettingsProperties.getProperty(
@@ -2934,6 +2934,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			catch (NumberFormatException nfe) {
 				throw new SitemapPagePriorityException();
 			}
+		}
+
+		boolean layoutCustomizable = GetterUtil.getBoolean(
+			typeSettingsProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
+
+		if (!layoutCustomizable && layout.isTypePortlet()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.removeCustomization();
 		}
 	}
 

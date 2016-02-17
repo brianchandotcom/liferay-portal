@@ -143,51 +143,57 @@ for (long defaultTeamId : defaultTeamIds) {
 	<aui:button cssClass="btn-lg modify-link" id="selectTeamLink" value="select" />
 </aui:button-row>
 
-<aui:script use="liferay-search-container">
-	var Util = Liferay.Util;
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-
-			searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
-
-			if (searchContainer.getSize() <= 0) {
-				A.one('#<portlet:namespace />siteRolesEmptyResultMessage').show();
-			}
-		},
-		'.modify-link'
-	);
-</aui:script>
-
-<aui:script use="liferay-search-container">
-	var Util = Liferay.Util;
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />teamsSearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-
-			searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
-
-			if (searchContainer.getSize() <= 0) {
-				A.one('#<portlet:namespace />teamsEmptyResultMessage').show();
-			}
-		},
-		'.modify-link'
-	);
-</aui:script>
-
 <aui:script use="liferay-search-container,escape">
+	var bindModifyLink = function(config) {
+		var searchContainer = config.searchContainer;
+
+		searchContainer.get('contentBox').delegate(
+			'click',
+			function(event) {
+				var link = event.currentTarget;
+
+				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
+
+				if (searchContainer.getSize() <= 0) {
+					A.one(config.emptyResultMessageId).show();
+				}
+			},
+			'.modify-link'
+		);
+	}
+
+	var bindSelectLink = function(config) {
+		var searchContainer = config.searchContainer;
+
+		A.one(config.linkId).on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							modal: true
+						},
+						id: config.id,
+						title: config.title,
+						uri: config.uri
+					},
+					function(event) {
+						var rowColumns = [
+							A.Escape.html(event[config.titleAttr]),
+							'<a class="modify-link" data-rowId="' + event[config.idAttr] + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+						];
+
+						searchContainer.addRow(rowColumns, event[config.idAttr]);
+
+						searchContainer.updateDataStore();
+
+						A.one(config.emptyResultMessageId).hide();
+					}
+				);
+			}
+		);
+	}
 
 	<%
 	PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
@@ -199,38 +205,19 @@ for (long defaultTeamId : defaultTeamIds) {
 	selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
-	A.one('#<portlet:namespace />selectSiteRoleLink').on(
-		'click',
-		function(event) {
-	        var uri = '<%= selectSiteRoleURL.toString() %>';
+	var siteRolesConfig = {
+		emptyResultMessageId: '#<portlet:namespace />siteRolesEmptyResultMessage',
+		id: '<portlet:namespace />selectSiteRole',
+		idAttr: 'roleid',
+		linkId: '#<portlet:namespace />selectSiteRoleLink',
+		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer'),
+		title: '<liferay-ui:message arguments="site-role" key="select-x" />',
+		titleAttr: 'roletitle',
+		uri: '<%= selectSiteRoleURL.toString() %>'
+	};
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					id: '<portlet:namespace />selectSiteRole',
-					title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-					uri: uri
-				},
-				function(event) {
-					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.searchcontainername + 'SearchContainer');
-
-					var rowColumns = [];
-
-					rowColumns.push(A.Escape.html(event.roletitle));
-					rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-
-					searchContainer.addRow(rowColumns, event.roleid);
-
-					searchContainer.updateDataStore();
-
-					A.one('#<portlet:namespace />siteRolesEmptyResultMessage').hide();
-				}
-			);
-		}
-	);
+	bindModifyLink(siteRolesConfig);
+	bindSelectLink(siteRolesConfig);
 
 	<%
 	PortletURL selectTeamURL = PortletProviderUtil.getPortletURL(request, Team.class.getName(), PortletProvider.Action.BROWSE);
@@ -240,36 +227,17 @@ for (long defaultTeamId : defaultTeamIds) {
 	selectTeamURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
-	A.one('#<portlet:namespace />selectTeamLink').on(
-		'click',
-		function(event) {
-			var uri = '<%= selectTeamURL.toString() %>';
+	var teamsConfig = {
+		emptyResultMessageId: '#<portlet:namespace />teamsEmptyResultMessage',
+		id: '<portlet:namespace />selectTeam',
+		idAttr: 'teamid',
+		linkId: '#<portlet:namespace />selectTeamLink',
+		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />teamsSearchContainer'),
+		title: '<liferay-ui:message arguments="team" key="select-x" />',
+		titleAttr: 'teamname',
+		uri: '<%= selectTeamURL.toString() %>'
+	};
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					id: '<portlet:namespace />selectTeam',
-					title: '<liferay-ui:message arguments="team" key="select-x" />',
-					uri: uri
-				},
-				function(event) {
-					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.teamsearchcontainername + 'SearchContainer');
-
-					var rowColumns = [];
-
-					rowColumns.push(event.teamname);
-					rowColumns.push('<a class="modify-link" data-rowId="' + event.teamid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
-
-					searchContainer.addRow(rowColumns, event.teamid);
-
-					searchContainer.updateDataStore();
-
-					A.one('#<portlet:namespace />teamsEmptyResultMessage').hide();
-				}
-			);
-		}
-	);
+	bindModifyLink(teamsConfig);
+	bindSelectLink(teamsConfig);
 </aui:script>

@@ -29,6 +29,160 @@ import org.json.JSONObject;
  */
 public class GitHubJobMessageUtil {
 
+	private static class JobResult {
+
+		public JobResult(JSONObject jsonObject, Project project, String url) {
+			_name = JenkinsResultsParserUtil.fixJSON(
+				jsonObject.getString("fullDisplayName"));
+			_project = project;
+			_result = jsonObject.getString("result");
+			_url = url;
+		}
+
+		public JobResult(Project project, String url) throws Exception {
+			this(
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(url + "/api/json")),
+				project, url);
+		}
+
+		public String getMessage() throws Exception {
+			if (_result.equals("ABORTED")) {
+				return ("<pre>Build was aborted</pre>");
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("<li><strong>");
+			sb.append(_result);
+			sb.append(" ");
+			sb.append("<a href=\"");
+			sb.append(_url);
+			sb.append("\">");
+			sb.append(_name);
+			sb.append("</a></strong>");
+
+			if (_result.equals("FAILURE")) {
+				sb.append(FailureMessageUtil.getFailureMessage(_project, _url));
+			}
+
+			if (_result.equals("UNSTABLE")) {
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(_url + "/testReport/api/json"));
+				int failCount = jsonObject.getInt("failCount");
+				int skipCount = jsonObject.getInt("skipCount");
+				int passCount = jsonObject.getInt("passCount");
+				int totalCount = failCount + skipCount + passCount;
+				sb.append(" (");
+				sb.append(passCount);
+				sb.append(" Passed, ");
+				sb.append(failCount);
+				sb.append(" Failed, ");
+				sb.append(skipCount);
+				sb.append(" Skipped, ");
+				sb.append(totalCount);
+				sb.append(" Total)");
+				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
+			}
+
+			sb.append("</li>");
+
+			return sb.toString();
+		}
+
+		private final String _name;
+		private final Project _project;
+		private final String _result;
+		private final String _url;
+
+	};
+
+	private static int countByResult(
+		List<JobResult> jobResults, String result) {
+
+		int count = 0;
+
+		for (JobResult jobResult : jobResults) {
+			if (jobResult._result.equals(result)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	private static final int _MAX_MESSAGE_COUNT = 3;
+
+	private static List<JobResult> getGitHubJobMessage(
+		String buildURL, Project project)
+	throws Exception {
+
+	JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+		JenkinsResultsParserUtil.getLocalURL(buildURL + "/api/json"));
+
+	String buildNumber = jsonObject.get("number").toString();
+
+	List<JobResult> jobResults = new ArrayList<>();
+
+	JobResult jobResult = new JobResult(jsonObject, project, buildURL);
+
+	if (jobResult._result.equals("SUCCESS")) {
+		return jobResults;
+	}
+
+	if (jobResult._result.equals("ABORTED")) {
+		jobResults.add(jobResult);
+		return jobResults;
+	}
+
+	if (jsonObject.has("runs")) {
+		JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
+
+		for (int i = 0; i < runsJSONArray.length(); i++) {
+			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
+
+			String runBuildURL = runJSONObject.getString("url");
+			String runBuildNumber = runJSONObject.get("number").toString();
+
+			if (!buildNumber.equals(runBuildNumber)) {
+				continue;
+			}
+
+			jobResult = new JobResult(project, runBuildURL);
+
+			jobResults.add(jobResult);
+		}
+	}
+
+	return jobResults;
+}
+
+	private static String generateCountLine(int count, String description) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(count);
+		sb.append(" Test");
+		sb.append(count == 1 ? " " : "s ");
+		sb.append(description);
+		sb.append(".");
+		sb.append("<br/>");
+		return sb.toString();
+	}
+
+	private static String generateHeaderText(
+		int failedCount, int passedCount, int unstableCount) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h6>Job Results:</h6><p>");
+
+		sb.append(generateCountLine(passedCount, "Passed"));
+		sb.append(generateCountLine(failedCount, "Failed"));
+		sb.append(generateCountLine(unstableCount, "Unstable"));
+
+		sb.append("<ol>");
+
+		return sb.toString();
+	}
+
 	public static void getGitHubJobMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
@@ -104,144 +258,5 @@ public class GitHubJobMessageUtil {
 
 		project.setProperty("report.html.content", sb.toString());
 	}
-
-	private static int countByResult(
-		List<JobResult> jobResults, String result) {
-
-		int count = 0;
-
-		for (JobResult jobResult : jobResults) {
-			if (jobResult._result.equals(result)) {
-				count++;
-			}
-		}
-
-		return count;
-	}
-
-	private static String generateCountLine(int count, String description) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(count);
-		sb.append(" Test");
-		sb.append(count == 1 ? " " : "s ");
-		sb.append(description);
-		sb.append(".");
-		sb.append("<br/>");
-		return sb.toString();
-	}
-
-	private static String generateHeaderText(
-		int failedCount, int passedCount, int unstableCount) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<h6>Job Results:</h6><p>");
-
-		sb.append(generateCountLine(passedCount, "Passed"));
-		sb.append(generateCountLine(failedCount, "Failed"));
-		sb.append(generateCountLine(unstableCount, "Unstable"));
-
-		sb.append("<ol>");
-
-		return sb.toString();
-	}
-
-	private static List<JobResult> getGitHubJobMessage(
-			String buildURL, Project project)
-		throws Exception {
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(buildURL + "/api/json"));
-
-		String buildNumber = jsonObject.get("number").toString();
-
-		List<JobResult> jobResults = new ArrayList<>();
-
-		JobResult jobResult = new JobResult(jsonObject, project, buildURL);
-
-		if (jobResult._result.equals("SUCCESS")) {
-			return jobResults;
-		}
-
-		if (jobResult._result.equals("ABORTED")) {
-			jobResults.add(jobResult);
-			return jobResults;
-		}
-
-		if (jsonObject.has("runs")) {
-			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
-
-			for (int i = 0; i < runsJSONArray.length(); i++) {
-				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
-
-				String runBuildURL = runJSONObject.getString("url");
-				String runBuildNumber = runJSONObject.get("number").toString();
-
-				if (!buildNumber.equals(runBuildNumber)) {
-					continue;
-				}
-
-				jobResult = new JobResult(project, runBuildURL);
-
-				jobResults.add(jobResult);
-			}
-		}
-
-		return jobResults;
-	}
-
-	private static final int _MAX_MESSAGE_COUNT = 3;
-
-	private static class JobResult {
-
-		public JobResult(JSONObject jsonObject, Project project, String url) {
-			_name = JenkinsResultsParserUtil.fixJSON(
-				jsonObject.getString("fullDisplayName"));
-			_project = project;
-			_result = jsonObject.getString("result");
-			_url = url;
-		}
-
-		public JobResult(Project project, String url) throws Exception {
-			this(
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(url + "/api/json")),
-				project, url);
-		}
-
-		public String getMessage() throws Exception {
-			if (_result.equals("ABORTED")) {
-				return ("<pre>Build was aborted</pre>");
-			}
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("<li><strong>");
-			sb.append(_result);
-			sb.append(" ");
-			sb.append("<a href=\'");
-			sb.append(_url);
-			sb.append("\'>");
-			sb.append(_name);
-			sb.append("</a></strong>");
-
-			if (_result.equals("FAILURE")) {
-				sb.append(FailureMessageUtil.getFailureMessage(_project, _url));
-			}
-
-			if (_result.equals("UNSTABLE")) {
-				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
-			}
-
-			sb.append("</li>");
-
-			return sb.toString();
-		}
-
-		private final String _name;
-		private final Project _project;
-		private final String _result;
-		private final String _url;
-
-	};
 
 }

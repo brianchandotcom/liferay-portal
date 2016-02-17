@@ -40,11 +40,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TABLE_MEMBERS_ORGS</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[4]/div[@class='organization-count']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TABLE_ACTIVE</td>
 	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[6]</td>
 	<td></td>
@@ -62,16 +57,6 @@
 <tr>
 	<td>SITE_TABLE_ACTIONS</td>
 	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td/div/a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_TABLE_ACTIONS_GENERIC</td>
-	<td>//table[contains(@class,'table-list')]//tr/td/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_TABLE_CHILD_SITE</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[2]/div/a</td>
 	<td></td>
 </tr>
 </tbody>

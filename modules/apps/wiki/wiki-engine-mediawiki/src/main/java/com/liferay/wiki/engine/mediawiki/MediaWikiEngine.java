@@ -15,10 +15,13 @@
 package com.liferay.wiki.engine.mediawiki;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
@@ -202,6 +205,11 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		return parserOutput;
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
 	protected String parsePage(
 			WikiPage page, ParserOutput parserOutput, PortletURL viewPageURL,
 			PortletURL editPageURL, String attachmentURLPrefix)
@@ -268,6 +276,17 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.mediawiki)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
+	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.mediawiki)",
 		unbind = "-"
 	)
@@ -295,6 +314,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = null;
 	}
 
+	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPageLocalService _wikiPageLocalService;

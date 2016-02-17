@@ -14,7 +14,10 @@
 
 package com.liferay.wiki.engine.text;
 
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
@@ -63,6 +66,22 @@ public class TextEngine extends BaseWikiEngine {
 		return _servletContext;
 	}
 
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.text)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.text)",
 		unbind = "-"
@@ -71,6 +90,7 @@ public class TextEngine extends BaseWikiEngine {
 		_servletContext = servletContext;
 	}
 
+	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 
 }

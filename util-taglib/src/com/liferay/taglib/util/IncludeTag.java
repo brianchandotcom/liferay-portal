@@ -166,6 +166,10 @@ public class IncludeTag extends AttributesTagSupport {
 		setNamespacedAttribute(
 			request, "scopedAttributes", getScopedAttributes());
 
+		request.setAttribute(
+			WebKeys.RESOURCE_BUNDLE,
+			TagResourceBundleUtil.getResourceBundle(pageContext));
+
 		setAttributes(request);
 	}
 

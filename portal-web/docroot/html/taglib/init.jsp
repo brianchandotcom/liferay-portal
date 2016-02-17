@@ -21,8 +21,7 @@ page import="com.liferay.portal.kernel.search.RelatedSearchResult" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %><%@
-page import="com.liferay.taglib.util.PortalIncludeUtil" %><%@
-page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
+page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 
 <%@ page import="java.io.IOException" %>
 
@@ -48,7 +47,7 @@ else {
 	currentURL = PortalUtil.getCurrentURL(request);
 }
 
-ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(request, locale);
+ResourceBundle resourceBundle = (ResourceBundle)request.getAttribute(WebKeys.RESOURCE_BUNDLE);
 
 pageContext.setAttribute("resourceBundle", resourceBundle);
 %>

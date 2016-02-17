@@ -237,7 +237,7 @@ if (groupThreadsUserId > 0) {
 							boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 							%>
 
-							<c:if test="<%= portletTitleBasedNavigation %>">
+							<c:if test="<%= portletTitleBasedNavigation || !message.isApproved() %>">
 								<span class="h6">
 									<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
 								</span>

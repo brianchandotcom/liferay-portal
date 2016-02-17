@@ -308,10 +308,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AnnouncementsEntry#viewEditPG">
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="General" />
 			<var name="distributionScope" value="${distributionScope}" />
-			<var name="entryContentEdit" value="${entryContentEdit}" />
-			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
 		</execute>
 	</command>
 

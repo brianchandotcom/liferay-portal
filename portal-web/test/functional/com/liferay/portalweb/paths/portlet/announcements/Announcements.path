@@ -25,6 +25,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_ENTRIES_NEW</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ENTRIES_PREVIOUS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVIGATION_MANAGE_ENTRIES</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Manage Entries')]</td>
 	<td></td>

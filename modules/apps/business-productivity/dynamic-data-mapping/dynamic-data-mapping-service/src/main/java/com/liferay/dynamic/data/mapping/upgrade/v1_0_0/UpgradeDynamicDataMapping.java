@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -123,6 +123,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
 		AssetEntryLocalService assetEntryLocalService,
+		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer,
 		DDMFormXSDDeserializer ddmFormXSDDeserializer,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -134,6 +135,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileVersionLocalService = dlFileVersionLocalService;
@@ -706,7 +708,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String toJSON(DDMFormValues ddmFormValues) {
-		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
 	}
 
 	protected String toXML(Map<String, String> expandoValuesMap) {
@@ -1460,6 +1462,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private long _ddmContentClassNameId;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
 	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;

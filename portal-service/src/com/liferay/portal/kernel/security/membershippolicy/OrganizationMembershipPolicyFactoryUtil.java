@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
+
 /**
  * @author Roberto Díaz
  */
@@ -32,15 +34,9 @@ public class OrganizationMembershipPolicyFactoryUtil {
 		return _organizationMembershipPolicyFactory;
 	}
 
-	public void setOrganizationMembershipPolicyFactory(
-		OrganizationMembershipPolicyFactory
-			organizationMembershipPolicyFactory) {
-
+	private static final OrganizationMembershipPolicyFactory
 		_organizationMembershipPolicyFactory =
-			organizationMembershipPolicyFactory;
-	}
-
-	private static OrganizationMembershipPolicyFactory
-		_organizationMembershipPolicyFactory;
+			ProxyFactory.newServiceTrackedInstance(
+				OrganizationMembershipPolicyFactory.class);
 
 }

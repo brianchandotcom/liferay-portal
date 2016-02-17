@@ -112,7 +112,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			null, null, null, null, null, null, null, null, null);
+			null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	@Test(expected = UpgradeException.class)

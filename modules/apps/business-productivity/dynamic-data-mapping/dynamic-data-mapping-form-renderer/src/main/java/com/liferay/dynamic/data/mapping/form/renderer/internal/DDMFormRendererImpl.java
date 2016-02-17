@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -333,7 +333,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		if (ddmFormValues != null) {
 			template.put(
 				"values",
-				DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues));
+				_ddmFormValuesJSONSerializer.serialize(ddmFormValues));
 		}
 		else {
 			template.put("values", JSONFactoryUtil.getNullJSON());
@@ -396,6 +396,13 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONSerializer(
+		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
+
+		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -404,6 +411,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
+	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
 	private JSONFactory _jsonFactory;
 	private TemplateResource _templateResource;
 

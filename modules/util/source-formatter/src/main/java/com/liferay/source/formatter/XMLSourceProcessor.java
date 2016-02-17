@@ -231,6 +231,33 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected void checkImportFiles(String fileName, String content) {
+		Matcher matcher = _importFilePattern.matcher(content);
+
+		while (matcher.find()) {
+			String importFileName = fileName;
+
+			int pos = importFileName.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return;
+			}
+
+			importFileName = importFileName.substring(0, pos + 1);
+
+			importFileName = importFileName + matcher.group(1);
+
+			File file = new File(importFileName);
+
+			if (!file.exists()) {
+				processErrorMessage(
+					fileName,
+					"Incorrect import file: " + fileName + " - " +
+						matcher.group(1));
+			}
+		}
+	}
+
 	protected void checkOrder(
 		String fileName, Element rootElement, String elementName,
 		String parentElementName, ElementComparator elementComparator) {
@@ -647,6 +674,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(
 				fileName, "macrodefs go before targets: " + fileName);
 		}
+
+		checkImportFiles(fileName, newContent);
 
 		return newContent;
 	}
@@ -1356,6 +1385,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _columnNames;
+	private final Pattern _importFilePattern = Pattern.compile(
+		"<import file=\"(.*)\"");
 	private List<String> _numericalPortletNameElementExcludes;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");

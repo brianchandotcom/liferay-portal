@@ -121,6 +121,59 @@ AUI.add(
 						}
 					},
 
+					openConfirmDialog: function(params) {
+						var message = params.message || Liferay.Language.get('are-you-sure');
+
+						var title = params.title || Liferay.Language.get('confirm');
+
+						var confirm = params.confirm || A.Lang.emptyFn;
+
+						var confirmLabel = params.confirmLabel || Liferay.Language.get('confirm');
+
+						var cancel = params.cancel || A.Lang.emptyFn;
+
+						var cancelLabel = params.cancelLabel || Liferay.Language.get('cancel');
+
+						var dialog = Liferay.Util.Window.getWindow(
+							{
+								dialog: {
+									bodyContent: message,
+									destroyOnHide: true,
+									height: 200,
+									toolbars: {
+										footer: [
+											{
+												cssClass: 'btn-primary',
+												label: confirmLabel,
+												on: {
+													click: function() {
+														confirm();
+
+														dialog.hide();
+													}
+												}
+											},
+											{
+												label: cancelLabel,
+												on: {
+													click: function() {
+														cancel();
+
+														dialog.hide();
+													}
+												}
+											}
+										]
+									},
+									width: 300
+								},
+								title: title
+							}
+						);
+
+						dialog.render().show();
+					},
+
 					openPublishModal: function() {
 						var instance = this;
 

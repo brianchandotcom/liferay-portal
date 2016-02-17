@@ -1,6 +1,0 @@
-dependencies {
-	provided project(":apps:journal:journal-test")
-
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
-	testIntegrationCompile project(":apps:journal:journal-api")
-}

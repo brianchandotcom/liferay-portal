@@ -1,7 +1,0 @@
-dependencies {
-	provided project(":apps:item-selector:item-selector-taglib")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

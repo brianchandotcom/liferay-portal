@@ -1,0 +1,4 @@
+dependencies {
+	testCompile project(":collaboration:mentions:mentions-api")
+	testCompile project(":collaboration:mentions:mentions-service")
+}

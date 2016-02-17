@@ -43,9 +43,7 @@ body {
 	.sidebar-header-logo {
 		margin-right: 10px;
 	}
-}
 
-.product-menu {
 	.sidebar-body {
 		bottom: 0;
 		left: 0;
@@ -63,15 +61,11 @@ body {
 			position: static;
 		}
 	}
-}
 
-.product-menu {
-	.panel-group {
+	.lfr-product-menu-sidebar .panel-group {
 		overflow: hidden;
 	}
-}
 
-.product-menu {
 	small {
 		display: block;
 	}
@@ -129,9 +123,7 @@ body {
 			width: auto;
 		}
 	}
-}
 
-.product-menu {
 	.nav-equal-height-heading {
 		.collapse-icon {
 			&:after,
@@ -159,13 +151,11 @@ body {
 			margin-bottom: 1px;
 		}
 	}
-}
 
-.product-menu.popover {
-	background-color: #FFF;
-}
+	&.popover {
+		background-color: #FFF;
+	}
 
-.product-menu {
 	.impersonation-message {
 		font-size: 12px;
 	}
@@ -203,11 +193,9 @@ body {
 		font-size: 12px;
 		margin: 10px 22px 4px 16px;
 	}
-}
 
-/* Layouts Tree */
+	/* Layouts Tree */
 
-.product-menu {
 	li.tree-node .tree-node-content {
 		z-index: 1;
 

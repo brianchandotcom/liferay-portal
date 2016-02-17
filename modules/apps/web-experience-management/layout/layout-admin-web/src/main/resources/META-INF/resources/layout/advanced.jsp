@@ -34,6 +34,10 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
 
+	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
+	</div>
+
 	<%
 	String queryString = GetterUtil.getString(layoutTypeSettings.getProperty("query-string"));
 	%>

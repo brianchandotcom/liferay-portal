@@ -43,6 +43,10 @@ if (selLayout != null) {
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
 	<h4><liferay-ui:message key="sitemap" /></h4>
 
+	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
+	</div>
+
 	<liferay-ui:error exception="<%= SitemapChangeFrequencyException.class %>" message="please-select-a-valid-change-frequency" />
 	<liferay-ui:error exception="<%= SitemapIncludeException.class %>" message="please-select-a-valid-include-value" />
 	<liferay-ui:error exception="<%= SitemapPagePriorityException.class %>" message="please-enter-a-valid-page-priority" />

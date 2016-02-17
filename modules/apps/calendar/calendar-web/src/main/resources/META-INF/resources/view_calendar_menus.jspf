@@ -222,9 +222,21 @@ String backURL = PortalUtil.getCurrentURL(request);
 							dialog: {
 								after: {
 									destroy: function(event) {
-										Liferay.CalendarUtil.getResourceCalendars(
-											activeCalendar.get('calendarResourceId'),
-											function(calendars) {
+										Liferay.CalendarUtil.getCalendar(
+											activeCalendar.get('calendarId'),
+											function(calendar) {
+												var activeCalendarId = activeCalendar.get('calendarId');
+
+												var calendars = calendarList.get('calendars').map(
+													function(item) {
+														if (activeCalendarId === item.get('calendarId')) {
+															item = calendar;
+														}
+
+														return item;
+													}
+												);
+
 												calendarList.set('calendars', calendars);
 
 												<portlet:namespace />syncCalendarsMap();

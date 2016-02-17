@@ -16,7 +16,7 @@ package com.liferay.portlet.display.template.web.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.webdav.DDMWebDavUtil;
+import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
@@ -48,7 +48,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return DDMWebDavUtil.deleteResource(
+		return _ddmWebDav.deleteResource(
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
@@ -56,7 +56,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return DDMWebDavUtil.getResource(
+		return _ddmWebDav.getResource(
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
@@ -83,7 +83,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 
 	@Override
 	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
-		return DDMWebDavUtil.putResource(
+		return _ddmWebDav.putResource(
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
@@ -93,9 +93,8 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		List<Resource> resources = new ArrayList<>();
 
 		resources.add(
-			DDMWebDavUtil.toResource(
-				webDAVRequest, DDMWebDavUtil.TYPE_TEMPLATES, getRootPath(),
-				true));
+			_ddmWebDav.toResource(
+				webDAVRequest, DDMWebDav.TYPE_TEMPLATES, getRootPath(), true));
 
 		return resources;
 	}
@@ -110,7 +109,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 				webDAVRequest.getGroupId(), 0);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = DDMWebDavUtil.toResource(
+			Resource resource = _ddmWebDav.toResource(
 				webDAVRequest, ddmTemplate, getRootPath(), true);
 
 			resources.add(resource);
@@ -126,6 +125,12 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMWebDav(DDMWebDav ddmWebDav) {
+		_ddmWebDav = ddmWebDav;
+	}
+
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMWebDav _ddmWebDav;
 
 }

@@ -61,6 +61,10 @@ entriesChecker.setCssClass("entry-selector");
 
 EntriesMover entriesMover = new EntriesMover(scopeGroupId);
 
+String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
+dlSearchContainer.setHeaderNames(ListUtil.fromArray(entryColumns));
+
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
 
@@ -206,8 +210,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 
 	<%
-	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-
 	String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	%>
 

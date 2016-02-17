@@ -168,15 +168,20 @@ for (long defaultTeamId : defaultTeamIds) {
 		A.one(config.linkId).on(
 			'click',
 			function(event) {
+				var ids = A.one(config.inputId).val();
+
+				var uri = Liferay.Util.addParams(config.urlParam + '=' + ids, config.uri);
+
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
 							constrain: true,
+							destroyOnHide: true,
 							modal: true
 						},
 						id: config.id,
 						title: config.title,
-						uri: config.uri
+						uri: uri
 					},
 					function(event) {
 						var rowColumns = [
@@ -203,17 +208,21 @@ for (long defaultTeamId : defaultTeamIds) {
 	selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
 	selectSiteRoleURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 	selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
+
+	String selectSiteRolePortletId = PortletProviderUtil.getPortletId(Role.class.getName(), PortletProvider.Action.BROWSE);
 	%>
 
 	var siteRolesConfig = {
 		emptyResultMessageId: '#<portlet:namespace />siteRolesEmptyResultMessage',
 		id: '<portlet:namespace />selectSiteRole',
 		idAttr: 'roleid',
+		inputId: '#<portlet:namespace />siteRolesSearchContainerPrimaryKeys',
 		linkId: '#<portlet:namespace />selectSiteRoleLink',
 		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer'),
 		title: '<liferay-ui:message arguments="site-role" key="select-x" />',
 		titleAttr: 'roletitle',
-		uri: '<%= selectSiteRoleURL.toString() %>'
+		uri: '<%= selectSiteRoleURL.toString() %>',
+		urlParam: '<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds'
 	};
 
 	bindModifyLink(siteRolesConfig);
@@ -225,17 +234,21 @@ for (long defaultTeamId : defaultTeamIds) {
 	selectTeamURL.setParameter("groupId", String.valueOf(groupId));
 	selectTeamURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectTeam");
 	selectTeamURL.setWindowState(LiferayWindowState.POP_UP);
+
+	String selectTeamPortletId = PortletProviderUtil.getPortletId(Team.class.getName(), PortletProvider.Action.BROWSE);
 	%>
 
 	var teamsConfig = {
 		emptyResultMessageId: '#<portlet:namespace />teamsEmptyResultMessage',
 		id: '<portlet:namespace />selectTeam',
 		idAttr: 'teamid',
+		inputId: '#<portlet:namespace />teamsSearchContainerPrimaryKeys',
 		linkId: '#<portlet:namespace />selectTeamLink',
 		searchContainer: Liferay.SearchContainer.get('<portlet:namespace />teamsSearchContainer'),
 		title: '<liferay-ui:message arguments="team" key="select-x" />',
 		titleAttr: 'teamname',
-		uri: '<%= selectTeamURL.toString() %>'
+		uri: '<%= selectTeamURL.toString() %>',
+		urlParam: '<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds'
 	};
 
 	bindModifyLink(teamsConfig);

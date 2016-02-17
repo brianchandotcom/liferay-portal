@@ -262,7 +262,9 @@ if (step == 1) {
 							else {
 								long[] defaultSiteRoleIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultSiteRoleIds"), 0L);
 
-								disabled = ArrayUtil.contains(defaultSiteRoleIds, role.getRoleId());
+								long[] siteRolesIds = ParamUtil.getLongValues(request, "roleIds", defaultSiteRoleIds);
+
+								disabled = ArrayUtil.contains(siteRolesIds, role.getRoleId());
 							}
 							%>
 

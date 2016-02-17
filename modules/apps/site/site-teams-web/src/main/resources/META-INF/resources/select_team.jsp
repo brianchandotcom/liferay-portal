@@ -38,6 +38,8 @@ teamSearch.setTotal(teamsCount);
 Group group = themeDisplay.getScopeGroup();
 
 long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
+
+long[] teamIds = ParamUtil.getLongValues(request, "teamIds", defaultTeamIds);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -107,7 +109,7 @@ long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getPr
 				data.put("teamid", curTeam.getTeamId());
 				data.put("teamname", curTeam.getName());
 
-				boolean disabled = ArrayUtil.contains(defaultTeamIds, curTeam.getTeamId());
+				boolean disabled = ArrayUtil.contains(teamIds, curTeam.getTeamId());
 				%>
 
 				<aui:button cssClass="btn btn-link selector-button" data="<%= data %>" disabled="<%= disabled %>" value="<%= HtmlUtil.escape(curTeam.getName()) %>" />

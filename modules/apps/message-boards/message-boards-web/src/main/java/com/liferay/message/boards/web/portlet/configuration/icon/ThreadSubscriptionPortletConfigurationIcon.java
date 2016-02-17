@@ -58,10 +58,17 @@ public class ThreadSubscriptionPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		String key = "subscribe";
 
-		MBMessage message = getMBMessage(portletRequest);
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
 
-		if (isSubscribed(portletRequest, message)) {
-			key = "unsubscribe";
+			MBMessage message = messageDisplay.getMessage();
+
+			if (isSubscribed(portletRequest, message)) {
+				key = "unsubscribe";
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return LanguageUtil.get(
@@ -79,9 +86,19 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/edit_message");
 
-		MBMessage message = getMBMessage(portletRequest);
+		MBMessage message = null;
 
-		if (isSubscribed(portletRequest, getMBMessage(portletRequest))) {
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			message = messageDisplay.getMessage();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		if (isSubscribed(portletRequest, message)) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
 		else {
@@ -107,9 +124,24 @@ public class ThreadSubscriptionPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(
+					themeDisplay.getScopeGroupId());
+
+			if (!mbGroupServiceSettings.isEmailMessageAddedEnabled() &&
+				!mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
+
+				return false;
+			}
+
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBMessage message = messageDisplay.getMessage();
+
 			return MBMessagePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				getMBMessage(portletRequest), ActionKeys.SUBSCRIBE);
+				themeDisplay.getPermissionChecker(), message,
+				ActionKeys.SUBSCRIBE);
 		}
 		catch (PortalException pe) {
 		}
@@ -122,32 +154,6 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		SubscriptionLocalService subscriptionLocalService) {
 
 		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private MBMessage getMBMessage(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			MBGroupServiceSettings mbGroupServiceSettings =
-				MBGroupServiceSettings.getInstance(
-					themeDisplay.getScopeGroupId());
-
-			if (!mbGroupServiceSettings.isEmailMessageAddedEnabled() &&
-				!mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
-
-				return null;
-			}
-
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			return messageDisplay.getMessage();
-		}
-		catch (PortalException pe) {
-		}
-
-		return null;
 	}
 
 	private boolean isSubscribed(

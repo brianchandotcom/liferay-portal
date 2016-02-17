@@ -59,8 +59,14 @@ public class PageSubscriptionPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		String key = "subscribe";
 
-		if (isSubscribed(portletRequest)) {
-			key = "unsubscribe";
+		try {
+			WikiPage page = ActionUtil.getPage(portletRequest);
+
+			if (isSubscribed(portletRequest, page)) {
+				key = "unsubscribe";
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return LanguageUtil.get(
@@ -84,7 +90,7 @@ public class PageSubscriptionPortletConfigurationIcon
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/wiki/edit_page");
 
-			if (isSubscribed(portletRequest)) {
+			if (isSubscribed(portletRequest, page)) {
 				portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 			}
 			else {
@@ -139,23 +145,15 @@ public class PageSubscriptionPortletConfigurationIcon
 		return false;
 	}
 
-	protected boolean isSubscribed(PortletRequest portletRequest) {
+	protected boolean isSubscribed(
+		PortletRequest portletRequest, WikiPage page) {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean subscribed = false;
-
-		try {
-			WikiPage page = ActionUtil.getPage(portletRequest);
-
-			subscribed = _subscriptionLocalService.isSubscribed(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				WikiNode.class.getName(), page.getNodeId());
-		}
-		catch (Exception e) {
-		}
-
-		return subscribed;
+		return _subscriptionLocalService.isSubscribed(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			WikiNode.class.getName(), page.getNodeId());
 	}
 
 	@Reference(unbind = "-")

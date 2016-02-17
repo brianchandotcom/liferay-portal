@@ -17,9 +17,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,11 +34,20 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_category"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class CategorySubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
@@ -46,10 +55,14 @@ public class CategorySubscriptionPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		String key = "subscribe";
 
-		MBCategory category = getCategory(portletRequest);
+		try {
+			MBCategory category = ActionUtil.getCategory(portletRequest);
 
-		if (isSubscribed(portletRequest, category)) {
-			key = "unsubscribe";
+			if (isSubscribed(portletRequest, category)) {
+				key = "unsubscribe";
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return LanguageUtil.get(
@@ -67,7 +80,14 @@ public class CategorySubscriptionPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/edit_category");
 
-		MBCategory category = getCategory(portletRequest);
+		MBCategory category = null;
+
+		try {
+			category = ActionUtil.getCategory(portletRequest);
+		}
+		catch (Exception e) {
+			return null;
+		}
 
 		if (isSubscribed(portletRequest, category)) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
@@ -95,11 +115,23 @@ public class CategorySubscriptionPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(
+					themeDisplay.getScopeGroupId());
+
+			if (!mbGroupServiceSettings.isEmailMessageAddedEnabled() &&
+				!mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
+
+				return false;
+			}
+
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
 			return MBCategoryPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				getCategory(portletRequest), ActionKeys.SUBSCRIBE);
+				themeDisplay.getPermissionChecker(), category,
+				ActionKeys.SUBSCRIBE);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -110,29 +142,6 @@ public class CategorySubscriptionPortletConfigurationIcon
 		SubscriptionLocalService subscriptionLocalService) {
 
 		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private MBCategory getCategory(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			MBGroupServiceSettings mbGroupServiceSettings =
-				MBGroupServiceSettings.getInstance(
-					themeDisplay.getScopeGroupId());
-
-			if (!mbGroupServiceSettings.isEmailMessageAddedEnabled() &&
-				!mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
-
-				return null;
-			}
-
-			return ActionUtil.getCategory(portletRequest);
-		}
-		catch (Exception e) {
-		}
-
-		return null;
 	}
 
 	private boolean isSubscribed(

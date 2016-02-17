@@ -18,12 +18,14 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,11 +37,20 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/view_message"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class ThreadPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
@@ -153,6 +164,6 @@ public class ThreadPermissionsPortletConfigurationIcon
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private volatile MBMessageLocalService _mbMessageLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

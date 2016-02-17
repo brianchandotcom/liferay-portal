@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-		"path=/message_boards/viewcategory"
+		"path=/message_boards/view_category"
 	},
 	service = PortletConfigurationIcon.class
 )

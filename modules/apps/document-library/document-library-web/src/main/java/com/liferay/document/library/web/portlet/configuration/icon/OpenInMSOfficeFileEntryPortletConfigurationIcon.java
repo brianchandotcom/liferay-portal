@@ -15,10 +15,12 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -36,9 +38,19 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_file_entry"
+	},
+	service = PortletConfigurationIcon.class
+)
 public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 

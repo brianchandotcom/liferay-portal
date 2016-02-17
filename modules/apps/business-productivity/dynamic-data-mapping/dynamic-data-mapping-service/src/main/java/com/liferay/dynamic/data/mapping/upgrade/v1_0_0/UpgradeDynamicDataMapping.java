@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -123,6 +123,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
 		AssetEntryLocalService assetEntryLocalService,
+		DDMFormXSDDeserializer ddmFormXSDDeserializer,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFolderLocalService dlFolderLocalService,
@@ -133,6 +134,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileVersionLocalService = dlFileVersionLocalService;
 		_dlFolderLocalService = dlFolderLocalService;
@@ -462,8 +464,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				if (storageType.equals("expando") ||
 					storageType.equals("xml")) {
 
-					ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-						definition);
+					ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 				}
 				else {
 					ddmForm = DDMFormJSONDeserializerUtil.deserialize(
@@ -1287,7 +1288,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					classPK, script);
 
 				if (language.equals("xsd")) {
-					DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+					DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(
 						updatedScript);
 
 					ddmForm = updateDDMFormFields(ddmForm);
@@ -1459,6 +1460,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private long _ddmContentClassNameId;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;
 	private final DLFolderLocalService _dlFolderLocalService;

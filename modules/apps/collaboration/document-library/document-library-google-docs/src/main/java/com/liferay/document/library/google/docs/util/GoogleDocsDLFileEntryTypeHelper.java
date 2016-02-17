@@ -17,7 +17,7 @@ package com.liferay.document.library.google.docs.util;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -45,12 +45,14 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 	public GoogleDocsDLFileEntryTypeHelper(
 		Company company, ClassNameLocalService classNameLocalService,
+		DDMFormXSDDeserializer ddmFormXSDDeserializer,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		UserLocalService userLocalService) {
 
 		_company = company;
 		_classNameLocalService = classNameLocalService;
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_userLocalService = userLocalService;
@@ -76,7 +78,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		String definition = ResourceUtil.get(
 			this, "dependencies/ddm_structure_google_docs.xml");
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -147,6 +149,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final Company _company;
+	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final long _dlFileEntryMetadataClassNameId;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

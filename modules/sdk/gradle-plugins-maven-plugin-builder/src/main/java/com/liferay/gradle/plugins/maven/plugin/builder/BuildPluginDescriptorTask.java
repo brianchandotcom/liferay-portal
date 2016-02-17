@@ -207,8 +207,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _useSetterComments;
 	}
 
-	public void pomRepository(String id, Object url) {
+	public BuildPluginDescriptorTask pomRepository(String id, Object url) {
 		_pomRepositories.put(id, url);
+
+		return this;
 	}
 
 	public void setClassesDir(Object classesDir) {

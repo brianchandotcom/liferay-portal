@@ -206,8 +206,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _useSetterComments;
 	}
 
-	public void pomRepository(String repositoryName, String repositoryUrl) {
-		_pomRepositories.put(repositoryName, repositoryUrl);
+	public void pomRepository(String id, String url) {
+		_pomRepositories.put(id, url);
 	}
 
 	public void setClassesDir(Object classesDir) {
@@ -477,13 +477,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Map<String, String> pomRepositories = getPomRepositories();
 
 		for (Map.Entry<String, String> entry : pomRepositories.entrySet()) {
-			String repositoryName = entry.getKey();
-			String repositoryUrl = entry.getValue();
+			String id = entry.getKey();
+			String url = entry.getValue();
 
-			XMLUtil.appendElement(
-				document, repositoryElement, "id", repositoryName);
-			XMLUtil.appendElement(
-				document, repositoryElement, "url", repositoryUrl);
+			XMLUtil.appendElement(document, repositoryElement, "id", id);
+			XMLUtil.appendElement(document, repositoryElement, "url", url);
 		}
 
 		XMLUtil.write(document, pomFile);

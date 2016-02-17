@@ -44,7 +44,7 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 	}
 
 	@Override
-	public void populate(ClientSettingsHelper clientSettingsHelper) {
+	public void populate(ClientSettingsHelper<?> clientSettingsHelper) {
 		if (!_clusterSettingsContext.isClusterEnabled()) {
 			return;
 		}

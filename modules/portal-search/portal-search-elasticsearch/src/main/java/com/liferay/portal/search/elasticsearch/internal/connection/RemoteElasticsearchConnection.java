@@ -29,6 +29,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
@@ -85,9 +86,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	protected void addPlugins(
 		TransportClient.Builder transportClientBuilder,
-		ClientSettingsHelperImpl clientSettingsHelperImpl) {
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper) {
 
-		Collection<String> plugins = clientSettingsHelperImpl.getPlugins();
+		Collection<String> plugins = clientSettingsHelper.getPlugins();
 
 		for (String plugin : plugins) {
 			transportClientBuilder.addPlugin(getPluginClass(plugin));
@@ -109,7 +110,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Override
 	protected Client createClient(
-		ClientSettingsHelperImpl clientSettingsHelperImpl) {
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper) {
 
 		if (_transportAddresses.isEmpty()) {
 			throw new IllegalStateException(
@@ -120,9 +121,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			TransportClient.builder();
 
 		transportClientBuilder.settings(
-			clientSettingsHelperImpl.getSettingsBuilder());
+			clientSettingsHelper.getSettingsBuilder());
 
-		addPlugins(transportClientBuilder, clientSettingsHelperImpl);
+		addPlugins(transportClientBuilder, clientSettingsHelper);
 
 		TransportClient transportClient = transportClientBuilder.build();
 

@@ -14,12 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
+import java.util.Collection;
+
 /**
  * @author André de Oliveira
  */
-public interface ClientSettingsHelper {
+public interface ClientSettingsHelper<T> {
 
 	public void addPlugin(String plugin);
+
+	public Collection<String> getPlugins();
+
+	public T getSettingsBuilder();
 
 	public void put(String setting, String value);
 

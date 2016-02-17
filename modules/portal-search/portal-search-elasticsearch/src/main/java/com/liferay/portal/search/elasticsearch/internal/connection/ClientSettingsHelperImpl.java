@@ -18,13 +18,15 @@ import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
  */
-public class ClientSettingsHelperImpl implements ClientSettingsHelper {
+public class ClientSettingsHelperImpl
+	implements ClientSettingsHelper<Settings.Builder> {
 
 	public ClientSettingsHelperImpl(Settings.Builder builder) {
 		_builder = builder;
@@ -54,6 +56,6 @@ public class ClientSettingsHelperImpl implements ClientSettingsHelper {
 	}
 
 	private final Settings.Builder _builder;
-	private final ArrayList<String> _plugins = new ArrayList<>(1);
+	private final List<String> _plugins = new ArrayList<>(1);
 
 }

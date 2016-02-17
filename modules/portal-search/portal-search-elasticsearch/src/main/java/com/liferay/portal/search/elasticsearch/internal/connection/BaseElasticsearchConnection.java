@@ -69,7 +69,7 @@ public abstract class BaseElasticsearchConnection
 
 		loadRequiredDefaultConfigurations(builder);
 
-		ClientSettingsHelperImpl clientSettingsHelper =
+		ClientSettingsHelper clientSettingsHelper =
 			new ClientSettingsHelperImpl(builder);
 
 		loadSettingsContributors(clientSettingsHelper);
@@ -128,7 +128,7 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected abstract Client createClient(
-		ClientSettingsHelperImpl clientSettingsHelperImpl);
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper);
 
 	protected IndexFactory getIndexFactory() {
 		return _indexFactory;

@@ -29,6 +29,7 @@ import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectio
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.io.IOException;
@@ -191,7 +192,7 @@ public class EmbeddedElasticsearchConnection
 
 	@Override
 	protected Client createClient(
-		ClientSettingsHelperImpl clientSettingsHelperImpl) {
+		ClientSettingsHelper<Settings.Builder> clientSettingsHelper) {
 
 		StopWatch stopWatch = new StopWatch();
 
@@ -216,7 +217,7 @@ public class EmbeddedElasticsearchConnection
 					elasticsearchConfiguration.clusterName());
 		}
 
-		Settings.Builder builder = clientSettingsHelperImpl.getSettingsBuilder();
+		Settings.Builder builder = clientSettingsHelper.getSettingsBuilder();
 
 		_node = new Node(builder.build());
 

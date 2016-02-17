@@ -234,7 +234,7 @@ public class ElasticsearchFixture {
 
 				@Override
 				public void populate(
-					ClientSettingsHelper clientSettingsHelper) {
+					ClientSettingsHelper<?> clientSettingsHelper) {
 
 					clientSettingsHelper.put(
 						"cluster.service.slow_task_logging_threshold", "600s");
@@ -251,7 +251,7 @@ public class ElasticsearchFixture {
 
 				@Override
 				public void populate(
-					ClientSettingsHelper clientSettingsHelper) {
+					ClientSettingsHelper<?> clientSettingsHelper) {
 
 					clientSettingsHelper.put(
 						"cluster.routing.allocation.disk.threshold_enabled",

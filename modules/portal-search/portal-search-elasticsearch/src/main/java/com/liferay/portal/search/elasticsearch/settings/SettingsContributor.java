@@ -21,6 +21,6 @@ public interface SettingsContributor extends Comparable<SettingsContributor> {
 
 	public int getPriority();
 
-	public void populate(ClientSettingsHelper clientSettingsHelper);
+	public void populate(ClientSettingsHelper<?> clientSettingsHelper);
 
 }

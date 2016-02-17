@@ -2258,8 +2258,6 @@
 	</command>
 
 	<command name="DeleteEventRegular"  priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -4124,8 +4122,6 @@
 	</command>
 
 	<command name="SearchForOtherCalendars" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />

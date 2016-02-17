@@ -34,6 +34,8 @@ public class UnstableMessageUtil {
 
 		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
 
+		int messageCount = 0;
+
 		for (int i = 0; i < suitesJSONArray.length(); i++) {
 			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
@@ -48,6 +50,14 @@ public class UnstableMessageUtil {
 					status.equals("SKIPPED")) {
 
 					continue;
+				}
+
+				messageCount++;
+
+				if (messageCount == _MAX_MESSAGE_COUNT) {
+					sb.append("<li>...</li></ul>");
+
+					return sb.toString();
 				}
 
 				sb.append("<li><a href=\"");
@@ -141,7 +151,9 @@ public class UnstableMessageUtil {
 
 				sb.append("<pre>");
 				sb.append(
-					truncate(500, caseJSONObject.getString("errorDetails")));
+					_truncate(
+						(2500 / _MAX_MESSAGE_COUNT),
+						caseJSONObject.getString("errorDetails")));
 				sb.append("</pre>");
 
 				sb.append("</li>");
@@ -152,7 +164,7 @@ public class UnstableMessageUtil {
 		return sb.toString();
 	}
 
-	private static String truncate(int maxLength, String message) {
+	private static String _truncate(int maxLength, String message) {
 		if (message.length() <= maxLength) {
 			return message;
 		}
@@ -161,12 +173,19 @@ public class UnstableMessageUtil {
 			String newMessage = message.substring(
 				0, message.lastIndexOf("\n", maxLength));
 
-			if (newMessage.length() > (.75 * maxLength)) {
+			if (newMessage.length() > _MIN_MESSAGE_TRUNCATED_LENGTH) {
 				return newMessage;
 			}
 		}
 
 		return message.substring(0, maxLength);
 	}
+
+	private static final int _MAX_MESSAGE_COUNT = 3;
+
+	private static final int _MAX_MESSAGE_LENGTH = 2500;
+
+	private static final int _MIN_MESSAGE_TRUNCATED_LENGTH = Math.round(
+		_MAX_MESSAGE_LENGTH * .75f);
 
 }

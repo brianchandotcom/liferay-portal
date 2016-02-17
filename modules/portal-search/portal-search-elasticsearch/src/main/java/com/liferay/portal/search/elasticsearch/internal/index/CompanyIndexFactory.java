@@ -262,10 +262,10 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		loadAdditionalIndexConfigurations(builder);
 
-		IndexSettingsHelperImpl indexSettingsHelperImpl =
-			new IndexSettingsHelperImpl(builder);
+		IndexSettingsHelper indexSettingsHelper = new IndexSettingsHelperImpl(
+			builder);
 
-		loadIndexSettingsContributors(indexSettingsHelperImpl);
+		loadIndexSettingsContributors(indexSettingsHelper);
 
 		createIndexRequestBuilder.setSettings(builder);
 	}

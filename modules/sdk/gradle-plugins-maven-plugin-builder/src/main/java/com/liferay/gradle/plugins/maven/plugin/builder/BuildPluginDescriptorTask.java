@@ -40,6 +40,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -78,7 +79,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			Conf2ScopeMappingContainer.COMPILE);
 		_configurationScopeMappings.put(
 			"provided", Conf2ScopeMappingContainer.PROVIDED);
-		_pomRepositories.put("provided", Conf2ScopeMappingContainer.PROVIDED);
+
+		_pomRepository.put(
+			"liferay-public",
+			"http://cdn.repository.liferay.com/nexus/content/groups/public");
 	}
 
 	@TaskAction
@@ -184,8 +188,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
-	public Map<String, String> getPomRepositories() {
-		return _pomRepositories;
+	public Map<String, String> getPomRepository() {
+		return _pomRepository;
 	}
 
 	@Input
@@ -203,8 +207,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _useSetterComments;
 	}
 
-	public void pomRepositories(String repositoryName, String scope) {
-		_pomRepositories.put(repositoryName, scope);
+	public void pomRepository(String repositoryName, String repositoryUrl) {
+		_pomRepository.put(repositoryName, repositoryUrl);
 	}
 
 	public void setClassesDir(Object classesDir) {
@@ -335,36 +339,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(doc, exclusionElement, "groupId", groupId);
 	}
 
-	protected void appendPomRepositoryElements(
-		Document doc, Element repositoryElement, String configurationName,
-		String scope) {
-
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Configuration configuration = configurationContainer.findByName(
-			configurationName);
-
-		if (configuration == null) {
-			return;
-		}
-
-		Set<Dependency> dependencies = configuration.getDependencies();
-
-		for (Dependency entry : dependencies) {
-			Element dependencyElement = doc.createElement("repository");
-
-			repositoryElement.appendChild(repositoryElement);
-
-			XMLUtil.appendElement(
-				doc, dependencyElement, "id", entry.getGroup());
-			XMLUtil.appendElement(
-				doc, dependencyElement, "url", entry.getName());
-		}
-	}
-
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
 		final Project project = getProject();
 
@@ -435,14 +409,16 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		repositoriesElement.appendChild(repositoryElement);
 
-		Map<String, String> pomRepositories = getPomRepositories();
+		Map<String, String> pomRepository = getPomRepository();
 
-		for (Map.Entry<String, String> entry : pomRepositories.entrySet()) {
-			String configurationName = entry.getKey();
-			String scope = entry.getValue();
+		for (Map.Entry<String, String> entry : pomRepository.entrySet()) {
+			String repositoryName = entry.getKey();
+			String repositoryUrl = entry.getValue();
 
-			appendPomRepositoryElements(
-				document, repositoryElement, configurationName, scope);
+			XMLUtil.appendElement(
+				document, repositoryElement, "id", repositoryName);
+			XMLUtil.appendElement(
+				document, repositoryElement, "url", repositoryUrl);
 		}
 
 		Element buildElement = document.createElement("build");
@@ -679,7 +655,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private Object _outputDir;
 	private Object _pomArtifactId;
 	private Object _pomGroupId;
-	private final Map<String, String> _pomRepositories = new HashMap<>();
+	private final Map<String, String> _pomRepository = new LinkedHashMap<>();
 	private Object _pomVersion;
 	private Object _sourceDir;
 	private boolean _useSetterComments = true;

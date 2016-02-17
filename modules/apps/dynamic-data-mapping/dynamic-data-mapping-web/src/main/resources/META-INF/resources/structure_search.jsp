@@ -32,8 +32,6 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 
 		<aui:input inlineField="<%= true %>" name="<%= StructureDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 
-		<aui:input name="<%= StructureDisplayTerms.CLASS_NAME_ID %>" type="hidden" value="<%= scopeClassNameId %>" />
-
 		<c:choose>
 			<c:when test="<%= Validator.isNull(storageTypeValue) %>">
 				<aui:select inlineField="<%= true %>" name="storageType">

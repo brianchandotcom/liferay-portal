@@ -3836,3 +3836,30 @@ There is no direct replacement. You should remove all usages of the
 This change was made as a part of the ongoing strategy to deprecate unused tags.
 
 ---------------------------------------
+
+### Removed ability to specify classloaders in Scripting
+- **Date:** 2016-Feb-17
+- **JIRA Ticket:** LPS-63180
+
+#### What changed?
+- `com.liferay.portal.kernel.scripting.ScriptingExecutor` no longer uses
+provided ClassLoaders in the eval methods
+- `com.liferay.portal.kernel.scripting.Scripting` no longer uses
+the provided ClassLoaders or servletContextNames in eval and exec methods.
+
+#### Who is affected?
+
+- All implementations of `com.liferay.portal.kernel.scripting.ScriptingExecutor`
+- All classes calling `com.liferay.portal.kernel.scripting.Scripting`
+
+#### How should I update my code?
+
+You should remove ClassLoader and servletContext from the parameters used when
+calling
+
+#### Why was this change made?
+
+This change was made since custom classloader management is no longer necessary
+in the OSGi container.
+
+---------------------------------------

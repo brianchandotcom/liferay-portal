@@ -73,7 +73,7 @@
 	</command>
 
 	<command name="addPGViaMG">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_FOLDER" value1="Add Folder" />
 
@@ -171,7 +171,7 @@
 	</command>
 
 	<command name="addSubfolderPGViaMG">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
 
@@ -315,7 +315,7 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MediaGallery#ENTRY_EDIT_ICON" value1="Edit" />
 

@@ -25,7 +25,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="Click" locator1="MenuItem#EDIT" />
 
 				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
@@ -39,7 +39,7 @@
 		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
 			<var name="key_rowEntry" value="${workflowResourceValue}" />
 
-			<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 			<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -136,7 +136,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#APPROVE" value1="Approve" />
 
@@ -222,13 +222,13 @@
 	</command>
 
 	<command name="clickApproveByDetails">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
 	</command>
 
 	<command name="clickAssignToMeByDetails">
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
 	</command>
@@ -236,7 +236,7 @@
 	<command name="configureWorkflow">
 		<var name="key_rowEntry" value="${workflowResourceValue}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -258,7 +258,7 @@
 
 	<command name="configureWorkflowViaFolderInfo">
 		<execute function="Click" locator1="Icon#INFO" />
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
@@ -441,7 +441,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#REJECT" value1="Reject" />
 
@@ -499,7 +499,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#RESUBMIT" value1="Resubmit" />
 
@@ -525,7 +525,7 @@
 		<var name="key_rowEntry" value="User" />
 		<var name="noWorkflow" value="No Workflow" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -965,7 +965,7 @@
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 
@@ -993,7 +993,7 @@
 			<var name="workflowDefinition" value="${workflowDefinition}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 

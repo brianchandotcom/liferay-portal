@@ -720,7 +720,7 @@
 
 					<var name="key_rowEntry" value="${siteName}" />
 
-					<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+					<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 					<execute function="AssertClick" locator1="MenuItem#REQUEST_MEMBERSHIP" value1="Request Membership" />
 
@@ -742,7 +742,7 @@
 
 				<var name="key_rowEntry" value="${siteName}" />
 
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 				<execute function="AssertClick" locator1="MenuItem#JOIN" value1="Join" />
 
@@ -750,7 +750,7 @@
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 				<execute function="AssertVisible" locator1="MenuItem#LEAVE" />
 			</else>
@@ -776,7 +776,7 @@
 
 		<var name="key_rowEntry" value="${siteName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#LEAVE" value1="Leave" />
 
@@ -784,7 +784,7 @@
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertVisible" locator1="MenuItem#JOIN" />
 	</command>
@@ -841,7 +841,7 @@
 
 		<var name="key_rowEntry" value="${key_cardText}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
 

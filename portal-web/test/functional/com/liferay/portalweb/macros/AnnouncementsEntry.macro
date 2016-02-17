@@ -79,7 +79,7 @@
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -98,7 +98,7 @@
 		<var name="key_entryContent" value="${entryContent}" />
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -115,7 +115,7 @@
 
 		<execute function="AssertVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#HIDE" value1="Hide" />
 
@@ -128,7 +128,7 @@
 
 		<execute function="AssertVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_READ" value1="Mark as Read" />
 
@@ -141,7 +141,7 @@
 
 		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#SHOW" value1="Show" />
 
@@ -199,7 +199,7 @@
 	<command name="viewHiddenPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#SHOW" value1="Show" />
 

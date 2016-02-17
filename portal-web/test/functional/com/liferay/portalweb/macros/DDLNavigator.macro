@@ -63,7 +63,7 @@
 
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#SPREADSHEET_VIEW" value1="Spreadsheet View" />
 	</command>

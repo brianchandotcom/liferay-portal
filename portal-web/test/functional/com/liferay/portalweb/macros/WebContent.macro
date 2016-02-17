@@ -738,7 +738,7 @@
 	<command name="copyCP">
 		<var name="key_rowEntry" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
@@ -772,7 +772,7 @@
 	<command name="deleteWithDisabledRB">
 		<var name="key_rowEntry" value="${entryTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 
@@ -943,7 +943,7 @@
 	<command name="expireSpecificVersionCP">
 		<var name="key_rowEntry" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 
@@ -990,7 +990,7 @@
 	<command name="gotoViewSpecificVersionHistoryCP">
 		<var name="key_rowEntry" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 	</command>

@@ -7594,6 +7594,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />
+		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg" />
 
 		<copy
 			file="tools/db-upgrade/build.xml"
@@ -7618,10 +7619,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			tofile="${liferay.home}/portal-ext.properties"
 		/>
 
-		<echo append="true" file="${liferay.home}/portal-ext.properties">
-
-index.read.only=true</echo>
-
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg">index.read.only=true</echo>
 
 		<record action="start" name="${liferay.home}/db_upgrade_log" />
 
@@ -7648,6 +7646,7 @@ index.read.only=true</echo>
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />
+		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg" />
 	</target>
 
 	<target name="wait-for-plugins-deployment">

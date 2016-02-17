@@ -109,7 +109,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);
 		}
-
 		finally {
 			if (preparedSourceDir != null) {
 				project.delete(preparedSourceDir);

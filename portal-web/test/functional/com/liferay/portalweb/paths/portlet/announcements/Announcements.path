@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>CARD_VIEW_ENTRY_SCOPE</td>
-	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/..//div[contains(@class,'entry-scope')]</td>
+	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/..//h5[contains(.,'${key_distributionScope}')]</td>
 	<td></td>
 </tr>
 <tr>

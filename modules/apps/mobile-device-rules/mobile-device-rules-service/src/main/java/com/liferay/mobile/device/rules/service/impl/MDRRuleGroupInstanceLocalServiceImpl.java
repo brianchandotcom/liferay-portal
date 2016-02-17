@@ -66,6 +66,11 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		ruleGroupInstance.setRuleGroupId(ruleGroupId);
 		ruleGroupInstance.setPriority(priority);
 
+		// Resources
+
+		resourceLocalService.addModelResources(
+			ruleGroupInstance, serviceContext);
+
 		return updateMDRRuleGroupInstance(ruleGroupInstance);
 	}
 

@@ -229,6 +229,25 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the resource local service.
+	 *
+	 * @return the resource local service
+	 */
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+		return resourceLocalService;
+	}
+
+	/**
+	 * Sets the resource local service.
+	 *
+	 * @param resourceLocalService the resource local service
+	 */
+	public void setResourceLocalService(
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		this.resourceLocalService = resourceLocalService;
+	}
+
+	/**
 	 * Returns the subscription local service.
 	 *
 	 * @return the subscription local service
@@ -539,6 +558,8 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.CompanyService companyService;
 	@ServiceReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService;
 	@ServiceReference(type = SubscriptionPersistence.class)

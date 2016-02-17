@@ -105,11 +105,15 @@ public class PasswordPolicyLocalServiceImpl
 
 		// Resources
 
-		if (!user.isDefaultUser()) {
-			resourceLocalService.addResources(
-				user.getCompanyId(), 0, userId, PasswordPolicy.class.getName(),
-				passwordPolicy.getPasswordPolicyId(), false, false, false);
+		long ownerId = userId;
+
+		if (user.isDefaultUser()) {
+			ownerId = 0;
 		}
+
+		resourceLocalService.addResources(
+			user.getCompanyId(), 0, ownerId, PasswordPolicy.class.getName(),
+			passwordPolicy.getPasswordPolicyId(), false, false, false);
 
 		return passwordPolicy;
 	}

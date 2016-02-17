@@ -719,6 +719,7 @@
 		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="LayoutSetBranch" />
 		<reference package-path="com.liferay.portal" entity="RecentLayoutBranch" />
+		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="LayoutFriendlyURL" uuid="true" local-service="true" remote-service="false">

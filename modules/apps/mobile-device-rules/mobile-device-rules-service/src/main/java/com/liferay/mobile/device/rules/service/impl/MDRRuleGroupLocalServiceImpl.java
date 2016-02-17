@@ -67,6 +67,10 @@ public class MDRRuleGroupLocalServiceImpl
 		ruleGroup.setNameMap(nameMap);
 		ruleGroup.setDescriptionMap(descriptionMap);
 
+		// Resources
+
+		resourceLocalService.addModelResources(ruleGroup, serviceContext);
+
 		return updateMDRRuleGroup(ruleGroup);
 	}
 

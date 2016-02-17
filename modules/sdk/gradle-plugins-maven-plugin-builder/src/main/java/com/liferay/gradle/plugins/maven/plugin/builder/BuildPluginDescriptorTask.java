@@ -405,28 +405,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, projectElement, "packaging", "maven-plugin");
 
-		// Repositories
-
-		Element repositoriesElement = document.createElement("repositories");
-
-		projectElement.appendChild(repositoriesElement);
-
-		Element repositoryElement = document.createElement("repository");
-
-		repositoriesElement.appendChild(repositoryElement);
-
-		Map<String, String> pomRepository = getPomRepository();
-
-		for (Map.Entry<String, String> entry : pomRepository.entrySet()) {
-			String repositoryName = entry.getKey();
-			String repositoryUrl = entry.getValue();
-
-			XMLUtil.appendElement(
-				document, repositoryElement, "id", repositoryName);
-			XMLUtil.appendElement(
-				document, repositoryElement, "url", repositoryUrl);
-		}
-
 		// Build
 
 		Element buildElement = document.createElement("build");
@@ -484,6 +462,28 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 			appendDependencyElements(
 				document, dependenciesElement, configurationName, scope);
+		}
+
+		// Repositories
+
+		Element repositoriesElement = document.createElement("repositories");
+
+		projectElement.appendChild(repositoriesElement);
+
+		Element repositoryElement = document.createElement("repository");
+
+		repositoriesElement.appendChild(repositoryElement);
+
+		Map<String, String> pomRepository = getPomRepository();
+
+		for (Map.Entry<String, String> entry : pomRepository.entrySet()) {
+			String repositoryName = entry.getKey();
+			String repositoryUrl = entry.getValue();
+
+			XMLUtil.appendElement(
+				document, repositoryElement, "id", repositoryName);
+			XMLUtil.appendElement(
+				document, repositoryElement, "url", repositoryUrl);
 		}
 
 		XMLUtil.write(document, pomFile);

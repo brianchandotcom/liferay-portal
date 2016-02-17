@@ -2708,7 +2708,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<parallel>
 				<daemons>
-					<java jar="${test.smtp.server.dir}/MockMock.jar" fork="true" />
+					<java jar="${test.smtp.server.dir}/MockMock.jar" fork="true">
+						<arg line="-p 25000" />
+					</java>
 				</daemons>
 			</parallel>
 		</sequential>

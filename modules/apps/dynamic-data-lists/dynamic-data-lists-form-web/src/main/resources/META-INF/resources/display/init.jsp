@@ -46,6 +46,7 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.util.List" %>
@@ -57,7 +58,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <portlet:defineObjects />
 
 <%
-DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(renderRequest);
+DDLFormDisplayContext ddlFormDisplayContext = (DDLFormDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/display/init-ext.jsp" %>

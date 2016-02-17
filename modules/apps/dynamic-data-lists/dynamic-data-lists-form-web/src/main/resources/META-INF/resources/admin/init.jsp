@@ -75,7 +75,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-DDLFormAdminDisplayContext ddlFormAdminDisplayContext = new DDLFormAdminDisplayContext(renderRequest, renderResponse);
+DDLFormAdminDisplayContext ddlFormAdminDisplayContext = (DDLFormAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

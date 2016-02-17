@@ -64,14 +64,6 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -126,14 +118,6 @@
 	<command name="ViewReplyMentionViaDMComment" priority="5">
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

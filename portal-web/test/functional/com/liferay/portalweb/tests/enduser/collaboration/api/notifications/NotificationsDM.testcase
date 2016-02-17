@@ -15,14 +15,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

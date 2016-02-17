@@ -66,7 +66,17 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewPageAddedSuccessMessage" />
+		<if>
+			<isset var="localized" />
+			<then>
+				<execute macro="Alert#viewLocalizedPageAddedSuccessMessage">
+					<var name="localized" value="${localized}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Alert#viewPageAddedSuccessMessage" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addChild">

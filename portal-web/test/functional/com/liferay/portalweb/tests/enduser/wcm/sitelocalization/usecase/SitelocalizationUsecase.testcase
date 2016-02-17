@@ -690,6 +690,7 @@
 		</execute>
 
 		<execute macro="Page#add">
+			<var name="localized" value="La página ha sido creada con éxito" />
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />

@@ -46,6 +46,12 @@ AUI.add(
 
 			settingsForm: {
 				valueFn: '_valueSettingsForm'
+			},
+
+			toolbarFooter: {
+				getter: '_manipulateFooterToolbar',
+				lazyAdd: true,
+				setter: '_manipulateFooterToolbar'
 			}
 		};
 
@@ -146,6 +152,40 @@ AUI.add(
 					settingsModal.on('xyChange', instance._onModalXYChange),
 					settingsModal.on('visibleChange', A.bind('_onModalVisibleChange', instance))
 				];
+			},
+
+			_manipulateFooterToolbar: function(toolbarItem) {
+				var instance = this;
+
+				var toolbar = [
+					{
+						cssClass: ['btn-lg btn-primary', CSS_FIELD_SETTINGS_SAVE].join(' '),
+						label: Liferay.Language.get('save'),
+						on: {
+							click: A.bind('_onClickModalSave', instance)
+						}
+					},
+					{
+						cssClass: 'btn-lg btn-link',
+						label: Liferay.Language.get('cancel'),
+						on: {
+							click: A.bind('_onClickModalClose', instance)
+						}
+					}
+				];
+
+				if (toolbarItem) {
+					A.Array.each(
+						toolbar,
+						function(item, index) {
+							if (toolbarItem[index]) {
+								toolbar[index] = A.merge(item, toolbarItem[index]);
+							}
+						}
+					);
+				}
+
+				return toolbar;
 			},
 
 			_onClickModalClose: function() {
@@ -272,30 +312,12 @@ AUI.add(
 				footerNode.prepend(instance._confirmationMessage);
 			},
 
-			_showDefaultToolbar: function() {
+			_showDefaultToolbar: function(label) {
 				var instance = this;
 
 				var settingsModal = instance.getSettingsModal()._modal;
 
-				settingsModal.addToolbar(
-					[
-						{
-							cssClass: ['btn-lg btn-primary', CSS_FIELD_SETTINGS_SAVE].join(' '),
-							label: Liferay.Language.get('save'),
-							on: {
-								click: A.bind('_onClickModalSave', instance)
-							}
-						},
-						{
-							cssClass: 'btn-lg btn-link',
-							label: Liferay.Language.get('cancel'),
-							on: {
-								click: A.bind('_onClickModalClose', instance)
-							}
-						}
-					],
-					'footer'
-				);
+				settingsModal.addToolbar(instance.get('toolbarFooter'), 'footer');
 			},
 
 			_updateSettingsFormValues: function() {

@@ -179,10 +179,21 @@ AUI.add(
 
 						var fieldType = event.fieldType;
 
+						var field = instance.createField(fieldType);
+
 						instance.hideFieldsPanel();
 
+						field.set(
+							'toolbarFooter',
+							[
+								{
+									label: Liferay.Language.get('add')
+								}
+							]
+						);
+
 						instance.showFieldSettingsPanel(
-							instance.createField(fieldType),
+							field,
 							Lang.sub(
 								Liferay.Language.get('add-x-field'),
 								[fieldType.get('label')]

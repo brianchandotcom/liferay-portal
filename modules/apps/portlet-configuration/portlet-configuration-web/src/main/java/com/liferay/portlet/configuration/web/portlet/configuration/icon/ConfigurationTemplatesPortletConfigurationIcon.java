@@ -42,13 +42,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIcon.class)
-public class AppTemplatePortletConfigurationIcon
+public class ConfigurationTemplatesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "app-templates");
+			getResourceBundle(getLocale(portletRequest)),
+			"configuration-templates");
 	}
 
 	@Override
@@ -66,7 +67,8 @@ public class AppTemplatePortletConfigurationIcon
 					PortletConfiguration.CLASS_NAME,
 				PortletProvider.Action.VIEW);
 
-			portletURL.setParameter("mvcPath", "/edit_app_templates.jsp");
+			portletURL.setParameter(
+				"mvcPath", "/edit_configuration_templates.jsp");
 			portletURL.setParameter("redirect", redirect);
 			portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 			portletURL.setParameter(

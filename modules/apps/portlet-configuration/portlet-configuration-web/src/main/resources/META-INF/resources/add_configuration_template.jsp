@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 <liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
 <portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
-	<portlet:param name="mvcPath" value="/edit_app_templates.jsp" />
+	<portlet:param name="mvcPath" value="/edit_configuration_templates.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 

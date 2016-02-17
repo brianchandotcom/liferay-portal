@@ -146,7 +146,6 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.trash.kernel.model.TrashEntry"
-					cssClass="entry-display-style"
 					keyProperty="entryId"
 					modelVar="entry"
 					rowVar="row"

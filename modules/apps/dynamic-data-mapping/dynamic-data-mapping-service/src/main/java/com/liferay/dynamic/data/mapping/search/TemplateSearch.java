@@ -28,7 +28,7 @@ import javax.portlet.PortletURL;
  */
 public class TemplateSearch extends SearchContainer<DDMTemplate> {
 
-	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-templates";
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
 	public static List<String> headerNames = new ArrayList<>();
 

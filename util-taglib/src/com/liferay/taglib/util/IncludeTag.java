@@ -184,6 +184,8 @@ public class IncludeTag extends AttributesTagSupport {
 
 			_trackedRequest = null;
 		}
+
+		request.removeAttribute(WebKeys.RESOURCE_BUNDLE);
 	}
 
 	protected void doClearTag() {

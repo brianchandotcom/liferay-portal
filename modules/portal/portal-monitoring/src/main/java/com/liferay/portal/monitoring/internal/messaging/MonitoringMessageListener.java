@@ -17,7 +17,10 @@ package com.liferay.portal.monitoring.internal.messaging;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.Level;
@@ -25,11 +28,6 @@ import com.liferay.portal.kernel.monitoring.MonitoringControl;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,28 +35,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.MONITORING},
+	service = {MessageListener.class, MonitoringControl.class}
+)
 public class MonitoringMessageListener
 	extends BaseMessageListener implements MonitoringControl {
-
-	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			DataSampleProcessor.class,
-			new DataSampleProcessorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	public void destroy() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
-	}
 
 	@Override
 	public Level getLevel(String namespace) {
@@ -101,21 +94,6 @@ public class MonitoringMessageListener
 		}
 	}
 
-	public synchronized void registerDataSampleProcessor(
-		String namespace, DataSampleProcessor<DataSample> dataSampleProcessor) {
-
-		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
-			_dataSampleProcessors.get(namespace);
-
-		if (dataSampleProcessors == null) {
-			dataSampleProcessors = new ArrayList<>();
-
-			_dataSampleProcessors.put(namespace, dataSampleProcessors);
-		}
-
-		dataSampleProcessors.add(dataSampleProcessor);
-	}
-
 	@Override
 	public void setLevel(String namespace, Level level) {
 		_levels.put(namespace, level);
@@ -132,17 +110,6 @@ public class MonitoringMessageListener
 		}
 	}
 
-	public synchronized void unregisterDataSampleProcessor(
-		String namespace, DataSampleProcessor<DataSample> dataSampleProcessor) {
-
-		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
-			_dataSampleProcessors.get(namespace);
-
-		if (dataSampleProcessors != null) {
-			dataSampleProcessors.remove(dataSampleProcessor);
-		}
-	}
-
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void doReceive(Message message) throws Exception {
@@ -155,79 +122,76 @@ public class MonitoringMessageListener
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unregisterDataSampleProcessor"
+	)
+	protected synchronized void registerDataSampleProcessor(
+		DataSampleProcessor<DataSample> dataSampleProcessor,
+		Map<String, Object> properties) {
+
+		String namespace = (String)properties.get("namespace");
+
+		if (Validator.isNull(namespace)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No namespace defined for service " +
+						dataSampleProcessor.getClass());
+			}
+
+			return;
+		}
+
+		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
+			_dataSampleProcessors.get(namespace);
+
+		if (dataSampleProcessors == null) {
+			dataSampleProcessors = new ArrayList<>();
+
+			_dataSampleProcessors.put(namespace, dataSampleProcessors);
+		}
+
+		dataSampleProcessors.add(dataSampleProcessor);
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.MONITORING + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
+	protected synchronized void unregisterDataSampleProcessor(
+		DataSampleProcessor<DataSample> dataSampleProcessor,
+		Map<String, Object> properties) {
+
+		String namespace = (String)properties.get("namespace");
+
+		if (Validator.isNull(namespace)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No namespace defined for service " +
+						dataSampleProcessor.getClass());
+			}
+
+			return;
+		}
+
+		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
+			_dataSampleProcessors.get(namespace);
+
+		if (dataSampleProcessors != null) {
+			dataSampleProcessors.remove(dataSampleProcessor);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringMessageListener.class);
 
 	private final Map<String, List<DataSampleProcessor<DataSample>>>
 		_dataSampleProcessors = new ConcurrentHashMap<>();
 	private final Map<String, Level> _levels = new ConcurrentHashMap<>();
-
-	@SuppressWarnings("rawtypes")
-	private ServiceTracker<DataSampleProcessor, DataSampleProcessor>
-		_serviceTracker;
-
-	@SuppressWarnings("rawtypes")
-	private class DataSampleProcessorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<DataSampleProcessor, DataSampleProcessor> {
-
-		@Override
-		public DataSampleProcessor addingService(
-			ServiceReference<DataSampleProcessor> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			String namespace = (String)serviceReference.getProperty(
-				"namespace");
-
-			DataSampleProcessor<DataSample> dataSampleProcessor =
-				registry.getService(serviceReference);
-
-			if (Validator.isNotNull(namespace)) {
-				registerDataSampleProcessor(namespace, dataSampleProcessor);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No namespace defined for service " +
-							dataSampleProcessor.getClass());
-				}
-			}
-
-			return dataSampleProcessor;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DataSampleProcessor> serviceReference,
-			DataSampleProcessor dataSampleProcessor) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DataSampleProcessor> serviceReference,
-			DataSampleProcessor dataSampleProcessor) {
-
-			String namespace = (String)serviceReference.getProperty(
-				"namespace");
-
-			if (Validator.isNull(namespace)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No namespace defined for service " +
-							dataSampleProcessor.getClass());
-				}
-
-				return;
-			}
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			dataSampleProcessor = registry.getService(serviceReference);
-
-			unregisterDataSampleProcessor(namespace, dataSampleProcessor);
-		}
-
-	}
 
 }

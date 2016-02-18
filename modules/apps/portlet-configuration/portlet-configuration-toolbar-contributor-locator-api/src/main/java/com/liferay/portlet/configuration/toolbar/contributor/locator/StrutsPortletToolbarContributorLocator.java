@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.toolbar.contributor.locator;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -63,8 +64,8 @@ public class StrutsPortletToolbarContributorLocator
 
 	@Activate
 	@Override
-	protected void activate() {
-		super.activate();
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 	@Deactivate

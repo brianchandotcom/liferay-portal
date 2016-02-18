@@ -17,101 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = assetCategoriesDisplayContext.getCategoriesRedirect();
 
-long categoryId = ParamUtil.getLong(request, "categoryId");
-
-AssetCategory category = null;
-
-if (categoryId > 0) {
-	category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
-}
-
-long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
-
-AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
-
-if (Validator.isNull(redirect)) {
-	PortletURL backURL = renderResponse.createRenderURL();
-
-	if (category != null) {
-		backURL.setParameter("mvcPath", "/view_categories.jsp");
-		backURL.setParameter("categoryId", String.valueOf(category.getParentCategoryId()));
-
-		if (vocabularyId > 0) {
-			backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
-		}
-	}
-
-	redirect = backURL.toString();
-}
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-PortletURL iteratorURL = renderResponse.createRenderURL();
-
-iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
-iteratorURL.setParameter("redirect", currentURL);
-iteratorURL.setParameter("categoryId", String.valueOf(categoryId));
-iteratorURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
-iteratorURL.setParameter("displayStyle", displayStyle);
-iteratorURL.setParameter("keywords", keywords);
-
-SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner");
-
-categoriesSearchContainer.setSearch(Validator.isNotNull(keywords));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
-
-categoriesSearchContainer.setOrderByCol(orderByCol);
-
-boolean orderByAsc = false;
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<AssetCategory> orderByComparator = new AssetCategoryCreateDateComparator(orderByAsc);
-
-categoriesSearchContainer.setOrderByComparator(orderByComparator);
-
-categoriesSearchContainer.setOrderByType(orderByType);
-categoriesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-
-List<AssetCategory> categories = null;
-int categoriesCount = 0;
-
-if (Validator.isNotNull(keywords)) {
-	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
-
-	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, vocabularyId, categoryId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), sort);
-
-	categoriesCount = assetCategoryDisplay.getTotal();
-
-	categoriesSearchContainer.setTotal(categoriesCount);
-
-	categories = assetCategoryDisplay.getCategories();
-}
-else {
-	categoriesCount = AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, categoryId, vocabularyId);
-
-	categoriesSearchContainer.setTotal(categoriesCount);
-
-	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), categoriesSearchContainer.getOrderByComparator());
-}
-
-categoriesSearchContainer.setResults(categories);
+SearchContainer categoriesSearchContainer = assetCategoriesDisplayContext.getCategoriesSearchContainer();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((category != null) ? category.getTitle(locale) : vocabulary.getTitle(locale));
+renderResponse.setTitle(assetCategoriesDisplayContext.getCategoryTitle());
 
-AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, renderResponse);
+AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -121,13 +36,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		<aui:nav-item href="<%= mainURL.toString() %>" label="categories" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= Validator.isNotNull(keywords) || (categoriesCount > 0) %>">
+	<c:if test="<%= Validator.isNotNull(assetCategoriesDisplayContext.getKeywords()) || (categoriesSearchContainer.getTotal() > 0) %>">
 		<portlet:renderURL var="portletURL">
 			<portlet:param name="mvcPath" value="/view_categories.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+			<portlet:param name="categoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
+			<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
+			<portlet:param name="displayStyle" value="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" />
 		</portlet:renderURL>
 
 		<aui:nav-bar-search>
@@ -139,7 +54,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= categoriesCount <= 0 %>"
+	disabled="<%= categoriesSearchContainer.getTotal() <= 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="assetCategories"
 >
@@ -147,21 +62,21 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
 			/>
 
 			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
+				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
+				orderByType="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 				orderColumns='<%= new String[] {"create-date"} %>'
-				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -200,7 +115,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 			<liferay-ui:search-container-column-text
 				cssClass="text-strong"
-				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, curCategory.getCategoryId(), vocabularyId) > 0) ? rowURL : null %>"
+				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, curCategory.getCategoryId(), assetCategoriesDisplayContext.getVocabularyId()) > 0) ? rowURL : null %>"
 				name="category"
 				value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 			/>
@@ -229,11 +144,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	<portlet:renderURL var="addCategoryURL">
 		<portlet:param name="mvcPath" value="/edit_category.jsp" />
 
-		<c:if test="<%= categoryId > 0 %>">
-			<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+		<c:if test="<%= assetCategoriesDisplayContext.getCategoryId() > 0 %>">
+			<portlet:param name="parentCategoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
 		</c:if>
 
-		<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+		<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

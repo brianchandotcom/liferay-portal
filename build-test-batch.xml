@@ -240,9 +240,61 @@ mysql.executable=${mysql.executable}]]></echo>
 						<param name="todir" value="${app.server.lib.global.dir}" />
 					</antcall>
 
-					<antcall target="rebuild-database" inheritall="false" >
-						<param name="database.type" value="@{database.type}" />
-					</antcall>
+					<trycatch property="database.error">
+						<try>
+							<record action="start" name="${project.dir}/database.log" />
+
+							<antcall target="rebuild-database" inheritall="false" >
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
+
+							<record action="stop" name="${project.dir}/database.log" />
+						</try>
+						<catch>
+							<if>
+								<resourcecontains resource="${project.dir}/database.log" substring="ERROR 1010" />
+								<then>
+									<zip destfile="${env.TOP_LEVEL_SHARED_DIR}/database.error.zip">
+										<fileset dir="/var/lib/mysql/${database.mysql.schema}" />
+									</zip>
+
+									<delete includeemptydirs="true">
+										<fileset dir="/var/lib/mysql/${database.mysql.schema}" includes="**/*" />
+									</delete>
+
+									<antcall target="rebuild-database" inheritall="false" >
+										<param name="database.type" value="@{database.type}" />
+									</antcall>
+
+									<echo file="${project.dir}/database_error.sh">
+										<![CDATA[service sendmail stop
+
+if [[ -n `service postfix status | grep 'dead\|stopped'` ]]
+then
+	service postfix restart
+fi
+
+service postfix status
+
+EMAIL_BODY="Invalid files found in MySQL database. Archive can be found in ${TOP_LEVEL_SHARED_DIR}."
+
+echo ${BUILD_URL} > /tmp/database_failure_email_body.txt
+echo -e ${EMAIL_BODY} >> /tmp/database_failure_email_body.txt
+
+mail -s "$(echo -e "${NODE_NAME} failed to delete a MySQL database on $(date).\nFrom: Jenkins Slave Verification <root@${NODE_NAME}.lax.liferay.com>\n")" ${EMAIL_LIST} < /tmp/database_failure_email_body.txt
+
+echo "Sent notification."]]>
+									</echo>
+
+									<chmod file="database_error.sh" perm="a+x" />
+
+									<exec executable="${project.dir}/database_error.sh" />
+
+									<delete file="database_error.sh" />
+								</then>
+							</if>
+						</catch>
+					</trycatch>
 
 					<test-action />
 

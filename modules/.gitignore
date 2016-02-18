@@ -53,8 +53,8 @@
 /*/*/test-coverage
 /*/*/test-results
 /*/*/tmp
-/themes/*/build_gradle
-/themes/*/dist
-/themes/*/liferay-theme.json
+/frontend/frontend-theme/*/build_gradle
+/frontend/frontend-theme/*/dist
+/frontend/frontend-theme/*/liferay-theme.json
 npm-debug.log
 uptodate.properties

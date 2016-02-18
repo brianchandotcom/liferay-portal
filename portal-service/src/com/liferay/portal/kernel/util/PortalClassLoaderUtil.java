@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -42,7 +45,7 @@ public class PortalClassLoaderUtil {
 		try {
 			clazz.getMethod("destroy");
 
-			_classLoader = new ClassLoader(classLoader) {};
+			_classLoader = new URLClassLoader(new URL[0], classLoader) {};
 		}
 		catch (NoSuchMethodException nsme) {
 			_classLoader = classLoader;

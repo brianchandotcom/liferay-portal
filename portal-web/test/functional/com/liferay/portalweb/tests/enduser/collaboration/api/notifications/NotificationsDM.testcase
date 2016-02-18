@@ -1,4 +1,5 @@
 <definition component-name="portal-collaboration">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="portlet.plugins.includes" value="notifications-portlet" />
 	<property name="testray.main.component.name" value="Notifications" />
 
@@ -12,14 +13,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

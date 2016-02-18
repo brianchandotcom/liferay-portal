@@ -1,4 +1,5 @@
 <definition component-name="portal-document-management">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
 	<set-up>
@@ -98,26 +99,10 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Site Page 1" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page 2" />
 			<var name="siteScopeSelected" value="true" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Site Page 2" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -208,14 +193,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -448,14 +425,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -598,14 +567,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -755,14 +716,6 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -785,14 +738,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -996,14 +941,6 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1063,14 +1000,6 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1081,14 +1010,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page - Global" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1276,14 +1197,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
-		</execute>
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1357,14 +1270,6 @@
 	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

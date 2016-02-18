@@ -480,6 +480,57 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		};
 
+	protected static BaseExtraDataGenerator _addMessageExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_CLASSNAME =
+					"com.liferay.portlet.messageboards.model.MBMessage";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_PARAMS.put(2,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(ADD_MESSAGE)));
+
+				ACTIVITY_QUERY_PARAMS.put(3,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(REPLY_MESSAGE)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
+					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
+					ACTIVITY_TYPE_CLAUSE + ")";
+
+				ENTITY_SELECT_CLAUSE=
+					_addAssetCommentExtraDataGenerator.ENTITY_SELECT_CLAUSE;
+
+				ENTITY_FROM_CLAUSE=
+					_addAssetCommentExtraDataGenerator.ENTITY_FROM_CLAUSE;
+
+				ENTITY_WHERE_CLAUSE=
+					_addAssetCommentExtraDataGenerator.ENTITY_WHERE_CLAUSE;
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "subject"));
+			}
+
+			// from MBActivityKeys
+			public static final int ADD_MESSAGE = 1;
+
+			public static final int REPLY_MESSAGE = 2;
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, classPK);
+			}
+		};
+
 	protected static ExtraDataGenerator _dlFileEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
@@ -582,6 +633,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	static {
 		_extraDataGenerators.add(_addAssetCommentExtraDataGenerator);
+		_extraDataGenerators.add(_addMessageExtraDataGenerator);
 		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}

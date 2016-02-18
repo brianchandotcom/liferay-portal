@@ -60,6 +60,8 @@
 	</command>
 
 	<command name="gotoStagedView">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<execute function="Click" locator1="Link#STAGING" />
 	</command>
 

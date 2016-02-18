@@ -16,6 +16,7 @@ package com.liferay.portlet.configuration.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -123,6 +124,12 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 		WindowState windowState = portletRequest.getWindowState();
 
 		if (windowState.equals(LiferayWindowState.EXCLUSIVE)) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
 			return false;
 		}
 

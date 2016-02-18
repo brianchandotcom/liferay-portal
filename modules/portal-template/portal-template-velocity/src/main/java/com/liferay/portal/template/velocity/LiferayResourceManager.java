@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.velocity;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.registry.util.StringPlus;
 
 import java.io.IOException;
 import java.io.Reader;

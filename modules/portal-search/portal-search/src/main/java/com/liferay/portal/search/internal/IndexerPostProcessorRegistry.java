@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.List;
 import java.util.Map;

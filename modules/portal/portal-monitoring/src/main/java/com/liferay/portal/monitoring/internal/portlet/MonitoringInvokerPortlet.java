@@ -17,6 +17,7 @@ package com.liferay.portal.monitoring.internal.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.PortletRequestType;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
-import com.liferay.portal.monitoring.statistics.DataSampleFactoryUtil;
 
 import java.io.IOException;
 
@@ -58,10 +58,11 @@ public class MonitoringInvokerPortlet
 	implements InvokerFilterContainer, InvokerPortlet {
 
 	public MonitoringInvokerPortlet(
-		InvokerPortlet invokerPortlet,
+		InvokerPortlet invokerPortlet, DataSampleFactory dataSampleFactory,
 		PortletMonitoringControl portletMonitoringControl) {
 
 		_invokerPortlet = invokerPortlet;
+		_dataSampleFactory = dataSampleFactory;
 		_portletMonitoringControl = portletMonitoringControl;
 	}
 
@@ -175,10 +176,8 @@ public class MonitoringInvokerPortlet
 
 		try {
 			if (_portletMonitoringControl.isMonitorPortletActionRequest()) {
-				dataSample =
-					DataSampleFactoryUtil.createPortletRequestDataSample(
-						PortletRequestType.ACTION, actionRequest,
-						actionResponse);
+				dataSample = _dataSampleFactory.createPortletRequestDataSample(
+					PortletRequestType.ACTION, actionRequest, actionResponse);
 
 				dataSample.setTimeout(_actionTimeout);
 
@@ -214,9 +213,8 @@ public class MonitoringInvokerPortlet
 
 		try {
 			if (_portletMonitoringControl.isMonitorPortletEventRequest()) {
-				dataSample =
-					DataSampleFactoryUtil.createPortletRequestDataSample(
-						PortletRequestType.EVENT, eventRequest, eventResponse);
+				dataSample = _dataSampleFactory.createPortletRequestDataSample(
+					PortletRequestType.EVENT, eventRequest, eventResponse);
 
 				dataSample.prepare();
 
@@ -250,10 +248,8 @@ public class MonitoringInvokerPortlet
 
 		try {
 			if (_portletMonitoringControl.isMonitorPortletRenderRequest()) {
-				dataSample =
-					DataSampleFactoryUtil.createPortletRequestDataSample(
-						PortletRequestType.RENDER, renderRequest,
-						renderResponse);
+				dataSample = _dataSampleFactory.createPortletRequestDataSample(
+					PortletRequestType.RENDER, renderRequest, renderResponse);
 
 				dataSample.setTimeout(_renderTimeout);
 
@@ -289,10 +285,9 @@ public class MonitoringInvokerPortlet
 
 		try {
 			if (_portletMonitoringControl.isMonitorPortletResourceRequest()) {
-				dataSample =
-					DataSampleFactoryUtil.createPortletRequestDataSample(
-						PortletRequestType.RESOURCE, resourceRequest,
-						resourceResponse);
+				dataSample = _dataSampleFactory.createPortletRequestDataSample(
+					PortletRequestType.RESOURCE, resourceRequest,
+					resourceResponse);
 
 				dataSample.prepare();
 
@@ -346,6 +341,7 @@ public class MonitoringInvokerPortlet
 	}
 
 	private long _actionTimeout;
+	private final DataSampleFactory _dataSampleFactory;
 	private InvokerPortlet _invokerPortlet;
 	private final PortletMonitoringControl _portletMonitoringControl;
 	private long _renderTimeout;

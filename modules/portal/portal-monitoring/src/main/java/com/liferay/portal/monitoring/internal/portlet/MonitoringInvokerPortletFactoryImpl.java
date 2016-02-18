@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.portlet;
 
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
@@ -57,7 +58,7 @@ public class MonitoringInvokerPortletFactoryImpl
 			strutsBridgePortlet);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
 	}
 
 	@Override
@@ -71,16 +72,13 @@ public class MonitoringInvokerPortletFactoryImpl
 			portletModel, portlet, portletContext, invokerFilterContainer);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
 	}
 
-	@Reference(unbind = "-")
-	public void setPortletMonitoringControl(
-		PortletMonitoringControl portletMonitoringControl) {
+	@Reference
+	private DataSampleFactory _dataSampleFactory;
 
-		_portletMonitoringControl = portletMonitoringControl;
-	}
-
+	@Reference
 	private PortletMonitoringControl _portletMonitoringControl;
 
 }

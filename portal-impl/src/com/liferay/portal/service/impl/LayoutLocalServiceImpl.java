@@ -2935,16 +2935,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				throw new SitemapPagePriorityException();
 			}
 		}
-
-		boolean layoutCustomizable = GetterUtil.getBoolean(
-			typeSettingsProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
-		if (!layoutCustomizable && layout.isTypePortlet()) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlet.removeCustomization();
-		}
 	}
 
 	@BeanReference(type = LayoutLocalServiceHelper.class)

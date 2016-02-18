@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
 
@@ -170,7 +171,7 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void movePortletId(
 		long userId, String portletId, String columnId, int columnPos);
 
-	public void removeCustomization();
+	public void removeCustomization(UnicodeProperties typeSettingsProperties);
 
 	public void removeModeAboutPortletId(String portletId);
 

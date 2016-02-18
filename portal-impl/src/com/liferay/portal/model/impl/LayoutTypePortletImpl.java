@@ -849,7 +849,7 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
-	public void removeCustomization() {
+	public void removeCustomization(UnicodeProperties typeSettingsProperties) {
 		for (String columnId : getColumns()) {
 			if (!isColumnCustomizable(columnId)) {
 				continue;
@@ -858,9 +858,6 @@ public class LayoutTypePortletImpl
 			if (GetterUtil.getBoolean(
 					getTypeSettingsProperty(
 						CustomizedPages.namespaceColumnId(columnId)))) {
-
-				UnicodeProperties typeSettingsProperties =
-					getTypeSettingsProperties();
 
 				typeSettingsProperties.remove(
 					CustomizedPages.namespaceColumnId(columnId));

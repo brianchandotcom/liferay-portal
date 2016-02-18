@@ -130,10 +130,11 @@ public class PortletKeys {
 		"com_liferay_directory_web_portlet_MySitesDirectoryPortlet";
 
 	public static final String MY_WORKFLOW_INSTANCE =
-		"com_liferay_workflow_instance_web_portlet_MyWorkflowInstancePortlet";
+		"com_liferay_portal_workflow_instance_web_portlet_" +
+			"MyWorkflowInstancePortlet";
 
 	public static final String MY_WORKFLOW_TASK =
-		"com_liferay_workflow_task_web_portlet_MyWorkflowTaskPortlet";
+		"com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet";
 
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
@@ -218,6 +219,7 @@ public class PortletKeys {
 		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 
 	public static final String WORKFLOW_DEFINITION =
-		"com_liferay_workflow_definition_web_portlet_WorkflowDefinitionPortlet";
+		"com_liferay_portal_workflow_definition_web_portlet_" +
+			"WorkflowDefinitionPortlet";
 
 }

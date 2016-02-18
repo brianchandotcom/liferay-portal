@@ -32,7 +32,7 @@ ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		message="restore"
+		message="apply"
 		url="<%= restoreArchivedSetupURL %>"
 	/>
 

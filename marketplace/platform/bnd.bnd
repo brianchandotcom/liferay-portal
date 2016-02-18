@@ -19,12 +19,16 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.frontend.editor.lang:1.0.0,\
 	com.liferay.frontend.editor.simple.web:1.0.0,\
 	com.liferay.frontend.editor.tinymce.web:1.0.0,\
+	com.liferay.frontend.js.bundle.config.extender:1.0.0,\
+	com.liferay.frontend.js.loader.modules.extender:1.0.0,\
 	com.liferay.frontend.js.metal.web:1.0.0,\
 	com.liferay.frontend.js.polyfill.babel.web:1.0.0,\
 	com.liferay.frontend.js.soyutils.web:1.0.0,\
 	com.liferay.frontend.js.web:1.0.0,\
+	com.liferay.frontend.rtl.servlet:1.0.0,\
 	com.liferay.frontend.taglib.freemarker.contributor:1.0.0,\
 	com.liferay.frontend.taglib:1.0.0,\
+	com.liferay.frontend.taglib.aui.form.extension.sample:1.0.0,\
 	com.liferay.frontend.theme.admin.web:1.0.0,\
 	com.liferay.frontend.theme.classic.web:1.0.0,\
 	com.liferay.frontend.theme.styled:1.0.0,\
@@ -72,8 +76,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.http.service.api:1.0.0,\
 	com.liferay.portal.instances.web:1.0.0,\
 	com.liferay.portal.jmx:1.0.0,\
-	com.liferay.portal.js.bundle.config.extender:1.0.0,\
-	com.liferay.portal.js.loader.modules.extender:1.0.0,\
 	com.liferay.portal.language.resource.bundle:1.0.0,\
 	com.liferay.portal.language.servlet.filter:1.0.0,\
 	com.liferay.portal.ldap.test:1.0.0,\
@@ -101,7 +103,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.remote.rest.extender.test:1.0.0,\
 	com.liferay.portal.remote.soap.extender:1.0.0,\
 	com.liferay.portal.remote.soap.extender.test:1.0.0,\
-	com.liferay.portal.rtl.servlet:1.0.0,\
 	com.liferay.portal.scheduler.quartz:1.0.0,\
 	com.liferay.portal.scheduler.single:1.0.0,\
 	com.liferay.portal.scheduler:1.0.0,\
@@ -140,7 +141,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.store.s3.test:1.0.0,\
 	com.liferay.portal.store.s3:1.0.0,\
 	com.liferay.portal.store.safefilenamewrapper:1.0.0,\
-	com.liferay.portal.taglib.aui.form.extension.sample:1.0.0,\
 	com.liferay.portal.template.freemarker:1.0.0,\
 	com.liferay.portal.template.soy:1.0.0,\
 	com.liferay.portal.template.velocity:1.0.0,\

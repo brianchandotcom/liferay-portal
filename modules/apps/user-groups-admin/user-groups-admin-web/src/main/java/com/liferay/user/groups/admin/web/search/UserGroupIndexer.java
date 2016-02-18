@@ -24,14 +24,14 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserGroupPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
@@ -80,7 +80,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 		UserGroup userGroup = _userGroupLocalService.getUserGroup(entryClassPK);
 
-		return UserGroupPermissionUtil.contains(
+		return _userGroupPermission.contains(
 			permissionChecker, userGroup.getUserGroupId(), actionId);
 	}
 
@@ -165,7 +165,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	protected void doReindex(UserGroup userGroup) throws Exception {
 		Document document = getDocument(userGroup);
 
-		IndexWriterHelperUtil.updateDocument(
+		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), userGroup.getCompanyId(), document,
 			isCommitImmediately());
 	}
@@ -201,16 +201,16 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserGroupLocalService(
-		UserGroupLocalService userGroupLocalService) {
-
-		_userGroupLocalService = userGroupLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupIndexer.class);
 
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserGroupPermission _userGroupPermission;
 
 }

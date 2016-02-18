@@ -85,6 +85,7 @@ public class BatchDownloadEvent {
 
 		parameters = new HashMap<>(parameters);
 
+		parameters.remove("batch");
 		parameters.remove("syncFile");
 
 		_batchParameters.add(parameters);

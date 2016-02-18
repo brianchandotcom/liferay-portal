@@ -110,22 +110,6 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 	</liferay-ui:search-container>
 </aui:form>
 
-<%
-boolean hasAddFolderPermission = JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER);
-%>
-
-<c:if test="<%= hasAddFolderPermission %>">
-	<liferay-frontend:add-menu>
-		<portlet:renderURL var="editFolderURL">
-			<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="parentFolderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (folder == null) ? "add-folder" : "add-subfolder") %>' url="<%= editFolderURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
-
 <aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

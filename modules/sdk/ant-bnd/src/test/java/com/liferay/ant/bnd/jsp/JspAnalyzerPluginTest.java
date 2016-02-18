@@ -34,7 +34,7 @@ public class JspAnalyzerPluginTest {
 	public void testTaglibURIsParsingNoComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
-		URL url = getResource("dependencies/importsNoComments.jsp");
+		URL url = getResource("dependencies/imports_no_comments.jsp");
 
 		InputStream stream = url.openStream();
 
@@ -53,7 +53,7 @@ public class JspAnalyzerPluginTest {
 	public void testTaglibURIsParsingWithComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
-		URL url = getResource("dependencies/importsWithComments.jsp");
+		URL url = getResource("dependencies/imports_with_comments.jsp");
 
 		InputStream stream = url.openStream();
 

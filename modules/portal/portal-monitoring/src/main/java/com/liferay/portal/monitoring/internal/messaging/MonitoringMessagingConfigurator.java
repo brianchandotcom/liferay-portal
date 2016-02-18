@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.wiring.internal.messaging;
+package com.liferay.portal.monitoring.internal.messaging;
 
-import aQute.configurable.Configurable;
+import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
+import com.liferay.portal.kernel.concurrent.DiscardOldestPolicy;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.security.audit.configuration.AuditConfiguration;
+import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 
 import java.util.Dictionary;
 
@@ -37,17 +37,13 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(
-	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
-	immediate = true, service = AuditMessagingConfigurator.class
-)
-public class AuditMessagingConfigurator {
+@Component(immediate = true, service = MonitoringMessagingConfigurator.class)
+public class MonitoringMessagingConfigurator {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
@@ -56,19 +52,20 @@ public class AuditMessagingConfigurator {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		AuditConfiguration auditConfiguration = Configurable.createConfigurable(
-			AuditConfiguration.class, properties);
+		MonitoringConfiguration monitoringConfiguration =
+			Configurable.createConfigurable(
+				MonitoringConfiguration.class, properties);
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.AUDIT);
+				DestinationNames.MONITORING);
 
 		destinationConfiguration.setMaximumQueueSize(
-			auditConfiguration.auditMessageMaxQueueSize());
+			monitoringConfiguration.monitoringMessageMaxQueueSize());
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new CallerRunsPolicy() {
+			new DiscardOldestPolicy() {
 
 				@Override
 				public void rejectedExecution(
@@ -99,8 +96,6 @@ public class AuditMessagingConfigurator {
 
 		_destinationServiceRegistration = _bundleContext.registerService(
 			Destination.class, destination, destinationProperties);
-
-		destination.register(_proxyMessageListener);
 	}
 
 	@Deactivate
@@ -117,15 +112,12 @@ public class AuditMessagingConfigurator {
 		_bundleContext = null;
 	}
 
-	@Modified
-	protected void modified(ComponentContext componentContext) {
-		deactivate();
-
-		activate(componentContext);
+	@Reference(unbind = "-")
+	protected void setMessageBus(MessageBus messageBus) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AuditMessagingConfigurator.class);
+		MonitoringMessagingConfigurator.class);
 
 	private volatile BundleContext _bundleContext;
 
@@ -134,11 +126,5 @@ public class AuditMessagingConfigurator {
 
 	private volatile ServiceRegistration<Destination>
 		_destinationServiceRegistration;
-
-	@Reference(
-		service = ProxyMessageListener.class,
-		target = "(destination.name=" + DestinationNames.AUDIT + ")"
-	)
-	private ProxyMessageListener _proxyMessageListener;
 
 }

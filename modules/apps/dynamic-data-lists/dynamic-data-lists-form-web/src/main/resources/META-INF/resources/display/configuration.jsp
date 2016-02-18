@@ -21,7 +21,9 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-DDLRecordSet selRecordSet = ddlFormDisplayContext.getRecordSet();
+long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "recordSetId");
+
+DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 %>
 
 <div class="alert alert-info">
@@ -114,7 +116,7 @@ DDLRecordSet selRecordSet = ddlFormDisplayContext.getRecordSet();
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= ddlFormDisplayContext.getRecordSetId() %>" />
+	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

@@ -26,7 +26,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 boolean showAddRecordButton = false;
 
-if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId())) {
+if (ddlDisplayContext.isEditable()) {
 	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
 }
 

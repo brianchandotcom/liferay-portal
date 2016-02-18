@@ -52,18 +52,12 @@ if (Validator.isNull(defaultLanguageId)) {
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
-boolean changeableDefaultLanguage = ddlWebConfiguration.changeableDefaultLanguage();
-
 if (ddmFormValues != null) {
 	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 
 	String ddmFormValueDefaultLanguageId = LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale());
-
-	if (!Validator.equals(defaultLanguageId, ddmFormValueDefaultLanguageId)) {
-		changeableDefaultLanguage = true;
-	}
 
 	defaultLanguageId = ddmFormValueDefaultLanguageId;
 }

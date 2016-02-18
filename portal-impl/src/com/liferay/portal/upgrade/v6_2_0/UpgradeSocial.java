@@ -519,6 +519,54 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		};
 
+	protected static ExtraDataGenerator _blogsEntryExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_CLASSNAME =
+					"com.liferay.portlet.blogs.model.BlogsEntry";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_PARAMS.put(2,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(ADD_ENTRY)));
+
+				ACTIVITY_QUERY_PARAMS.put(3,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(UPDATE_ENTRY)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
+					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
+					ACTIVITY_TYPE_CLAUSE + ")";
+
+				ENTITY_SELECT_CLAUSE="title";
+
+				ENTITY_FROM_CLAUSE="BlogsEntry";
+
+				ENTITY_WHERE_CLAUSE="entryId = ?";
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "title"));
+			}
+
+			// from BlogsActivityKeys
+			public static final int ADD_ENTRY = 2;
+
+			public static final int UPDATE_ENTRY = 3;
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, classPK);
+			}
+		};
+
 	protected static ExtraDataGenerator _dlFileEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
@@ -622,6 +670,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	static {
 		_extraDataGenerators.add(_addAssetCommentExtraDataGenerator);
 		_extraDataGenerators.add(_addMessageExtraDataGenerator);
+		_extraDataGenerators.add(_blogsEntryExtraDataGenerator);
 		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.form.web.display.context;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSearch;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
@@ -223,7 +222,7 @@ public class DDLFormViewRecordsDisplayContext {
 			_renderRequest, portletURL, headerNames);
 
 		OrderByComparator<DDLRecord> orderByComparator =
-			DDLFormAdminPortletUtil.getRecordOrderByComparator(
+			RecordSearch.getRecordOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		_recordSearchContainer.setOrderByCol(getOrderByCol());

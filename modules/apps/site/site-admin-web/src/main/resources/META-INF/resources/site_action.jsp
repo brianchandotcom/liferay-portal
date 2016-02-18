@@ -91,54 +91,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</c:if>
 	</c:if>
 
-	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
-		<liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.EXPORT %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			message="export"
-			method="get"
-			url="<%= exportURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-
-		<liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			message="import"
-			method="get"
-			url="<%= importURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-
-		<c:if test="<%= group.isStaged() %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= group.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
-			</liferay-portlet:renderURL>
-
-			<liferay-ui:icon
-				message="publish"
-				method="get"
-				url="<%= publishURL.toString() %>"
-				useDialog="<%= true %>"
-			/>
-		</c:if>
-	</c:if>
-
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
 		<liferay-ui:icon
 			message="go-to-public-pages"

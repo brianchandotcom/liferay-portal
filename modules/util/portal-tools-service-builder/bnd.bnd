@@ -13,7 +13,7 @@ Include-Resource:\
 	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
-	com/liferay/journal/service.xml=../../../modules/apps/journal/journal-service/service.xml,\
+	com/liferay/journal/service.xml=../../../modules/apps/wem/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/mobile-device-rules/mobile-device-rules-service/service.xml,\
 	com/liferay/shopping/service.xml=../../../modules/apps/shopping/shopping-service/service.xml,\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\

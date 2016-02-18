@@ -14,8 +14,8 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
-	provided project(":apps:export-import:export-import-api")
-	provided project(":apps:export-import:export-import-service")
+	provided project(":apps:wem:export-import:export-import-api")
+	provided project(":apps:wem:export-import:export-import-service")
 	provided project(":apps:polls:polls-api")
 	provided project(":portal:portal-upgrade")
 }

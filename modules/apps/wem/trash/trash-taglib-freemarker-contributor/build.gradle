@@ -1,0 +1,7 @@
+dependencies {
+	provided project(":apps:wem:trash:trash-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

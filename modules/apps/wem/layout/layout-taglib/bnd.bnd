@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Layout Taglib
+Bundle-SymbolicName: com.liferay.layout.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.layout.taglib.servlet,\
+	com.liferay.layout.taglib.servlet.taglib
+Liferay-JS-Config: /META-INF/resources/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/layout";version:Version="1.0.0"
+Web-ContextPath: /layout-taglib
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

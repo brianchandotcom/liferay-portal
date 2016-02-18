@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Site Navigation Breadcrumb Web
+Bundle-SymbolicName: com.liferay.site.navigation.breadcrumb.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.site.navigation.breadcrumb.web.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Navigation
+Web-ContextPath: /site-navigation-breadcrumb-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

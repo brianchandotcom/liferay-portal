@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portlet Configuration Icon Refresh
+Bundle-SymbolicName: com.liferay.portlet.configuration.icon.refresh
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+-include: ../../../../../../marketplace/web-content-management/bnd.bnd

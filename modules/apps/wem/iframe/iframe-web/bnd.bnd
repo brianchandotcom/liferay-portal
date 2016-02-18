@@ -1,0 +1,7 @@
+Bundle-Name: Liferay IFrame Web
+Bundle-SymbolicName: com.liferay.iframe.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Publication Tools
+Web-ContextPath: /iframe-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

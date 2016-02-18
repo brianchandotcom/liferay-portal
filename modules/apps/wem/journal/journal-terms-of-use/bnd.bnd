@@ -1,0 +1,7 @@
+Bundle-Name: Journal Terms Of Use
+Bundle-SymbolicName: com.liferay.journal.terms.of.use
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
+Web-ContextPath: /journal-terms-of-use
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

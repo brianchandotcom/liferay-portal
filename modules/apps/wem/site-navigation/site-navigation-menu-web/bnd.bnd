@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Site Navigation Menu Web
+Bundle-SymbolicName: com.liferay.site.navigation.menu.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Navigation
+Web-ContextPath: /site-navigation-menu-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

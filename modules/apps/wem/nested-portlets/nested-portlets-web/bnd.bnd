@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Nested Portlets Web
+Bundle-SymbolicName: com.liferay.nested.portlets.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /nested-portlets-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

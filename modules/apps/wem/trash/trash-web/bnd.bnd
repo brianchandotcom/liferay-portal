@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Trash Web
+Bundle-SymbolicName: com.liferay.trash.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Recycle Bin
+Web-ContextPath: /trash-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

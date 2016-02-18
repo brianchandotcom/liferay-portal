@@ -101,9 +101,6 @@ public class ModuleApplicationContextRegistrator {
 		_configurableApplicationContext.close();
 
 		_configurableApplicationContext = null;
-
-		_extendeeBundle = null;
-		_extenderBundle = null;
 	}
 
 	private void _cleanInstropectionCaches(Bundle bundle) {

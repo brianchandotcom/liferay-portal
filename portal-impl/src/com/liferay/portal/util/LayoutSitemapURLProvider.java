@@ -18,6 +18,9 @@ import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -41,15 +45,56 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public void visitLayout(
+	public void visitLayoutSet(
+			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (layoutSet.isPrivateLayout()) {
+			return;
+		}
+
+		Map<String, LayoutTypeController> layoutTypeControllers =
+			LayoutTypeControllerTracker.getLayoutTypeControllers();
+
+		for (Map.Entry<String, LayoutTypeController> entry :
+				layoutTypeControllers.entrySet()) {
+
+			LayoutTypeController layoutTypeController = entry.getValue();
+
+			if (!layoutTypeController.isSitemapable()) {
+				continue;
+			}
+
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				entry.getKey());
+
+			for (Layout layout : layouts) {
+				visitLayout(element, layout, themeDisplay);
+			}
+		}
+	}
+
+	protected boolean isAddAlternateURLs(Map<Locale, String> alternateURLs) {
+		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
+			return false;
+		}
+
+		if (alternateURLs.size() == 1) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected void visitLayout(
 			Element element, Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		if (!PortalUtil.isLayoutSitemapable(layout) ||
-			!GetterUtil.getBoolean(
+		if (!GetterUtil.getBoolean(
 				typeSettingsProperties.getProperty("sitemap-include"), true)) {
 
 			return;

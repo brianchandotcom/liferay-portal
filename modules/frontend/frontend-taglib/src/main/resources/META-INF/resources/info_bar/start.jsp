@@ -16,7 +16,7 @@
 
 <%@ include file="/info_bar/init.jsp" %>
 
-<div class="management-bar-container">
-	<div class="management-bar management-bar-default">
+<div class="info-bar-container">
+	<div class="info-bar info-bar-default">
 		<div class="container-fluid-1280">
-			<div class="management-bar-center">
+			<div class="info-bar-center">

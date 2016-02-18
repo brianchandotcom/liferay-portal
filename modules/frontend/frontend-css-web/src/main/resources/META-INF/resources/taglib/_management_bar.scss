@@ -34,17 +34,6 @@
 			}
 		}
 
-		.management-bar-center {
-			left: 50%;
-			margin-top: 16px;
-			position: absolute;
-			transform: translate(-50%);
-
-			@include sm() {
-				margin-top: 20px;
-			}
-		}
-
 		.form-group {
 			margin-bottom: 0;
 		}

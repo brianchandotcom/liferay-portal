@@ -76,6 +76,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+boolean navigationStartsOnSelectTemplates = ddmDisplay.getDDMNavigationHelper().startsOnSelectTemplates(liferayPortletRequest);
 
 String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
 %>
@@ -207,7 +208,7 @@ String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, lifera
 							<div class="form-group">
 								<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
 
-								<c:if test="<%= (template == null) || (template.getClassPK() == 0) %>">
+								<c:if test="<%= !navigationStartsOnSelectTemplates && ((template == null) || (template.getClassPK() == 0)) %>">
 									<liferay-ui:icon
 										iconCssClass="icon-search"
 										label="<%= true %>"

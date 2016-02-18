@@ -17,8 +17,7 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -32,14 +31,13 @@ import java.util.ResourceBundle;
 public class RepositoryConfigurationBuilder {
 
 	public RepositoryConfigurationBuilder() {
-		this(Portal.class, "content.Language");
+		this(LanguageUtil.getPortalResourceBundleLoader());
 	}
 
 	public RepositoryConfigurationBuilder(
-		Class<?> clazz, String resourceBundleBaseName, String... names) {
+		ResourceBundleLoader resourceBundleLoader, String... names) {
 
-		_clazz = clazz;
-		_resourceBundleBaseName = resourceBundleBaseName;
+		_resourceBundleLoader = resourceBundleLoader;
 
 		for (String name : names) {
 			addParameter(name);
@@ -67,10 +65,9 @@ public class RepositoryConfigurationBuilder {
 		return new RepositoryConfigurationImpl(new ArrayList<>(_parameters));
 	}
 
-	private final Class<?> _clazz;
 	private final Collection<RepositoryConfiguration.Parameter> _parameters =
 		new ArrayList<>();
-	private final String _resourceBundleBaseName;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 	private static class RepositoryConfigurationImpl
 		implements RepositoryConfiguration {
@@ -97,8 +94,9 @@ public class RepositoryConfigurationBuilder {
 
 		@Override
 		public String getLabel(Locale locale) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				_resourceBundleBaseName, locale, _clazz);
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					LanguageUtil.getLanguageId(locale));
 
 			return LanguageUtil.get(resourceBundle, _labelKey);
 		}

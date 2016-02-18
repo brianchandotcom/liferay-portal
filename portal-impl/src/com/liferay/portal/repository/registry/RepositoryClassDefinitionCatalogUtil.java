@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 
 import java.util.Collection;
@@ -53,11 +54,12 @@ public class RepositoryClassDefinitionCatalogUtil {
 	}
 
 	public static void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory) {
+		String className, ExternalRepositoryFactory externalRepositoryFactory,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		getRepositoryClassDefinitionCatalog().
 			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory);
+				className, externalRepositoryFactory, resourceBundleLoader);
 	}
 
 	public static void unregisterLegacyExternalRepositoryFactory(

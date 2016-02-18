@@ -90,7 +90,9 @@ import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.url.ServletContextURLContainer;
+import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -99,6 +101,7 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1494,8 +1497,14 @@ public class HookHotDeployListener
 					new ExternalRepositoryFactoryImpl(
 						dlRepositoryClassName, portletClassLoader);
 
+				ResourceBundleLoader resourceBundleLoader =
+					new CacheResourceBundleLoader(
+						new ClassResourceBundleLoader(
+							"content.Language", portletClassLoader));
+
 				dlRepositoryContainer.registerRepositoryFactory(
-					dlRepositoryClassName, externalRepositoryFactory);
+					dlRepositoryClassName, externalRepositoryFactory,
+					resourceBundleLoader);
 			}
 		}
 
@@ -2466,11 +2475,12 @@ public class HookHotDeployListener
 
 		public void registerRepositoryFactory(
 			String className,
-			ExternalRepositoryFactory externalRepositoryFactory) {
+			ExternalRepositoryFactory externalRepositoryFactory,
+			ResourceBundleLoader resourceBundleLoader) {
 
 			RepositoryClassDefinitionCatalogUtil.
 				registerLegacyExternalRepositoryFactory(
-					className, externalRepositoryFactory);
+					className, externalRepositoryFactory, resourceBundleLoader);
 
 			_classNames.add(className);
 		}

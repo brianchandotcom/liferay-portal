@@ -50,8 +50,8 @@ public @interface DDMFormField {
 
 	public String validationErrorMessage() default StringPool.BLANK;
 
-	public String validationExpression() default StringPool.TRUE;
+	public String validationExpression() default StringPool.BLANK;
 
-	public String visibilityExpression() default StringPool.TRUE;
+	public String visibilityExpression() default StringPool.BLANK;
 
 }

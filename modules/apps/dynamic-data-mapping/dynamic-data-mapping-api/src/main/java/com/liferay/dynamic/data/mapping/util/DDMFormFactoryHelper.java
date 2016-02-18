@@ -208,7 +208,7 @@ public class DDMFormFactoryHelper {
 			return _ddmFormField.visibilityExpression();
 		}
 
-		return StringPool.TRUE;
+		return StringUtil.toUpperCase(StringPool.TRUE);
 	}
 
 	public Map<String, Object> getProperties() {

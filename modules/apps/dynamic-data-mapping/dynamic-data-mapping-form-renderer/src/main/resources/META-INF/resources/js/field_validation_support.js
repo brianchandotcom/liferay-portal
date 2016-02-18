@@ -59,7 +59,7 @@ AUI.add(
 
 				var expression = validation.expression;
 
-				return required || (!!expression && expression !== 'true');
+				return required || (!!expression && expression !== 'TRUE');
 			},
 
 			processEvaluation: function(result) {

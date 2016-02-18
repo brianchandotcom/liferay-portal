@@ -327,7 +327,7 @@ AUI.add(
 
 						return {
 							errorMessage: Liferay.Language.get('is-empty'),
-							expression: '!{name}.isEmpty()'
+							expression: 'NOT(equals({name}, ""))'
 						};
 					}
 				}

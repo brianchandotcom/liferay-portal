@@ -112,7 +112,7 @@ AUI.add(
 						}
 					}
 					else {
-						visible = instance.get('visibilityExpression') !== 'false';
+						visible = instance.get('visibilityExpression') !== 'FALSE';
 					}
 				}
 

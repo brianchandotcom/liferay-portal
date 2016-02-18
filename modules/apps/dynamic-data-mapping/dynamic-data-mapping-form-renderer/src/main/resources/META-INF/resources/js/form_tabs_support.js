@@ -5,20 +5,36 @@ AUI.add(
 		};
 
 		FormTabsSupport.prototype = {
-			getTabView: function() {
+			initializer: function() {
 				var instance = this;
 
-				if (!instance.tabView) {
-					var container = instance.get('container');
+				instance.after('render', instance._afterTabsRender);
+			},
 
+			destructor: function() {
+				var instance = this;
+
+				var tabView = instance.tabView;
+
+				if (tabView) {
+					tabView.destroy();
+				}
+			},
+
+			_afterTabsRender: function() {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				var tabs = container.one('.lfr-ddm-form-tabs');
+
+				if (!instance.tabView && tabs) {
 					instance.tabView = new A.TabView(
 						{
-							srcNode: container.one('.lfr-ddm-form-tabs')
+							srcNode: tabs
 						}
-					);
+					).render();
 				}
-
-				return instance.tabView;
 			}
 		};
 

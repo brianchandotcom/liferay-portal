@@ -45,10 +45,10 @@ public class TrashDisplayContext {
 	}
 
 	public String getClassName() {
-		TrashEntry entry = getEntry();
+		TrashEntry trashEntry = getTrashEntry();
 
-		if (entry != null) {
-			return entry.getClassName();
+		if (trashEntry != null) {
+			return trashEntry.getClassName();
 		}
 
 		String className = StringPool.BLANK;
@@ -63,20 +63,20 @@ public class TrashDisplayContext {
 	}
 
 	public long getClassNameId() {
-		TrashEntry entry = getEntry();
+		TrashEntry trashEntry = getTrashEntry();
 
-		if (entry != null) {
-			return entry.getClassNameId();
+		if (trashEntry != null) {
+			return trashEntry.getClassNameId();
 		}
 
 		return ParamUtil.getLong(_request, "classNameId");
 	}
 
 	public long getClassPK() {
-		TrashEntry entry = getEntry();
+		TrashEntry trashEntry = getTrashEntry();
 
-		if (entry != null) {
-			return entry.getClassPK();
+		if (trashEntry != null) {
+			return trashEntry.getClassPK();
 		}
 
 		return ParamUtil.getLong(_request, "classPK");
@@ -90,31 +90,6 @@ public class TrashDisplayContext {
 		_displayStyle = ParamUtil.getString(_request, "orderByCol", "list");
 
 		return _displayStyle;
-	}
-
-	public TrashEntry getEntry() {
-		if (_entry != null) {
-			return _entry;
-		}
-
-		long trashEntryId = ParamUtil.getLong(_request, "trashEntryId");
-
-		long classNameId = ParamUtil.getLong(_request, "classNameId");
-		long classPK = ParamUtil.getLong(_request, "classPK");
-
-		if (trashEntryId > 0) {
-			_entry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
-		}
-		else if(classNameId > 0 && classPK > 0) {
-			String className = PortalUtil.getClassName(classNameId);
-
-			if (Validator.isNotNull(className)) {
-				_entry = TrashEntryLocalServiceUtil.fetchEntry(
-					className, classPK);
-			}
-		}
-
-		return _entry;
 	}
 
 	public String getOrderByCol() {
@@ -164,10 +139,35 @@ public class TrashDisplayContext {
 		return portletURL;
 	}
 
-	public long getTrashEntryId() {
-		TrashEntry entry = getEntry();
+	public TrashEntry getTrashEntry() {
+		if (_trashEntry != null) {
+			return _trashEntry;
+		}
 
-		return (entry != null) ? entry.getEntryId() : 0;
+		long trashEntryId = ParamUtil.getLong(_request, "trashEntryId");
+
+		long classNameId = ParamUtil.getLong(_request, "classNameId");
+		long classPK = ParamUtil.getLong(_request, "classPK");
+
+		if (trashEntryId > 0) {
+			_trashEntry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
+		}
+		else if(classNameId > 0 && classPK > 0) {
+			String className = PortalUtil.getClassName(classNameId);
+
+			if (Validator.isNotNull(className)) {
+				_trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+					className, classPK);
+			}
+		}
+
+		return _trashEntry;
+	}
+
+	public long getTrashEntryId() {
+		TrashEntry trashEntry = getTrashEntry();
+
+		return (trashEntry != null) ? trashEntry.getEntryId() : 0;
 	}
 
 	public TrashHandler getTrashHandler() {
@@ -230,11 +230,11 @@ public class TrashDisplayContext {
 	}
 
 	private String _displayStyle;
-	private TrashEntry _entry;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;
+	private TrashEntry _trashEntry;
 	private TrashHandler _trashHandler;
 	private TrashRenderer _trashRenderer;
 

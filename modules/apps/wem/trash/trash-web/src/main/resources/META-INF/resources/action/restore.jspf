@@ -15,18 +15,18 @@
 --%>
 
 <%
-TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashEntry.getClassName());
 %>
 
 <c:choose>
-	<c:when test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
+	<c:when test="<%= trashHandler.isRestorable(trashEntry.getClassPK()) && !trashHandler.isInTrashContainer(trashEntry.getClassPK()) %>">
 		<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 		</portlet:actionURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -35,12 +35,12 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 			url="javascript:;"
 		/>
 	</c:when>
-	<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
+	<c:when test="<%= !trashHandler.isRestorable(trashEntry.getClassPK()) && trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(entry.getClassPK()))) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(trashEntry.getClassNameId()) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(trashEntry.getClassPK()) %>" />
+			<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(trashEntry.getClassPK()))) %>" />
 		</portlet:renderURL>
 
 		<%

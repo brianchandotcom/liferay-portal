@@ -113,7 +113,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
 			null, null, null, null, null, null, null, null, null, null, null,
-			null, null, null);
+			null, null, null, null);
 	}
 
 	@Test(expected = UpgradeException.class)

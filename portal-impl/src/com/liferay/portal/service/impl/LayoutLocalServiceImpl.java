@@ -1434,7 +1434,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
-		if (PropsValues.LAYOUT_SCOPE_GROUP_FINDER_THRESHOLD != -1) {
+		if (PropsValues.LAYOUT_SCOPE_GROUP_FINDER_THRESHOLD >= 0) {
 			int groupCount = groupLocalService.getGroupsCount(
 				parentGroup.getCompanyId(), Layout.class.getName(),
 				parentGroupId);
@@ -1473,7 +1473,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
-		if (PropsValues.LAYOUT_SCOPE_GROUP_FINDER_THRESHOLD != -1) {
+		if (PropsValues.LAYOUT_SCOPE_GROUP_FINDER_THRESHOLD >= 0) {
 			int groupCount = groupLocalService.getGroupsCount(
 				parentGroup.getCompanyId(), Layout.class.getName(),
 				parentGroupId);

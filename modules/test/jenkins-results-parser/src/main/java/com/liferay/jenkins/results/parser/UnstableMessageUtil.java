@@ -54,7 +54,7 @@ public class UnstableMessageUtil {
 
 				messageCount++;
 
-				if (messageCount == _MAX_MESSAGE_COUNT) {
+				if (messageCount == _MAX_COUNT) {
 					sb.append("<li>...</li></ol>");
 
 					return sb.toString();
@@ -206,7 +206,7 @@ public class UnstableMessageUtil {
 			message = errorDetails + "\n" + message;
 		}
 
-		return _truncate((2500/_MAX_MESSAGE_COUNT), message);
+		return _truncate((_MAX_LENGTH/_MAX_COUNT), message);
 	}
 
 	private static String _truncate(int maxLength, String message) {
@@ -218,7 +218,9 @@ public class UnstableMessageUtil {
 			String newMessage = message.substring(
 				0, message.lastIndexOf("\n", maxLength));
 
-			if (newMessage.length() > _MIN_MESSAGE_TRUNCATED_LENGTH) {
+			if (newMessage.length() >
+					(maxLength * _MIN_TRUNCATED_LENGTH_PERCENT)) {
+
 				return newMessage;
 			}
 		}
@@ -226,11 +228,10 @@ public class UnstableMessageUtil {
 		return message.substring(0, maxLength);
 	}
 
-	private static final int _MAX_MESSAGE_COUNT = 3;
+	private static final int _MAX_COUNT = 3;
 
-	private static final int _MAX_MESSAGE_LENGTH = 2500;
+	private static final int _MAX_LENGTH = 2500;
 
-	private static final int _MIN_MESSAGE_TRUNCATED_LENGTH = Math.round(
-		_MAX_MESSAGE_LENGTH * .75f);
+	private static final double _MIN_TRUNCATED_LENGTH_PERCENT = .75;
 
 }

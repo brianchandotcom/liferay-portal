@@ -312,7 +312,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			Constants.REQUIRE_CAPABILITY, Strings.join(taglibRequirements));
 	}
 
-	protected Set<String> getTaglibURIs(String content) {
+	protected Set<String> getTaglibURIs(String originalContent) {
+		String content = originalContent.replaceAll("<%--[\\s\\S]*?--%>","");
+
 		int contentX = -1;
 		int contentY = content.length();
 

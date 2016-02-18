@@ -41,9 +41,7 @@
 	</#if>
 
 	<div class="${portlet_content_css_class}">
-		<#assign backToSite = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-back-to-site"))>
-
-		<#if portlet_display.isShowBackIcon() && backToSite>
+		<#if portlet_display.isShowBackIcon()>
 			<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
 				<span class="icon-angle-left"></span>
 			</a>

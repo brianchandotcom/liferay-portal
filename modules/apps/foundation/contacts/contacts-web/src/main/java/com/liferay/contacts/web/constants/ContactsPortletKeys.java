@@ -19,15 +19,19 @@ package com.liferay.contacts.web.constants;
  */
 public class ContactsPortletKeys {
 
-	public static final String CONTACTS_CENTER = "1_WAR_contactsportlet";
+	public static final String CONTACTS_CENTER =
+		"com_liferay_contacts_web_portlet_ContactsCenterPortlet";
 
-	public static final String MEMBERS = "4_WAR_contactsportlet";
+	public static final String MEMBERS =
+		"com_liferay_contacts_web_portlet_MembersPortlet";
 
-	public static final String MY_CONTACTS = "3_WAR_contactsportlet";
+	public static final String MY_CONTACTS =
+		"com_liferay_contacts_web_portlet_MyContactsPortlet";
 
 	public static final String PRIVATE_MESSAGING =
 		"1_WAR_privatemessagingportlet";
 
-	public static final String PROFILE = "2_WAR_contactsportlet";
+	public static final String PROFILE =
+		"com_liferay_contacts_web_portlet_ProfilePortlet";
 
 }

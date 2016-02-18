@@ -33,7 +33,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input label="archive-name-for-current-setup" name="name" placeholder="name" required="<%= true %>" size="20" type="text" />
+			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

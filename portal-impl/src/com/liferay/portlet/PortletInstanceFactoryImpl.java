@@ -28,8 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.registry.Filter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -57,12 +56,9 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter filter = registry.getFilter(
-			"(&(javax.portlet.name=" + PortletKeys.MONITORING_INVOKER + ")" +
-				"(objectClass=" + InvokerPortletFactory.class.getName() + "))");
-
 		_serviceTracker = registry.trackServices(
-			filter, new InvokerPortletFactoryTrackerCustomizer());
+			InvokerPortletFactory.class,
+			new InvokerPortletFactoryTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -276,6 +272,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	private InvokerPortletFactory _invokerPortletFactory;
 	private final Map<String, Map<String, InvokerPortlet>> _pool;
+	private long _serviceRanking;
 	private final ServiceTracker<InvokerPortletFactory, InvokerPortletFactory>
 		_serviceTracker;
 
@@ -284,7 +281,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			<InvokerPortletFactory, InvokerPortletFactory> {
 
 		@Override
-		public InvokerPortletFactory addingService(
+		public synchronized InvokerPortletFactory addingService(
 			ServiceReference<InvokerPortletFactory> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -292,7 +289,15 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			InvokerPortletFactory invokerPortletFactory = registry.getService(
 				serviceReference);
 
-			_invokerPortletFactory = invokerPortletFactory;
+			long serviceRanking = GetterUtil.getLong(
+				serviceReference.getProperty("service.ranking"));
+
+			if ((_invokerPortletFactory == null) ||
+				(serviceRanking > _serviceRanking)) {
+
+				_invokerPortletFactory = invokerPortletFactory;
+				_serviceRanking = serviceRanking;
+			}
 
 			return invokerPortletFactory;
 		}
@@ -304,13 +309,23 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		}
 
 		@Override
-		public void removedService(
+		public synchronized void removedService(
 			ServiceReference<InvokerPortletFactory> serviceReference,
 			InvokerPortletFactory invokerPortletFactory) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
+
+			serviceReference = registry.getServiceReference(
+				InvokerPortletFactory.class);
+
+			if (serviceReference != null) {
+				_invokerPortletFactory = registry.getService(serviceReference);
+
+				_serviceRanking = GetterUtil.getLong(
+					serviceReference.getProperty("service.ranking"));
+			}
 		}
 
 	}

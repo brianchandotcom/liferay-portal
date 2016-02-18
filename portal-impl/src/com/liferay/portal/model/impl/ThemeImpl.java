@@ -322,11 +322,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		String contextPath = null;
 
 		if (_themeId.equals("admin")) {
-			contextPath = PortalWebResourcesUtil.getContextPath(
+			contextPath = PortalWebResourcesUtil.getModuleContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_ADMIN);
 		}
 		else if (_themeId.equals("classic")) {
-			contextPath = PortalWebResourcesUtil.getContextPath(
+			contextPath = PortalWebResourcesUtil.getModuleContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
 		}
 

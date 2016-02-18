@@ -144,8 +144,17 @@ AUI.add(
 						var instance = this;
 
 						var panelBody = $('#' + instance._panelBody.get('id'));
+						var panelChildren = $('#' + instance._panelBody.get('id') + ' .list-group-panel');
 
-						instance._eventHandles.push(panelBody.on('shown.bs.collapse', instance, instance._focusOnItem));
+						instance._eventHandles.push(
+							panelBody.on('shown.bs.collapse', instance, instance._focusOnItem),
+							panelChildren.on(
+								'shown.bs.collapse',
+								function(event) {
+									event.stopPropagation();
+								}
+							)
+						);
 					},
 
 					_disablePortletEntry: function(portletId) {

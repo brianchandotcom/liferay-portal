@@ -133,6 +133,9 @@ body.open {
 	}
 }
 
-.sidenav-transition .control-menu {
-	@include transition($control-menu-css-transition);
+.sidenav-transition {
+	.control-menu,
+	.control-menu-level-2 {
+		@include transition($control-menu-css-transition);
+	}
 }

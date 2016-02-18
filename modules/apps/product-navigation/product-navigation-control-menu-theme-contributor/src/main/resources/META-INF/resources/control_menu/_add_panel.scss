@@ -7,6 +7,12 @@ body.open-admin-panel {
 			padding-right: $admin-panel-width;
 		}
 	}
+
+	.control-menu-level-2 {
+		@include sm() {
+			right: $admin-panel-width;
+		}
+	}
 }
 
 body.open-admin-panel, body.sidenav-transition {
@@ -18,12 +24,19 @@ body.open-admin-panel, body.sidenav-transition {
 .lfr-admin-panel.sidenav-menu-slider {
 	z-index: 501;
 
-	&, .sidenav-menu {
+	&, .product-menu {
 		width: $admin-panel-width;
 	}
 }
 
 .lfr-admin-panel {
+	.product-menu {
+		@include sm() {
+			position: absolute;
+			right: 0;
+		}
+	}
+
 	.sidebar-body {
 		padding: 0;
 	}

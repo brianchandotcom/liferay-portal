@@ -18,7 +18,7 @@
 	<c:if test="<%= AnnouncementsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= announcementsRequestHelper.getCurrentURL() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
@@ -33,7 +33,7 @@
 	<c:if test="<%= AnnouncementsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/announcements/edit_entry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= announcementsRequestHelper.getCurrentURL() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
@@ -43,16 +43,19 @@
 		/>
 	</c:if>
 
-	<c:if test='<%= tabs1.equals("entries") && themeDisplay.isSignedIn() %>'>
+	<c:if test="<%= !announcementsDisplayContext.isShowManageEntries() && themeDisplay.isSignedIn() %>">
 
 		<%
-		String taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "handleEntry(" + entry.getEntryId() + ");";
+		String taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "markEntry(" + entry.getEntryId() + ");";
+
+		if (flagValue == AnnouncementsFlagConstants.HIDDEN) {
+			taglibMarkAsReadURL = "javascript:" + renderResponse.getNamespace() + "unmarkEntry(" + entry.getEntryId() + ");";
+		}
 		%>
 
 		<liferay-ui:icon
-			cssClass="visibility-control"
 			label="<%= true %>"
-			message='<%= ((flagValue == AnnouncementsFlagConstants.NOT_HIDDEN) ? "mark-as-read" : "show") %>'
+			message='<%= ((flagValue == AnnouncementsFlagConstants.NOT_HIDDEN) ? "mark-as-read" : "mark-as-unread") %>'
 			url="<%= taglibMarkAsReadURL %>"
 		/>
 	</c:if>

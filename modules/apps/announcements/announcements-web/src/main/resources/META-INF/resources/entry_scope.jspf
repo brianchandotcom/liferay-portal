@@ -60,7 +60,7 @@ scopeName = HtmlUtil.escape(scopeName);
 %>
 
 <c:choose>
-	<c:when test="<%= showScopeName %>">
+	<c:when test="<%= announcementsDisplayContext.isShowScopeName() %>">
 		<c:choose>
 			<c:when test="<%= scopeName.equals(scopeClassName) %>">
 				<%= scopeName %>

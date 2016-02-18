@@ -70,6 +70,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
@@ -90,6 +91,7 @@
 	</command>
 
 	<command name="editPG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
@@ -109,19 +111,6 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
-	<command name="hidePG">
-		<var name="key_entryContent" value="${entryContent}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#HIDE" value1="Hide" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-	</command>
-
 	<command name="markAsReadPG">
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -131,8 +120,6 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_READ" value1="Mark as Read" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
 	</command>
 
 	<command name="showPG">
@@ -178,25 +165,8 @@
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 	</command>
 
-	<command name="viewEditPG">
-		<var name="key_entryTitle" value="${entryTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
-
-		<var name="key_entryContent" value="${entryContentEdit}" />
-
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
-
-		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
-
-		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
-	</command>
-
 	<command name="viewHiddenPG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
@@ -218,6 +188,7 @@
 	</command>
 
 	<command name="viewPG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
@@ -236,7 +207,21 @@
 		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${announcementType}" />
 	</command>
 
+	<command name="viewPreviousPG">
+		<execute function="Click" locator1="Announcements#NAVIGATION_ENTRIES_PREVIOUS" value1="Previous" />
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="key_distributionScope" value="${distributionScope}" />
+			<var name="key_entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="viewViaEntriesPG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
@@ -248,6 +233,7 @@
 	</command>
 
 	<command name="viewViaManageEntriesPG">
+		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />

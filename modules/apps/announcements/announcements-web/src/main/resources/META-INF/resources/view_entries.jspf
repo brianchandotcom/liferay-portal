@@ -14,95 +14,45 @@
  */
 --%>
 
-<%
-LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<Long, long[]>();
+<div class="entries">
 
-if (customizeAnnouncementsDisplayed) {
-	long[] selectedScopeGroupIdsArray = GetterUtil.getLongValues(StringUtil.split(selectedScopeGroupIds));
-	long[] selectedScopeOrganizationIdsArray = GetterUtil.getLongValues(StringUtil.split(selectedScopeOrganizationIds));
-	long[] selectedScopeRoleIdsArray = GetterUtil.getLongValues(StringUtil.split(selectedScopeRoleIds));
-	long[] selectedScopeUserGroupIdsArray = GetterUtil.getLongValues(StringUtil.split(selectedScopeUserGroupIds));
+	<%
+	int flag = announcementsDisplayContext.isShowPreviousEntries() ? AnnouncementsFlagConstants.HIDDEN : AnnouncementsFlagConstants.NOT_HIDDEN;
 
-	if (selectedScopeGroupIdsArray.length != 0) {
-		scopes.put(PortalUtil.getClassNameId(Group.class.getName()), selectedScopeGroupIdsArray);
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
+
+	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
+
+	searchContainer.setTotal(entriesCount);
+
+	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), announcementsDisplayContext.getAnnouncementScopes(), portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
+
+	searchContainer.setResults(entries);
+
+	for (AnnouncementsEntry entry : entries) {
+		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+		request.setAttribute("view_entry.jsp-flagValue", flag);
+	%>
+
+		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
+
+	<%
 	}
+	%>
 
-	if (selectedScopeOrganizationIdsArray.length != 0) {
-		scopes.put(PortalUtil.getClassNameId(Organization.class.getName()), selectedScopeOrganizationIdsArray);
-	}
-
-	if (selectedScopeRoleIdsArray.length != 0) {
-		scopes.put(PortalUtil.getClassNameId(Role.class.getName()), selectedScopeRoleIdsArray);
-	}
-
-	if (selectedScopeUserGroupIdsArray.length != 0) {
-		scopes.put(PortalUtil.getClassNameId(UserGroup.class.getName()), selectedScopeUserGroupIdsArray);
-	}
-}
-else {
-	scopes = AnnouncementsUtil.getAnnouncementScopes(user.getUserId());
-}
-
-scopes.put(Long.valueOf(0), new long[] {0});
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", pageDelta, portletURL, null, "no-entries-were-found");
-
-List<AnnouncementsEntry> results = null;
-int total = 0;
-
-int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
-%>
-
-<div class="unread-entries">
-	<%@ include file="/entry_iterator.jspf" %>
 </div>
 
-<%
-int visibleMessagesCount = total;
-%>
-
-<c:if test="<%= visibleMessagesCount > 0 %>">
+<c:if test="<%= entriesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
 <%
-flagValue = AnnouncementsFlagConstants.HIDDEN;
-
-searchContainer = new SearchContainer(renderRequest, null, null, "cur2", pageDelta, portletURL, null, "no-entries-were-found");
-%>
-
-<div class="read-entries">
-	<%@ include file="/entry_iterator.jspf" %>
-</div>
-
-<%
-int hiddenMessagesCount = total;
-%>
-
-<c:if test="<%= hiddenMessagesCount > 0 %>">
-	<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" type="article" />
-</c:if>
-
-<%
-if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) {
+if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 }
 %>
 
 <aui:script>
-	function <portlet:namespace />handleEntry(entryId) {
-		var entry = AUI.$('#<portlet:namespace />' + entryId);
-
-		var container = entry.parent();
-
-		if (container.hasClass('unread-entries')) {
-			<portlet:namespace />markEntry(entryId);
-		}
-		else {
-			<portlet:namespace />toggleContent(entry);
-		}
-	}
-
 	function <portlet:namespace />markEntry(entryId) {
 		Liferay.Service(
 			'/announcementsflag/add-flag',
@@ -114,21 +64,22 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 		);
 	}
 
-	function <portlet:namespace />toggleContent(entry) {
-		var content = entry.find('.entry-content');
-		var scope = entry.find('.entry-scope');
-
-		var visible = entry.hasClass('visible');
-
-		entry.toggleClass('visible', !visible);
-
-		content.toggleClass('hide', visible);
-		scope.toggleClass('hide', visible);
-
-		var label = visible ? '<%= UnicodeLanguageUtil.get(request, "show") %>' : '<%= UnicodeLanguageUtil.get(request, "hide") %>';
-
-		var showHideControl = entry.find('.control-entry li.visibility-control a');
-
-		showHideControl.html(label);
+	function <portlet:namespace />unmarkEntry(entryId) {
+		Liferay.Service(
+			'/announcementsflag/get-flag',
+				{
+					entryId : entryId,
+					value: <%= AnnouncementsFlagConstants.HIDDEN %>
+				},
+				function(response) {
+					Liferay.Service(
+						'/announcementsflag/delete-flag',
+						{
+							flagId: response.flagId
+						},
+						AUI.$.proxy(Liferay.Portlet, 'refresh', '#p_p_id<portlet:namespace />')
+					);
+				}
+		);
 	}
 </aui:script>

@@ -20,8 +20,13 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_ENTRIES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Entries')]</td>
+	<td>NAVIGATION_ENTRIES_NEW</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ENTRIES_PREVIOUS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +47,7 @@
 </tr>
 <tr>
 	<td>CARD_VIEW_ENTRY_SCOPE</td>
-	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/..//div[contains(@class,'entry-scope')]</td>
+	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/..//h5[contains(.,'${key_distributionScope}')]</td>
 	<td></td>
 </tr>
 <tr>

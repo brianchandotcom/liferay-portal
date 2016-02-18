@@ -39,10 +39,12 @@ page import="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalSer
 page import="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil" %><%@
 page import="com.liferay.announcements.kernel.util.AnnouncementsUtil" %><%@
 page import="com.liferay.announcements.web.constants.AnnouncementsPortletKeys" %><%@
+page import="com.liferay.announcements.web.display.context.AnnouncementsDisplayContext" %><%@
+page import="com.liferay.announcements.web.display.context.DefaultAnnouncementsDisplayContext" %><%@
+page import="com.liferay.announcements.web.display.context.util.AnnouncementsRequestHelper" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
@@ -58,13 +60,11 @@ page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -75,11 +75,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.text.DateFormat" %><%@
-page import="java.text.Format" %>
-
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
@@ -92,17 +88,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-Group scopeGroup = themeDisplay.getScopeGroup();
-
-boolean customizeAnnouncementsDisplayed = PrefsParamUtil.getBoolean(portletPreferences, request, "customizeAnnouncementsDisplayed", scopeGroup.isUser() ? false : true);
-
-int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
-String selectedScopeGroupIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeGroupIds", String.valueOf(layout.getGroupId()));
-String selectedScopeOrganizationIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeOrganizationIds", "");
-String selectedScopeRoleIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeRoleIds", "");
-String selectedScopeUserGroupIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeUserGroupIds", "");
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(DateFormat.FULL, themeDisplay.getLocale(), themeDisplay.getTimeZone());
+AnnouncementsRequestHelper announcementsRequestHelper = new AnnouncementsRequestHelper(request);
+AnnouncementsDisplayContext announcementsDisplayContext = new DefaultAnnouncementsDisplayContext(announcementsRequestHelper);
 %>
 
 <%@ include file="/init-ext.jsp" %>

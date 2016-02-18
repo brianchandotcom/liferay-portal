@@ -3,9 +3,9 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.service.access.policy</model-name>
+		<model-name>com.liferay.portal.security.service.access.policy</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_service_access_policy_web_portlet_SAPPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -22,9 +22,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.service.access.policy.model.SAPEntry</model-name>
+		<model-name>com.liferay.portal.security.service.access.policy.model.SAPEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_service_access_policy_web_portlet_SAPPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

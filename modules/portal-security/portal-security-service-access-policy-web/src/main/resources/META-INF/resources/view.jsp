@@ -85,7 +85,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.service.access.policy.model.SAPEntry"
+			className="com.liferay.portal.security.service.access.policy.model.SAPEntry"
 			escapedModel="<%= true %>"
 			keyProperty="sapEntryId"
 			modelVar="sapEntry"

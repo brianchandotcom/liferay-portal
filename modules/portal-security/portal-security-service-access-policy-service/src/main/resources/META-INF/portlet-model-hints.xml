@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.service.access.policy.model.SAPEntry">
+	<model name="com.liferay.portal.security.service.access.policy.model.SAPEntry">
 		<field name="uuid" type="String" />
 		<field name="sapEntryId" type="long" />
 		<field name="companyId" type="long" />

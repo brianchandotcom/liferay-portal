@@ -831,6 +831,8 @@
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+
 		<if>
 			<equals arg1="${modifiedVersion}" arg2="true" />
 			<then>
@@ -840,6 +842,8 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</else>
 		</if>
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">

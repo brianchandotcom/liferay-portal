@@ -167,7 +167,7 @@ public class IncludeTag extends AttributesTagSupport {
 			request, "scopedAttributes", getScopedAttributes());
 
 		request.setAttribute(
-			WebKeys.RESOURCE_BUNDLE,
+			WebKeys.TAG_RESOURCE_BUNDLE,
 			TagResourceBundleUtil.getResourceBundle(pageContext));
 
 		setAttributes(request);
@@ -185,7 +185,7 @@ public class IncludeTag extends AttributesTagSupport {
 			_trackedRequest = null;
 		}
 
-		request.removeAttribute(WebKeys.RESOURCE_BUNDLE);
+		request.removeAttribute(WebKeys.TAG_RESOURCE_BUNDLE);
 	}
 
 	protected void doClearTag() {

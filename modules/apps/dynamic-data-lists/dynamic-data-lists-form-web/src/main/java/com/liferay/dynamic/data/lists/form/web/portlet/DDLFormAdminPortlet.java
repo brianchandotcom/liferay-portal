@@ -14,21 +14,35 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
-import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationActivator;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
+import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormAdminDisplayContext;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -37,9 +51,17 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
 import java.io.IOException;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -126,6 +148,61 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		return ddmFormRenderingContext;
 	}
 
+	protected DDMForm createSettingsDDMForm(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
+
+		ddmForm.addAvailableLocale(themeDisplay.getLocale());
+		ddmForm.setDefaultLocale(themeDisplay.getLocale());
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get("workflowDefinition");
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			createWorkflowDefinitionDDMFormFieldOptions(themeDisplay);
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		return ddmForm;
+	}
+
+	protected DDMFormFieldOptions createWorkflowDefinitionDDMFormFieldOptions(
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Locale locale = themeDisplay.getLocale();
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.setDefaultLocale(locale);
+
+		ddmFormFieldOptions.addOptionLabel(
+			StringPool.BLANK, locale, LanguageUtil.get(locale, "no-workflow"));
+
+		List<WorkflowDefinition> workflowDefinitions =
+			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+			String value =
+				workflowDefinition.getName() + StringPool.AT +
+					workflowDefinition.getVersion();
+
+			String version = LanguageUtil.format(
+				locale, "version-x", workflowDefinition.getVersion(), false);
+
+			String label = workflowDefinition.getName() + " (" + version + ")";
+
+			ddmFormFieldOptions.addOptionLabel(value, locale, label);
+		}
+
+		return ddmFormFieldOptions;
+	}
+
 	@Reference(policy = ReferencePolicy.DYNAMIC, unbind = "-")
 	protected void setDDLFormWebConfigurationActivator(
 		DDLFormWebConfigurationActivator ddlFormWebConfigurationActivator) {
@@ -134,10 +211,61 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetLocalService(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMDataProviderInstanceLocalService(
+		DDMDataProviderInstanceLocalService
+			ddmDataProviderInstanceLocalService) {
+
+		_ddmDataProviderInstanceLocalService =
+			ddmDataProviderInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypesJSONSerializer(
+		DDMFormFieldTypesJSONSerializer ddmFormFieldTypesJSONSerializer) {
+
+		_ddmFormFieldTypesJSONSerializer = ddmFormFieldTypesJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormJSONSerializer(
+		DDMFormJSONSerializer ddmFormJSONSerializer) {
+
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormLayoutJSONSerializer(
+		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
+
+		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 	}
 
 	@Reference(unbind = "-")
@@ -161,6 +289,18 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	protected void setRenderRequestAttributes(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
@@ -170,8 +310,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 
 		long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
 
-		DDMForm ddmForm = DDLFormAdminPortletUtil.createSettingsDDMForm(
-			themeDisplay);
+		DDMForm ddmForm = createSettingsDDMForm(themeDisplay);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(renderRequest, renderResponse);
@@ -190,16 +329,51 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
 
+		DDLFormAdminDisplayContext ddlFormAdminDisplayContext =
+			new DDLFormAdminDisplayContext(
+				renderRequest, renderResponse,
+				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
+				_ddlRecordLocalService, _ddlRecordSetService,
+				_ddmDataProviderInstanceLocalService,
+				_ddmFormFieldTypeServicesTracker,
+				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
+				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
+				_ddmStructureLocalService, _jsonFactory, _storageEngine,
+				_workflowEngineManager);
+
 		renderRequest.setAttribute(
-			DDLFormWebConfiguration.class.getName(),
-			_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration());
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormAdminDisplayContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowEngineManager(
+		WorkflowEngineManager workflowEngineManager) {
+
+		_workflowEngineManager = workflowEngineManager;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAdminPortlet.class);
 
 	private DDLFormWebConfigurationActivator _ddlFormWebConfigurationActivator;
+	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordSetService _ddlRecordSetService;
+	private DDMDataProviderInstanceLocalService
+		_ddmDataProviderInstanceLocalService;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private DDMFormRenderer _ddmFormRenderer;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JSONFactory _jsonFactory;
+	private StorageEngine _storageEngine;
+	private WorkflowEngineManager _workflowEngineManager;
 
 }

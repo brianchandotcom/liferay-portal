@@ -23,20 +23,7 @@ PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 
 portletURL.setParameter("displayStyle", displayStyle);
 
-RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
-
-OrderByComparator<DDLRecordSet> orderByComparator = DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(ddlFormAdminDisplayContext.getOrderByCol(), ddlFormAdminDisplayContext.getOrderByType());
-
-recordSetSearch.setOrderByCol(ddlFormAdminDisplayContext.getOrderByCol());
-recordSetSearch.setOrderByComparator(orderByComparator);
-recordSetSearch.setOrderByType(ddlFormAdminDisplayContext.getOrderByType());
-
-if (recordSetSearch.isSearch()) {
-	recordSetSearch.setEmptyResultsMessage("no-forms-were-found");
-}
-else {
-	recordSetSearch.setEmptyResultsMessage("there-are-no-forms");
-}
+RecordSetSearch recordSetSearch = ddlFormAdminDisplayContext.getRecordSetSearch();
 %>
 
 <liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />

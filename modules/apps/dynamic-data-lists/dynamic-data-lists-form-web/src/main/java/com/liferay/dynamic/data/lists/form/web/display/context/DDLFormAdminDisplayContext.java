@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
+import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -256,6 +258,37 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return _recordSet;
+	}
+
+	public RecordSetSearch getRecordSetSearch() {
+		String displayStyle = getDisplayStyle();
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("displayStyle", displayStyle);
+
+		RecordSetSearch recordSetSearch = new RecordSetSearch(
+			_renderRequest, portletURL);
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		OrderByComparator<DDLRecordSet> orderByComparator =
+			DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(
+				orderByCol, orderByType);
+
+		recordSetSearch.setOrderByCol(orderByCol);
+		recordSetSearch.setOrderByComparator(orderByComparator);
+		recordSetSearch.setOrderByType(orderByType);
+
+		if (recordSetSearch.isSearch()) {
+			recordSetSearch.setEmptyResultsMessage("no-forms-were-found");
+		}
+		else {
+			recordSetSearch.setEmptyResultsMessage("there-are-no-forms");
+		}
+
+		return recordSetSearch;
 	}
 
 	public List<DDLRecordSet> getSearchContainerResults(

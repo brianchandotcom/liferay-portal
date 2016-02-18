@@ -48,6 +48,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	var ControlMenu = Liferay.ControlMenu;
 
 	var searchContent = A.one('#<portlet:namespace />searchContent');
+	var contentPanelBody = A.one('#<portlet:namespace />addContentCollapse');
 
 	var addContent = new ControlMenu.AddContent(
 		{
@@ -56,6 +57,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
+			panelBody: contentPanelBody,
 			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')
 		}
 	);

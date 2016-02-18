@@ -48,6 +48,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					panelBody: {
+						setter: A.one
+					},
+
 					selected: {
 						validator: Lang.isBoolean
 					}

@@ -16,17 +16,20 @@ package com.liferay.portlet.configuration.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
@@ -35,6 +38,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -101,11 +105,21 @@ public class PermissionsPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		String rootPortletId = portletDisplay.getRootPortletId();
+
+		if (!Validator.isBlank(portletDisplay.getPortletResource())) {
+			String portletResource = portletDisplay.getPortletResource();
+
+			Portlet portlet = _portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(), portletResource);
+
+			rootPortletId = portlet.getRootPortletId();
+		}
+
 		try {
 			if (!PortletPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getLayout(),
-					portletDisplay.getPortletResource(),
+					themeDisplay.getLayout(), rootPortletId,
 					ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -122,5 +136,14 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	private PortletLocalService _portletLocalService;
 
 }

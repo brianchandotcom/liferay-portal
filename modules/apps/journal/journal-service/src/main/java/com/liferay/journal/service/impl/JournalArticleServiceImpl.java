@@ -280,8 +280,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean autoArticleId, double version)
 		throws PortalException {
 
-		JournalArticle article = journalArticleLocalService.getArticle(
-			groupId, oldArticleId);
+		JournalArticle article = getArticle(groupId, oldArticleId);
 
 		JournalFolderPermission.check(
 			getPermissionChecker(), groupId, article.getFolderId(),
@@ -2035,6 +2034,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			Map<Locale, String> descriptionMap, String content,
 			String layoutUuid, ServiceContext serviceContext)
 		throws PortalException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, version,
+			ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticle(
 			userId, groupId, folderId, articleId, version, titleMap,

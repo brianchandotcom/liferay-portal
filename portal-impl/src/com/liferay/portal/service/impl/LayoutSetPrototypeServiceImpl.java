@@ -175,6 +175,9 @@ public class LayoutSetPrototypeServiceImpl
 			long layoutSetPrototypeId, String settings)
 		throws PortalException {
 
+		LayoutSetPrototypePermissionUtil.check(
+			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.UPDATE);
+
 		return layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 			layoutSetPrototypeId, settings);
 	}

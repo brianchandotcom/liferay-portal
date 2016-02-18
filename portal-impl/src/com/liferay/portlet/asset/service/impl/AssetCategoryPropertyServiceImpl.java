@@ -16,10 +16,13 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portlet.asset.service.base.AssetCategoryPropertyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,15 +62,33 @@ public class AssetCategoryPropertyServiceImpl
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
-		return assetCategoryPropertyLocalService.getCategoryProperties(entryId);
+		try {
+			if (AssetCategoryPermission.contains(
+					getPermissionChecker(), entryId, ActionKeys.VIEW)) {
+
+				return assetCategoryPropertyLocalService.getCategoryProperties(
+					entryId);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error retrieving AssetCategoryProperty for entryId=" +
+						entryId,
+					pe);
+			}
+		}
+
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 		long companyId, String key) {
 
-		return assetCategoryPropertyLocalService.getCategoryPropertyValues(
-			companyId, key);
+		return filterAssetCategoryProperties(
+			assetCategoryPropertyLocalService.getCategoryPropertyValues(
+				companyId, key));
 	}
 
 	@Override
@@ -94,5 +115,34 @@ public class AssetCategoryPropertyServiceImpl
 
 		return updateCategoryProperty(0, categoryPropertyId, key, value);
 	}
+
+	protected List<AssetCategoryProperty> filterAssetCategoryProperties(
+		List<AssetCategoryProperty> assetCategoryProperties) {
+
+		ArrayList<AssetCategoryProperty> filteredAssetCategoryProperties =
+			new ArrayList<>(assetCategoryProperties.size());
+
+		for (AssetCategoryProperty assetCategoryProperty :
+				assetCategoryProperties) {
+
+			try {
+				if (AssetCategoryPermission.contains(
+						getPermissionChecker(),
+						assetCategoryProperty.getCategoryId(),
+						ActionKeys.VIEW)) {
+
+					filteredAssetCategoryProperties.add(assetCategoryProperty);
+				}
+			}
+			catch (PortalException pe) {
+				continue;
+			}
+		}
+
+		return filteredAssetCategoryProperties;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryPropertyServiceImpl.class);
 
 }

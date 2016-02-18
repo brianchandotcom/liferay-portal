@@ -96,18 +96,18 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
-		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
-			className);
-
-		if (!resourceActions.contains(actionId)) {
-			return true;
-		}
-
 		MBDiscussion mbDiscussion =
 			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);
 
 		if (mbDiscussion == null) {
 			return false;
+		}
+
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
+			className);
+
+		if (!resourceActions.contains(actionId)) {
+			return true;
 		}
 
 		if ((mbDiscussion.getUserId() > 0) &&

@@ -491,7 +491,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		throws PortalException {
 
 		DDMTemplatePermission.check(
-			getPermissionChecker(), templateId, ActionKeys.VIEW);
+			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		ddmTemplateLocalService.revertTemplate(
 			getUserId(), templateId, version, serviceContext);

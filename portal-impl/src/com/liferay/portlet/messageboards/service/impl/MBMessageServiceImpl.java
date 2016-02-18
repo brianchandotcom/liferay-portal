@@ -728,6 +728,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public void updateAnswer(long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		long rootMessageId = message.getRootMessageId();
+
+		MBMessagePermission.check(
+			getPermissionChecker(), rootMessageId, ActionKeys.UPDATE);
+
 		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
 	}
 

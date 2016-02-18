@@ -15,6 +15,8 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutSetBranchPermissionUtil;
 import com.liferay.portal.service.base.LayoutSetBranchServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,8 +62,24 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 	public List<LayoutSetBranch> getLayoutSetBranches(
 		long groupId, boolean privateLayout) {
 
-		return layoutSetBranchLocalService.getLayoutSetBranches(
-			groupId, privateLayout);
+		try {
+			if (GroupPermissionUtil.contains(
+					getPermissionChecker(), groupId, ActionKeys.VIEW_STAGING)) {
+
+				return layoutSetBranchLocalService.getLayoutSetBranches(
+					groupId, privateLayout);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error retrieving LayoutSetBranches for groupId=" +
+						groupId + ", privateLayout=" + privateLayout,
+					pe);
+			}
+		}
+
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -88,5 +107,8 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 		return layoutSetBranchLocalService.updateLayoutSetBranch(
 			layoutSetBranchId, name, description, serviceContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSetBranchServiceImpl.class);
 
 }

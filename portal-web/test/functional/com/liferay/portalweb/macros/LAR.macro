@@ -329,6 +329,9 @@
 		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
 
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
+
+		<execute function="AssertElementPresent" locator1="Button#SELECT_FILE" />
+
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />

@@ -958,6 +958,8 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Bookmarks" />
+
 		<execute macro="LAR#importPortlet">
 			<var name="cannotImport" value="true" />
 			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />

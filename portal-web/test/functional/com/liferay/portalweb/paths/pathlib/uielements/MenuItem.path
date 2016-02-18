@@ -369,11 +369,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GENERIC_MENU_ITEM</td>
-	<td>//*[contains(@class,'dropdown') and contains(@class,'open')]//a[contains(.,'${key_menuItem}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GLOBAL</td>
 	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
 	<td></td>
@@ -881,11 +876,6 @@
 <tr>
 	<td>VIEW</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_CHILD_SITES</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Child Sites')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,11 +12,11 @@
 	<command name="gotoEntryMenuItem">
 		<var name="key_rowEntry" value="${rowEntry}" />
 
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<var name="key_menuItem" value="${menuItem}" />
 
-		<execute function="AssertClick" locator1="MenuItem#GENERIC_MENU_ITEM" value1="${menuItem}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}" />
 	</command>
 
 	<command name="selectEntry">

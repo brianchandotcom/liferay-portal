@@ -1013,9 +1013,10 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#VIEW_CHILD_SITES" value1="View Child Sites" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View Child Sites" />
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
 
 		<var method="StringUtil#upperCase('${siteName}')" name="siteNameUppercase" />
 

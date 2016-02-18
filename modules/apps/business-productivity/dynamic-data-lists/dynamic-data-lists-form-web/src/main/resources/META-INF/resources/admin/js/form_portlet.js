@@ -1,10 +1,16 @@
 AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
+		var _ = AUI._;
+
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
+
+		var isNode = function(node) {
+			return node && (node._node || node.nodeType);
+		};
 
 		var DDLPortlet = A.Component.create(
 			{
@@ -15,6 +21,11 @@ AUI.add(
 					definition: {
 					},
 
+					description: {
+						getter: '_getDescription',
+						value: ''
+					},
+
 					editForm: {
 					},
 
@@ -23,6 +34,11 @@ AUI.add(
 					},
 
 					layout: {
+					},
+
+					name: {
+						getter: '_getName',
+						value: ''
 					},
 
 					publishRecordSetURL: {
@@ -88,8 +104,8 @@ AUI.add(
 
 						instance._eventHandlers = [
 							instance.one('#publishCheckbox').on('change', A.bind('_onChangePublishCheckbox', instance)),
-							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance)),
-							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance))
+							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 					},
 
@@ -118,63 +134,51 @@ AUI.add(
 
 						return {
 							definition: definition,
-							description: window[instance.ns('descriptionEditor')].getHTML(),
-							layout: layout.pages,
-							name: window[instance.ns('nameEditor')].getHTML()
-						}
+							description: instance.get('description'),
+							layout: layout,
+							name: instance.get('name')
+						};
 					},
 
-					openConfirmDialog: function(params) {
-						var message = params.message || Liferay.Language.get('are-you-sure');
-
-						var title = params.title || Liferay.Language.get('confirm');
-
-						var confirm = params.confirm || A.Lang.emptyFn;
-
-						var confirmLabel = params.confirmLabel || Liferay.Language.get('confirm');
-
-						var cancel = params.cancel || A.Lang.emptyFn;
-
-						var cancelLabel = params.cancelLabel || Liferay.Language.get('cancel');
+					openConfirmationModal: function(confirm, cancel) {
+						var instance = this;
 
 						var dialog = Liferay.Util.Window.getWindow(
 							{
 								dialog: {
-									bodyContent: message,
+									bodyContent: Liferay.Language.get('are-you-sure-you-want-to-cancel'),
 									destroyOnHide: true,
 									height: 200,
+									resizable: false,
 									toolbars: {
 										footer: [
 											{
-												cssClass: 'btn-primary',
-												label: confirmLabel,
+												cssClass: 'btn-lg btn-primary',
+												label: Liferay.Language.get('yes-cancel'),
 												on: {
 													click: function() {
-														confirm();
-
-														dialog.hide();
+														confirm.call(instance, dialog);
 													}
 												}
 											},
 											{
-												label: cancelLabel,
+												cssClass: 'btn-lg btn-link',
+												label: Liferay.Language.get('no-continue'),
 												on: {
 													click: function() {
-														cancel();
-
-														dialog.hide();
+														cancel.call(instance, dialog);
 													}
 												}
 											}
 										]
 									},
-									width: 300
+									width: 500
 								},
-								title: title
+								title: Liferay.Language.get('confirm')
 							}
 						);
 
-						dialog.render().show();
+						return dialog;
 					},
 
 					openPublishModal: function() {
@@ -205,29 +209,15 @@ AUI.add(
 					serializeFormBuilder: function() {
 						var instance = this;
 
-						var description = window[instance.ns('descriptionEditor')].getHTML();
+						var state = instance.getState();
 
-						instance.one('#description').val(description);
+						instance.one('#description').val(state.description);
 
-						var formBuilder = instance.get('formBuilder');
+						instance.one('#definition').val(JSON.stringify(state.definition));
 
-						var pages = formBuilder.get('layouts');
+						instance.one('#layout').val(JSON.stringify(state.layout));
 
-						var definitionInput = instance.one('#definition');
-
-						instance.definitionSerializer.set('pages', pages);
-
-						definitionInput.val(instance.definitionSerializer.serialize());
-
-						var layoutInput = instance.one('#layout');
-
-						instance.layoutSerializer.set('pages', pages);
-
-						layoutInput.val(instance.layoutSerializer.serialize());
-
-						var name = window[instance.ns('nameEditor')].getHTML();
-
-						instance.one('#name').val(name);
+						instance.one('#name').val(state.name);
 
 						var publishCheckbox = instance.one('#publishCheckbox');
 
@@ -260,42 +250,57 @@ AUI.add(
 						submitForm(editForm.form);
 					},
 
-					_isSameState() {
+					_getDescription: function(value) {
 						var instance = this;
 
-						var currentState = instance.getState();
+						var editor = window[instance.ns('descriptionEditor')];
 
-						var ignoreInstanceId = function(value1, value2, key) {
-							var result = undefined;
-
-							if (key === 'instanceId') {
-								result = true;
-							}
-
-							return result;
+						if (editor && !isNode(editor)) {
+							value = editor.getHTML();
 						}
 
-						return _.isEqual(currentState, instance.initialState, ignoreInstanceId);
+						return value;
+					},
+
+					_getName: function(value) {
+						var instance = this;
+
+						var editor = window[instance.ns('nameEditor')];
+
+						if (editor && !isNode(editor)) {
+							value = editor.getHTML();
+						}
+
+						return value;
+					},
+
+					_isSameState: function() {
+						var instance = this;
+
+						return _.isEqual(
+							instance.getState(),
+							instance.initialState,
+							function(value1, value2, key) {
+								return (key === 'instanceId') || undefined;
+							}
+						);
 					},
 
 					_onCancel: function(event) {
 						var instance = this;
 
 						if (!instance._isSameState()) {
-							var url = event.currentTarget.get('href');
-
 							event.preventDefault();
 							event.stopPropagation();
 
-							instance.openConfirmDialog(
-								{
-									message: Liferay.Language.get('are-you-sure-you-want-to-cancel'),
-									cancelLabel: Liferay.Language.get('no-keep'),
-									confirm: function() {
-										window.location.href = url;
-									},
-									confirmLabel: Liferay.Language.get('yes-cancel'),
-									title: Liferay.Language.get('confirm')
+							instance.openConfirmationModal(
+								function(dialog) {
+									window.location.href = event.currentTarget.get('href');
+
+									dialog.hide();
+								},
+								function(dialog) {
+									dialog.hide();
 								}
 							);
 						}
@@ -361,6 +366,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-portlet-base']
+		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );

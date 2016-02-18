@@ -95,7 +95,8 @@
 								'liferay-ddl-form-builder',
 								'liferay-ddl-form-builder-definition-serializer',
 								'liferay-ddl-form-builder-layout-serializer',
-								'liferay-portlet-base'
+								'liferay-portlet-base',
+								'liferay-util-window'
 							]
 						}
 					},

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -29,8 +27,12 @@ public class SiteMembershipPolicyFactoryUtil {
 		return _siteMembershipPolicyFactory;
 	}
 
-	private static final SiteMembershipPolicyFactory
-		_siteMembershipPolicyFactory = ProxyFactory.newServiceTrackedInstance(
-			SiteMembershipPolicyFactory.class);
+	public void setSiteMembershipPolicyFactory(
+		SiteMembershipPolicyFactory siteMembershipPolicyFactory) {
+
+		_siteMembershipPolicyFactory = siteMembershipPolicyFactory;
+	}
+
+	private static SiteMembershipPolicyFactory _siteMembershipPolicyFactory;
 
 }

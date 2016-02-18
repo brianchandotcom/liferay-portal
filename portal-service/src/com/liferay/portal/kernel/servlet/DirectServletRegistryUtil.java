@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
 
 import javax.servlet.Servlet;
 
@@ -51,8 +50,6 @@ public class DirectServletRegistryUtil {
 		_directServletRegistry = directServletRegistry;
 	}
 
-	private static DirectServletRegistry
-		_directServletRegistry = ProxyFactory.newServiceTrackedInstance(
-			DirectServletRegistry.class);
+	private static DirectServletRegistry _directServletRegistry;
 
 }

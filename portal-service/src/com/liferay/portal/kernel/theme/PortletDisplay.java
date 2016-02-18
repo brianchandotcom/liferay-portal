@@ -99,8 +99,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showEditIcon = master.isShowEditIcon();
 		_showExportImportIcon = master.isShowExportImportIcon();
 		_showHelpIcon = master.isShowHelpIcon();
-		_showMaxIcon = master.isShowMaxIcon();
-		_showMinIcon = master.isShowMinIcon();
 		_showMoveIcon = master.isShowMoveIcon();
 		_showPortletCssIcon = master.isShowPortletCssIcon();
 		_showPortletIcon = master.isShowPortletIcon();
@@ -172,8 +170,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		slave.setShowEditIcon(_showEditIcon);
 		slave.setShowExportImportIcon(_showExportImportIcon);
 		slave.setShowHelpIcon(_showHelpIcon);
-		slave.setShowMaxIcon(_showMaxIcon);
-		slave.setShowMinIcon(_showMinIcon);
 		slave.setShowMoveIcon(_showMoveIcon);
 		slave.setShowPortletCssIcon(_showPortletCssIcon);
 		slave.setShowPortletIcon(_showPortletIcon);
@@ -460,14 +456,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _showHelpIcon;
 	}
 
-	public boolean isShowMaxIcon() {
-		return _showMaxIcon;
-	}
-
-	public boolean isShowMinIcon() {
-		return _showMinIcon;
-	}
-
 	public boolean isShowMoveIcon() {
 		return _showMoveIcon;
 	}
@@ -554,8 +542,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showEditIcon = false;
 		_showExportImportIcon = false;
 		_showHelpIcon = false;
-		_showMaxIcon = false;
-		_showMinIcon = false;
 		_showMoveIcon = false;
 		_showPortletCssIcon = false;
 		_showPortletIcon = false;
@@ -753,14 +739,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showHelpIcon = showHelpIcon;
 	}
 
-	public void setShowMaxIcon(boolean showMaxIcon) {
-		_showMaxIcon = showMaxIcon;
-	}
-
-	public void setShowMinIcon(boolean showMinIcon) {
-		_showMinIcon = showMinIcon;
-	}
-
 	public void setShowMoveIcon(boolean showMoveIcon) {
 		_showMoveIcon = showMoveIcon;
 	}
@@ -934,8 +912,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 	private boolean _showEditIcon;
 	private boolean _showExportImportIcon;
 	private boolean _showHelpIcon;
-	private boolean _showMaxIcon;
-	private boolean _showMinIcon;
 	private boolean _showMoveIcon;
 	private boolean _showPortletCssIcon;
 	private boolean _showPortletIcon;

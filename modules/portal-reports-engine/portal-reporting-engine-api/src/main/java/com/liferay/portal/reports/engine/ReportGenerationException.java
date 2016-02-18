@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Michael C. Han
  */
-public class ReportExportException extends ReportGenerationException {
+public class ReportGenerationException extends PortalException {
 
-	public ReportExportException() {
+	public ReportGenerationException() {
 	}
 
-	public ReportExportException(String msg) {
+	public ReportGenerationException(String msg) {
 		super(msg);
 	}
 
-	public ReportExportException(String msg, Throwable cause) {
+	public ReportGenerationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public ReportExportException(Throwable cause) {
+	public ReportGenerationException(Throwable cause) {
 		super(cause);
 	}
 

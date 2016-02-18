@@ -12,16 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine;
+
+import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Michael C. Han
  */
-public interface ReportFormatExporter {
+public interface ReportEngine {
 
-	public void format(
-			Object report, ReportRequest reportRequest,
+	public void compile(ReportRequest reportRequest)
+		throws ReportGenerationException;
+
+	public void destroy();
+
+	public void execute(
+			ReportRequest reportRequest,
 			ReportResultContainer reportResultContainer)
 		throws ReportGenerationException;
+
+	public Map<String, String> getEngineParameters();
+
+	public void init(ServletContext servletContext);
+
+	public void setEngineParameters(Map<String, String> engineParameters);
+
+	public void setReportFormatExporterRegistry(
+		ReportFormatExporterRegistry reportFormatExporterRegistry);
 
 }

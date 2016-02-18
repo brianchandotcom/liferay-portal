@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting.messaging;
+package com.liferay.portal.reports.engine.messaging;
 
-import com.liferay.portal.kernel.bi.reporting.ReportDesignRetriever;
-import com.liferay.portal.kernel.bi.reporting.ReportEngine;
-import com.liferay.portal.kernel.bi.reporting.ReportGenerationException;
-import com.liferay.portal.kernel.bi.reporting.ReportRequest;
-import com.liferay.portal.kernel.bi.reporting.ReportResultContainer;
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
+import com.liferay.portal.reports.engine.ReportEngine;
+import com.liferay.portal.reports.engine.ReportGenerationException;
+import com.liferay.portal.reports.engine.ReportRequest;
+import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

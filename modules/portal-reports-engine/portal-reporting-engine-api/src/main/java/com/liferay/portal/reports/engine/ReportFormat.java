@@ -12,28 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine;
 
 /**
- * @author Gavin Wan
+ * @author Michael C. Han
  */
-public enum ReportDataSourceType {
+public enum ReportFormat {
 
-	CSV("csv"), EMPTY("empty"), JDBC("jdbc"), PORTAL("portal"), XLS("xls"),
+	CSV("csv"), HTML("html"), PDF("pdf"), RTF("rtf"), TXT("txt"), XLS("xls"),
 	XML("xml");
 
-	public static ReportDataSourceType parse(String value) {
+	public static ReportFormat parse(String value) {
 		if (CSV.getValue().equals(value)) {
 			return CSV;
 		}
-		else if (EMPTY.getValue().equals(value)) {
-			return EMPTY;
+		else if (HTML.getValue().equals(value)) {
+			return HTML;
 		}
-		else if (JDBC.getValue().equals(value)) {
-			return JDBC;
+		else if (PDF.getValue().equals(value)) {
+			return PDF;
 		}
-		else if (PORTAL.getValue().equals(value)) {
-			return PORTAL;
+		else if (RTF.getValue().equals(value)) {
+			return RTF;
+		}
+		else if (TXT.getValue().equals(value)) {
+			return TXT;
 		}
 		else if (XLS.getValue().equals(value)) {
 			return XLS;
@@ -54,7 +57,7 @@ public enum ReportDataSourceType {
 		return _value;
 	}
 
-	private ReportDataSourceType(String value) {
+	private ReportFormat(String value) {
 		_value = value;
 	}
 

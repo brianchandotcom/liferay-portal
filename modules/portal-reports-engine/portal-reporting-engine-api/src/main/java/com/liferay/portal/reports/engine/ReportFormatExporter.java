@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
-
-import com.liferay.portal.kernel.resource.ResourceRetriever;
-
-import java.util.Date;
+package com.liferay.portal.reports.engine;
 
 /**
  * @author Michael C. Han
  */
-public interface ReportDesignRetriever extends ResourceRetriever {
+public interface ReportFormatExporter {
 
-	public Date getModifiedDate();
-
-	public String getReportName();
+	public void format(
+			Object report, ReportRequest reportRequest,
+			ReportResultContainer reportResultContainer)
+		throws ReportGenerationException;
 
 }

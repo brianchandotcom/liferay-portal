@@ -221,7 +221,13 @@ if (group.isLayoutPrototype()) {
 	showExportImportIcon = false;
 }
 
-if ((group.isStaged() || group.isStagedRemotely()) && !group.hasLocalOrRemoteStagingGroup()) {
+Group checkingStagingGroup = group;
+
+if (checkingStagingGroup.isControlPanel()) {
+	checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
+}
+
+if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup()) {
 	showStagingIcon = true;
 }
 

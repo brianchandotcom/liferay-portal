@@ -575,7 +575,7 @@
 	<command name="publishGlobalToLiveCP">
 		<var name="key_siteName" value="Global" />
 
-		<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
 		<if>
 			<equals arg1="${remoteStaging}" arg2="true" />

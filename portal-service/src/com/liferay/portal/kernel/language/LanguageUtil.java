@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -241,6 +242,10 @@ public class LanguageUtil {
 
 	public static Locale getLocale(String languageCode) {
 		return getLanguage().getLocale(languageCode);
+	}
+
+	public static ResourceBundleLoader getPortalResourceBundleLoader() {
+		return getLanguage().getPortalResourceBundleLoader();
 	}
 
 	public static Set<Locale> getSupportedLocales() {

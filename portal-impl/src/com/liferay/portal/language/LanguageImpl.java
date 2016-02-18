@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1131,6 +1132,10 @@ public class LanguageImpl implements Language, Serializable {
 		CompanyLocalesBag companyLocalesBag = _getCompanyLocalesBag();
 
 		return companyLocalesBag.getByLanguageCode(languageCode);
+	}
+
+	public ResourceBundleLoader getPortalResourceBundleLoader() {
+		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
 	@Override

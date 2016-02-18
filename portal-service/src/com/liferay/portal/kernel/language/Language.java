@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.language;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.List;
 import java.util.Locale;
@@ -131,6 +132,8 @@ public interface Language {
 	public Locale getLocale(long groupId, String languageCode);
 
 	public Locale getLocale(String languageCode);
+
+	public ResourceBundleLoader getPortalResourceBundleLoader();
 
 	public Set<Locale> getSupportedLocales();
 

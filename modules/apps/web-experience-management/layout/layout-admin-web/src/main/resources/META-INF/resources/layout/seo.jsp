@@ -43,8 +43,8 @@ if (selLayout != null) {
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
 	<h4><liferay-ui:message key="sitemap" /></h4>
 
-	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-		<%= LanguageUtil.format(request, "some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x", LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template"), false) %>
+	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message arguments='<%= LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template") %>' key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x" translateArguments="<%= false %>" />
 	</div>
 
 	<liferay-ui:error exception="<%= SitemapChangeFrequencyException.class %>" message="please-select-a-valid-change-frequency" />

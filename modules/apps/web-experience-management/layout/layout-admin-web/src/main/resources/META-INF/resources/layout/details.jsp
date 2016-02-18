@@ -137,8 +137,8 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 	<aui:input label='<%= LanguageUtil.format(request, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
 
-	<div class="alert alert-warning <portlet:namespace/>layoutPrototypeInfoMessage <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-		<%= LanguageUtil.format(request, "some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x", LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template"), false) %>
+	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message arguments='<%= LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template") %>' key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x" translateArguments="<%= false %>" />
 	</div>
 
 	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace/>layoutPrototypeMergeAlert">
@@ -267,14 +267,14 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
 		'change',
 		function(event) {
-			var isLayoutPrototypeLinkActive = event.currentTarget.checked;
+			var layoutPrototypeLinkChecked = event.currentTarget.checked;
 
-			$('.<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkActive);
+			$('.layout-prototype-info-message').toggleClass('hide', !layoutPrototypeLinkChecked);
 
 			var propagatableFields = $('#<portlet:namespace />fm .propagatable-field');
 
-			propagatableFields.prop('disabled', isLayoutPrototypeLinkActive);
-			propagatableFields.toggleClass('disabled', isLayoutPrototypeLinkActive);
+			propagatableFields.prop('disabled', layoutPrototypeLinkChecked);
+			propagatableFields.toggleClass('disabled', layoutPrototypeLinkChecked);
 		}
 	);
 </aui:script>

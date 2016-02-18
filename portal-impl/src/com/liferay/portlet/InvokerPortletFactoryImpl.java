@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.InvokerPortletFactory;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -26,6 +27,7 @@ import javax.portlet.PortletException;
 /**
  * @author Shuyang Zhou
  */
+@OSGiBeanProperties(property = "service.ranking=1")
 public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 
 	@Override

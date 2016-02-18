@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.monitoring.web.portlet;
+package com.liferay.portal.monitoring.internal.portlet;
 
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.InvokerPortletFactory;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portlet.InvokerPortletFactoryImpl;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,12 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.MONITORING_INVOKER},
+	immediate = true, property = {Constants.SERVICE_RANKING + "=100"},
 	service = InvokerPortletFactory.class
 )
 public class MonitoringInvokerPortletFactoryImpl
-	extends InvokerPortletFactoryImpl {
+	implements InvokerPortletFactory {
 
 	@Override
 	public InvokerPortlet create(
@@ -51,13 +50,13 @@ public class MonitoringInvokerPortletFactoryImpl
 			boolean strutsBridgePortlet)
 		throws PortletException {
 
-		InvokerPortlet invokerPortlet = super.create(
+		InvokerPortlet invokerPortlet = _invokerPortletFactory.create(
 			portletModel, portlet, portletConfig, portletContext,
 			invokerFilterContainer, checkAuthToken, facesPortlet, strutsPortlet,
 			strutsBridgePortlet);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
 	}
 
 	@Override
@@ -67,20 +66,20 @@ public class MonitoringInvokerPortletFactoryImpl
 			InvokerFilterContainer invokerFilterContainer)
 		throws PortletException {
 
-		InvokerPortlet invokerPortlet = super.create(
+		InvokerPortlet invokerPortlet = _invokerPortletFactory.create(
 			portletModel, portlet, portletContext, invokerFilterContainer);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
 	}
 
-	@Reference(unbind = "-")
-	public void setPortletMonitoringControl(
-		PortletMonitoringControl portletMonitoringControl) {
+	@Reference
+	private DataSampleFactory _dataSampleFactory;
 
-		_portletMonitoringControl = portletMonitoringControl;
-	}
+	@Reference(target = "(" + Constants.SERVICE_RANKING + "=1)")
+	private InvokerPortletFactory _invokerPortletFactory;
 
+	@Reference
 	private PortletMonitoringControl _portletMonitoringControl;
 
 }

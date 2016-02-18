@@ -1,0 +1,14 @@
+
+<div>
+  <ol>
+    <li>
+      <a href="${dependencies.url}/UnstableMessageUtilTest/junit-exception-1-test-portal-acceptance-pullrequest-batch(master)//testReport/com.liferay.counter.service/CounterLocalServiceTest/testConcurrentIncrement">CounterLocalServiceTest.testConcurrentIncrement</a>
+      <pre>
+Caused by: com.liferay.portal.kernel.process.ProcessException: com.liferay.portal.kernel.exception.SystemException: java.sql.SQLIntegrityConstraintViolationException: integrity constraint violation: unique constraint or index violation; SYS_PK_10316 table: COUNTER
+	at com.liferay.counter.service.CounterLocalServiceTest$IncrementProcessCallable.call(CounterLocalServiceTest.java:242)
+	at com.liferay.counter.service.CounterLocalServiceTest$IncrementProcessCallable.call(CounterLocalServiceTest.java:198)
+	at com.liferay.portal.kernel.process.local.LocalProcessLauncher.main(LocalProcessLauncher.java:122)
+Caused by: com.liferay.portal.kernel.exception.SystemException: java.sql.SQLIntegrityConstraintViolationException: integrity constraint violation: unique constraint or index violation; SYS_PK_10316 table: COUNTER</pre>
+    </li>
+  </ol>
+</div>

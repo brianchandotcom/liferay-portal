@@ -1,0 +1,40 @@
+
+<div>
+  <h5 job-result="UNSTABLE">
+    <a href="https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/11312/">test-portal-acceptance-pullrequest-batch(master)</a>
+  </h5>  
+  <div> 
+    <h6>Job Results:</h6>  
+    <p>14 Tests Passed. 
+      <br/>0 Tests Failed. 
+      <br/>1 Test Unstable. 
+      <br/> 
+    </p>  
+    <ol> 
+      <li> 
+        <strong>UNSTABLE 
+          <a href="${dependencies.url}/GitHubMessageUtilTest/generic-1/job-18-test-portal-acceptance-pullrequest-batch(master)/run-2/11312/">test-portal-acceptance-pullrequest-batch(master) &raquo; 10,!master #11312</a> 
+        </strong>  
+        <p>182 Cases Passed. 
+          <br/>1 Case Failed. 
+          <br/>9 Cases Skipped. 
+          <br/> 
+        </p>  
+        <ol> 
+          <li> 
+            <a href="${dependencies.url}/GitHubMessageUtilTest/generic-1/job-18-test-portal-acceptance-pullrequest-batch(master)/run-2/11312//testReport/com.liferay.portal.log.assertor/PortalLogAssertorTest/testScanXMLLog">PortalLogAssertorTest.testScanXMLLog</a>  
+            <pre>
+Portal log assert failure, see above log for more information:
+Unable to save metadata for file version 22928
+com.liferay.portlet.documentlibrary.NoSuchFileException: {companyId=20202, repositoryId=22926, fileName=2, version=1.0}
+	at com.liferay.portal.store.file.system.FileSystemStore.getFile(FileSystemStore.java:221)
+	at com.liferay.portal.store.safe.file.name.wrapper.SafeFileNameStoreWrapper$SafeFileNameStore.getFile(SafeFileNameStoreWrapper.java:216)
+	at com.liferay.document.library.store.IgnoreDuplicatesStore.getFile(IgnoreDuplicatesStore.java:162)
+	at com.liferay.portlet.documentlibrary.store.DLStoreImpl.getFile(DLStoreImpl.java:250)
+	at com.liferay.portlet.documentlibrary.store.DLStoreUtil.getFile(DLStoreUtil.java:325)</pre> 
+          </li> 
+        </ol> 
+      </li> 
+    </ol> 
+  </div>
+</div>

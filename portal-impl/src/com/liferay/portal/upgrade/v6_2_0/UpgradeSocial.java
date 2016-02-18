@@ -23,20 +23,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Sergio Sanchez
@@ -44,58 +40,10 @@ import java.util.Set;
  */
 public class UpgradeSocial extends UpgradeProcess {
 
-	protected void addActivity(
-			long activityId, long groupId, long companyId, long userId,
-			Timestamp createDate, long mirrorActivityId, long classNameId,
-			long classPK, int type, String extraData, long receiverUserId)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("insert into SocialActivity (activityId, groupId, ");
-			sb.append("companyId, userId, createDate, mirrorActivityId, ");
-			sb.append("classNameId, classPK, type_, extraData, ");
-			sb.append("receiverUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?)");
-
-			ps = con.prepareStatement(sb.toString());
-
-			ps.setLong(1, activityId);
-			ps.setLong(2, groupId);
-			ps.setLong(3, companyId);
-			ps.setLong(4, userId);
-			ps.setLong(5, createDate.getTime());
-			ps.setLong(6, mirrorActivityId);
-			ps.setLong(7, classNameId);
-			ps.setLong(8, classPK);
-			ps.setInt(9, type);
-			ps.setString(10, extraData);
-			ps.setLong(11, receiverUserId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add activity " + activityId, e);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateJournalActivities();
 		updateSOSocialActivities();
-		updateWikiPageActivities();
 		updateActivities();
 	}
 
@@ -189,37 +137,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		return result;
-	}
-
-	protected Timestamp getUniqueModifiedDate(
-		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
-		long classNameId, long resourcePrimKey, double type) {
-
-		while (true) {
-			StringBundler sb = new StringBundler(11);
-
-			sb.append(groupId);
-			sb.append(StringPool.DASH);
-			sb.append(userId);
-			sb.append(StringPool.DASH);
-			sb.append(modifiedDate);
-			sb.append(StringPool.DASH);
-			sb.append(classNameId);
-			sb.append(StringPool.DASH);
-			sb.append(resourcePrimKey);
-			sb.append(StringPool.DASH);
-			sb.append(type);
-
-			String key = sb.toString();
-
-			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
-
-			if (!keys.contains(key)) {
-				keys.add(key);
-
-				return modifiedDate;
-			}
-		}
 	}
 
 	protected void updateActivities() throws Exception {
@@ -328,61 +245,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		runSQL("drop table SO_SocialActivity");
-	}
-
-	protected void updateWikiPageActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.wiki.model.WikiPage");
-
-		runSQL("delete from SocialActivity where classNameId = " + classNameId);
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			Set<String> keys = new HashSet<>();
-
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId, companyId, userId, modifiedDate, " +
-					"resourcePrimKey, version from WikiPage");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				double version = rs.getDouble("version");
-
-				int type = 1;
-
-				if (version > 1.0) {
-					type = 2;
-				}
-
-				modifiedDate = getUniqueModifiedDate(
-					keys, groupId, userId, modifiedDate, classNameId,
-					resourcePrimKey, type);
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("version", version);
-
-				addActivity(
-					increment(), groupId, companyId, userId, modifiedDate, 0,
-					classNameId, resourcePrimKey, type,
-					extraDataJSONObject.toString(), 0);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 	}
 
 	/**
@@ -583,12 +445,70 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		};
 
+	protected static ExtraDataGenerator _wikiPageExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				// use old classname as upgrade wiki hasn't taken place at yet
+				ACTIVITY_CLASSNAME = "com.liferay.portlet.wiki.model.WikiPage";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_PARAMS.put(2,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(ADD_PAGE)));
+
+				ACTIVITY_QUERY_PARAMS.put(3,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(UPDATE_PAGE)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
+					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
+					ACTIVITY_TYPE_CLAUSE + ")";
+
+				ENTITY_SELECT_CLAUSE="title, version";
+
+				ENTITY_FROM_CLAUSE="WikiPage";
+
+				ENTITY_WHERE_CLAUSE=
+					"companyId = ? and groupId = ? and resourcePrimKey = ? " +
+					"and head = true";
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "title"));
+
+				EXTRA_DATA_MAP.put("version",
+					new KeyValuePair(Double.class.getName(), "version"));
+			}
+
+			// from WikiActivityKeys
+			public static final int ADD_PAGE = 1;
+
+			public static final int UPDATE_PAGE = 2;
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, companyId);
+
+				ps.setLong(2, groupId);
+
+				ps.setLong(3, classPK);
+			}
+		};
+
 	protected static List<ExtraDataGenerator> _extraDataGenerators =
 		new ArrayList<ExtraDataGenerator>();
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 	static {
-			_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
+		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
+		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}
 }

@@ -41,30 +41,25 @@
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummyRoleMembershipPolicy" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummySiteMembershipPolicy" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummyUserGroupMembershipPolicy" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
-		<property name="organizationMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
-		</property>
+		<property name="organizationMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactory" class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactoryUtil">
-		<property name="roleMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
-		</property>
+		<property name="roleMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory" class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
-		<property name="siteMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
-		</property>
+		<property name="siteMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
-		<property name="userGroupMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
-		</property>
+		<property name="userGroupMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.permission.InlineSQLHelper" class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
 	<bean id="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil">
-		<property name="inlineSQLHelper">
-			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
-		</property>
+		<property name="inlineSQLHelper" ref="com.liferay.portal.kernel.security.permission.InlineSQLHelper" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.security.permission.PermissionCheckerFactory" class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.security.permission.PermissionConverterUtil" class="com.liferay.portal.kernel.security.permission.PermissionConverterUtil">

@@ -27,7 +27,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
@@ -123,6 +123,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
 		AssetEntryLocalService assetEntryLocalService,
+		DDMFormJSONSerializer ddmFormJSONSerializer,
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
 		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer,
@@ -137,6 +138,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
@@ -708,7 +710,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String toJSON(DDMForm ddmForm) {
-		return DDMFormJSONSerializerUtil.serialize(ddmForm);
+		return _ddmFormJSONSerializer.serialize(ddmForm);
 	}
 
 	protected String toJSON(DDMFormValues ddmFormValues) {
@@ -1463,6 +1465,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private long _ddmContentClassNameId;
+	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

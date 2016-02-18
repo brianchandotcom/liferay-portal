@@ -51,7 +51,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>targetContainer</name>
+			<name>targetNode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -4904,6 +4904,11 @@
 			<description>Explicit message text or the name of a language key from which to derive the message text.</description>
 			<name>message</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>targetNode</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

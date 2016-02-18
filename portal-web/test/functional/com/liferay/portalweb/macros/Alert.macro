@@ -1,4 +1,16 @@
 <definition>
+	<command name="viewLocalizedPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localized}" />
+	</command>
+
+	<command name="viewPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The page has been created successfully" />
+	</command>
+
 	<command name="viewRequestCompletedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 

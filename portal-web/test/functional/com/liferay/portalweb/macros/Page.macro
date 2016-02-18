@@ -66,19 +66,16 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-
 		<if>
-			<not>
-				<isset var="pageTypeURL" />
-			</not>
+			<isset var="localized" />
 			<then>
-				<execute macro="Navigator#gotoViewPage">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="pageName" value="${pageName}" />
+				<execute macro="Alert#viewLocalizedPageAddedSuccessMessage">
+					<var name="localized" value="${localized}" />
 				</execute>
 			</then>
+			<else>
+				<execute macro="Alert#viewPageAddedSuccessMessage" />
+			</else>
 		</if>
 	</command>
 
@@ -113,8 +110,6 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
-
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
@@ -125,7 +120,7 @@
 				<condition function="IsVisible" locator1="Message#SUCCESS" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewPageAddedSuccessMessage" />
 			</then>
 		</if>
 	</command>

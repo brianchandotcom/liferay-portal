@@ -77,6 +77,7 @@ public class TemplatesPortletConfigurationIcon
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+		portletURL.setParameter("navStartsOn", "templates");
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		portletURL.setParameter(

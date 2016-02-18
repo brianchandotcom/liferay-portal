@@ -53,19 +53,16 @@ public class AuditMessagingConfigurator {
 	protected void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
 
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.AUDIT);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
-
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
 		AuditConfiguration auditConfiguration = Configurable.createConfigurable(
 			AuditConfiguration.class, properties);
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.AUDIT);
 
 		destinationConfiguration.setMaximumQueueSize(
 			auditConfiguration.auditMessageMaxQueueSize());
@@ -91,6 +88,9 @@ public class AuditMessagingConfigurator {
 
 		destinationConfiguration.setRejectedExecutionHandler(
 			rejectedExecutionHandler);
+
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
 
 		Dictionary<String, Object> destinationProperties =
 			new HashMapDictionary<>();

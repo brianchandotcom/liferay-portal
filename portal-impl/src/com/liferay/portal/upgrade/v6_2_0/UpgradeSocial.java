@@ -720,6 +720,54 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		};
 
+	protected static BaseExtraDataGenerator _kbTemplateExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_CLASSNAME =
+					"com.liferay.knowledgebase.model.KBTemplate";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_PARAMS.put(2,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(ADD_KB_TEMPLATE)));
+
+				ACTIVITY_QUERY_PARAMS.put(3,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(UPDATE_KB_TEMPLATE)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
+					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
+					ACTIVITY_TYPE_CLAUSE + ")";
+
+				ENTITY_SELECT_CLAUSE="title";
+
+				ENTITY_FROM_CLAUSE="KBTemplate";
+
+				ENTITY_WHERE_CLAUSE="kbtemplateid = ?";
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "title"));
+			}
+
+			// from AdminActivityKeys
+			public static final int ADD_KB_TEMPLATE = 2;
+
+			public static final int UPDATE_KB_TEMPLATE = 4;
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, classPK);
+			}
+		};
+
 	protected static ExtraDataGenerator _wikiPageExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
@@ -789,6 +837,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(_bookmarksEntryExtraDataGenerator);
 		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
 		_extraDataGenerators.add(_kbArticleExtraDataGenerator);
+		_extraDataGenerators.add(_kbTemplateExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}
 }

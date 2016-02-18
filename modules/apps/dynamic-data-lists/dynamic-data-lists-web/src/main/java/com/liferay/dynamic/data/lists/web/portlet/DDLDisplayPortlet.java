@@ -22,8 +22,12 @@ import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
+import com.liferay.dynamic.data.lists.web.display.context.DDLDisplayContext;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +36,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -42,6 +48,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,8 +103,15 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 			setDDLRecordSetRequestAttribute(renderRequest);
 
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				renderRequest);
+
+			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
+				request, _ddl, _ddlRecordSetLocalService, _ddlWebConfiguration,
+				_ddmTemplateLocalService);
+
 			renderRequest.setAttribute(
-				DDLWebConfiguration.class.getName(), _ddlWebConfiguration);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -117,8 +132,27 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	public void setDDL(DDL ddl) {
+		_ddl = ddl;
+	}
+
+	@Reference(unbind = "-")
 	public void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	@Activate
@@ -201,8 +235,11 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortlet.class);
 
+	private DDL _ddl;
 	private DDLRecordService _ddlRecordService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
 	private volatile DDLWebConfiguration _ddlWebConfiguration;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

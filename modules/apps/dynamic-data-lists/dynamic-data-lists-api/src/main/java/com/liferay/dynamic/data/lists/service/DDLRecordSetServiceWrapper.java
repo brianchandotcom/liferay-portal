@@ -51,6 +51,13 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		_ddlRecordSetService.deleteRecordSet(recordSetId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetService.fetchRecordSet(recordSetId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

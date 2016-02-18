@@ -62,6 +62,23 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	}
 
 	@Override
+	public DDLRecordSet fetchRecordSet(long recordSetId)
+		throws PortalException {
+
+		DDLRecordSet recordSet = ddlRecordSetLocalService.fetchRecordSet(
+			recordSetId);
+
+		if (recordSet == null) {
+			return null;
+		}
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), recordSet, ActionKeys.VIEW);
+
+		return recordSet;
+	}
+
+	@Override
 	public DDLRecordSet getRecordSet(long recordSetId) throws PortalException {
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.VIEW);

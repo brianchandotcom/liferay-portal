@@ -66,6 +66,10 @@ public interface DDLRecordSetService extends BaseService {
 
 	public void deleteRecordSet(long recordSetId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSet fetchRecordSet(long recordSetId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

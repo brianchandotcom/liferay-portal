@@ -12,35 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine;
+
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Date;
 
 /**
  * @author Michael C. Han
  */
-public class ContextClassloaderReportDesignRetriever
-	implements ReportDesignRetriever, Serializable {
+public class MemoryReportDesignRetriever implements ReportDesignRetriever {
 
-	public ContextClassloaderReportDesignRetriever(String reportName) {
+	public MemoryReportDesignRetriever(
+		String reportName, Date modifiedDate, byte[] bytes) {
+
 		_reportName = reportName;
+		_modifiedDate = modifiedDate;
+		_bytes = bytes;
 	}
 
 	@Override
 	public InputStream getInputStream() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		return contextClassLoader.getResourceAsStream(_reportName);
+		return new UnsyncByteArrayInputStream(_bytes);
 	}
 
 	@Override
 	public Date getModifiedDate() {
-		return new Date();
+		return _modifiedDate;
 	}
 
 	@Override
@@ -48,6 +48,8 @@ public class ContextClassloaderReportDesignRetriever
 		return _reportName;
 	}
 
+	private final byte[] _bytes;
+	private final Date _modifiedDate;
 	private final String _reportName;
 
 }

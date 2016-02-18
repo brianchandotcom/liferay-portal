@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting.messaging;
+package com.liferay.portal.reports.engine.messaging;
 
-import com.liferay.portal.kernel.bi.reporting.ReportDesignRetriever;
-import com.liferay.portal.kernel.bi.reporting.ReportEngine;
-import com.liferay.portal.kernel.bi.reporting.ReportGenerationException;
-import com.liferay.portal.kernel.bi.reporting.ReportRequest;
-import com.liferay.portal.kernel.bi.reporting.ReportResultContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
+import com.liferay.portal.reports.engine.ReportEngine;
+import com.liferay.portal.reports.engine.ReportGenerationException;
+import com.liferay.portal.reports.engine.ReportRequest;
+import com.liferay.portal.reports.engine.ReportResultContainer;
 
 /**
  * @author Michael C. Han
  */
-public class ReportCompilerRequestMessageListener extends BaseMessageListener {
+public class ReportRequestMessageListener extends BaseMessageListener {
 
 	public void setReportEngine(ReportEngine reportEngine) {
 		_reportEngine = reportEngine;
@@ -51,16 +51,16 @@ public class ReportCompilerRequestMessageListener extends BaseMessageListener {
 			_reportResultContainer.clone(reportDesignRetriever.getReportName());
 
 		try {
-			_reportEngine.compile(reportRequest);
+			_reportEngine.execute(reportRequest, reportResultContainer);
 		}
 		catch (ReportGenerationException rge) {
-			_log.error("Unable to compile report", rge);
+			_log.error("Unable to generate report", rge);
 
 			reportResultContainer.setReportGenerationException(rge);
 		}
 		finally {
 			Message responseMessage = MessageBusUtil.createResponseMessage(
-				message, reportResultContainer);
+				message);
 
 			responseMessage.setPayload(reportResultContainer);
 
@@ -70,7 +70,7 @@ public class ReportCompilerRequestMessageListener extends BaseMessageListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReportCompilerRequestMessageListener.class);
+		ReportRequestMessageListener.class);
 
 	private ReportEngine _reportEngine;
 	private ReportResultContainer _reportResultContainer;

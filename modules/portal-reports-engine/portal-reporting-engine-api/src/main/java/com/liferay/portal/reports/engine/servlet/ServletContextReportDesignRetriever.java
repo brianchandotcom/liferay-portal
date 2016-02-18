@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting.servlet;
+package com.liferay.portal.reports.engine.servlet;
 
-import com.liferay.portal.kernel.bi.reporting.ReportDesignRetriever;
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
 
 import java.io.InputStream;
 

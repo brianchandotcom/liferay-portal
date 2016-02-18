@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine.messaging;
 
 /**
  * @author Michael C. Han
  */
-public interface ReportFormatExporter {
+public class DestinationNames {
 
-	public void format(
-			Object report, ReportRequest reportRequest,
-			ReportResultContainer reportResultContainer)
-		throws ReportGenerationException;
+	public static final String REPORT_COMPILER = "liferay/report_compiler";
+
+	public static final String REPORT_REQUEST = "liferay/report_request";
+
+	public static final String REPORT_RESULT = "liferay/report_result";
 
 }

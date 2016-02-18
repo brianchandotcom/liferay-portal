@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.reporting;
+package com.liferay.portal.reports.engine;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 

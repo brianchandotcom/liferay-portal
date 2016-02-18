@@ -15,9 +15,9 @@
 package com.liferay.dynamic.data.lists.form.web.notification;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -34,9 +34,12 @@ import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -44,10 +47,14 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Writer;
 
@@ -58,6 +65,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
 
@@ -91,24 +99,20 @@ public class DDLFormEmailNotificationSender {
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
-		String emailFromAddress =
-			DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
-		String emailFromName = DDLFormEmailNotificationUtil.getEmailFromName(
-			recordSet);
+		String emailFromAddress = getEmailFromAddress(recordSet);
+		String emailFromName = getEmailFromName(recordSet);
 
 		InternetAddress fromInternetAddress = new InternetAddress(
 			emailFromAddress, emailFromName);
 
-		String subject = DDLFormEmailNotificationUtil.getEmailSubject(
-			recordSet);
+		String subject = getEmailSubject(recordSet);
 
 		String body = getEmailBody(portletRequest, recordSet, record);
 
 		MailMessage mailMessage = new MailMessage(
 			fromInternetAddress, subject, body, true);
 
-		String emailToAddress = DDLFormEmailNotificationUtil.getEmailToAddress(
-			recordSet);
+		String emailToAddress = getEmailToAddress(recordSet);
 
 		InternetAddress[] toAddresses = InternetAddress.parse(emailToAddress);
 
@@ -164,6 +168,63 @@ public class DDLFormEmailNotificationSender {
 		Template template = createTemplate(portletRequest, recordSet, record);
 
 		return render(template);
+	}
+
+	protected String getEmailFromAddress(DDLRecordSet recordSet) {
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
+
+		String defaultEmailFromAddress = PrefsPropsUtil.getString(
+			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		return GetterUtil.getString(
+			recordSettings.emailFromAddress(), defaultEmailFromAddress);
+	}
+
+	protected String getEmailFromName(DDLRecordSet recordSet) {
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
+
+		String defaultEmailFromName = PrefsPropsUtil.getString(
+			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		return GetterUtil.getString(
+			recordSettings.emailFromName(), defaultEmailFromName);
+	}
+
+	protected String getEmailSubject(DDLRecordSet recordSet)
+		throws PortalException {
+
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		Locale locale = ddmForm.getDefaultLocale();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		String defaultEmailSubject = LanguageUtil.format(
+			resourceBundle, "new-x-form-submitted", recordSet.getName(locale),
+			false);
+
+		return GetterUtil.getString(
+			recordSettings.emailSubject(), defaultEmailSubject);
+	}
+
+	protected String getEmailToAddress(DDLRecordSet recordSet) {
+		String defaultEmailToAddress = StringPool.BLANK;
+
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
+
+		User user = _userLocalService.fetchUser(recordSet.getUserId());
+
+		if (user != null) {
+			defaultEmailToAddress = user.getEmailAddress();
+		}
+
+		return GetterUtil.getString(
+			recordSettings.emailToAddress(), defaultEmailToAddress);
 	}
 
 	protected Map<String, Object> getField(
@@ -405,6 +466,11 @@ public class DDLFormEmailNotificationSender {
 		_mailService = mailService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String _NAMESPACE = "form.form_entry";
 
 	private static final String _TEMPLATE_PATH =
@@ -415,5 +481,6 @@ public class DDLFormEmailNotificationSender {
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private MailService _mailService;
+	private UserLocalService _userLocalService;
 
 }

@@ -1,0 +1,156 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Hits hits = searchDisplayContext.getHits();
+%>
+
+<aui:row cssClass='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
+	<c:if test="<%= searchDisplayContext.isShowMenu() %>">
+		<aui:col id="facetNavigation" span="<%= 3 %>">
+
+			<%
+			for (SearchFacet searchFacet : ListUtil.sort(searchDisplayContext.getEnabledSearchFacets(), SearchFacetComparator.INSTANCE)) {
+				if (searchFacet.isStatic()) {
+					continue;
+				}
+
+				request.setAttribute("search.jsp-facet", searchFacet.getFacet());
+
+				searchFacet.includeView(request, new PipingServletResponse(pageContext));
+			}
+			%>
+
+			<aui:script sandbox="<%= true %>">
+				$('#<portlet:namespace />facetNavigation').on(
+					'click',
+					'.facet-value a',
+					function(event) {
+						event.preventDefault();
+
+						var term = $(event.currentTarget);
+
+						var facetValue = term.parentsUntil('.search-facet', '.facet-value');
+
+						if (!facetValue.hasClass('active')) {
+							facetValue.addClass('active');
+
+							facetValue.siblings().removeClass('active');
+
+							var searchFacet = facetValue.parentsUntil('.search-layout', '.search-facet');
+
+							var form = $(document.<portlet:namespace />fm);
+
+							var field = form.fm(searchFacet.data('facetfieldname'));
+
+							if (field.length) {
+								field.val(term.data('value'));
+
+								form.fm('<%= SearchContainer.DEFAULT_CUR_PARAM %>').val(1);
+
+								submitForm(form);
+							}
+						}
+					}
+				);
+			</aui:script>
+		</aui:col>
+	</c:if>
+
+	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 9 %>">
+		<%@ include file="/main_search_suggest.jspf" %>
+
+		<liferay-ui:search-container
+			id="search"
+			searchContainer="<%= searchDisplayContext.getSearchContainer() %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.search.Document"
+				escapedModel="<%= false %>"
+				keyProperty="UID"
+				modelVar="document"
+				stringKey="<%= true %>"
+			>
+
+				<%
+				String className = document.get(Field.ENTRY_CLASS_NAME);
+				long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+				AssetRenderer<?> assetRenderer = null;
+
+				if (assetRendererFactory != null) {
+					long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+					if (resourcePrimKey > 0) {
+						classPK = resourcePrimKey;
+					}
+
+					assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+				}
+
+				String viewURL = com.liferay.portal.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+				Summary summary = null;
+
+				if (indexer != null) {
+					String snippet = document.get(Field.SNIPPET);
+
+					summary = indexer.getSummary(document, snippet, renderRequest, renderResponse);
+				}
+				else if (assetRenderer != null) {
+					summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale));
+				}
+				%>
+
+				<c:if test="<%= summary != null %>">
+					<%@ include file="/main_search_result_form.jspf" %>
+				</c:if>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
+
+			<c:if test="<%= searchDisplayContext.isDisplayMainQuery() && (hits.getQuery() != null) %>">
+				<table class="full-query">
+					<tr>
+						<td valign="top">
+							<div class="container">
+								<code>
+									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchDisplayContext.getSearchContext(), hits.getQuery())) %>
+								</code>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</c:if>
+		</liferay-ui:search-container>
+	</aui:col>
+</aui:row>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />search').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			currentTarget.siblings('.table-details').toggleClass('hide');
+		},
+		'.expand-details'
+	);
+</aui:script>

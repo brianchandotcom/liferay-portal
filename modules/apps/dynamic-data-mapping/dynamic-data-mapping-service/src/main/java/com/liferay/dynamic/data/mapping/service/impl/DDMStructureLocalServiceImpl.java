@@ -40,7 +40,7 @@ import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -527,7 +527,7 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureIndexerBackgroundTaskExecutor.getBackgroundTaskName(
 				structure.getStructureId());
 
-		backgroundTaskLocalService.deleteGroupBackgroundTasks(
+		backgroundTaskmanager.deleteGroupBackgroundTasks(
 			structure.getGroupId(), backgroundTaskName,
 			DDMStructureIndexerBackgroundTaskExecutor.class.getName());
 	}
@@ -1625,7 +1625,7 @@ public class DDMStructureLocalServiceImpl
 
 		taskContextMap.put("structureId", structure.getStructureId());
 
-		backgroundTaskLocalService.addBackgroundTask(
+		backgroundTaskmanager.addBackgroundTask(
 			structure.getUserId(), structure.getGroupId(), backgroundTaskName,
 			DDMStructureIndexerBackgroundTaskExecutor.class.getName(),
 			taskContextMap, serviceContext);
@@ -1756,8 +1756,8 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = BackgroundTaskLocalService.class)
-	protected BackgroundTaskLocalService backgroundTaskLocalService;
+	@ServiceReference(type = BackgroundTaskManager.class)
+	protected BackgroundTaskManager backgroundTaskmanager;
 
 	@ServiceReference(type = DDMFormValidator.class)
 	protected DDMFormValidator ddmFormValidator;

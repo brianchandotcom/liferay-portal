@@ -494,9 +494,10 @@ urlConfiguration.setParameter("resourcePrimKey", portletPrimaryKey);
 
 portletDisplay.setURLConfiguration(urlConfiguration.toString());
 
-StringBuilder urlConfigurationJSSB = new StringBuilder(14);
+StringBuilder urlConfigurationJSSB = new StringBuilder(15);
 
 urlConfigurationJSSB.append("Liferay.Portlet.openWindow({bodyCssClass: 'dialog-with-footer',");
+urlConfigurationJSSB.append("destroyOnHide: true,");
 urlConfigurationJSSB.append("namespace: '");
 urlConfigurationJSSB.append(portletDisplay.getNamespace());
 urlConfigurationJSSB.append("', portlet: '#p_p_id_");

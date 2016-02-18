@@ -27,7 +27,7 @@ if ((row != null) && (row.getObject() instanceof TrashRenderer)) {
 	trashRenderer = (TrashRenderer)row.getObject();
 }
 else {
-	trashRenderer = (TrashRenderer)request.getAttribute(WebKeys.TRASH_RENDERER);
+	trashRenderer = (TrashRenderer)request.getAttribute(TrashWebKeys.TRASH_RENDERER);
 }
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRenderer.getClassName());

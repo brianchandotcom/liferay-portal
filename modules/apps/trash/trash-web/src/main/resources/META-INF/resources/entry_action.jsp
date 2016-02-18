@@ -33,7 +33,7 @@ if (row != null) {
 	trashEntry = (TrashEntry)row.getObject();
 }
 else {
-	trashEntry = (TrashEntry)request.getAttribute(WebKeys.TRASH_ENTRY);
+	trashEntry = (TrashEntry)request.getAttribute(TrashWebKeys.TRASH_ENTRY);
 }
 %>
 

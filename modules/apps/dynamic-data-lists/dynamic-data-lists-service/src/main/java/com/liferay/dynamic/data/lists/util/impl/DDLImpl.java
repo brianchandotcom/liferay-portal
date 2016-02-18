@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.util.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -41,19 +40,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -167,45 +162,6 @@ public class DDLImpl implements DDL {
 		}
 
 		return jsonObject;
-	}
-
-	@Override
-	public List<DDLRecord> getRecords(Hits hits) throws Exception {
-		List<DDLRecord> records = new ArrayList<>();
-
-		List<com.liferay.portal.kernel.search.Document> documents =
-			hits.toList();
-
-		for (com.liferay.portal.kernel.search.Document document : documents) {
-			long recordId = GetterUtil.getLong(
-				document.get(
-					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
-
-			try {
-				DDLRecord record = _ddlRecordLocalService.getRecord(recordId);
-
-				records.add(record);
-			}
-			catch (NoSuchRecordException nsre) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"DDL record index is stale and contains record " +
-							recordId,
-						nsre);
-				}
-
-				Indexer<DDLRecord> indexer = _indexerRegistry.getIndexer(
-					DDLRecord.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(
-						com.liferay.portal.kernel.search.Field.COMPANY_ID));
-
-				indexer.delete(companyId, document.getUID());
-			}
-		}
-
-		return records;
 	}
 
 	@Override

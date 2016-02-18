@@ -47,9 +47,10 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<TrashEntry> entries = ActionUtil.getEntries(resourceRequest);
+		List<TrashEntry> trashEntries = ActionUtil.getTrashEntries(
+			resourceRequest);
 
-		resourceRequest.setAttribute(TrashWebKeys.TRASH_ENTRIES, entries);
+		resourceRequest.setAttribute(TrashWebKeys.TRASH_ENTRIES, trashEntries);
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(resourceRequest, "/info_panel.jsp");

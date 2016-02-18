@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.TRASH_ENTRIES);
+List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.TRASH_ENTRIES);
 %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(entries) %>">
+	<c:when test="<%= ListUtil.isNotEmpty(trashEntries) %>">
 		<c:choose>
-			<c:when test="<%= entries.size() == 1 %>">
+			<c:when test="<%= trashEntries.size() == 1 %>">
 
 				<%
-				TrashEntry entry = entries.get(0);
+				TrashEntry trashEntry = trashEntries.get(0);
 
-				TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+				TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashEntry.getClassName());
 
-				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(trashEntry.getClassPK());
 				%>
 
 				<div class="sidebar-header">
@@ -40,10 +40,10 @@ List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.T
 								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
 									<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" servletContext="<%= application %>" />
 								</c:when>
-								<c:when test="<%= entry.getRootEntry() == null %>">
+								<c:when test="<%= trashEntry.getRootEntry() == null %>">
 
 									<%
-									request.setAttribute(WebKeys.TRASH_ENTRY, entry);
+									request.setAttribute(WebKeys.TRASH_ENTRY, trashEntry);
 									%>
 
 									<liferay-util:include page="/entry_action.jsp" servletContext="<%= application %>" />
@@ -73,25 +73,25 @@ List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.T
 					<h5><liferay-ui:message key="type" /></h5>
 
 					<p>
-						<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>
+						<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
 					</p>
 
 					<h5><liferay-ui:message key="removed-date" /></h5>
 
 					<p>
-						<%= dateFormatDateTime.format(entry.getCreateDate()) %>
+						<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
 					</p>
 
 					<h5><liferay-ui:message key="removed-by" /></h5>
 
 					<p>
-						<%= HtmlUtil.escape(entry.getUserName()) %>
+						<%= HtmlUtil.escape(trashEntry.getUserName()) %>
 					</p>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<h4><liferay-ui:message arguments="<%= entries.size() %>" key="x-items-are-selected" /></h4>
+					<h4><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 
 				<aui:nav-bar>
@@ -104,7 +104,7 @@ List<TrashEntry> entries = (List<TrashEntry>)request.getAttribute(TrashWebKeys.T
 					<h5><liferay-ui:message key="num-of-items" /></h5>
 
 					<p>
-						<%= entries.size() %>
+						<%= trashEntries.size() %>
 					</p>
 				</div>
 			</c:otherwise>

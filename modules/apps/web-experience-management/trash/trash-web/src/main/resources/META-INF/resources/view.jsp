@@ -147,14 +147,14 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 				<liferay-ui:search-container-row
 					className="com.liferay.trash.kernel.model.TrashEntry"
 					keyProperty="entryId"
-					modelVar="entry"
+					modelVar="trashEntry"
 					rowVar="row"
 				>
 
 					<%
-					TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+					TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashEntry.getClassName());
 
-					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
+					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(trashEntry.getClassPK());
 
 					String viewContentURLString = null;
 
@@ -170,12 +170,12 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 						}
 
-						if (entry.getRootEntry() != null) {
-							viewContentURL.setParameter("classNameId", String.valueOf(entry.getClassNameId()));
-							viewContentURL.setParameter("classPK", String.valueOf(entry.getClassPK()));
+						if (trashEntry.getRootEntry() != null) {
+							viewContentURL.setParameter("classNameId", String.valueOf(trashEntry.getClassNameId()));
+							viewContentURL.setParameter("classPK", String.valueOf(trashEntry.getClassPK()));
 						}
 						else {
-							viewContentURL.setParameter("trashEntryId", String.valueOf(entry.getEntryId()));
+							viewContentURL.setParameter("trashEntryId", String.valueOf(trashEntry.getEntryId()));
 						}
 
 						viewContentURLString = viewContentURL.toString();
@@ -207,10 +207,10 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="<%= entry.getRootEntry() != null %>">
+						<c:if test="<%= trashEntry.getRootEntry() != null %>">
 
 							<%
-							TrashEntry rootEntry = entry.getRootEntry();
+							TrashEntry rootEntry = trashEntry.getRootEntry();
 
 							TrashHandler rootTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(rootEntry.getClassName());
 
@@ -243,17 +243,17 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
+						value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
 						name="removed-date"
-						value="<%= entry.getCreateDate() %>"
+						value="<%= trashEntry.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="removed-by"
-						value="<%= HtmlUtil.escape(entry.getUserName()) %>"
+						value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 					/>
 
 					<c:choose>
@@ -263,7 +263,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
 							/>
 						</c:when>
-						<c:when test="<%= entry.getRootEntry() == null %>">
+						<c:when test="<%= trashEntry.getRootEntry() == null %>">
 							<liferay-ui:search-container-column-jsp
 								cssClass="list-group-item-field"
 								path="/entry_action.jsp"

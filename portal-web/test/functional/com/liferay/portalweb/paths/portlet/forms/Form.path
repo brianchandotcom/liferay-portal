@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>ADD_FIRST_FIELD</td>
-	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//div[contains(@class,'add-button-icon')]</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//span[contains(@class,'add-button-plus-icon')]</td>
 	<td></td>
 </tr>
 <tr>

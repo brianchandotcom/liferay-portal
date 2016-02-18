@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.definition.web.portlet.constants;
+package com.liferay.portal.workflow.definition.web.constants;
 
 /**
  * @author Eudaldo Alonso

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.definition.link.web.portlet.constants;
+package com.liferay.portal.workflow.definition.link.web.constants;
 
 /**
  * @author Marcellus Tavares

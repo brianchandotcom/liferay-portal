@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.definition.link.web.portlet;
 
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
-import com.liferay.portal.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
+import com.liferay.portal.workflow.definition.link.web.constants.WorkflowDefinitionLinkPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

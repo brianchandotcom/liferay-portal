@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.definition.link.web.constants.WorkflowDefinitionLinkPortletKeys;
 import com.liferay.portal.workflow.definition.link.web.display.context.WorkflowDefinitionLinkDisplayContext;
-import com.liferay.portal.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import java.io.IOException;
 

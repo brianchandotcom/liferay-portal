@@ -33,7 +33,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" />
+
+			<%
+			String name = StringPool.BLANK;
+
+			boolean useCustomTitle = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupUseCustomTitle", null));
+
+			if (useCustomTitle) {
+				name = PortletConfigurationUtil.getPortletTitle(portletPreferences, LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
+			}
+			%>
+
+			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

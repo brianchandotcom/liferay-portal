@@ -43,7 +43,7 @@
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>
-	<td>//div[contains(@id,'parentGroupSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td>//div[contains(@id,'parentGroupSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td</td>
 	<td></td>
 </tr>
 <tr>

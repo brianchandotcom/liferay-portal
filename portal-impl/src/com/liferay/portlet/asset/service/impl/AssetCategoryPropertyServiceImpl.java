@@ -16,6 +16,8 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portlet.asset.service.base.AssetCategoryPropertyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -69,6 +71,12 @@ public class AssetCategoryPropertyServiceImpl
 			}
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error retrieving AssetCategoryProperty for entryId=" +
+						entryId,
+					pe);
+			}
 		}
 
 		return new ArrayList<>();
@@ -133,5 +141,8 @@ public class AssetCategoryPropertyServiceImpl
 
 		return filteredAssetCategoryProperties;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryPropertyServiceImpl.class);
 
 }

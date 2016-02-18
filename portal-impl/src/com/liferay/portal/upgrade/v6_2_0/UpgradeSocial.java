@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,8 +31,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -93,10 +93,10 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateDLFileVersionActivities();
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
+		updateActivities();
 	}
 
 	protected Map<Long, String> generateExtraData(
@@ -222,6 +222,12 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected void updateActivities() throws Exception {
+		for (ExtraDataGenerator extraDataGenerator : _extraDataGenerators) {
+			updateActivities(extraDataGenerator);
+		}
+	}
+
 	protected void updateActivities(ExtraDataGenerator extraDataGenerator)
 			throws Exception {
 
@@ -260,65 +266,6 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void updateDLFileVersionActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.documentlibrary.model.DLFolder");
-
-		runSQL("delete from SocialActivity where classNameId = " + classNameId);
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			Set<String> keys = new HashSet<>();
-
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId, companyId, userId, modifiedDate, " +
-					"fileEntryId, title, version from DLFileVersion " +
-						"where status = ?");
-
-			ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long fileEntryId = rs.getLong("fileEntryId");
-				String title = rs.getString("title");
-				double version = rs.getDouble("version");
-
-				int type = DLActivityKeys.ADD_FILE_ENTRY;
-
-				if (version > 1.0) {
-					type = DLActivityKeys.UPDATE_FILE_ENTRY;
-				}
-
-				modifiedDate = getUniqueModifiedDate(
-					keys, groupId, userId, modifiedDate, classNameId,
-					fileEntryId, type);
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", title);
-
-				addActivity(
-					increment(), groupId, companyId, userId, modifiedDate, 0,
-					classNameId, fileEntryId, type,
-					extraDataJSONObject.toString(), 0);
-			}
-		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
@@ -598,6 +545,50 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected static ExtraDataGenerator _dlFileEntryExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_CLASSNAME =
+					"com.liferay.portlet.documentlibrary.model.DLFileEntry";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE;
+
+				ENTITY_SELECT_CLAUSE = "title";
+
+				ENTITY_FROM_CLAUSE = "DLFileEntry";
+
+				ENTITY_WHERE_CLAUSE =
+					"companyId = ? and groupId = ? and fileEntryId = ?";
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "title"));
+			}
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, companyId);
+
+				ps.setLong(2, groupId);
+
+				ps.setLong(3, classPK);
+			}
+		};
+
+	protected static List<ExtraDataGenerator> _extraDataGenerators =
+		new ArrayList<ExtraDataGenerator>();
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
+	static {
+			_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
+	}
 }

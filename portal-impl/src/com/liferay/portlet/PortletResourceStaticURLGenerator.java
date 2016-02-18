@@ -46,7 +46,8 @@ public class PortletResourceStaticURLGenerator {
 				contextPath = PortalUtil.getPathContext();
 			}
 			else {
-				contextPath = portlet.getContextPath();
+				contextPath =
+					PortalUtil.getPathProxy() + portlet.getContextPath();
 			}
 
 			List<String> portletResources = portletResourceAccessor.get(

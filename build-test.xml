@@ -4862,6 +4862,17 @@ hot.deploy.dependency.management.enabled=false</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+		<if>
+			<isset property="test.smtp.server.enabled" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+mail.session.mail.smtp.port=25000</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="setup.wizard.enabled" />
 
 		<if>

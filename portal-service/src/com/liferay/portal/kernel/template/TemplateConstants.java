@@ -37,9 +37,13 @@ public interface TemplateConstants {
 
 	public static final String LANG_TYPE_FTL = "ftl";
 
+	public static final String LANG_TYPE_JSON = "json";
+
 	public static final String LANG_TYPE_SOY = "soy";
 
 	public static final String LANG_TYPE_VM = "vm";
+
+	public static final String LANG_TYPE_XML = "xml";
 
 	public static final String LANG_TYPE_XSL = "xsl";
 

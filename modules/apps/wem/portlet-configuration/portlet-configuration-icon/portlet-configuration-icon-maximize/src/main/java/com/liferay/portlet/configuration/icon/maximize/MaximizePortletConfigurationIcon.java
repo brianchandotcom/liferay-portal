@@ -14,16 +14,28 @@
 
 package com.liferay.portlet.configuration.icon.maximize;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -86,14 +98,65 @@ public class MaximizePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		Layout layout = themeDisplay.getLayout();
 
-		return portletDisplay.isShowMaxIcon();
+		if (!layout.isTypePortlet()) {
+			return false;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
+			return false;
+		}
+
+		Portlet portlet = (Portlet)portletRequest.getAttribute(
+			WebKeys.RENDER_PORTLET);
+
+		if (!portlet.hasWindowState(
+				portletRequest.getResponseContentType(),
+				WindowState.MAXIMIZED)) {
+
+			return false;
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!themeDisplay.isSignedIn() ||
+			(group.hasStagingGroup() && !group.isStagingGroup()) ||
+			!hasUpdateLayoutPermission(themeDisplay)) {
+
+			if (!PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
 	}
+
+	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay) {
+		try {
+			return LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				ActionKeys.UPDATE);
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MaximizePortletConfigurationIcon.class);
 
 }

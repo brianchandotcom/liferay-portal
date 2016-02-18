@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.7"
+	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.8"
 	provided group: "com.liferay", name: "com.liferay.portal.osgi.web.servlet.jsp.compiler", version: "1.0.6"
 	provided group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5"
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion

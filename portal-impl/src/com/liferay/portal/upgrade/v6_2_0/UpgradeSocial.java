@@ -28,9 +28,12 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -91,6 +94,98 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateWikiPageActivities();
 	}
 
+	protected Map<Long, String> generateExtraData(
+			ExtraDataGenerator extraDataGenerator)
+		throws Exception {
+
+		Map<Long, String> extraDataMap = new HashMap<Long, String>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("select activityId, groupId, companyId, userId, ");
+			sb.append("classNameId, classPK, type_, extraData ");
+			sb.append("from SocialActivity where ");
+			sb.append(extraDataGenerator.getActivityQueryWhereClause());
+
+			ps = con.prepareStatement(sb.toString());
+
+			extraDataGenerator.setActivityQueryParameters(ps);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long activityId = rs.getLong("activityId");
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
+				long companyId = rs.getLong("companyId");
+				String extraData = rs.getString("extraData");
+				long groupId = rs.getLong("groupId");
+				int type = rs.getInt("type_");
+				long userId = rs.getLong("userId");
+
+				String newExtraData = generateExtraDataForActivity(
+					extraDataGenerator, groupId, companyId, userId, classNameId,
+					classPK, type, extraData);
+
+				if (newExtraData != null) {
+					extraDataMap.put(activityId, newExtraData);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+		return extraDataMap;
+	}
+
+	protected String generateExtraDataForActivity(
+			ExtraDataGenerator extraDataGenerator, long companyId, long groupId,
+			long userId, long classNameId, long classPK, int type,
+			String extraData)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String result = null;
+
+		try {
+			if (extraDataGenerator != null) {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				ps = con.prepareStatement(extraDataGenerator.getEntityQuery());
+
+				extraDataGenerator.setEntityQueryParameters(
+					ps, groupId, companyId, userId, classNameId, classPK, type,
+					extraData);
+
+				rs = ps.executeQuery();
+
+				JSONObject extraDataJSONObject = null;
+
+				while (rs.next()) {
+					extraDataJSONObject =
+						extraDataGenerator.getExtraData(rs, extraData);
+				}
+
+				result = extraDataJSONObject.toString();
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return result;
+	}
+
 	protected Timestamp getUniqueModifiedDate(
 		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
 		long classNameId, long resourcePrimKey, double type) {
@@ -119,6 +214,49 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				return modifiedDate;
 			}
+		}
+	}
+
+	protected void updateActivities(ExtraDataGenerator extraDataGenerator)
+			throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Map<Long, String> extraDataMap = generateExtraData(extraDataGenerator);
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(2);
+
+			sb.append("update SocialActivity set extraData = ? ");
+			sb.append("where activityId = ?");
+
+			String updateActivityQuery = sb.toString();
+
+			for (Map.Entry<Long, String> entry : extraDataMap.entrySet()) {
+				long activityId = entry.getKey();
+				String extraData = entry.getValue();
+				try {
+					ps = con.prepareStatement(updateActivityQuery);
+
+					ps.setString(1, extraData);
+					ps.setLong(2, activityId);
+
+					ps.executeUpdate();
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to update activity " + activityId, e);
+					}
+				}
+			}
+		}
+
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
@@ -284,6 +422,60 @@ public class UpgradeSocial extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(ps, rs);
 		}
+	}
+
+	/**
+	 * Defines the necessary methods to generate extra data from a set of
+	 * social activities of any kind. Implementors just have to focus on:
+	 *   1) What is the set of social activities this generator will generate
+	 *      extra data for (getActivityQueryWhereClause() and
+	 *      setActivityQueryParameters())
+	 *   2) How to obtain the model entities related to such activities
+	 *      (getEntityQuery() and setEntityQueryParameters()),
+	 *   3) How to generate extra data (getExtraData())
+	 */
+	protected interface ExtraDataGenerator {
+		/**
+		 * Returns the "where" clause in social activity query to select the
+		 * SocialActivity tuples this generator will generate extra data for
+		 */
+		public String getActivityQueryWhereClause();
+
+		/**
+		 * Returns the SQL query on any model entity which the selected
+		 * SocialActivity tuples refer to. Extra data will be generated from
+		 * the entities returned by this query
+		 */
+		public String getEntityQuery();
+
+		/**
+		 * Given a result from the #getEntityQuery() and the original extra
+		 * data in the SocialActivity tuple pointing to that entity, computes
+		 * the extra data that will be persisted in the SocialActivity tuple as
+		 * a result of the upgrade process.
+		 *
+		 * @return JSONObject containing the extra data
+		 */
+		public JSONObject getExtraData(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException;
+
+		/**
+		 * Sets parameters required to run the activity query returned by
+		 * #getActivityQueryWhereClause() in this generator
+		 */
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException;
+
+		/**
+		 * Sets parameters required to run the entity query returned by
+		 * #getEntityQueryWhereClause() in this generator, based on fields
+		 * from the SocialActivity tuple
+		 */
+		public void setEntityQueryParameters(PreparedStatement ps,
+				long companyId, long groupId, long userId, long classNameId,
+				long classPK, int type, String extraData)
+			throws SQLException;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);

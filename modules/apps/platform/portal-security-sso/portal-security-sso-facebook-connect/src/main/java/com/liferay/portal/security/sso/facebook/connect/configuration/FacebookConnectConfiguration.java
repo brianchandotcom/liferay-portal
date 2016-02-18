@@ -29,14 +29,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FacebookConnectConfiguration {
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enabled();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean verifiedAccountRequired();
+
 	@Meta.AD(required = false)
 	public String appId();
 
 	@Meta.AD(required = false)
 	public String appSecret();
-
-	@Meta.AD(deflt = "false", required = false)
-	public boolean enabled();
 
 	@Meta.AD(deflt = "https://graph.facebook.com", required = false)
 	public String graphURL();
@@ -47,18 +50,15 @@ public interface FacebookConnectConfiguration {
 	public String oauthAuthURL();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080/c/portal/facebook_connect_oauth",
-		required = false
-	)
-	public String oauthRedirectURL();
-
-	@Meta.AD(
 		deflt = "https://graph.facebook.com/oauth/access_token",
 		required = false
 	)
 	public String oauthTokenURL();
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean verifiedAccountRequired();
+	@Meta.AD(
+		deflt = "http://localhost:8080/c/portal/facebook_connect_oauth",
+		required = false
+	)
+	public String oauthRedirectURL();
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.verify.extender.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -226,6 +227,13 @@ public class VerifyProcessTracker {
 		return verifyProcess;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -264,6 +272,7 @@ public class VerifyProcessTracker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTracker.class);
 
+	private CounterLocalService _counterLocalService;
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
@@ -302,8 +311,22 @@ public class VerifyProcessTracker {
 
 			Release release = _releaseLocalService.fetchRelease(key);
 
-			if ((release == null) || release.isVerified()) {
+			if ((release != null) && release.isVerified()) {
 				return;
+			}
+
+			if (release == null) {
+
+				// Not all the verifiers are associated with a database service
+				// but we need to represent them into the release table anyway,
+				// so we can know their state. We just need to record the name
+				// of the component being verified
+
+				release = _releaseLocalService.createRelease(
+					_counterLocalService.increment());
+
+				release.setServletContextName(key);
+				release.setVerified(false);
 			}
 
 			execute(key);

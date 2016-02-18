@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.util.AssetEntryValidator;
 import com.liferay.portlet.asset.util.AssetSearcher;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -664,8 +663,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		if (tagNames != null) {
-			tagNames = checkTags(className, classPK, tagNames);
-
 			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
 
 			Group siteGroup = groupLocalService.getGroup(siteGroupId);
@@ -938,31 +935,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return categoryIds;
-	}
-
-	protected String[] checkTags(
-		String className, long classPK, String[] tagNames) {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			return tagNames;
-		}
-
-		List<AssetTag> oldTags = assetTagLocalService.getTags(
-			className, classPK);
-
-		for (AssetTag tag : oldTags) {
-			if (!ArrayUtil.contains(tagNames, tag.getName()) &&
-				!AssetTagPermission.contains(
-					permissionChecker, tag, ActionKeys.VIEW)) {
-
-				tagNames = ArrayUtil.append(tagNames, tag.getName());
-			}
-		}
-
-		return tagNames;
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(

@@ -92,7 +92,7 @@ public class StagingPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 10.0;
+		return 16.0;
 	}
 
 	@Override

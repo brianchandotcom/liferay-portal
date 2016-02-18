@@ -600,6 +600,12 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		MultiSessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
+
+		Layout layout = themeDisplay.getLayout();
+
+		actionResponse.sendRedirect(
+			layout.getRegularURL(
+				PortalUtil.getHttpServletRequest(actionRequest)));
 	}
 
 	/**

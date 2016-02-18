@@ -185,7 +185,7 @@ public class UnstableMessageUtil {
 		sb.append("</a>");
 
 		return sb.toString();
-}
+	}
 
 	private static String _processError(
 		String errorDetails, String errorStackTrace) {

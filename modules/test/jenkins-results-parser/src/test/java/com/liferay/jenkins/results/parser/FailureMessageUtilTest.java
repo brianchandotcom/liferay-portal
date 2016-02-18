@@ -91,7 +91,7 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		return formatXML(
 			"<div>" +
 				FailureMessageUtil.getFailureMessage(project, urlString) +
-			"</div>");
+					"</div>");
 	}
 
 	protected Project getProject() {

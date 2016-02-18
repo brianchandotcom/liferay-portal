@@ -17,14 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classPK = trashDisplayContext.getClassPK();
-
-String redirect = trashDisplayContext.getViewContentRedirectURL();
-
 TrashEntry entry = trashDisplayContext.getEntry();
-
 TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
-
 TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 %>
 
@@ -34,7 +28,7 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 			<c:choose>
 				<c:when test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
 					<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
-						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="redirect" value="<%= trashDisplayContext.getViewContentRedirectURL() %>" />
 						<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 					</portlet:actionURL>
 
@@ -78,7 +72,7 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 
 			<c:if test="<%= trashHandler.isDeletable() %>">
 				<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="redirect" value="<%= trashDisplayContext.getViewContentRedirectURL() %>" />
 					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</portlet:actionURL>
 
@@ -99,7 +93,7 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 			<c:if test="<%= trashHandler.isMovable() %>">
 
 				<%
-				String containerModelClassName = trashHandler.getContainerModelClassName(classPK);
+				String containerModelClassName = trashHandler.getContainerModelClassName(trashDisplayContext.getClassPK());
 
 				long trashRendererClassNameId = PortalUtil.getClassNameId(trashRenderer.getClassName());
 				%>
@@ -126,7 +120,7 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 
 			<c:if test="<%= trashHandler.isDeletable() %>">
 				<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="redirect" value="<%= trashDisplayContext.getViewContentRedirectURL() %>" />
 					<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 				</portlet:actionURL>

@@ -1,0 +1,6 @@
+dependencies {
+	testCompile project(":misc:shopping:shopping-api")
+	testCompile project(":misc:shopping:shopping-service")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+}

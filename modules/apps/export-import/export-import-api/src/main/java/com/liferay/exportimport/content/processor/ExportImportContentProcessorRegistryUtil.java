@@ -17,8 +17,8 @@ package com.liferay.exportimport.content.processor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.Collection;
 import java.util.List;

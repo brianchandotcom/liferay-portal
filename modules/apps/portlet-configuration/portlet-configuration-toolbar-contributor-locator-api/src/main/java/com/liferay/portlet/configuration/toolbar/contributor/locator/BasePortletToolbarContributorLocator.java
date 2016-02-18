@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.toolbar.contributor.locator;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -24,7 +25,6 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.List;
 

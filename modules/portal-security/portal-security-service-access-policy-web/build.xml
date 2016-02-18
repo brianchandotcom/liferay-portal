@@ -2,5 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../build-module.xml" />
+	<import file="../../build-module.xml" />
 </project>

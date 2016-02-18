@@ -70,7 +70,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
 
-		if (availableLocales.size() > 1) {
+		if (isAddAlternateURLs(availableLocales)) {
 			Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 			for (Locale availableLocale : availableLocales) {
@@ -88,6 +88,18 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 						layoutFullURL, themeDisplay, layout));
 			}
 		}
+	}
+
+	protected boolean isAddAlternateURLs(Set<Locale> availableLocales) {
+		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
+			return false;
+		}
+
+		if (availableLocales.size() == 1) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

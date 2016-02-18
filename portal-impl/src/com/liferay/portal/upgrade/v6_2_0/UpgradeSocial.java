@@ -720,6 +720,101 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		};
 
+	protected static ExtraDataGenerator _kbCommentExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_CLASSNAME =
+					"com.liferay.knowledgebase.model.KBComment";
+
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Long.class.getName(),
+						String.valueOf(
+							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
+
+				ACTIVITY_QUERY_PARAMS.put(2,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(ADD_KB_COMMENT)));
+
+				ACTIVITY_QUERY_PARAMS.put(3,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(UPDATE_KB_COMMENT)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
+					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
+					ACTIVITY_TYPE_CLAUSE + ")";
+
+				ENTITY_SELECT_CLAUSE="classnameid, classpk";
+
+				ENTITY_FROM_CLAUSE="KBComment";
+
+				ENTITY_WHERE_CLAUSE="kbcommentid = ?";
+			}
+
+			// from AdminActivityKeys
+			public static final int ADD_KB_COMMENT = 5;
+
+			public static final int UPDATE_KB_COMMENT = 6;
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				ps.setLong(1, classPK);
+			}
+
+			public JSONObject getExtraData(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
+
+				JSONObject extraDataJSONObject = null;
+
+				long classnameId = entityResultSet.getLong("classnameid");
+				long classpk = entityResultSet.getLong("classpk");
+
+				Connection con = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;
+
+				try {
+					con = DataAccess.getUpgradeOptimizedConnection();
+
+					ExtraDataGenerator extraDataGenerator = null;
+
+					if (classnameId == PortalUtil.getClassNameId(
+						_kbArticleExtraDataGenerator.ACTIVITY_CLASSNAME)) {
+
+						extraDataGenerator = _kbArticleExtraDataGenerator;
+					}
+					else if (classnameId == PortalUtil.getClassNameId(
+						_kbTemplateExtraDataGenerator.ACTIVITY_CLASSNAME)) {
+
+						extraDataGenerator = _kbTemplateExtraDataGenerator;
+					}
+
+					if (extraDataGenerator != null) {
+						ps = con.prepareStatement(
+							extraDataGenerator.getEntityQuery());
+
+						ps.setLong(1, classpk);
+
+						rs = ps.executeQuery();
+
+						while (rs.next()) {
+							extraDataJSONObject =
+								extraDataGenerator.getExtraData(rs, "");
+						}
+					}
+				}
+				finally {
+					DataAccess.cleanUp(con, ps, rs);
+				}
+
+				return extraDataJSONObject;
+			}
+		};
+
 	protected static BaseExtraDataGenerator _kbTemplateExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
@@ -837,6 +932,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(_bookmarksEntryExtraDataGenerator);
 		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
 		_extraDataGenerators.add(_kbArticleExtraDataGenerator);
+		_extraDataGenerators.add(_kbCommentExtraDataGenerator);
 		_extraDataGenerators.add(_kbTemplateExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}

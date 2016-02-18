@@ -14,8 +14,8 @@
 
 package com.liferay.contacts.web.notifications;
 
-import com.liferay.contacts.util.PortletKeys;
 import com.liferay.contacts.util.SocialRelationConstants;
+import com.liferay.contacts.web.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
@@ -44,7 +44,7 @@ public class ContactsCenterUserNotificationHandler
 
 	public ContactsCenterUserNotificationHandler() {
 		setActionable(true);
-		setPortletId(PortletKeys.CONTACTS_CENTER);
+		setPortletId(ContactsPortletKeys.CONTACTS_CENTER);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ContactsCenterUserNotificationHandler
 			serviceContext.getLiferayPortletResponse();
 
 		PortletURL confirmURL = liferayPortletResponse.createActionURL(
-			PortletKeys.CONTACTS_CENTER);
+			ContactsPortletKeys.CONTACTS_CENTER);
 
 		confirmURL.setParameter(
 			ActionRequest.ACTION_NAME, "updateSocialRequest");
@@ -100,7 +100,7 @@ public class ContactsCenterUserNotificationHandler
 		confirmURL.setWindowState(WindowState.NORMAL);
 
 		PortletURL ignoreURL = liferayPortletResponse.createActionURL(
-			PortletKeys.CONTACTS_CENTER);
+			ContactsPortletKeys.CONTACTS_CENTER);
 
 		ignoreURL.setParameter(
 			ActionRequest.ACTION_NAME, "updateSocialRequest");

@@ -181,6 +181,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.journal.web", "com.liferay.layout.admin.web",
 		"com.liferay.license.manager.web", "com.liferay.loan.calculator.web",
 		"com.liferay.login.web", "com.liferay.message.boards.web",
+		"com.liferay.mobile.device.rules.service",
 		"com.liferay.mobile.device.rules.web", "com.liferay.my.account.web",
 		"com.liferay.nested.portlets.web", "com.liferay.network.utilities.web",
 		"com.liferay.password.generator.web", "com.liferay.plugins.admin.web",

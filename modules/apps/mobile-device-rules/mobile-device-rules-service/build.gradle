@@ -15,6 +15,7 @@ dependencies {
 	provided project(":apps:mobile-device-rules:mobile-device-rules-api")
 	provided project(":apps:wem:export-import:export-import-api")
 	provided project(":apps:wem:export-import:export-import-service")
+	provided project(":portal:portal-upgrade")
 }
 
 liferay {

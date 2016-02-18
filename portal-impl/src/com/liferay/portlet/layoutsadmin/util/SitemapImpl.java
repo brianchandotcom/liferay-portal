@@ -20,9 +20,9 @@ import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -190,17 +190,15 @@ public class SitemapImpl implements Sitemap {
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout);
-
 		List<SitemapURLProvider> sitemapURLProviders =
 			SitemapURLProviderRegistryUtil.getSitemapURLProviders();
 
-		for (Layout layout : layouts) {
-			for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-				sitemapURLProvider.visitLayout(
-					rootElement, layout, themeDisplay);
-			}
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
+			sitemapURLProvider.visitLayoutSet(
+				rootElement, layoutSet, themeDisplay);
 		}
 
 		return document.asXML();

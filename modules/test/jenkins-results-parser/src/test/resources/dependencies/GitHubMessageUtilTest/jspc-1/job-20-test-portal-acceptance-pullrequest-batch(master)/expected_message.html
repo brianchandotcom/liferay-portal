@@ -1,0 +1,56 @@
+
+<div>
+  <h5 job-result="FAILURE">
+    <a href="https://test-1-17.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/7747/">test-portal-acceptance-pullrequest-batch(master)</a>
+  </h5>  
+  <div> 
+    <h6>Job Results:</h6>  
+    <p>4 Tests Passed. 
+      <br/>1 Test Failed. 
+      <br/>0 Tests Unstable. 
+      <br/> 
+    </p>  
+    <ol> 
+      <li> 
+        <strong>FAILURE 
+          <a href="${dependencies.url}/GitHubMessageUtilTest/jspc-1/job-20-test-portal-acceptance-pullrequest-batch(master)/run-0/7747/">test-portal-acceptance-pullrequest-batch(master) &raquo; 0,!master #7747</a> 
+        </strong>  
+        <pre>
+     [exec]                                                   ^
+     [exec] :apps:message-boards:message-boards-web:compileJSP FAILED
+     [exec]
+     [exec] BUILD FAILED
+     [exec]
+     [exec] Total time: 11 mins 11.247 secs
+     [exec] /opt/dev/projects/github/liferay-portal/modules/apps/message-boards/message-boards-web/build/jspc/org/apache/jsp/message_005fboards_005fadmin/add_005fbutton_jsp.java:383: error: cannot find symbol
+     [exec] MBPortletToolbarContributor mbPortletToolbarContributor = (MBPortletToolbarContributor)request.getAttribute(MBWebKeys.MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR);
+     [exec] ^
+     [exec]   symbol:   class MBPortletToolbarContributor
+     [exec]   location: class add_005fbutton_jsp
+     [exec] /opt/dev/projects/github/liferay-portal/modules/apps/message-boards/message-boards-web/build/jspc/org/apache/jsp/message_005fboards_005fadmin/add_005fbutton_jsp.java:383: error: cannot find symbol
+     [exec] MBPortletToolbarContributor mbPortletToolbarContributor = (MBPortletToolbarContributor)request.getAttribute(MBWebKeys.MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR);
+     [exec]                                                            ^
+     [exec]   symbol:   class MBPortletToolbarContributor
+     [exec]   location: class add_005fbutton_jsp
+     [exec] Note: Some input files use unchecked or unsafe operations.
+     [exec] Note: Recompile with -Xlint:unchecked for details.
+     [exec] 36 errors
+     [exec]
+     [exec] FAILURE: Build failed with an exception.
+     [exec]
+     [exec] * What went wrong:
+     [exec] Execution failed for task ':apps:message-boards:message-boards-web:compileJSP'.
+     [exec] > Compilation failed; see the compiler error output for details.
+     [exec]
+     [exec] * Try:
+     [exec] Run with --info or --debug option to get more log output.
+     [exec]
+     [exec] * Exception is:
+     [exec] org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':apps:message-boards:message-boards-web:compileJSP'.
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:69)
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:46)
+     [exec] 	at org.gradle.api.internal.tasks.execution.PostExecutionAnalysisTaskExecuter.execute(PostExecutionAnalysisTaskExecuter.java:35)</pre> 
+      </li> 
+    </ol> 
+  </div>
+</div>

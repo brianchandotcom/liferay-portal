@@ -14,11 +14,10 @@
 
 package com.liferay.wiki.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"resource.name=" + WikiResourcePermissionChecker.RESOURCE_NAME}
 )
 public class WikiResourcePermissionChecker
-	implements ResourcePermissionChecker {
+	extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.wiki";
 
@@ -48,16 +47,9 @@ public class WikiResourcePermissionChecker
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			WikiPortletKeys.WIKI, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+		return contains(
+			permissionChecker, RESOURCE_NAME, WikiPortletKeys.WIKI, groupId,
+			actionId);
 	}
 
 	@Override

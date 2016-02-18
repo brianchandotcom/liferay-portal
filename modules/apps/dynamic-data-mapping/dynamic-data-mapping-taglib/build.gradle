@@ -16,7 +16,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
-	provided project(":apps:portlet-display-template:portlet-display-template")
+	provided project(":apps:wem:portlet-display-template:portlet-display-template")
 }
 
 liferay {

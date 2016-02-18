@@ -1,0 +1,9 @@
+dependencies {
+	provided project(":apps:wem:journal:journal-test")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:wem:asset:asset-publisher-web")
+	testIntegrationCompile project(":apps:wem:journal:journal-api")
+}

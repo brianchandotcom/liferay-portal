@@ -78,6 +78,10 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		_rowBreak = HtmlUtil.unescape(rowBreak);
 	}
 
+	public void setTargetNode(String targetNode) {
+		_targetNode = targetNode;
+	}
+
 	public void setTranslateMessage(boolean translateMessage) {
 		_translateMessage = translateMessage;
 	}
@@ -91,6 +95,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		_key = null;
 		_message = null;
 		_rowBreak = StringPool.BLANK;
+		_targetNode = null;
 		_translateMessage = true;
 	}
 
@@ -125,6 +130,8 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		request.setAttribute("liferay-ui:error:key", _key);
 		request.setAttribute("liferay-ui:error:message", _message);
 		request.setAttribute("liferay-ui:error:rowBreak", _rowBreak);
+		request.setAttribute(
+			"liferay-ui:error:targetNode", _targetNode);
 		request.setAttribute(
 			"liferay-ui:error:translateMessage",
 			String.valueOf(_translateMessage));
@@ -162,6 +169,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	private String _key;
 	private String _message;
 	private String _rowBreak = StringPool.BLANK;
+	private String _targetNode;
 	private boolean _translateMessage = true;
 
 }

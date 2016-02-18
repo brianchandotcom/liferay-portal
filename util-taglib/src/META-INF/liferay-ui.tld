@@ -1364,6 +1364,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>targetNode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description>Whether to translate the message into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>translateMessage</name>
 			<required>false</required>

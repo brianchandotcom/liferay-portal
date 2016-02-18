@@ -20,6 +20,7 @@
 String key = (String)request.getAttribute("liferay-ui:error:key");
 String message = (String)request.getAttribute("liferay-ui:error:message");
 String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
+String targetNode = GetterUtil.getString((String)request.getAttribute("liferay-ui:error:targetNode"));
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:error:translateMessage"));
 
 String bodyContentString = StringPool.BLANK;
@@ -38,6 +39,7 @@ if (bodyContent != null) {
 				<liferay-ui:alert
 					icon="exclamation-full"
 					message="<%= bodyContentString %>"
+					targetNode="<%= targetNode  %>"
 					timeout="0"
 					type="danger"
 				/>
@@ -61,6 +63,7 @@ if (bodyContent != null) {
 		<liferay-ui:alert
 			icon="exclamation-full"
 			message="<%= alertMessage %>"
+			targetNode="<%= targetNode  %>"
 			timeout="0"
 			type="warning"
 		/>
@@ -72,6 +75,7 @@ if (bodyContent != null) {
 			<liferay-ui:alert
 				icon="exclamation-full"
 				message='<%= LanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>'
+				targetNode="<%= targetNode  %>"
 				timeout="0"
 				type="danger"
 			/>
@@ -84,6 +88,7 @@ if (bodyContent != null) {
 			<liferay-ui:alert
 				icon="exclamation-full"
 				message="<%= translateMessage ? LanguageUtil.get(resourceBundle, message) : message %>"
+				targetNode="<%= targetNode  %>"
 				timeout="0"
 				type="danger"
 			/>

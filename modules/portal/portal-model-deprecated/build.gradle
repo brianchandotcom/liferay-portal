@@ -1,0 +1,3 @@
+liferay {
+	deployDir = new File(appServerPortalDir, "WEB-INF/lib")
+}

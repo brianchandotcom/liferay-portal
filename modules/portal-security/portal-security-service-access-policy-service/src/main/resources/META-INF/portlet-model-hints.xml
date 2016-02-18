@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.security.service.access.policy.model.SAPEntry">
+		<field name="uuid" type="String" />
+		<field name="sapEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="allowedServiceSignatures" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="defaultSAPEntry" type="boolean" />
+		<field name="enabled" type="boolean" />
+		<field name="name" type="String" />
+		<field name="title" type="String" localized="true" />
+	</model>
+</model-hints>

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +38,7 @@ import java.util.Map;
 /**
  * @author Sergio Sanchez
  * @author Zsolt Berentey
+ * @author Daniel Sanz
  */
 public class UpgradeSocial extends UpgradeProcess {
 
@@ -407,6 +409,77 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected static BaseExtraDataGenerator _addAssetCommentExtraDataGenerator =
+		new BaseExtraDataGenerator() {
+			{
+				ACTIVITY_QUERY_PARAMS.put(1,
+					new KeyValuePair(Integer.class.getName(),
+						String.valueOf(TYPE_ADD_COMMENT)));
+
+				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_TYPE_CLAUSE;
+
+				ENTITY_SELECT_CLAUSE="subject";
+
+				ENTITY_FROM_CLAUSE="MBMessage";
+
+				ENTITY_WHERE_CLAUSE="messageId = ?";
+
+				EXTRA_DATA_MAP.put("title",
+					new KeyValuePair(String.class.getName(), "subject"));
+			}
+
+			// from SocialActivityConstants
+			public static final int TYPE_ADD_COMMENT = 10005;
+
+			/* WikiActivityKeys.ADD_COMMENT=3 is not used in 6.1 for comments
+			 * on wiki pages
+			 * BlogsActivityKeys.ADD_COMMENT=1 is not used in 6.1 for comments
+			 * on blog entries */
+
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId,
+					long userId, long classNameId, long classPK, int type,
+					String extraData)
+				throws SQLException {
+
+				long messageId = 0;
+
+				try {
+					JSONObject extraDataJson =
+						JSONFactoryUtil.createJSONObject(extraData);
+
+					messageId = extraDataJson.getLong("messageId");
+				}
+				catch (JSONException e) {
+				}
+
+				ps.setLong(1, messageId);
+			}
+
+			public JSONObject getExtraData(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
+
+				long messageId = 0;
+
+				try {
+					JSONObject extraDataJson =
+						JSONFactoryUtil.createJSONObject(extraData);
+
+					messageId = extraDataJson.getLong("messageId");
+				}
+				catch (JSONException e) {
+				}
+
+				JSONObject result =
+					super.getExtraData(entityResultSet, extraData);
+
+				result.put("messageId", messageId);
+
+				return result;
+			}
+		};
+
 	protected static ExtraDataGenerator _dlFileEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
@@ -508,6 +581,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 	static {
+		_extraDataGenerators.add(_addAssetCommentExtraDataGenerator);
 		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}

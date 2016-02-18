@@ -260,12 +260,28 @@ AUI.add(
 						submitForm(editForm.form);
 					},
 
-					_onCancel: function(event) {
+					_isSameState() {
 						var instance = this;
 
 						var currentState = instance.getState();
 
-						if (!_.isEqual(currentState, instance.initialState)) {
+						var ignoreInstanceId = function(value1, value2, key) {
+							var result = undefined;
+
+							if (key === 'instanceId') {
+								result = true;
+							}
+
+							return result;
+						}
+
+						return _.isEqual(currentState, instance.initialState, ignoreInstanceId);
+					},
+
+					_onCancel: function(event) {
+						var instance = this;
+
+						if (!instance._isSameState()) {
 							var url = event.currentTarget.get('href');
 
 							event.preventDefault();

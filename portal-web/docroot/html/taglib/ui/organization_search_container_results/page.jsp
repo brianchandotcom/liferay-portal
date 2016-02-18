@@ -21,11 +21,7 @@ LinkedHashMap<String, Object> organizationParams = (LinkedHashMap<String, Object
 SearchContainer organizationSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:organization-search-container-results:searchContainer");
 long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
-boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:useIndexer"));
-
-if (!searchTerms.isAdvancedSearch() && Validator.isNotNull(searchTerms.getKeywords())) {
-	useIndexer = true;
-}
+boolean forceDatabase = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:forceDatabase"));
 
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 %>
@@ -33,7 +29,7 @@ Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 <liferay-ui:search-container id="<%= organizationSearchContainer.getId(request, namespace) %>" searchContainer="<%= organizationSearchContainer %>">
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= useIndexer && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= !forceDatabase && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
 
 				<%
 				organizationParams.put("expandoAttributes", searchTerms.getKeywords());

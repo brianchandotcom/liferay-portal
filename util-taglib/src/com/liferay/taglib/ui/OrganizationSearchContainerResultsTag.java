@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
+	public void setForceDatabase(boolean forceDatabase) {
+		_forceDatabase = forceDatabase;
+	}
+
 	public void setOrganizationParams(
 		LinkedHashMap<String, Object> organizationParams) {
 
@@ -37,16 +41,12 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 		_parentOrganizationId = parentOrganizationId;
 	}
 
-	public void setUseIndexer(boolean useIndexer) {
-		_useIndexer = useIndexer;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_organizationParams = null;
 		_parentOrganizationId = 0;
 		_searchTerms = null;
-		_useIndexer = false;
+		_forceDatabase = false;
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 		_searchTerms = searchContainer.getSearchTerms();
 
 		request.setAttribute(
-			"liferay-ui:organization-search-container-results:useIndexer",
-			_useIndexer);
+			"liferay-ui:organization-search-container-results:forceDatabase",
+			_forceDatabase);
 		request.setAttribute(
 			"liferay-ui:organization-search-container-results:searchContainer",
 			searchContainer);
@@ -87,9 +87,9 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/organization_search_container_results/page.jsp";
 
+	private boolean _forceDatabase;
 	private LinkedHashMap<String, Object> _organizationParams;
 	private long _parentOrganizationId;
 	private DisplayTerms _searchTerms;
-	private boolean _useIndexer = false;
 
 }

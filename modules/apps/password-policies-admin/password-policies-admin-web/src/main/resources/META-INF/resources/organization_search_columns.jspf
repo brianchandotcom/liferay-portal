@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:organization-search-container-results
+	forceDatabase="<%= true %>"
 	organizationParams="<%= organizationParams %>"
 	parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>"
 />

@@ -54,6 +54,7 @@ if (tabs3.equals("available")) {
 	%>
 
 	<liferay-ui:organization-search-container-results
+		forceDatabase="<%= true %>"
 		organizationParams="<%= organizationParams %>"
 		parentOrganizationId="<%= parentOrganizationId %>"
 	/>

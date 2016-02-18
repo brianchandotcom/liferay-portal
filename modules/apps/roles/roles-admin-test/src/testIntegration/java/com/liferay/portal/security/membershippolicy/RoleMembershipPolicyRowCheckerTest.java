@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
-import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
+import com.liferay.roles.admin.search.SetUserRoleChecker;
+import com.liferay.roles.admin.search.UnsetUserRoleChecker;
 
 import javax.portlet.RenderResponse;
 

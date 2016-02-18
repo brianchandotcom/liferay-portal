@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -40,8 +41,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -71,6 +75,36 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		}
 
 		return curSelPlid;
+	}
+
+	public PortletURL getDeleteLayoutURL(long selPlid) {
+		PortletURL deleteLayoutURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.ACTION_PHASE);
+
+		deleteLayoutURL.setParameter(ActionRequest.ACTION_NAME, "deleteLayout");
+
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			RenderRequest.RENDER_PHASE);
+
+		redirectURL.setParameter(
+			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+		redirectURL.setParameter("mvcPath", "/panel/app/layouts_tree.jsp");
+
+		try {
+			redirectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		}
+		catch (WindowStateException e) {
+		}
+
+		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
+
+		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
+			deleteLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
+		}
+
+		return deleteLayoutURL;
 	}
 
 	public PortletURL getEmptyLayoutSetURL(boolean privateLayout) {
@@ -158,6 +192,9 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		portletURLs.put(
 			"addLayoutURL",
 			getAddLayoutURL(LayoutConstants.DEFAULT_PLID, null));
+		portletURLs.put(
+			"deleteLayoutURL",
+			getDeleteLayoutURL(LayoutConstants.DEFAULT_PLID));
 		portletURLs.put(
 			"editLayoutURL",
 			getEditLayoutURL(LayoutConstants.DEFAULT_PLID, null));

@@ -31,9 +31,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -123,17 +123,17 @@ public class SitesUtil {
 	}
 
 	public static Object[] deleteLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		return getSites().deleteLayout(actionRequest, actionResponse);
-	}
-
-	public static Object[] deleteLayout(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		return getSites().deleteLayout(request, response);
+	}
+
+	public static Object[] deleteLayout(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		return getSites().deleteLayout(portletRequest, portletResponse);
 	}
 
 	public static void deleteLayout(

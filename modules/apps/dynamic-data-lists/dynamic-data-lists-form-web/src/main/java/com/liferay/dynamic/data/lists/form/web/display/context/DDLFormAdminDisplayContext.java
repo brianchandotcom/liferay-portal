@@ -17,10 +17,10 @@ package com.liferay.dynamic.data.lists.form.web.display.context;
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -30,6 +30,9 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -51,8 +54,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -66,6 +72,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -173,7 +180,7 @@ public class DDLFormAdminDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = DDLFormAdminPortletUtil.getDisplayStyle(
+			_displayStyle = getDisplayStyle(
 				_renderRequest, _ddlFormWebConfiguration, getDisplayViews());
 		}
 
@@ -274,8 +281,7 @@ public class DDLFormAdminDisplayContext {
 		String orderByType = getOrderByType();
 
 		OrderByComparator<DDLRecordSet> orderByComparator =
-			DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(
-				orderByCol, orderByType);
+			getDDLRecordSetOrderByComparator(orderByCol, orderByType);
 
 		recordSetSearch.setOrderByCol(orderByCol);
 		recordSetSearch.setOrderByComparator(orderByComparator);
@@ -469,8 +475,63 @@ public class DDLFormAdminDisplayContext {
 		return ddmFormRenderingContext;
 	}
 
+	protected OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDLRecordSet> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new DDLRecordSetCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDLRecordSetModifiedDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new DDLRecordSetNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
 	protected DDMFormRenderer getDDMFormRenderer() {
 		return _ddmFormRenderer;
+	}
+
+	protected String getDisplayStyle(
+		PortletRequest portletRequest,
+		DDLFormWebConfiguration ddlFormWebConfiguration,
+		String[] displayViews) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			portletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style", ddlFormWebConfiguration.defaultDisplayView());
+		}
+		else if (ArrayUtil.contains(displayViews, displayStyle)) {
+			portalPreferences.setValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style", displayStyle);
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 	protected DDLRecord getRecord() throws PortalException {

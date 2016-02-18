@@ -64,6 +64,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
 	}
 
+	public DDMNavigationHelper getDDMNavigationHelper() {
+		return new DDMNavigationHelperImpl();
+	}
+
 	@Override
 	public String getDefaultTemplateLanguage() {
 		return TemplateConstants.LANG_TYPE_FTL;

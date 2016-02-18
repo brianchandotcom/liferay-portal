@@ -33,6 +33,8 @@ public interface DDMDisplay {
 
 	public String getAvailableFields();
 
+	public DDMNavigationHelper getDDMNavigationHelper();
+
 	public String getDefaultTemplateLanguage();
 
 	public String getEditStructureDefaultValuesURL(

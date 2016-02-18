@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.css-class-wrapper=service-access-policy-portlet",
+		"com.liferay.portlet.css-class-wrapper=portal-security-service-access-policy-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=Service Access Policy",

@@ -390,6 +390,12 @@ public class DDLFormPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
+		DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(
+			renderRequest, _ddlRecordSetLocalService);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormDisplayContext);
+
 		long recordSetId = PrefsParamUtil.getLong(
 			PortletPreferencesFactoryUtil.getPortletSetup(renderRequest),
 			renderRequest, "recordSetId");
@@ -408,12 +414,6 @@ public class DDLFormPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
-
-		DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(
-			renderRequest, _ddlRecordSetLocalService);
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormDisplayContext);
 	}
 
 	@Reference(unbind = "-")

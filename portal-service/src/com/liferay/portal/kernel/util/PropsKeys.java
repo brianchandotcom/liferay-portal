@@ -727,8 +727,6 @@ public interface PropsKeys {
 
 	public static final String DL_WEBDAV_SUBSTITUTION_CHAR = "dl.webdav.substitution.char";
 
-	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
-
 	public static final String DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = "dynamic.resource.servlet.allowed.paths";
 
 	public static final String EDITOR_WYSIWYG_DEFAULT = "editor.wysiwyg.default";

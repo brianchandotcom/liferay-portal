@@ -550,8 +550,6 @@ public class PropsValues {
 
 	public static String DL_WEBDAV_SUBSTITUTION_CHAR = PropsUtil.get(PropsKeys.DL_WEBDAV_SUBSTITUTION_CHAR);
 
-	public static String[] DOCKBAR_ADD_PORTLETS = PropsUtil.getArray(PropsKeys.DOCKBAR_ADD_PORTLETS);
-
 	public static final String[] DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS = PropsUtil.getArray(PropsKeys.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS);
 
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(PropsKeys.EDITOR_WYSIWYG_DEFAULT);

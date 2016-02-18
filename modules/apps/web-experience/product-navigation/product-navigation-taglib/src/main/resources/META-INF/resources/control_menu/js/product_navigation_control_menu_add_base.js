@@ -65,7 +65,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						if (instance.get('selected')) {
+						if (instance._isSelected()) {
 							var focusItem = instance.get('focusItem');
 
 							if (focusItem) {
@@ -213,6 +213,12 @@ AUI.add(
 						}
 
 						return portletMetaData;
+					},
+
+					_isSelected: function() {
+						var instance = this;
+
+						return instance.get('panelBody').hasClass('in');
 					},
 
 					_portletFeedback: function(portletId, portlet) {

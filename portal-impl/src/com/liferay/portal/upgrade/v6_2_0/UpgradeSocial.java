@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -476,6 +477,112 @@ public class UpgradeSocial extends UpgradeProcess {
 				long companyId, long groupId, long userId, long classNameId,
 				long classPK, int type, String extraData)
 			throws SQLException;
+	}
+
+	/**
+	 * Provides a partial implementation for ExtraDataGenerator which allows
+	 * subclasses to just define some attributes and provide the method
+	 * setEntityQueryParameters()
+	 */
+	protected static abstract class BaseExtraDataGenerator
+		implements ExtraDataGenerator {
+
+		public String ACTIVITY_CLASSNAME = "";
+
+		public static final String ACTIVITY_CLASSNAMEID_CLAUSE =
+			"classNameId = ?";
+
+		/** maps each position in the activity query to a pair <type,
+		 * string value of that type>. setActivityQueryParameters() will
+		 * fill the prepared statement accordingly
+		 */
+		public Map<Integer, KeyValuePair> ACTIVITY_QUERY_PARAMS =
+			new HashMap<Integer, KeyValuePair>();;
+
+		public String ACTIVITY_QUERY_WHERE_CLAUSE = "";
+
+		public static final String ACTIVITY_TYPE_CLAUSE = "type_ = ?";
+
+		public String ENTITY_SELECT_CLAUSE = "";
+
+		public String ENTITY_FROM_CLAUSE = "";
+
+		public String ENTITY_WHERE_CLAUSE = "";
+
+		/** maps each key in the extra data map JSON object to a pair
+		 * <type, field name of that type in the result set>.
+		 * getExtraData() will fill the JSON object from the result set
+		 * accordingly
+		 */
+		public Map<String, KeyValuePair> EXTRA_DATA_MAP =
+			new HashMap<String, KeyValuePair>();
+
+		public String getActivityQueryWhereClause() {
+			return ACTIVITY_QUERY_WHERE_CLAUSE;
+		}
+
+		public String getEntityQuery() {
+			return "select " + ENTITY_SELECT_CLAUSE +
+				" from " + ENTITY_FROM_CLAUSE +
+				" where " + ENTITY_WHERE_CLAUSE;
+		}
+
+		public JSONObject getExtraData(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+
+			if (EXTRA_DATA_MAP != null && EXTRA_DATA_MAP.size() > 0) {
+				for (Map.Entry<String, KeyValuePair> entry :
+						EXTRA_DATA_MAP.entrySet()) {
+
+					String entryKey = entry.getKey();
+
+					KeyValuePair entryValue = entry.getValue();
+
+					String clazz = entryValue.getKey();
+
+					if (clazz.equals(String.class.getName())) {
+						result.put(entryKey,
+							entityResultSet.getString(entryValue.getValue()));
+					}
+					else if (clazz.equals(Double.class.getName())) {
+						result.put(entryKey,
+							entityResultSet.getDouble(entryValue.getValue()));
+					}
+				}
+			}
+
+			return result;
+		}
+
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			if (ACTIVITY_QUERY_PARAMS != null &&
+				ACTIVITY_QUERY_PARAMS.size() > 0) {
+
+				for (Map.Entry<Integer, KeyValuePair> entry :
+						ACTIVITY_QUERY_PARAMS.entrySet()) {
+
+					Integer entryKey = entry.getKey();
+
+					KeyValuePair entryValue = entry.getValue();
+
+					String clazz = entryValue.getKey();
+
+					if (clazz.equals(Long.class.getName())) {
+						ps.setLong(entryKey,
+							Long.valueOf(entryValue.getValue()));
+					}
+					else if (clazz.equals(Integer.class.getName())) {
+						ps.setInt(entryKey,
+							Integer.valueOf(entryValue.getValue()));
+					}
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);

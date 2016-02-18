@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
 import java.io.Externalizable;

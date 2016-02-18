@@ -21,7 +21,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
 import org.osgi.util.tracker.ServiceTracker;

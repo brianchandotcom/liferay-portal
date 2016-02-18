@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-
 import com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil;
 
 import java.rmi.RemoteException;
@@ -80,7 +79,8 @@ public class SAPEntryServiceSoap {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
 					titleMapValues);
 
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.addSAPEntry(allowedServiceSignatures,
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.addSAPEntry(allowedServiceSignatures,
 					defaultSAPEntry, enabled, name, titleMap, serviceContext);
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
@@ -95,7 +95,8 @@ public class SAPEntryServiceSoap {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap deleteSAPEntry(
 		long sapEntryId) throws RemoteException {
 		try {
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.deleteSAPEntry(sapEntryId);
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.deleteSAPEntry(sapEntryId);
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}
@@ -110,7 +111,8 @@ public class SAPEntryServiceSoap {
 		com.liferay.portal.security.service.access.policy.model.SAPEntrySoap sapEntry)
 		throws RemoteException {
 		try {
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.deleteSAPEntry(com.liferay.portal.security.service.access.policy.model.impl.SAPEntryModelImpl.toModel(
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.deleteSAPEntry(com.liferay.portal.security.service.access.policy.model.impl.SAPEntryModelImpl.toModel(
 						sapEntry));
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
@@ -125,8 +127,8 @@ public class SAPEntryServiceSoap {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap fetchSAPEntry(
 		long companyId, java.lang.String name) throws RemoteException {
 		try {
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.fetchSAPEntry(companyId,
-					name);
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.fetchSAPEntry(companyId, name);
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}
@@ -187,7 +189,8 @@ public class SAPEntryServiceSoap {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap getSAPEntry(
 		long sapEntryId) throws RemoteException {
 		try {
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.getSAPEntry(sapEntryId);
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.getSAPEntry(sapEntryId);
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}
@@ -201,8 +204,8 @@ public class SAPEntryServiceSoap {
 	public static com.liferay.portal.security.service.access.policy.model.SAPEntrySoap getSAPEntry(
 		long companyId, java.lang.String name) throws RemoteException {
 		try {
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.getSAPEntry(companyId,
-					name);
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.getSAPEntry(companyId, name);
 
 			return com.liferay.portal.security.service.access.policy.model.SAPEntrySoap.toSoapModel(returnValue);
 		}
@@ -224,7 +227,8 @@ public class SAPEntryServiceSoap {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
 					titleMapValues);
 
-			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue = SAPEntryServiceUtil.updateSAPEntry(sapEntryId,
+			com.liferay.portal.security.service.access.policy.model.SAPEntry returnValue =
+				SAPEntryServiceUtil.updateSAPEntry(sapEntryId,
 					allowedServiceSignatures, defaultSAPEntry, enabled, name,
 					titleMap, serviceContext);
 

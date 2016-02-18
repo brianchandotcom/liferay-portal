@@ -269,17 +269,16 @@ AUI.add(
 
 						field.set('strings', instance.get('strings'));
 
-						var fieldHiddenAttributeMap =
-						{
-						'ddm-separator' : instance.MAP_HIDDEN_FIELD_ATTRS.separator,
-						'checkbox' : instance.MAP_HIDDEN_FIELD_ATTRS.checkbox,
-						'default' : instance.MAP_HIDDEN_FIELD_ATTRS.DEFAULT
+						var fieldHiddenAttributeMap = {
+							checkbox: instance.MAP_HIDDEN_FIELD_ATTRS.checkbox,
+							'ddm-separator': instance.MAP_HIDDEN_FIELD_ATTRS.separator,
+							default: instance.MAP_HIDDEN_FIELD_ATTRS.DEFAULT
 						};
 
 						var hiddenAtributes = fieldHiddenAttributeMap[field.get('type')];
 
 						if (!hiddenAtributes) {
-							hiddenAtributes = fieldHiddenAttributeMap['default'];
+							hiddenAtributes = fieldHiddenAttributeMap.default;
 						}
 
 						field.set('hiddenAttributes', hiddenAtributes);

@@ -30,9 +30,9 @@
 		</if>
 
 		<if>
-			<equals arg1="${portletOption}" arg2="Look and Feel Configuration" />
+			<equals arg1="${portletOption}" arg2="Look and Feel" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel Configuration" />
+				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
 			</then>
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Configuration" />
@@ -47,7 +47,7 @@
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var portletOption. Must be (Look and Feel Configuration|Configuration|Export / Import)." />
+				<fail message="Invalid var portletOption. Must be (Look and Feel|Configuration|Export / Import)." />
 			</else>
 		</if>
 	</command>

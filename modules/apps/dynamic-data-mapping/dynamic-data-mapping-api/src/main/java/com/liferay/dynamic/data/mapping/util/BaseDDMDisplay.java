@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,16 +89,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(
-			liferayPortletRequest, "redirect");
-
-		if (Validator.isNull(redirect) || Validator.isNull(portletResource)) {
-			return getViewTemplatesURL(
-				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK, resourceClassNameId);
-		}
-
-		return redirect;
+		return getViewTemplatesURL(
+			liferayPortletRequest, liferayPortletResponse, classNameId, classPK,
+			resourceClassNameId);
 	}
 
 	@Override
@@ -243,9 +235,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) throws Exception {
 
-		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
-
-		return backURL;
+		return ParamUtil.getString(liferayPortletRequest, "backURL");
 	}
 
 	@Override
@@ -254,15 +244,22 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
+		if (navigationHelper.startsOnSelectStructures(liferayPortletRequest)) {
+			return ParamUtil.getString(liferayPortletRequest, "redirect");
+		}
+		else {
+			String portletId = PortletProviderUtil.getPortletId(
+				DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
 
-		return portletURL.toString();
+			portletURL.setParameter("mvcPath", "/view.jsp");
+
+			return portletURL.toString();
+		}
 	}
 
 	@Override

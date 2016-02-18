@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -28,7 +29,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Set;
 
@@ -83,16 +84,25 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(
-			liferayPortletRequest, "redirect");
+		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
 
-		if (Validator.isNull(redirect)) {
-			return getViewTemplatesURL(
-				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK, resourceClassNameId);
+		if (navigationHelper.startsOnEditTemplates(liferayPortletRequest)) {
+			return StringPool.BLANK;
 		}
 
-		return redirect;
+		if (navigationHelper.startsOnSelectTemplates(liferayPortletRequest)) {
+			return ParamUtil.getString(liferayPortletRequest, "redirect");
+		}
+
+		if (navigationHelper.startsOnTemplates(liferayPortletRequest)) {
+			return getViewTemplatesURL(
+				liferayPortletRequest, liferayPortletResponse, classNameId, 0,
+				resourceClassNameId);
+		}
+
+		return getViewTemplatesURL(
+			liferayPortletRequest, liferayPortletResponse, classNameId, classPK,
+			resourceClassNameId);
 	}
 
 	@Override
@@ -133,7 +143,13 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		if (classPK <= 0) {
+		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
+
+		if (navigationHelper.startsOnEditStructures(liferayPortletRequest)) {
+			return StringPool.BLANK;
+		}
+
+		if (navigationHelper.startsOnTemplates(liferayPortletRequest)) {
 			String backURL = ParamUtil.getString(
 				liferayPortletRequest, "backURL");
 

@@ -28,20 +28,21 @@ import javax.portlet.ResourceRequest;
  */
 public class ActionUtil {
 
-	public static List<TrashEntry> getEntries(ResourceRequest request)
+	public static List<TrashEntry> getTrashEntries(ResourceRequest request)
 		throws Exception {
 
-		long[] entryIds = ParamUtil.getLongValues(request, "rowIds");
+		long[] trashEntryIds = ParamUtil.getLongValues(request, "rowIds");
 
-		List<TrashEntry> entries = new ArrayList<>();
+		List<TrashEntry> trashEntries = new ArrayList<>();
 
-		for (long entryId : entryIds) {
-			TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(entryId);
+		for (long trashEntryId : trashEntryIds) {
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+				trashEntryId);
 
-			entries.add(entry);
+			trashEntries.add(trashEntry);
 		}
 
-		return entries;
+		return trashEntries;
 	}
 
 }

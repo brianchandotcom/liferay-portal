@@ -17,23 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TrashEntry entry = trashDisplayContext.getEntry();
+TrashEntry trashEntry = trashDisplayContext.getTrashEntry();
+
 TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
+
 TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:choose>
-		<c:when test="<%= entry != null %>">
+		<c:when test="<%= trashEntry != null %>">
 			<c:choose>
-				<c:when test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
+				<c:when test="<%= trashHandler.isRestorable(trashEntry.getClassPK()) && !trashHandler.isInTrashContainer(trashEntry.getClassPK()) %>">
 					<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
 						<portlet:param name="redirect" value="<%= trashDisplayContext.getViewContentRedirectURL() %>" />
-						<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+						<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 					</portlet:actionURL>
 
 					<%
-					String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'}); void(0);";
+					String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'}); void(0);";
 					%>
 
 					<liferay-ui:icon
@@ -43,16 +45,16 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 						url="<%= taglibURL %>"
 					/>
 				</c:when>
-				<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
+				<c:when test="<%= !trashHandler.isRestorable(trashEntry.getClassPK()) && trashHandler.isMovable() %>">
 
 					<%
-					String trashHandlerEntryContainerModelClassName = trashHandler.getContainerModelClassName(entry.getClassPK());
+					String trashHandlerEntryContainerModelClassName = trashHandler.getContainerModelClassName(trashEntry.getClassPK());
 					%>
 
 					<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-						<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
+						<portlet:param name="classNameId" value="<%= String.valueOf(trashEntry.getClassNameId()) %>" />
+						<portlet:param name="classPK" value="<%= String.valueOf(trashEntry.getClassPK()) %>" />
 						<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandlerEntryContainerModelClassName)) %>" />
 					</portlet:renderURL>
 
@@ -73,7 +75,7 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 			<c:if test="<%= trashHandler.isDeletable() %>">
 				<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
 					<portlet:param name="redirect" value="<%= trashDisplayContext.getViewContentRedirectURL() %>" />
-					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+					<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 				</portlet:actionURL>
 
 				<%

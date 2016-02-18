@@ -27,13 +27,13 @@ if (searchContainer != null) {
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-TrashEntry entry = null;
+TrashEntry trashEntry = null;
 
 if (row != null) {
-	entry = (TrashEntry)row.getObject();
+	trashEntry = (TrashEntry)row.getObject();
 }
 else {
-	entry = (TrashEntry)request.getAttribute(WebKeys.TRASH_ENTRY);
+	trashEntry = (TrashEntry)request.getAttribute(WebKeys.TRASH_ENTRY);
 }
 %>
 

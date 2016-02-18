@@ -127,6 +127,24 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 	static {
 		_classNamesMap.put(
+			"com.liferay.portal.model.Company",
+			"com.liferay.portal.kernel.model.Company");
+		_classNamesMap.put(
+			"com.liferay.portal.model.Group",
+			"com.liferay.portal.kernel.model.Group");
+		_classNamesMap.put(
+			"com.liferay.portal.model.LayoutRevision",
+			"com.liferay.portal.kernel.model.LayoutRevision");
+		_classNamesMap.put(
+			"com.liferay.portal.model.Role",
+			"com.liferay.portal.kernel.model.Role");
+		_classNamesMap.put(
+			"com.liferay.portal.model.User",
+			"com.liferay.portal.kernel.model.User");
+		_classNamesMap.put(
+			"com.liferay.portal.model.UserGroup",
+			"com.liferay.portal.kernel.model.UserGroup");
+		_classNamesMap.put(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			"com.liferay.journal.model.JournalArticle");
 		_classNamesMap.put(

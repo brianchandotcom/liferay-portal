@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -297,7 +298,11 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		extends DDMFormTemplateSynchonizer {
 
 		public MockDDMFormTemplateSynchronizer(DDMForm structureDDMForm) {
-			super(structureDDMForm);
+			super(
+				structureDDMForm,
+				DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer(),
+				DDMFormJSONSerializerUtil.getDDMFormJSONSerializer(),
+				DDMTemplateLocalServiceUtil.getService());
 		}
 
 		@Override

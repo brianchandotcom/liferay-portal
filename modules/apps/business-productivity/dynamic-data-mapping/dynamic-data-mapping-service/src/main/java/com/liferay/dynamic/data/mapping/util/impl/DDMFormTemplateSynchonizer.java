@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.util.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,8 +36,16 @@ import java.util.Queue;
  */
 public class DDMFormTemplateSynchonizer {
 
-	public DDMFormTemplateSynchonizer(DDMForm structureDDMForm) {
+	public DDMFormTemplateSynchonizer(
+		DDMForm structureDDMForm,
+		DDMFormJSONDeserializer ddmFormJSONDeserializer,
+		DDMFormJSONSerializer ddmFormJSONSerializer,
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
 		_structureDDMForm = structureDDMForm;
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	public void setDDMFormTemplates(List<DDMTemplate> ddmFormTemplates) {
@@ -46,7 +54,7 @@ public class DDMFormTemplateSynchonizer {
 
 	public void synchronize() throws PortalException {
 		for (DDMTemplate ddmTemplate : getDDMFormTemplates()) {
-			DDMForm templateDDMForm = DDMFormJSONDeserializerUtil.deserialize(
+			DDMForm templateDDMForm = _ddmFormJSONDeserializer.deserialize(
 				ddmTemplate.getScript());
 
 			synchronizeDDMFormFields(
@@ -158,14 +166,17 @@ public class DDMFormTemplateSynchonizer {
 	protected void updateDDMTemplate(
 		DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-		String script = DDMFormJSONSerializerUtil.serialize(templateDDMForm);
+		String script = _ddmFormJSONSerializer.serialize(templateDDMForm);
 
 		ddmTemplate.setScript(script);
 
-		DDMTemplateLocalServiceUtil.updateDDMTemplate(ddmTemplate);
+		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
+	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<>();
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DDMForm _structureDDMForm;
 
 }

@@ -65,7 +65,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.xuggler.XugglerInstallException" %><%@
 page import="com.liferay.portal.kernel.xuggler.XugglerUtil" %><%@
-page import="com.liferay.portal.model.*" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@

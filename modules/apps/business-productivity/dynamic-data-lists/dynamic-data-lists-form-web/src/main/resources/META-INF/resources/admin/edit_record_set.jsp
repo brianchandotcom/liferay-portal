@@ -202,8 +202,10 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 										{
 											dataProviders: <%= ddlFormAdminDisplayContext.getSerializedDDMDataProviders() %>,
 											definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+											description: '<%= HtmlUtil.escapeJS(description) %>',
 											editForm: event.form,
 											layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
+											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',
 											publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
 											recordSetId: <%= recordSetId %>

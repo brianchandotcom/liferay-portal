@@ -50,10 +50,6 @@ AUI.add(
 
 					panelBody: {
 						setter: A.one
-					},
-
-					selected: {
-						validator: Lang.isBoolean
 					}
 				},
 

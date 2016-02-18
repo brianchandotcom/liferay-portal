@@ -57,8 +57,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
-			panelBody: contentPanelBody,
-			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')
+			panelBody: contentPanelBody
 		}
 	);
 

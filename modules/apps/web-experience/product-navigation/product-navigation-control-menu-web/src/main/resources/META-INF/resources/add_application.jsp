@@ -104,8 +104,7 @@ refererURL.setParameter("updateLayout", "true");
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />applicationList'),
 			nodeSelector: '.drag-content-item',
-			panelBody: applicationPanelBody,
-			selected: !A.one('#<portlet:namespace />addApplicationForm').ancestor().hasClass('hide')
+			panelBody: applicationPanelBody
 		}
 	);
 

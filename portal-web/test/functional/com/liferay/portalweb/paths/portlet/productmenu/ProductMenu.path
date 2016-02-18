@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_SELECTED</td>
+	<td>//li[@class='active']//*[@data-qa-id='app' and contains(@data-title,'${key_portlet}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE</td>
 	<td>//div[contains(@id,'siteSelector')]//div[h5[.='${key_site}']]</td>
 	<td></td>

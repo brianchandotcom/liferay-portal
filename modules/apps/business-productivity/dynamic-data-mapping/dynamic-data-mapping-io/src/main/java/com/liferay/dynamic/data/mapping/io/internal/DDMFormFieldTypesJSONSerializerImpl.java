@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -45,7 +44,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes)
 		throws PortalException {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
 			jsonArray.put(toJSONObject(ddmFormFieldType));
@@ -83,7 +82,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 	protected JSONObject toJSONObject(DDMFormFieldType ddmFormFieldType)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Map<String, Object> ddmFormFieldTypeProperties =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(

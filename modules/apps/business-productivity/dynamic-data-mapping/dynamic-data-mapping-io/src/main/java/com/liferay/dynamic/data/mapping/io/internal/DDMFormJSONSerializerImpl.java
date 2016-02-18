@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -47,7 +48,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 	@Override
 	public String serialize(DDMForm ddmForm) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addAvailableLanguageIds(jsonObject, ddmForm.getAvailableLocales());
 		addDefaultLanguageId(jsonObject, ddmForm.getDefaultLocale());
@@ -59,7 +60,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	protected void addAvailableLanguageIds(
 		JSONObject jsonObject, Set<Locale> availableLocales) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Locale availableLocale : availableLocales) {
 			jsonArray.put(LocaleUtil.toLanguageId(availableLocale));
@@ -132,7 +133,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 	protected DDMForm getDDMFormFieldTypeSettingsDDMForm(String type) {
 		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(type);
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
 
 		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
 			DefaultDDMFormFieldTypeSettings.class;
@@ -168,6 +169,18 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	protected JSONArray toJSONArray(DDMFormFieldOptions ddmFormFieldOptions) {
 		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
 
@@ -175,10 +188,10 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 			return null;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String optionValue : optionValues) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put("value", optionValue);
 			jsonObject.put(
@@ -192,7 +205,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	}
 
 	protected JSONArray toJSONArray(List<DDMFormField> ddmFormFields) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			jsonArray.put(toJSONObject(ddmFormField));
@@ -202,7 +215,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	}
 
 	protected JSONObject toJSONObject(DDMFormField ddmFormField) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addProperties(jsonObject, ddmFormField);
 
@@ -218,7 +231,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 			return null;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
 			"errorMessage", ddmFormFieldValidation.getErrorMessage());
@@ -234,7 +247,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 			return null;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Locale availableLocale : localizedValue.getAvailableLocales()) {
 			jsonObject.put(
@@ -244,5 +257,8 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 		return jsonObject;
 	}
+
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private JSONFactory _jsonFactory;
 
 }

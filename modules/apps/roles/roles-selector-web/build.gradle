@@ -5,6 +5,7 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	provided project(":apps:roles:roles-admin-api")
 	provided project(":frontend:frontend-taglib")
 }
 

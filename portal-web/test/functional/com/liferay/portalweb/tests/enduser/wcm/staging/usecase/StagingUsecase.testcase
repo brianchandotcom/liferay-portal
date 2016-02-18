@@ -3815,6 +3815,8 @@
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+
 		<var locator="Staging#HISTORY_VERSION" name="historyVersion" />
 
 		<execute macro="Page#gotoPG">

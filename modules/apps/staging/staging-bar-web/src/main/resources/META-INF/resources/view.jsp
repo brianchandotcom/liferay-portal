@@ -224,7 +224,7 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<span id="<portlet:namespace />layoutRevisionDetails">
+										<span class="staging-layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />

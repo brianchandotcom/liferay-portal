@@ -137,6 +137,10 @@
 		label {
 			margin-bottom: 0px;
 
+			@include sm() {
+				float: left;
+			}
+
 			span {
 				span.toggle-switch-handle {
 					color: #FFF;
@@ -146,6 +150,17 @@
 				}
 			}
 		}
+	}
+}
+
+.staging-layout-revision-details {
+	@include sm() {
+		@include align-items(center);
+
+		display: flex;
+
+		@include flex(0 1 50%);
+		@include justify-content(space-between);
 	}
 }
 

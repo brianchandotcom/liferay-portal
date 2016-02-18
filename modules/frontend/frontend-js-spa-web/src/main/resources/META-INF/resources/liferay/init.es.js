@@ -40,12 +40,14 @@ Liferay.Util.submitForm = function(form) {
 	async.nextTick(
 		() => {
 			let formElement = form.getDOM();
+			let url = formElement.action;
 
-			if (formElement === globals.capturedFormElement) {
+			if (app.canNavigate(url) && formElement.method !== 'get') {
 				Liferay.Util._submitLocked = false;
 
-				var uri = new Uri(formElement.action);
-				app.navigate(uri.getPathname() + uri.getSearch() + uri.getHash());
+				globals.capturedFormElement = formElement;
+
+				app.navigate(app.getPath(url));
 			}
 			else {
 				formElement.submit();

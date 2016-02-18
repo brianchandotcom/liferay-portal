@@ -164,18 +164,30 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
+<aui:script use="liferay-item-selector-dialog">
 	AUI.$('#<portlet:namespace />selectFolderButton').on(
 		'click',
 		function(event) {
-			Liferay.Util.selectEntity(
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
+					eventName: '<portlet:namespace />selectFolder',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var folderData = {
+									idString: 'newFolderId',
+									idValue: selectedItem.folderId,
+									nameString: 'folderName',
+									nameValue: selectedItem.folderName
+								};
+
+								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+							}
+						}
 					},
-					id: '<portlet:namespace />selectFolder',
+					'strings.add': '<liferay-ui:message key="done" />',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -183,19 +195,11 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 						<portlet:param name="folderId" value="<%= String.valueOf(journalMovesEntriesDisplayContext.getNewFolderId()) %>" />
 					</portlet:renderURL>
 
-					uri: '<%= selectFolderURL.toString() %>'
-				},
-				function(event) {
-					var folderData = {
-						idString: 'newFolderId',
-						idValue: event.folderid,
-						nameString: 'folderName',
-						nameValue: event.foldername
-					};
-
-					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+					url: '<%= selectFolderURL %>'
 				}
 			);
+
+			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

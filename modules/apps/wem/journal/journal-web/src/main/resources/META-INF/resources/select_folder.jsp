@@ -110,6 +110,30 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+<aui:script use="aui-base">
+	var selectFolderFm = A.one('#<portlet:namespace />selectFolderFm');
+
+	selectFolderFm.delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			selectFolderFm.all('.selector-button').removeClass('selected');
+
+			currentTarget.addClass('selected');
+
+			var data = {
+				folderId: currentTarget.attr('data-folderid'),
+				folderName: currentTarget.attr('data-foldername')
+			};
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: data
+				}
+			);
+		},
+		'.selector-button'
+	);
 </aui:script>

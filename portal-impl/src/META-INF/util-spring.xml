@@ -303,6 +303,9 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.servlet.DirectServletRegistry" class="com.liferay.portal.servlet.DirectServletRegistryImpl" />
+	<bean id="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil" class="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil">
+		<property name="directServletRegistry" ref="com.liferay.portal.kernel.servlet.DirectServletRegistry" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil" class="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil">
 		<property name="lastSessionRecorderHelper">
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.model.SAPEntryModel;
 import com.liferay.portal.security.service.access.policy.model.SAPEntrySoap;
@@ -933,7 +932,8 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.security.service.access.policy.model.SAPEntry");
+		sb.append(
+			"com.liferay.portal.security.service.access.policy.model.SAPEntry");
 		sb.append("</model-name>");
 
 		sb.append(

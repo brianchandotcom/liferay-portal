@@ -27,11 +27,10 @@ import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersisten
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
-
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
 import com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 

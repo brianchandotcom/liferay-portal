@@ -102,16 +102,12 @@ public class SortFactoryImpl implements SortFactory {
 		return indexer.getSortField(orderByCol, type);
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
-		_indexerRegistry = indexerRegistry;
-	}
-
 	private static final Sort[] _DEFAULT_SORTS = new Sort[] {
 		new Sort(null, Sort.SCORE_TYPE, false),
 		new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true)
 	};
 
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 }

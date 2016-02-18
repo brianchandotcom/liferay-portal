@@ -86,23 +86,6 @@ public class ElasticsearchEngineConfigurator
 		super.initialize();
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
-	protected void setIndexSearcher(IndexSearcher indexSearcher) {
-		_indexSearcher = indexSearcher;
-	}
-
-	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
-	protected void setIndexWriter(IndexWriter indexWriter) {
-		_indexWriter = indexWriter;
-	}
-
 	@Reference(
 		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
 	)
@@ -128,9 +111,15 @@ public class ElasticsearchEngineConfigurator
 		_searchEngines.remove(searchEngineId);
 	}
 
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+
+	@Reference(target = "(!(search.engine.impl=*))")
 	private IndexSearcher _indexSearcher;
+
+	@Reference(target = "(!(search.engine.impl=*))")
 	private IndexWriter _indexWriter;
+
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 

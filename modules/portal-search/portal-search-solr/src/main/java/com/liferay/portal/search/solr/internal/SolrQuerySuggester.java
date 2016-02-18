@@ -229,16 +229,6 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		return ArrayUtil.append(groupIds, _GLOBAL_GROUP_ID);
 	}
 
-	@Reference(unbind = "-")
-	protected void setNGramQueryBuilder(NGramQueryBuilder nGramQueryBuilder) {
-		_nGramQueryBuilder = nGramQueryBuilder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSolrClientManager(SolrClientManager solrClientManager) {
-		_solrClientManager = solrClientManager;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -374,8 +364,13 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		SolrQuerySuggester.class);
 
 	private double _distanceThreshold;
+
+	@Reference
 	private NGramQueryBuilder _nGramQueryBuilder;
+
+	@Reference
 	private SolrClientManager _solrClientManager;
+
 	private StringDistance _stringDistance = new LevensteinDistance();
 
 }

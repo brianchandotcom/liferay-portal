@@ -70,37 +70,16 @@ public class ElasticsearchSuggesterTranslator
 		return _termSuggesterTranslator.translate(termSuggester);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAggregateSuggesteTranslator(
-		AggregateSuggesterTranslator aggregateSuggesteTranslator) {
-
-		_aggregateSuggesteTranslator = aggregateSuggesteTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompletionSuggesterTranslator(
-		CompletionSuggesterTranslator completionSuggesterTranslator) {
-
-		_completionSuggesterTranslator = completionSuggesterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPhraseSuggesterTranslator(
-		PhraseSuggesterTranslator phraseSuggesterTranslator) {
-
-		_phraseSuggesterTranslator = phraseSuggesterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermSuggesterTranslator(
-		TermSuggesterTranslator termSuggesterTranslator) {
-
-		_termSuggesterTranslator = termSuggesterTranslator;
-	}
-
+	@Reference
 	private AggregateSuggesterTranslator _aggregateSuggesteTranslator;
+
+	@Reference
 	private CompletionSuggesterTranslator _completionSuggesterTranslator;
+
+	@Reference
 	private PhraseSuggesterTranslator _phraseSuggesterTranslator;
+
+	@Reference
 	private TermSuggesterTranslator _termSuggesterTranslator;
 
 }

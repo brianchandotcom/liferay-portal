@@ -131,101 +131,40 @@ public class ElasticsearchQueryTranslator
 		return _wildcardQueryTranslator.translate(wildcardQuery);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBooleanQueryTranslator(
-		BooleanQueryTranslator booleanQueryTranslator) {
-
-		_booleanQueryTranslator = booleanQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDisMaxQueryTranslator(
-		DisMaxQueryTranslator disMaxQueryTranslator) {
-
-		_disMaxQueryTranslator = disMaxQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFuzzyQueryTranslator(
-		FuzzyQueryTranslator fuzzyQueryTranslator) {
-
-		_fuzzyQueryTranslator = fuzzyQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMatchAllQueryTranslator(
-		MatchAllQueryTranslator matchAllQueryTranslator) {
-
-		_matchAllQueryTranslator = matchAllQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMatchQueryTranslator(
-		MatchQueryTranslator matchQueryTranslator) {
-
-		_matchQueryTranslator = matchQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMoreLikeThisQueryTranslator(
-		MoreLikeThisQueryTranslator moreLikeThisQueryTranslator) {
-
-		_moreLikeThisQueryTranslator = moreLikeThisQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMultiMatchQueryTranslator(
-		MultiMatchQueryTranslator multiMatchQueryTranslator) {
-
-		_multiMatchQueryTranslator = multiMatchQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setNestedQueryTranslator(
-		NestedQueryTranslator nestedQueryTranslator) {
-
-		_nestedQueryTranslator = nestedQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStringQueryTranslator(
-		StringQueryTranslator stringQueryTranslator) {
-
-		_stringQueryTranslator = stringQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermQueryTranslator(
-		TermQueryTranslator termQueryTranslator) {
-
-		_termQueryTranslator = termQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermRangeQueryTranslator(
-		TermRangeQueryTranslator termRangeQueryTranslator) {
-
-		_termRangeQueryTranslator = termRangeQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWildcardQueryTranslator(
-		WildcardQueryTranslator wildcardQueryTranslator) {
-
-		_wildcardQueryTranslator = wildcardQueryTranslator;
-	}
-
+	@Reference
 	private BooleanQueryTranslator _booleanQueryTranslator;
+
+	@Reference
 	private DisMaxQueryTranslator _disMaxQueryTranslator;
+
+	@Reference
 	private FuzzyQueryTranslator _fuzzyQueryTranslator;
+
+	@Reference
 	private MatchAllQueryTranslator _matchAllQueryTranslator;
+
+	@Reference
 	private MatchQueryTranslator _matchQueryTranslator;
+
+	@Reference
 	private MoreLikeThisQueryTranslator _moreLikeThisQueryTranslator;
+
+	@Reference
 	private MultiMatchQueryTranslator _multiMatchQueryTranslator;
+
+	@Reference
 	private NestedQueryTranslator _nestedQueryTranslator;
+
+	@Reference
 	private StringQueryTranslator _stringQueryTranslator;
+
+	@Reference
 	private TermQueryTranslator _termQueryTranslator;
+
+	@Reference
 	private TermRangeQueryTranslator _termRangeQueryTranslator;
+
+	@Reference
 	private WildcardQueryTranslator _wildcardQueryTranslator;
 
 }

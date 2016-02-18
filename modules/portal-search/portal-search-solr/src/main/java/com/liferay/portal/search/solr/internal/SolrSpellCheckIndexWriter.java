@@ -159,22 +159,13 @@ public class SolrSpellCheckIndexWriter
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSolrClientManager(SolrClientManager solrClientManager) {
-		_solrClientManager = solrClientManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSolrUpdateDocumentCommand(
-		SolrUpdateDocumentCommand solrUpdateDocumentCommand) {
-
-		_solrUpdateDocumentCommand = solrUpdateDocumentCommand;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSpellCheckIndexWriter.class);
 
+	@Reference
 	private SolrClientManager _solrClientManager;
+
+	@Reference
 	private SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
 
 }

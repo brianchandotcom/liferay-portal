@@ -82,14 +82,10 @@ public class IndexerPostProcessorRegistry {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
-		_indexerRegistry = indexerRegistry;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerPostProcessorRegistry.class);
 
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 }

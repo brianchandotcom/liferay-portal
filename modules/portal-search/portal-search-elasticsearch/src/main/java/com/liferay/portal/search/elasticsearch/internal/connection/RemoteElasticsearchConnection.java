@@ -189,15 +189,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		setTransportAddresses(SetUtil.fromArray(transportAddresses));
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
+	@Reference
 	private Props _props;
+
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

@@ -140,16 +140,10 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		return indexSearcher.suggestKeywordQueries(searchContext, max);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchEngineHelper(
-		SearchEngineHelper searchEngineHelper) {
-
-		_searchEngineHelper = searchEngineHelper;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexSearcherHelperImpl.class);
 
+	@Reference
 	private SearchEngineHelper _searchEngineHelper;
 
 }

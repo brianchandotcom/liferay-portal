@@ -188,109 +188,43 @@ public class SolrFilterTranslator
 		return sb.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBooleanQueryTranslator(
-		BooleanFilterTranslator booleanQueryTranslator) {
-
-		_booleanQueryTranslator = booleanQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDateRangeTermFilterTranslator(
-		DateRangeTermFilterTranslator dateRangeTermFilterTranslator) {
-
-		_dateRangeTermFilterTranslator = dateRangeTermFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExistsFilterTranslator(
-		ExistsFilterTranslator existsFilterTranslator) {
-
-		_existsFilterTranslator = existsFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGeoBoundingBoxFilterTranslator(
-		GeoBoundingBoxFilterTranslator geoBoundingBoxFilterTranslator) {
-
-		_geoBoundingBoxFilterTranslator = geoBoundingBoxFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGeoDistanceFilterTranslator(
-		GeoDistanceFilterTranslator geoDistanceFilterTranslator) {
-
-		_geoDistanceFilterTranslator = geoDistanceFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGeoDistanceRangeFilterTranslator(
-		GeoDistanceRangeFilterTranslator geoDistanceRangeFilterTranslator) {
-
-		_geoDistanceRangeFilterTranslator = geoDistanceRangeFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGeoPolygonFilterTranslator(
-		GeoPolygonFilterTranslator geoPolygonFilterTranslator) {
-
-		_geoPolygonFilterTranslator = geoPolygonFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMissingFilterTranslator(
-		MissingFilterTranslator missingFilterTranslator) {
-
-		_missingFilterTranslator = missingFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPrefixFilterTranslator(
-		PrefixFilterTranslator prefixFilterTranslator) {
-
-		_prefixFilterTranslator = prefixFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setQueryFilterTranslator(
-		QueryFilterTranslator queryFilterTranslator) {
-
-		_queryFilterTranslator = queryFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRangeTermFilterTranslator(
-		RangeTermFilterTranslator rangeTermFilterTranslator) {
-
-		_rangeTermFilterTranslator = rangeTermFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermFilterTranslator(
-		TermFilterTranslator termFilterTranslator) {
-
-		_termFilterTranslator = termFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermsFilterTranslator(
-		TermsFilterTranslator termsFilterTranslator) {
-
-		_termsFilterTranslator = termsFilterTranslator;
-	}
-
+	@Reference
 	private BooleanFilterTranslator _booleanQueryTranslator;
+
+	@Reference
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
+
+	@Reference
 	private ExistsFilterTranslator _existsFilterTranslator;
+
+	@Reference
 	private GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
+
+	@Reference
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
+
+	@Reference
 	private GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
+
+	@Reference
 	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
+
+	@Reference
 	private MissingFilterTranslator _missingFilterTranslator;
+
+	@Reference
 	private PrefixFilterTranslator _prefixFilterTranslator;
+
+	@Reference
 	private QueryFilterTranslator _queryFilterTranslator;
+
+	@Reference
 	private RangeTermFilterTranslator _rangeTermFilterTranslator;
+
+	@Reference
 	private TermFilterTranslator _termFilterTranslator;
+
+	@Reference
 	private TermsFilterTranslator _termsFilterTranslator;
 
 }

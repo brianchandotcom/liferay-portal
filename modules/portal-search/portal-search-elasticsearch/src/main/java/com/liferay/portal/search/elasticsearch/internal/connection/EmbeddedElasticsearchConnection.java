@@ -263,18 +263,6 @@ public class EmbeddedElasticsearchConnection
 		super.removeSettingsContributor(settingsContributor);
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterSettingsContext(
-		ClusterSettingsContext clusterSettingsContext) {
-
-		_clusterSettingsContext = clusterSettingsContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private void configureNetworking(Settings.Builder builder) {
 		String networkBindHost = elasticsearchConfiguration.networkBindHost();
 
@@ -317,8 +305,12 @@ public class EmbeddedElasticsearchConnection
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
+	@Reference
 	private ClusterSettingsContext _clusterSettingsContext;
+
 	private Node _node;
+
+	@Reference
 	private Props _props;
 
 }

@@ -112,13 +112,6 @@ public class CertAuthPoolingHttpClientFactory
 		addHttpRequestInterceptor(httpRequestInterceptor);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSslSocketFactoryBuilder(
-		SSLSocketFactoryBuilder sslSocketFactoryBuilder) {
-
-		_sslSocketFactoryBuilder = sslSocketFactoryBuilder;
-	}
-
 	protected void unsetHttpRequestInterceptor(
 		HttpRequestInterceptor httpRequestInterceptor) {
 
@@ -127,6 +120,8 @@ public class CertAuthPoolingHttpClientFactory
 
 	private volatile SolrHttpClientFactoryConfiguration
 		_solrHttpClientFactoryConfiguration;
+
+	@Reference
 	private SSLSocketFactoryBuilder _sslSocketFactoryBuilder;
 
 }

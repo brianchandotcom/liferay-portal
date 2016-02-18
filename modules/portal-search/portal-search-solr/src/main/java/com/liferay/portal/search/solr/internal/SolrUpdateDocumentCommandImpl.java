@@ -114,22 +114,13 @@ public class SolrUpdateDocumentCommandImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSolrClientManager(SolrClientManager solrClientManager) {
-		_solrClientManager = solrClientManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSolrDocumentFactory(
-		SolrDocumentFactory solrDocumentFactory) {
-
-		_solrDocumentFactory = solrDocumentFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrUpdateDocumentCommandImpl.class);
 
+	@Reference
 	private SolrClientManager _solrClientManager;
+
+	@Reference
 	private SolrDocumentFactory _solrDocumentFactory;
 
 }

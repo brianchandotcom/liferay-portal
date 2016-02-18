@@ -90,7 +90,7 @@ String message = "add";
 				if (classNameId > 0) {
 					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-					if (permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+					if (PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 						templateHandlers.add(templateHandler);
 					}
 				}
@@ -102,7 +102,7 @@ String message = "add";
 					while (itr.hasNext()) {
 						TemplateHandler templateHandler = itr.next();
 
-						if (!permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+						if (!PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 							itr.remove();
 						}
 					}

@@ -17,7 +17,9 @@ package com.liferay.ant.bnd.jsp;
 import aQute.lib.io.IO;
 
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.util.Set;
 
 import org.junit.Assert;

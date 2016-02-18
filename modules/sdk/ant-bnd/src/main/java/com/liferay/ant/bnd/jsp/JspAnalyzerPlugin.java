@@ -313,8 +313,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected Set<String> getTaglibURIs(String originalContent) {
-		String content =
-			originalContent.replaceAll("<%--[\\s\\S]*?--%>","");
+		String content = originalContent.replaceAll("<%--[\\s\\S]*?--%>","");
 
 		int contentX = -1;
 		int contentY = content.length();

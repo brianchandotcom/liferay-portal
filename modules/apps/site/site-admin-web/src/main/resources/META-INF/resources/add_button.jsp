@@ -19,6 +19,8 @@
 <c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
 
 	<%
+	Group group = siteAdminDisplayContext.getGroup();
+
 	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 
 	boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
@@ -26,6 +28,10 @@
 
 	<liferay-portlet:renderURL varImpl="addSiteURL">
 		<portlet:param name="mvcPath" value="/edit_site.jsp" />
+
+		<c:if test="<%= (group != null) && siteAdminDisplayContext.hasAddChildSitePermission(group) %>">
+			<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</c:if>
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>

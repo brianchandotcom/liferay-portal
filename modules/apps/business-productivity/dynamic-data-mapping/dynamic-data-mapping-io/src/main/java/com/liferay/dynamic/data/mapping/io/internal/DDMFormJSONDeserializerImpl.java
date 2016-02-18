@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +41,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -53,7 +54,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		throws PortalException {
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				serializedDDMForm);
 
 			DDMForm ddmForm = new DDMForm();
@@ -95,7 +96,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			return new DDMFormFieldOptions();
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			serializedDDMFormFieldProperty);
 
 		return getDDMFormFieldOptions(jsonArray);
@@ -139,7 +140,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			return ddmFormFieldValidation;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedDDMFormFieldProperty);
 
 		ddmFormFieldValidation.setExpression(
@@ -160,7 +161,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			return localizedValue;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedDDMFormFieldProperty);
 
 		Iterator<String> itr = jsonObject.keys();
@@ -239,7 +240,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 	protected DDMForm getDDMFormFieldTypeSettingsDDMForm(String type) {
 		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(type);
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
 
 		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
 			DefaultDDMFormFieldTypeSettings.class;
@@ -345,11 +346,23 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		ddmForm.setDDMFormFields(ddmFormFields);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
 	protected void setDDMFormLocalizedValuesDefaultLocale(DDMForm ddmForm) {
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			setDDMFormFieldLocalizedValuesDefaultLocale(
 				ddmFormField, ddmForm.getDefaultLocale());
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
 	}
 
 	protected void setNestedDDMFormField(
@@ -364,5 +377,8 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
 	}
+
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private JSONFactory _jsonFactory;
 
 }

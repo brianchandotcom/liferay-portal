@@ -109,7 +109,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 			<portlet:param name="portletResource" value="<%= portletResource %>" />
 		</portlet:renderURL>
 
-		<aui:button href="<%= addConfigurationTemplateURL %>" value="create-configuration-template" />
+		<aui:button href="<%= addConfigurationTemplateURL %>" value="save-current-configuration-as-template" />
 	</div>
 
 	<portlet:actionURL name="deleteArchivedSetups" var="deleteArchivedSetupsURL">

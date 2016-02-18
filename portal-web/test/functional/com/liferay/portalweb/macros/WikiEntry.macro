@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addPageContent">
-		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="addPageContentViaSource">
@@ -16,7 +16,7 @@
 	</command>
 
 	<command name="addPageTitle">
-		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="cancel">

@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Site Admin Web
+Bundle-SymbolicName: com.liferay.site.admin.web
+Bundle-Version: 1.0.0
+Include-Resource: @../../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+Web-ContextPath: /sites-admin-web
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

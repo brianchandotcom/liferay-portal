@@ -1,0 +1,9 @@
+Bundle-Name: Staging Test
+Bundle-SymbolicName: com.liferay.staging.test
+Bundle-Version: 1.0.0
+Include-Resource:\
+	test-classes/integration,\
+	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

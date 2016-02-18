@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portlet Display Template Web
+Bundle-SymbolicName: com.liferay.portlet.display.template.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

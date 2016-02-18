@@ -1,0 +1,18 @@
+Bundle-Name: Liferay Journal Web
+Bundle-SymbolicName: com.liferay.journal.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.journal.web.asset,\
+	com.liferay.journal.web.constants,\
+	com.liferay.journal.web.dynamic.data.mapping.util,\
+	com.liferay.journal.web.social,\
+	com.liferay.journal.web.util
+Include-Resource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+Liferay-JS-Config: /META-INF/resources/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
+Web-ContextPath: /journal-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

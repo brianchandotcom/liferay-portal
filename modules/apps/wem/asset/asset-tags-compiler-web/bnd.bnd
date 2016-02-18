@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Asset Tags Compiler Web
+Bundle-SymbolicName: com.liferay.asset.tags.compiler.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

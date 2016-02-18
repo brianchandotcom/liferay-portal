@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portlet Configuration Toolbar Contributor Locator API
+Bundle-SymbolicName: com.liferay.portlet.configuration.toolbar.contributor.locator.api
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

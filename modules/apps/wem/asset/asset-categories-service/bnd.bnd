@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Asset Categories Service
+Bundle-SymbolicName: com.liferay.asset.categories.service
+Bundle-Version: 1.0.0
+Export-package: com.liferay.asset.exportimport.staged.model.repository
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Layout Set Prototype Implementation
+Bundle-SymbolicName: com.liferay.layout.set.prototype.impl
+Bundle-Version: 1.0.0
+Export-package: com.liferay.layout.set.prototype.lar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

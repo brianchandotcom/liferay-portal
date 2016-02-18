@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Journal Content Search Web
+Bundle-SymbolicName: com.liferay.journal.content.search.web
+Bundle-Version: 1.0.0
+
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
+Web-ContextPath: /journal-content-search-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

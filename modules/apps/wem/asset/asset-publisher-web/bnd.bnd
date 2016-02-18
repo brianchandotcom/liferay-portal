@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Asset Publisher Web
+Bundle-SymbolicName: com.liferay.asset.publisher.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.asset.publisher.web,\
+	com.liferay.asset.publisher.web.constants,\
+	com.liferay.asset.publisher.web.display.context,\
+	com.liferay.asset.publisher.web.util
+Include-Resource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
+Web-ContextPath: /asset-publisher-web
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

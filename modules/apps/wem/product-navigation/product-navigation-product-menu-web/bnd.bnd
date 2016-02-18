@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Product Navigation Product Menu Web
+Bundle-SymbolicName: com.liferay.product.navigation.product.menu.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.product.navigation.product.menu.web.constants,\
+	com.liferay.product.navigation.product.menu.web.display.context
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Product Navigation
+Web-ContextPath: /product-navigation-product-menu-web
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

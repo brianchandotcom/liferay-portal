@@ -19,6 +19,12 @@ package com.liferay.trash.web.constants;
  */
 public class TrashWebKeys {
 
+	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
+
 	public static final String TRASH_ENTRIES = "TRASH_ENTRIES";
+
+	public static final String TRASH_ENTRY = "TRASH_ENTRY";
+
+	public static final String TRASH_RENDERER = "TRASH_RENDERER";
 
 }

@@ -43,7 +43,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 								<c:when test="<%= trashEntry.getRootEntry() == null %>">
 
 									<%
-									request.setAttribute(WebKeys.TRASH_ENTRY, trashEntry);
+									request.setAttribute(TrashWebKeys.TRASH_ENTRY, trashEntry);
 									%>
 
 									<liferay-util:include page="/entry_action.jsp" servletContext="<%= application %>" />
@@ -51,7 +51,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 								<c:otherwise>
 
 									<%
-									request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
+									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
 									%>
 
 									<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />

@@ -272,7 +272,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 						<c:otherwise>
 
 							<%
-							request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
+							request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
 							%>
 
 							<liferay-ui:search-container-column-jsp

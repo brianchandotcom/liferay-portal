@@ -584,6 +584,8 @@ public interface WebKeys {
 
 	public static final String TAB_INDEX = "TAB_INDEX";
 
+	public static final String TAG_RESOURCE_BUNDLE = "TAG_RESOURCE_BUNDLE";
+
 	public static final String TAGS_LAYOUT_ENTRIES = "TAGS_LAYOUT_ENTRIES";
 
 	public static final String TARGET_NAME = "TARGET_NAME";

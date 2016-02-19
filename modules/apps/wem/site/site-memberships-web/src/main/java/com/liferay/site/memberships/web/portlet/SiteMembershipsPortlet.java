@@ -17,11 +17,14 @@ package com.liferay.site.memberships.web.portlet;
 import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
@@ -38,14 +41,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
+import com.liferay.site.memberships.web.display.context.SiteMembershipsDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
@@ -59,8 +61,12 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,38 +103,35 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long[] addOrganizationIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
 
 		_organizationService.addGroupOrganizations(
-			themeDisplay.getSiteGroupId(), addOrganizationIds);
+			group.getGroupId(), addOrganizationIds);
 	}
 
 	public void addGroupUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long[] addUserGroupIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
 
 		_userGroupService.addGroupUserGroups(
-			themeDisplay.getSiteGroupId(), addUserGroupIds);
+			group.getGroupId(), addUserGroupIds);
 	}
 
 	public void addGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
-		long groupId = themeDisplay.getSiteGroupId();
+		long groupId = group.getGroupId();
 
 		long[] addUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
@@ -139,15 +142,14 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
 
-		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+		LiveUsers.joinGroup(group.getCompanyId(), groupId, addUserIds);
 	}
 
 	public void deleteGroupOrganizations(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long[] removeOrganizationIds = null;
 
@@ -163,15 +165,14 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 
 		_organizationService.unsetGroupOrganizations(
-			themeDisplay.getSiteGroupId(), removeOrganizationIds);
+			group.getGroupId(), removeOrganizationIds);
 	}
 
 	public void deleteGroupUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long[] removeUserGroupIds = null;
 
@@ -187,17 +188,16 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 
 		_userGroupService.unsetGroupUserGroups(
-			themeDisplay.getSiteGroupId(), removeUserGroupIds);
+			group.getGroupId(), removeUserGroupIds);
 	}
 
 	public void deleteGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
-		long groupId = themeDisplay.getSiteGroupId();
+		long groupId = group.getGroupId();
 
 		long[] removeUserIds = null;
 
@@ -217,16 +217,14 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
-		LiveUsers.leaveGroup(
-			themeDisplay.getCompanyId(), groupId, removeUserIds);
+		LiveUsers.leaveGroup(group.getCompanyId(), groupId, removeUserIds);
 	}
 
 	public void editUserGroupGroupRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
 
@@ -234,7 +232,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		List<UserGroupGroupRole> userGroupGroupRoles =
 			_userGroupGroupRoleLocalService.getUserGroupGroupRoles(
-				userGroupId, themeDisplay.getSiteGroupId());
+				userGroupId, group.getGroupId());
 
 		List<Long> curRoleIds = ListUtil.toList(
 			userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_ID_ACCESSOR);
@@ -248,9 +246,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 
 		_userGroupGroupRoleService.addUserGroupGroupRoles(
-			userGroupId, themeDisplay.getSiteGroupId(), roleIds);
+			userGroupId, group.getGroupId(), roleIds);
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
-			userGroupId, themeDisplay.getSiteGroupId(),
+			userGroupId, group.getGroupId(),
 			ArrayUtil.toLongArray(removeRoleIds));
 	}
 
@@ -264,14 +262,13 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRoles(
-				user.getUserId(), themeDisplay.getSiteGroupId());
+				user.getUserId(), group.getGroupId());
 
 		List<Long> curRoleIds = ListUtil.toList(
 			userGroupRoles, UsersAdmin.USER_GROUP_ROLE_ID_ACCESSOR);
@@ -285,9 +282,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 
 		_userGroupRoleService.addUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(), roleIds);
+			user.getUserId(), group.getGroupId(), roleIds);
 		_userGroupRoleService.deleteUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(),
+			user.getUserId(), group.getGroupId(),
 			ArrayUtil.toLongArray(removeRoleIds));
 	}
 
@@ -295,8 +292,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group group = getGroup(actionRequest, actionResponse);
 
 		long membershipRequestId = ParamUtil.getLong(
 			actionRequest, "membershipRequestId");
@@ -317,7 +313,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 					membershipRequestId);
 
 			LiveUsers.joinGroup(
-				themeDisplay.getCompanyId(), membershipRequest.getGroupId(),
+				group.getCompanyId(), membershipRequest.getGroupId(),
 				new long[] {membershipRequest.getUserId()});
 		}
 
@@ -445,6 +441,22 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		_userService = userService;
+	}
+
+	private Group getGroup(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		SiteMembershipsDisplayContext siteMembershipsDisplayContext =
+			new SiteMembershipsDisplayContext(request, liferayPortletResponse);
+
+		return siteMembershipsDisplayContext.getGroup();
 	}
 
 	private MembershipRequestService _membershipRequestService;

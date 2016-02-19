@@ -42,7 +42,8 @@ public class BaseSourceProcessorTest {
 		Assert.assertEquals(
 			"./modules/apps/web-experience-management/staging/staging-lang",
 			_baseSourceProcessor.getModuleLangDir(
-				"./modules/apps/web-experience-management/staging/staging-bar-web"));
+				"./modules/apps/web-experience-management/staging/" +
+					"staging-bar-web"));
 		Assert.assertEquals(
 			"./modules/apps/workflow/workflow-lang",
 			_baseSourceProcessor.getModuleLangDir(

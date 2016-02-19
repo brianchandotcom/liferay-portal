@@ -13,6 +13,10 @@ body {
 			overflow-x: hidden;
 		}
 	}
+
+	&.sidenav-transition #wrapper {
+		@include transition(padding 0.5s ease);
+	}
 }
 
 .lfr-product-menu-panel.sidenav-menu-slider {

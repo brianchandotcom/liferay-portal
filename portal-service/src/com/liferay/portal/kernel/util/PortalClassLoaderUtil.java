@@ -45,7 +45,7 @@ public class PortalClassLoaderUtil {
 		try {
 			clazz.getMethod("destroy");
 
-			_classLoader = new URLClassLoader(new URL[0], classLoader) {};
+			_classLoader = new URLClassLoader(new URL[0], classLoader);
 		}
 		catch (NoSuchMethodException nsme) {
 			_classLoader = classLoader;

@@ -41,7 +41,6 @@ String backURL = ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, lifer
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
 	<aui:input name="status" type="hidden" value="<%= structureVersion.getStatus() %>" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 

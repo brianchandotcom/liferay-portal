@@ -245,7 +245,7 @@ request.setAttribute("view_user.jsp-user", user2);
 											for (Group curGroup : results) {
 											%>
 
-												<li class="user-information-sites <%= SocialOfficeServiceUtil.isSocialOfficeGroup(curGroup.getGroupId()) ? "social-office-enabled" : "social-office-disabled" %>"><a href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
+												<li class="user-information-sites social-office-disabled"><a href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
 
 											<%
 											}

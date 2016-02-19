@@ -1,7 +1,7 @@
 buildscript {
 	dependencies {
-		classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:3.0.0"
-		classpath "com.liferay:com.liferay.ant.bnd:1.0.9"
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "3.0.0"
+		classpath group: "com.liferay", name: "com.liferay.ant.bnd", version: "1.0.9"
 	}
 
 	repositories {
@@ -23,17 +23,17 @@ buildscript {
 apply plugin: "biz.aQute.bnd.builder"
 
 dependencies {
-	compile "biz.aQute.bnd:biz.aQute.bnd.annotation:2.4.0"
-	compile "com.liferay.portal:portal-service:7.0.0-SNAPSHOT"
-	compile "com.liferay.portal:util-bridges:7.0.0-SNAPSHOT"
-	compile "com.liferay.portal:util-java:7.0.0-SNAPSHOT"
-	compile "com.liferay.portal:util-taglib:7.0.0-SNAPSHOT"
-	compile "javax.portlet:portlet-api:2.0"
-	compile "javax.servlet:servlet-api:2.5"
-	compile "org.osgi:org.osgi.compendium:5.0.0"
-	compile "org.osgi:org.osgi.core:6.0.0"
-	compile "org.slf4j:slf4j-api:1.7.7"
-	compile "org.slf4j:slf4j-simple:1.7.7"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "2.4.0"
+	compile group: "com.liferay.portal", name: "portal-service", version: "7.0.0-SNAPSHOT"
+	compile group: "com.liferay.portal", name: "util-bridges", version: "7.0.0-SNAPSHOT"
+	compile group: "com.liferay.portal", name: "util-java", version: "7.0.0-SNAPSHOT"
+	compile group: "com.liferay.portal", name: "util-taglib", version: "7.0.0-SNAPSHOT"
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "javax.servlet", name: "servlet-api", version: "2.5"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.7"
+	compile group: "org.slf4j", name: "slf4j-simple", version: "1.7.7"
 	compile project(":_api_")
 	compile project(":_svc_")
 }

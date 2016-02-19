@@ -89,6 +89,10 @@ public class AssetCategoriesDisplayContext {
 	public SearchContainer getVocabulariesSearchContainer()
 		throws PortalException {
 
+		if (_vocabulariesSearchContainer != null) {
+			return _vocabulariesSearchContainer;
+		}
+
 		SearchContainer vocabulariesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking" +
@@ -155,7 +159,37 @@ public class AssetCategoriesDisplayContext {
 
 		vocabulariesSearchContainer.setResults(vocabularies);
 
-		return vocabulariesSearchContainer;
+		_vocabulariesSearchContainer = vocabulariesSearchContainer;
+
+		return _vocabulariesSearchContainer;
+	}
+
+	public boolean isDisabledVocabulariesManagementBar()
+		throws PortalException {
+
+		SearchContainer vocabulariesSearchContainer =
+			getVocabulariesSearchContainer();
+
+		if (vocabulariesSearchContainer.getTotal() <= 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowVocabulariesSearch() throws PortalException {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		SearchContainer vocabulariesSearchContainer =
+			getVocabulariesSearchContainer();
+
+		if (vocabulariesSearchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _displayStyle;
@@ -164,5 +198,6 @@ public class AssetCategoriesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SearchContainer _vocabulariesSearchContainer;
 
 }

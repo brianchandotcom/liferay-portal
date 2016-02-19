@@ -25,7 +25,6 @@ AUI.add(
 			iconExpanded: 'icon-file',
 			iconHitAreaCollapsed: 'tree-hitarea icon-plus',
 			iconHitAreaExpanded: 'tree-hitarea icon-minus',
-			iconLeaf: 'icon-leaf',
 			iconLoading: 'icon-refresh',
 			iconUncheck: 'icon-check'
 		};
@@ -237,8 +236,7 @@ AUI.add(
 				if (nodeType === 'embedded' || nodeType === 'link_to_layout' || nodeType === 'url') {
 					cssIcons = {
 						iconCollapsed: iconCssClassName,
-						iconExpanded: iconCssClassName,
-						iconLeaf: iconCssClassName
+						iconExpanded: iconCssClassName
 					};
 				}
 
@@ -262,7 +260,7 @@ AUI.add(
 					expanded: expanded,
 					id: id,
 					io: instance._getNodeIOConfig(),
-					leaf: !hasChildren,
+					leaf: false,
 					paginator: {
 						limit: maxChildren,
 						offsetParam: 'start',

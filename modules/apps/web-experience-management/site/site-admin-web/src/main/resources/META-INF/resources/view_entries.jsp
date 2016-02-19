@@ -16,8 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
+String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
+
+SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-groupSearchContainer");
+%>
+
 <liferay-ui:search-container
-	id="sites"
+	id="<%= searchContainerId %>"
 	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= groupSearch %>"
 >

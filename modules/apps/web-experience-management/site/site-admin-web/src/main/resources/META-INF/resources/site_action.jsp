@@ -31,7 +31,7 @@ if (row != null) {
 	userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 }
 else {
-	group = siteAdminDisplayContext.getGroup();
+	group = (Group)request.getAttribute("info_panel.jsp-group");
 
 	List<String> organizationNames = SitesUtil.getOrganizationNames(group, user);
 

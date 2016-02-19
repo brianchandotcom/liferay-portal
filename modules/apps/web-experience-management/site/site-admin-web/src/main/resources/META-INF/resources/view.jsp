@@ -48,45 +48,51 @@ if (group != null) {
 	<liferay-util:param name="searchContainerId" value="sites" />
 </liferay-util:include>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<div class="sidenav-menu-slider">
-		<div class="sidebar sidebar-default sidenav-menu">
-			<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
-				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-			</c:if>
+<div id="<portlet:namespace />sitesContainer">
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site/info_panel" var="sidebarPanelURL">
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-frontend:sidebar-panel
+			resourceURL="<%= sidebarPanelURL %>"
+			searchContainerId="sites"
+		>
+			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:sidebar-panel>
+
+		<div class="sidenav-content">
+			<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
+
+			<aui:form action="<%= deleteGroupsURL %>" name="fm">
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+				<div id="breadcrumb">
+					<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+				</div>
+
+				<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
+
+					<%
+					NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
+
+					PKParser pkParser = new PKParser(nslse.getMessage());
+
+					Group curGroup = GroupLocalServiceUtil.getGroup(pkParser.getLong("groupId"));
+					%>
+
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
+				</liferay-ui:error>
+
+				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
+				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
+				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+
+				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="searchContainerId" value="sites" />
+				</liferay-util:include>
+			</aui:form>
 		</div>
-	</div>
-
-	<div class="sidenav-content">
-		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
-
-		<aui:form action="<%= deleteGroupsURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-
-			<div id="breadcrumb">
-				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-			</div>
-
-			<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
-
-				<%
-				NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
-
-				PKParser pkParser = new PKParser(nslse.getMessage());
-
-				Group curGroup = GroupLocalServiceUtil.getGroup(pkParser.getLong("groupId"));
-				%>
-
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
-			</liferay-ui:error>
-
-			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
-			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
-			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
-
-			<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="searchContainerId" value="sites" />
-			</liferay-util:include>
-		</aui:form>
 	</div>
 </div>

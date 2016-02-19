@@ -606,12 +606,6 @@ public interface WebKeys {
 
 	public static final String TRANSLATOR_TRANSLATION = "TRANSLATOR_TRANSLATION";
 
-	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
-
-	public static final String TRASH_ENTRY = "TRASH_ENTRY";
-
-	public static final String TRASH_RENDERER = "TRASH_RENDERER";
-
 	public static final String TREE_GROUP_ID = "TREE_GROUP_ID";
 
 	public static final String TREE_NODE_ID = "TREE_NODE_ID";

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
-</portlet:actionURL>
+package com.liferay.trash.web.constants;
 
-<liferay-ui:icon-delete
-	url="<%= deleteEntryURL %>"
-/>
+/**
+ * @author Jürgen Kappler
+ */
+public class TrashWebKeys {
+
+	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
+
+	public static final String TRASH_ENTRIES = "TRASH_ENTRIES";
+
+	public static final String TRASH_ENTRY = "TRASH_ENTRY";
+
+	public static final String TRASH_RENDERER = "TRASH_RENDERER";
+
+}

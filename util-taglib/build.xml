@@ -128,7 +128,7 @@
 		</java>
 
 		<copy overwrite="true" todir="${doc.taglibs.dir}/images" preservelastmodified="true">
-			<fileset dir="${project.dir}/util-taglib/src/META-INF/images"/>
+			<fileset dir="${project.dir}/util-taglib/src/META-INF/images" />
 		</copy>
 	</target>
 

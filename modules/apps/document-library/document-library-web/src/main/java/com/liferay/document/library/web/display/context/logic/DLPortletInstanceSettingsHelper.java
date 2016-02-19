@@ -170,21 +170,6 @@ public class DLPortletInstanceSettingsHelper {
 		return folderColumns;
 	}
 
-	public boolean isFolderMenuVisible() {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.isShowFolderMenu();
-	}
-
 	public boolean isShowActions() {
 		String portletName = _dlRequestHelper.getPortletName();
 		String portletResource = _dlRequestHelper.getPortletResource();

@@ -285,7 +285,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
 					<portlet:renderURL var="addMultipleFileEntriesURL">
-						<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/upload_multiple_file_entries" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

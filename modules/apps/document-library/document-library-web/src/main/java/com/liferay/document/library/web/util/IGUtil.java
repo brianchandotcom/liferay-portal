@@ -65,11 +65,11 @@ public class IGUtil {
 				"mvcRenderCommandName", "/image_gallery_display/view");
 		}
 
-		long defaultFolderId = getDefaultFolderId(request);
+		long rootFolderId = getRootFolderId(request);
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
-		if ((folder != null) && (folder.getFolderId() != defaultFolderId)) {
+		if ((folder != null) && (folder.getFolderId() != rootFolderId)) {
 			ancestorFolders = folder.getAncestors();
 
 			int indexOfRootFolder = -1;
@@ -77,7 +77,7 @@ public class IGUtil {
 			for (int i = 0; i < ancestorFolders.size(); i++) {
 				Folder ancestorFolder = ancestorFolders.get(i);
 
-				if (defaultFolderId == ancestorFolder.getFolderId()) {
+				if (rootFolderId == ancestorFolder.getFolderId()) {
 					indexOfRootFolder = i;
 				}
 			}
@@ -118,7 +118,7 @@ public class IGUtil {
 		addPortletBreadcrumbEntries(folder, request, renderResponse);
 	}
 
-	protected static long getDefaultFolderId(HttpServletRequest request)
+	protected static long getRootFolderId(HttpServletRequest request)
 		throws Exception {
 
 		PortletPreferences portletPreferences =

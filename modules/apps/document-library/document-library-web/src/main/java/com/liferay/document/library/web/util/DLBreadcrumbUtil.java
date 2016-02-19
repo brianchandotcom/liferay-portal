@@ -120,7 +120,7 @@ public class DLBreadcrumbUtil {
 			DLPortletInstanceSettings.getInstance(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
-		data.put("folder-id", dlPortletInstanceSettings.getDefaultFolderId());
+		data.put("folder-id", dlPortletInstanceSettings.getRootFolderId());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -141,7 +141,7 @@ public class DLBreadcrumbUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		long defaultFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		boolean ignoreRootFolder = ParamUtil.getBoolean(
 			request, "ignoreRootFolder");
@@ -151,12 +151,12 @@ public class DLBreadcrumbUtil {
 				DLPortletInstanceSettings.getInstance(
 					themeDisplay.getLayout(), portletDisplay.getId());
 
-			defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
+			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 		}
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
-		if ((folder != null) && (folder.getFolderId() != defaultFolderId)) {
+		if ((folder != null) && (folder.getFolderId() != rootFolderId)) {
 			ancestorFolders = folder.getAncestors();
 
 			int indexOfRootFolder = -1;
@@ -164,7 +164,7 @@ public class DLBreadcrumbUtil {
 			for (int i = 0; i < ancestorFolders.size(); i++) {
 				Folder ancestorFolder = ancestorFolders.get(i);
 
-				if (defaultFolderId == ancestorFolder.getFolderId()) {
+				if (rootFolderId == ancestorFolder.getFolderId()) {
 					indexOfRootFolder = i;
 				}
 			}
@@ -198,7 +198,7 @@ public class DLBreadcrumbUtil {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(folderId != defaultFolderId)) {
+			(folderId != rootFolderId)) {
 
 			Folder unescapedFolder = folder.toUnescapedModel();
 

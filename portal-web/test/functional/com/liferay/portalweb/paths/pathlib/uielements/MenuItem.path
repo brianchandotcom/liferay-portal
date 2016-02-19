@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>ADD_FOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Folder')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>

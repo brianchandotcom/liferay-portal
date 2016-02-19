@@ -39,7 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(service = JournalServiceSystemEventVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.journal.service"},
+	service = VerifyProcess.class
+)
 public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 
 	@Override

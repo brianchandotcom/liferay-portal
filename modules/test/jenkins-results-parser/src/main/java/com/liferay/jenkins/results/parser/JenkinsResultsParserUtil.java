@@ -157,9 +157,7 @@ public class JenkinsResultsParserUtil {
 		return writer.toString();
 	}
 
-	public static String getAxisVariable(JSONObject jsonObject)
-		throws Exception {
-
+	public static String getAxis(JSONObject jsonObject) throws Exception {
 		JSONArray actionsJSONArray = (JSONArray)jsonObject.get("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {

@@ -29,13 +29,13 @@ public class UnstableMessageUtil {
 
 		sb.append("<ol>");
 
+		int count = 0;
+
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
 				runBuildURL + "testReport/api/json"));
 
 		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
-
-		int messageCount = 0;
 
 		for (int i = 0; i < suitesJSONArray.length(); i++) {
 			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
@@ -53,26 +53,26 @@ public class UnstableMessageUtil {
 					continue;
 				}
 
-				messageCount++;
+				count++;
 
-				if (messageCount == _MAX_COUNT) {
+				if (count == _MAX_COUNT) {
 					sb.append("<li>...</li></ol>");
 
 					return sb.toString();
 				}
+
+				sb.append("<li>");
 
 				JSONObject runBuildURLJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(
 						JenkinsResultsParserUtil.getLocalURL(
 							runBuildURL + "api/json"));
 
-				String axis = JenkinsResultsParserUtil.getAxisVariable(
+				String axis = JenkinsResultsParserUtil.getAxis(
 					runBuildURLJSONObject);
-
 				String jobVariant = JenkinsResultsParserUtil.getJobVariant(
 					runBuildURLJSONObject);
 
-				sb.append("<li>");
 				sb.append(
 					_getRunBuildAnchor(
 						axis, caseJSONObject, jobVariant, runBuildURL));
@@ -97,22 +97,21 @@ public class UnstableMessageUtil {
 					sb.append("/console\">Console Output</a>");
 				}
 
-				String errorDetails = caseJSONObject.isNull(
-					"errorDetails") ?
-						null : caseJSONObject.getString("errorDetails");
-				String errorStackTrace = caseJSONObject.isNull(
-					"errorStackTrace") ?
-						null : caseJSONObject.getString("errorStackTrace");
-
 				sb.append("<pre>");
-				sb.append(_processError(errorDetails, errorStackTrace));
-				sb.append("</pre>");
 
+				String errorDetails = caseJSONObject.optString("errorDetails");
+				String errorStackTrace = caseJSONObject.optString(
+					"errorStackTrace");
+
+				sb.append(_processError(errorDetails, errorStackTrace));
+
+				sb.append("</pre>");
 				sb.append("</li>");
 			}
 		}
 
 		sb.append("</ol>");
+
 		return sb.toString();
 	}
 
@@ -207,7 +206,7 @@ public class UnstableMessageUtil {
 			message = errorDetails + "\n" + message;
 		}
 
-		return _truncate((_MAX_LENGTH/_MAX_COUNT), message);
+		return _truncate((_MAX_LENGTH / _MAX_COUNT), message);
 	}
 
 	private static String _truncate(int maxLength, String message) {

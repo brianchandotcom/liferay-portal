@@ -62,7 +62,7 @@ public class GitHubJobMessageUtil {
 
 				failureAndUnstableCount++;
 
-				if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
+				if (failureAndUnstableCount == (_MAX_COUNT + 1)) {
 					sb.append("<li>...</li>");
 
 					break;
@@ -73,7 +73,7 @@ public class GitHubJobMessageUtil {
 
 			sb.append("</ol>");
 
-			if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
+			if (failureAndUnstableCount == (_MAX_COUNT + 1)) {
 				sb.append("<p><strong>Click <a href=\"");
 				sb.append(buildURL);
 				sb.append(
@@ -210,7 +210,7 @@ public class GitHubJobMessageUtil {
 		return sb.toString();
 	}
 
-	private static final int _MAX_MESSAGE_COUNT = 3;
+	private static final int _MAX_COUNT = 3;
 
 	private static class JobResult {
 

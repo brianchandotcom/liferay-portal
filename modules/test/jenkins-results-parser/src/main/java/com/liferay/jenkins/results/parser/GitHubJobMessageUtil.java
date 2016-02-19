@@ -36,11 +36,11 @@ public class GitHubJobMessageUtil {
 
 		List<JobResult> jobResults = getGitHubJobMessage(buildURL, project);
 
-		int failureCount = countByResult(jobResults, "FAILURE");
-		int unstableCount = countByResult(jobResults, "UNSTABLE");
-		int successCount = countByResult(jobResults, "SUCCESS");
+		int failureCount = _getResultCount(jobResults, "FAILURE");
+		int successCount = _getResultCount(jobResults, "SUCCESS");
+		int unstableCount = _getResultCount(jobResults, "UNSTABLE");
 
-		if (jobResults.size() > 0) {
+		if (!jobResults.isEmpty()) {
 			JobResult firstJobResult = jobResults.get(0);
 			int failureAndUnstableCount = 0;
 
@@ -114,7 +114,7 @@ public class GitHubJobMessageUtil {
 		project.setProperty("report.html.content", sb.toString());
 	}
 
-	private static int countByResult(
+	private static int _getResultCount(
 		List<JobResult> jobResults, String result) {
 
 		int count = 0;
@@ -128,10 +128,11 @@ public class GitHubJobMessageUtil {
 		return count;
 	}
 
-	private static String getCountLine(
+	private static String _getCountLine(
 		int count, String description, String type) {
 
 		StringBuilder sb = new StringBuilder();
+
 		sb.append(count);
 		sb.append(" ");
 		sb.append(type);
@@ -139,6 +140,7 @@ public class GitHubJobMessageUtil {
 		sb.append(description);
 		sb.append(".");
 		sb.append("<br/>");
+
 		return sb.toString();
 	}
 
@@ -196,9 +198,9 @@ public class GitHubJobMessageUtil {
 
 		sb.append("<h6>Job Results:</h6><p>");
 
-		sb.append(getCountLine(passedCount, "Passed", "Test"));
-		sb.append(getCountLine(failedCount, "Failed", "Test"));
-		sb.append(getCountLine(unstableCount, "Unstable", "Test"));
+		sb.append(_getCountLine(passedCount, "Passed", "Test"));
+		sb.append(_getCountLine(failedCount, "Failed", "Test"));
+		sb.append(_getCountLine(unstableCount, "Unstable", "Test"));
 
 		sb.append("</p><ol>");
 
@@ -253,9 +255,9 @@ public class GitHubJobMessageUtil {
 				int passCount = jsonObject.getInt("passCount");
 
 				sb.append("<p>");
-				sb.append(getCountLine(passCount, "Passed", "Case"));
-				sb.append(getCountLine(failCount, "Failed", "Case"));
-				sb.append(getCountLine(skipCount, "Skipped", "Case"));
+				sb.append(_getCountLine(passCount, "Passed", "Case"));
+				sb.append(_getCountLine(failCount, "Failed", "Case"));
+				sb.append(_getCountLine(skipCount, "Skipped", "Case"));
 				sb.append("</p>");
 				sb.append(UnstableMessageUtil.getUnstableMessage(url));
 			}

@@ -14,17 +14,18 @@
 
 package com.liferay.invitation.invite.members.events;
 
-import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -43,7 +44,7 @@ public class LoginPostAction implements LifecycleAction {
 			String ppid = ParamUtil.getString(
 				lifecycleEvent.getRequest(), "p_p_id");
 
-			String portletNamespace = PortalUtil.getPortletNamespace(ppid);
+			String portletNamespace = _portal.getPortletNamespace(ppid);
 
 			String memberRequestKey = ParamUtil.getString(
 				lifecycleEvent.getRequest(), portletNamespace + "key");
@@ -52,14 +53,29 @@ public class LoginPostAction implements LifecycleAction {
 				return;
 			}
 
-			User user = PortalUtil.getUser(lifecycleEvent.getRequest());
+			User user = _portal.getUser(lifecycleEvent.getRequest());
 
-			MemberRequestLocalServiceUtil.updateMemberRequest(
+			_memberRequestLocalService.updateMemberRequest(
 				memberRequestKey, user.getUserId());
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMemberRequestLocalService(
+		MemberRequestLocalService memberRequestLocalService) {
+
+		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	private MemberRequestLocalService _memberRequestLocalService;
+	private Portal _portal;
 
 }

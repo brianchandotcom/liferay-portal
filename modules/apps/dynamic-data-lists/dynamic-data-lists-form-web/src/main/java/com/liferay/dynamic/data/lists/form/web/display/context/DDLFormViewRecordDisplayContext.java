@@ -47,7 +47,6 @@ public class DDLFormViewRecordDisplayContext {
 		DDMFormRenderer ddmFormRenderer,
 		DDMStructureLocalService ddmStructureLocalService) {
 
-		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -83,7 +82,8 @@ public class DDLFormViewRecordDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
+		ddmFormRenderingContext.setHttpServletRequest(
+			_ddlFormAdminRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(
 			_ddlFormAdminRequestHelper.getLocale());
@@ -113,14 +113,14 @@ public class DDLFormViewRecordDisplayContext {
 	}
 
 	protected DDLRecord getRecord() throws PortalException {
-		long recordId = ParamUtil.getLong(_httpServletRequest, "recordId");
+		HttpServletRequest httpServletRequest =
+			_ddlFormAdminRequestHelper.getRequest();
+
+		long recordId = ParamUtil.getLong(httpServletRequest, "recordId");
 
 		if (recordId > 0) {
 			return _ddlRecordLocalService.fetchRecord(recordId);
 		}
-
-		HttpServletRequest httpServletRequest =
-			_ddlFormAdminRequestHelper.getRequest();
 
 		Object record = httpServletRequest.getAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
@@ -160,7 +160,6 @@ public class DDLFormViewRecordDisplayContext {
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
-	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 
 }

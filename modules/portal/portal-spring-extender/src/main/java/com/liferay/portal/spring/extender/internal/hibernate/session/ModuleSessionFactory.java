@@ -50,8 +50,7 @@ public class ModuleSessionFactory
 		BundleContext bundleContext =
 			moduleApplicationContext.getBundleContext();
 
-		_classLoader = new BundleResolverClassLoader(
-			bundleContext.getBundle(), null);
+		_classLoader = new BundleResolverClassLoader(bundleContext.getBundle());
 
 		setSessionFactoryClassLoader(_classLoader);
 	}

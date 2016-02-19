@@ -79,11 +79,9 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<p class="text-muted">
-			<liferay-ui:message key="customizable-help" />
-		</p>
+		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="toggle-switch" />
 
-		<div class="customization-settings">
+		<div class="customization-settings" id="<portlet:namespace/>customizationSettingsOptions">
 
 			<%
 			if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
@@ -92,5 +90,9 @@ if (selLayout != null) {
 			%>
 
 		</div>
+
+		<aui:script>
+			Liferay.Util.toggleBoxes('<portlet:namespace /><%= LayoutConstants.CUSTOMIZABLE_LAYOUT %>', '<portlet:namespace />customizationSettingsOptions');
+		</aui:script>
 	</c:otherwise>
 </c:choose>

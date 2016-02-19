@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -82,7 +83,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -124,7 +125,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -163,7 +164,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetProperties(configuration, properties);
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -194,7 +195,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			extendedAttributeDefinition, new String[] {"false"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -230,7 +231,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			new String[] {"COOKIE", "REQUEST_HEADER"});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -262,7 +263,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -294,7 +295,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Text");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, null, null, false);
+			extendedObjectClassDefinition, null, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			configurationModel, getDDMForm(configurationModel));
@@ -311,7 +312,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter =
 				new ConfigurationModelToDDMFormConverter(
-					configurationModel, _enLocale);
+					configurationModel, _enLocale, new EmptyResourceBundle());
 
 		return configurationModelToDDMFormConverter.getDDMForm();
 	}
@@ -322,7 +323,8 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		ConfigurationModelToDDMFormValuesConverter
 			configurationModelToDDMFormValuesConverter =
 				new ConfigurationModelToDDMFormValuesConverter(
-					configurationModel, ddmForm, _enLocale);
+					configurationModel, ddmForm, _enLocale,
+					new EmptyResourceBundle());
 
 		return configurationModelToDDMFormValuesConverter.getDDMFormValues();
 	}
@@ -410,5 +412,14 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	private final Locale _enLocale = LocaleUtil.US;
+
+	private static class EmptyResourceBundle extends ListResourceBundle {
+
+		@Override
+		protected Object[][] getContents() {
+			return new Object[0][];
+		}
+
+	}
 
 }

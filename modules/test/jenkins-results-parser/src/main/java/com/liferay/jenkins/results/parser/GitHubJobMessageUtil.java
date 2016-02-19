@@ -34,7 +34,7 @@ public class GitHubJobMessageUtil {
 
 		String buildURL = project.getProperty("build.url");
 
-		List<JobResult> jobResults = getGitHubJobMessage(buildURL, project);
+		List<JobResult> jobResults = _getJobResults(buildURL, project);
 
 		int failureCount = _getResultCount(jobResults, "FAILURE");
 		int successCount = _getResultCount(jobResults, "SUCCESS");
@@ -51,7 +51,7 @@ public class GitHubJobMessageUtil {
 				return;
 			}
 
-			sb.append(getHeaderText(failureCount, successCount, unstableCount));
+			sb.append(_getHeaderText(failureCount, successCount, unstableCount));
 
 			for (JobResult jobResult : jobResults) {
 				if (!jobResult.result.equals("FAILURE") &&
@@ -144,16 +144,16 @@ public class GitHubJobMessageUtil {
 		return sb.toString();
 	}
 
-	private static List<JobResult> getGitHubJobMessage(
+	private static List<JobResult> _getJobResults(
 			String buildURL, Project project)
 		throws Exception {
+
+		List<JobResult> jobResults = new ArrayList<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(buildURL + "/api/json"));
 
-		String buildNumber = jsonObject.get("number").toString();
-
-		List<JobResult> jobResults = new ArrayList<>();
+		String buildNumber = String.valueOf(jsonObject.get("number"));
 
 		JobResult jobResult = new JobResult(jsonObject, project, buildURL);
 
@@ -163,6 +163,7 @@ public class GitHubJobMessageUtil {
 
 		if (jobResult.result.equals("ABORTED")) {
 			jobResults.add(jobResult);
+
 			return jobResults;
 		}
 
@@ -172,12 +173,14 @@ public class GitHubJobMessageUtil {
 			for (int i = 0; i < runsJSONArray.length(); i++) {
 				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
 
-				String runBuildURL = runJSONObject.getString("url");
-				String runBuildNumber = runJSONObject.get("number").toString();
+				String runBuildNumber = String.valueOf(
+					runJSONObject.get("number"));
 
 				if (!buildNumber.equals(runBuildNumber)) {
 					continue;
 				}
+
+				String runBuildURL = runJSONObject.getString("url");
 
 				jobResult = new JobResult(project, runBuildURL);
 
@@ -191,7 +194,7 @@ public class GitHubJobMessageUtil {
 		return jobResults;
 	}
 
-	private static String getHeaderText(
+	private static String _getHeaderText(
 		int failedCount, int passedCount, int unstableCount) {
 
 		StringBuilder sb = new StringBuilder();
@@ -212,11 +215,12 @@ public class GitHubJobMessageUtil {
 	private static class JobResult {
 
 		public JobResult(JSONObject jsonObject, Project project, String url) {
+			this.project = project;
+			this.url = url;
+
 			name = JenkinsResultsParserUtil.fixJSON(
 				jsonObject.getString("fullDisplayName"));
-			this.project = project;
 			result = jsonObject.getString("result");
-			this.url = url;
 		}
 
 		public JobResult(Project project, String url) throws Exception {
@@ -250,6 +254,7 @@ public class GitHubJobMessageUtil {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
 						url + "/testReport/api/json"));
+
 				int failCount = jsonObject.getInt("failCount");
 				int skipCount = jsonObject.getInt("skipCount");
 				int passCount = jsonObject.getInt("passCount");

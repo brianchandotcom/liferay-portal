@@ -15,38 +15,44 @@
 package com.liferay.invitation.invite.members.events;
 
 import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
-import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
-public class LoginPostAction extends Action {
+@Component(
+	immediate = true, property = {"key=" + PropsKeys.LOGIN_EVENTS_POST},
+	service = LifecycleAction.class
+)
+public class LoginPostAction implements LifecycleAction {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
 		try {
-			String ppid = ParamUtil.getString(request, "p_p_id");
+			String ppid = ParamUtil.getString(
+				lifecycleEvent.getRequest(), "p_p_id");
 
 			String portletNamespace = PortalUtil.getPortletNamespace(ppid);
 
 			String memberRequestKey = ParamUtil.getString(
-				request, portletNamespace + "key");
+				lifecycleEvent.getRequest(), portletNamespace + "key");
 
 			if (Validator.isNull(memberRequestKey)) {
 				return;
 			}
 
-			User user = PortalUtil.getUser(request);
+			User user = PortalUtil.getUser(lifecycleEvent.getRequest());
 
 			MemberRequestLocalServiceUtil.updateMemberRequest(
 				memberRequestKey, user.getUserId());

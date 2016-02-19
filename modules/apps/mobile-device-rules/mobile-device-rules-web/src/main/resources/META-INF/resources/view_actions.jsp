@@ -73,6 +73,18 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+	<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+		<liferay-portlet:renderURL var="addURL">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
+		</liferay-portlet:renderURL>
+
+		<div class="button-holder text-center">
+			<aui:button href="<%= addURL.toString() %>" value="add-action" />
+		</div>
+	</c:if>
+
 	<liferay-ui:search-container
 		id="actionActions"
 		searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>"
@@ -95,18 +107,6 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-	<liferay-portlet:renderURL var="addURL">
-		<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-action") %>' url="<%= addURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	$('#<portlet:namespace />deleteActions').on(

@@ -62,16 +62,16 @@ renderResponse.setTitle(title);
 	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="device-family-does-not-exist" />
 	<liferay-ui:error exception="<%= UnknownRuleHandlerException.class %>" message="please-select-a-rule-type" />
 
-	<c:if test="<%= rule == null %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="classification-rule-help" />
-		</div>
-	</c:if>
-
 	<aui:model-context bean="<%= rule %>" model="<%= MDRRule.class %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
+			<c:if test="<%= rule == null %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="classification-rule-help" />
+				</div>
+			</c:if>
+
 			<aui:input name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />

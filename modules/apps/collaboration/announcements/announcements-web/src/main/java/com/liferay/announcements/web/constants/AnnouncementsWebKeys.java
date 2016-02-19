@@ -19,7 +19,6 @@ package com.liferay.announcements.web.constants;
  */
 public class AnnouncementsWebKeys {
 
-	public static final String VIEW_ENTRY_FLAG_VALUE =
-		"view_entry.jsp-flagValue";
+	public static final String VIEW_ENTRY_FLAG_VALUE = "VIEW_ENTRY_FLAG_VALUE";
 
 }

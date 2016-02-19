@@ -175,8 +175,6 @@ boolean showEditDefaultsIcon = false;
 boolean showEditGuestIcon = false;
 boolean showExportImportIcon = false;
 boolean showHelpIcon = false;
-boolean showMaxIcon = portlet.hasWindowState(responseContentType, WindowState.MAXIMIZED);
-boolean showMinIcon = portlet.hasWindowState(responseContentType, WindowState.MINIMIZED);
 boolean showMoveIcon = !stateMax && !themeDisplay.isStateExclusive();
 boolean showPortletCssIcon = false;
 boolean showPortletIcon = (portletResourcePortlet != null) ? Validator.isNotNull(portletResourcePortlet.getIcon()) : Validator.isNotNull(portlet.getIcon());
@@ -266,9 +264,6 @@ if ((!themeDisplay.isSignedIn()) ||
 	(group.hasStagingGroup() && !group.isStagingGroup()) ||
 	(!LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE))) {
 
-	showMaxIcon = PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON;
-	showMinIcon = PropsValues.LAYOUT_GUEST_SHOW_MIN_ICON;
-
 	if (!(!columnDisabled && customizable && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {
 		showCloseIcon = false;
 		showMoveIcon = false;
@@ -318,8 +313,6 @@ LayoutTypeController layoutTypeController = layoutTypePortlet.getLayoutTypeContr
 
 if (layoutTypeController.isFullPageDisplayable()) {
 	showCloseIcon = false;
-	showMaxIcon = false;
-	showMinIcon = false;
 }
 
 long previousScopeGroupId = themeDisplay.getScopeGroupId();
@@ -389,8 +382,6 @@ portletDisplay.setShowEditDefaultsIcon(showEditDefaultsIcon);
 portletDisplay.setShowEditGuestIcon(showEditGuestIcon);
 portletDisplay.setShowExportImportIcon(showExportImportIcon);
 portletDisplay.setShowHelpIcon(showHelpIcon);
-portletDisplay.setShowMaxIcon(showMaxIcon);
-portletDisplay.setShowMinIcon(showMinIcon);
 portletDisplay.setShowMoveIcon(showMoveIcon);
 portletDisplay.setShowPortletCssIcon(showPortletCssIcon);
 portletDisplay.setShowPortletIcon(showPortletIcon);
@@ -803,8 +794,6 @@ if (themeDisplay.isWidget()) {
 if (group.isControlPanel()) {
 	portletDisplay.setShowBackIcon(false);
 	portletDisplay.setShowConfigurationIcon(false);
-	portletDisplay.setShowMaxIcon(false);
-	portletDisplay.setShowMinIcon(false);
 	portletDisplay.setShowMoveIcon(false);
 	portletDisplay.setShowPortletCssIcon(false);
 

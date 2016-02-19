@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.autopropagated-parameters=showMountFolder",
 		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
 		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.display-category=category.highlighted",
 		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/main.js",
 		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/upload.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",

@@ -44,70 +44,71 @@ public class GitHubJobMessageUtil {
 			JobResult firstJobResult = jobResults.get(0);
 			int failureAndUnstableCount = 0;
 
-			if (firstJobResult._result.equals("ABORTED")) {
-				sb.append(firstJobResult.getMessage());
+			if (firstJobResult.result.equals("ABORTED")) {
+				project.setProperty(
+					"report.html.content", firstJobResult.getMessage());
+
+				return;
 			}
-			else {
-				sb.append(
-					generateHeaderText(
-						failureCount, successCount, unstableCount));
 
-				for (JobResult jobResult : jobResults) {
-					if (!jobResult._result.equals("FAILURE") &&
-						!jobResult._result.equals("UNSTABLE")) {
+			sb.append(getHeaderText(failureCount, successCount, unstableCount));
 
-						continue;
-					}
+			for (JobResult jobResult : jobResults) {
+				if (!jobResult.result.equals("FAILURE") &&
+					!jobResult.result.equals("UNSTABLE")) {
 
-					failureAndUnstableCount++;
-
-					if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
-						sb.append("<li>...</li>");
-
-						break;
-					}
-
-					sb.append(jobResult.getMessage());
+					continue;
 				}
 
-				sb.append("</ol>");
+				failureAndUnstableCount++;
 
 				if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
-					sb.append("<p><strong>Click <a href=\"");
-					sb.append(buildURL);
-					sb.append(
-						"/testReport/\">here</a> for more failures.</strong>");
-					sb.append("</p>");
+					sb.append("<li>...</li>");
+
+					break;
 				}
+
+				sb.append(jobResult.getMessage());
 			}
+
+			sb.append("</ol>");
+
+			if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
+				sb.append("<p><strong>Click <a href=\"");
+				sb.append(buildURL);
+				sb.append(
+					"/testReport/\">here</a> for more failures.</strong>");
+				sb.append("</p>");
+			}
+
+			project.setProperty("report.html.content", sb.toString());
+
+			return;
 		}
 
-		if (sb.length() == 0) {
-			String topLevelSharedDir = project.getProperty(
-				"top.level.shared.dir");
+		String topLevelSharedDir = project.getProperty("top.level.shared.dir");
 
-			topLevelSharedDir = topLevelSharedDir.replace(
-				"${user.dir}", System.getProperty("user.dir"));
+		topLevelSharedDir = topLevelSharedDir.replace(
+			"${user.dir}", System.getProperty("user.dir"));
 
-			File javacOutputFile = new File(
-				topLevelSharedDir + "/javac.output.txt");
+		File javacOutputFile = new File(
+			topLevelSharedDir + "/javac.output.txt");
 
-			if (javacOutputFile.exists()) {
-				sb.append("<h6>Job Results:</h6>");
-				sb.append("<p>0 Tests Passed.<br />1 Test Failed.</p>");
-				sb.append("<pre>");
+		if (javacOutputFile.exists()) {
+			sb.append("<h6>Job Results:</h6>");
+			sb.append("<p>0 Tests Passed.<br />1 Test Failed.</p>");
+			sb.append("<pre>");
 
-				String javacOutputFileContent = JenkinsResultsParserUtil.read(
-					javacOutputFile);
+			String javacOutputFileContent = JenkinsResultsParserUtil.read(
+				javacOutputFile);
 
-				if (javacOutputFileContent.length() > 5000) {
-					javacOutputFileContent = javacOutputFileContent.substring(
-						javacOutputFileContent.length() - 5000);
-				}
-
-				sb.append(javacOutputFileContent);
-				sb.append("</pre>");
+			if (javacOutputFileContent.length() > 5000) {
+				javacOutputFileContent = javacOutputFileContent.substring(
+					javacOutputFileContent.length() - 5000);
 			}
+
+			sb.append(javacOutputFileContent);
+			sb.append("</pre>");
 		}
 
 		project.setProperty("report.html.content", sb.toString());
@@ -119,7 +120,7 @@ public class GitHubJobMessageUtil {
 		int count = 0;
 
 		for (JobResult jobResult : jobResults) {
-			if (jobResult._result.equals(result)) {
+			if (jobResult.result.equals(result)) {
 				count++;
 			}
 		}
@@ -127,7 +128,7 @@ public class GitHubJobMessageUtil {
 		return count;
 	}
 
-	private static String generateCountLine(
+	private static String getCountLine(
 		int count, String description, String type) {
 
 		StringBuilder sb = new StringBuilder();
@@ -138,22 +139,6 @@ public class GitHubJobMessageUtil {
 		sb.append(description);
 		sb.append(".");
 		sb.append("<br/>");
-		return sb.toString();
-	}
-
-	private static String generateHeaderText(
-		int failedCount, int passedCount, int unstableCount) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<h6>Job Results:</h6><p>");
-
-		sb.append(generateCountLine(passedCount, "Passed", "Test"));
-		sb.append(generateCountLine(failedCount, "Failed", "Test"));
-		sb.append(generateCountLine(unstableCount, "Unstable", "Test"));
-
-		sb.append("</p><ol>");
-
 		return sb.toString();
 	}
 
@@ -170,11 +155,11 @@ public class GitHubJobMessageUtil {
 
 		JobResult jobResult = new JobResult(jsonObject, project, buildURL);
 
-		if (jobResult._result.equals("SUCCESS")) {
+		if (jobResult.result.equals("SUCCESS")) {
 			return jobResults;
 		}
 
-		if (jobResult._result.equals("ABORTED")) {
+		if (jobResult.result.equals("ABORTED")) {
 			jobResults.add(jobResult);
 			return jobResults;
 		}
@@ -204,16 +189,32 @@ public class GitHubJobMessageUtil {
 		return jobResults;
 	}
 
+	private static String getHeaderText(
+		int failedCount, int passedCount, int unstableCount) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h6>Job Results:</h6><p>");
+
+		sb.append(getCountLine(passedCount, "Passed", "Test"));
+		sb.append(getCountLine(failedCount, "Failed", "Test"));
+		sb.append(getCountLine(unstableCount, "Unstable", "Test"));
+
+		sb.append("</p><ol>");
+
+		return sb.toString();
+	}
+
 	private static final int _MAX_MESSAGE_COUNT = 3;
 
 	private static class JobResult {
 
 		public JobResult(JSONObject jsonObject, Project project, String url) {
-			_name = JenkinsResultsParserUtil.fixJSON(
+			name = JenkinsResultsParserUtil.fixJSON(
 				jsonObject.getString("fullDisplayName"));
-			_project = project;
-			_result = jsonObject.getString("result");
-			_url = url;
+			this.project = project;
+			result = jsonObject.getString("result");
+			this.url = url;
 		}
 
 		public JobResult(Project project, String url) throws Exception {
@@ -224,39 +225,39 @@ public class GitHubJobMessageUtil {
 		}
 
 		public String getMessage() throws Exception {
-			if (_result.equals("ABORTED")) {
+			if (result.equals("ABORTED")) {
 				return ("<pre>Build was aborted</pre>");
 			}
 
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("<li><strong>");
-			sb.append(_result);
+			sb.append(result);
 			sb.append(" ");
 			sb.append("<a href=\"");
-			sb.append(_url);
+			sb.append(url);
 			sb.append("\">");
-			sb.append(_name);
+			sb.append(name);
 			sb.append("</a></strong>");
 
-			if (_result.equals("FAILURE")) {
-				sb.append(FailureMessageUtil.getFailureMessage(_project, _url));
+			if (result.equals("FAILURE")) {
+				sb.append(FailureMessageUtil.getFailureMessage(project, url));
 			}
 
-			if (_result.equals("UNSTABLE")) {
+			if (result.equals("UNSTABLE")) {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
-						_url + "/testReport/api/json"));
+						url + "/testReport/api/json"));
 				int failCount = jsonObject.getInt("failCount");
 				int skipCount = jsonObject.getInt("skipCount");
 				int passCount = jsonObject.getInt("passCount");
 
 				sb.append("<p>");
-				sb.append(generateCountLine(passCount, "Passed", "Case"));
-				sb.append(generateCountLine(failCount, "Failed", "Case"));
-				sb.append(generateCountLine(skipCount, "Skipped", "Case"));
+				sb.append(getCountLine(passCount, "Passed", "Case"));
+				sb.append(getCountLine(failCount, "Failed", "Case"));
+				sb.append(getCountLine(skipCount, "Skipped", "Case"));
 				sb.append("</p>");
-				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
+				sb.append(UnstableMessageUtil.getUnstableMessage(url));
 			}
 
 			sb.append("</li>");
@@ -264,10 +265,10 @@ public class GitHubJobMessageUtil {
 			return sb.toString();
 		}
 
-		private final String _name;
-		private final Project _project;
-		private final String _result;
-		private final String _url;
+		public final String name;
+		public final Project project;
+		public final String result;
+		public final String url;
 
 	};
 

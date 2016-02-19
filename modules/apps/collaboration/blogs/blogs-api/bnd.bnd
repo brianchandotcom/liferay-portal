@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Blogs API
+Bundle-SymbolicName: com.liferay.blogs.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.blogs.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
+-include: ../../../../../marketplace/collaboration/bnd.bnd

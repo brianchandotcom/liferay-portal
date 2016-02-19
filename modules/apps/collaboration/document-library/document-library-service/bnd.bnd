@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Document Library Service
+Bundle-SymbolicName: com.liferay.document.library.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.events,\
+	com.liferay.document.library.lar.xstream,\
+	com.liferay.document.library.verify
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+Liferay-Require-SchemaVersion: 0.0.1
+-include: ../../../../../marketplace/collaboration/bnd.bnd

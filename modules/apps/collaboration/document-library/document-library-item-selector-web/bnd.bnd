@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Document Library Item Selector Web
+Bundle-SymbolicName: com.liferay.document.library.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+Web-ContextPath: /document-library-item-selector-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Image Uploader Web
+Bundle-SymbolicName: com.liferay.image.uploader.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/collaboration/bnd.bnd

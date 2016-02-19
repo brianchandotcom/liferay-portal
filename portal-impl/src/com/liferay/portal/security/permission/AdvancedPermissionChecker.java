@@ -867,6 +867,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		stopWatch.start();
 
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (name.equals(Organization.class.getName())) {
+			if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
+				return true;
+			}
+		}
+
 		long companyId = user.getCompanyId();
 
 		if (groupId > 0) {
@@ -880,29 +890,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (user != null) {
 				companyId = user.getCompanyId();
-			}
-		}
-
-		boolean hasLayoutManagerPermission = true;
-
-		// Check if the layout manager has permission to do this action for the
-		// current portlet
-
-		if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
-			primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
-
-			hasLayoutManagerPermission =
-				PortletPermissionUtil.hasLayoutManagerPermission(
-					name, actionId);
-		}
-
-		if (isOmniadmin()) {
-			return true;
-		}
-
-		if (name.equals(Organization.class.getName())) {
-			if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
-				return true;
 			}
 		}
 
@@ -927,8 +914,23 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		if (isGroupAdminImpl(groupId) && hasLayoutManagerPermission) {
-			return true;
+		if (isGroupAdminImpl(groupId)) {
+			boolean hasLayoutManagerPermission = true;
+
+			// Check if the layout manager has permission to do this action for
+			// the current portlet
+
+			if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
+				primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+
+				hasLayoutManagerPermission =
+					PortletPermissionUtil.hasLayoutManagerPermission(
+						name, actionId);
+			}
+
+			if (hasLayoutManagerPermission) {
+				return true;
+			}
 		}
 
 		return false;

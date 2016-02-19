@@ -529,7 +529,7 @@ public class PDFProcessorImpl
 			else {
 				_log.debug(
 					"Waiting for " + waiting + " seconds to obtain " +
-						file.getPath() + " previews generation");
+						file.getPath() + " preview generation");
 			}
 		}
 
@@ -539,15 +539,24 @@ public class PDFProcessorImpl
 			futures.put(processIdentity, future);
 		}
 		catch (TimeoutException te) {
-			_log.error(file.getPath() + " generation timeout!");
+			String errorMessage =
+				"Timeout when generating preview for " + file.getPath();
 
-			boolean cancel = future.cancel(true);
-			_log.error("Generation cancelled?: "+ cancel);
+			if (thumbnail) {
+				errorMessage =
+					"Timeout when generating thumbanil for " + file.getPath();
+			}
+
+			if (future.cancel(true)) {
+				errorMessage += ". Cancelled timeout " + future;
+			}
+
+			_log.error(errorMessage);
 
 			throw te;
 		}
 		catch (Exception e) {
-			_log.error("Unexpected error: ", e);
+			_log.error(e, e);
 
 			throw e;
 		}
@@ -678,15 +687,37 @@ public class PDFProcessorImpl
 				futures.put(processIdentity, future);
 			}
 			catch (TimeoutException te) {
-				_log.error(file.getPath() + " generation timeout!");
+				String errorMessage = null;
 
-				boolean cancel = future.cancel(true);
-				_log.error("Generation cancelled?: "+ cancel);
+				if (generateThumbnail && generatePreview) {
+					errorMessage =
+						"Timeout when generating thumbanil and preview for " +
+							file.getPath();
+				}
+				else {
+					if (generateThumbnail) {
+						errorMessage =
+							"Timeout when generating thumbanil for " +
+								file.getPath();
+					}
+
+					if (generatePreview) {
+						errorMessage =
+							"Timeout when generating preview for " +
+								file.getPath();
+					}
+				}
+
+				if (future.cancel(true)) {
+					errorMessage += ". Cancelled timeout " + future;
+				}
+
+				_log.error(errorMessage);
 
 				throw te;
 			}
 			catch (Exception e) {
-				_log.error("Unexpected error: ", e);
+				_log.error(e, e);
 
 				throw e;
 			}

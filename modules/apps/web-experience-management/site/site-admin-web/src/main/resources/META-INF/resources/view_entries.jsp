@@ -41,8 +41,6 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 		<%
 		boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
 
-		String rowURL = siteAdminDisplayContext.getRowURL(curGroup);
-
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
 		%>
 

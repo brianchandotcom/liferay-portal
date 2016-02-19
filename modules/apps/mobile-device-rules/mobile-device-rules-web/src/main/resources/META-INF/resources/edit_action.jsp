@@ -46,14 +46,14 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 	<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
 
-	<c:if test="<%= action == null %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="action-help" />
-		</div>
-	</c:if>
-
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
+			<c:if test="<%= action == null %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="action-help" />
+				</div>
+			</c:if>
+
 			<aui:input name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />

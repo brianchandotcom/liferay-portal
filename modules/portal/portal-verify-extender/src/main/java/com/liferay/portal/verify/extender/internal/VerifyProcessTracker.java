@@ -17,6 +17,8 @@ package com.liferay.portal.verify.extender.internal;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -36,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,14 +67,14 @@ import org.osgi.service.component.annotations.Reference;
 public class VerifyProcessTracker {
 
 	public void execute(final String verifyProcessName) {
-		executeVerifyProcess(
+		executeVerifyProcesses(
 			verifyProcessName, null, "verify-" + verifyProcessName);
 	}
 
 	public void execute(
 		String verifyProcessName, String outputStreamContainerFactoryName) {
 
-		executeVerifyProcess(
+		executeVerifyProcesses(
 			verifyProcessName, outputStreamContainerFactoryName,
 			"verify-" + verifyProcessName);
 	}
@@ -101,7 +104,7 @@ public class VerifyProcessTracker {
 
 	public void show(String verifyProcessName) {
 		try {
-			getVerifyProcess(verifyProcessName);
+			getVerifyProcesses(verifyProcessName);
 		}
 		catch (IllegalArgumentException iae) {
 			System.out.println(
@@ -132,15 +135,19 @@ public class VerifyProcessTracker {
 		_verifyProcessTrackerConfiguration = Configurable.createConfigurable(
 			VerifyProcessTrackerConfiguration.class, properties);
 
-		VerifyServiceTrackerMapListener verifyServiceTrackerMapListener = null;
+		ServiceTrackerMapListener<String, VerifyProcess, List<VerifyProcess>>
+			verifyServiceTrackerMapListener = null;
 
 		if (_verifyProcessTrackerConfiguration.autoVerify()) {
 			verifyServiceTrackerMapListener =
 				new VerifyServiceTrackerMapListener();
 		}
 
-		_verifyProcesses = ServiceTrackerMapFactory.singleValueMap(
-			bundleContext, VerifyProcess.class, "verify.process.name",
+		_verifyProcesses = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, VerifyProcess.class, null,
+			new PropertyServiceReferenceMapper<String, VerifyProcess>(
+				"verify.process.name"),
+			new PropertyServiceReferenceComparator("service.ranking"),
 			verifyServiceTrackerMapListener);
 
 		_verifyProcesses.open();
@@ -160,24 +167,28 @@ public class VerifyProcessTracker {
 		_verifyProcesses.close();
 	}
 
-	protected void executeVerifyProcess(
+	protected void executeVerifyProcesses(
 		String verifyProcessName, OutputStream outputStream) {
 
 		PrintWriter printWriter = new PrintWriter(outputStream, true);
 
-		printWriter.println("Executing " + verifyProcessName);
+		printWriter.println(
+			"Executing verifiers registered at: " + verifyProcessName);
 
-		VerifyProcess verifyProcess = getVerifyProcess(verifyProcessName);
+		List<VerifyProcess> verifyProcesses = getVerifyProcesses(
+			verifyProcessName);
 
-		try {
-			verifyProcess.verify();
-		}
-		catch (VerifyException ve) {
-			_log.error(ve, ve);
+		for (VerifyProcess verifyProcess : verifyProcesses) {
+			try {
+				verifyProcess.verify();
+			}
+			catch (VerifyException ve) {
+				_log.error(ve, ve);
+			}
 		}
 	}
 
-	protected void executeVerifyProcess(
+	protected void executeVerifyProcesses(
 		final String verifyProcessName, String outputStreamContainerFactoryName,
 		String outputStreamName) {
 
@@ -206,7 +217,7 @@ public class VerifyProcessTracker {
 
 				@Override
 				public void run() {
-					executeVerifyProcess(verifyProcessName, outputStream);
+					executeVerifyProcesses(verifyProcessName, outputStream);
 				}
 
 			},
@@ -215,16 +226,16 @@ public class VerifyProcessTracker {
 		close(outputStream);
 	}
 
-	protected VerifyProcess getVerifyProcess(String verifyProcessName) {
-		VerifyProcess verifyProcess = _verifyProcesses.getService(
+	protected List<VerifyProcess> getVerifyProcesses(String verifyProcessName) {
+		List<VerifyProcess> verifyProcesses = _verifyProcesses.getService(
 			verifyProcessName);
 
-		if (verifyProcess == null) {
+		if (verifyProcesses == null) {
 			throw new IllegalArgumentException(
-				"No verify process with name " + verifyProcessName);
+				"No verify processes with name " + verifyProcessName);
 		}
 
-		return verifyProcess;
+		return verifyProcesses;
 	}
 
 	@Reference(unbind = "-")
@@ -276,7 +287,7 @@ public class VerifyProcessTracker {
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
-	private ServiceTrackerMap<String, VerifyProcess> _verifyProcesses;
+	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;
 
@@ -291,7 +302,7 @@ public class VerifyProcessTracker {
 			Set<String> verifyProcessNames = _verifyProcesses.keySet();
 
 			for (String verifyProcessName : verifyProcessNames) {
-				executeVerifyProcess(verifyProcessName, _outputStream);
+				executeVerifyProcesses(verifyProcessName, _outputStream);
 			}
 		}
 
@@ -301,13 +312,14 @@ public class VerifyProcessTracker {
 
 	private class VerifyServiceTrackerMapListener
 		implements ServiceTrackerMapListener
-			<String, VerifyProcess, VerifyProcess> {
+			<String, VerifyProcess, List<VerifyProcess>> {
 
 		@Override
 		public void keyEmitted(
-			ServiceTrackerMap<String, VerifyProcess> verifyProcessTrackerMap,
+			ServiceTrackerMap<String, List<VerifyProcess>>
+				verifyProcessTrackerMap,
 			String key, VerifyProcess serviceVerifyProcess,
-			VerifyProcess contentVerifyProcess) {
+			List<VerifyProcess> contentVerifyProcesses) {
 
 			Release release = _releaseLocalService.fetchRelease(key);
 
@@ -317,10 +329,10 @@ public class VerifyProcessTracker {
 
 			if (release == null) {
 
-				// Not all the verifiers are associated with a database service
-				// but we need to represent them into the release table anyway,
-				// so we can know their state. We just need to record the name
-				// of the component being verified
+				// Not all the verifiers are associated with a database
+				// service but we need to represent them into the release
+				// table anyway,so we can know their state. We just need to
+				// record the name of the component being verified
 
 				release = _releaseLocalService.createRelease(
 					_counterLocalService.increment());
@@ -338,9 +350,9 @@ public class VerifyProcessTracker {
 
 		@Override
 		public void keyRemoved(
-			ServiceTrackerMap<String, VerifyProcess> serviceTrackerMap,
+			ServiceTrackerMap<String, List<VerifyProcess>> serviceTrackerMap,
 			String key, VerifyProcess serviceVerifyProcess,
-			VerifyProcess contentVerifyProcess) {
+			List<VerifyProcess> contentVerifyProcess) {
 		}
 
 	}

@@ -17,11 +17,15 @@ package com.liferay.dynamic.data.lists.form.web.asset;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
+import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordDisplayContext;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 
@@ -44,10 +49,16 @@ import javax.servlet.http.HttpServletResponse;
 public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 	public DDLFormAssetRenderer(
-		DDLFormRecord formRecord, DDLRecordVersion recordVersion) {
+		DDLFormRecord formRecord, DDLRecordVersion recordVersion,
+		DDLRecordLocalService ddlRecordLocalService,
+		DDMFormRenderer ddmFormRenderer,
+		DDMStructureLocalService ddmStructureLocalService) {
 
 		_formRecord = formRecord;
 		_recordVersion = recordVersion;
+		_ddlRecordLocalService = ddlRecordLocalService;
+		_ddmFormRenderer = ddmFormRenderer;
+		_ddmStructureLocalService = ddmStructureLocalService;
 
 		_record = formRecord.getDDLRecord();
 
@@ -158,6 +169,14 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _formRecord);
 
+		DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext =
+			new DDLFormViewRecordDisplayContext(
+				request, response, _ddlRecordLocalService, _ddmFormRenderer,
+				_ddmStructureLocalService);
+
+		request.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormViewRecordDisplayContext);
+
 		return super.include(request, response, template);
 	}
 
@@ -168,6 +187,9 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAssetRenderer.class);
 
+	private final DDLRecordLocalService _ddlRecordLocalService;
+	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDLFormRecord _formRecord;
 	private final DDLRecord _record;
 	private final DDLRecordSet _recordSet;

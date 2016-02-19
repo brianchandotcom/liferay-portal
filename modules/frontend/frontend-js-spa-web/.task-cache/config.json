@@ -1,0 +1,134 @@
+{
+    "frontend-js-spa-web@1.0.0/senna/src/surface/Surface": {
+        "dependencies": ["exports", "../globals/globals", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/screen/HtmlScreen": {
+        "dependencies": ["exports", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface", "../app/dataAttributes"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen": {
+        "dependencies": ["exports", "metal/src/metal", "metal-ajax/src/Ajax", "metal-multimap/src/MultiMap", "metal-promise/src/promise/Promise", "../globals/globals", "./Screen", "metal-uri/src/Uri", "metal-useragent/src/UA"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/screen/Screen": {
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "../cacheable/Cacheable", "metal-promise/src/promise/Promise"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/route/Route": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/globals/globals": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/cacheable/Cacheable": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/app/App": {
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "metal-events/src/events", "../globals/globals", "../route/Route", "../screen/Screen", "../surface/Surface", "metal-uri/src/Uri"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/app/AppDataAttributeHandler": {
+        "dependencies": ["exports", "metal/src/metal", "./dataAttributes", "../globals/globals", "./App", "../screen/HtmlScreen", "../route/Route"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/app/dataAttributeHandler": {
+        "dependencies": ["exports", "../globals/globals", "./AppDataAttributeHandler"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/app/dataAttributes": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-useragent/src/UA": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-uri/src/parse": {
+        "dependencies": ["exports", "metal/src/metal", "./parseFromAnchor"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-uri/src/parseFromAnchor": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-uri/src/Uri": {
+        "dependencies": ["exports", "metal/src/metal", "./parse", "metal-multimap/src/MultiMap"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-promise/src/promise/Promise": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-multimap/src/MultiMap": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-events/src/EventEmitter": {
+        "dependencies": ["exports", "metal/src/metal", "./EventHandle"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-events/src/EventEmitterProxy": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-events/src/EventHandle": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-events/src/EventHandler": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-events/src/events": {
+        "dependencies": ["exports", "./EventEmitter", "./EventEmitterProxy", "./EventHandle", "./EventHandler"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/dom": {
+        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/DomEventEmitterProxy": {
+        "dependencies": ["exports", "./dom", "metal-events/src/events"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/DomEventHandle": {
+        "dependencies": ["exports", "metal-events/src/events"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/events": {
+        "dependencies": ["./dom", "./features"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/features": {
+        "dependencies": ["exports", "./dom", "metal/src/metal"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/globalEval": {
+        "dependencies": ["exports", "metal/src/metal", "./dom"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/globalEvalStyles": {
+        "dependencies": ["exports", "metal/src/metal", "./dom"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-dom/src/all/dom": {
+        "dependencies": ["exports", "../dom", "../DomEventEmitterProxy", "../DomEventHandle", "../features", "../globalEval", "../globalEvalStyles", "../events"]
+    },
+    "frontend-js-spa-web@1.0.0/metal-ajax/src/Ajax": {
+        "dependencies": ["exports", "metal/src/metal", "metal-uri/src/Uri", "metal-promise/src/promise/Promise"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/core": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/metal": {
+        "dependencies": ["exports", "./core", "./array/array", "./async/async", "./disposable/Disposable", "./object/object", "./string/string"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/string/string": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/object/object": {
+        "dependencies": ["exports", "../core"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/disposable/Disposable": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/async/async": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/metal/src/array/array": {
+        "dependencies": ["exports", "../core"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/init.es": {
+        "dependencies": ["exports", "./screen/ActionURLScreen.es", "./app/App.es", "metal/src/async/async", "senna/src/globals/globals", "./screen/RenderURLScreen.es", "metal-uri/src/Uri"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/util/Utils.es": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es": {
+        "dependencies": ["exports", "./EventScreen.es"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es": {
+        "dependencies": ["exports", "metal-dom/src/dom", "senna/src/screen/HtmlScreen", "metal-dom/src/globalEval", "metal-promise/src/promise/Promise", "../util/Utils.es"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/screen/RenderURLScreen.es": {
+        "dependencies": ["exports", "./EventScreen.es"]
+    },
+    "frontend-js-spa-web@1.0.0/liferay/app/App.es": {
+        "dependencies": ["exports", "senna/src/app/App", "metal-dom/src/dom", "metal-uri/src/Uri", "senna/src/globals/globals", "../util/Utils.es"]
+    }
+}

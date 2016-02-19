@@ -278,13 +278,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 
 <aui:script>
 	function <portlet:namespace />openPageVariationsDialog() {
-		var pageVariationsDialog = Liferay.Util.openWindow(
+		Liferay.Util.openWindow(
 			{
 				dialog: {
 					destroyOnHide: true
 				},
 				id: 'pagesVariationsDialog',
-
 				title: '<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />',
 
 				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -298,13 +297,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 	}
 
 	function <portlet:namespace />openSitePagesVariationsDialog() {
-		var sitePagesVariationDialog = Liferay.Util.openWindow(
+		Liferay.Util.openWindow(
 			{
 				dialog: {
 					destroyOnHide: true
 				},
 				id: 'sitePagesVariationDialog',
-
 				title: '<liferay-ui:message arguments="<%= sitePagesVariationsHelpIcon %>" key="site-pages-variation-x" />',
 
 				<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -320,9 +318,9 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 		Liferay.fire(
 			'<portlet:namespace />submit',
 			{
+				currentURL: '<%= currentURL %>',
 				incomplete: <%= layoutRevision.isIncomplete() %>,
-				publishURL: publishURL,
-				currentURL: '<%= currentURL %>'
+				publishURL: publishURL
 			}
 		);
 

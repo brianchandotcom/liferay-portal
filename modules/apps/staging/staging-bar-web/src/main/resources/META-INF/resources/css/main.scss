@@ -132,10 +132,10 @@
 
 .staging-bar-control-toggle {
 	div {
-		margin-bottom: 0px;
+		margin-bottom: 0;
 
 		label {
-			margin-bottom: 0px;
+			margin-bottom: 0;
 
 			@include sm() {
 				float: left;

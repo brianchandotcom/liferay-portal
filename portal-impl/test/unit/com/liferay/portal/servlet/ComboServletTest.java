@@ -140,7 +140,7 @@ public class ComboServletTest extends PowerMockito {
 				Mockito.eq(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS),
 				Mockito.anyString())
 		).thenReturn(
-			new String[]{".css", ".js"}
+			new String[] {".css", ".js"}
 		);
 
 		_mockHttpServletRequest = new MockHttpServletRequest();
@@ -202,8 +202,7 @@ public class ComboServletTest extends PowerMockito {
 	@Test
 	public void testValidateValidModuleExtension() throws Exception {
 		boolean valid = _comboServlet.validateModuleExtension(
-			_TEST_PORTLET_ID +
-				"_INSTANCE_.js:/js/javascript.js");
+			_TEST_PORTLET_ID + "_INSTANCE_.js:/js/javascript.js");
 
 		Assert.assertTrue(valid);
 	}

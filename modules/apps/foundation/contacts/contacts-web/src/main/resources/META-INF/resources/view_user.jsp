@@ -76,7 +76,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 				<aui:layout cssClass="contacts-action">
 					<c:choose>
-						<c:when test="<%= portletId.equals(PortletKeys.CONTACTS_CENTER) || portletId.equals(PortletKeys.MEMBERS) %>">
+						<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
 
 							<%
 							boolean blocked = false;

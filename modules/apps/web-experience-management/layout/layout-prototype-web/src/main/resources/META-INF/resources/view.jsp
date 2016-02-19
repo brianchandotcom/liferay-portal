@@ -152,9 +152,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-text
 				cssClass="list-group-item-field"
 				name="active"
-			>
-				<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>
-			</liferay-ui:search-container-column-text>
+				value='<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>'
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="list-group-item-field"

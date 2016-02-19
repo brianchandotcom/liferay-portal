@@ -130,7 +130,12 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_PAGES" value1="Private Pages" />
+		<if>
+			<condition function="IsNotVisible" locator1="ProductMenu#PRIVATE_PAGES_SELECTED" />
+			<then>
+				<execute function="AssertClick" locator1="ProductMenu#PRIVATE_PAGES" value1="Private Pages" />
+			</then>
+		</if>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -158,7 +163,12 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
+		<if>
+			<condition function="IsNotVisible" locator1="ProductMenu#PUBLIC_PAGES_SELECTED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
+			</then>
+		</if>
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

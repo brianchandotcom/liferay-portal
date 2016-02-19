@@ -1,5 +1,7 @@
 <definition default="sikuliUploadTCatFile">
 	<command name="sikuliUploadTCatFile">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliUploadTCatFile" />
 
 		<execute selenium="assertJavaScriptErrors" />

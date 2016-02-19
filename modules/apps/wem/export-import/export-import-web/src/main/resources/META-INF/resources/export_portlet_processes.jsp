@@ -104,9 +104,14 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("senna-off", "true");
 				%>
 
 				<liferay-ui:icon
+					data="<%= data %>"
 					icon="download"
 					label="<%= true %>"
 					markupView="lexicon"

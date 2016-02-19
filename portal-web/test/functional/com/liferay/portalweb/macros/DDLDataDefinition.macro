@@ -4,6 +4,8 @@
 	<var name="ddlListName" value="List Name" />
 
 	<command name="_add">
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 

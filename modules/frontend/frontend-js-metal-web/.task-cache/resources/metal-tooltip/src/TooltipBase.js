@@ -1,23 +1,15 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal-position/src/Align', 'metal/src/component/Component', 'metal/src/events/EventHandler', 'metal/src/soy/SoyRenderer', 'metal-jquery-adapter/src/JQueryAdapter', 'metal/src/dom/events'], function (exports, _core, _dom, _Align, _Component2, _EventHandler, _SoyRenderer, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-position/src/all/position', 'metal-component/src/all/component', 'metal-events/src/events', 'metal-soy/src/soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _position, _component, _events, _soy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _Align2 = _interopRequireDefault(_Align);
-
-	var _Component3 = _interopRequireDefault(_Component2);
-
-	var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-	var _SoyRenderer2 = _interopRequireDefault(_SoyRenderer);
+	var _component2 = _interopRequireDefault(_component);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -38,7 +30,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -60,14 +52,23 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 	var TooltipBase = function (_Component) {
 		_inherits(TooltipBase, _Component);
 
+		/**
+   * @inheritDoc
+   */
+
 		function TooltipBase(opt_config) {
 			_classCallCheck(this, TooltipBase);
 
 			var _this = _possibleConstructorReturn(this, _Component.call(this, opt_config));
 
-			_this.eventHandler_ = new _EventHandler2.default();
+			_this.eventHandler_ = new _events.EventHandler();
 			return _this;
 		}
+
+		/**
+   * @inheritDoc
+   */
+
 
 		TooltipBase.prototype.attached = function attached() {
 			this.align();
@@ -94,7 +95,6 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 				if (this.locked_) {
 					return;
 				}
-
 				if (interactingWithDifferentTarget) {
 					this.alignElement = delegateTarget;
 				} else {
@@ -106,9 +106,7 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 
 		TooltipBase.prototype.handleShow = function handleShow(event) {
 			var delegateTarget = event.delegateTarget;
-
 			_Component.prototype.syncVisible.call(this, true);
-
 			this.callAsync_(function () {
 				this.alignElement = delegateTarget;
 				this.visible = true;
@@ -136,20 +134,16 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 			if (prevAlignElement) {
 				alignElement.removeAttribute('aria-describedby');
 			}
-
 			if (alignElement) {
 				var dataTitle = alignElement.getAttribute('data-title');
-
 				if (dataTitle) {
 					this.title = dataTitle;
 				}
-
 				if (this.visible) {
 					alignElement.setAttribute('aria-describedby', this.id);
 				} else {
 					alignElement.removeAttribute('aria-describedby');
 				}
-
 				if (this.inDocument) {
 					var finalPosition = TooltipBase.Align.align(this.element, alignElement, this.position);
 					this.updatePositionCSS(finalPosition);
@@ -169,10 +163,8 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 			if (!this.inDocument) {
 				return;
 			}
-
 			this.eventHandler_.removeAllListeners();
 			var selector = this.selector;
-
 			if (!selector) {
 				return;
 			}
@@ -192,41 +184,100 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 
 		TooltipBase.prototype.updatePositionCSS = function updatePositionCSS(position) {
 			_dom2.default.removeClasses(this.element, TooltipBase.PositionClasses.join(' '));
-
 			_dom2.default.addClasses(this.element, TooltipBase.PositionToClass[position]);
 		};
 
 		return TooltipBase;
-	}(_Component3.default);
+	}(_component2.default);
 
 	TooltipBase.prototype.registerMetalComponent && TooltipBase.prototype.registerMetalComponent(TooltipBase, 'TooltipBase')
-	TooltipBase.Align = _Align2.default;
+
+
+	/**
+  * @inheritDoc
+  * @see `Align` class.
+  * @static
+  */
+	TooltipBase.Align = _position.Align;
+
+	/**
+  * TooltipBase attrbutes definition.
+  * @type {!Object}
+  * @static
+  */
 	TooltipBase.ATTRS = {
+		/**
+   * Element to align tooltip with.
+   * @type {Element}
+   */
 		alignElement: {
 			setter: _dom2.default.toElement
 		},
+
+		/**
+   * Delay showing and hiding the tooltip (ms).
+   * @type {!Array<number>}
+   * @default [ 500, 250 ]
+   */
 		delay: {
 			validator: Array.isArray,
 			value: [500, 250]
 		},
+
+		/**
+   * Trigger events used to bind handlers to show and hide tooltip.
+   * @type {!Array<string>}
+   * @default ['mouseenter', 'mouseleave']
+   */
 		triggerEvents: {
 			validator: Array.isArray,
 			value: ['mouseenter', 'mouseleave']
 		},
+
+		/**
+   * If a selector is provided, tooltip objects will be delegated to the
+   * specified targets by setting the `alignElement`.
+   * @type {?string}
+   */
 		selector: {
-			validator: _core2.default.isString
+			validator: _metal2.default.isString
 		},
+
+		/**
+   * The position to try alignment. If not possible the best position will be
+   * found.
+   * @type {Align.Top|Align.Right|Align.Bottom|Align.Left}
+   * @default Align.Bottom
+   */
 		position: {
 			validator: TooltipBase.Align.isValidPosition,
 			value: TooltipBase.Align.Bottom
 		},
+
+		/**
+   * Content to be placed inside tooltip.
+   * @type {string}
+   */
 		title: {}
 	};
-	TooltipBase.PositionClasses = ['top', 'right', 'bottom', 'left'];
-	TooltipBase.PositionToClass = ['top', 'top', 'right', 'bottom', 'bottom', 'bottom', 'left', 'top'];
-	TooltipBase.RENDERER = _SoyRenderer2.default;
-	exports.default = TooltipBase;
 
+	/**
+  * CSS classes used for each align position.
+  * @type {!Array}
+  * @static
+  */
+	TooltipBase.PositionClasses = ['top', 'right', 'bottom', 'left'];
+
+	/**
+  * A map from each `Align` position to the appropriate tooltip class.
+  * @type {!Array}
+  * @static
+  */
+	TooltipBase.PositionToClass = ['top', 'top', 'right', 'bottom', 'bottom', 'bottom', 'left', 'top'];
+
+	TooltipBase.RENDERER = _soy.SoyRenderer;
+
+	exports.default = TooltipBase;
 	_JQueryAdapter2.default.register('tooltipBase', TooltipBase);
 });
 //# sourceMappingURL=TooltipBase.js.map

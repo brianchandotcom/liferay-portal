@@ -66,7 +66,7 @@ AUI.add(
 						instance._eventHandles = [
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowCSSFn, instance.get(STR_ROW_SELECTOR) + ' ' + STR_CHECKBOX_SELECTOR, instance),
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowFn, instance.get(STR_ROW_SELECTOR) + ' ' + instance.get('rowCheckerSelector'), instance),
-							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
+							Liferay.on('startNavigate', instance._onSurfaceStartNavigate, instance)
 						];
 					},
 

@@ -98,6 +98,8 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PORTLET" value1="${portlet}" />
 
+		<execute function="AssertVisible" locator1="ProductMenu#PORTLET_SELECTED" />
+
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>
 

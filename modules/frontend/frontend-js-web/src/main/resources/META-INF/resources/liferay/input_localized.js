@@ -70,6 +70,10 @@ AUI.add(
 						validator: Array.isArray
 					},
 
+					instanceId: {
+						value: Lang.isString
+					},
+
 					name: {
 						validator: Lang.isString
 					},
@@ -169,6 +173,8 @@ AUI.add(
 
 					destructor: function() {
 						var instance = this;
+
+						InputLocalized.unregister(instance.get('instanceId'));
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -422,9 +428,11 @@ AUI.add(
 					_onSubmit: function(event, input) {
 						var instance = this;
 
-						instance._onInputValueChange.apply(instance, arguments);
+						if (event.form === input.get('form')) {
+							instance._onInputValueChange.apply(instance, arguments);
 
-						InputLocalized.unregister(input.attr('id'));
+							InputLocalized.unregister(input.attr('id'));
+						}
 					},
 
 					_syncTranslatedLanguagesUI: function() {
@@ -476,6 +484,8 @@ AUI.add(
 				register: function(id, config) {
 					var instance = this;
 
+					config.instanceId = id;
+
 					Liferay.component(
 						id,
 						function() {
@@ -511,6 +521,7 @@ AUI.add(
 					var instance = this;
 
 					delete InputLocalized._instances[id];
+					delete InputLocalized._registered[id];
 				},
 
 				_initializeInputLocalized: function(event, input, initialLanguageId) {

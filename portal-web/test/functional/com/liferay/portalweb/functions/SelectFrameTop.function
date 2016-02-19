@@ -5,5 +5,7 @@
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
 	</command>
 </definition>

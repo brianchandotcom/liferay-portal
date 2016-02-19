@@ -1,11 +1,11 @@
-define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'metal/src/core', './Geometry'], function (exports, _core, _Geometry) {
+define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'metal/src/metal', './Geometry'], function (exports, _metal, _Geometry) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 
@@ -32,15 +32,12 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'm
 
 		Position.getClientSize_ = function getClientSize_(node, prop) {
 			var el = node;
-
-			if (_core2.default.isWindow(node)) {
+			if (_metal2.default.isWindow(node)) {
 				el = node.document.documentElement;
 			}
-
-			if (_core2.default.isDocument(node)) {
+			if (_metal2.default.isDocument(node)) {
 				el = node.documentElement;
 			}
-
 			return el['client' + prop];
 		};
 
@@ -67,64 +64,54 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'm
 		};
 
 		Position.getRegion = function getRegion(node, opt_includeScroll) {
-			if (_core2.default.isDocument(node) || _core2.default.isWindow(node)) {
+			if (_metal2.default.isDocument(node) || _metal2.default.isWindow(node)) {
 				return this.getDocumentRegion_(node);
 			}
-
 			return this.makeRegionFromBoundingRect_(node.getBoundingClientRect(), opt_includeScroll);
 		};
 
 		Position.getScrollLeft = function getScrollLeft(node) {
-			if (_core2.default.isWindow(node)) {
+			if (_metal2.default.isWindow(node)) {
 				return node.pageXOffset;
 			}
-
-			if (_core2.default.isDocument(node)) {
+			if (_metal2.default.isDocument(node)) {
 				return node.defaultView.pageXOffset;
 			}
-
 			return node.scrollLeft;
 		};
 
 		Position.getScrollTop = function getScrollTop(node) {
-			if (_core2.default.isWindow(node)) {
+			if (_metal2.default.isWindow(node)) {
 				return node.pageYOffset;
 			}
-
-			if (_core2.default.isDocument(node)) {
+			if (_metal2.default.isDocument(node)) {
 				return node.defaultView.pageYOffset;
 			}
-
 			return node.scrollTop;
 		};
 
 		Position.getSize_ = function getSize_(node, prop) {
-			if (_core2.default.isWindow(node)) {
+			if (_metal2.default.isWindow(node)) {
 				return this.getClientSize_(node, prop);
 			}
-
-			if (_core2.default.isDocument(node)) {
+			if (_metal2.default.isDocument(node)) {
 				var docEl = node.documentElement;
 				return Math.max(node.body['scroll' + prop], docEl['scroll' + prop], node.body['offset' + prop], docEl['offset' + prop], docEl['client' + prop]);
 			}
-
 			return Math.max(node['client' + prop], node['scroll' + prop], node['offset' + prop]);
 		};
 
 		Position.getTransformMatrixValues = function getTransformMatrixValues(node) {
 			var style = getComputedStyle(node);
 			var transform = style.msTransform || style.transform || style.webkitTransform || style.mozTransform;
-
 			if (transform !== 'none') {
 				var values = [];
 				var regex = /([\d-\.\s]+)/g;
 				var matches = regex.exec(transform);
-
 				while (matches) {
 					values.push(matches[1]);
 					matches = regex.exec(transform);
 				}
-
 				return values;
 			}
 		};
@@ -135,12 +122,10 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'm
 				left: 0,
 				top: 0
 			};
-
 			if (values) {
 				translation.left = parseFloat(values.length === 6 ? values[4] : values[13]);
 				translation.top = parseFloat(values.length === 6 ? values[5] : values[14]);
 			}
-
 			return translation;
 		};
 
@@ -164,7 +149,6 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Position", ['exports', 'm
 			if (!this.intersectRegion(r1, r2)) {
 				return null;
 			}
-
 			var bottom = Math.min(r1.bottom, r2.bottom);
 			var right = Math.min(r1.right, r2.right);
 			var left = Math.max(r1.left, r2.left);

@@ -1,5 +1,7 @@
 <definition default="sikuliLeftMouseDown">
 	<command name="sikuliLeftMouseDown">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliLeftMouseDown" />
 
 		<execute selenium="assertJavaScriptErrors" />

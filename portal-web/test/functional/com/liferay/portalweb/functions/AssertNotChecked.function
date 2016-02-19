@@ -1,5 +1,7 @@
 <definition default="assertNotChecked">
 	<command name="assertNotChecked">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="assertNotChecked" />
@@ -10,6 +12,8 @@
 	</command>
 
 	<command name="assertNotCheckedToggleSwitch">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="assertNotChecked" />

@@ -69,7 +69,7 @@ AUI.add(
 						instance._eventHandles = [
 							instance._searchContainer.on('rowToggled', instance._onSearchContainerRowToggled, instance),
 							instance.get('rootNode').delegate(STR_CLICK, instance._toggleSelectAll, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
-							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
+							Liferay.on('startNavigate', instance._onSurfaceStartNavigate, instance)
 						];
 					},
 

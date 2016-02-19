@@ -1,17 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/attribute/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal/src/events/EventHandler', 'metal-position/src/Position'], function (exports, _core, _dom, _object, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _EventHandler, _Position) {
+define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-attribute/src/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal-events/src/events', 'metal-position/src/all/position'], function (exports, _metal, _dom, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _events, _position) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
-
 	var _dom2 = _interopRequireDefault(_dom);
-
-	var _object2 = _interopRequireDefault(_object);
 
 	var _Attribute3 = _interopRequireDefault(_Attribute2);
 
@@ -21,9 +15,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 
 	var _DragShim2 = _interopRequireDefault(_DragShim);
 
-	var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-	var _Position2 = _interopRequireDefault(_Position);
+	var _position2 = _interopRequireDefault(_position);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -42,7 +34,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -64,37 +56,110 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 	var Drag = function (_Attribute) {
 		_inherits(Drag, _Attribute);
 
+		/**
+   * @inheritDoc
+   */
+
 		function Drag(opt_config) {
 			_classCallCheck(this, Drag);
 
 			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
 
+			/**
+    * The drag placeholder that is active at the moment.
+    * @type {Element}
+    * @protected
+    */
 			_this.activeDragPlaceholder_ = null;
+
+			/**
+    * The drag source that is active at the moment.
+    * @type {Element}
+    * @protected
+    */
 			_this.activeDragSource_ = null;
+
+			/**
+    * The distance that has been dragged.
+    * @type {number}
+    * @protected
+    */
 			_this.distanceDragged_ = 0;
+
+			/**
+    * Flag indicating if one of the sources are being dragged.
+    * @type {boolean}
+    * @protected
+    */
 			_this.dragging_ = false;
-			_this.dragHandler_ = new _EventHandler2.default();
+
+			/**
+    * The `EventHandler` instance that holds events that keep track of the drag action.
+    * @type {!EventHandler}
+    * @protected
+    */
+			_this.dragHandler_ = new _events.EventHandler();
+
+			/**
+    * `DragScrollDelta` instance.
+    * @type {!DragScrollDelta}
+    * @protected
+    */
 			_this.dragScrollDelta_ = new _DragScrollDelta2.default();
+
+			/**
+    * The current x and y positions of the mouse (or null if not dragging).
+    * @type {{x: number, y: number}}
+    * @protected
+    */
 			_this.mousePos_ = null;
+
+			/**
+    * The distance between the mouse position and the dragged source position
+    * (or null if not dragging).
+    * @type {{x: number, y: number}}
+    * @protected
+    */
 			_this.mouseSourceDelta_ = null;
-			_this.sourceHandler_ = new _EventHandler2.default();
+
+			/**
+    * The `EventHandler` instance that holds events for the source (or sources).
+    * @type {!EventHandler}
+    * @protected
+    */
+			_this.sourceHandler_ = new _events.EventHandler();
+
+			/**
+    * The current region values of the element being dragged, relative to
+    * the document (or null if not dragging).
+    * @type {Object}
+    * @protected
+    */
 			_this.sourceRegion_ = null;
+
+			/**
+    * The current x and y positions of the element being dragged relative to its
+    * `offsetParent`, or to the viewport if there's no `offsetParent`
+    * (or null if not dragging).
+    * @type {{x: number, y: number}}
+    * @protected
+    */
 			_this.sourceRelativePos_ = null;
 
 			_this.attachSourceEvents_();
-
 			_this.on(Drag.Events.DRAG, _this.defaultDragFn_, true);
-
 			_this.on(Drag.Events.END, _this.defaultEndFn_, true);
-
 			_this.on('sourcesChanged', _this.handleSourcesChanged_.bind(_this));
-
 			_this.dragScrollDelta_.on('scrollDelta', _this.handleScrollDelta_.bind(_this));
-
 			_dom2.default.on(document, 'keydown', _this.handleKeyDown_.bind(_this));
-
 			return _this;
 		}
+
+		/**
+   * Attaches the necessary events to the source (or sources).
+   * @protected
+   */
+
 
 		Drag.prototype.attachSourceEvents_ = function attachSourceEvents_() {
 			var toAttach = {
@@ -103,11 +168,9 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 				touchstart: this.handleDragStartEvent_.bind(this)
 			};
 			var eventTypes = Object.keys(toAttach);
-
 			for (var i = 0; i < eventTypes.length; i++) {
 				var listenerFn = toAttach[eventTypes[i]];
-
-				if (_core2.default.isString(this.sources)) {
+				if (_metal.core.isString(this.sources)) {
 					this.sourceHandler_.add(_dom2.default.delegate(this.container, eventTypes[i], this.sources, listenerFn));
 				} else {
 					this.sourceHandler_.add(_dom2.default.on(this.sources, eventTypes[i], listenerFn));
@@ -127,13 +190,12 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		Drag.prototype.calculateInitialPosition_ = function calculateInitialPosition_(event) {
-			this.sourceRegion_ = _object2.default.mixin({}, _Position2.default.getRegion(this.activeDragSource_, true));
+			this.sourceRegion_ = _metal.object.mixin({}, _position2.default.getRegion(this.activeDragSource_, true));
 			this.sourceRelativePos_ = {
 				x: this.activeDragSource_.offsetLeft,
 				y: this.activeDragSource_.offsetTop
 			};
-
-			if (_core2.default.isDef(event.clientX)) {
+			if (_metal.core.isDef(event.clientX)) {
 				this.mousePos_ = {
 					x: event.clientX,
 					y: event.clientY
@@ -146,20 +208,17 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		Drag.prototype.canStartDrag_ = function canStartDrag_(event) {
-			return !this.disabled && (!_core2.default.isDef(event.button) || event.button === 0) && !this.isDragging() && this.isWithinHandle_(event.target);
+			return !this.disabled && (!_metal.core.isDef(event.button) || event.button === 0) && !this.isDragging() && this.isWithinHandle_(event.target);
 		};
 
 		Drag.prototype.cleanUpAfterDragging_ = function cleanUpAfterDragging_() {
 			if (this.activeDragPlaceholder_) {
 				this.activeDragPlaceholder_.setAttribute('aria-grabbed', 'false');
-
 				_dom2.default.removeClasses(this.activeDragPlaceholder_, this.draggingClass);
-
 				if (this.dragPlaceholder === Drag.Placeholder.CLONE) {
 					_dom2.default.exitDocument(this.activeDragPlaceholder_);
 				}
 			}
-
 			this.activeDragPlaceholder_ = null;
 			this.activeDragSource_ = null;
 			this.sourceRegion_ = null;
@@ -175,9 +234,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			placeholder.style.position = 'absolute';
 			placeholder.style.left = this.sourceRelativePos_.x + 'px';
 			placeholder.style.top = this.sourceRelativePos_.y + 'px';
-
 			_dom2.default.append(this.activeDragSource_.parentNode, placeholder);
-
 			return placeholder;
 		};
 
@@ -199,24 +256,20 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 
 		Drag.prototype.constrainToRegion_ = function constrainToRegion_(region) {
 			var constrain = this.constrain;
-
 			if (constrain) {
-				if (_core2.default.isElement(constrain)) {
-					constrain = _Position2.default.getRegion(constrain, true);
+				if (_metal.core.isElement(constrain)) {
+					constrain = _position2.default.getRegion(constrain, true);
 				}
-
 				if (region.left < constrain.left) {
 					region.left = constrain.left;
 				} else if (region.right > constrain.right) {
 					region.left -= region.right - constrain.right;
 				}
-
 				if (region.top < constrain.top) {
 					region.top = constrain.top;
 				} else if (region.bottom > constrain.bottom) {
 					region.top -= region.bottom - constrain.bottom;
 				}
-
 				region.right = region.left + region.width;
 				region.bottom = region.top + region.height;
 			}
@@ -233,10 +286,9 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 
 		Drag.prototype.createActiveDragPlaceholder_ = function createActiveDragPlaceholder_() {
 			var dragPlaceholder = this.dragPlaceholder;
-
 			if (dragPlaceholder === Drag.Placeholder.CLONE) {
 				this.activeDragPlaceholder_ = this.cloneActiveDrag_();
-			} else if (_core2.default.isElement(dragPlaceholder)) {
+			} else if (_metal.core.isElement(dragPlaceholder)) {
 				this.activeDragPlaceholder_ = dragPlaceholder;
 			} else {
 				this.activeDragPlaceholder_ = this.activeDragSource_;
@@ -258,7 +310,6 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			this.dragScrollDelta_ = null;
 			this.sourceHandler_.removeAllListeners();
 			this.sourceHandler_ = null;
-
 			_Attribute.prototype.disposeInternal.call(this);
 		};
 
@@ -270,11 +321,8 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			if (this.autoScroll) {
 				this.autoScroll.stop();
 			}
-
 			this.dragScrollDelta_.stop();
-
 			_DragShim2.default.hideDocShim();
-
 			this.emit(Drag.Events.END, this.buildEventObject_());
 			this.cleanUpAfterDragging_();
 		};
@@ -285,7 +333,6 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			var distanceY = position.clientY - this.mousePos_.y;
 			this.mousePos_.x = position.clientX;
 			this.mousePos_.y = position.clientY;
-
 			if (!this.isDragging() && !this.hasReachedMinimumDistance_(distanceX, distanceY)) {
 				return;
 			}
@@ -294,11 +341,9 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 				this.startDragging_();
 				this.dragScrollDelta_.start(this.activeDragPlaceholder_, this.scrollContainers);
 			}
-
 			if (this.autoScroll) {
 				this.autoScroll.scroll(this.scrollContainers, this.mousePos_.x, this.mousePos_.y);
 			}
-
 			this.updatePositionFromMouse();
 		};
 
@@ -308,7 +353,6 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			if (this.canStartDrag_(event)) {
 				this.calculateInitialPosition_(event.targetTouches ? event.targetTouches[0] : event);
 				event.preventDefault();
-
 				if (event.type === 'keydown') {
 					this.startDragging_();
 				} else {
@@ -338,17 +382,15 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		Drag.prototype.handleSourceKeyDown_ = function handleSourceKeyDown_(event) {
 			if (this.isDragging()) {
 				var currentTarget = event.delegateTarget || event.currentTarget;
-
 				if (currentTarget !== this.activeDragSource_) {
 					return;
 				}
-
 				if (event.keyCode >= 37 && event.keyCode <= 40) {
+					// Arrow keys during drag move the source.
 					var deltaX = 0;
 					var deltaY = 0;
 					var speedX = this.keyboardSpeed >= this.steps.x ? this.keyboardSpeed : this.steps.x;
 					var speedY = this.keyboardSpeed >= this.steps.y ? this.keyboardSpeed : this.steps.y;
-
 					if (event.keyCode === 37) {
 						deltaX -= speedX;
 					} else if (event.keyCode === 38) {
@@ -358,13 +400,14 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 					} else {
 						deltaY += speedY;
 					}
-
 					this.updatePositionFromDelta(deltaX, deltaY);
 					event.preventDefault();
 				} else if (event.keyCode === 13 || event.keyCode === 32 || event.keyCode === 27) {
+					// Enter, space or esc during drag will end it.
 					this.handleDragEndEvent_();
 				}
 			} else if (event.keyCode === 13 || event.keyCode === 32) {
+				// Enter or space will start the drag action.
 				this.handleDragStartEvent_(event);
 			}
 		};
@@ -385,10 +428,9 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 
 		Drag.prototype.isWithinHandle_ = function isWithinHandle_(element) {
 			var handles = this.handles;
-
 			if (!handles) {
 				return true;
-			} else if (_core2.default.isString(handles)) {
+			} else if (_metal.core.isString(handles)) {
 				return _dom2.default.match(element, handles + ', ' + handles + ' *');
 			} else {
 				return _dom2.default.contains(handles, element);
@@ -407,10 +449,9 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		Drag.prototype.setterConstrainFn = function setterConstrainFn(val) {
-			if (_core2.default.isString(val)) {
+			if (_metal.core.isString(val)) {
 				val = _dom2.default.toElement(val);
 			}
-
 			return val;
 		};
 
@@ -423,14 +464,12 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		Drag.prototype.startDragging_ = function startDragging_() {
 			this.dragging_ = true;
 			this.createActiveDragPlaceholder_();
-
 			_dom2.default.addClasses(this.activeDragPlaceholder_, this.draggingClass);
-
 			this.activeDragPlaceholder_.setAttribute('aria-grabbed', 'true');
 		};
 
 		Drag.prototype.toElements_ = function toElements_(elementOrSelector) {
-			if (_core2.default.isString(elementOrSelector)) {
+			if (_metal.core.isString(elementOrSelector)) {
 				var matched = this.container.querySelectorAll(elementOrSelector);
 				return Array.prototype.slice.call(matched, 0);
 			} else if (elementOrSelector) {
@@ -444,7 +483,6 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 			this.constrain_(newRegion);
 			var deltaX = newRegion.left - this.sourceRegion_.left;
 			var deltaY = newRegion.top - this.sourceRegion_.top;
-
 			if (deltaX !== 0 || deltaY !== 0) {
 				this.sourceRegion_ = newRegion;
 				this.sourceRelativePos_.x += deltaX;
@@ -454,8 +492,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		Drag.prototype.updatePositionFromDelta = function updatePositionFromDelta(deltaX, deltaY) {
-			var newRegion = _object2.default.mixin({}, this.sourceRegion_);
-
+			var newRegion = _metal.object.mixin({}, this.sourceRegion_);
 			newRegion.left += deltaX;
 			newRegion.right += deltaX;
 			newRegion.top += deltaY;
@@ -476,67 +513,164 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		Drag.prototype.validateElementOrString_ = function validateElementOrString_(val) {
-			return _core2.default.isString(val) || _core2.default.isElement(val);
+			return _metal.core.isString(val) || _metal.core.isElement(val);
 		};
 
 		Drag.prototype.validatorConstrainFn = function validatorConstrainFn(val) {
-			return _core2.default.isString(val) || _core2.default.isObject(val);
+			return _metal.core.isString(val) || _metal.core.isObject(val);
 		};
 
 		return Drag;
 	}(_Attribute3.default);
 
 	Drag.prototype.registerMetalComponent && Drag.prototype.registerMetalComponent(Drag, 'Drag')
+
+
+	/**
+  * Attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	Drag.ATTRS = {
+		/**
+   * Configuration object for the `DragAutoScroll` instance that will be used for
+   * automatically scrolling the elements in `scrollContainers` during drag when
+   * the mouse is near their boundaries. If set to `false`, auto scrolling will be
+   * disabled (default).
+   * @type {!Object|boolean}
+   * @default false
+   */
 		autoScroll: {
 			setter: 'setterAutoScrollFn_',
 			value: false,
 			writeOnce: true
 		},
+
+		/**
+   * The axis that allows dragging. Can be set to just x, just y or both (default).
+   * @type {string}
+   */
 		axis: {
-			validator: _core2.default.isString
+			validator: _metal.core.isString
 		},
+
+		/**
+   * Object with the boundaries, that the dragged element should not leave
+   * while being dragged. If not set, the element is free to be dragged
+   * to anywhere on the page. Can be either already an object with the
+   * boundaries relative to the document, or an element to use the boundaries
+   * from, or even a selector for finding that element.
+   * @type {!Element|Object|string}
+   */
 		constrain: {
 			setter: 'setterConstrainFn',
 			validator: 'validatorConstrainFn'
 		},
+
+		/**
+   * An element that contains all sources, targets and scroll containers. This
+   * will be used when delegate events are attached or when looking for elements
+   * by selector. Defaults to `document`.
+   * @type {!Element|string}
+   * @default document
+   */
 		container: {
 			setter: _dom2.default.toElement,
 			validator: 'validateElementOrString_',
 			value: document
 		},
+
+		/**
+   * Flag indicating if drag operations are disabled. When set to true, it
+   * dragging won't work.
+   * @type {boolean}
+   * @default false
+   */
 		disabled: {
-			validator: _core2.default.isBoolean,
+			validator: _metal.core.isBoolean,
 			value: false
 		},
+
+		/**
+   * The CSS class that should be added to the node being dragged.
+   * @type {string}
+   * @default 'dragging'
+   */
 		draggingClass: {
-			validator: _core2.default.isString,
+			validator: _metal.core.isString,
 			value: 'dragging'
 		},
+
+		/**
+   * The placeholder element that should be moved during drag. Can be either
+   * an element or the "clone" string, indicating that a clone of the source
+   * being dragged should be used. If nothing is set, the original source element
+   * will be used.
+   * @type {Element|?string}
+   */
 		dragPlaceholder: {
 			validator: 'validateElementOrString_'
 		},
+
+		/**
+   * Elements inside the source that should be the drag handles. Can be
+   * either a single element or a selector for multiple elements.
+   * @type {Element|?string}
+   */
 		handles: {
 			validator: 'validateElementOrString_'
 		},
+
+		/**
+   * The number of pixels that the source should move when dragged via
+   * the keyboard controls.
+   * @default 10
+   */
 		keyboardSpeed: {
-			validator: _core2.default.isNumber,
+			validator: _metal.core.isNumber,
 			value: 10
 		},
+
+		/**
+   * The minimum distance, in pixels, that the mouse needs to move before
+   * the action is considered a drag.
+   * @type {number}
+   * @default 5
+   */
 		minimumDragDistance: {
-			validator: _core2.default.isNumber,
+			validator: _metal.core.isNumber,
 			value: 5,
 			writeOnce: true
 		},
+
+		/**
+   * Elements with scroll, besides the document, that contain any of the given
+   * sources. Can be either a single element or a selector for multiple elements.
+   * @type {Element|string}
+   */
 		scrollContainers: {
 			setter: 'setterScrollContainersFn_',
 			validator: 'validateElementOrString_'
 		},
+
+		/**
+   * Elements that should be draggable. Can be either a single element
+   * or a selector for multiple elements.
+   * @type {!Element|string}
+   */
 		sources: {
 			validator: 'validateElementOrString_'
 		},
+
+		/**
+   * The number of pixels that the source element should move at a time,
+   * for each axis. When set to a value higher than 1, dragging won't be
+   * a continuous movement, since the source element will move by multiple
+   * pixels on each step.
+   * @type {!{x: number, y: number}}
+   */
 		steps: {
-			validator: _core2.default.isObject,
+			validator: _metal.core.isObject,
 			valueFn: function valueFn() {
 				return {
 					x: 1,
@@ -544,17 +678,38 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 				};
 			}
 		},
+
+		/**
+   * Flag indicating if a shim should be used for capturing document events.
+   * This is important for allowing dragging nodes over iframes. If false,
+   * events will be listened in the document itself instead.
+   * @type {boolean}
+   * @default true
+   */
 		useShim: {
 			value: true
 		}
 	};
+
+	/**
+  * Holds the names of events that can be emitted by `Drag`.
+  * @type {!Object}
+  * @static
+  */
 	Drag.Events = {
 		DRAG: 'drag',
 		END: 'end'
 	};
+
+	/**
+  * Holds the values that can be passed to the `dragPlaceholder` attribute.
+  * @type {!Object}
+  * @static
+  */
 	Drag.Placeholder = {
 		CLONE: 'clone'
 	};
+
 	exports.default = Drag;
 });
 //# sourceMappingURL=Drag.js.map

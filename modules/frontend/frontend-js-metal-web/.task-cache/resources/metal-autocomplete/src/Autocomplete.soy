@@ -1,0 +1,16 @@
+{namespace Templates.Autocomplete}
+
+/**
+ * This renders the main element.
+ * @param? elementClasses
+ * @param id
+ * @skipUpdates elementClasses
+ */
+{template .render}
+	<div id="{$id}" class="autocomplete autocomplete-list component {$elementClasses ? ' ' + $elementClasses : ''}">
+		{call Templates.List.render}
+		{param events: ['itemSelected': $id + ':onListItemSelected_'] /}
+			{param id: $id + '-list' /}
+		{/call}
+	</div>
+{/template}

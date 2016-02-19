@@ -1,13 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher", ['exports', 'metal/src/core', 'metal/src/dom/dom', './Switcher.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _SwitcherSoy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Switcher.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _SwitcherSoy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
@@ -32,7 +30,7 @@ define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher", ['exports', 'm
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -76,15 +74,34 @@ define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher", ['exports', 'm
 	}(_SwitcherSoy2.default);
 
 	Switcher.prototype.registerMetalComponent && Switcher.prototype.registerMetalComponent(Switcher, 'Switcher')
+
+
+	/**
+  * Default switcher elementClasses.
+  * @default list
+  * @type {string}
+  * @static
+  */
 	Switcher.ELEMENT_CLASSES = 'switcher';
+
+	/**
+  * Switcher attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	Switcher.ATTRS = {
+		/**
+   * Flag indicating if the switcher is currently checked or not.
+   * @type {boolean}
+   * @default false
+   */
 		checked: {
-			validator: _core2.default.isBoolean,
+			validator: _metal2.default.isBoolean,
 			value: false
 		}
 	};
-	exports.default = Switcher;
 
+	exports.default = Switcher;
 	_JQueryAdapter2.default.register('switcher', Switcher);
 });
 //# sourceMappingURL=Switcher.js.map

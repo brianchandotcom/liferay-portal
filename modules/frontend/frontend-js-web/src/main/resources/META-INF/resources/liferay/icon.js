@@ -1,41 +1,75 @@
 AUI.add(
 	'liferay-icon',
 	function(A) {
+		var _ICON_REGISTRY = {};
+
 		var Icon = {
 			register: function(config) {
 				var instance = this;
 
-				var icon = A.one('#' + config.id);
+				var doc = A.one(A.config.doc);
 
-				var forcePost = config.forcePost;
-				var src = config.src;
-				var srcHover = config.srcHover;
-				var useDialog = config.useDialog;
+				_ICON_REGISTRY[config.id] = config;
 
-				if (icon) {
-					if (srcHover) {
-						instance._onMouseOver = A.rbind('_onMouseHover', instance, srcHover);
-						instance._onMouseOut = A.rbind('_onMouseHover', instance, src);
+				if (!instance._docClickHandler) {
+					instance._docClickHandler = doc.delegate('click', instance._handleDocClick, '.lfr-icon-item', instance);
+				}
 
-						icon.hover(instance._onMouseOver, instance._onMouseOut);
-					}
-
-					if (useDialog) {
-						icon.on('click', instance._useDialog, instance);
-					}
-					else if (forcePost) {
-						icon.on('click', instance._forcePost, instance);
-					}
+				if (!instance._docHoverHandler) {
+					instance._docHoverHandler = doc.delegate('hover', instance._handleDocMouseOver, instance._handleDocMouseOut, '.lfr-icon-item', instance);
 				}
 			},
 
 			_forcePost: function(event) {
 				var instance = this;
 
-				if (!Liferay.Surface || !Liferay.Surface.app) {
+				if (!Liferay.SPA || !Liferay.SPA.app) {
 					Liferay.Util.forcePost(event.currentTarget);
 
 					event.preventDefault();
+				}
+			},
+
+			_getConfig: function(event) {
+				var instance = this;
+
+				return _ICON_REGISTRY[event.currentTarget.attr('id')];
+			},
+
+			_handleDocClick: function(event) {
+				var instance = this;
+
+				var config = instance._getConfig(event);
+
+				if (config) {
+					event.preventDefault();
+
+					if (config.useDialog) {
+						instance._useDialog(event);
+					}
+					else {
+						instance._forcePost(event);
+					}
+				}
+			},
+
+			_handleDocMouseOut: function(event) {
+				var instance = this;
+
+				var config = instance._getConfig(event);
+
+				if (config && config.srcHover) {
+					instance._onMouseHover(event, config.src);
+				}
+			},
+
+			_handleDocMouseOver: function(event) {
+				var instance = this;
+
+				var config = instance._getConfig(event);
+
+				if (config && config.srcHover) {
+					instance._onMouseHover(event, config.srcHover);
 				}
 			},
 

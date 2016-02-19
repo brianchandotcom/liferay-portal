@@ -1,19 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  var _Component3 = _interopRequireDefault(_Component2);
-
-  var _SoyAop2 = _interopRequireDefault(_SoyAop);
-
-  var _SoyRenderer2 = _interopRequireDefault(_SoyRenderer);
-
-  var _SoyTemplates2 = _interopRequireDefault(_SoyTemplates);
+  var _component2 = _interopRequireDefault(_component);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -32,7 +24,7 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
   }
 
   function _inherits(subClass, superClass) {
@@ -51,12 +43,25 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _SoyTemplates2.default.get();
+  var Templates = _soy.SoyTemplates.get();
+  // This file was automatically generated from Popover.soy.
+  // Please don't edit this file by hand.
+
+  /**
+   * @fileoverview Templates in namespace Templates.Popover.
+   */
 
   if (typeof Templates.Popover == 'undefined') {
     Templates.Popover = {};
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.Popover.render = function (opt_data, opt_ignored, opt_ijData) {
     var output = '';
     var positionClasses__soy3 = ['top', 'right', 'bottom', 'left'];
@@ -64,23 +69,34 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 
     output += '<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="popover component ' + soy.$$escapeHtmlAttribute(positionClass__soy4) + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="tooltip"><div class="arrow"></div>' + Templates.Popover.title(opt_data, null, opt_ijData) + Templates.Popover.innerContent(opt_data, null, opt_ijData) + '</div>';
     return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
   };
-
   if (goog.DEBUG) {
     Templates.Popover.render.soyTemplateName = 'Templates.Popover.render';
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.Popover.title = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<h3 id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-title" class="popover-title' + soy.$$escapeHtmlAttribute(opt_data.title ? '' : ' hidden') + '">' + soy.$$escapeHtml(opt_data.title) + '</h3>');
   };
-
   if (goog.DEBUG) {
     Templates.Popover.title.soyTemplateName = 'Templates.Popover.title';
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.Popover.innerContent = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-innerContent" class="popover-content"><p>' + soy.$$escapeHtml(opt_data.content ? opt_data.content : '') + '</p></div>');
   };
-
   if (goog.DEBUG) {
     Templates.Popover.innerContent.soyTemplateName = 'Templates.Popover.innerContent';
   }
@@ -99,13 +115,12 @@ define("frontend-js-metal-web@1.0.0/metal-popover/src/Popover.soy", ['exports', 
     }
 
     return Popover;
-  }(_Component3.default);
+  }(_component2.default);
 
   Popover.prototype.registerMetalComponent && Popover.prototype.registerMetalComponent(Popover, 'Popover')
-  Popover.RENDERER = _SoyRenderer2.default;
 
-  _SoyAop2.default.registerTemplates('Popover');
-
+  Popover.RENDERER = _soy.SoyRenderer;
+  _soy.SoyAop.registerTemplates('Popover');
   exports.default = Popover;
 });
 //# sourceMappingURL=Popover.soy.js.map

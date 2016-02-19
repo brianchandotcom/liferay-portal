@@ -75,6 +75,14 @@ AUI.add(
 						instance._startTimer();
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
+
+						instance._stopTimer();
+					},
+
 					expire: function() {
 						var instance = this;
 
@@ -234,10 +242,6 @@ AUI.add(
 					_initEvents: function() {
 						var instance = this;
 
-						instance.on('sessionStateChange', instance._onSessionStateChange);
-
-						instance.after('sessionStateChange', instance._afterSessionStateChange);
-
 						instance.publish(
 							'activated',
 							{
@@ -254,14 +258,24 @@ AUI.add(
 
 						instance.publish('warned');
 
-						A.on(
-							'io:complete',
-							function(transactionId, response, args) {
-								if (!args || args && args.sessionExtend || !Lang.isBoolean(args.sessionExtend)) {
-									instance.resetInterval();
+						instance._eventHandlers = [
+							instance.on('sessionStateChange', instance._onSessionStateChange),
+							instance.after('sessionStateChange', instance._afterSessionStateChange),
+							A.on(
+								'io:complete',
+								function(transactionId, response, args) {
+									if (!args || args && args.sessionExtend || !Lang.isBoolean(args.sessionExtend)) {
+										instance.resetInterval();
+									}
 								}
-							}
-						);
+							),
+							Liferay.once(
+								'screenLoad',
+								function() {
+									instance.destroy();
+								}
+							)
+						];
 					},
 
 					_onSessionStateChange: function(event) {
@@ -424,6 +438,14 @@ AUI.add(
 						}
 						else {
 							host.unplug(instance);
+						}
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						if (instance._banner) {
+							instance._banner.destroy();
 						}
 					},
 

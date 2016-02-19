@@ -1,5 +1,7 @@
 <definition default="assertNotLocation">
 	<command name="assertNotLocation">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="assertNotLocation" />
 
 		<execute selenium="assertJavaScriptErrors" />

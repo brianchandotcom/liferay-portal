@@ -84,8 +84,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_PAGES_SELECTED</td>
+	<td>//span[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPrivatePages']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLIC_PAGES</td>
 	<td>//*[@data-qa-id='goToPublicPages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_PAGES_SELECTED</td>
+	<td>//span[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPublicPages']</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,6 +136,11 @@
 <tr>
 	<td>PORTLET</td>
 	<td>//div[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and contains(@data-title,'${key_portlet}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_SELECTED</td>
+	<td>//li[@class='active']//*[@data-qa-id='app' and contains(@data-title,'${key_portlet}')]</td>
 	<td></td>
 </tr>
 <tr>

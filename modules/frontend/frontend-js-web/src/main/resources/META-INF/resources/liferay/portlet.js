@@ -693,6 +693,7 @@
 			var instance = this;
 
 			var bodyCssClass = options.bodyCssClass;
+			var destroyOnHide = options.destroyOnHide;
 			var namespace = options.namespace;
 			var portlet = options.portlet;
 			var subTitle = options.subTitle;
@@ -722,6 +723,9 @@
 				Liferay.Util.openWindow(
 					{
 						cache: false,
+						dialog: {
+							destroyOnHide: destroyOnHide
+						},
 						dialogIframe: {
 							bodyCssClass: bodyCssClass,
 							id: namespace + 'configurationIframe',

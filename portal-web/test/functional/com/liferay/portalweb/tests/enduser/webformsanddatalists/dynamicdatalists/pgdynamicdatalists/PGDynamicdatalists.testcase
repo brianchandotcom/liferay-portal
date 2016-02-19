@@ -536,8 +536,6 @@
 	</command>
 
 	<command name="ConfigureSpreadsheetListPG" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />

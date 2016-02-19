@@ -1,5 +1,7 @@
 <definition default="assertAlertNotPresent">
 	<command name="assertAlertNotPresent">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="assertAlertNotPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />

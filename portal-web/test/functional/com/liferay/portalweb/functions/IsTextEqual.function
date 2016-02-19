@@ -1,5 +1,7 @@
 <definition default="isTextEqual">
 	<command name="isPartialText">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="waitForVisible" />
@@ -8,6 +10,8 @@
 	</command>
 
 	<command name="isText">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="waitForVisible" />
@@ -16,6 +20,8 @@
 	</command>
 
 	<command name="isTextEqual">
+		<execute function="WaitForSPARefresh" />
+
 		<if>
 			<contains string="${locator1}" substring="/input" />
 			<then>
@@ -28,6 +34,8 @@
 	</command>
 
 	<command name="isValue">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="waitForVisible" />

@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Frontend SPA Web
+Bundle-SymbolicName: com.liferay.frontend.js.spa.web
+Bundle-Version: 1.0.0
+Include-Resource: package.json
+Liferay-Export-JS-Submodules:\
+	metal-ajax,\
+	metal-multimap,\
+	metal-uri,\
+	metal-useragent,\
+	senna
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend SPA Infrastructure
+Provide-Capability: osgi.extender;osgi.extender="liferay.spa";version:Version="${plugin.full.version}"
+Web-ContextPath: /frontend-js-spa-web

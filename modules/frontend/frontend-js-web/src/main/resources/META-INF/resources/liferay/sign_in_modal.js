@@ -56,10 +56,26 @@ AUI.add(
 						instance._bindUI();
 					},
 
+					destructor: function() {
+						var dialog = Liferay.Util.getWindow(NAME);
+
+						if (dialog) {
+							dialog.destroy();
+						}
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
 						instance._host.on('click', A.bind('_load', instance));
+
+						var destroyModal = function(event) {
+							instance.destroy();
+
+							Liferay.detach('screenLoad', destroyModal);
+						};
+
+						Liferay.on('screenLoad', destroyModal);
 					},
 
 					_load: function(event) {

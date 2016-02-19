@@ -1,5 +1,7 @@
 <definition default="close">
 	<command name="close">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="null" selenium="selectWindow" />
 
 		<execute argument1="relative=top" selenium="selectFrame" />
@@ -10,6 +12,8 @@
 	</command>
 
 	<command name="closeWindow">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="close" />

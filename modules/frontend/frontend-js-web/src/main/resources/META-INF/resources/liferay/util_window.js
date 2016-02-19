@@ -332,6 +332,13 @@ AUI.add(
 							)
 						);
 
+						Liferay.once(
+							'screenLoad',
+							function() {
+								modal.destroy();
+							}
+						);
+
 						modal.titleNode = titleNode;
 
 						instance._register(modal);

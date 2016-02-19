@@ -1,17 +1,15 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll", ['exports', 'metal/src/core', 'metal/src/attribute/Attribute', 'metal-position/src/Position'], function (exports, _core, _Attribute2, _Position) {
+define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll", ['exports', 'metal/src/metal', 'metal-attribute/src/Attribute', 'metal-position/src/all/position'], function (exports, _metal, _Attribute2, _position) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _Attribute3 = _interopRequireDefault(_Attribute2);
 
-	var _Position2 = _interopRequireDefault(_Position);
+	var _position2 = _interopRequireDefault(_position);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -30,7 +28,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -52,28 +50,41 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 	var DragAutoScroll = function (_Attribute) {
 		_inherits(DragAutoScroll, _Attribute);
 
+		/**
+   * @inheritDoc
+   */
+
 		function DragAutoScroll(opt_config) {
 			_classCallCheck(this, DragAutoScroll);
 
 			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
 
+			/**
+    * The handler for the current call to `setTimeout`.
+    * @type {?number}
+    * @protected
+    */
 			_this.scrollTimeout_ = null;
 			return _this;
 		}
 
+		/**
+   * @inheritDoc
+   */
+
+
 		DragAutoScroll.prototype.disposeInternal = function disposeInternal() {
 			_Attribute.prototype.disposeInternal.call(this);
-
 			this.stop();
 		};
 
 		DragAutoScroll.prototype.getRegionWithoutScroll_ = function getRegionWithoutScroll_(scrollContainer) {
-			if (_core2.default.isDocument(scrollContainer)) {
+			if (_metal2.default.isDocument(scrollContainer)) {
 				var height = window.innerHeight;
 				var width = window.innerWidth;
-				return _Position2.default.makeRegion(height, height, 0, width, 0, width);
+				return _position2.default.makeRegion(height, height, 0, width, 0, width);
 			} else {
-				return _Position2.default.getRegion(scrollContainer);
+				return _position2.default.getRegion(scrollContainer);
 			}
 		};
 
@@ -83,7 +94,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 		};
 
 		DragAutoScroll.prototype.scrollElement_ = function scrollElement_(element, deltaX, deltaY) {
-			if (_core2.default.isDocument(element)) {
+			if (_metal2.default.isDocument(element)) {
 				window.scrollBy(deltaX, deltaY);
 			} else {
 				element.scrollTop += deltaY;
@@ -94,24 +105,19 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 		DragAutoScroll.prototype.scrollInternal_ = function scrollInternal_(scrollContainers, mouseX, mouseY) {
 			for (var i = 0; i < scrollContainers.length; i++) {
 				var scrollRegion = this.getRegionWithoutScroll_(scrollContainers[i]);
-
-				if (!_Position2.default.pointInsideRegion(mouseX, mouseY, scrollRegion)) {
+				if (!_position2.default.pointInsideRegion(mouseX, mouseY, scrollRegion)) {
 					continue;
 				}
 
 				var deltaX = 0;
 				var deltaY = 0;
-
-				var scrollTop = _Position2.default.getScrollTop(scrollContainers[i]);
-
-				var scrollLeft = _Position2.default.getScrollLeft(scrollContainers[i]);
-
+				var scrollTop = _position2.default.getScrollTop(scrollContainers[i]);
+				var scrollLeft = _position2.default.getScrollLeft(scrollContainers[i]);
 				if (scrollLeft > 0 && Math.abs(mouseX - scrollRegion.left) <= this.maxDistance) {
 					deltaX -= this.speed;
 				} else if (Math.abs(mouseX - scrollRegion.right) <= this.maxDistance) {
 					deltaX += this.speed;
 				}
-
 				if (scrollTop > 0 && Math.abs(mouseY - scrollRegion.top) <= this.maxDistance) {
 					deltaY -= this.speed;
 				} else if (Math.abs(mouseY - scrollRegion.bottom) <= this.maxDistance) {
@@ -134,20 +140,46 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 	}(_Attribute3.default);
 
 	DragAutoScroll.prototype.registerMetalComponent && DragAutoScroll.prototype.registerMetalComponent(DragAutoScroll, 'DragAutoScroll')
+
+
+	/**
+  * Attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	DragAutoScroll.ATTRS = {
+		/**
+   * The delay in ms before an element is scrolled automatically.
+   * @type {number}
+   * @default 200
+   */
 		delay: {
-			validator: _core2.default.isNumber,
+			validator: _metal2.default.isNumber,
 			value: 50
 		},
+
+		/**
+   * The maximum distance the mouse needs to be from an element before
+   * it will be scrolled automatically.
+   * @type {number}
+   * @default 10
+   */
 		maxDistance: {
-			validator: _core2.default.isNumber,
+			validator: _metal2.default.isNumber,
 			value: 20
 		},
+
+		/**
+   * The number of pixels that will be scrolled each time.
+   * @type {number}
+   * @default 10
+   */
 		speed: {
-			validator: _core2.default.isNumber,
+			validator: _metal2.default.isNumber,
 			value: 20
 		}
 	};
+
 	exports.default = DragAutoScroll;
 });
 //# sourceMappingURL=DragAutoScroll.js.map

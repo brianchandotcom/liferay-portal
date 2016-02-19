@@ -1,19 +1,11 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  var _Component3 = _interopRequireDefault(_Component2);
-
-  var _SoyAop2 = _interopRequireDefault(_SoyAop);
-
-  var _SoyRenderer2 = _interopRequireDefault(_SoyRenderer);
-
-  var _SoyTemplates2 = _interopRequireDefault(_SoyTemplates);
+  var _component2 = _interopRequireDefault(_component);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -32,7 +24,7 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'm
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
   }
 
   function _inherits(subClass, superClass) {
@@ -51,53 +43,64 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'm
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _SoyTemplates2.default.get();
+  var Templates = _soy.SoyTemplates.get();
+  // This file was automatically generated from ListItem.soy.
+  // Please don't edit this file by hand.
+
+  /**
+   * @fileoverview Templates in namespace Templates.ListItem.
+   */
 
   if (typeof Templates.ListItem == 'undefined') {
     Templates.ListItem = {};
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.ListItem.render = function (opt_data, opt_ignored, opt_ijData) {
     return soydata.VERY_UNSAFE.ordainSanitizedHtml('<li id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="listitem list-group-item component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + ' clearfix" data-index="' + soy.$$escapeHtmlAttribute(opt_data.index) + '">' + Templates.ListItem.item(opt_data, null, opt_ijData) + '</li>');
   };
-
   if (goog.DEBUG) {
     Templates.ListItem.render.soyTemplateName = 'Templates.ListItem.render';
   }
 
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
   Templates.ListItem.item = function (opt_data, opt_ignored, opt_ijData) {
     var output = (opt_data.item.avatar ? '<span class="list-image pull-left ' + soy.$$escapeHtmlAttribute(opt_data.item.avatar['class']) + '">' + soy.$$escapeHtml(opt_data.item.avatar.content) + '</span>' : '') + '<div class="list-main-content pull-left"><div class="list-text-primary">' + soy.$$escapeHtml(opt_data.item.textPrimary) + '</div>' + (opt_data.item.textSecondary ? '<div class="list-text-secondary">' + soy.$$escapeHtml(opt_data.item.textSecondary) + '</div>' : '') + '</div>';
-
     if (opt_data.item.icons) {
       output += '<div class="list-icons pull-right">';
       var iconList56 = opt_data.item.icons;
       var iconListLen56 = iconList56.length;
-
       for (var iconIndex56 = 0; iconIndex56 < iconListLen56; iconIndex56++) {
         var iconData56 = iconList56[iconIndex56];
         output += '<span class="list-icon ' + soy.$$escapeHtmlAttribute(iconData56) + '"></span>';
       }
-
       output += '</div>';
     }
-
     if (opt_data.item.iconsHtml) {
       output += '<div class="list-icons pull-right">';
       var iconHtmlList65 = opt_data.item.iconsHtml;
       var iconHtmlListLen65 = iconHtmlList65.length;
-
       for (var iconHtmlIndex65 = 0; iconHtmlIndex65 < iconHtmlListLen65; iconHtmlIndex65++) {
         var iconHtmlData65 = iconHtmlList65[iconHtmlIndex65];
         output += soy.$$escapeHtml(iconHtmlData65);
       }
-
       output += '</div>';
     }
-
     output += opt_data.item.label ? '<span class="label list-label pull-right ' + soy.$$escapeHtmlAttribute(opt_data.item.label['class']) + '">' + soy.$$escapeHtml(opt_data.item.label.content) + '</span>' : '';
     return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
   };
-
   if (goog.DEBUG) {
     Templates.ListItem.item.soyTemplateName = 'Templates.ListItem.item';
   }
@@ -115,13 +118,12 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'm
     }
 
     return ListItem;
-  }(_Component3.default);
+  }(_component2.default);
 
   ListItem.prototype.registerMetalComponent && ListItem.prototype.registerMetalComponent(ListItem, 'ListItem')
-  ListItem.RENDERER = _SoyRenderer2.default;
 
-  _SoyAop2.default.registerTemplates('ListItem');
-
+  ListItem.RENDERER = _soy.SoyRenderer;
+  _soy.SoyAop.registerTemplates('ListItem');
   exports.default = ListItem;
 });
 //# sourceMappingURL=ListItem.soy.js.map

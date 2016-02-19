@@ -44,20 +44,6 @@
 			</c:if>
 		</c:otherwise>
 	</c:choose>
-
-	<%
-	OutputData outputData = (OutputData)request.getAttribute(WebKeys.OUTPUT_DATA);
-
-	if (outputData != null) {
-		Set<String> outputKeys = outputData.getOutputKeys();
-	%>
-
-		Liferay.Data.sharedResources.push('<%= StringUtil.merge(outputKeys.toArray(new String[outputKeys.size()]), "','") %>');
-
-	<%
-	}
-	%>
-
 </aui:script>
 
 <aui:script use="aui-base">
@@ -80,7 +66,7 @@ if (layout != null) {
 
 <c:if test="<%= !themeDisplay.isStatePopUp() && !group.isControlPanel() && (layout != null) && (!group.hasStagingGroup() || group.isStagingGroup() || layoutTypePortlet.isCustomizable()) && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
 	<c:if test="<%= layout.isTypePortlet() %>">
-		<aui:script>
+		<aui:script position="inline">
 			Liferay.Data.layoutConfig = {
 				container: '#main-content',
 
@@ -172,6 +158,13 @@ if (layout != null) {
 				}
 			);
 		}
+
+		A.on(
+			'io:complete',
+			function() {
+				Liferay.fire('io:complete');
+			}
+		);
 	</aui:script>
 </c:if>
 
@@ -194,76 +187,18 @@ if (layout != null) {
 	</c:if>
 </aui:script>
 
-<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
-	<div id="bottomJS">
-		<div id="bottomJS-defaultScreen">
-			<aui:script use="liferay-surface-app">
-				if (Liferay.Surface) {
+<script type="text/javascript">
+	// <![CDATA[
 
-					<%
-					List<Portlet> companyPortlets = PortletLocalServiceUtil.getPortlets(themeDisplay.getCompanyId());
+		<%
+		String currentURL = PortalUtil.getCurrentURL(request);
+		%>
 
-					for (Portlet portlet : companyPortlets) {
-						if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet() && !portlet.isSinglePageApplication()) {
-					%>
+		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
+		Liferay.currentURLEncoded = '<%= HttpUtil.encodeURL(currentURL) %>';
 
-							Liferay.Surface.blacklist.route['<%= portlet.getPortletId() %>'] = true;
-
-					<%
-						}
-
-						boolean singlePageApplicationCacheable = GetterUtil.getBoolean(portlet.getInitParams().get("single-page-application-cacheable"), true);
-
-						if (!singlePageApplicationCacheable) {
-					%>
-
-							Liferay.Surface.blacklist.cache['<%= portlet.getPortletId() %>'] = true;
-
-					<%
-						}
-					}
-					%>
-
-					Liferay.Surface.blacklist.surface['<%= PortletKeys.NESTED_PORTLETS %>'] = true;
-				}
-			</aui:script>
-
-			<script type="text/surface-data-channel">
-
-				<%
-				String portletId = request.getParameter("p_p_id");
-				boolean singlePageApplicationClearCache = GetterUtil.getBoolean(request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
-				String singlePageApplicationLastPortletId = (String)session.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
-
-				String scrollElementId = HtmlUtil.escape(ParamUtil.getString(request, "scroll"));
-				%>
-
-				{
-					"clearScreensCache": <%= singlePageApplicationClearCache || ((Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId))) %>,
-					"scrollElementId": "<%= scrollElementId %>"
-				}
-
-				<%
-				session.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID, portletId);
-				%>
-
-			</script>
-
-			<script type="text/javascript">
-				// <![CDATA[
-
-					<%
-					String currentURL = PortalUtil.getCurrentURL(request);
-					%>
-
-					Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-					Liferay.currentURLEncoded = '<%= HttpUtil.encodeURL(currentURL) %>';
-
-				// ]]>
-			</script>
-
-			<div class="lfr-surface-loading-bar"></div>
-</c:if>
+	// ]]>
+</script>
 
 <c:if test="<%= layout != null %>">
 
@@ -284,9 +219,4 @@ if (layout != null) {
 			<%= GetterUtil.getString(layoutTypeSettings.getProperty("javascript")) %>
 		// ]]>
 	</script>
-</c:if>
-
-<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
-		</div>
-	</div>
 </c:if>

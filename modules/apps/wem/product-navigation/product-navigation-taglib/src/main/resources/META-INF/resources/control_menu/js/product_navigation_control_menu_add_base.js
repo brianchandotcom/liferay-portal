@@ -457,6 +457,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['anim', 'aui-base', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'transition']
+		requires: ['anim', 'aui-base', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'transition']
 	}
 );

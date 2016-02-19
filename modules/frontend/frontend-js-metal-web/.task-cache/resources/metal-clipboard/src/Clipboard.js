@@ -1,6 +1,4 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 'metal/src/attribute/Attribute', 'metal/src/core', 'metal/src/dom/dom', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _Attribute3, _core, _dom, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 'metal-attribute/src/Attribute', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _Attribute3, _metal, _dom, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -9,7 +7,7 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 
 	var _Attribute4 = _interopRequireDefault(_Attribute3);
 
-	var _core2 = _interopRequireDefault(_core);
+	var _metal2 = _interopRequireDefault(_metal);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
@@ -32,7 +30,7 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
 		}
 
-		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+		return call && (typeof call === "object" || typeof call === "function") ? call : self;
 	}
 
 	function _inherits(subClass, superClass) {
@@ -54,6 +52,10 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 	var Clipboard = function (_Attribute) {
 		_inherits(Clipboard, _Attribute);
 
+		/**
+   * Delegates a click event to the passed selector.
+   */
+
 		function Clipboard(opt_config) {
 			_classCallCheck(this, Clipboard);
 
@@ -65,10 +67,14 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 			return _this;
 		}
 
+		/**
+   * @inheritDoc
+   */
+
+
 		Clipboard.prototype.disposeInternal = function disposeInternal() {
 			this.listener_.dispose();
 			this.listener_ = null;
-
 			if (this.clipboardAction_) {
 				this.clipboardAction_.dispose();
 				this.clipboardAction_ = null;
@@ -93,33 +99,69 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 	}(_Attribute4.default);
 
 	Clipboard.prototype.registerMetalComponent && Clipboard.prototype.registerMetalComponent(Clipboard, 'Clipboard')
+
+
+	/**
+  * Attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	Clipboard.ATTRS = {
+		/**
+   * A function that returns the name of the clipboard action that should be done
+   * when for the given element (either 'copy' or 'cut').
+   * @type {!function(!Element)}
+   */
 		action: {
-			validator: _core2.default.isFunction,
+			validator: _metal2.default.isFunction,
 			value: function value(delegateTarget) {
 				return delegateTarget.getAttribute('data-action');
 			}
 		},
+
+		/**
+   * The selector for all elements that should be listened for clipboard actions.
+   * @type {string}
+   */
 		selector: {
 			value: '[data-clipboard]',
-			validator: _core2.default.isString
+			validator: _metal2.default.isString
 		},
+
+		/**
+   * A function that returns an element that has the content to be copied to the
+   * clipboard.
+   * @type {!function(!Element)}
+   */
 		target: {
-			validator: _core2.default.isFunction,
+			validator: _metal2.default.isFunction,
 			value: function value(delegateTarget) {
 				return document.querySelector(delegateTarget.getAttribute('data-target'));
 			}
 		},
+
+		/**
+   * A function that returns the text to be copied to the clipboard.
+   * @type {!function(!Element)}
+   */
 		text: {
-			validator: _core2.default.isFunction,
+			validator: _metal2.default.isFunction,
 			value: function value(delegateTarget) {
 				return delegateTarget.getAttribute('data-text');
 			}
 		}
 	};
 
+	/**
+  * ClipboardAction component.
+  */
+
 	var ClipboardAction = function (_Attribute2) {
 		_inherits(ClipboardAction, _Attribute2);
+
+		/**
+   * Initializes selection either from a `text` or `target` attribute.
+   */
 
 		function ClipboardAction(opt_config) {
 			_classCallCheck(this, ClipboardAction);
@@ -131,9 +173,13 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 			} else if (_this2.target) {
 				_this2.selectTarget();
 			}
-
 			return _this2;
 		}
+
+		/**
+   * Removes current selection and focus from `target` element.
+   */
+
 
 		ClipboardAction.prototype.clearSelection = function clearSelection() {
 			if (this.target) {
@@ -157,7 +203,6 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 
 		ClipboardAction.prototype.disposeInternal = function disposeInternal() {
 			this.removeFakeElement();
-
 			_Attribute2.prototype.disposeInternal.call(this);
 		};
 
@@ -195,6 +240,7 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 			} else {
 				var range = document.createRange();
 				var selection = window.getSelection();
+
 				range.selectNodeContents(this.target);
 				selection.addRange(range);
 				this.selectedText = selection.toString();
@@ -206,6 +252,7 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 		ClipboardAction.prototype.selectValue = function selectValue() {
 			this.removeFakeElement();
 			this.removeFakeHandler = _dom2.default.once(document, 'click', this.removeFakeElement.bind(this));
+
 			this.fake = document.createElement('textarea');
 			this.fake.style.position = 'fixed';
 			this.fake.style.left = '-9999px';
@@ -223,33 +270,70 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 	}(_Attribute4.default);
 
 	ClipboardAction.prototype.registerMetalComponent && ClipboardAction.prototype.registerMetalComponent(ClipboardAction, 'ClipboardAction')
+
+
+	/**
+  * Attributes definition.
+  * @type {!Object}
+  * @static
+  */
 	ClipboardAction.ATTRS = {
+		/**
+   * The action to be performed (either 'copy' or 'cut').
+   * @type {string}
+   * @default 'copy'
+   */
 		action: {
 			value: 'copy',
 			validator: function validator(val) {
 				return val === 'copy' || val === 'cut';
 			}
 		},
+
+		/**
+   * A reference to the `Clipboard` base class.
+   * @type {!Clipboard}
+   */
 		host: {
 			validator: function validator(val) {
 				return val instanceof Clipboard;
 			}
 		},
+
+		/**
+   * The text that is current selected.
+   * @type {string}
+   */
 		selectedText: {
-			validator: _core2.default.isString
+			validator: _metal2.default.isString
 		},
+
+		/**
+   * The ID of an element that will be have its content copied.
+   * @type {Element}
+   */
 		target: {
-			validator: _core2.default.isElement
+			validator: _metal2.default.isElement
 		},
+
+		/**
+   * The text to be copied.
+   * @type {string}
+   */
 		text: {
-			validator: _core2.default.isString
+			validator: _metal2.default.isString
 		},
+
+		/**
+   * The element that when clicked initiates a clipboard action.
+   * @type {!Element}
+   */
 		trigger: {
-			validator: _core2.default.isElement
+			validator: _metal2.default.isElement
 		}
 	};
-	exports.default = Clipboard;
 
+	exports.default = Clipboard;
 	_JQueryAdapter2.default.register('clipboard', Clipboard);
 });
 //# sourceMappingURL=Clipboard.js.map

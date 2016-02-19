@@ -51,7 +51,7 @@
 				return true;
 			}
 
-			iframe.contentWindow.Liferay.on('surfaceEndNavigate', <portlet:namespace />monitorIframe);
+			iframe.contentWindow.Liferay.on('endNavigate', <portlet:namespace />monitorIframe);
 
 			var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 			var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';

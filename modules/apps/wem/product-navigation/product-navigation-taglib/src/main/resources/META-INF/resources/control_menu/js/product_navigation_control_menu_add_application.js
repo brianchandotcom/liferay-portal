@@ -48,7 +48,7 @@ AUI.add(
 							);
 						}
 
-						new Liferay.PanelSearch(
+						instance._panelSearch = new Liferay.PanelSearch(
 							{
 								categorySelector: '.panel-page-category',
 								inputNode: instance.get('inputNode'),
@@ -60,6 +60,14 @@ AUI.add(
 						);
 
 						instance._bindUI();
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						instance._panelSearch.destroy();
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_addApplication: function(event) {

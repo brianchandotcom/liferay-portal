@@ -1,5 +1,7 @@
 <definition default="sikuliUploadCommonFile">
 	<command name="sikuliUploadCommonFile">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliUploadCommonFile" />
 
 		<execute selenium="assertJavaScriptErrors" />

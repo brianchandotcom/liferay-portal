@@ -206,6 +206,13 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 				}
 			);
 
+			Liferay.once(
+				'screenLoad',
+				function() {
+					datePicker.destroy();
+				}
+			);
+
 			return datePicker;
 		}
 	);

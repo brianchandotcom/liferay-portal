@@ -1,0 +1,40 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+configurations {
+	senna
+}
+
+task buildSenna(type: Copy)
+
+String sennaVersion = "1.0.0-alpha.4.1"
+
+buildSenna {
+	eachFile new StripPathSegmentsAction(7)
+
+	from {
+		zipTree(configurations.senna.singleFile)
+	}
+
+	include "META-INF/resources/webjars/senna.js/${sennaVersion}/build/amd/"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+}
+
+configJSModules {
+	dependsOn buildSenna
+	include "**/*.js*"
+}
+
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	senna group: "com.liferay.webjars", name: "senna.js", transitive: false, version: sennaVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

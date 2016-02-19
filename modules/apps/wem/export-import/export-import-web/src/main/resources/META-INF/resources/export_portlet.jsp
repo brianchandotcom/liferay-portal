@@ -435,6 +435,19 @@ portletURL.setParameter("portletResource", portletResource);
 					</aui:button-row>
 				</aui:fieldset-group>
 			</div>
+
+			<aui:script use="aui-base">
+				var form = A.one('#<portlet:namespace />fm1');
+
+				form.on(
+					'submit',
+					function(event) {
+						event.preventDefault();
+
+						submitForm(form, form.attr('action'), false);
+					}
+				);
+			</aui:script>
 		</aui:form>
 	</c:when>
 
@@ -455,7 +468,7 @@ portletURL.setParameter("portletResource", portletResource);
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 	</liferay-portlet:resourceURL>
 
-	new Liferay.ExportImport(
+	var exportImport = new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
@@ -473,14 +486,10 @@ portletURL.setParameter("portletResource", portletResource);
 		}
 	);
 
-	var form = A.one('#<portlet:namespace />fm1');
-
-	form.on(
-		'submit',
-		function(event) {
-			event.preventDefault();
-
-			submitForm(form, form.attr('action'), false);
+	Liferay.once(
+		'destroyPortlet',
+		function() {
+			exportImport.destroy();
 		}
 	);
 </aui:script>

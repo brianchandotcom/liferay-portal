@@ -693,30 +693,6 @@
 							'aui-io-request'
 						]
 					},
-					'liferay-surface': {
-						condition: {
-							name: 'liferay-surface',
-							test: testHistory
-						},
-						path: 'surface.js',
-						requires: [
-							'aui-surface-app',
-							'aui-surface-base',
-							'aui-surface-screen-html',
-							'json',
-							'liferay-portlet-url'
-						]
-					},
-					'liferay-surface-app': {
-						condition: {
-							name: 'liferay-surface-app',
-							test: testHistory
-						},
-						path: 'surface_app.js',
-						requires: [
-							'liferay-surface'
-						]
-					},
 					'liferay-toggler-interaction': {
 						path: 'toggler_interaction.js',
 						requires: [

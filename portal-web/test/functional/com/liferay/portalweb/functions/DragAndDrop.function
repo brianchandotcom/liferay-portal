@@ -1,5 +1,7 @@
 <definition default="dragAndDropToObject">
 	<command name="dragAndDrop">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="dragAndDrop" />
 
 		<execute selenium="assertJavaScriptErrors" />
@@ -8,6 +10,8 @@
 	</command>
 
 	<command name="dragAndDropPortletToObject">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="${locator1}" selenium="waitForElementPresent" />
 
 		<execute argument1="${locator1}" selenium="mouseOver" />
@@ -38,6 +42,8 @@
 	</command>
 
 	<command name="dragAndDropToObject">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="${locator1}" selenium="waitForVisible" />
 
 		<execute argument1="${locator1}" selenium="mouseOver" />
@@ -56,6 +62,8 @@
 	</command>
 
 	<command name="dragAndDropToObjectNotVisible">
+		<execute function="WaitForSPARefresh" />
+
 		<execute argument1="${locator1}" selenium="waitForVisible" />
 
 		<execute argument1="${locator1}" selenium="mouseOver" />

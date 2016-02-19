@@ -1,5 +1,7 @@
 <definition default="sikuliUploadTempFile">
 	<command name="sikuliUploadTempFile">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="sikuliUploadTempFile" />
 
 		<execute selenium="assertJavaScriptErrors" />

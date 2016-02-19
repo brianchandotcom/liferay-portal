@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exports', 'metal/src/dom/dom'], function (exports, _dom) {
+define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exports', 'metal-dom/src/all/dom'], function (exports, _dom) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -26,12 +26,10 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 
 		DragShim.attachDocListeners = function attachDocListeners(useShim, listeners) {
 			var element = document;
-
 			if (useShim) {
 				element = DragShim.getDocShim();
 				element.style.display = 'block';
 			}
-
 			var eventTypes = Object.keys(listeners);
 			return eventTypes.map(function (type) {
 				var isTouch = type.substr(0, 5) === 'touch';
@@ -51,10 +49,8 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 				DragShim.docShim_.style.display = 'none';
 				DragShim.docShim_.style.opacity = 0;
 				DragShim.docShim_.style.zIndex = 9999;
-
 				_dom2.default.enterDocument(DragShim.docShim_);
 			}
-
 			return DragShim.docShim_;
 		};
 
@@ -65,7 +61,6 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 		DragShim.reset = function reset() {
 			if (DragShim.docShim_) {
 				_dom2.default.exitDocument(DragShim.docShim_);
-
 				DragShim.docShim_ = null;
 			}
 		};
@@ -73,7 +68,14 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragShim", ['exp
 		return DragShim;
 	}();
 
+	/**
+  * The shim element. This is only created when necessary.
+  * @type {Element}
+  * @protected
+  * @static
+  */
 	DragShim.docShim_ = null;
+
 	exports.default = DragShim;
 });
 //# sourceMappingURL=DragShim.js.map

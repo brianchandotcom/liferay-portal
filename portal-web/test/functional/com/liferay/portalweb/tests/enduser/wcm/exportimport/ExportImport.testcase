@@ -546,7 +546,6 @@
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#add">
@@ -957,6 +956,8 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Bookmarks" />
 
 		<execute macro="LAR#importPortlet">
 			<var name="cannotImport" value="true" />

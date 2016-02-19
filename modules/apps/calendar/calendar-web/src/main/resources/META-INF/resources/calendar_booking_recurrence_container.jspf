@@ -306,6 +306,18 @@ if (recurrence != null) {
 				title: getRecurrenceDialogTitle()
 			}
 		);
+
+		var destroyRecurrenceDialog = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				window.<portlet:namespace />recurrenceDialog.destroy();
+
+				delete window['<portlet:namespace />recurrenceDialog'];
+
+				Liferay.detach('destroyPortlet', destroyRecurrenceDialog);
+			}
+		};
+
+		Liferay.on('destroyPortlet', destroyRecurrenceDialog);
 	};
 
 	repeatCheckboxNode.on(

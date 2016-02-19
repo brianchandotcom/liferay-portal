@@ -16,7 +16,11 @@ package com.liferay.frontend.js.loader.modules.extender;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -179,7 +183,12 @@ public class JSLoaderModule {
 		return jsonObject.toString();
 	}
 
-	protected String generateMapsConfiguration(String configuration) {
+	protected String generateMapsConfiguration(
+		String configuration, String[] exportJSSubmodules) {
+
+		boolean exportAll = ArrayUtil.contains(
+			exportJSSubmodules, StringPool.STAR);
+
 		JSONObject mapsConfigurationJSONObject = new JSONObject();
 
 		JSONObject configurationJSONObject = new JSONObject(
@@ -204,8 +213,12 @@ public class JSLoaderModule {
 
 			String submoduleName = submodulePath.substring(0, y);
 
-			mapsConfigurationJSONObject.put(
-				submoduleName, moduleRootPath.concat(submoduleName));
+			if (exportAll ||
+				ArrayUtil.contains(exportJSSubmodules, submoduleName)) {
+
+				mapsConfigurationJSONObject.put(
+					submoduleName, moduleRootPath.concat(submoduleName));
+			}
 		}
 
 		return mapsConfigurationJSONObject.toString();
@@ -264,12 +277,14 @@ public class JSLoaderModule {
 
 			Dictionary<String, String> headers = _bundle.getHeaders();
 
-			boolean jsSubmodules = GetterUtil.getBoolean(
-				headers.get("Liferay-JS-Submodules"));
+			String exportJSSubmodules = GetterUtil.getString(
+				headers.get("Liferay-Export-JS-Submodules"));
 
-			if (jsSubmodules) {
+			if (Validator.isNotNull(exportJSSubmodules)) {
 				_unversionedMapsConfiguration = normalize(
-					generateMapsConfiguration(_unversionedConfiguration));
+					generateMapsConfiguration(
+						_unversionedConfiguration,
+						StringUtil.split(exportJSSubmodules)));
 			}
 		}
 		catch (IOException ioe) {

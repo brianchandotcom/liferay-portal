@@ -1,5 +1,7 @@
 <definition default="clickAt">
 	<command name="checkAll">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
@@ -19,6 +21,8 @@
 	</command>
 
 	<command name="checkToggleSwitch">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
@@ -38,6 +42,8 @@
 	</command>
 
 	<command name="clickAt">
+		<execute function="WaitForSPARefresh" />
+
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

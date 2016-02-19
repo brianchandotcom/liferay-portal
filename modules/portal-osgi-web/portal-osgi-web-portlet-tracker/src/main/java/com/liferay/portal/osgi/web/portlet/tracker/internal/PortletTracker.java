@@ -703,6 +703,10 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				get(serviceReference, "show-portlet-inactive"),
 				portletModel.isShowPortletInactive()));
+		portletModel.setSinglePageApplication(
+			GetterUtil.getBoolean(
+				get(serviceReference, "single-page-application"),
+				portletModel.isSinglePageApplication()));
 		portletModel.setStrutsPath(
 			GetterUtil.getString(
 				get(serviceReference, "struts-path"),

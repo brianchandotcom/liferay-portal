@@ -64,13 +64,13 @@ AUI.add(
 
 						body.append(hudcrumbs);
 
-						Liferay.on('surfaceStartNavigate', instance._onStartNavigate, instance);
+						Liferay.on('startNavigate', instance._onStartNavigate, instance);
 					},
 
 					destructor: function() {
 						var instance = this;
 
-						Liferay.detach('surfaceStartNavigate', instance._onStartNavigate);
+						Liferay.detach('startNavigate', instance._onStartNavigate);
 
 						var win = instance._win;
 

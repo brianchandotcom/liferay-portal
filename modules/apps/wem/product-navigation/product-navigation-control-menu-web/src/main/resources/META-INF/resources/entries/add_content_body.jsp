@@ -34,6 +34,17 @@
 
 		addToggle.sideNavigation();
 
+		Liferay.once(
+			'screenLoad',
+			function() {
+				var sideNavigation = addToggle.data('lexicon.sidenav');
+
+				if (sideNavigation) {
+					sideNavigation.destroy();
+				}
+			}
+		);
+
 		var addPanel = $('#addPanelId');
 
 		addPanel.on(

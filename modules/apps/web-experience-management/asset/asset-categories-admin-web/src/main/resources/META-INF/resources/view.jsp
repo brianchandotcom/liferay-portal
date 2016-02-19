@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer vocabulariesSearchContainer = assetCategoriesDisplayContext.getVocabulariesSearchContainer();
-
-int vocabulariesCount = vocabulariesSearchContainer.getTotal();
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
@@ -31,7 +27,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<aui:nav-item href="<%= mainURL.toString() %>" label="vocabularies" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= Validator.isNotNull(assetCategoriesDisplayContext.getKeywords()) || (vocabulariesCount > 0) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesSearch() %>">
 		<liferay-portlet:renderURL varImpl="portletURL" />
 
 		<aui:nav-bar-search>
@@ -43,7 +39,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= vocabulariesCount <= 0 %>"
+	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="assetVocabularies"
 >
@@ -88,7 +84,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<liferay-ui:search-container
 		id="assetVocabularies"
-		searchContainer="<%= vocabulariesSearchContainer %>"
+		searchContainer="<%= assetCategoriesDisplayContext.getVocabulariesSearchContainer() %>"
 	>
 
 		<liferay-ui:search-container-row

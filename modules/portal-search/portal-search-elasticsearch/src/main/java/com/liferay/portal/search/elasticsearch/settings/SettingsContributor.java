@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @author André de Oliveira
  */
@@ -23,6 +21,6 @@ public interface SettingsContributor extends Comparable<SettingsContributor> {
 
 	public int getPriority();
 
-	public void populate(Settings.Builder builder);
+	public void populate(ClientSettingsHelper clientSettingsHelper);
 
 }

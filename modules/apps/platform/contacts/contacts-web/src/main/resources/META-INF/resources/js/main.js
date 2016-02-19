@@ -549,7 +549,7 @@ AUI.add(
 
 						var portletURL = new Liferay.PortletURL.createURL(config.baseRenderURL);
 
-						portletURL.setParameter('mvcPath', '/contacts_center/edit_entry.jsp');
+						portletURL.setParameter('mvcPath', '/edit_entry.jsp');
 						portletURL.setParameter('redirect', contact.redirect);
 						portletURL.setParameter('entryId', contact.entryId);
 						portletURL.setPortletId('1_WAR_contactsportlet');

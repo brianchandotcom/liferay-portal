@@ -109,17 +109,17 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 				continue;
 			}
 
+			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
+
 			URL runURL = JenkinsResultsParserUtil.createURL(
 				URLDecoder.decode(runJSONObject.getString("url"), "UTF-8"));
+
+			downloadSampleURL(runDir, runURL, "/api/json");
+			downloadSampleURL(runDir, runURL, "/logText/progressiveText");
 
 			JSONObject runResultJSONObject =
 				JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(runURL + "/api/json"));
-
-			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
-
-			downloadSampleURL(runDir, runURL, "/api/json");
-			downloadSampleURL(runDir, runURL, "/logText/progressiveText");
 
 			String result = runResultJSONObject.getString("result");
 

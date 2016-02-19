@@ -81,7 +81,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			return;
 		}
 
-		System.out.println("Deleting: " + file.getPath());
+		System.out.println("Deleting " + file.getPath());
 
 		if (file.isFile()) {
 			file.delete();

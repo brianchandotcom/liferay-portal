@@ -65,8 +65,6 @@
 	</command>
 
 	<command name="AddMembersSiteUser" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -210,8 +208,6 @@
 	</command>
 
 	<command name="AssignMembersSiteTeamUser" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -665,8 +661,6 @@
 	</command>
 
 	<command name="RemoveMember" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

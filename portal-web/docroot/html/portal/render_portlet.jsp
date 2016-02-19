@@ -225,7 +225,7 @@ if (checkingStagingGroup.isControlPanel()) {
 	checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
 }
 
-if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup()) {
+if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
 	showStagingIcon = true;
 }
 

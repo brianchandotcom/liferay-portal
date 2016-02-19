@@ -67,8 +67,6 @@ public abstract class BaseJSPAssetRenderer<T>
 			request.setAttribute(
 				WebKeys.RESOURCE_BUNDLE_LOADER, getResourceBundleLoader());
 
-			setRequestAttributes(request, response);
-
 			requestDispatcher.include(request, response);
 
 			return true;
@@ -110,10 +108,6 @@ public abstract class BaseJSPAssetRenderer<T>
 		PortletBag portletBag = PortletBagPool.get(portletId);
 
 		return portletBag.getServletContext();
-	}
-
-	protected void setRequestAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -169,17 +169,6 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _formRecord);
 
-		return super.include(request, response, template);
-	}
-
-	protected DDLRecord getDDLRecord() {
-		return _formRecord.getDDLRecord();
-	}
-
-	@Override
-	protected void setRequestAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
-
 		DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext =
 			new DDLFormViewRecordDisplayContext(
 				request, response, _ddlRecordLocalService, _ddmFormRenderer,
@@ -187,6 +176,12 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormViewRecordDisplayContext);
+
+		return super.include(request, response, template);
+	}
+
+	protected DDLRecord getDDLRecord() {
+		return _formRecord.getDDLRecord();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -329,5 +329,5 @@ if (Validator.isNull(contact2.getSmsSn())) {
 </c:if>
 
 <c:if test="<%= incompleteProfile && showCompleteYourProfile && (themeDisplay.getUserId() == user2.getUserId()) %>">
-	<%@ include file="/contacts_center/complete_your_profile.jspf" %>
+	<%@ include file="/complete_your_profile.jspf" %>
 </c:if>

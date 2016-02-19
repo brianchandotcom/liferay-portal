@@ -1,6 +1,14 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+ext {
+	libSassVersion = "3.2.5"
+	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
+
+	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
+	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
+}
+
 task buildLibSass_Darwin(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
 task buildLibSass_Linux_x86_64(type: BuildLibSassTask)
@@ -8,12 +16,6 @@ task buildLibSass_Win32_x86(type: BuildLibSassTask)
 task buildLibSass_Win32_x86_64(type: BuildLibSassTask)
 task downloadSassSpec(type: Copy)
 task generateJNALibrary
-
-String libSassVersion = "3.2.5"
-String sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
-
-String libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
-String sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 
 buildLibSass_Darwin {
 	doFirst {
@@ -24,7 +26,7 @@ buildLibSass_Darwin {
 		File buildShFile = new File(libSassDir, "build.sh")
 
 		buildShFile.write("""\
-LIBSASS_VERSION=\"${libSassVersion}\"
+LIBSASS_VERSION=\"${project.libSassVersion}\"
 autoreconf --force --install
 ./configure --disable-tests --enable-shared
 make -j5""")
@@ -93,7 +95,7 @@ downloadSassSpec {
 	}
 
 	from {
-		zipTree(FileUtil.get(project, sassSpecUrl))
+		zipTree(FileUtil.get(project, project.sassSpecUrl))
 	}
 
 	include "**/spec/basic/"
@@ -109,11 +111,11 @@ generateJNALibrary {
 
 	doLast {
 		copy {
-			from zipTree(FileUtil.get(project, libSassUrl))
+			from zipTree(FileUtil.get(project, project.libSassUrl))
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-${libSassVersion}")
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
 
 		javaexec {
 			args configurations.jnaerator.singleFile

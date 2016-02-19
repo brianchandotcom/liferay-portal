@@ -3866,3 +3866,63 @@ This change was made since custom class loader management is no longer necessary
 in the OSGi container.
 
 ---------------------------------------
+
+###
+- **Date:** 2016-Feb-17
+- **JIRA Ticket:** LPS-63205
+
+#### What changed?
+
+- `com.liferay.portal.kernel.security.exportimport.UserImporter`,
+`com.liferay.portal.kernel.security.exportimport.UserExporter`,
+and `com.liferay.portal.kernel.security.exportimport.UserOperation`,  have been
+moved from portal-kernel to the portal-security-export-import-api module.
+
+- `com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
+`com.liferay.portal.kernel.security.exportimport.UserExporterUtil` have been
+removed with no replacement.
+
+#### Who is affected?
+
+- All implementations of
+`com.liferay.portal.kernel.security.exportimport.UserImporter`,
+`com.liferay.portal.kernel.security.exportimport.UserExporter`,
+are affected.
+- All code calling using
+`com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
+`com.liferay.portal.kernel.security.exportimport.UserExporterUtil`,
+`com.liferay.portal.kernel.security.exportimport.UserImporter`,
+`com.liferay.portal.kernel.security.exportimport.UserExporter`,
+are affected.
+
+#### How should I update my code?
+
+If you are in an OSGi module, you can simply inject the UserImporter or
+UserExporter references
+
+`
+@Reference
+private UserExporter_userExporter;
+
+@Reference
+private UserImporter _userImporter;
+`
+
+If you are in a legacy WAR or WAB, you will need a snippet like:
+
+`
+Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+BundleContext bundleContext = bundle.getBundleContext();
+
+ServiceReference<UserImporter> serviceReference =
+	bundleContext.getServiceReference(UserImporter.class);
+
+UserImporter userImporter = bundleContext.getService(serviceReference);
+`
+
+#### Why was this change made?
+
+The change was made to improve modularity of the user import/export subsystem in
+the product.
+---------------------------------------

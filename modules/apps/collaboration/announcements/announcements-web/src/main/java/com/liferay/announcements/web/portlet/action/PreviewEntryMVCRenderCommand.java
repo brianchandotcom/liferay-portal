@@ -54,10 +54,10 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			WebKeys.ANNOUNCEMENTS_ENTRY, getAnnouncementsEntry(renderRequest));
-		renderRequest.setAttribute(
 			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
 			AnnouncementsFlagConstants.NOT_HIDDEN);
+		renderRequest.setAttribute(
+			WebKeys.ANNOUNCEMENTS_ENTRY, getAnnouncementsEntry(renderRequest));
 
 		return "/view_entry.jsp";
 	}

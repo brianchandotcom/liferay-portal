@@ -102,6 +102,7 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -109,11 +110,37 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
  * @author Jonathan Lee
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=contacts-portlet",
+		"com.liferay.portlet.display-category=category.social",
+		"com.liferay.portlet.friendly-url-mapping=contacts",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.icon=/icon.png",
+		"javax.portlet.display-name=Contacts Center",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Contacts Center",
+		"javax.portlet.info.short-title=Contacts Center",
+		"javax.portlet.info.title=Contacts Center",
+		"javax.portlet.init-param.config-template=/configuration.jsp",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class ContactsCenterPortlet extends MVCPortlet {
 
 	public void addSocialRelation(

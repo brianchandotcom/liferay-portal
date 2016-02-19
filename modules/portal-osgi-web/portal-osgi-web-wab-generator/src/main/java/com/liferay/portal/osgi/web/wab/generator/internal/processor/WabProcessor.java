@@ -435,9 +435,13 @@ public class WabProcessor {
 		classPath.put(
 			"WEB-INF/classes", new File(_pluginDir, "WEB-INF/classes"));
 
-		String[] portalDependencyJars = StringUtil.split(
-			pluginPackageProperties.getProperty(
-				"portal-dependency-jars", StringPool.BLANK));
+		String[] portalDependencyJars = new String[0];
+
+		if (pluginPackageProperties != null) {
+			portalDependencyJars = StringUtil.split(
+				pluginPackageProperties.getProperty(
+					"portal-dependency-jars", StringPool.BLANK));
+		}
 
 		processFiles(
 			_pluginDir, _pluginDir.toURI(), classPath, portalDependencyJars);
@@ -478,7 +482,12 @@ public class WabProcessor {
 			_parameters, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNull(_bundleVersion)) {
-			_bundleVersion = _pluginPackage.getVersion();
+			if (_pluginPackage != null) {
+				_bundleVersion = _pluginPackage.getVersion();
+			}
+			else {
+				_bundleVersion = "1.0.0";
+			}
 		}
 
 		analyzer.setProperty(Constants.BUNDLE_VERSION, _bundleVersion);
@@ -834,6 +843,10 @@ public class WabProcessor {
 	protected void processPluginPackagePropertiesExportImportPackages(
 		Properties pluginPackageProperties) {
 
+		if (pluginPackageProperties == null) {
+			return;
+		}
+
 		String exportPackage = pluginPackageProperties.getProperty(
 			Constants.EXPORT_PACKAGE);
 
@@ -1028,6 +1041,10 @@ public class WabProcessor {
 
 	protected void processWebXML(
 		Element element, List<Element> initParamElements, Class<?> clazz) {
+
+		if (element == null) {
+			return;
+		}
 
 		String elementText = element.getTextTrim();
 

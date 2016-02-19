@@ -4966,7 +4966,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a tabbed UI of section dividers that each house their own content.<![CDATA[<br /><br />Example:<br /><img src="../../../util-taglib/src/META-INF/images/tabs.png"/>]]>.</description>
+		<description>Creates a tabbed UI of section dividers that each house their own content.<![CDATA[<br /><br />Example:<br /><img src="../images/liferay-ui/tabs.png"/>]]>.</description>
 		<name>tabs</name>
 		<tag-class>com.liferay.taglib.ui.TabsTag</tag-class>
 		<body-content>JSP</body-content>

@@ -126,6 +126,10 @@
 			<arg line="-d ${doc.taglibs.dir}" />
 			<arg line="${tld.files}" />
 		</java>
+
+		<copy overwrite="true" todir="${doc.taglibs.dir}/images" preservelastmodified="true">
+			<fileset dir="${project.dir}/util-taglib/src/META-INF/images"/>
+		</copy>
 	</target>
 
 	<target name="validate-tld">

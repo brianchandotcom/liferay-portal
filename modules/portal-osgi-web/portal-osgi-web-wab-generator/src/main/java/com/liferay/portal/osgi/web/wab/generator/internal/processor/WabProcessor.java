@@ -69,6 +69,7 @@ import java.net.URI;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -219,6 +220,51 @@ public class WabProcessor {
 		return autoDeploymentContext;
 	}
 
+	protected AutoDeployListener computeAutoDeployListener(
+		AutoDeploymentContext autoDeploymentContext,
+		List<AutoDeployListener> autoDeployListeners) {
+
+		List<AutoDeployListener> deployableAutoDeployListeners =
+			new ArrayList<>();
+
+		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
+			try {
+				if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+					deployableAutoDeployListeners.add(autoDeployListener);
+				}
+			}
+			catch (AutoDeployException ade) {
+				throw new RuntimeException(ade);
+			}
+		}
+
+		if (deployableAutoDeployListeners.size() > 1) {
+			StringBundler sb = new StringBundler(
+				3 + (deployableAutoDeployListeners.size() * 2) - 1);
+
+			sb.append("More than one auto deploy listener is available for ");
+			sb.append(autoDeploymentContext.getFile());
+			sb.append(": ");
+
+			for (int i = 0; i < deployableAutoDeployListeners.size(); i++) {
+				AutoDeployListener deployableAutoDeployListener =
+					deployableAutoDeployListeners.get(i);
+
+				Class<?> clazz = deployableAutoDeployListener.getClass();
+
+				if (i != 0) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				sb.append(clazz.getName());
+			}
+
+			throw new RuntimeException(new AutoDeployException(sb.toString()));
+		}
+
+		return deployableAutoDeployListeners.get(0);
+	}
+
 	protected void executeAutoDeployers(
 		AutoDeploymentContext autoDeploymentContext) {
 
@@ -230,14 +276,13 @@ public class WabProcessor {
 			List<AutoDeployListener> autoDeployListeners =
 				GlobalStartupAction.getAutoDeployListeners(false);
 
-			for (AutoDeployListener autoDeployListener : autoDeployListeners) {
-				try {
-					autoDeployListener.deploy(autoDeploymentContext);
-				}
-				catch (AutoDeployException ade) {
-					_log.error(ade, ade);
-				}
-			}
+			AutoDeployListener autoDeployListener = computeAutoDeployListener(
+				autoDeploymentContext, autoDeployListeners);
+
+			autoDeployListener.deploy(autoDeploymentContext);
+		}
+		catch (AutoDeployException ade) {
+			throw new RuntimeException(ade);
 		}
 		finally {
 			DependencyManagementThreadLocal.setEnabled(enabled);

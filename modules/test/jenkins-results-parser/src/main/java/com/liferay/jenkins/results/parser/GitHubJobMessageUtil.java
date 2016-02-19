@@ -139,7 +139,7 @@ public class GitHubJobMessageUtil {
 		sb.append(count == 1 ? " " : "s ");
 		sb.append(description);
 		sb.append(".");
-		sb.append("<br/>");
+		sb.append("<br />");
 
 		return sb.toString();
 	}

@@ -288,7 +288,7 @@ public class DDMFormFieldFactoryHelper {
 			return _ddmFormField.visibilityExpression();
 		}
 
-		return StringPool.TRUE;
+		return StringUtil.toUpperCase(StringPool.TRUE);
 	}
 
 	protected String getLocalizedValue(Locale locale, String value) {

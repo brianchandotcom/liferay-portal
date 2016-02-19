@@ -36,14 +36,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenSSOConfiguration {
 
-	@Meta.AD(deflt = "mail", required = false)
-	public String emailAddressAttr();
-
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
-
-	@Meta.AD(deflt = "givenname", required = false)
-	public String firstNameAttr();
 
 	@Meta.AD(
 		deflt = "false",
@@ -51,9 +45,6 @@ public interface OpenSSOConfiguration {
 		required = false
 	)
 	public boolean importFromLDAP();
-
-	@Meta.AD(deflt = "sn", required = false)
-	public String lastNameAttr();
 
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login",
@@ -74,12 +65,21 @@ public interface OpenSSOConfiguration {
 	)
 	public String logoutURL();
 
-	@Meta.AD(deflt = "uid", required = false)
-	public String screenNameAttr();
-
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso", required = false
 	)
 	public String serviceURL();
+
+	@Meta.AD(deflt = "uid", required = false)
+	public String screenNameAttr();
+
+	@Meta.AD(deflt = "mail", required = false)
+	public String emailAddressAttr();
+
+	@Meta.AD(deflt = "givenname", required = false)
+	public String firstNameAttr();
+
+	@Meta.AD(deflt = "sn", required = false)
+	public String lastNameAttr();
 
 }

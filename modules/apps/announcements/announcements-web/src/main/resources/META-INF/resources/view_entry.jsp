@@ -17,35 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = GetterUtil.getString(request.getAttribute("view_entry.jsp-className"));
 AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
 int flagValue = GetterUtil.getInteger(request.getAttribute("view_entry.jsp-flagValue"));
-String tabs1 = GetterUtil.getString(request.getAttribute("view_entry.jsp-tabs1"));
 
-boolean hiddenEntry = false;
-boolean readEntry = false;
-
-if (flagValue == AnnouncementsFlagConstants.HIDDEN) {
-	hiddenEntry = true;
-	readEntry = true;
-}
-else {
+if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 	try {
 		AnnouncementsFlagLocalServiceUtil.getFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
-
-		readEntry = true;
 	}
 	catch (NoSuchFlagException nsfe) {
 		AnnouncementsFlagLocalServiceUtil.addFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 	}
-}
-
-if (readEntry) {
-	className += " read";
-}
-
-if (entry.getPriority() > 0) {
-	className += " important";
 }
 %>
 
@@ -61,7 +42,7 @@ if (entry.getPriority() > 0) {
 			<div class="card-col-content card-col-gutters">
 
 				<%
-				String userDisplayText = user.getFullName() + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, dateFormatDate);
+				String userDisplayText = user.getFullName() + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
 				%>
 
 				<h5 class="text-default" title="<%= userDisplayText %>">
@@ -79,18 +60,18 @@ if (entry.getPriority() > 0) {
 							<%= HtmlUtil.escape(entry.getTitle()) %>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
+						<span class="badge badge-danger badge-sm">
+							<liferay-ui:message key="important" />
+						</span>
+					</c:if>
 				</h4>
 
-				<%
-				boolean showScopeName = false;
-				%>
-
-				<div class="<%= hiddenEntry ? "hide" : StringPool.BLANK %> entry-scope">
-					<%@ include file="/entry_scope.jspf" %>
-				</div>
+				<%@ include file="/entry_scope.jspf" %>
 			</div>
 
-			<c:if test='<%= !tabs1.equals("preview") %>'>
+			<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
 				<div class="card-col-field">
 					<%@ include file="/entry_action.jspf" %>
 				</div>
@@ -98,7 +79,7 @@ if (entry.getPriority() > 0) {
 		</div>
 	</div>
 
-	<div class="entry-content <%= hiddenEntry ? "hide" : StringPool.BLANK %> panel-body">
+	<div class="entry-content panel-body">
 		<%= entry.getContent() %>
 	</div>
 </div>

@@ -15,7 +15,9 @@
 package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.web.constants.AnnouncementsWebKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,8 +55,11 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			WebKeys.ANNOUNCEMENTS_ENTRY, getAnnouncementsEntry(renderRequest));
+		renderRequest.setAttribute(
+			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
+			AnnouncementsFlagConstants.NOT_HIDDEN);
 
-		return "/preview_entry.jsp";
+		return "/view_entry.jsp";
 	}
 
 	private AnnouncementsEntry getAnnouncementsEntry(

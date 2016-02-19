@@ -53,6 +53,8 @@ page import="com.liferay.portal.model.impl.LayoutPrototypeImpl" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
+<%@ page import="java.util.Date" %>
+
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

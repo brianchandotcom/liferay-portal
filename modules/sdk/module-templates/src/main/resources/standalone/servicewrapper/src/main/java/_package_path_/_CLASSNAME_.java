@@ -14,8 +14,8 @@ import org.osgi.service.component.annotations.Component;
 )
 public class _CLASSNAME_ extends _SERVICE_SHORT_ {
 
-        public _CLASSNAME_() {
-            super(null);
-        }
+	public _CLASSNAME_() {
+		super(null);
+	}
 
 }

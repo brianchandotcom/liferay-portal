@@ -24,10 +24,11 @@ import org.osgi.service.component.annotations.Component;
 public class _CLASSNAME_ extends GenericPortlet {
 
 	@Override
-	protected void doView(RenderRequest request, RenderResponse response)
-		throws PortletException, IOException {
+	protected void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print("_NAME_ Portlet - Hello World!");
 	}

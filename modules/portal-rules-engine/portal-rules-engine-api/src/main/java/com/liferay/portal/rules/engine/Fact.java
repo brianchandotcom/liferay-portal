@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
+package com.liferay.portal.rules.engine;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import java.io.Serializable;
 
 /**
  * @author Michael C. Han
  */
-public class RulesEngineException extends PortalException {
+public class Fact<T> implements Serializable {
 
-	public RulesEngineException(String msg) {
-		super(msg);
+	public Fact(String identifier, T object) {
+		_identifier = identifier;
+		_factObject = object;
 	}
 
-	public RulesEngineException(String msg, Throwable cause) {
-		super(msg, cause);
+	public T getFactObject() {
+		return _factObject;
 	}
 
-	public RulesEngineException(Throwable cause) {
-		super(cause);
+	public String getIdentifier() {
+		return _identifier;
 	}
+
+	private final T _factObject;
+	private final String _identifier;
 
 }

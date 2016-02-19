@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
+package com.liferay.portal.rules.engine;
 
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
@@ -28,8 +28,7 @@ public interface RulesEngine {
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public void add(
-			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			ClassLoader... classloaders)
+			String domainName, RulesResourceRetriever rulesResourceRetriever)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
@@ -38,25 +37,22 @@ public interface RulesEngine {
 
 	@MessagingProxy(mode = ProxyMode.ASYNC)
 	public void execute(
-			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			ClassLoader... classloaders)
+			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public Map<String, ?> execute(
 			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			Query query, ClassLoader... classloaders)
+			Query query)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.ASYNC)
-	public void execute(
-			String domainName, List<Fact<?>> facts, ClassLoader... classloaders)
+	public void execute(String domainName, List<Fact<?>> facts)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public Map<String, ?> execute(
-			String domainName, List<Fact<?>> facts, Query query,
-			ClassLoader... classloaders)
+			String domainName, List<Fact<?>> facts, Query query)
 		throws RulesEngineException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
@@ -64,8 +60,7 @@ public interface RulesEngine {
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public void update(
-			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			ClassLoader... classloaders)
+			String domainName, RulesResourceRetriever rulesResourceRetriever)
 		throws RulesEngineException;
 
 }

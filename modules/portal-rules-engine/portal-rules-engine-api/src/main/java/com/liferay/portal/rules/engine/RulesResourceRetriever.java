@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
+package com.liferay.portal.rules.engine;
 
 import com.liferay.portal.kernel.resource.ResourceRetriever;
 

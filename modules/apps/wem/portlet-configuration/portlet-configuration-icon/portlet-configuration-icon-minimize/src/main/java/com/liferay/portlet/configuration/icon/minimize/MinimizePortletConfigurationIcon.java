@@ -161,7 +161,7 @@ public class MinimizePortletConfigurationIcon
 				ActionKeys.UPDATE);
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 
 			return false;
 		}

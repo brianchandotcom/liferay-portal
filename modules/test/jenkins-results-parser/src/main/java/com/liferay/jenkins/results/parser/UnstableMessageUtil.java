@@ -26,6 +26,7 @@ public class UnstableMessageUtil {
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
+
 		sb.append("<ol>");
 
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(

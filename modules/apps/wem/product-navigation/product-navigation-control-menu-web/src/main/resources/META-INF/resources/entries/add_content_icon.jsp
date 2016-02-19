@@ -22,10 +22,12 @@ PortletURL addPanelURL = PortletURLFactoryUtil.create(request, ProductNavigation
 addPanelURL.setParameter("mvcPath", "/add_panel.jsp");
 addPanelURL.setParameter("stateMaximized", String.valueOf(themeDisplay.isStateMaximized()));
 addPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+String namespace = PortalUtil.getPortletNamespace(ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU);
 %>
 
 <li class="control-menu-nav-item">
-	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open-admin-panel" data-qa-id="add" data-target="#addPanelId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "add")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= addPanelURL.toString() %>" href="javascript:;" id="addToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "add")) %>')">
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open-admin-panel" data-qa-id="add" data-target="#<%= namespace %>addPanelId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "add")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= addPanelURL.toString() %>" href="javascript:;" id="<%= namespace %>addToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "add")) %>')">
 		<aui:icon image="plus" markupView="lexicon" />
 	</a>
 </li>

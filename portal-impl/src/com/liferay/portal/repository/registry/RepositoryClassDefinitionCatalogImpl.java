@@ -15,9 +15,11 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
@@ -98,20 +100,23 @@ public class RepositoryClassDefinitionCatalogImpl
 				new ExternalRepositoryFactoryImpl(className, classLoader);
 
 			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory);
+				className, externalRepositoryFactory,
+				LanguageUtil.getPortalResourceBundleLoader());
 		}
 	}
 
 	@Override
 	public void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory) {
+		String className, ExternalRepositoryFactory externalRepositoryFactory,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		ExternalRepositoryFactoryUtil.registerExternalRepositoryFactory(
 			className, externalRepositoryFactory);
 
 		RepositoryDefiner repositoryDefiner =
 			new LegacyExternalRepositoryDefiner(
-				className, _legacyExternalRepositoryFactory);
+				className, _legacyExternalRepositoryFactory,
+				resourceBundleLoader);
 
 		ServiceRegistration<RepositoryDefiner> serviceRegistration =
 			registerRepositoryDefiner(repositoryDefiner);

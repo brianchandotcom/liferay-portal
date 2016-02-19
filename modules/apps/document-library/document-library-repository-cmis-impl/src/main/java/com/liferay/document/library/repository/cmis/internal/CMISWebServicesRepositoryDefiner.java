@@ -34,7 +34,7 @@ public class CMISWebServicesRepositoryDefiner
 	public CMISWebServicesRepositoryDefiner() {
 		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
 			new RepositoryConfigurationBuilder(
-				getClass(), "content.Language",
+				getResourceBundleLoader(),
 				CMISRepositoryConstants.CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER,
 				CMISRepositoryConstants.
 					CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER,

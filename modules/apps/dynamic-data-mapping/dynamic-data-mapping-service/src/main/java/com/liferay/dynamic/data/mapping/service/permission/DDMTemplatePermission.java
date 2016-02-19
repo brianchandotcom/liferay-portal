@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -222,11 +223,21 @@ public class DDMTemplatePermission {
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassNameId);
 
+		String resourceName = getResourceName(
+			templatePermissionSupportServiceWrapper, classNameId);
+
+		boolean portletResource =
+			ResourceActionsUtil.getPortletNames().contains(resourceName);
+
+		if (portletResource) {
+			return PortletPermissionUtil.contains(
+				permissionChecker, groupId, null, resourceName,
+				getAddTemplateActionId(
+					templatePermissionSupportServiceWrapper));
+		}
+
 		return permissionChecker.hasPermission(
-			groupId,
-			getResourceName(
-				templatePermissionSupportServiceWrapper, classNameId),
-			groupId,
+			groupId, resourceName, groupId,
 			getAddTemplateActionId(templatePermissionSupportServiceWrapper));
 	}
 

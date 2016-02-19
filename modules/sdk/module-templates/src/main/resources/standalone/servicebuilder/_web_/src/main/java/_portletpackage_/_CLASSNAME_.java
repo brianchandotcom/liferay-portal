@@ -2,9 +2,9 @@ package _portlet_;
 
 import javax.portlet.Portlet;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+
+import org.osgi.service.component.annotations.Component;
 
 @Component(
 	immediate = true,
@@ -12,13 +12,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=_NAME_ Portlet",
-		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.resource-bundle=content.Language"
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
 public class _CLASSNAME_ extends MVCPortlet {
-
 }

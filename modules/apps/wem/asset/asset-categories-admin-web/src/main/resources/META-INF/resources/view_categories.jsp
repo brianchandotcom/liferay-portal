@@ -17,12 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = assetCategoriesDisplayContext.getCategoriesRedirect();
-
-SearchContainer categoriesSearchContainer = assetCategoriesDisplayContext.getCategoriesSearchContainer();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(assetCategoriesDisplayContext.getCategoriesRedirect());
 
 renderResponse.setTitle(assetCategoriesDisplayContext.getCategoryTitle());
 
@@ -36,7 +32,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 		<aui:nav-item href="<%= mainURL.toString() %>" label="categories" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= Validator.isNotNull(assetCategoriesDisplayContext.getKeywords()) || (categoriesSearchContainer.getTotal() > 0) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>">
 		<portlet:renderURL var="portletURL">
 			<portlet:param name="mvcPath" value="/view_categories.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -54,7 +50,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= categoriesSearchContainer.getTotal() <= 0 %>"
+	disabled="<%= assetCategoriesDisplayContext.isDisabledCategoriesManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="assetCategories"
 >
@@ -99,7 +95,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 
 	<liferay-ui:search-container
 		id="assetCategories"
-		searchContainer="<%= categoriesSearchContainer %>"
+		searchContainer="<%= assetCategoriesDisplayContext.getCategoriesSearchContainer() %>"
 	>
 
 		<liferay-ui:search-container-row

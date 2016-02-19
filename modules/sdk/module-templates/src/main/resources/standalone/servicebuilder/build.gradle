@@ -4,8 +4,6 @@ buildscript {
 	}
 
 	repositories {
-		mavenLocal()
-
 		maven {
 			url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
 		}
@@ -16,8 +14,6 @@ subprojects {
 	apply plugin: "com.liferay.plugin"
 
 	repositories {
-		mavenLocal()
-
 		maven {
 			url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
 		}

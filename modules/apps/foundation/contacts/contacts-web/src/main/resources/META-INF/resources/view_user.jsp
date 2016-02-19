@@ -123,7 +123,7 @@ request.setAttribute("view_user.jsp-user", user2);
 							/>
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/contacts_center/user_toolbar.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/user_toolbar.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 				</aui:layout>
@@ -166,7 +166,7 @@ request.setAttribute("view_user.jsp-user", user2);
 							</div>
 
 							<div class="lfr-user-info-container">
-								<liferay-util:include page="/contacts_center/view_user_information.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/view_user_information.jsp" servletContext="<%= application %>" />
 							</div>
 
 							<%
@@ -351,7 +351,7 @@ request.setAttribute("view_user.jsp-user", user2);
 			var <portlet:namespace />openDialog = function(event) {
 				var node = event.currentTarget;
 
-				var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/contacts_center/edit_user_dialogs.jsp" /></portlet:renderURL>';
+				var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/edit_user_dialogs.jsp" /></portlet:renderURL>';
 
 				if (node.getAttribute('data-sectionId')) {
 					uri = Liferay.Util.addParams('<portlet:namespace />curSectionId=' + node.getAttribute('data-sectionId'), uri) || uri;

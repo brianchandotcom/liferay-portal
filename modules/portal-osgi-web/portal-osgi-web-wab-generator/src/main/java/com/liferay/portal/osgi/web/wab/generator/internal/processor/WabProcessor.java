@@ -710,9 +710,6 @@ public class WabProcessor {
 
 				classPath.put(path, file);
 			}
-			else if (path.endsWith(".jsp") || path.endsWith(".jspf")) {
-				_importPackageNames.addAll(processJSPDependencies(file));
-			}
 		}
 	}
 
@@ -741,55 +738,6 @@ public class WabProcessor {
 
 			analyzer.setProperty(Constants.IMPORT_PACKAGE, sb.toString());
 		}
-	}
-
-	protected Set<String> processJSPDependencies(File file) throws IOException {
-		Source source = new ClassLoaderSource(_classLoader);
-
-		DependencyVisitor dependencyVisitor = new DependencyVisitor();
-
-		String content = FileUtil.read(file);
-
-		int contentX = -1;
-		int contentY = content.length();
-
-		Set<String> packageNames = new HashSet<>();
-
-		while (true) {
-			contentX = content.lastIndexOf("<%@", contentY);
-
-			if (contentX == -1) {
-				break;
-			}
-
-			contentY = contentX;
-
-			int importX = content.indexOf("import=\"", contentY);
-			int importY = -1;
-
-			if (importX != -1) {
-				importX = importX + "import=\"".length();
-				importY = content.indexOf("\"", importX);
-			}
-
-			if ((importX != -1) && (importY != -1)) {
-				String s = content.substring(importX, importY);
-
-				packageNames.addAll(
-					processClass(source, dependencyVisitor, getFileName(s)));
-			}
-
-			contentY -= 3;
-		}
-
-		Set<String> globals = dependencyVisitor.getGlobals();
-
-		for (String global : globals) {
-			packageNames.add(
-				global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
-		}
-
-		return packageNames;
 	}
 
 	protected void processLiferayPortletXML() throws IOException {
@@ -1159,6 +1107,9 @@ public class WabProcessor {
 
 		analyzer.setBase(_pluginDir);
 		analyzer.setJar(_pluginDir);
+		analyzer.setProperty(
+			"-plugin", "com.liferay.ant.bnd.jsp.JspAnalyzerPlugin");
+		analyzer.setProperty("-jsp", "*.jsp,*.jspf");
 
 		processBundleVersion(analyzer);
 

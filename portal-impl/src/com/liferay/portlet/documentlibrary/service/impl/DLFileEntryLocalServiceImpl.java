@@ -235,6 +235,10 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry);
 
+		// Resources
+
+		addFileEntryResources(dlFileEntry, serviceContext);
+
 		// File version
 
 		addFileVersion(
@@ -2117,6 +2121,35 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return lockVerified;
+	}
+
+	protected void addFileEntryResources(
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			resourceLocalService.addResources(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), false,
+				serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			if (serviceContext.isDeriveDefaultPermissions()) {
+				serviceContext.deriveDefaultPermissions(
+					dlFileEntry.getRepositoryId(),
+					DLFileEntryConstants.getClassName());
+			}
+
+			resourceLocalService.addModelResources(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(),
+				serviceContext.getModelPermissions());
+		}
 	}
 
 	protected DLFileVersion addFileVersion(

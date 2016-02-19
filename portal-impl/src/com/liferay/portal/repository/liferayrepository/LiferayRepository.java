@@ -125,8 +125,6 @@ public class LiferayRepository
 			fileEntryTypeId, ddmFormValuesMap, file, null, size,
 			serviceContext);
 
-		addFileEntryResources(dlFileEntry, serviceContext);
-
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
@@ -148,8 +146,6 @@ public class LiferayRepository
 			getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, null, is, size, serviceContext);
-
-		addFileEntryResources(dlFileEntry, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

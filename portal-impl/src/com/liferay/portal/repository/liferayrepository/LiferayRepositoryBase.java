@@ -14,8 +14,6 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -103,35 +101,6 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		Class<T> capabilityClass) {
 
 		return false;
-	}
-
-	protected void addFileEntryResources(
-			DLFileEntry dlFileEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			resourceLocalService.addResources(
-				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(), false,
-				serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			if (serviceContext.isDeriveDefaultPermissions()) {
-				serviceContext.deriveDefaultPermissions(
-					dlFileEntry.getRepositoryId(),
-					DLFileEntryConstants.getClassName());
-			}
-
-			resourceLocalService.addModelResources(
-				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(),
-				serviceContext.getModelPermissions());
-		}
 	}
 
 	protected HashMap<String, DDMFormValues> getDDMFormValuesMap(

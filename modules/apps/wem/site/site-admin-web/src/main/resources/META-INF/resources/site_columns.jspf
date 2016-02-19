@@ -15,10 +15,22 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="text-strong"
 	name="name"
 	orderable="<%= true %>"
 >
-	<aui:a href="<%= rowURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+
+	<%
+	PortletURL viewSubsitesURL = null;
+
+	if (hasAddChildSitePermisison && (row != null)) {
+		viewSubsitesURL = renderResponse.createRenderURL();
+		viewSubsitesURL.setParameter("backURL", currentURL);
+		viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
+	}
+	%>
+
+	<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 	<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -63,33 +75,27 @@
 
 	<%
 	}
-
-	if (GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
-		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
-
-		if (!childSites.isEmpty()) {
-	%>
-
-			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-			</liferay-portlet:renderURL>
-
-			<div class="subsites-count">
-				<a href="<%= viewSubsitesURL.toString() %>">
-					<%= LanguageUtil.format(request, childSites.size() == 1 ? "this-site-has-x-child-site" : "this-site-has-x-child-sites", String.valueOf(childSites.size()), false) %>
-				</a>
-			</div>
-
-	<%
-		}
-	}
 	%>
 
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
+	name="child-sites"
+>
+	<div class="subsites-count">
+		<c:choose>
+			<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
+				<%= childSites.size() %>
+			</c:when>
+			<c:otherwise>
+				<%= StringPool.DASH %>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-text
 	name="membership-type"
 	value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 />

@@ -33,7 +33,7 @@
 		<execute macro="Page#add">
 			<var name="columnName" value="1_column" />
 			<var name="pageName" value="IFrame Page" />
-			<var name="pageType" value="Empty Page" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

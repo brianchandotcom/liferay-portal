@@ -24,7 +24,7 @@
 	<command name="WebProxyDemo" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Proxy Page" />
-			<var name="pageType" value="1 Column" />
+			<var name="sitePageType" value="1 Column" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

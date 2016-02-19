@@ -551,7 +551,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
 			<var name="sitePagePrivacy" value="Private" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -660,7 +659,6 @@
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1005,7 +1003,6 @@
 		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="Page#add">
 				<var name="pageName" value="${publicPageName}" />
-				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
 
@@ -1027,7 +1024,6 @@
 			<execute macro="Page#add">
 				<var name="pageName" value="${privatePageName}" />
 				<var name="sitePagePrivacy" value="Private" />
-				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
 

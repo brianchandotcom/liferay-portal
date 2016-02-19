@@ -23,7 +23,6 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 	</set-up>
 

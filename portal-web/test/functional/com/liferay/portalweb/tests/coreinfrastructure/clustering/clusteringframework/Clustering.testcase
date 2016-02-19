@@ -282,7 +282,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="New Page Name" />
 			<var name="pageStaging" value="true" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#schedulePublishToLivePG">

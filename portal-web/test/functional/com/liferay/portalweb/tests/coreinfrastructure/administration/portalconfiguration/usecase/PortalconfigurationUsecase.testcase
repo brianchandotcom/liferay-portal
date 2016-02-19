@@ -311,7 +311,6 @@
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Public Page" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -319,9 +318,8 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Private Page" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="Page#openURL">

@@ -1462,7 +1462,7 @@
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Marketplace Calendar Testing" />
 					<var name="pageTemplateName" value="${pageTemplateName}" />
-					<var name="pageType" value="${pageType}" />
+					<var name="sitePageType" value="${pageType}" />
 				</execute>
 
 				<execute macro="Portlet#addPG">

@@ -451,9 +451,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
@@ -601,7 +601,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2467,9 +2466,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

@@ -194,7 +194,6 @@
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="sitePageType" value="${sitePageType}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -313,7 +312,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageType" value="${pageType}" />
+			<var name="sitePageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -632,7 +631,6 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="sitePageType" value="${sitePageType}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

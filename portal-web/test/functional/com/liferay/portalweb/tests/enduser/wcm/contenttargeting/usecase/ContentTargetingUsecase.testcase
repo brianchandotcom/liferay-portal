@@ -3172,7 +3172,6 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<for list="Admin,Page Visited,Male,Person" param="ruleName">

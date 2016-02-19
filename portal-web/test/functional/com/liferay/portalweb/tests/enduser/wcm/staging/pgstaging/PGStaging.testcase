@@ -22,7 +22,6 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 	</set-up>
 
@@ -239,6 +238,29 @@
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="ActivateStagingSiteWithPublicAndPrivatePage" priority="5">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Private Staging Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
@@ -512,7 +534,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -522,7 +543,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -532,7 +552,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="AP Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1385,7 +1404,6 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Variation Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#addPageVariationPG">

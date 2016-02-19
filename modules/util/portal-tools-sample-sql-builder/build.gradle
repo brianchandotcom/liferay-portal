@@ -5,6 +5,10 @@ dependencies {
 	compile project(":apps:collaboration:blogs:blogs-web")
 	compile project(":apps:collaboration:document-library:document-library-api")
 	compile project(":apps:collaboration:document-library:document-library-web")
+	compile project(":apps:collaboration:message-boards:message-boards-api")
+	compile project(":apps:collaboration:message-boards:message-boards-web")
+	compile project(":apps:collaboration:wiki:wiki-api")
+	compile project(":apps:collaboration:wiki:wiki-service")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
@@ -12,12 +16,8 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
 	compile project(":apps:login:login-web")
-	compile project(":apps:collaboration:message-boards:message-boards-api")
-	compile project(":apps:collaboration:message-boards:message-boards-web")
 	compile project(":apps:web-experience-management:journal:journal-api")
 	compile project(":apps:web-experience-management:journal:journal-service")
-	compile project(":apps:collaboration:wiki:wiki-api")
-	compile project(":apps:collaboration:wiki:wiki-service")
 
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

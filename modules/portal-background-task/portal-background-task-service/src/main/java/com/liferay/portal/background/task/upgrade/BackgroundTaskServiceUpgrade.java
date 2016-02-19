@@ -20,8 +20,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
- * @author Manuel de la Peña
+ * @author Cristina Rodríguez
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class BackgroundTaskServiceUpgrade implements UpgradeStepRegistrator {

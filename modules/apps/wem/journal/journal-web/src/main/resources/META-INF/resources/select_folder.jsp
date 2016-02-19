@@ -30,14 +30,15 @@ if (folder != null) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_folder.jsp");
+portletURL.setParameter("eventName", eventName);
 
 JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 %>
 
-<aui:form method="post" name="selectFolderFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="selectFolderFm">
 	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
-	<aui:button-row>
+	<aui:button-row cssClass="text-center">
 
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -54,6 +55,7 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 
 	iteratorURL.setParameter("mvcPath", "/select_folder.jsp");
 	iteratorURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+	iteratorURL.setParameter("eventName", eventName);
 	%>
 
 	<liferay-ui:search-container
@@ -74,6 +76,7 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="mvcPath" value="/select_folder.jsp" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
@@ -110,22 +113,30 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 	</liferay-ui:search-container>
 </aui:form>
 
-<%
-boolean hasAddFolderPermission = JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER);
-%>
+<aui:script use="aui-base">
+	var selectFolderFm = A.one('#<portlet:namespace />selectFolderFm');
 
-<c:if test="<%= hasAddFolderPermission %>">
-	<liferay-frontend:add-menu>
-		<portlet:renderURL var="editFolderURL">
-			<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="parentFolderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-		</portlet:renderURL>
+	selectFolderFm.delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (folder == null) ? "add-folder" : "add-subfolder") %>' url="<%= editFolderURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
+			selectFolderFm.all('.selector-button').removeClass('selected');
 
-<aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+			currentTarget.addClass('selected');
+
+			var data = {
+				folderId: currentTarget.attr('data-folderid'),
+				folderName: currentTarget.attr('data-foldername')
+			};
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: data
+				}
+			);
+		},
+		'.selector-button'
+	);
 </aui:script>

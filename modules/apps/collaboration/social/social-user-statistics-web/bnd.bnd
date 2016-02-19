@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Social User Statistics Web
+Bundle-SymbolicName: com.liferay.social.user.statistics.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+Web-ContextPath: /social-user-statistics-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

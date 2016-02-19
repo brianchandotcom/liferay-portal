@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Social Networking Test
+Bundle-SymbolicName: com.liferay.social.networking.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+-include: ../../../../../marketplace/collaboration/bnd.bnd

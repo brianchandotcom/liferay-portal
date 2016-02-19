@@ -1,0 +1,22 @@
+Bundle-Name: Liferay Social Networking Service
+Bundle-SymbolicName: com.liferay.social.networking.service
+Bundle-Version: 1.0.1
+Export-Package:\
+	com.liferay.social.networking.configuration.*,\
+	com.liferay.social.networking.friends.social.*,\
+	com.liferay.social.networking.members.social.*,\
+	com.liferay.social.networking.service.configuration.configurator.*,\
+	com.liferay.social.networking.wall.social.*
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+Liferay-Require-SchemaVersion: 1.0.1
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0))"
+-include: ../../../../../marketplace/collaboration/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

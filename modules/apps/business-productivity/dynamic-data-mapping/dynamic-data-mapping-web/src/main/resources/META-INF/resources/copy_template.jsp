@@ -42,7 +42,6 @@ String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, lifera
 
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 

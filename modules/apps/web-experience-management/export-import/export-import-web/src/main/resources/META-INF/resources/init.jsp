@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
+page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants" %><%@
 page import="com.liferay.exportimport.kernel.exception.LARFileException" %><%@
@@ -57,7 +58,6 @@ page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLo
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
-page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.dao.search.ExportImportResultRowSplitter" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@

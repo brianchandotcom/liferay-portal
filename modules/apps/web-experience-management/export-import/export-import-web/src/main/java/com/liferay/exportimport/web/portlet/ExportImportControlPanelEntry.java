@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.web.portlet;
 
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;

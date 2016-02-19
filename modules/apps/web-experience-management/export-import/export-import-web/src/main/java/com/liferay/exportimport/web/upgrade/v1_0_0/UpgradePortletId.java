@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.web.upgrade.v1_0_0;
 
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 
 /**
  * @author Daniel Kocsis

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin.search;
+package com.liferay.roles.admin.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.Role;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin.search;
+package com.liferay.roles.admin.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;

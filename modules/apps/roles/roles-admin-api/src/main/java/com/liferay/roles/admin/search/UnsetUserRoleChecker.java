@@ -12,52 +12,49 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin.search;
+package com.liferay.roles.admin.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Charles May
+ * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  */
-public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
+public class UnsetUserRoleChecker extends EmptyOnClickRowChecker {
 
-	public UserGroupRoleChecker(RenderResponse renderResponse, Role role) {
+	public UnsetUserRoleChecker(RenderResponse renderResponse, Role role) {
 		super(renderResponse);
 
 		_role = role;
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		UserGroup userGroup = (UserGroup)obj;
+	public boolean isDisabled(Object obj) {
+		User user = (User)obj;
 
 		try {
-			return GroupLocalServiceUtil.hasRoleGroup(
-				_role.getRoleId(), userGroup.getGroup().getGroupId());
+			if (RoleMembershipPolicyUtil.isRoleRequired(
+					user.getUserId(), _role.getRoleId())) {
+
+				return true;
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			return false;
 		}
-	}
 
-	@Override
-	public boolean isDisabled(Object obj) {
-		UserGroup userGroup = (UserGroup)obj;
-
-		return isChecked(userGroup);
+		return super.isDisabled(obj);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupRoleChecker.class);
+		UnsetUserRoleChecker.class);
 
 	private final Role _role;
 

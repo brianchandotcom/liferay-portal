@@ -34,30 +34,26 @@ public interface TokenConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to automatically import users from LDAP if they do not exist in the portal.",
+		deflt = "false", description = "%import-from-ldap-help",
 		required = false
 	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(
-		deflt = "SM_USER",
-		description = "Set this to the name of the user token that authenticator passes to the portal.",
+		deflt = "SM_USER", description = "%user-token-name-help",
 		required = false
 	)
 	public String userTokenName();
 
 	@Meta.AD(
-		deflt = "REQUEST_HEADER",
-		description = "Set this to the location of the user token.",
+		deflt = "REQUEST_HEADER", description = "%token-location-help",
 		required = false
 	)
 	public TokenLocation tokenLocation();
 
 	@Meta.AD(
 		deflt ="SMIDENTITY|SMSESSION",
-		description = "Set this to the cookie names that must be removed after logout.",
-		required = false
+		description = "%authentication-cookies-help", required = false
 	)
 	public String[] authenticationCookies();
 

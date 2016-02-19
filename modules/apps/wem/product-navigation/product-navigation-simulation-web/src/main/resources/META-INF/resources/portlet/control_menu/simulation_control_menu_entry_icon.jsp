@@ -20,10 +20,12 @@
 PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION, plid, PortletRequest.RENDER_PHASE);
 
 simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+String namespace = PortalUtil.getPortletNamespace(ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION);
 %>
 
 <li class="control-menu-nav-item hidden-xs">
-	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="lfr-has-simulation-panel open-admin-panel" data-qa-id="simulation" data-target="#simulationPanelId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "simulation")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= simulationPanelURL.toString() %>" href="javascript:;" id="simulationToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "simulation")) %>')">
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="lfr-has-simulation-panel open-admin-panel" data-qa-id="simulation" data-target="#<%= namespace %>simulationPanelId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "simulation")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= simulationPanelURL.toString() %>" href="javascript:;" id="<%= namespace %>simulationToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "simulation")) %>')">
 		<aui:icon image="simulation-menu-closed" markupView="lexicon" />
 	</a>
 </li>

@@ -15,7 +15,7 @@ buildscript {
 		mavenCentral()
 
 		maven {
-			url "https://repository.liferay.com/nexus/content/repositories/liferay-snapshots-ce/"
+			url "https://cdn.repository.liferay.com/nexus/content/repositories/liferay-snapshots-ce/"
 		}
 	}
 }
@@ -42,7 +42,7 @@ repositories {
 	mavenCentral()
 
 	maven {
-		url "https://repository.liferay.com/nexus/content/repositories/liferay-snapshots-ce/"
+		url "https://cdn.repository.liferay.com/nexus/content/repositories/liferay-snapshots-ce/"
 	}
 }
 

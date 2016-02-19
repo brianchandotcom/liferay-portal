@@ -165,6 +165,8 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<var name="key_rowEntry" value="${userGroupName}" />
 
 		<execute function="AssertElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
@@ -181,9 +183,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -206,6 +208,8 @@
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -231,6 +235,8 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
@@ -249,6 +255,8 @@
 	</command>
 
 	<command name="editCP">
+		<execute function="Pause" locator1="5000" />
+
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
@@ -281,6 +289,8 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
@@ -297,6 +307,8 @@
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -399,6 +411,8 @@
 
 				<execute function="Click" locator1="Button#SUBMIT" />
 
+				<execute function="Pause" locator1="5000" />
+
 				<var name="key_userGroupName" value="${userGroupName}" />
 
 				<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
@@ -417,6 +431,8 @@
 	</command>
 
 	<command name="viewPG">
+		<execute function="Pause" locator1="5000" />
+
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />

@@ -7636,6 +7636,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 					/>
 				</waitfor>
 
+				<sleep seconds="60" />
+
 				<telnet port="11311" server="localhost" timeout="20">
 					<read>g!</read>
 					<write>upgrade:list</write>

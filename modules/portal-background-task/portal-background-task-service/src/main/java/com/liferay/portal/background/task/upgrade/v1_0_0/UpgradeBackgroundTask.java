@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.portal.background.task.upgrade.v1_0_0;
 
+import com.liferay.portal.background.task.upgrade.v1_0_0.util.BackgroundTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_0.util.BackgroundTaskTable;
 
 import java.sql.SQLException;
 

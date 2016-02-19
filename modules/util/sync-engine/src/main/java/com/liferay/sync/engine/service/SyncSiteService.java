@@ -334,7 +334,7 @@ public class SyncSiteService {
 
 		for (SyncFile syncFile : syncFiles) {
 			if (!syncFile.isSystem()) {
-				SyncFileService.deleteSyncFile(syncFile, false);
+				SyncFileService.deleteSyncFile(syncFile);
 			}
 		}
 

@@ -278,21 +278,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 				</aui:fieldset>
 			</c:if>
 
-			<portlet:renderURL var="importPortletURL">
-				<portlet:param name="mvcRenderCommandName" value="exportImport" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-				<portlet:param name="tabs2" value="import" />
-				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
-			</portlet:renderURL>
-
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" href="<%= importPortletURL %>" name="back1" value="back" />
-
-				<aui:button cssClass="btn-lg" name="continue" primary="<%= true %>" value="continue" />
-			</aui:button-row>
-		</div>
-
-		<div class="hide" id="<portlet:namespace />importStrategy">
 			<aui:fieldset cssClass="options-group" label="update-data">
 				<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
 
@@ -307,8 +292,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 				<aui:input data-name='<%= LanguageUtil.get(request, "always-use-my-user-id") %>' helpMessage="use-the-current-user-as-author-help" id="alwaysCurrentUserId" label="use-the-current-user-as-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
 			</aui:fieldset>
 
+			<portlet:renderURL var="importPortletURL">
+				<portlet:param name="mvcRenderCommandName" value="exportImport" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+				<portlet:param name="tabs2" value="import" />
+				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
+			</portlet:renderURL>
+
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" name="back" value="back" />
+				<aui:button cssClass="btn-lg" href="<%= importPortletURL %>" name="back" value="back" />
 
 				<aui:button cssClass="btn-lg" type="submit" value="import" />
 			</aui:button-row>
@@ -318,29 +310,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>', '<portlet:namespace />permissionsUl');
-</aui:script>
-
-<aui:script sandbox="<%= true %>">
-	var importConfiguration = $('#<portlet:namespace />importConfiguration');
-	var importStrategy = $('#<portlet:namespace />importStrategy');
-
-	$('#<portlet:namespace />continue').on(
-		'click',
-		function() {
-			importConfiguration.addClass('hide');
-
-			importStrategy.removeClass('hide');
-		}
-	);
-
-	$('#<portlet:namespace />back').on(
-		'click',
-		function() {
-			importStrategy.addClass('hide');
-
-			importConfiguration.removeClass('hide');
-		}
-	);
 </aui:script>
 
 <aui:script use="liferay-export-import">

@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Announcements",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/announcements/view",
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,

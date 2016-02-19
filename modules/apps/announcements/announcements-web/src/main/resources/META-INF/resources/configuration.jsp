@@ -57,7 +57,7 @@ if (!roles.isEmpty()) {
 				for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
 				%>
 
-					<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
+					<aui:option label="<%= pageDeltaValue %>" selected="<%= announcementsDisplayContext.getPageDelta() == pageDeltaValue %>" />
 
 				<%
 				}
@@ -67,9 +67,9 @@ if (!roles.isEmpty()) {
 		</aui:fieldset>
 
 		<aui:fieldset collapsible="<%= true %>" id="announcementsDisplayedPanel" label="announcements-displayed">
-			<aui:input cssClass="customize-announcements-displayed" id="customizeAnnouncementsDisplayed" name="preferences--customizeAnnouncementsDisplayed--" title="customize-announcements-displayed" type="checkbox" value="<%= customizeAnnouncementsDisplayed %>" />
+			<aui:input cssClass="customize-announcements-displayed" id="customizeAnnouncementsDisplayed" name="preferences--customizeAnnouncementsDisplayed--" title="customize-announcements-displayed" type="checkbox" value="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() %>" />
 
-			<div class="<%= customizeAnnouncementsDisplayed ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
+			<div class="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
 				<div class="alert alert-info">
 					<liferay-ui:message key="general-annnouncements-will-always-be-shown-select-any-other-distribution-scopes-you-would-like-to-display" />
 				</div>
@@ -87,7 +87,7 @@ if (!roles.isEmpty()) {
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
 							for (Group curGroup : groups) {
-								if (selectedScopeGroupIds.contains(String.valueOf(curGroup.getGroupId()))) {
+								if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
 									leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale)));
 								}
 							}
@@ -126,7 +126,7 @@ if (!roles.isEmpty()) {
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
-								if (selectedScopeOrganizationIds.contains(String.valueOf(organization.getOrganizationId()))) {
+								if (announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
 									leftList.add(new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName()));
 								}
 							}
@@ -165,7 +165,7 @@ if (!roles.isEmpty()) {
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
-								if (selectedScopeUserGroupIds.contains(String.valueOf(userGroup.getUserGroupId()))) {
+								if (announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
 									leftList.add(new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName()));
 								}
 							}
@@ -204,7 +204,7 @@ if (!roles.isEmpty()) {
 							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
-								if (selectedScopeRoleIds.contains(String.valueOf(role.getRoleId()))) {
+								if (announcementsDisplayContext.isScopeRoleSelected(role)) {
 									leftList.add(new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale)));
 								}
 							}

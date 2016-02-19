@@ -26,9 +26,10 @@
 
 	<%
 	for (String url : urls) {
+		String resourceId = StringUtil.toHexString(url.hashCode());
 	%>
 
-		<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(url) %>" rel="stylesheet" type="text/css" />
+		<link data-senna-track="permanent" id="<%= HtmlUtil.escapeAttribute(resourceId) %>" href="<%= HtmlUtil.escapeAttribute(url) %>" rel="stylesheet" type="text/css" />
 
 	<%
 	}

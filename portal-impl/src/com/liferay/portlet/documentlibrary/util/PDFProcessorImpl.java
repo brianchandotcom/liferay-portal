@@ -62,6 +62,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -515,9 +517,51 @@ public class PDFProcessorImpl
 
 		String processIdentity = String.valueOf(fileVersion.getFileVersionId());
 
-		futures.put(processIdentity, future);
+		long ghostscriptTimeout =
+			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT;
 
-		future.get();
+		if (_log.isDebugEnabled()) {
+			if (thumbnail) {
+				_log.debug(
+					"Waiting for " + ghostscriptTimeout +
+						" seconds to obtain " + file.getPath() +
+							" thumbnail generation");
+			}
+			else {
+				_log.debug(
+					"Waiting for " + ghostscriptTimeout +
+						" seconds to obtain " + file.getPath() +
+							" preview generation");
+			}
+		}
+
+		try {
+			future.get(ghostscriptTimeout, TimeUnit.SECONDS);
+
+			futures.put(processIdentity, future);
+		}
+		catch (TimeoutException te) {
+			String errorMessage =
+				"Timeout when generating preview for " + file.getPath();
+
+			if (thumbnail) {
+				errorMessage =
+					"Timeout when generating thumbanil for " + file.getPath();
+			}
+
+			if (future.cancel(true)) {
+				errorMessage += ". Cancelled timeout " + future;
+			}
+
+			_log.error(errorMessage);
+
+			throw te;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw e;
+		}
 
 		// Store images
 
@@ -589,6 +633,10 @@ public class PDFProcessorImpl
 		boolean generatePreview = _isGeneratePreview(fileVersion);
 		boolean generateThumbnail = _isGenerateThumbnail(fileVersion);
 
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
 			ProcessCallable<String> processCallable =
 				new LiferayPDFBoxProcessCallable(
@@ -610,9 +658,73 @@ public class PDFProcessorImpl
 			String processIdentity = String.valueOf(
 				fileVersion.getFileVersionId());
 
-			futures.put(processIdentity, future);
+			long pdfboxTimeout =
+				PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX;
 
-			future.get();
+			if (_log.isDebugEnabled()) {
+				if (generateThumbnail && generatePreview) {
+					_log.debug(
+						"Waiting for " + pdfboxTimeout + " seconds to obtain " +
+							file.getPath() + " thumbnail and previews " +
+								"generation");
+				}
+				else {
+					if (generateThumbnail) {
+						_log.debug(
+							"Waiting for " + pdfboxTimeout +
+								" seconds to obtain " + file.getPath() +
+									" thumbnail generation");
+					}
+
+					if (generatePreview) {
+						_log.debug(
+							"Waiting for " + pdfboxTimeout +
+								" seconds to obtain " + file.getPath() +
+									" previews generation");
+					}
+				}
+			}
+
+			try {
+				future.get(pdfboxTimeout, TimeUnit.SECONDS);
+
+				futures.put(processIdentity, future);
+			}
+			catch (TimeoutException te) {
+				String errorMessage = null;
+
+				if (generateThumbnail && generatePreview) {
+					errorMessage =
+						"Timeout when generating thumbanil and preview for " +
+							file.getPath();
+				}
+				else {
+					if (generateThumbnail) {
+						errorMessage =
+							"Timeout when generating thumbanil for " +
+								file.getPath();
+					}
+
+					if (generatePreview) {
+						errorMessage =
+							"Timeout when generating preview for " +
+								file.getPath();
+					}
+				}
+
+				if (future.cancel(true)) {
+					errorMessage += ". Cancelled timeout " + future;
+				}
+
+				_log.error(errorMessage);
+
+				throw te;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				throw e;
+			}
 		}
 		else {
 			LiferayPDFBoxConverter liferayConverter =
@@ -634,12 +746,6 @@ public class PDFProcessorImpl
 			finally {
 				FileUtil.delete(thumbnailFile);
 			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"PDFBox generated a thumbnail for " +
-						fileVersion.getFileVersionId());
-			}
 		}
 
 		if (generatePreview) {
@@ -658,13 +764,33 @@ public class PDFProcessorImpl
 
 				index++;
 			}
+		}
 
-			if (_log.isInfoEnabled()) {
+		if (_log.isInfoEnabled()) {
+			if (generateThumbnail && generatePreview) {
 				_log.info(
-					"PDFBox generated " +
-						getPreviewFileCount(fileVersion) +
+					"PDFBox generated a thumbnail " +
+						"and " + getPreviewFileCount(fileVersion) +
 							" preview pages for " +
-								fileVersion.getFileVersionId());
+								fileVersion.getFileVersionId() +
+									" in " + stopWatch.getTime() + " ms");
+			}
+			else {
+				if (generateThumbnail) {
+					_log.info(
+						"PDFBox generated a thumbnail for " +
+							fileVersion.getFileVersionId() +
+								" in " + stopWatch.getTime() + " ms");
+				}
+
+				if (generatePreview) {
+					_log.info(
+						"PDFBox generated " +
+							getPreviewFileCount(fileVersion) +
+								" preview pages for " +
+									fileVersion.getFileVersionId() +
+									" in " + stopWatch.getTime() + " ms");
+				}
 			}
 		}
 	}

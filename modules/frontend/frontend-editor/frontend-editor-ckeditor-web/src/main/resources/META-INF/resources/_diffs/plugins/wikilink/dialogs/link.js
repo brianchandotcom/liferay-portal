@@ -7,20 +7,6 @@ CKEDITOR.dialog.add(
 
 		var PLUGIN = CKEDITOR.plugins.link;
 
-		var handleAddress = function(val) {
-			var address = val.toString().trim();
-
-			address = address.replace(/[\u200B-\u200D\uFEFF]/g, '');
-
-			var prefix = '';
-
-			if (address.indexOf('/') !== 0 && address.indexOf('://') === -1) {
-				prefix = 'http://';
-			}
-
-			return prefix + address;
-		};
-
 		var parseLink = function(editor, element) {
 			var instance = this;
 
@@ -44,8 +30,6 @@ CKEDITOR.dialog.add(
 				data.address = selection.getSelectedText();
 			}
 
-			data.address = handleAddress(data.address);
-
 			instance._.selectedElement = element;
 
 			return data;
@@ -67,11 +51,7 @@ CKEDITOR.dialog.add(
 
 										var val = instance.getValue();
 
-										var address = val;
-
-										address = handleAddress(address);
-
-										data.address = address;
+										data.address = val;
 										data.text = val;
 									},
 									id: 'linkAddress',
@@ -141,7 +121,6 @@ CKEDITOR.dialog.add(
 
 				if (!instance._.selectedElement) {
 					var selection = editor.getSelection();
-
 					var ranges = selection.getRanges(true);
 
 					if (ranges.length == 1 && ranges[0].collapsed) {
@@ -183,9 +162,7 @@ CKEDITOR.dialog.add(
 				instance.fakeObj = false;
 
 				var editor = instance.getParentEditor();
-
 				var selection = editor.getSelection();
-
 				var element = PLUGIN.getSelectedLink(editor) || null;
 
 				if (element) {

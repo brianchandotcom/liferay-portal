@@ -42,13 +42,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
-		expectedMessage = expectedMessage.replace(" \n", "\n");
-
 		String actualMessage = getMessage(
 			"${dependencies.url}/" + getSimpleClassName() + "/" +
 				caseDir.getName() + "/");
 
-		actualMessage = actualMessage.replace(" \n", "\n");
+		actualMessage = actualMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
 
 		if (actualMessage.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL)) {
 			actualMessage = actualMessage.replace(
@@ -82,6 +80,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		if (!file.exists()) {
 			return;
 		}
+
+		System.out.println("Deleting: " + file.getPath());
 
 		if (file.isFile()) {
 			file.delete();
@@ -213,6 +213,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String urlString = url.toString();
 
+		if (file.exists()) {
+			return urlString;
+		}
+
 		String path = dependenciesDir.getPath();
 
 		int x =
@@ -237,6 +241,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 				JenkinsResultsParserUtil.DEPENDENCIES_URL,
 				"${dependencies.url}");
 		}
+
+		expectedMessage = expectedMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}

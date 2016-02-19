@@ -1,0 +1,55 @@
+
+<div>
+  <h5 job-result="UNSTABLE">
+    <a href="https://test-1-8.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/18284/">test-portal-acceptance-pullrequest-batch(master)</a>
+  </h5>  
+  <div> 
+    <h6>Job Results:</h6>  
+    <p>4 Tests Passed. 
+      <br/>0 Tests Failed. 
+      <br/>1 Test Unstable. 
+      <br/> 
+    </p>  
+    <ol> 
+      <li> 
+        <strong>UNSTABLE 
+          <a href="${dependencies.url}/GitHubMessageUtilTest/generic-1/job-20-test-portal-acceptance-pullrequest-batch(master)/run-12/18284/">test-portal-acceptance-pullrequest-batch(master) &raquo; 2,!master #18284</a> 
+        </strong>  
+        <p>244 Cases Passed. 
+          <br/>1 Case Failed. 
+          <br/>1 Case Skipped. 
+          <br/> 
+        </p>  
+        <ol> 
+          <li> 
+            <a href="${dependencies.url}/GitHubMessageUtilTest/generic-1/job-20-test-portal-acceptance-pullrequest-batch(master)/run-12/18284//testReport/com.liferay.source.formatter/SourceFormatterTest/testSourceFormatter">SourceFormatterTest.testSourceFormatter</a>  
+            <pre>org.junit.ComparisonFailure: ../../../portal-impl/src/com/liferay/portlet/messageboards/util/MBUtil.java expected:<...	}
+
+	private static [String[] _findThreadPriority(
+		double value, ThemeDisplay themeDisplay, String[] priorities) {
+
+		for (int i = 0; i < priorities.length; i++) {
+			String[] priority = StringUtil.split(
+				priorities[i], StringPool.PIPE);
+
+			try {
+				String priorityName = priority[0];
+				String priorityImage = priority[1];
+				double priorityValue = GetterUtil.getDouble(priority[2]);
+
+				if (value == priorityValue) {
+					if (!priorityImage.startsWith(Http.HTTP)) {
+						priorityImage =
+							themeDisplay.getPathThemeImages() + priorityImage;
+					}
+
+					return new String[] {priorityName, priorityImage};
+				}
+			}
+			catch (Exception e) {</pre> 
+          </li> 
+        </ol> 
+      </li> 
+    </ol> 
+  </div>
+</div>

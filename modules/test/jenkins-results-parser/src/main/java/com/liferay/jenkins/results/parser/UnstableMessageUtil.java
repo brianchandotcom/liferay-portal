@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,56 +22,42 @@ import org.json.JSONObject;
  */
 public class UnstableMessageUtil {
 
-	public static String getUnstableMessage(String buildURL) throws Exception {
+	public static String getUnstableMessage(String runBuildURL)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder();
+		sb.append("<ol>");
 
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
-				buildURL + "testReport/api/json"));
+				runBuildURL + "testReport/api/json"));
 
-		int failCount = testReportJSONObject.getInt("failCount");
-		int totalCount = testReportJSONObject.getInt("totalCount");
+		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
 
-		int passCount = totalCount - failCount;
+		int messageCount = 0;
 
-		sb.append("<h6>Job Results:</h6>");
-		sb.append("<p>");
-		sb.append(passCount);
-		sb.append(" Test");
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
-		if (passCount != 1) {
-			sb.append("s");
-		}
+			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
 
-		sb.append(" Passed.<br />");
-		sb.append(failCount);
-		sb.append(" Test");
+			for (int j = 0; j < casesJSONArray.length(); j++) {
+				JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
 
-		if (failCount != 1) {
-			sb.append("s");
-		}
+				String status = caseJSONObject.getString("status");
 
-		sb.append(" Failed.</p>");
-
-		sb.append("<ol>");
-
-		List<String> runBuildURLs = new ArrayList<>();
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
-
-		if (jsonObject.has("runs")) {
-			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
-
-			for (int i = 0; i < runsJSONArray.length(); i++) {
-				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
-
-				String runBuildURL = runJSONObject.getString("url");
-
-				if (!runBuildURL.endsWith(
-						"/" + jsonObject.getInt("number") + "/")) {
+				if (status.equals("FIXED") || status.equals("PASSED") ||
+					status.equals("SKIPPED")) {
 
 					continue;
+				}
+
+				messageCount++;
+
+				if (messageCount == _MAX_COUNT) {
+					sb.append("<li>...</li></ol>");
+
+					return sb.toString();
 				}
 
 				JSONObject runBuildURLJSONObject =
@@ -82,169 +65,173 @@ public class UnstableMessageUtil {
 						JenkinsResultsParserUtil.getLocalURL(
 							runBuildURL + "api/json"));
 
-				String result = runBuildURLJSONObject.getString("result");
+				String axis = JenkinsResultsParserUtil.getAxisVariable(
+					runBuildURLJSONObject);
 
-				if (!result.equals("SUCCESS")) {
-					runBuildURLs.add(runBuildURL);
+				String jobVariant = JenkinsResultsParserUtil.getJobVariant(
+					runBuildURLJSONObject);
+
+				sb.append("<li>");
+				sb.append(
+					_getRunBuildAnchor(
+						axis, caseJSONObject, jobVariant, runBuildURL));
+
+				if (jobVariant.contains("functional")) {
+					sb.append(" - ");
+
+					String description = runBuildURLJSONObject.getString(
+						"description");
+
+					int x = description.indexOf(">Jenkins Report<") + 22;
+
+					if (description.length() > x) {
+						description = description.substring(x);
+
+						sb.append(description);
+						sb.append(" - ");
+					}
+
+					sb.append("<a href=\"");
+					sb.append(runBuildURL);
+					sb.append("/console\">Console Output</a>");
 				}
+
+				String errorDetails = caseJSONObject.isNull(
+					"errorDetails") ?
+						null : caseJSONObject.getString("errorDetails");
+				String errorStackTrace = caseJSONObject.isNull(
+					"errorStackTrace") ?
+						null : caseJSONObject.getString("errorStackTrace");
+
+				sb.append("<pre>");
+				sb.append(_processError(errorDetails, errorStackTrace));
+				sb.append("</pre>");
+
+				sb.append("</li>");
 			}
 		}
-		else {
-			runBuildURLs.add(buildURL);
-		}
-
-		int failureCount = _getUnstableMessage(sb, runBuildURLs);
 
 		sb.append("</ol>");
+		return sb.toString();
+	}
 
-		if (failureCount > 3) {
-			sb.append("<p><strong>Click <a href=\"");
-			sb.append(buildURL);
-			sb.append("/testReport/\">here</a> for more failures.</strong>");
-			sb.append("</p>");
+	private static String _fixURL(String link) {
+		String newLink = link;
+
+		newLink = newLink.replace("[", "_");
+		newLink = newLink.replace("]", "_");
+		newLink = newLink.replace("#", "_");
+
+		return newLink;
+	}
+
+	private static String _getRunBuildAnchor(
+		String axis, JSONObject caseJSONObject, String jobVariant,
+		String runBuildURL) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<a href=\"");
+
+		String runBuildHREF = runBuildURL;
+
+		runBuildHREF = _fixURL(runBuildHREF);
+
+		sb.append(runBuildHREF);
+
+		sb.append("/testReport/");
+
+		String testClassName = caseJSONObject.getString("className");
+
+		int x = testClassName.lastIndexOf(".");
+
+		String testPackageName = testClassName.substring(0, x);
+
+		sb.append(testPackageName);
+
+		sb.append("/");
+
+		String testSimpleClassName = testClassName.substring(x + 1);
+
+		sb.append(testSimpleClassName);
+
+		sb.append("/");
+
+		String testMethodName = caseJSONObject.getString("name");
+
+		String testMethodNameURL = testMethodName;
+
+		testMethodNameURL = _fixURL(testMethodNameURL);
+
+		if (testPackageName.equals("junit.framework")) {
+			testMethodNameURL = testMethodNameURL.replace(".", "_");
 		}
+
+		sb.append(testMethodNameURL);
+
+		sb.append("\">");
+		sb.append(testSimpleClassName);
+		sb.append(".");
+		sb.append(testMethodName);
+
+		if (jobVariant.contains("functional") &&
+			testClassName.contains("EvaluateLogTest")) {
+
+			sb.append("[");
+			sb.append(axis);
+			sb.append("]");
+		}
+
+		sb.append("</a>");
 
 		return sb.toString();
 	}
 
-	private static int _getUnstableMessage(
-			StringBuilder sb, List<String> runBuildURLs)
-		throws Exception {
+	private static String _processError(
+		String errorDetails, String errorStackTrace) {
 
-		int failureCount = 0;
+		if ((errorStackTrace == null) || (errorStackTrace.length() == 0)) {
+			return "";
+		}
 
-		for (String runBuildURL : runBuildURLs) {
-			JSONObject testReportJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						runBuildURL + "testReport/api/json"));
+		String message = errorStackTrace;
 
-			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
-				"suites");
+		int x = message.indexOf("Caused by:");
 
-			for (int i = 0; i < suitesJSONArray.length(); i++) {
-				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+		if (x != -1) {
+			message = message.substring(message.lastIndexOf("\n", x));
+		}
 
-				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
-					"cases");
+		if ((errorDetails != null) && !message.contains(errorDetails)) {
+			message = errorDetails + "\n" + message;
+		}
 
-				for (int j = 0; j < casesJSONArray.length(); j++) {
-					JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
+		return _truncate((_MAX_LENGTH/_MAX_COUNT), message);
+	}
 
-					String status = caseJSONObject.getString("status");
+	private static String _truncate(int maxLength, String message) {
+		if (message.length() <= maxLength) {
+			return message;
+		}
 
-					if (status.equals("FIXED") || status.equals("PASSED") ||
-						status.equals("SKIPPED")) {
+		if (message.contains("\n")) {
+			String newMessage = message.substring(
+				0, message.lastIndexOf("\n", maxLength));
 
-						continue;
-					}
+			if (newMessage.length() >
+					(maxLength * _MIN_TRUNCATED_LENGTH_PERCENT)) {
 
-					if (failureCount == 3) {
-						failureCount++;
-
-						sb.append("<li>...</li>");
-
-						return failureCount;
-					}
-
-					sb.append("<li><a href=\"");
-
-					String runBuildHREF = runBuildURL;
-
-					runBuildHREF = runBuildHREF.replace("[", "_");
-					runBuildHREF = runBuildHREF.replace("]", "_");
-					runBuildHREF = runBuildHREF.replace("#", "_");
-
-					sb.append(runBuildHREF);
-
-					sb.append("/testReport/");
-
-					String testClassName = caseJSONObject.getString(
-						"className");
-
-					int x = testClassName.lastIndexOf(".");
-
-					String testPackageName = testClassName.substring(0, x);
-
-					sb.append(testPackageName);
-
-					sb.append("/");
-
-					String testSimpleClassName = testClassName.substring(x + 1);
-
-					sb.append(testSimpleClassName);
-
-					sb.append("/");
-
-					String testMethodName = caseJSONObject.getString("name");
-
-					String testMethodNameURL = testMethodName;
-
-					testMethodNameURL = testMethodNameURL.replace("[", "_");
-					testMethodNameURL = testMethodNameURL.replace("]", "_");
-					testMethodNameURL = testMethodNameURL.replace("#", "_");
-
-					if (testPackageName.equals("junit.framework")) {
-						testMethodNameURL = testMethodNameURL.replace(".", "_");
-					}
-
-					sb.append(testMethodNameURL);
-
-					sb.append("\">");
-					sb.append(testSimpleClassName);
-					sb.append(".");
-					sb.append(testMethodName);
-
-					JSONObject runBuildURLJSONObject =
-						JenkinsResultsParserUtil.toJSONObject(
-							JenkinsResultsParserUtil.getLocalURL(
-								runBuildURL + "api/json"));
-
-					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
-						runBuildURLJSONObject);
-
-					if (jobVariant.contains("functional") &&
-						testClassName.contains("EvaluateLogTest")) {
-
-						sb.append("[");
-						sb.append(
-							JenkinsResultsParserUtil.getAxisVariable(
-								runBuildURLJSONObject));
-						sb.append("]");
-					}
-
-					sb.append("</a>");
-
-					if (jobVariant.contains("functional")) {
-						sb.append(" - ");
-
-						String description = runBuildURLJSONObject.getString(
-							"description");
-
-						x = description.indexOf(">Jenkins Report<") + 22;
-
-						if (description.length() > x) {
-							description = description.substring(x);
-
-							description = description.replace("\"", "\"");
-
-							sb.append(description);
-							sb.append(" - ");
-						}
-
-						sb.append("<a href=\"");
-						sb.append(runBuildURL);
-						sb.append("/console\">Console Output</a>");
-					}
-
-					sb.append("</li>");
-
-					failureCount++;
-				}
+				return newMessage;
 			}
 		}
 
-		return failureCount;
+		return message.substring(0, maxLength);
 	}
+
+	private static final int _MAX_COUNT = 3;
+
+	private static final int _MAX_LENGTH = 2500;
+
+	private static final double _MIN_TRUNCATED_LENGTH_PERCENT = .75;
 
 }

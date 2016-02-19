@@ -63,6 +63,13 @@ else {
 			List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
 			%>
 
+			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
+				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+				<portlet:param name="major" value="true" />
+				<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+			</portlet:actionURL>
+
 			<c:choose>
 				<c:when test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 
@@ -85,13 +92,12 @@ else {
 						);
 					</aui:script>
 				</c:when>
+				<c:when test="<%= !workflowEnabled && !layoutRevision.isIncomplete() %>">
+					<span class="staging-bar-control-toggle">
+						<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publication" labelOn="ready-for-publication" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
+					</span>
+				</c:when>
 				<c:otherwise>
-					<portlet:actionURL name="updateLayoutRevision" var="publishURL">
-						<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-						<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-						<portlet:param name="major" value="true" />
-						<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-					</portlet:actionURL>
 
 					<%
 					String label = null;
@@ -99,13 +105,8 @@ else {
 					if (layoutRevision.isIncomplete()) {
 						label = LanguageUtil.format(request, "enable-in-x", layoutSetBranch.getName(), false);
 					}
-					else {
-						if (workflowEnabled) {
-							label = "submit-for-publication";
-						}
-						else {
-							label = "mark-as-ready-for-publication";
-						}
+					else if (workflowEnabled) {
+						label = "submit-for-publication";
 					}
 					%>
 
@@ -118,55 +119,57 @@ else {
 	</c:if>
 </c:if>
 
-<li class="control-menu-nav-item">
-	<c:if test="<%= !layoutRevision.isIncomplete() %>">
-		<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+<c:if test="<%= !layoutRevision.isIncomplete() %>">
+	<c:if test="<%= layoutRevision.isHead() %>">
+		<li class="control-menu-nav-item">
 
-		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+		<span class="staging-bar-control-toggle">
+			<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publication" name="readyToggle" type="toggle-switch" value="<%= true %>" />
+		</span>
 
-		<aui:script>
-			AUI.$('.layout-revision-info .taglib-workflow-status').on(
-				'mouseenter',
-				function(event) {
-					Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= taglibHelpMessage %>" />');
-				}
-			);
-		</aui:script>
-
-		<c:if test="<%= hasWorkflowTask %>">
-
-			<%
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
-
-			WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
-
-			portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
-
-			portletURL.setPortletMode(PortletMode.VIEW);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
-
-			layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
-			layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
-
-			portletURL.setParameter("closeRedirect", layoutURL);
-			%>
-
-			<liferay-ui:icon
-				cssClass="submit-link"
-				icon="workflow"
-				id="reviewTaskIcon"
-				message="workflow"
-				method="get"
-				url="<%= portletURL.toString() %>"
-				useDialog="<%= true %>"
-			/>
+		<c:if test="<%= !hasWorkflowTask %>">
+			</li>
 		</c:if>
 	</c:if>
-</li>
+
+	<c:if test="<%= hasWorkflowTask %>">
+		<c:if test="<%= !layoutRevision.isHead() %>">
+			<li class="control-menu-nav-item">
+		</c:if>
+
+		<%
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
+
+		WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
+
+		portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
+
+		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+
+		layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
+		layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
+
+		portletURL.setParameter("closeRedirect", layoutURL);
+		%>
+
+		<liferay-ui:icon
+			cssClass="submit-link"
+			icon="workflow"
+			id="reviewTaskIcon"
+			message="workflow"
+			method="get"
+			url="<%= portletURL.toString() %>"
+			useDialog="<%= true %>"
+		/>
+
+		</li>
+	</c:if>
+</c:if>
 
 <%
 request.setAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED, String.valueOf(true));
@@ -275,13 +278,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 
 <aui:script>
 	function <portlet:namespace />openPageVariationsDialog() {
-		var pageVariationsDialog = Liferay.Util.openWindow(
+		Liferay.Util.openWindow(
 			{
 				dialog: {
 					destroyOnHide: true
 				},
 				id: 'pagesVariationsDialog',
-
 				title: '<liferay-ui:message arguments="<%= pageVariationsHelpIcon %>" key="page-variations-x" />',
 
 				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -295,13 +297,12 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 	}
 
 	function <portlet:namespace />openSitePagesVariationsDialog() {
-		var sitePagesVariationDialog = Liferay.Util.openWindow(
+		Liferay.Util.openWindow(
 			{
 				dialog: {
 					destroyOnHide: true
 				},
 				id: 'sitePagesVariationDialog',
-
 				title: '<liferay-ui:message arguments="<%= sitePagesVariationsHelpIcon %>" key="site-pages-variation-x" />',
 
 				<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -311,5 +312,18 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 				uri: '<%= HtmlUtil.escapeJS(layoutSetBranchesURL) %>'
 			}
 		);
+	}
+
+	function <portlet:namespace />submitLayoutRevision(publishURL) {
+		Liferay.fire(
+			'<portlet:namespace />submit',
+			{
+				currentURL: '<%= currentURL %>',
+				incomplete: <%= layoutRevision.isIncomplete() %>,
+				publishURL: publishURL
+			}
+		);
+
+		Liferay.Util.toggleDisabled('#<portlet:namespace />readyToggle', true);
 	}
 </aui:script>

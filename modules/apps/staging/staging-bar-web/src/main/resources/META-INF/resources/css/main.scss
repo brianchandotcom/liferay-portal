@@ -130,6 +130,40 @@
 	}
 }
 
+.staging-bar-control-toggle {
+	div {
+		margin-bottom: 0;
+
+		label {
+			margin-bottom: 0;
+
+			@include sm() {
+				float: left;
+			}
+
+			span {
+				span.toggle-switch-handle {
+					color: #FFF;
+					font-size: 14px;
+					font-weight: 500;
+					text-transform: none;
+				}
+			}
+		}
+	}
+}
+
+.staging-layout-revision-details {
+	@include sm() {
+		@include align-items(center);
+
+		display: flex;
+
+		@include flex(0 1 50%);
+		@include justify-content(space-between);
+	}
+}
+
 .staging-ready {
 	padding-top: 55px;
 }

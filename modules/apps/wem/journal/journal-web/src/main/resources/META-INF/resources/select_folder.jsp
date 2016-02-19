@@ -30,6 +30,7 @@ if (folder != null) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_folder.jsp");
+portletURL.setParameter("eventName", eventName);
 
 JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 %>
@@ -54,6 +55,7 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 
 	iteratorURL.setParameter("mvcPath", "/select_folder.jsp");
 	iteratorURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+	iteratorURL.setParameter("eventName", eventName);
 	%>
 
 	<liferay-ui:search-container
@@ -74,6 +76,7 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="mvcPath" value="/select_folder.jsp" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

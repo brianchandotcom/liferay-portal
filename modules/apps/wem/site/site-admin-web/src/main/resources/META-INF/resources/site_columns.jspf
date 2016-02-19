@@ -83,18 +83,16 @@
 <liferay-ui:search-container-column-text
 	name="child-sites"
 >
-
-	<%
-	if (hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
-	%>
-
-		<div class="subsites-count">
-			<%= childSites.size() %>
-		</div>
-
-	<%
-	}
-	%>
+	<div class="subsites-count">
+		<c:choose>
+			<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
+				<%= childSites.size() %>
+			</c:when>
+			<c:otherwise>
+				<%= StringPool.DASH %>
+			</c:otherwise>
+		</c:choose>
+	</div>
 
 </liferay-ui:search-container-column-text>
 

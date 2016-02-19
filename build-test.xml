@@ -7602,16 +7602,17 @@ jdbc.default.password=${database.mysql.password}</echo>
 			tofile="${liferay.home}/build-db-upgrade.xml"
 		/>
 
-		<replace file="${liferay.home}/build-db-upgrade.xml">
-			<replacetoken><![CDATA[		<path id="lib.classpath">
-			<fileset dir="lib" includes="*.jar" />
-		</path>]]></replacetoken>
-			<replacevalue expandproperties="true"><![CDATA[		<path id="lib.classpath">
+		<property name="db.upgrade.classpath"><![CDATA[<path id="lib.classpath">
 			<fileset dir="${app.server.dir}/lib" includes="*.jar" />
 			<fileset dir="${app.server.dir}/lib/ext" includes="*.jar" />
 			<fileset dir="${app.server.dir}/webapps/ROOT/WEB-INF/lib" includes="*.jar" />
-		</path>]]></replacevalue>
-		</replace>
+		</path>]]></property>
+
+		<replaceregexp
+			file="${liferay.home}/build-db-upgrade.xml"
+			match="&lt;path id=[\S\s]*path&gt;"
+			replace="${db.upgrade.classpath}"
+		/>
 
 		<copy
 			file="portal-impl/src/portal-ext.properties"
@@ -7635,9 +7636,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 					/>
 				</waitfor>
 
-				<execute>
-					{ echo "upgrade:list"; sleep 10; echo "exit"; sleep 1; echo "y"; } | telnet localhost 11311
-				</execute>
+				<telnet port="11311" server="localhost" timeout="20">
+					<read>g!</read>
+					<write>upgrade:list</write>
+					<read>g!</read>
+					<write>exit</write>
+					<write>y</write>
+				</telnet>
 			</sequential>
 		</parallel>
 

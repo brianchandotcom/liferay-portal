@@ -397,9 +397,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			return;
 		}
 
-		String index = element.attributeValue("index");
-
-		String name = element.attributeValue("name");
+		String elName = element.attributeValue("name");
 
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -413,8 +411,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		if (articleImage == null) {
 			return;
 		}
-
-		String elName = name + StringPool.UNDERLINE + index;
 
 		if (!elName.equals(articleImage.getElName())) {
 			articleImage.setElName(elName);

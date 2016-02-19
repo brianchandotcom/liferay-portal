@@ -51,12 +51,12 @@ class EventScreen extends HtmlScreen {
 	}
 
 	flip(surfaces) {
-		document.documentElement.className = this.virtualDocument.className;
 		document.body.className = this.virtualDocument.querySelector('body').className;
 
 		dom.addClasses(document.body, 'lfr-surface-loading');
 
-		return super.flip(surfaces)
+		return CancellablePromise.resolve(Utils.resetAllPortlets())
+			.then(super.flip(surfaces))
 			.then(() => {
 				Liferay.fire(
 					'screenFlip',
@@ -79,8 +79,6 @@ class EventScreen extends HtmlScreen {
 						screen: this
 					}
 				);
-
-				Utils.resetAllPortlets();
 
 				return content;
 			});

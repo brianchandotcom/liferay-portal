@@ -6,6 +6,7 @@ import async from 'metal/src/async/async'
 import globals from 'senna/src/globals/globals'
 import RenderURLScreen from './screen/RenderURLScreen.es';
 import Uri from 'metal-uri/src/Uri'
+import utils from 'senna/src/utils/utils';
 
 let app = new App();
 
@@ -47,7 +48,7 @@ Liferay.Util.submitForm = function(form) {
 
 				globals.capturedFormElement = formElement;
 
-				app.navigate(app.getPath(url));
+				app.navigate(utils.getUrlPath(url));
 			}
 			else {
 				formElement.submit();

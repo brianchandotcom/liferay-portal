@@ -82,6 +82,8 @@ class LiferayApp extends App {
 			this.clearScreensCache();
 		}
 
+		AUI().Get._insertCache = {};
+
 		dom.removeClasses(document.body, 'lfr-surface-loading');
 	}
 

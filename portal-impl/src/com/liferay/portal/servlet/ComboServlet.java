@@ -155,7 +155,9 @@ public class ComboServlet extends HttpServlet {
 
 		String firstModulePath = modulePaths[0];
 
-		String extension = FileUtil.getExtension(firstModulePath);
+		String resourcePath = getResourcePath(firstModulePath);
+
+		String extension = FileUtil.getExtension(resourcePath);
 
 		String minifierType = ParamUtil.getString(request, "minifierType");
 
@@ -393,6 +395,8 @@ public class ComboServlet extends HttpServlet {
 
 	protected boolean validateModuleExtension(String moduleName)
 		throws Exception {
+
+		moduleName = getResourcePath(moduleName);
 
 		int index = moduleName.indexOf(CharPool.QUESTION);
 

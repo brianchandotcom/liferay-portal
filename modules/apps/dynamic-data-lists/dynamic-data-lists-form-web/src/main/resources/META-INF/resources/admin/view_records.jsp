@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = ddlFormAdminDisplayContext.getDDLFormViewDisplayContext();
+DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = ddlFormAdminDisplayContext.getDDLFormViewRecordsDisplayContext();
 
 DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
 

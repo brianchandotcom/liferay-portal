@@ -98,13 +98,11 @@ public class PluginContextListener
 	}
 
 	protected void fireDeployEvent() {
-		HotDeployUtil.fireDeployEvent(
-			new HotDeployEvent(servletContext, pluginClassLoader));
+		HotDeployUtil.fireDeployEvent(new HotDeployEvent(servletContext));
 	}
 
 	protected void fireUndeployEvent() {
-		HotDeployUtil.fireUndeployEvent(
-			new HotDeployEvent(servletContext, pluginClassLoader));
+		HotDeployUtil.fireUndeployEvent(new HotDeployEvent(servletContext));
 	}
 
 	protected ClassLoader pluginClassLoader;

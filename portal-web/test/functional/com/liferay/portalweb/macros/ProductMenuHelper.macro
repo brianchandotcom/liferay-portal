@@ -104,7 +104,12 @@
 	<command name="gotoSite">
 		<var name="key_site" value="${site}" />
 
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${site}" />
+		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="${site}" />
 	</command>
 
 	<command name="gotoTab">

@@ -221,6 +221,8 @@
 			<var name="page" value="${sitePageName}" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />

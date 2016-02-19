@@ -110,28 +110,9 @@ AUI.add(
 						var formValidator = instance.formValidator;
 
 						formValidator.on('submit', A.bind('_onValidatorSubmit', instance));
-
 						formValidator.on('submitError', A.bind('_onSubmitError', instance));
 
 						formNode.delegate(['blur', 'focus'], A.bind('_onFieldFocusChange', instance), 'button,input,select,textarea');
-					},
-
-					_onSubmitError: function(event) {
-						var instance = this;
-
-						var collapsiblePanels = instance.formNode.all('.panel-collapse');
-
-						collapsiblePanels.each(
-							function(panel) {
-								var errorFields = panel.get('children').all('.has-error');
-
-								if (errorFields.size() > 0 && !panel.hasClass('in')) {
-									var panelId = panel.get('id');
-
-									$('#' + panelId).collapse('show');
-								}
-							}
-						);
 					},
 
 					_defaultSubmitFn: function(event) {
@@ -162,6 +143,24 @@ AUI.add(
 								instance._defaultSubmitFn.call(instance, event);
 							},
 							0
+						);
+					},
+
+					_onSubmitError: function(event) {
+						var instance = this;
+
+						var collapsiblePanels = instance.formNode.all('.panel-collapse');
+
+						collapsiblePanels.each(
+							function(panel) {
+								var errorFields = panel.get('children').all('.has-error');
+
+								if (errorFields.size() > 0 && !panel.hasClass('in')) {
+									var panelId = panel.get('id');
+
+									$('#' + panelId).collapse('show');
+								}
+							}
 						);
 					},
 

@@ -438,8 +438,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_REGULAR_ROLE_IFRAME_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[1]/span</td>
+	<td>ROLES_REGULAR_ROLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

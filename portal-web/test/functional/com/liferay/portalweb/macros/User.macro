@@ -760,7 +760,7 @@
 
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLE_IFRAME_TITLE" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLE_TITLE" value1="${roleName}" />
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />

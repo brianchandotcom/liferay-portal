@@ -517,24 +517,26 @@ public class PDFProcessorImpl
 
 		String processIdentity = String.valueOf(fileVersion.getFileVersionId());
 
-		long waiting =
+		long ghostscriptTimeout =
 			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT;
 
 		if (_log.isDebugEnabled()) {
 			if (thumbnail) {
 				_log.debug(
-					"Waiting for " + waiting + " seconds to obtain " +
-						file.getPath() + " thumbnail generation");
+					"Waiting for " + ghostscriptTimeout +
+						" seconds to obtain " + file.getPath() +
+							" thumbnail generation");
 			}
 			else {
 				_log.debug(
-					"Waiting for " + waiting + " seconds to obtain " +
-						file.getPath() + " preview generation");
+					"Waiting for " + ghostscriptTimeout +
+						" seconds to obtain " + file.getPath() +
+							" preview generation");
 			}
 		}
 
 		try {
-			future.get(waiting, TimeUnit.SECONDS);
+			future.get(ghostscriptTimeout, TimeUnit.SECONDS);
 
 			futures.put(processIdentity, future);
 		}
@@ -656,33 +658,35 @@ public class PDFProcessorImpl
 			String processIdentity = String.valueOf(
 				fileVersion.getFileVersionId());
 
-			long waiting =
+			long pdfboxTimeout =
 				PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX;
 
 			if (_log.isDebugEnabled()) {
 				if (generateThumbnail && generatePreview) {
 					_log.debug(
-						"Waiting for " + waiting + " seconds to obtain " +
+						"Waiting for " + pdfboxTimeout + " seconds to obtain " +
 							file.getPath() + " thumbnail and previews " +
 								"generation");
 				}
 				else {
 					if (generateThumbnail) {
 						_log.debug(
-							"Waiting for " + waiting + " seconds to obtain " +
-								file.getPath() + " thumbnail generation");
+							"Waiting for " + pdfboxTimeout +
+								" seconds to obtain " + file.getPath() +
+									" thumbnail generation");
 					}
 
 					if (generatePreview) {
 						_log.debug(
-							"Waiting for " + waiting + " seconds to obtain " +
-								file.getPath() + " previews generation");
+							"Waiting for " + pdfboxTimeout +
+								" seconds to obtain " + file.getPath() +
+									" previews generation");
 					}
 				}
 			}
 
 			try {
-				future.get(waiting, TimeUnit.SECONDS);
+				future.get(pdfboxTimeout, TimeUnit.SECONDS);
 
 				futures.put(processIdentity, future);
 			}

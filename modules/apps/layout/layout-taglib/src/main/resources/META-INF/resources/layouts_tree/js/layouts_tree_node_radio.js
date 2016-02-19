@@ -25,11 +25,13 @@ AUI.add(
 						var checkEl = instance.get('checkEl');
 
 						checkEl.append(instance.get('label'));
+
 						checkEl.show();
 
 						var labelEl = instance.get('labelEl');
 
 						labelEl.empty();
+
 						labelEl.addClass('radio');
 
 						var checkContainerEl = instance.get('checkContainerEl');

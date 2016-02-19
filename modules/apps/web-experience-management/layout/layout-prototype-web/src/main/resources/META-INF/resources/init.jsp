@@ -29,7 +29,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

@@ -9,7 +9,7 @@ dependencies {
 	provided group: "org.scribe", name: "scribe", version: "1.3.6"
 	provided project(":apps:marketplace:marketplace-api")
 	provided project(":apps:marketplace:marketplace-service")
-	provided project(":apps:wem:application-list:application-list-api")
+	provided project(":apps:web-experience-management:application-list:application-list-api")
 }
 
 liferay {

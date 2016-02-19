@@ -14,8 +14,8 @@ dependencies {
 	provided project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:screens:screens-api")
-	provided project(":apps:wem:asset:asset-publisher-web")
-	provided project(":apps:wem:journal:journal-api")
+	provided project(":apps:web-experience-management:asset:asset-publisher-web")
+	provided project(":apps:web-experience-management:journal:journal-api")
 	provided project(":portal:portal-upgrade")
 }
 

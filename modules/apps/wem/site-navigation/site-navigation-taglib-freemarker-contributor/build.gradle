@@ -1,7 +1,0 @@
-dependencies {
-	provided project(":apps:wem:site-navigation:site-navigation-taglib")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

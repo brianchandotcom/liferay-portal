@@ -7,7 +7,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	provided project(":apps:map:map-api")
 	provided project(":apps:users-admin:users-admin-web")
-	provided project(":apps:wem:application-list:application-list-api")
+	provided project(":apps:web-experience-management:application-list:application-list-api")
 	provided project(":frontend:frontend-taglib")
 	provided project(":portal:portal-upgrade")
 }

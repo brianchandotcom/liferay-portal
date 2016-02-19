@@ -4,7 +4,7 @@ dependencies {
 	provided project(":apps:message-boards:message-boards-web")
 	provided project(":apps:polls:polls-api")
 	provided project(":apps:social:social-user-statistics-web")
-	provided project(":apps:wem:layout:layout-set-prototype-api")
+	provided project(":apps:web-experience-management:layout:layout-set-prototype-api")
 	provided project(":portal:portal-instance-lifecycle")
 }
 

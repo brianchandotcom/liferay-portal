@@ -11,7 +11,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
-	provided project(":apps:wem:application-list:application-list-api")
+	provided project(":apps:web-experience-management:application-list:application-list-api")
 	provided project(":frontend:frontend-taglib")
 	provided project(":portal-configuration:portal-configuration-metatype")
 

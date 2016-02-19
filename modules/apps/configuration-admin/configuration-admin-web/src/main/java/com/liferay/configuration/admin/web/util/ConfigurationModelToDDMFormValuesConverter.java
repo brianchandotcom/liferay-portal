@@ -21,10 +21,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.metatype.AttributeDefinition;
@@ -35,12 +37,14 @@ import org.osgi.service.metatype.AttributeDefinition;
 public class ConfigurationModelToDDMFormValuesConverter {
 
 	public ConfigurationModelToDDMFormValuesConverter(
-		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale) {
+		ConfigurationModel configurationModel, DDMForm ddmForm, Locale locale,
+		ResourceBundle resourceBundle) {
 
 		_configurationModel = configurationModel;
 		_ddmForm = ddmForm;
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 		_locale = locale;
+		_resourceBundle = resourceBundle;
 	}
 
 	public DDMFormValues getDDMFormValues() {
@@ -133,14 +137,25 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		LocalizedValue localizedValue = new LocalizedValue(_locale);
 
-		localizedValue.addString(_locale, value);
+		localizedValue.addString(_locale, translate(value));
 
 		ddmFormFieldValue.setValue(localizedValue);
+	}
+
+	protected String translate(String key) {
+		if ((_resourceBundle != null) && (key != null)) {
+			String result = ResourceBundleUtil.getString(_resourceBundle, key);
+
+			return result == null ? key : result;
+		}
+
+		return key;
 	}
 
 	private final ConfigurationModel _configurationModel;
 	private final DDMForm _ddmForm;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Locale _locale;
+	private final ResourceBundle _resourceBundle;
 
 }

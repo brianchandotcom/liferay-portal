@@ -57,6 +57,10 @@
 		select.form-control[multiple] {
 			height: auto;
 		}
+
+		textarea {
+			overflow-y: hidden;
+		}
 	}
 
 	.lfr-ddm-form-page {
@@ -90,10 +94,6 @@
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
-}
-
-.field textarea {
-    overflow-y:hidden;
 }
 
 .multi-step-progress-bar {

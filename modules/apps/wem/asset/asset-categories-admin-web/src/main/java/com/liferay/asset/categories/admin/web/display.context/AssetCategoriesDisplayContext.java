@@ -91,6 +91,10 @@ public class AssetCategoriesDisplayContext {
 	public SearchContainer getCategoriesSearchContainer()
 		throws PortalException {
 
+		if (_categoriesSearchContainer != null) {
+			return _categoriesSearchContainer;
+		}
+
 		SearchContainer categoriesSearchContainer = new SearchContainer(
 			_renderRequest, getIteratorURL(), null,
 			"there-are-no-categories.-you-can-add-a-category-by-clicking-the" +
@@ -156,7 +160,9 @@ public class AssetCategoriesDisplayContext {
 
 		categoriesSearchContainer.setResults(categories);
 
-		return categoriesSearchContainer;
+		_categoriesSearchContainer = categoriesSearchContainer;
+
+		return _categoriesSearchContainer;
 	}
 
 	public AssetCategory getCategory() {
@@ -361,6 +367,17 @@ public class AssetCategoriesDisplayContext {
 		return _vocabularyId;
 	}
 
+	public boolean isDisabledCategoriesManagementBar() throws PortalException {
+		SearchContainer categoriesSearchContainer =
+			getCategoriesSearchContainer();
+
+		if (categoriesSearchContainer.getTotal() <= 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDisabledVocabulariesManagementBar()
 		throws PortalException {
 
@@ -368,6 +385,21 @@ public class AssetCategoriesDisplayContext {
 			getVocabulariesSearchContainer();
 
 		if (vocabulariesSearchContainer.getTotal() <= 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowCategoriesSearch() throws PortalException {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		SearchContainer categoriesSearchContainer =
+			getCategoriesSearchContainer();
+
+		if (categoriesSearchContainer.getTotal() > 0) {
 			return true;
 		}
 
@@ -389,6 +421,7 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
+	private SearchContainer _categoriesSearchContainer;
 	private AssetCategory _category;
 	private Long _categoryId;
 	private String _displayStyle;

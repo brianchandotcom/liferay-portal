@@ -1,0 +1,6 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile project(":apps:web-experience-management:export-import:export-import-service")
+	testIntegrationCompile project(":apps:web-experience-management:layout:layout-set-prototype-api")
+	testIntegrationCompile project(":apps:web-experience-management:layout:layout-set-prototype-impl")
+}

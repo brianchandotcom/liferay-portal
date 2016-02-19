@@ -11,8 +11,8 @@ dependencies {
 	provided project(":apps:flags:flags-taglib")
 	provided project(":apps:message-boards:message-boards-api")
 	provided project(":apps:message-boards:message-boards-service")
-	provided project(":apps:wem:application-list:application-list-api")
-	provided project(":apps:wem:trash:trash-taglib")
+	provided project(":apps:web-experience-management:application-list:application-list-api")
+	provided project(":apps:web-experience-management:trash:trash-taglib")
 	provided project(":frontend:frontend-taglib")
 	provided project(":portal:portal-upgrade")
 }

@@ -20,7 +20,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
 	provided project(":apps:mobile-device-rules:mobile-device-rules-api")
-	provided project(":apps:wem:export-import:export-import-api")
+	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":core:osgi-service-tracker-collections")
 	provided project(":portal-background-task:portal-background-task-api")
 	provided project(":portal-configuration:portal-configuration-metatype")

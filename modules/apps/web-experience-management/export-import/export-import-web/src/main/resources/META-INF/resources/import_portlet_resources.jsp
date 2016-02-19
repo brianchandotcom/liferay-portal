@@ -23,6 +23,8 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
+Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
 
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(themeDisplay.getUserId(), groupId, new HashMap<String, String[]>(), fileEntry);
@@ -50,7 +52,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree">
-		<div id="<portlet:namespace />importConfiguration">
+		<aui:fieldset-group id="<portlet:namespace />importConfiguration" markupView="lexicon">
 			<aui:fieldset cssClass="options-group" label="file">
 				<dl class="import-file-details options">
 					<dt>
@@ -94,7 +96,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			%>
 
 			<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
-				<aui:fieldset cssClass="options-group" label="application">
+				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="application">
 					<ul class="lfr-tree list-unstyled select-options">
 						<li class="options">
 							<ul class="portlet-list">
@@ -153,7 +155,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			%>
 
 			<c:if test="<%= !portletDataHandler.isDisplayPortlet() && ((importModelCount != 0) || (modelDeletionCount != 0)) %>">
-				<aui:fieldset cssClass="options-group" label="content">
+				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content">
 					<ul class="lfr-tree list-unstyled select-options">
 						<li class="options">
 							<ul class="portlet-list">
@@ -273,12 +275,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 				<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
 
-				<aui:fieldset cssClass="options-group" label="permissions">
-					<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-				</aui:fieldset>
+				<liferay-staging:permissions action="import" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 			</c:if>
 
-			<aui:fieldset cssClass="options-group" label="update-data">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">
 				<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
 
 				<aui:input data-name='<%= LanguageUtil.get(request, "mirror-with-overwriting") %>' helpMessage="import-data-strategy-mirror-with-overwriting-help" id="mirrorWithOverwriting" label="mirror-with-overwriting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
@@ -286,31 +286,27 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 				<aui:input data-name='<%= LanguageUtil.get(request, "copy-as-new") %>' disabled="<%= !portletDataHandler.isSupportsDataStrategyCopyAsNew() %>" helpMessage='<%= portletDataHandler.isSupportsDataStrategyCopyAsNew() ? "import-data-strategy-copy-as-new-help" : "not-supported" %>' id="copyAsNew" label="copy-as-new" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>" />
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="options-group" label="authorship-of-the-content">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="authorship-of-the-content">
 				<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "use-the-original-author") %>' helpMessage="use-the-original-author-help" id="currentUserId" label="use-the-original-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.CURRENT_USER_ID %>" />
 
 				<aui:input data-name='<%= LanguageUtil.get(request, "always-use-my-user-id") %>' helpMessage="use-the-current-user-as-author-help" id="alwaysCurrentUserId" label="use-the-current-user-as-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
 			</aui:fieldset>
 
-			<portlet:renderURL var="importPortletURL">
-				<portlet:param name="mvcRenderCommandName" value="exportImport" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-				<portlet:param name="tabs2" value="import" />
-				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
-			</portlet:renderURL>
-
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" href="<%= importPortletURL %>" name="back" value="back" />
+				<portlet:renderURL var="backURL">
+					<portlet:param name="mvcRenderCommandName" value="exportImport" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+					<portlet:param name="tabs2" value="import" />
+					<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
+				</portlet:renderURL>
+
+				<aui:button cssClass="btn-lg" href="<%= backURL %>" name="back" value="back" />
 
 				<aui:button cssClass="btn-lg" type="submit" value="import" />
 			</aui:button-row>
-		</div>
+		</aui:fieldset-group>
 	</aui:form>
 </div>
-
-<aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>', '<portlet:namespace />permissionsUl');
-</aui:script>
 
 <aui:script use="liferay-export-import">
 	new Liferay.ExportImport(

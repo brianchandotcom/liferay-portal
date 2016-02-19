@@ -29,9 +29,9 @@ Group group = themeDisplay.getScopeGroup();
 		PortletURL portletURL = null;
 
 		try {
-			long contactsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), false, PortletKeys.CONTACTS_CENTER);
+			long contactsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), false, ContactsPortletKeys.CONTACTS_CENTER);
 
-			portletURL = PortletURLFactoryUtil.create(request, PortletKeys.CONTACTS_CENTER, contactsPlid, PortletRequest.RENDER_PHASE);
+			portletURL = PortletURLFactoryUtil.create(request, ContactsPortletKeys.CONTACTS_CENTER, contactsPlid, PortletRequest.RENDER_PHASE);
 		}
 		catch (Exception e) {
 			portletURL = renderResponse.createRenderURL();

@@ -92,6 +92,10 @@
 	line-height: 16px;
 }
 
+.field textarea {
+    overflow-y:hidden;
+}
+
 .multi-step-progress-bar {
 	> .complete {
 		color: #65B6F0;

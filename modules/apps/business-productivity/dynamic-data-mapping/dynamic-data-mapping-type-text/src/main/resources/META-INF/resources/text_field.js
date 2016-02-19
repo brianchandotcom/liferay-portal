@@ -47,6 +47,23 @@ AUI.add(
 						);
 					},
 
+					render: function() {
+						var instance = this;
+
+						TextField.superclass.render.apply(instance, arguments);
+
+						var textAreaNode = this.get('container').one('textarea');
+
+						if (!textAreaNode.autosize) {
+							var height = textAreaNode.get('scrollHeight');
+
+							textAreaNode.plug(A.Plugin.Autosize);
+							textAreaNode.height(height);
+						}
+
+						textAreaNode.autosize._uiAutoSize();
+					},
+
 					_renderErrorMessage: function() {
 						var instance = this;
 
@@ -87,6 +104,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tooltip', 'liferay-ddm-form-renderer-field']
+		requires: ['aui-autosize-deprecated', 'aui-tooltip', 'liferay-ddm-form-renderer-field']
 	}
 );

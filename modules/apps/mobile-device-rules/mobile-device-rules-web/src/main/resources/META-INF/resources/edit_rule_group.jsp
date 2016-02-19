@@ -48,9 +48,9 @@ renderResponse.setTitle(((ruleGroup == null) ? LanguageUtil.get(resourceBundle, 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:if test="<%= ruleGroup == null %>">
-				<div class="alert alert-info">
+				<p class="text-default">
 					<liferay-ui:message key="device-family-help" />
-				</div>
+				</p>
 			</c:if>
 
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" placeholder="name" />

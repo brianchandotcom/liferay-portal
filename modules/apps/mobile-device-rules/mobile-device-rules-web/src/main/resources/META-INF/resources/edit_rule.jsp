@@ -67,9 +67,9 @@ renderResponse.setTitle(title);
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:if test="<%= rule == null %>">
-				<div class="alert alert-info">
+				<p class="text-default">
 					<liferay-ui:message key="classification-rule-help" />
-				</div>
+				</p>
 			</c:if>
 
 			<aui:input name="name" placeholder="name" />

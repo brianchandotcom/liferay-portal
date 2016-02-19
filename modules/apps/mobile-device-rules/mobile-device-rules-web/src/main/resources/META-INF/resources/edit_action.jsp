@@ -49,9 +49,9 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:if test="<%= action == null %>">
-				<div class="alert alert-info">
+				<p class="text-default">
 					<liferay-ui:message key="action-help" />
-				</div>
+				</p>
 			</c:if>
 
 			<aui:input name="name" placeholder="name" />

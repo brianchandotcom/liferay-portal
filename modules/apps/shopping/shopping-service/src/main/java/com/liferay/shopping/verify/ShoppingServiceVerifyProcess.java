@@ -18,20 +18,31 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
+import com.liferay.shopping.service.ShoppingCartLocalService;
 import com.liferay.shopping.verify.model.ShoppingCategoryVerifiableModel;
 import com.liferay.shopping.verify.model.ShoppingItemVerifiableResourcedModel;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
-@Component(service = ShoppingServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.shopping.service"},
+	service = VerifyProcess.class
+)
 public class ShoppingServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
 		verifyResourcedModels();
+	}
+
+	@Reference(unbind = "-")
+	protected void setShoppingCartLocalService(
+		ShoppingCartLocalService shoppingCartLocalService) {
 	}
 
 	protected void verifyResourcedModels() throws Exception {

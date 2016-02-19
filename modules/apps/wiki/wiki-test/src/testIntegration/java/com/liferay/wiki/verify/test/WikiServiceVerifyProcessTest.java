@@ -18,10 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.wiki.verify.WikiServiceVerifyProcess;
+import com.liferay.registry.ServiceTracker;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -37,11 +40,29 @@ public class WikiServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
+	@BeforeClass
+	public static void setUpClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		return registry.getService(WikiServiceVerifyProcess.class);
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + VerifyProcess.class.getName() +
+				")(verify.process.name=com.liferay.wiki.service))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
 	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
 
 }

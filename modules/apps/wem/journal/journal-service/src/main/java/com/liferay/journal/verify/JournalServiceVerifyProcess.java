@@ -80,7 +80,6 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -91,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"verify.process.name=com.liferay.journal.service"},
-	service = VerifyProcess.class
+	service = {JournalServiceVerifyProcess.class, VerifyProcess.class}
 )
 public class JournalServiceVerifyProcess extends VerifyLayout {
 
@@ -99,7 +98,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	public static final int NUM_OF_ARTICLES = 5;
 
-	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();

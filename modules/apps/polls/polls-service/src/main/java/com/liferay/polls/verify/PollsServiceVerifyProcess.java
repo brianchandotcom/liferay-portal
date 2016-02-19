@@ -14,6 +14,7 @@
 
 package com.liferay.polls.verify;
 
+import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.polls.verify.model.PollsChoiceVerifiableModel;
 import com.liferay.polls.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.verify.model.PollsVoteVerifiableModel;
@@ -22,6 +23,7 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
@@ -37,6 +39,11 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyResourcedModels();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPollsChoiceLocalService(
+		PollsChoiceLocalService pollsChoiceLocalService) {
 	}
 
 	protected void verifyAuditedModels() throws Exception {

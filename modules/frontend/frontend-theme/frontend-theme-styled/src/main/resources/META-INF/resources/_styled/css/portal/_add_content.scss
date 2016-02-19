@@ -9,9 +9,13 @@
 		}
 	}
 
-	.lfr-content-item {
+	.add-application-panel .lfr-content-item {
 		height: 40px;
 		padding: 0 16px;
+
+		&.lfr-archived-setup {
+			padding-left: 30px;
+		}
 	}
 
 	.search-bar {

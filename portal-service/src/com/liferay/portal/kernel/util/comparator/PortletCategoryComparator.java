@@ -36,6 +36,13 @@ public class PortletCategoryComparator
 	public int compare(
 		PortletCategory portletCategory1, PortletCategory portletCategory2) {
 
+		if (portletCategory1.getName().equals("category.highlighted")) {
+			return -1;
+		}
+		else if (portletCategory2.getName().equals("category.highlighted")) {
+			return 1;
+		}
+
 		String name1 = LanguageUtil.get(_locale, portletCategory1.getName());
 
 		String name2 = LanguageUtil.get(_locale, portletCategory2.getName());

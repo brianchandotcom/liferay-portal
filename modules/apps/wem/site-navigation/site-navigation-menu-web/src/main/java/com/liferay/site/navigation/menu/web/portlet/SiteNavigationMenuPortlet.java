@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-navigation",
 		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.display-category=category.highlighted",
 		"com.liferay.portlet.icon=/icons/navigation.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",

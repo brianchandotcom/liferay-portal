@@ -43,10 +43,6 @@
 					display: none;
 				}
 			}
-
-			&.lfr-archived-setup {
-				padding-left: 30px;
-			}
 		}
 
 		@include respond-to(phone) {

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1212,8 +1213,14 @@ public class PortletTracker
 			List<Company> companies)
 		throws PortalException {
 
-		String categoryName = GetterUtil.getString(
-			get(serviceReference, "display-category"), "category.undefined");
+		List<String> categoryNames = StringPlus.asList(
+			get(serviceReference, "display-category"));
+
+		if (categoryNames.isEmpty()) {
+			categoryNames.add("category.undefined");
+		}
+
+		String[] categoryNamesArray = ArrayUtil.toStringArray(categoryNames);
 
 		for (Company company : companies) {
 			com.liferay.portal.kernel.model.Portlet companyPortletModel =
@@ -1222,7 +1229,7 @@ public class PortletTracker
 			companyPortletModel.setCompanyId(company.getCompanyId());
 
 			_portletLocalService.deployRemotePortlet(
-				companyPortletModel, new String[] {categoryName}, false);
+				companyPortletModel, categoryNamesArray, false);
 		}
 	}
 

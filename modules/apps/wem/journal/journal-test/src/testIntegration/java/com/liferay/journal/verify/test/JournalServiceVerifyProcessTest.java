@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.verify.JournalServiceVerifyProcess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -58,7 +59,7 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(objectClass=" + VerifyProcess.class.getName() +
+			"(&(objectClass=" + JournalServiceVerifyProcess.class.getName() +
 				")(verify.process.name=com.liferay.journal.service))");
 
 		_serviceTracker = registry.trackServices(filter);

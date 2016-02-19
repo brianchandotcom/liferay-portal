@@ -11,6 +11,12 @@ AUI.add(
 						value: true
 					},
 
+					closeableNode: {
+						valueFn: function() {
+							return A.Node.create('<button type="button" class="close"><svg class="lexicon-icon icon-monospaced"><use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /></svg></button>');
+						}
+					},
+
 					icon: {
 						validator: Lang.isString,
 						value: 'info-circle'

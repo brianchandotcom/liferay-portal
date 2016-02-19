@@ -230,7 +230,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 								}
 
 								<liferay-portlet:renderURL var="viewSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="mvcPath" value="/contacts_center/view_user.jsp" />
+									<portlet:param name="mvcPath" value="/view_user.jsp" />
 									<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
 								</liferay-portlet:renderURL>
 

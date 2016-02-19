@@ -66,13 +66,9 @@ public class SiteMembershipsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupId());
+			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		_group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (_group != null) {
-			_group = StagingUtil.getLiveGroup(_group.getGroupId());
-		}
 
 		return _group;
 	}

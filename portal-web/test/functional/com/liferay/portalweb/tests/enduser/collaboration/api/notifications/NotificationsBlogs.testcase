@@ -133,14 +133,14 @@
 	</command>
 
 	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="add" />
+			<var name="actionType" value="Add" />
 			<var name="contentType" value="Blogs" />
 			<var name="notificationType" value="Website" />
 		</execute>

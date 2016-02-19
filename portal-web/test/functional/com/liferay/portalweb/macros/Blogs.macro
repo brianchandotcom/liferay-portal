@@ -169,6 +169,8 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
+		<execute function="SelectFrameTop" value1="relative=top" />
+
 		<execute function="Pause" locator1="5000" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />

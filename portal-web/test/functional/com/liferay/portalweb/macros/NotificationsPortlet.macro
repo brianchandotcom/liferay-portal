@@ -1,8 +1,14 @@
 <definition>
 	<command name="disableUserDeliveries">
 		<var name="key_contentType" value="${contentType}" />
+		<var name="key_panelHeading" value="${contentType}" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="${contentType}" />
+		<if>
+			<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
+			<then>
+				<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="${contentType}" />
+			</then>
+		</if>
 
 		<var name="key_actionType" value="${actionType}" />
 		<var method="StringUtil#replace('${contentType}',' ','-')" name="key_contentType" />

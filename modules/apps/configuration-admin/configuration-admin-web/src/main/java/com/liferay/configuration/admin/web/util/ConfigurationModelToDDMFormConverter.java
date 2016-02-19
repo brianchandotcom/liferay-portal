@@ -22,10 +22,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
@@ -38,10 +40,12 @@ import org.osgi.service.metatype.ObjectClassDefinition;
 public class ConfigurationModelToDDMFormConverter {
 
 	public ConfigurationModelToDDMFormConverter(
-		ConfigurationModel configurationModel, Locale locale) {
+		ConfigurationModel configurationModel, Locale locale,
+		ResourceBundle resourceBundle) {
 
 		_configurationModel = configurationModel;
 		_locale = locale;
+		_resourceBundle = resourceBundle;
 	}
 
 	public DDMForm getDDMForm() {
@@ -102,7 +106,7 @@ public class ConfigurationModelToDDMFormConverter {
 
 		for (int i = 0; i < optionLabels.length; i++) {
 			ddmFormFieldOptions.addOptionLabel(
-				optionValues[i], _locale, optionLabels[i]);
+				optionValues[i], _locale, translate(optionLabels[i]));
 		}
 
 		return ddmFormFieldOptions;
@@ -228,7 +232,7 @@ public class ConfigurationModelToDDMFormConverter {
 
 		LocalizedValue label = new LocalizedValue(_locale);
 
-		label.addString(_locale, attributeDefinition.getName());
+		label.addString(_locale, translate(attributeDefinition.getName()));
 
 		ddmFormField.setLabel(label);
 	}
@@ -256,7 +260,7 @@ public class ConfigurationModelToDDMFormConverter {
 
 		LocalizedValue predefinedValue = new LocalizedValue(_locale);
 
-		predefinedValue.addString(_locale, predefinedValueString);
+		predefinedValue.addString(_locale, translate(predefinedValueString));
 
 		ddmFormField.setPredefinedValue(predefinedValue);
 	}
@@ -287,12 +291,23 @@ public class ConfigurationModelToDDMFormConverter {
 
 		LocalizedValue tip = new LocalizedValue(_locale);
 
-		tip.addString(_locale, attributeDefinition.getDescription());
+		tip.addString(_locale, translate(attributeDefinition.getDescription()));
 
 		ddmFormField.setTip(tip);
 	}
 
+	protected String translate(String key) {
+		if ((_resourceBundle != null) && (key != null)) {
+			String result = ResourceBundleUtil.getString(_resourceBundle, key);
+
+			return result == null ? key : result;
+		}
+
+		return key;
+	}
+
 	private final ConfigurationModel _configurationModel;
 	private final Locale _locale;
+	private final ResourceBundle _resourceBundle;
 
 }

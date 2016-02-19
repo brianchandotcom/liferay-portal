@@ -12,6 +12,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
+	provided project(":core:osgi-service-tracker-collections")
 	provided project(":frontend:frontend-taglib")
 	provided project(":portal-configuration:portal-configuration-metatype")
 

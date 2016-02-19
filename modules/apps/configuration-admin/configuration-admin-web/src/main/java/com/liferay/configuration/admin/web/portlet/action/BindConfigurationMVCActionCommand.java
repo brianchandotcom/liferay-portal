@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.util.DDMFormValuesToPropertiesConverter;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -37,6 +39,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,9 +98,18 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			_configurationModelRetriever.getConfiguration(pid);
 
 		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter =
-				new ConfigurationModelToDDMFormConverter(
-					configurationModel, themeDisplay.getLocale());
+			configurationModelToDDMFormConverter;
+
+		ResourceBundleLoader resourceBundleLoader =
+			_resourceBundleLoaderProvider.getResourceBundleLoader(
+				configurationModel.getBundleSymbolicName());
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			themeDisplay.getLanguageId());
+
+		configurationModelToDDMFormConverter =
+			new ConfigurationModelToDDMFormConverter(
+				configurationModel, themeDisplay.getLocale(), resourceBundle);
 
 		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
@@ -209,5 +221,8 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

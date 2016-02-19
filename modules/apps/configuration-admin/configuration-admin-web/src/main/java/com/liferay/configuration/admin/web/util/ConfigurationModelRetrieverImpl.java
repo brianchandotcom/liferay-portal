@@ -164,6 +164,7 @@ public class ConfigurationModelRetrieverImpl
 		for (Configuration configuration : configurations) {
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				factoryConfigurationModel, configuration,
+				factoryConfigurationModel.getBundleSymbolicName(),
 				configuration.getBundleLocation(), false);
 
 			factoryInstances.add(curConfigurationModel);
@@ -245,14 +246,16 @@ public class ConfigurationModelRetrieverImpl
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			metaTypeInformation.getObjectClassDefinition(pid, locale),
-			getConfiguration(pid), StringPool.QUESTION, factory);
+			getConfiguration(pid), bundle.getSymbolicName(),
+			StringPool.QUESTION, factory);
 
 		if (configurationModel.isCompanyFactory()) {
 			Configuration configuration = getCompanyDefaultConfiguration(pid);
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, configurationModel.getBundleLocation(),
+				configuration, bundle.getSymbolicName(),
+				configurationModel.getBundleLocation(),
 				configurationModel.isFactory());
 		}
 

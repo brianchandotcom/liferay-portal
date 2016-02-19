@@ -136,24 +136,11 @@ for (Group group : allGroups) {
 		roleGroups.add(group);
 	}
 }
-
-if (organizations.size() == 1) {
-	UsersAdminUtil.addPortletBreadcrumbEntries(organizations.get(0), request, renderResponse);
-}
-
-if (selUser != null) {
-	if (!portletName.equals(myAccountPortletId)) {
-		PortalUtil.addPortletBreadcrumbEntry(request, selUser.getFullName(), null);
-	}
-}
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
 
 	<%
 	portletDisplay.setShowBackIcon(true);
@@ -258,6 +245,7 @@ if (selUser != null) {
 		htmlBottom="<%= htmlBottom %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS %>"
+		markupView="lexicon"
 	/>
 </aui:form>
 

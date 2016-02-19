@@ -28,15 +28,6 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationSearchContainerPrimaryKeys", (organization != null) ? organization.getParentOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 String type = BeanParamUtil.getString(organization, request, "type");
 
-if (organization != null) {
-	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-}
-else if (parentOrganizationId > 0) {
-	Organization parentOrganization = OrganizationServiceUtil.getOrganization(parentOrganizationId);
-
-	UsersAdminUtil.addPortletBreadcrumbEntries(parentOrganization, request, renderResponse);
-}
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -54,10 +45,6 @@ else {
 
 renderResponse.setTitle(headerTitle);
 %>
-
-<div id="breadcrumb">
-	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-</div>
 
 <portlet:actionURL name="/users_admin/edit_organization" var="editOrganizationActionURL" />
 
@@ -105,6 +92,7 @@ renderResponse.setTitle(headerTitle);
 		formModelBean="<%= organization %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS %>"
+		markupView="lexicon"
 	/>
 </aui:form>
 

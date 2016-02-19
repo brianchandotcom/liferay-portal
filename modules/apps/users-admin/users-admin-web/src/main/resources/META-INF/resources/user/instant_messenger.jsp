@@ -20,8 +20,6 @@
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 %>
 
-<h3><liferay-ui:message key="instant-messenger" /></h3>
-
 <c:choose>
 	<c:when test="<%= selContact != null %>">
 		<aui:model-context bean="<%= selContact %>" model="<%= Contact.class %>" />

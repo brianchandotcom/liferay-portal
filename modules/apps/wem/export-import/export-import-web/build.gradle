@@ -13,7 +13,7 @@ dependencies {
 	provided project(":apps:wem:staging:staging-lang")
 	provided project(":apps:wem:trash:trash-taglib")
 	provided project(":frontend:frontend-taglib")
-	provided project(":portal:portal-background-task-api")
+	provided project(":portal-background-task:portal-background-task-api")
 	provided project(":portal:portal-upgrade")
 }
 

@@ -1,10 +1,8 @@
 <definition>
 	<command name="viewUpgrade">
-		<execute macro="SignIn#signInViaDockbar" />
+		<execute macro="SignIn#signIn" />
 
-		<!--<execute macro="SignIn#signIn" />
-
-		<execute macro="Smoke#viewWelcomePage" />-->
+		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content" />
@@ -17,14 +15,6 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Document" />
 		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="DMPortlet#setDescriptiveView" />
 
@@ -43,9 +33,9 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version 1.0" />
 
-		<var name="key_dmDocumentSize" value="22" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)">
+			<var name="key_dmDocumentSize" value="22" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards" />
@@ -82,20 +72,23 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="Site Page" />
 		</execute>
 
 		<execute macro="SignOut#signOut" />
 
-		<execute macro="SignIn#signInViaDockbar">
+		<execute macro="SignIn#signIn">
 			<var name="userEmailAddress" value="user@liferay.com" />
 		</execute>
 
-		<!--<execute macro="Smoke#viewWelcomePage">
+		<execute macro="Smoke#viewWelcomePage">
 			<var name="userFirstName" value="Userfn" />
 			<var name="userLastName" value="Userln" />
-		</execute>-->
+		</execute>
 	</command>
 </definition>

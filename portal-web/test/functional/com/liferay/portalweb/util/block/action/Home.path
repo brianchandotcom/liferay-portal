@@ -212,6 +212,11 @@
 	<td>Page</td>
 </tr>
 <tr>
+	<td>PAGE_ACTIVE</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[contains(@class,'active')]/a[contains(.,'${key_pageName}')]</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>PAGE_WITH_QUOTES</td>
 	<td>//li[contains(@class,'add-page')]/a[contains(.,&quot;${key_pageName}&quot;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
 	<td>Page</td>

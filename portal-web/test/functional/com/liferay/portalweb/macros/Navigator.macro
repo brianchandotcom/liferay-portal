@@ -2,9 +2,13 @@
 	<command name="_gotoPage">
 		<execute macro-mobile="MobileNavigator#clickReorderButton" />
 
-		<var name="key_pageName" value="${pageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="closeSpecificWindow">

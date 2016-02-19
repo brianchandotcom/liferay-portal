@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Wiki Navigation Web
+Bundle-SymbolicName: com.liferay.wiki.navigation.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /wiki-navigation-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

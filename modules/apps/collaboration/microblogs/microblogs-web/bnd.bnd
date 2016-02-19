@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Microblogs Web
+Bundle-SymbolicName: com.liferay.microblogs.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Microblogs
+Web-ContextPath: /microblogs-web
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/collaboration/bnd.bnd

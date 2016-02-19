@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Item Selector URL Web
+Bundle-SymbolicName: com.liferay.item.selector.url.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Item Selector
+Web-ContextPath: /item-selector-url-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

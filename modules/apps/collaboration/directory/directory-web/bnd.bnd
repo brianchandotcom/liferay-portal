@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Directory Web
+Bundle-SymbolicName: com.liferay.directory.web
+Bundle-Version: 1.0.0
+-include: ../../../../../marketplace/platform/bnd.bnd

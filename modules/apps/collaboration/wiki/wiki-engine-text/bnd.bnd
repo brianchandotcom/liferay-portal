@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Wiki Engine Text
+Bundle-SymbolicName: com.liferay.wiki.engine.text
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+Web-ContextPath: /wiki-engine-text
+-include: ../../../../../marketplace/collaboration/bnd.bnd

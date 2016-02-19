@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Ratings API
+Bundle-SymbolicName: com.liferay.ratings.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ratings.page.ratings.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/collaboration/bnd.bnd

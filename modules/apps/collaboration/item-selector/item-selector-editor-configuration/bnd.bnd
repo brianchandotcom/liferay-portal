@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Item Selector Editor Configuration
+Bundle-SymbolicName: com.liferay.item.selector.editor.configuration
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Item Selector
+-include: ../../../../../marketplace/collaboration/bnd.bnd

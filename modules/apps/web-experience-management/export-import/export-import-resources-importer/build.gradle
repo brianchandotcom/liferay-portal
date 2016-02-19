@@ -11,7 +11,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:web-experience-management:journal:journal-api")
 	provided project(":apps:web-experience-management:journal:journal-service")
-	provided project(":apps:wiki:wiki-api")
+	provided project(":apps:collaboration:wiki:wiki-api")
 }
 
 liferay {

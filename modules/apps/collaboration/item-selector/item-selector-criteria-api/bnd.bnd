@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Item Selector Criteria API
+Bundle-SymbolicName: com.liferay.item.selector.criteria.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.item.selector.criteria,\
+	com.liferay.item.selector.criteria.audio.criterion,\
+	com.liferay.item.selector.criteria.file.criterion,\
+	com.liferay.item.selector.criteria.image.criterion,\
+	com.liferay.item.selector.criteria.upload.criterion,\
+	com.liferay.item.selector.criteria.url.criterion,\
+	com.liferay.item.selector.criteria.video.criterion
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Item Selector
+-include: ../../../../../marketplace/collaboration/bnd.bnd

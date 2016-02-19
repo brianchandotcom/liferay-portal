@@ -1,0 +1,30 @@
+Bundle-Name: Liferay Bookmarks Service
+Bundle-SymbolicName: com.liferay.bookmarks.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.customattributes,\
+	com.liferay.bookmarks.lar,\
+	com.liferay.bookmarks.notifications,\
+	com.liferay.bookmarks.opensearch,\
+	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.search,\
+	com.liferay.bookmarks.service.configuration.configurator,\
+	com.liferay.bookmarks.service.permission,\
+	com.liferay.bookmarks.social,\
+	com.liferay.bookmarks.trash,\
+	com.liferay.bookmarks.util,\
+	com.liferay.bookmarks.verify
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Bookmarks
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/collaboration/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

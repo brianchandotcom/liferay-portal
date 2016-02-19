@@ -12,13 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
+package com.liferay.portal.rules.engine;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Michael C. Han
  */
-public enum QueryType {
+public class RulesEngineException extends PortalException {
 
-	CUSTOM, STANDARD
+	public RulesEngineException(String msg) {
+		super(msg);
+	}
+
+	public RulesEngineException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public RulesEngineException(Throwable cause) {
+		super(cause);
+	}
 
 }

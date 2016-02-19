@@ -14,12 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
-import com.liferay.portal.kernel.bi.rules.Fact;
-import com.liferay.portal.kernel.bi.rules.Query;
-import com.liferay.portal.kernel.bi.rules.RulesEngineUtil;
-import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
+import com.liferay.portal.rules.engine.Fact;
+import com.liferay.portal.rules.engine.Query;
+import com.liferay.portal.rules.engine.RulesEngine;
+import com.liferay.portal.rules.engine.RulesResourceRetriever;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
@@ -55,7 +56,7 @@ public class DRLScriptingTaskAssignmentSelector
 
 		Query query = Query.createStandardQuery();
 
-		Map<String, ?> results = RulesEngineUtil.execute(
+		Map<String, ?> results = _rulesEngine.execute(
 			rulesResourceRetriever, facts, query);
 
 		Map<String, Serializable> resultsWorkflowContext =
@@ -67,5 +68,8 @@ public class DRLScriptingTaskAssignmentSelector
 
 		return getKaleoTaskAssignments(results);
 	}
+
+	@ServiceReference(type = RulesEngine.class)
+	private RulesEngine _rulesEngine;
 
 }

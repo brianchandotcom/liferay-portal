@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
+package com.liferay.portal.rules.engine;
 
 /**
  * @author Michael C. Han
  */
-public enum RulesLanguage {
+public class RulesEngineConstants {
 
-	DROOLS_BRL, DROOLS_CHANGE_SET, DROOLS_DECISION_TABLE,
-	DROOLS_DOMAIN_SPECIFIC, DROOLS_DOMAIN_SPECIFIC_RULE, DROOLS_PKG,
-	DROOLS_RULE_FLOW, DROOLS_RULE_LANGUAGE, DROOLS_XML_LANGUAGE
+	public static final String DESTINATION_NAME = "liferay/rules_engine";
 
 }

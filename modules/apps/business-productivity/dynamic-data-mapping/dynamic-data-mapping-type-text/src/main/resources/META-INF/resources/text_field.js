@@ -52,16 +52,16 @@ AUI.add(
 
 						TextField.superclass.render.apply(instance, arguments);
 
-						var textAreaNode = this.get('container').one('textarea');
+						if (instance.get('displayStyle') === 'multiline') {
+							var textAreaNode = instance.getInputNode();
 
-						if (!textAreaNode.autosize) {
-							var height = textAreaNode.get('scrollHeight');
+							if (!textAreaNode.autosize) {
+								textAreaNode.plug(A.Plugin.Autosize);
+								textAreaNode.height(textAreaNode.get('scrollHeight'));
+							}
 
-							textAreaNode.plug(A.Plugin.Autosize);
-							textAreaNode.height(height);
+							textAreaNode.autosize._uiAutoSize();
 						}
-
-						textAreaNode.autosize._uiAutoSize();
 					},
 
 					_renderErrorMessage: function() {

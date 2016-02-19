@@ -87,22 +87,28 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId)
 		throws PortalException {
 
-		LayoutPrototypePermissionUtil.check(
-			getPermissionChecker(), layoutPrototypeId, ActionKeys.VIEW);
+		LayoutPrototype layoutPrototype =
+			layoutPrototypeLocalService.fetchLayoutPrototype(layoutPrototypeId);
 
-		return layoutPrototypeLocalService.fetchLayoutPrototype(
-			layoutPrototypeId);
+		if (layoutPrototype != null) {
+			LayoutPrototypePermissionUtil.check(
+				getPermissionChecker(), layoutPrototypeId, ActionKeys.VIEW);
+		}
+
+		return layoutPrototype;
 	}
 
 	@Override
 	public LayoutPrototype getLayoutPrototype(long layoutPrototypeId)
 		throws PortalException {
 
+		LayoutPrototype layoutPrototype =
+			layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId);
+
 		LayoutPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutPrototypeId, ActionKeys.VIEW);
 
-		return layoutPrototypeLocalService.getLayoutPrototype(
-			layoutPrototypeId);
+		return layoutPrototype;
 	}
 
 	@Override

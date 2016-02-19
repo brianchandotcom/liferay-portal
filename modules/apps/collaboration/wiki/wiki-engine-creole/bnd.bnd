@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Wiki Engine Creole
+Bundle-SymbolicName: com.liferay.wiki.engine.creole
+Bundle-Version: 1.0.0
+Include-Resource:\
+	@../../../../../lib/portal/antlr2.jar,\
+	@../../../../../lib/portal/antlr3.jar,\
+	@../../../../../lib/portal/stringtemplate.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+Web-ContextPath: /wiki-engine-creole
+-include: ../../../../../marketplace/collaboration/bnd.bnd

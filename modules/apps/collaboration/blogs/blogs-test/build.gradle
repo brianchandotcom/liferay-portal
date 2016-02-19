@@ -1,0 +1,6 @@
+dependencies {
+	testCompile project(":apps:collaboration:blogs:blogs-service")
+	testCompile project(":apps:collaboration:blogs:blogs-web")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+}

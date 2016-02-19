@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Document Library Web
+Bundle-SymbolicName: com.liferay.document.library.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.web.asset,\
+	com.liferay.document.library.web.lar,\
+	com.liferay.document.library.web.social,\
+	com.liferay.document.library.web.webdav
+Liferay-JS-Config: /META-INF/resources/document_library/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+Web-ContextPath: /document-library-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

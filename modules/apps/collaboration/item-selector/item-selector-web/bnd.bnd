@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Item Selector Web
+Bundle-SymbolicName: com.liferay.item.selector.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.item.selector.web.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Item Selector
+-include: ../../../../../marketplace/collaboration/bnd.bnd

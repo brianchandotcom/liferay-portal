@@ -81,6 +81,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			return;
 		}
 
+		System.out.println("Deleting: " + file.getPath());
+
 		if (file.isFile()) {
 			file.delete();
 		}
@@ -210,6 +212,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		URL url = uri.toURL();
 
 		String urlString = url.toString();
+
+		if (file.exists()) {
+			return urlString;
+		}
 
 		String path = dependenciesDir.getPath();
 

@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PrefsPropsUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -40,6 +42,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
 import org.mockito.invocation.InvocationOnMock;
@@ -58,7 +61,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
  */
-@PrepareForTest({PortletLocalServiceUtil.class})
+@PrepareForTest({PortletLocalServiceUtil.class, PrefsPropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class ComboServletTest extends PowerMockito {
 
@@ -130,6 +133,16 @@ public class ComboServletTest extends PowerMockito {
 			true
 		);
 
+		mockStatic(PrefsPropsUtil.class);
+
+		when(
+			PrefsPropsUtil.getStringArray(
+				Mockito.eq(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS),
+				Mockito.anyString())
+		).thenReturn(
+			new String[]{".css", ".js"}
+		);
+
 		_mockHttpServletRequest = new MockHttpServletRequest();
 
 		_mockHttpServletRequest.setLocalAddr("localhost");
@@ -175,6 +188,24 @@ public class ComboServletTest extends PowerMockito {
 		verify(_pluginServletContext);
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
+	}
+
+	@Test
+	public void testValidateInValidModuleExtension() throws Exception {
+		boolean valid = _comboServlet.validateModuleExtension(
+			_TEST_PORTLET_ID +
+				"_INSTANCE_.js:/api/jsonws?discover=true&callback=aaa");
+
+		Assert.assertFalse(valid);
+	}
+
+	@Test
+	public void testValidateValidModuleExtension() throws Exception {
+		boolean valid = _comboServlet.validateModuleExtension(
+			_TEST_PORTLET_ID +
+				"_INSTANCE_.js:/js/javascript.js");
+
+		Assert.assertTrue(valid);
 	}
 
 	protected ServletConfig getServletConfig() {

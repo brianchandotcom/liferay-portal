@@ -1061,6 +1061,10 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = "layout.remember.maximized.window.state";
 
+	public static final String LAYOUT_SCOPE_GROUP_FINDER_ENABLED = "layout.scope.group.finder.enabled";
+
+	public static final String LAYOUT_SCOPE_GROUP_FINDER_THRESHOLD = "layout.scope.group.finder.threshold";
+
 	public static final String LAYOUT_SET_FORM_UPDATE = "layout.set.form.update";
 
 	public static final String LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.set.prototype.merge.fail.threshold";

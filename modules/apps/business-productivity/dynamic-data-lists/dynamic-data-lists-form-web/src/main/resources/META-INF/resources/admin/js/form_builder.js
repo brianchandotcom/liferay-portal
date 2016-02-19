@@ -130,6 +130,8 @@ AUI.add(
 
 						var fieldType = instance.findTypeOfField(field);
 
+						field.setPrimaryButtonLabel(Liferay.Language.get('save'));
+
 						instance.showFieldSettingsPanel(
 							field,
 							Lang.sub(
@@ -186,14 +188,7 @@ AUI.add(
 
 						instance.hideFieldsPanel();
 
-						field.set(
-							'toolbarFooter',
-							[
-								{
-									label: Liferay.Language.get('add')
-								}
-							]
-						);
+						field.setPrimaryButtonLabel(Liferay.Language.get('add'));
 
 						instance.showFieldSettingsPanel(
 							field,

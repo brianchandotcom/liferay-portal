@@ -31,20 +31,14 @@ public interface S3StoreConfiguration {
 	@Meta.AD(required = false)
 	public String accessKey();
 
-	@Meta.AD(required = true)
-	public String bucketName();
-
-	@Meta.AD(deflt = "7", required = false)
-	public int cacheDirCleanUpExpunge();
-
-	@Meta.AD(deflt = "100", required = false)
-	public int cacheDirCleanUpFrequency();
-
-	@Meta.AD(deflt = "50", required = false)
-	public int httpClientMaxConnections();
+	@Meta.AD(required = false)
+	public String secretKey();
 
 	@Meta.AD(deflt = "us-east-1", required = false)
 	public String s3Region();
+
+	@Meta.AD(required = true)
+	public String bucketName();
 
 	@Meta.AD(
 		deflt = "STANDARD", optionValues = {"REDUCED_REDUNDANCY", "STANDARD"},
@@ -52,7 +46,13 @@ public interface S3StoreConfiguration {
 	)
 	public String s3StorageClass();
 
-	@Meta.AD(required = false)
-	public String secretKey();
+	@Meta.AD(deflt = "50", required = false)
+	public int httpClientMaxConnections();
+
+	@Meta.AD(deflt = "7", required = false)
+	public int cacheDirCleanUpExpunge();
+
+	@Meta.AD(deflt = "100", required = false)
+	public int cacheDirCleanUpFrequency();
 
 }

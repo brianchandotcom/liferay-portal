@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,20 +32,43 @@ import java.sql.SQLException;
 public class UpgradeKernelPackage extends UpgradeProcess {
 
 	@Override
-	protected void doUpgrade() throws SQLException {
-		upgradeTable("Counter", "name", _CLASS_NAMES, WildcardMode.SURROUND);
-		upgradeTable(
-			"ClassName_", "value", _CLASS_NAMES, WildcardMode.SURROUND);
-		upgradeTable(
-			"ResourceBlock", "name", _CLASS_NAMES, WildcardMode.SURROUND);
-		upgradeTable(
-			"ResourcePermission", "name", _CLASS_NAMES, WildcardMode.SURROUND);
+	protected void doUpgrade() throws UpgradeException {
+		try {
+			upgradeTable(
+				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
+			upgradeTable(
+				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+			upgradeTable(
+				"ResourceAction", "name", getClassNames(),
+				WildcardMode.SURROUND);
+			upgradeTable(
+				"ResourceBlock", "name", getClassNames(),
+				WildcardMode.SURROUND);
+			upgradeTable(
+				"ResourcePermission", "name", getClassNames(),
+				WildcardMode.SURROUND);
 
-		upgradeTable(
-			"ResourceBlock", "name", _RESOURCE_NAMES, WildcardMode.LEADING);
-		upgradeTable(
-			"ResourcePermission", "name", _RESOURCE_NAMES,
-			WildcardMode.LEADING);
+			upgradeTable(
+				"ResourceAction", "name", getResourceNames(),
+				WildcardMode.LEADING);
+			upgradeTable(
+				"ResourceBlock", "name", getResourceNames(),
+				WildcardMode.LEADING);
+			upgradeTable(
+				"ResourcePermission", "name", getResourceNames(),
+				WildcardMode.LEADING);
+		}
+		catch (SQLException sqle) {
+			throw new UpgradeException(sqle);
+		}
+	}
+
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
+	}
+
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
 	}
 
 	protected void upgradeTable(
@@ -440,14 +464,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.blogs.kernel.model.BlogsStatsUser"
 		},
 		{
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			"com.liferay.bookmarks.model.BookmarksEntry"
-		},
-		{
-			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
-			"com.liferay.bookmarks.model.BookmarksFolder"
-		},
-		{
 			"com.liferay.portlet.counter.model.Counter",
 			"com.liferay.counter.kernel.model.Counter"
 		},
@@ -488,44 +504,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.document.library.kernel.model.DLSyncEvent"
 		},
 		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
-			"com.liferay.dynamic.data.lists.model.DDLRecord"
-		},
-		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet"
-		},
-		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion",
-			"com.liferay.dynamic.data.lists.model.DDLRecordVersion"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
-			"com.liferay.dynamic.data.mapping.kernel.model.DDMStructure"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.kernel.model.DDMTemplate"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMContent",
-			"com.liferay.dynamic.data.mapping.model.DDMContent"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
-			"com.liferay.dynamic.data.mapping.model.DDMStructure"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStructureLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
+			"com.liferay.portlet.documentlibrary.util.RawMetadataProcessor",
+			"com.liferay.document.library.kernel.util.RawMetadataProcessor"
 		},
 		{
 			"com.liferay.portlet.expando.model.ExpandoColumn",
@@ -542,30 +522,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		{
 			"com.liferay.portlet.expando.model.ExpandoValue",
 			"com.liferay.expando.kernel.model.ExpandoValue"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.journal.model.JournalArticle"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalArticleImage",
-			"com.liferay.journal.model.JournalArticleImage"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalArticleResource",
-			"com.liferay.journal.model.JournalArticleResource"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalContentSearch",
-			"com.liferay.journal.model.JournalContentSearch"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalFeed",
-			"com.liferay.journal.model.JournalFeed"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalFolder",
-			"com.liferay.journal.model.JournalFolder"
 		},
 		{
 			"com.liferay.portlet.messageboards.model.MBBan",
@@ -616,56 +572,12 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"
 		},
 		{
-			"com.liferay.portlet.polls.model.PollsChoice",
-			"com.liferay.polls.model.PollsChoice"
-		},
-		{
-			"com.liferay.portlet.polls.model.PollsQuestion",
-			"com.liferay.polls.model.PollsQuestion"
-		},
-		{
-			"com.liferay.portlet.polls.model.PollsVote",
-			"com.liferay.polls.model.PollsVote"
-		},
-		{
 			"com.liferay.portlet.ratings.model.RatingsEntry",
 			"com.liferay.ratings.kernel.model.RatingsEntry"
 		},
 		{
 			"com.liferay.portlet.ratings.model.RatingsStats",
 			"com.liferay.ratings.kernel.model.RatingsStats"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingCart",
-			"com.liferay.shopping.model.ShoppingCart"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingCategory",
-			"com.liferay.shopping.model.ShoppingCategory"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingCoupon",
-			"com.liferay.shopping.model.ShoppingCoupon"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingItem",
-			"com.liferay.shopping.model.ShoppingItem"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingItemField",
-			"com.liferay.shopping.model.ShoppingItemField"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingItemPrice",
-			"com.liferay.shopping.model.ShoppingItemPrice"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingOrder",
-			"com.liferay.shopping.model.ShoppingOrder"
-		},
-		{
-			"com.liferay.portlet.shopping.model.ShoppingOrderItem",
-			"com.liferay.shopping.model.ShoppingOrderItem"
 		},
 		{
 			"com.liferay.portlet.social.model.SocialActivity",
@@ -704,18 +616,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.trash.kernel.model.TrashVersion"
 		},
 		{
-			"com.liferay.portlet.wiki.model.WikiNode",
-			"com.liferay.wiki.model.WikiNode"
-		},
-		{
-			"com.liferay.portlet.wiki.model.WikiPage",
-			"com.liferay.wiki.model.WikiPage"
-		},
-		{
-			"com.liferay.portlet.wiki.model.WikiPageResource",
-			"com.liferay.wiki.model.WikiPageResource"
-		},
-		{
 			"com.liferay.socialnetworking.model.MeetupsEntry",
 			"com.liferay.social.networking.model.MeetupsEntry"
 		},
@@ -737,37 +637,11 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.portlet.blogs", "com.liferay.blogs"
 		},
 		{
-			"com.liferay.portlet.bookmarks", "com.liferay.bookmarks"
-		},
-		{
-			"com.liferay.portlet.calendar", "com.liferay.calendar"
-		},
-		{
 			"com.liferay.portlet.documentlibrary",
 			"com.liferay.document.library"
 		},
 		{
-			"com.liferay.portlet.dynamicdatalists",
-			"com.liferay.dynamic.data.lists"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping",
-			"com.liferay.dynamic.data.mapping"
-		},
-		{
-			"com.liferay.portlet.journal", "com.liferay.journal"
-		},
-		{
 			"com.liferay.portlet.messageboards", "com.liferay.message.boards"
-		},
-		{
-			"com.liferay.portlet.polls", "com.liferay.polls"
-		},
-		{
-			"com.liferay.portlet.shopping", "com.liferay.shopping"
-		},
-		{
-			"com.liferay.portlet.wiki", "com.liferay.wiki"
 		}
 	};
 

@@ -14,95 +14,66 @@
 
 package com.liferay.shopping.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependency;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
-import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
-import com.liferay.shopping.model.ShoppingCart;
-import com.liferay.shopping.model.ShoppingCartItem;
-import com.liferay.shopping.model.ShoppingCategory;
-import com.liferay.shopping.model.ShoppingCoupon;
-import com.liferay.shopping.model.ShoppingItem;
-import com.liferay.shopping.model.ShoppingItemField;
-import com.liferay.shopping.model.ShoppingItemPrice;
-import com.liferay.shopping.model.ShoppingOrder;
-import com.liferay.shopping.model.ShoppingOrderItem;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
  * @author Philip Jones
  */
-public class UpgradeClassNames extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		List<ClassNameDependency> classNameDependencies =
-			Collections.singletonList(
-				(ClassNameDependency)
-					(new ResourcePermissionClassNameDependency()));
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.shopping", "com.liferay.shopping",
-				classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingCart",
-			ShoppingCart.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingCartItem",
-			ShoppingCartItem.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingCategory",
-			ShoppingCategory.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingCoupon",
-			ShoppingCoupon.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingItem",
-			ShoppingItem.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingItemField",
-			ShoppingItemField.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingItemPrice",
-			ShoppingItemPrice.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingOrder",
-			ShoppingOrder.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingOrderItem",
-			ShoppingOrderItem.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
+
+	@Override
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
+	}
+
+	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.shopping.model.ShoppingCart",
+			"com.liferay.shopping.model.ShoppingCart"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingCartItem",
+			"com.liferay.shopping.model.ShoppingCartItem"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingCategory",
+			"com.liferay.shopping.model.ShoppingCategory"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingCoupon",
+			"com.liferay.shopping.model.ShoppingCoupon"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingItem",
+			"com.liferay.shopping.model.ShoppingItem"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingItemField",
+			"com.liferay.shopping.model.ShoppingItemField"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingItemPrice",
+			"com.liferay.shopping.model.ShoppingItemPrice"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingOrder",
+			"com.liferay.shopping.model.ShoppingOrder"
+		},
+		{
+			"com.liferay.portlet.shopping.model.ShoppingOrderItem",
+			"com.liferay.shopping.model.ShoppingOrderItem"
+		}
+	};
+
+	private static final String[][] _RESOURCE_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.shopping", "com.liferay.shopping"
+		}
+	};
 
 }

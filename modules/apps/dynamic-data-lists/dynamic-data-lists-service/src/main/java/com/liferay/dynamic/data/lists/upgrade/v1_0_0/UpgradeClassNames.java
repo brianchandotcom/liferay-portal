@@ -14,77 +14,43 @@
 
 package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
 
-import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependency;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
-import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
  * @author Marcellus Tavares
  */
-public class UpgradeClassNames extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		List<ClassNameDependency> classNameDependencies =
-			Collections.singletonList(
-				(ClassNameDependency)(
-					new ResourcePermissionClassNameDependency()));
-
-		upgradeDDLClassName(classNameDependencies);
-		upgradeDDLRecordClassName(classNameDependencies);
-		upgradeDDLRecordSetClassName(classNameDependencies);
-		upgradeDDLRecordVersionClassName(classNameDependencies);
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
 
-	protected void upgradeDDLClassName(
-		List<ClassNameDependency> classNameDependencies) {
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatalists",
-				"com.liferay.dynamic.data.lists", classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
+	@Override
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
 	}
 
-	protected void upgradeDDLRecordClassName(
-		List<ClassNameDependency> classNameDependencies) {
+	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.list.model.DDLRecordSet"
+		},
+		{
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion",
+			"com.liferay.dynamic.data.list.model.DDLRecordVersion"
+		},
+		{
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
+			"com.liferay.dynamic.data.list.model.DDLRecord"
+		}
+	};
 
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
-				DDLRecord.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-	}
-
-	protected void upgradeDDLRecordSetClassName(
-		List<ClassNameDependency> classNameDependencies) {
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-				DDLRecordSet.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-	}
-
-	protected void upgradeDDLRecordVersionClassName(
-		List<ClassNameDependency> classNameDependencies) {
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion",
-				DDLRecordVersion.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-	}
+	private static final String[][] _RESOURCE_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.dynamicdatalists",
+			"com.liferay.dynamic.data.lists"
+		}
+	};
 
 }

@@ -14,53 +14,42 @@
 
 package com.liferay.polls.upgrade.v1_0_0;
 
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.PollsVote;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependency;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
-import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
  * @author Miguel Pastor
  */
-public class UpgradeClassNames extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		List<ClassNameDependency> classNameDependencies =
-			Collections.singletonList(
-				(ClassNameDependency)
-					(new ResourcePermissionClassNameDependency()));
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.polls", "com.liferay.polls",
-				classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.polls.model.PollsChoice",
-			PollsChoice.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.polls.model.PollsQuestion",
-			PollsQuestion.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.polls.model.PollsVote",
-			PollsVote.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
+
+	@Override
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
+	}
+
+	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.polls.model.PollsChoice",
+			"com.liferay.polls.model.PollsChoice"
+		},
+		{
+			"com.liferay.portlet.polls.model.PollsQuestion",
+			"com.liferay.polls.model.PollsQuestion"
+		},
+		{
+			"com.liferay.portlet.polls.model.PollsVote",
+			"com.liferay.polls.model.PollsVote"
+		}
+	};
+
+	private static final String[][] _RESOURCE_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.polls", "com.liferay.polls"
+		}
+	};
 
 }

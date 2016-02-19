@@ -14,53 +14,42 @@
 
 package com.liferay.wiki.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependency;
-import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
-import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageResource;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
  * @author Miguel Pastor
  */
-public class UpgradeClassNames extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		List<ClassNameDependency> classNameDependencies =
-			Collections.singletonList(
-				(ClassNameDependency)
-					(new ResourcePermissionClassNameDependency()));
-
-		ClassNameDependencyUpgrader classNameDependencyUpgrader =
-			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.wiki", "com.liferay.wiki",
-				classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.wiki.model.WikiNode", WikiNode.class.getName(),
-			classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.wiki.model.WikiPage", WikiPage.class.getName(),
-			classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.wiki.model.WikiPageResource",
-			WikiPageResource.class.getName(), classNameDependencies);
-
-		classNameDependencyUpgrader.upgrade();
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
+
+	@Override
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
+	}
+
+	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.wiki.model.WikiNode",
+			"com.liferay.wiki.model.WikiNode"
+		},
+		{
+			"com.liferay.portlet.wiki.model.WikiPageResource",
+			"com.liferay.wiki.model.WikiPageResource"
+		},
+		{
+			"com.liferay.portlet.wiki.model.WikiPage",
+			"com.liferay.wiki.model.WikiPage"
+		}
+	};
+
+	private static final String[][] _RESOURCE_NAMES = new String[][] {
+		{
+			"com.liferay.portlet.wiki", "com.liferay.wiki"
+		}
+	};
 
 }

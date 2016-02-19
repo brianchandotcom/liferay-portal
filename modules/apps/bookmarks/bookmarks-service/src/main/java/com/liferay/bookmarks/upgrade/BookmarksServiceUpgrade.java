@@ -35,7 +35,7 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.bookmarks.service", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeClassNames(),
+			new UpgradeClassNames(), new UpgradePortletId(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory));
 	}

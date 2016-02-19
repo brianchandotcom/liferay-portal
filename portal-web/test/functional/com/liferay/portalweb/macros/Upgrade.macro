@@ -1,38 +1,67 @@
 <definition>
 	<command name="viewUpgrade">
-		<execute macro="SignIn#signIn" />
+		<execute macro="SignIn#signInViaDockbar" />
 
-		<execute macro="Smoke#viewWelcomePage" />
+		<!--<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />-->
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewPGViaWCD">
+		<!--<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
-		</execute>
+		</execute>-->
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Document" />
 		</execute>
 
-		<execute macro="DMDocument#viewPGDetails">
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<!--<execute macro="DMDocument#viewPGDetails">
 			<var name="dmDocumentSize" value="22KB" />
 			<var name="dmDocumentTitle" value="Document1" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
 			<var name="workflow" value="Approved" />
+		</execute>-->
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version 1.0" />
+
+		<var name="key_dmDocumentSize" value="22" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="Message Boards Body" />
 			<var name="threadSubject" value="Message Boards Subject" />
-			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -60,13 +89,13 @@
 
 		<execute macro="SignOut#signOut" />
 
-		<execute macro="SignIn#signIn">
+		<execute macro="SignIn#signInViaDockbar">
 			<var name="userEmailAddress" value="user@liferay.com" />
 		</execute>
 
-		<execute macro="Smoke#viewWelcomePage">
+		<!--<execute macro="Smoke#viewWelcomePage">
 			<var name="userFirstName" value="Userfn" />
 			<var name="userLastName" value="Userln" />
-		</execute>
+		</execute>-->
 	</command>
 </definition>

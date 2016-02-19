@@ -225,9 +225,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					Date completionDate = backgroundTask.getCompletionDate();
 					%>
 
-					<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
+					<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+						<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

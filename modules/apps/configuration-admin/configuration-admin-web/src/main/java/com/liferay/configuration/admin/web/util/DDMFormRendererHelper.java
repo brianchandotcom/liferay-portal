@@ -23,10 +23,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -39,13 +42,14 @@ public class DDMFormRendererHelper {
 
 	public DDMFormRendererHelper(
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		ConfigurationModel configurationModel,
-		DDMFormRenderer ddmFormRenderer) {
+		ConfigurationModel configurationModel, DDMFormRenderer ddmFormRenderer,
+		ResourceBundleLoaderProvider resourceBundleLoaderProvider) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_configurationModel = configurationModel;
 		_ddmFormRenderer = ddmFormRenderer;
+		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
 	}
 
 	public String getDDMFormHTML() throws PortletException {
@@ -81,19 +85,39 @@ public class DDMFormRendererHelper {
 	}
 
 	protected DDMForm getDDMForm() {
+		String bundleSymbolicName = _configurationModel.getBundleSymbolicName();
+
+		ResourceBundleLoader resourceBundleLoader =
+			_resourceBundleLoaderProvider.getResourceBundleLoader(
+				bundleSymbolicName);
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.toLanguageId(getLocale()));
+
 		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter =
-				new ConfigurationModelToDDMFormConverter(
-					_configurationModel, getLocale());
+			configurationModelToDDMFormConverter;
+
+		configurationModelToDDMFormConverter =
+			new ConfigurationModelToDDMFormConverter(
+				_configurationModel, getLocale(), resourceBundle);
 
 		return configurationModelToDDMFormConverter.getDDMForm();
 	}
 
 	protected DDMFormValues getDDMFormValues(DDMForm ddmForm) {
+		String bundleSymbolicName = _configurationModel.getBundleSymbolicName();
+
+		ResourceBundleLoader resourceBundleLoader =
+			_resourceBundleLoaderProvider.getResourceBundleLoader(
+				bundleSymbolicName);
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.toLanguageId(getLocale()));
+
 		ConfigurationModelToDDMFormValuesConverter
 			configurationModelToDDMFormValuesConverter =
 				new ConfigurationModelToDDMFormValuesConverter(
-					_configurationModel, ddmForm, getLocale());
+					_configurationModel, ddmForm, getLocale(), resourceBundle);
 
 		return configurationModelToDDMFormValuesConverter.getDDMFormValues();
 	}
@@ -112,5 +136,6 @@ public class DDMFormRendererHelper {
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
+	private final ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

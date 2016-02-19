@@ -19,10 +19,13 @@ import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.util.DDMFormRendererHelper;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -79,22 +82,35 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, configurationModel.getBundleLocation(),
+				configuration, configurationModel.getBundleSymbolicName(),
+				configurationModel.getBundleLocation(),
 				configurationModel.isFactory());
 		}
 
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_MODEL, configurationModel);
+		if (configurationModel != null) {
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
+				configurationModel);
 
-		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
-			renderRequest, renderResponse, configurationModel,
-			_ddmFormRenderer);
+			ResourceBundleLoader resourceBundleLoader =
+				_resourceBundleLoaderProvider.getResourceBundleLoader(
+					configurationModel.getBundleSymbolicName());
 
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
-			ddmFormRendererHelper.getDDMFormHTML());
+			DDMFormRendererHelper ddmFormRendererHelper =
+				new DDMFormRendererHelper(
+					renderRequest, renderResponse, configurationModel,
+					_ddmFormRenderer, _resourceBundleLoaderProvider);
 
-		return "/edit_configuration.jsp";
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
+				ddmFormRendererHelper.getDDMFormHTML());
+
+			return "/edit_configuration.jsp";
+		}
+
+		SessionErrors.add(renderRequest, "the-entry-could-not-be-found");
+
+		return "/error.jsp";
 	}
 
 	@Reference
@@ -102,5 +118,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

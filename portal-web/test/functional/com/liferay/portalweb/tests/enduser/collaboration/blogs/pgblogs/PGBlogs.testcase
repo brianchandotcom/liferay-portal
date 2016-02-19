@@ -500,16 +500,6 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsPortletDuplicate" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addDuplicatePG">
-			<var name="portletName" value="Blogs" />
-		</execute>
-	</command>
-
 	<command name="AddPortletToOrganizationSitePublicPage" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Organization" />

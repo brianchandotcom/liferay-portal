@@ -123,40 +123,34 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-
-		<var name="key_entryContent" value="${entryContent}" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Copy" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" />
 
 		<if>
-			<equals arg1="virtualHosts" arg2="true" />
+			<equals arg1="${virtualHosts}" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="pageName" value="${pageName}" />
-					<var name="virtualHostsURL" value="${virtualHost1}" />
+					<var name="pageName" value="Blogs Page" />
+					<var name="siteName" value="${siteName}" />
+					<var name="siteURL" value="true" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="pageName" value="${pageName}" />
+					<var name="pageName" value="Blogs Page" />
 				</execute>
 			</else>
 		</if>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
 
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 

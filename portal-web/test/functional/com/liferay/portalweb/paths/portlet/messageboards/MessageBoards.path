@@ -392,6 +392,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_LIST_STATUS</td>
+	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_threadStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_LIST_THREAD</td>
 	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_threadSubject}')]</td>
 	<td></td>

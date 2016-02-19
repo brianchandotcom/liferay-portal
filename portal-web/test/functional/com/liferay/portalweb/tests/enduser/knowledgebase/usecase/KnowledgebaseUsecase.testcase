@@ -1614,6 +1614,10 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>

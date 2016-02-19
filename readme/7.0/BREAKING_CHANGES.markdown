@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `d756263`.*
+*This document has been reviewed through commit `b6b7772`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3867,7 +3867,7 @@ in the OSGi container.
 
 ---------------------------------------
 
-###
+### User Operation and Importer/Exporter Classes and Utilities Have Been Moved or Removed From portal-kernel  
 - **Date:** 2016-Feb-17
 - **JIRA Ticket:** LPS-63205
 
@@ -3875,54 +3875,52 @@ in the OSGi container.
 
 - `com.liferay.portal.kernel.security.exportimport.UserImporter`,
 `com.liferay.portal.kernel.security.exportimport.UserExporter`,
-and `com.liferay.portal.kernel.security.exportimport.UserOperation`,  have been
+and `com.liferay.portal.kernel.security.exportimport.UserOperation`  have been
 moved from portal-kernel to the portal-security-export-import-api module.
 
-- `com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
+- `com.liferay.portal.kernel.security.exportimport.UserImporterUtil` and
 `com.liferay.portal.kernel.security.exportimport.UserExporterUtil` have been
 removed with no replacement.
 
 #### Who is affected?
 
 - All implementations of
-`com.liferay.portal.kernel.security.exportimport.UserImporter`,
-`com.liferay.portal.kernel.security.exportimport.UserExporter`,
+`com.liferay.portal.kernel.security.exportimport.UserImporter` or
+`com.liferay.portal.kernel.security.exportimport.UserExporter`
 are affected.
-- All code calling using
+
+- All code that uses
 `com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
 `com.liferay.portal.kernel.security.exportimport.UserExporterUtil`,
-`com.liferay.portal.kernel.security.exportimport.UserImporter`,
-`com.liferay.portal.kernel.security.exportimport.UserExporter`,
-are affected.
+`com.liferay.portal.kernel.security.exportimport.UserImporter`, or
+`com.liferay.portal.kernel.security.exportimport.UserExporter`
+is affected.
 
 #### How should I update my code?
 
 If you are in an OSGi module, you can simply inject the UserImporter or
 UserExporter references
 
-`
-@Reference
-private UserExporter_userExporter;
+    @Reference
+    private UserExporter_userExporter;
 
-@Reference
-private UserImporter _userImporter;
-`
+    @Reference
+    private UserImporter _userImporter;
 
 If you are in a legacy WAR or WAB, you will need a snippet like:
 
-`
-Bundle bundle = FrameworkUtil.getBundle(getClass());
+    Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-BundleContext bundleContext = bundle.getBundleContext();
+    BundleContext bundleContext = bundle.getBundleContext();
 
-ServiceReference<UserImporter> serviceReference =
-	bundleContext.getServiceReference(UserImporter.class);
+    ServiceReference<UserImporter> serviceReference =
+        bundleContext.getServiceReference(UserImporter.class);
 
-UserImporter userImporter = bundleContext.getService(serviceReference);
-`
+    UserImporter userImporter = bundleContext.getService(serviceReference);
 
 #### Why was this change made?
 
 The change was made to improve modularity of the user import/export subsystem in
 the product.
+
 ---------------------------------------

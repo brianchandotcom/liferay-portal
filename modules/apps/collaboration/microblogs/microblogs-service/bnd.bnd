@@ -1,0 +1,20 @@
+Bundle-Name: Liferay Microblogs Service
+Bundle-SymbolicName: com.liferay.microblogs.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.microblogs.service.permission,\
+	com.liferay.microblogs.util,\
+	com.liferay.microblogs.util.comparator
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Microblogs
+Liferay-Require-SchemaVersion: 1.0.2
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/collaboration/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Social Networking API
+Bundle-SymbolicName: com.liferay.social.networking.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.social.networking.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+-include: ../../../../../marketplace/collaboration/bnd.bnd

@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Wiki Engine MediaWiki
+Bundle-SymbolicName: com.liferay.wiki.engine.mediawiki
+Bundle-Version: 1.0.0
+Import-Package:\
+	!net.sf.ehcache.*,\
+	\
+	!org.apache.commons.dbcp.*,\
+	!org.apache.commons.pool.impl.*,\
+	\
+	!org.incava.util.diff.*,\
+	*
+Include-Resource: @lib/org.jamwiki.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+Web-ContextPath: /wiki-engine-mediawiki
+-include: ../../../../../marketplace/collaboration/bnd.bnd

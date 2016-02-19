@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Wiki Test
+Bundle-SymbolicName: com.liferay.wiki.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.junit.experimental.theories,\
+	*
+Include-Resource: test-classes/integration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+-include: ../../../../../marketplace/collaboration/bnd.bnd

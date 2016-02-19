@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Comment Ratings Definition
+Bundle-SymbolicName: com.liferay.comment.ratings.definition
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Comments
+-include: ../../../../../marketplace/collaboration/bnd.bnd

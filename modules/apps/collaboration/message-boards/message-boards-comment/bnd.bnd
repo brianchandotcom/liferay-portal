@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Message Boards Comment
+Bundle-SymbolicName: com.liferay.message.boards.comment
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Message Boards
+-include: ../../../../../marketplace/collaboration/bnd.bnd

@@ -13,7 +13,7 @@ dependencies {
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	provided project(":apps:item-selector:item-selector-api")
+	provided project(":apps:collaboration:item-selector:item-selector-api")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
 	provided project(":apps:web-experience-management:journal:journal-api")
 	provided project(":apps:web-experience-management:journal:journal-lang")

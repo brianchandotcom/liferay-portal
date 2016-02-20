@@ -68,8 +68,8 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		gitHubJobMessageUtilTest.dependenciesDir = dependenciesDir;
 
-		int jobCount = 0;
-		int passCount = 0;
+		int jobTotalCount = 0;
+		int jobSuccessCount = 0;
 		StringBuilder sb = new StringBuilder();
 
 		String content = JenkinsResultsParserUtil.toString(
@@ -89,7 +89,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 				JenkinsResultsParserUtil.getLocalURL(urlString + "/api/json"));
 
 			gitHubJobMessageUtilTest.downloadSample(
-				sampleDir.getName() + "/" + "job-" + jobCount,
+				sampleDir.getName() + "/" + "job-" + jobTotalCount,
 				jobNameMatcher.group("buildNumber"),
 				jobNameMatcher.group("jobName"),
 				jobNameMatcher.group("hostName"));
@@ -97,7 +97,8 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			File jobExpectedMessageFile = getJobExpectedMessageFile(
 				new File(
 					sampleDir,
-					"job-" + jobCount + "-" + jobNameMatcher.group("jobName")));
+					"job-" + jobTotalCount + "-" +
+						jobNameMatcher.group("jobName")));
 
 			if (sb.length() > 0) {
 				sb.append(" ");
@@ -108,16 +109,17 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			String result = jsonObject.getString("result");
 
 			if (result.equals("SUCCESS")) {
-				passCount++;
+				jobSuccessCount++;
 			}
 
-			jobCount++;
+			jobTotalCount++;
 		}
 
 		properties.setProperty(
-			"top.level.fail.count", String.valueOf(jobCount - passCount));
+			"top.level.fail.count",
+			String.valueOf(jobTotalCount - jobSuccessCount));
 		properties.setProperty(
-			"top.level.pass.count", String.valueOf(passCount));
+			"top.level.pass.count", String.valueOf(jobSuccessCount));
 		properties.setProperty("top.level.report.files", sb.toString());
 	}
 

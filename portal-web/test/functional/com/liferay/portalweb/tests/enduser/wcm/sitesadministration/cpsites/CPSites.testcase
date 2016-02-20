@@ -57,9 +57,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#viewChildChildCP">
-			<var name="childChildSiteName" value="Child Child SiteName" />
-			<var name="childSiteName" value="Child SiteName" />
+		<execute macro="Site#viewChildCP">
+			<var name="childSiteName" value="Child Child SiteName" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 	</command>
 
@@ -580,9 +580,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#viewChildChildCP">
-			<var name="childChildSiteName" value="Child ChildSiteName" />
-			<var name="childSiteName" value="Child SiteName" />
+		<execute macro="Site#viewChildCP">
+			<var name="childSiteName" value="Child ChildSiteName" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

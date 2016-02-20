@@ -31,7 +31,7 @@ if (row != null) {
 	userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 }
 else {
-	group = siteAdminDisplayContext.getGroup();
+	group = (Group)request.getAttribute("info_panel.jsp-group");
 
 	List<String> organizationNames = SitesUtil.getOrganizationNames(group, user);
 
@@ -46,6 +46,16 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcPath" value="/edit_site.jsp" />
+		<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		label="<%= true %>"
+		message="edit"
+		url="<%= editURL %>"
+	/>
 
 	<%
 	PortletURL siteAdministrationURL = siteAdminDisplayContext.getSiteAdministrationPortletURL(group);
@@ -67,7 +77,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 		<c:if test="<%= (childSitesCount > 0) && (row != null) %>">
 			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</liferay-portlet:renderURL>
 

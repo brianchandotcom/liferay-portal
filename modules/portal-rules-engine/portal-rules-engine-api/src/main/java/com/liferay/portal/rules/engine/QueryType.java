@@ -12,29 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bi.rules;
-
-import java.io.Serializable;
+package com.liferay.portal.rules.engine;
 
 /**
  * @author Michael C. Han
  */
-public class Fact<T> implements Serializable {
+public enum QueryType {
 
-	public Fact(String identifier, T object) {
-		_identifier = identifier;
-		_factObject = object;
-	}
-
-	public T getFactObject() {
-		return _factObject;
-	}
-
-	public String getIdentifier() {
-		return _identifier;
-	}
-
-	private final T _factObject;
-	private final String _identifier;
+	CUSTOM, STANDARD
 
 }

@@ -112,6 +112,14 @@ gradle.beforeProject {
 				}
 			}
 		}
+
+		if (System.getenv("JENKINS_HOME")) {
+			pluginManager.withPlugin("com.liferay.cache") {
+				cache {
+					forcedCache = true
+				}
+			}
+		}
 	}
 }
 

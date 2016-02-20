@@ -172,9 +172,6 @@
 				<entry key="beanshell">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.ScriptingLanguagesTaskAssignmentSelector" />
 				</entry>
-				<entry key="drl">
-					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.DRLScriptingTaskAssignmentSelector" />
-				</entry>
 				<entry key="groovy">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.assignment.ScriptingLanguagesTaskAssignmentSelector" />
 				</entry>
@@ -198,9 +195,6 @@
 			<util:map>
 				<entry key="beanshell">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.condition.ScriptingConditionEvaluator" />
-				</entry>
-				<entry key="drl">
-					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.condition.DRLConditionEvaluator" />
 				</entry>
 				<entry key="groovy">
 					<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.condition.ScriptingConditionEvaluator" />
@@ -326,9 +320,6 @@
 					<util:map>
 						<entry key="beanshell">
 							<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient.script.ScriptingNotificationRecipientEvaluator" />
-						</entry>
-						<entry key="drl">
-							<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient.script.DRLNotificationRecipientEvaluator" />
 						</entry>
 						<entry key="groovy">
 							<bean class="com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient.script.ScriptingNotificationRecipientEvaluator" />

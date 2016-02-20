@@ -29,18 +29,18 @@ if (classNameId != 0) {
 
 long classPK = ParamUtil.getLong(request, "classPK");
 
-TrashEntry entry = null;
+TrashEntry trashEntry = null;
 
 if (trashEntryId > 0) {
-	entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
+	trashEntry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
 }
 else if (Validator.isNotNull(className) && (classPK > 0)) {
-	entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
+	trashEntry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
 }
 
-if (entry != null) {
-	className = entry.getClassName();
-	classPK = entry.getClassPK();
+if (trashEntry != null) {
+	className = trashEntry.getClassName();
+	classPK = trashEntry.getClassPK();
 }
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);

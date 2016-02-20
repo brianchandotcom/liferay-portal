@@ -59,14 +59,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 				<liferay-ui:message key="tags" />
 			</label>
 
-			<liferay-ui:asset-tags-selector
-				addCallback="onAddTag"
-				allowAddEntry="<%= false %>"
-				curTags="<%= StringUtil.merge(mergeTagNames) %>"
-				hiddenInput="mergeTagNames"
-				id="assetTagsSelector"
-				removeCallback="onRemoveTag"
-			/>
+			<div class="button-holder">
+				<liferay-ui:asset-tags-selector
+					addCallback="onAddTag"
+					allowAddEntry="<%= false %>"
+					curTags="<%= StringUtil.merge(mergeTagNames) %>"
+					hiddenInput="mergeTagNames"
+					id="assetTagsSelector"
+					removeCallback="onRemoveTag"
+				/>
+			</div>
 
 			<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 

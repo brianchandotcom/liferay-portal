@@ -71,7 +71,7 @@ rulesSearchContainer.setResults(rules);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(LanguageUtil.format(resourceBundle, "classification-rules-for-x", ruleGroup.getName(locale), false));
+renderResponse.setTitle(ruleGroup.getName(locale));
 %>
 
 <aui:nav-bar markupView="lexicon">

@@ -16,7 +16,6 @@
 
 <liferay-ui:search-container-column-text
 	cssClass="text-strong"
-	href="<%= rowURL %>"
 	name="name"
 	value="<%= rule.getName(locale) %>"
 />

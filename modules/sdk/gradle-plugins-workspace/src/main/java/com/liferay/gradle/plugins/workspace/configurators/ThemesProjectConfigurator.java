@@ -46,6 +46,8 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
@@ -83,6 +85,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			project, workspaceExtension);
 
 		addTaskDeploy(project);
+		configureArtifacts(project);
 		configureTaskAssemble(project);
 		configureTaskClean(project);
 		configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
@@ -182,6 +185,18 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	protected void configureArtifacts(Project project) {
+		ArtifactHandler artifactHandler = project.getArtifacts();
+
+		String projectName = project.getName();
+
+		String outputFileName = "dist/" + projectName + ".war";
+
+		File outputFile = new File(outputFileName);
+
+		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
 	}
 
 	protected void configureTaskAssemble(Project project) {

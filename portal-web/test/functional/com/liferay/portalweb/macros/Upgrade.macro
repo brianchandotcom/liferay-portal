@@ -30,12 +30,12 @@
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+		<!--<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version 1.0" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)">
 			<var name="key_dmDocumentSize" value="22" />
-		</execute>
+		</execute>-->
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards" />

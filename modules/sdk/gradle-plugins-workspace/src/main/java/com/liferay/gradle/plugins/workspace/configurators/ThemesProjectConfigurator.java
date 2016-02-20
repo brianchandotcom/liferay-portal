@@ -164,6 +164,18 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		return task;
 	}
 
+	protected void configureArtifacts(Project project) {
+		String projectName = project.getName();
+
+		String outputFileName = "dist/" + projectName + ".war";
+
+		File outputFile = new File(outputFileName);
+
+		ArtifactHandler artifacts = project.getArtifacts();
+
+		artifacts.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
+	}
+
 	protected void configureRootTaskDistBundle(
 		final Project project, String rootTaskName) {
 
@@ -185,18 +197,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
-	}
-
-	protected void configureArtifacts(Project project) {
-		ArtifactHandler artifactHandler = project.getArtifacts();
-
-		String projectName = project.getName();
-
-		String outputFileName = "dist/" + projectName + ".war";
-
-		File outputFile = new File(outputFileName);
-
-		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
 	}
 
 	protected void configureTaskAssemble(Project project) {

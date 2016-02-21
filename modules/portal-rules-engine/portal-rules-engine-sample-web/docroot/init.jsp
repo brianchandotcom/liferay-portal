@@ -28,11 +28,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.portal.kernel.bi.rules.Fact" %><%@
-page import="com.liferay.portal.kernel.bi.rules.Query" %><%@
-page import="com.liferay.portal.kernel.bi.rules.RulesEngineUtil" %><%@
-page import="com.liferay.portal.kernel.bi.rules.RulesLanguage" %><%@
-page import="com.liferay.portal.kernel.bi.rules.RulesResourceRetriever" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.resource.StringResourceRetriever" %><%@
@@ -53,15 +48,20 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.rules.engine.Fact" %><%@
+page import="com.liferay.portal.rules.engine.Query" %><%@
+page import="com.liferay.portal.rules.engine.RulesEngineUtil" %><%@
+page import="com.liferay.portal.rules.engine.RulesLanguage" %><%@
+page import="com.liferay.portal.rules.engine.RulesResourceRetriever" %><%@
 page import="com.liferay.util.portlet.PortletProps" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String instanceId = portletDisplay.getInstanceId();

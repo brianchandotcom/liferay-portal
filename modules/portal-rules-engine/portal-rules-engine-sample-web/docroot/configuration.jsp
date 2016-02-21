@@ -23,7 +23,7 @@ String userCustomAttributeNamesValue = ParamUtil.getString(request, "userCustomA
 long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classNameIds", StringUtil.merge(classNameIds)), 0L);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -35,7 +35,7 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 	<liferay-ui:error key="rulesEngineException" message="please-check-the-syntax-of-your-rules" />
 
 	<aui:fieldset>
-		<aui:input name="domainName" value="<%= domainNameValue %>" wrapperCssClass="lfr-input-text-container"  />
+		<aui:input name="domainName" value="<%= domainNameValue %>" wrapperCssClass="lfr-input-text-container" />
 
 		<aui:input name="rules" style="height: 250px; width: 100%;" type="textarea" value="<%= rulesValue %>" wrap="off" wrapperCssClass="lfr-textarea-container" />
 

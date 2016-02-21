@@ -14,10 +14,6 @@
 
 package com.liferay.sampledrools.action;
 
-import com.liferay.portal.kernel.bi.rules.RulesEngineException;
-import com.liferay.portal.kernel.bi.rules.RulesEngineUtil;
-import com.liferay.portal.kernel.bi.rules.RulesLanguage;
-import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -27,10 +23,13 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.rules.engine.RulesEngineException;
+import com.liferay.portal.rules.engine.RulesEngineUtil;
+import com.liferay.portal.rules.engine.RulesLanguage;
+import com.liferay.portal.rules.engine.RulesResourceRetriever;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -98,9 +97,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					String.valueOf(RulesLanguage.DROOLS_RULE_LANGUAGE));
 
 			try {
-				RulesEngineUtil.update(
-					domainName, rulesResourceRetriever,
-					PortalClassLoaderUtil.getClassLoader());
+				RulesEngineUtil.update(domainName, rulesResourceRetriever);
 			}
 			catch (RulesEngineException ree) {
 				_log.error(ree, ree);
@@ -119,7 +116,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationActionImpl.class);
 
 }

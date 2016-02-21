@@ -90,7 +90,7 @@ public class PortletStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId(), "exported");
 
 			missingReferences = TransactionInvokerUtil.invoke(
-				transactionAttribute,
+				transactionConfig,
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId(),
 					exportImportConfiguration, file));

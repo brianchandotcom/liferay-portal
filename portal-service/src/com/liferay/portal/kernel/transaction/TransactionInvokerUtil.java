@@ -22,10 +22,10 @@ import java.util.concurrent.Callable;
 public class TransactionInvokerUtil {
 
 	public static <T> T invoke(
-			TransactionAttribute transactionAttribute, Callable<T> callable)
+			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 
-		return _transactionInvoker.invoke(transactionAttribute, callable);
+		return _transactionInvoker.invoke(transactionConfig, callable);
 	}
 
 	public void setTransactionInvoker(TransactionInvoker transactionInvoker) {

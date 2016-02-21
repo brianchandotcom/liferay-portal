@@ -22,7 +22,7 @@ import java.util.concurrent.Callable;
 public interface TransactionInvoker {
 
 	public <T> T invoke(
-			TransactionAttribute transactionAttribute, Callable<T> callable)
+			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable;
 
 }

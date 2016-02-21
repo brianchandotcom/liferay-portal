@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionConfig.Builder;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,17 +40,16 @@ import java.util.concurrent.Future;
  */
 public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
-	public static final TransactionAttribute REQUIRES_NEW_TRANSACTION_ATTRIBUTE;
+	public static final TransactionConfig REQUIRES_NEW_TRANSACTION_CONFIG;
 
 	static {
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
+		Builder builder = new Builder();
 
 		builder.setPropagation(Propagation.REQUIRES_NEW);
 		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
-		REQUIRES_NEW_TRANSACTION_ATTRIBUTE = builder.build();
+		REQUIRES_NEW_TRANSACTION_CONFIG = builder.build();
 	}
 
 	@Override
@@ -207,10 +207,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	@Override
-	public void setTransactionAttribute(
-		TransactionAttribute transactionAttribute) {
-
-		_transactionAttribute = transactionAttribute;
+	public void setTransactionConfig(TransactionConfig transactionConfig) {
+		_transactionConfig = transactionConfig;
 	}
 
 	/**
@@ -321,15 +319,15 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
 		};
 
-		TransactionAttribute transactionAttribute = getTransactionAttribute();
+		TransactionConfig transactionConfig = getTransactionConfig();
 
 		try {
-			if (transactionAttribute == null) {
+			if (transactionConfig == null) {
 				return callable.call();
 			}
 			else {
 				return TransactionInvokerUtil.invoke(
-					transactionAttribute, callable);
+					transactionConfig, callable);
 			}
 		}
 		catch (Throwable t) {
@@ -385,8 +383,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		return _modelClass;
 	}
 
-	protected TransactionAttribute getTransactionAttribute() {
-		return _transactionAttribute;
+	protected TransactionConfig getTransactionConfig() {
+		return _transactionConfig;
 	}
 
 	@SuppressWarnings("unused")
@@ -421,6 +419,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private final ThreadPoolExecutor _threadPoolExecutor =
 		PortalExecutorManagerUtil.getPortalExecutor(
 			DefaultActionableDynamicQuery.class.getName());
-	private TransactionAttribute _transactionAttribute;
+	private TransactionConfig _transactionConfig;
 
 }

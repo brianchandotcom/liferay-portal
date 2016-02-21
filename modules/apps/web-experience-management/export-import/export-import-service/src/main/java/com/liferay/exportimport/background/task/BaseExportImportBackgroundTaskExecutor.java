@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionConfig.Factory;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
@@ -70,8 +71,7 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 			fetchExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	protected static final TransactionAttribute transactionAttribute =
-		TransactionAttribute.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	protected static final TransactionConfig transactionConfig = Factory.create(
+		Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 }

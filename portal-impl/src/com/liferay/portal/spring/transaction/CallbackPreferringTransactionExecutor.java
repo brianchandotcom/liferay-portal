@@ -14,11 +14,12 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
+
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
 import org.springframework.transaction.support.TransactionCallback;
 
@@ -27,12 +28,12 @@ import org.springframework.transaction.support.TransactionCallback;
  * @author Shuyang Zhou
  */
 public class CallbackPreferringTransactionExecutor
-	extends BaseTransactionExecutor {
+	implements TransactionExecutor {
 
 	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
-			TransactionAttribute transactionAttribute,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
@@ -44,9 +45,9 @@ public class CallbackPreferringTransactionExecutor
 		try {
 			Object result =
 				callbackPreferringPlatformTransactionManager.execute(
-					transactionAttribute,
+					transactionAttributeAdaptor,
 					createTransactionCallback(
-						transactionAttribute, methodInvocation));
+						transactionAttributeAdaptor, methodInvocation));
 
 			if (result instanceof ThrowableHolder) {
 				ThrowableHolder throwableHolder = (ThrowableHolder)result;
@@ -62,11 +63,11 @@ public class CallbackPreferringTransactionExecutor
 	}
 
 	protected TransactionCallback<Object> createTransactionCallback(
-		TransactionAttribute transactionAttribute,
+		TransactionAttributeAdaptor transactionAttributeAdaptor,
 		MethodInvocation methodInvocation) {
 
 		return new CallbackPreferringTransactionCallback(
-			transactionAttribute, methodInvocation);
+			transactionAttributeAdaptor, methodInvocation);
 	}
 
 	protected static class ThrowableHolder {
@@ -96,8 +97,11 @@ public class CallbackPreferringTransactionExecutor
 
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
-			fireTransactionCreatedEvent(
-				_transactionAttribute, transactionStatus);
+			TransactionStatusAdaptor transactionStatusAdaptor =
+				new TransactionStatusAdaptor(transactionStatus);
+
+			TransactionLifecycleManager.fireTransactionCreatedEvent(
+				_transactionAttributeAdaptor, transactionStatusAdaptor);
 
 			boolean rollback = false;
 
@@ -105,9 +109,10 @@ public class CallbackPreferringTransactionExecutor
 				return _methodInvocation.proceed();
 			}
 			catch (Throwable throwable) {
-				if (_transactionAttribute.rollbackOn(throwable)) {
-					fireTransactionRollbackedEvent(
-						_transactionAttribute, transactionStatus, throwable);
+				if (_transactionAttributeAdaptor.rollbackOn(throwable)) {
+					TransactionLifecycleManager.fireTransactionRollbackedEvent(
+						_transactionAttributeAdaptor, transactionStatusAdaptor,
+						throwable);
 
 					if (transactionStatus.isNewTransaction()) {
 						rollback = true;
@@ -126,22 +131,22 @@ public class CallbackPreferringTransactionExecutor
 			}
 			finally {
 				if (!rollback) {
-					fireTransactionCommittedEvent(
-						_transactionAttribute, transactionStatus);
+					TransactionLifecycleManager.fireTransactionCommittedEvent(
+						_transactionAttributeAdaptor, transactionStatusAdaptor);
 				}
 			}
 		}
 
 		private CallbackPreferringTransactionCallback(
-			TransactionAttribute transactionAttribute,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			MethodInvocation methodInvocation) {
 
-			_transactionAttribute = transactionAttribute;
+			_transactionAttributeAdaptor = transactionAttributeAdaptor;
 			_methodInvocation = methodInvocation;
 		}
 
 		private final MethodInvocation _methodInvocation;
-		private final TransactionAttribute _transactionAttribute;
+		private final TransactionAttributeAdaptor _transactionAttributeAdaptor;
 
 	}
 

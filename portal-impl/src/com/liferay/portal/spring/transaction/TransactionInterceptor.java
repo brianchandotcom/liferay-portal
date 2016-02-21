@@ -52,8 +52,12 @@ public class TransactionInterceptor implements MethodInterceptor {
 			return methodInvocation.proceed();
 		}
 
+		TransactionAttributeAdaptor transactionAttributeAdaptor =
+			new TransactionAttributeAdaptor(transactionAttribute);
+
 		return transactionExecutor.execute(
-			platformTransactionManager, transactionAttribute, methodInvocation);
+			platformTransactionManager, transactionAttributeAdaptor,
+			methodInvocation);
 	}
 
 	public void setPlatformTransactionManager(

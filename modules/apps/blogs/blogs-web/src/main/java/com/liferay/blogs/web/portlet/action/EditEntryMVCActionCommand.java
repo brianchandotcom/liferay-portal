@@ -53,7 +53,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionConfig.Factory;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -190,7 +191,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					new UpdateEntryCallable(actionRequest);
 
 				Object[] returnValue = TransactionInvokerUtil.invoke(
-					_transactionAttribute, updateEntryCallable);
+					_transactionConfig, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = (String)returnValue[1];
@@ -671,9 +672,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditEntryMVCActionCommand.class);
 
-	private static final TransactionAttribute _transactionAttribute =
-		TransactionAttribute.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private static final TransactionConfig _transactionConfig = Factory.create(
+		Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private BlogsEntryService _blogsEntryService;

@@ -10054,28 +10054,6 @@
 		</field>
 	</javadoc>
 	<javadoc>
-		<name>ClassLoaderUtil</name>
-		<type>com.liferay.portal.workflow.kaleo.runtime.util.ClassLoaderUtil</type>
-		<author><![CDATA[Michael C. Han]]></author>
-		<method>
-			<name>getClassLoaders</name>
-			<param>
-				<name>servletContextNames</name>
-				<type>java.lang.String[]</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-		</method>
-		<method>
-			<name>_getContextClassLoader</name>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-		</method>
-	</javadoc>
-	<javadoc>
 		<name>ExecutionContextUtil</name>
 		<type>com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtil</type>
 		<author><![CDATA[Marcellus Tavares]]></author>

@@ -17,7 +17,6 @@ package com.liferay.portal.spring.transaction;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.support.TransactionCallback;
 
 /**
@@ -28,11 +27,11 @@ public class CounterCallbackPreferringTransactionExecutor
 
 	@Override
 	protected TransactionCallback<Object> createTransactionCallback(
-		TransactionAttribute transactionAttribute,
+		TransactionAttributeAdaptor transactionAttributeAdaptor,
 		MethodInvocation methodInvocation) {
 
 		return new CounterCallbackPreferringTransactionCallback(
-			transactionAttribute, methodInvocation);
+			transactionAttributeAdaptor, methodInvocation);
 	}
 
 	private static class CounterCallbackPreferringTransactionCallback
@@ -44,7 +43,7 @@ public class CounterCallbackPreferringTransactionExecutor
 				return _methodInvocation.proceed();
 			}
 			catch (Throwable throwable) {
-				if (_transactionAttribute.rollbackOn(throwable)) {
+				if (_transactionAttributeAdaptor.rollbackOn(throwable)) {
 					if (throwable instanceof RuntimeException) {
 						throw (RuntimeException)throwable;
 					}
@@ -59,15 +58,15 @@ public class CounterCallbackPreferringTransactionExecutor
 		}
 
 		private CounterCallbackPreferringTransactionCallback(
-			TransactionAttribute transactionAttribute,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			MethodInvocation methodInvocation) {
 
-			_transactionAttribute = transactionAttribute;
+			_transactionAttributeAdaptor = transactionAttributeAdaptor;
 			_methodInvocation = methodInvocation;
 		}
 
 		private final MethodInvocation _methodInvocation;
-		private final TransactionAttribute _transactionAttribute;
+		private final TransactionAttributeAdaptor _transactionAttributeAdaptor;
 
 	}
 

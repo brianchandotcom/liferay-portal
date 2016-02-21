@@ -38,14 +38,16 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 
 		return (T)_transactionExecutor.execute(
 			_platformTransactionManager,
-			TransactionAttributeBuilder.build(
-				true, transactionConfig.getIsolation(),
-				transactionConfig.getPropagation(),
-				transactionConfig.isReadOnly(), transactionConfig.getTimeout(),
-				transactionConfig.getRollbackForClasses(),
-				transactionConfig.getRollbackForClassNames(),
-				transactionConfig.getNoRollbackForClasses(),
-				transactionConfig.getNoRollbackForClassNames()),
+			new TransactionAttributeAdaptor(
+				TransactionAttributeBuilder.build(
+					true, transactionConfig.getIsolation(),
+					transactionConfig.getPropagation(),
+					transactionConfig.isReadOnly(),
+					transactionConfig.getTimeout(),
+					transactionConfig.getRollbackForClasses(),
+					transactionConfig.getRollbackForClassNames(),
+					transactionConfig.getNoRollbackForClasses(),
+					transactionConfig.getNoRollbackForClassNames())),
 			new CallableMethodInvocation(callable));
 	}
 

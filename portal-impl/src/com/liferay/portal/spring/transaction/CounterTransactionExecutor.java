@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Shuyang Zhou
@@ -31,7 +30,7 @@ public class CounterTransactionExecutor
 	@Override
 	public void commit(
 		PlatformTransactionManager platformTransactionManager,
-		TransactionAttribute transactionAttribute,
+		TransactionAttributeAdaptor transactionAttributeAdaptor,
 		TransactionStatusAdaptor transactionStatusAdaptor) {
 
 		try {
@@ -54,12 +53,12 @@ public class CounterTransactionExecutor
 	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
-			TransactionAttribute transactionAttribute,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
 		TransactionStatusAdaptor transactionStatusAdaptor = start(
-			platformTransactionManager, transactionAttribute);
+			platformTransactionManager, transactionAttributeAdaptor);
 
 		Object returnValue = null;
 
@@ -68,12 +67,12 @@ public class CounterTransactionExecutor
 		}
 		catch (Throwable throwable) {
 			rollback(
-				platformTransactionManager, throwable, transactionAttribute,
-				transactionStatusAdaptor);
+				platformTransactionManager, throwable,
+				transactionAttributeAdaptor, transactionStatusAdaptor);
 		}
 
 		commit(
-			platformTransactionManager, transactionAttribute,
+			platformTransactionManager, transactionAttributeAdaptor,
 			transactionStatusAdaptor);
 
 		return returnValue;
@@ -82,11 +81,12 @@ public class CounterTransactionExecutor
 	@Override
 	public void rollback(
 			PlatformTransactionManager platformTransactionManager,
-			Throwable throwable, TransactionAttribute transactionAttribute,
+			Throwable throwable,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			TransactionStatusAdaptor transactionStatusAdaptor)
 		throws Throwable {
 
-		if (transactionAttribute.rollbackOn(throwable)) {
+		if (transactionAttributeAdaptor.rollbackOn(throwable)) {
 			try {
 				platformTransactionManager.rollback(
 					transactionStatusAdaptor.getTransactionStatus());
@@ -111,7 +111,7 @@ public class CounterTransactionExecutor
 		}
 		else {
 			commit(
-				platformTransactionManager, transactionAttribute,
+				platformTransactionManager, transactionAttributeAdaptor,
 				transactionStatusAdaptor);
 		}
 
@@ -121,10 +121,11 @@ public class CounterTransactionExecutor
 	@Override
 	public TransactionStatusAdaptor start(
 		PlatformTransactionManager platformTransactionManager,
-		TransactionAttribute transactionAttribute) {
+		TransactionAttributeAdaptor transactionAttributeAdaptor) {
 
 		return new TransactionStatusAdaptor(
-			platformTransactionManager.getTransaction(transactionAttribute));
+			platformTransactionManager.getTransaction(
+				transactionAttributeAdaptor));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

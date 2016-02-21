@@ -509,8 +509,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
-				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
-				<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="Ready for Publication" />
+				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			</then>
 		</if>
 
@@ -533,8 +532,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
-				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
-				<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="Ready for Publication" />
+				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			</then>
 		</if>
 	</command>
@@ -712,8 +710,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
-				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
-				<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="Ready for Publication" />
+				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			</then>
 		</if>
 
@@ -767,8 +764,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
-				<execute function="AssertClick" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
-				<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="Ready for Publication" />
+				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			</then>
 		</if>
 
@@ -831,6 +827,8 @@
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+
 		<if>
 			<equals arg1="${modifiedVersion}" arg2="true" />
 			<then>
@@ -840,6 +838,8 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</else>
 		</if>
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">

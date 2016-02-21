@@ -1053,6 +1053,11 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="portletName" value="Documents and Media" />

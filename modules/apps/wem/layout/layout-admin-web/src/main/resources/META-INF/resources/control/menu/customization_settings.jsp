@@ -31,6 +31,7 @@
 <%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <%@ page import="java.util.HashMap" %>
@@ -47,6 +48,8 @@
 <portlet:defineObjects />
 
 <%
+String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.LAYOUT_ADMIN);
+
 boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsProductNavigationControlMenuEntry.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 Map<String, Object> data = new HashMap<>();
 
@@ -57,7 +60,7 @@ data.put("qa-id", "customizations");
 	<liferay-ui:icon
 		data="<%= data %>"
 		icon="pencil"
-		id="customizationButton"
+		id='<%= portletNamespace + "customizationButton" %>'
 		label="<%= false %>"
 		linkCssClass="control-menu-icon"
 		markupView="lexicon"
@@ -66,13 +69,13 @@ data.put("qa-id", "customizations");
 	/>
 </li>
 
-<li class="control-menu-nav-item" id="customizationBar">
+<li class="control-menu-nav-item" id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2">
 		<div class="container-fluid-1280">
 			<div class="control-menu-level-2-heading visible-xs">
 				<liferay-ui:message key="customization-options" />
 
-				<button aria-labelledby="Close" class="close" id="closeCustomizationOptions" type="button">
+				<button aria-labelledby="Close" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
 					<aui:icon image="times" markupView="lexicon" />
 				</button>
 			</div>
@@ -115,7 +118,7 @@ data.put("qa-id", "customizations");
 							wrappedField="<%= true %>"
 						/>
 
-						<div class="hide layout-customizable-controls-container" id="<portlet:namespace />layoutCustomizableControls">
+						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
 							<div class="layout-customizable-controls">
 								<span title="<liferay-ui:message key="customizable-help" />">
 									<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="no-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
@@ -127,7 +130,7 @@ data.put("qa-id", "customizations");
 					<aui:script use="liferay-layout-customization-settings">
 						new Liferay.LayoutCustomizationSettings(
 							{
-								namespace: '<portlet:namespace />'
+								namespace: '<%= portletNamespace %>'
 							}
 						);
 					</aui:script>
@@ -188,14 +191,14 @@ data.put("qa-id", "customizations");
 				</li>
 
 				<aui:script>
-					$('#customizationButton, #closeCustomizationOptions').on(
+					$('#<%= portletNamespace %>customizationButton, #<%= portletNamespace %>closeCustomizationOptions').on(
 						'click',
 						function(event) {
-							$('#customizationBar .control-menu-level-2').toggleClass('open');
+							$('#<%= portletNamespace %>customizationBar .control-menu-level-2').toggleClass('open');
 						}
 					);
 
-					$('#customizationBar').delegate(
+					$('#<%= portletNamespace %>customizationBar').delegate(
 						'.toggle-customized-view',
 						'click',
 						function(event) {

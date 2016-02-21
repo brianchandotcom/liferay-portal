@@ -87,7 +87,7 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 				hasUpdateLayoutPermission(themeDisplay));
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 		}
 
 		return super.includeIcon(request, response);

@@ -47,10 +47,12 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public ConfigurationModel(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
-		Configuration configuration, String bundleLocation, boolean factory) {
+		Configuration configuration, String bundleSymbolicName,
+		String bundleLocation, boolean factory) {
 
 		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_configuration = configuration;
+		_bundleSymbolicName = bundleSymbolicName;
 		_bundleLocation = bundleLocation;
 		_factory = factory;
 	}
@@ -66,6 +68,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public String getBundleLocation() {
 		return _bundleLocation;
+	}
+
+	public String getBundleSymbolicName() {
+		return _bundleSymbolicName;
 	}
 
 	public String getCategory() {
@@ -249,6 +255,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	private final String _bundleLocation;
+	private final String _bundleSymbolicName;
 	private final Configuration _configuration;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final boolean _factory;

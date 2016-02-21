@@ -97,7 +97,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -152,7 +152,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -201,7 +201,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Integer");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -250,7 +250,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Select");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
@@ -304,7 +304,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			extendedObjectClassDefinition, configuration, null, false);
+			extendedObjectClassDefinition, configuration, null, null, false);
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(

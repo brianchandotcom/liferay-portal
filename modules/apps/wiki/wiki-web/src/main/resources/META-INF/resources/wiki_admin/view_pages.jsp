@@ -114,7 +114,6 @@ else {
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-sidenav-toggler-button
-			cssClass="infoPanelToggler"
 			disabled="<%= false %>"
 			href="javascript:;"
 			icon="info-circle"

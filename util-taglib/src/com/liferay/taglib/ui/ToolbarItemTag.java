@@ -33,14 +33,9 @@ public class ToolbarItemTag extends IncludeTag {
 		_toolbarItem = toolbarItem;
 	}
 
-	public void setVar(String var) {
-		_var = var;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_toolbarItem = null;
-		_var = null;
 	}
 
 	@Override
@@ -57,7 +52,6 @@ public class ToolbarItemTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:toolbar-item:toolbarItem", _toolbarItem);
-		request.setAttribute("liferay-ui:toolbar-item:var", _var);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -65,6 +59,5 @@ public class ToolbarItemTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/toolbar_item/page.jsp";
 
 	private ToolbarItem _toolbarItem;
-	private String _var;
 
 }

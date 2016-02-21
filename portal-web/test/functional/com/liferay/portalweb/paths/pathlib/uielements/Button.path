@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>CHECKOUT</td>
-	<td>//button[contains(.,'Checkout')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Checkout')] | //button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -295,12 +295,12 @@
 </tr>
 <tr>
 	<td>DOWNLOAD</td>
-	<td>//button[contains(.,'Download')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Download')] | //button[contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'edit') and contains(@class,'btn')] | //button[contains(.,'Edit')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Edit')] | //a[contains(@id,'edit') and contains(@class,'btn')] | //button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -364,6 +364,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVOKE</td>
 	<td>//button[contains(.,'Invoke')]</td>
 	<td></td>
@@ -380,7 +385,7 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//button[contains(.,'Move')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Move')] | //button[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -400,7 +405,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Move to the Recycle Bin')] | //button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

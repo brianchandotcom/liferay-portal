@@ -36,4 +36,14 @@ if (active) {
 if (disabled) {
 	cssClass = "disabled " + cssClass;
 }
+
+if (Validator.isNotNull(icon)) {
+	iconCssClass = StringPool.BLANK;
+}
+
+String labelCssClass = "sr-only";
+
+if (Validator.isNull(icon) && Validator.isNull(iconCssClass)) {
+	labelCssClass = StringPool.BLANK;
+}
 %>

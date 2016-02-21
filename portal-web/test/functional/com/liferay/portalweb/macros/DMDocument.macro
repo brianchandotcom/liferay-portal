@@ -1629,6 +1629,8 @@
 			</else>
 		</if>
 
+		<execute function="Click" locator1="Icon#INFO" />
+
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
@@ -1700,6 +1702,8 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 
+		<execute function="Click" locator1="Icon#INFO" />
+
 		<if>
 			<and>
 				<isset var="dmDocumentSize" />
@@ -1709,6 +1713,8 @@
 			</and>
 			<then>
 				<var name="key_dmDocumentSize" value="${dmDocumentSize}" />
+
+				<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" />
 
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize}KB)" />
 			</then>

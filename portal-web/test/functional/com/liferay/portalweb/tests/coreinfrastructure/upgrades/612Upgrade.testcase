@@ -4,7 +4,11 @@
 	<property name="portal.version" value="6.1.2" />
 	<property name="testray.main.component.name" value="Upgrades" />
 
-	<command name="View612DataArchive" priority="4">
-		<execute macro="Upgrade#viewUpgrade" />
+	<command name="View612DataArchive" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
 	</command>
 </definition>

@@ -16,6 +16,7 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -26,7 +27,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author Shuyang Zhou
  */
 public class DefaultTransactionExecutor
-	extends BaseTransactionExecutor implements TransactionHandler {
+	implements TransactionExecutor, TransactionHandler {
 
 	@Override
 	public void commit(
@@ -57,12 +58,12 @@ public class DefaultTransactionExecutor
 		}
 		finally {
 			if (throwable != null) {
-				fireTransactionRollbackedEvent(
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
 					transactionAttributeAdaptor, transactionStatusAdaptor,
 					throwable);
 			}
 			else {
-				fireTransactionCommittedEvent(
+				TransactionLifecycleManager.fireTransactionCommittedEvent(
 					transactionAttributeAdaptor, transactionStatusAdaptor);
 			}
 		}
@@ -127,7 +128,7 @@ public class DefaultTransactionExecutor
 				throw e;
 			}
 			finally {
-				fireTransactionRollbackedEvent(
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
 					transactionAttributeAdaptor, transactionStatusAdaptor,
 					throwable);
 			}
@@ -151,7 +152,7 @@ public class DefaultTransactionExecutor
 				platformTransactionManager.getTransaction(
 					transactionAttributeAdaptor));
 
-		fireTransactionCreatedEvent(
+		TransactionLifecycleManager.fireTransactionCreatedEvent(
 			transactionAttributeAdaptor, transactionStatusAdaptor);
 
 		return transactionStatusAdaptor;

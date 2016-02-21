@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
+
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -26,7 +28,7 @@ import org.springframework.transaction.support.TransactionCallback;
  * @author Shuyang Zhou
  */
 public class CallbackPreferringTransactionExecutor
-	extends BaseTransactionExecutor {
+	implements TransactionExecutor {
 
 	@Override
 	public Object execute(
@@ -98,7 +100,7 @@ public class CallbackPreferringTransactionExecutor
 			TransactionStatusAdaptor transactionStatusAdaptor =
 				new TransactionStatusAdaptor(transactionStatus);
 
-			fireTransactionCreatedEvent(
+			TransactionLifecycleManager.fireTransactionCreatedEvent(
 				_transactionAttributeAdaptor, transactionStatusAdaptor);
 
 			boolean rollback = false;
@@ -108,7 +110,7 @@ public class CallbackPreferringTransactionExecutor
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttributeAdaptor.rollbackOn(throwable)) {
-					fireTransactionRollbackedEvent(
+					TransactionLifecycleManager.fireTransactionRollbackedEvent(
 						_transactionAttributeAdaptor, transactionStatusAdaptor,
 						throwable);
 
@@ -129,7 +131,7 @@ public class CallbackPreferringTransactionExecutor
 			}
 			finally {
 				if (!rollback) {
-					fireTransactionCommittedEvent(
+					TransactionLifecycleManager.fireTransactionCommittedEvent(
 						_transactionAttributeAdaptor, transactionStatusAdaptor);
 				}
 			}

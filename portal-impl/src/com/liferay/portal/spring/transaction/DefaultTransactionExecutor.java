@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -34,12 +33,13 @@ public class DefaultTransactionExecutor
 	public void commit(
 		PlatformTransactionManager platformTransactionManager,
 		TransactionAttribute transactionAttribute,
-		TransactionStatus transactionStatus) {
+		TransactionStatusAdaptor transactionStatusAdaptor) {
 
 		Throwable throwable = null;
 
 		try {
-			platformTransactionManager.commit(transactionStatus);
+			platformTransactionManager.commit(
+				transactionStatusAdaptor.getTransactionStatus());
 		}
 		catch (RuntimeException re) {
 			_log.error(
@@ -59,11 +59,11 @@ public class DefaultTransactionExecutor
 		finally {
 			if (throwable != null) {
 				fireTransactionRollbackedEvent(
-					transactionAttribute, transactionStatus, throwable);
+					transactionAttribute, transactionStatusAdaptor, throwable);
 			}
 			else {
 				fireTransactionCommittedEvent(
-					transactionAttribute, transactionStatus);
+					transactionAttribute, transactionStatusAdaptor);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class DefaultTransactionExecutor
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
-		TransactionStatus transactionStatus = start(
+		TransactionStatusAdaptor transactionStatusAdaptor = start(
 			platformTransactionManager, transactionAttribute);
 
 		Object returnValue = null;
@@ -86,12 +86,12 @@ public class DefaultTransactionExecutor
 		catch (Throwable throwable) {
 			rollback(
 				platformTransactionManager, throwable, transactionAttribute,
-				transactionStatus);
+				transactionStatusAdaptor);
 		}
 
 		commit(
 			platformTransactionManager, transactionAttribute,
-			transactionStatus);
+			transactionStatusAdaptor);
 
 		return returnValue;
 	}
@@ -100,12 +100,13 @@ public class DefaultTransactionExecutor
 	public void rollback(
 			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable, TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus)
+			TransactionStatusAdaptor transactionStatusAdaptor)
 		throws Throwable {
 
 		if (transactionAttribute.rollbackOn(throwable)) {
 			try {
-				platformTransactionManager.rollback(transactionStatus);
+				platformTransactionManager.rollback(
+					transactionStatusAdaptor.getTransactionStatus());
 			}
 			catch (RuntimeException re) {
 				re.addSuppressed(throwable);
@@ -126,29 +127,32 @@ public class DefaultTransactionExecutor
 			}
 			finally {
 				fireTransactionRollbackedEvent(
-					transactionAttribute, transactionStatus, throwable);
+					transactionAttribute, transactionStatusAdaptor, throwable);
 			}
 		}
 		else {
 			commit(
 				platformTransactionManager, transactionAttribute,
-				transactionStatus);
+				transactionStatusAdaptor);
 		}
 
 		throw throwable;
 	}
 
 	@Override
-	public TransactionStatus start(
+	public TransactionStatusAdaptor start(
 		PlatformTransactionManager platformTransactionManager,
 		TransactionAttribute transactionAttribute) {
 
-		TransactionStatus transactionStatus =
-			platformTransactionManager.getTransaction(transactionAttribute);
+		TransactionStatusAdaptor transactionStatusAdaptor =
+			new TransactionStatusAdaptor(
+				platformTransactionManager.getTransaction(
+					transactionAttribute));
 
-		fireTransactionCreatedEvent(transactionAttribute, transactionStatus);
+		fireTransactionCreatedEvent(
+			transactionAttribute, transactionStatusAdaptor);
 
-		return transactionStatus;
+		return transactionStatusAdaptor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

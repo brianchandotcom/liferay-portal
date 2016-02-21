@@ -16,7 +16,6 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
-import com.liferay.portal.kernel.transaction.TransactionStatus;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
@@ -26,7 +25,6 @@ import java.util.concurrent.Callable;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.DefaultTransactionStatus;
 
 /**
  * @author Shuyang Zhou
@@ -62,25 +60,6 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 		TransactionExecutor transactionExecutor) {
 
 		_transactionExecutor = transactionExecutor;
-	}
-
-	protected static org.springframework.transaction.TransactionStatus
-		toTransactionStatus(TransactionStatus transactionStatus) {
-
-		DefaultTransactionStatus defaultTransactionStatus =
-			new DefaultTransactionStatus(
-				null, transactionStatus.isNewTransaction(), false, false, false,
-				null);
-
-		if (transactionStatus.isCompleted()) {
-			defaultTransactionStatus.setCompleted();
-		}
-
-		if (transactionStatus.isRollbackOnly()) {
-			defaultTransactionStatus.setRollbackOnly();
-		}
-
-		return defaultTransactionStatus;
 	}
 
 	private static PlatformTransactionManager _platformTransactionManager;

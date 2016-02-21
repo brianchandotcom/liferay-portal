@@ -286,7 +286,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionAttribute transactionAttribute = builder.build();
 
-		TransactionStatus transactionStatus = new TransactionStatus(
+		TransactionStatus transactionStatus = new TestTrasactionStatus(
 			false, false, false);
 
 		transactionLifecycleListener.created(
@@ -905,7 +905,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionAttribute parentTransactionAttribute = parentBuilder.build();
 
-		TransactionStatus parentTransactionStatus = new TransactionStatus(
+		TransactionStatus parentTransactionStatus = new TestTrasactionStatus(
 			true, false, false);
 
 		transactionLifecycleListener.created(
@@ -921,7 +921,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionAttribute childTransactionAttribute = childBuilder.build();
 
-		TransactionStatus childTransactionStatus = new TransactionStatus(
+		TransactionStatus childTransactionStatus = new TestTrasactionStatus(
 			true, false, false);
 
 		transactionLifecycleListener.created(
@@ -936,8 +936,8 @@ public class TransactionalPortalCacheTest {
 		TransactionAttribute grandchildTransactionAttribute =
 			grandchildBuilder.build();
 
-		TransactionStatus grandchildTransactionStatus = new TransactionStatus(
-			true, false, false);
+		TransactionStatus grandchildTransactionStatus =
+			new TestTrasactionStatus(true, false, false);
 
 		transactionLifecycleListener.created(
 			grandchildTransactionAttribute, grandchildTransactionStatus);
@@ -1010,7 +1010,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionAttribute parentTransactionAttribute = parentBuilder.build();
 
-		TransactionStatus parentTransactionStatus = new TransactionStatus(
+		TransactionStatus parentTransactionStatus = new TestTrasactionStatus(
 			true, false, false);
 
 		transactionLifecycleListener.created(
@@ -1026,7 +1026,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionAttribute childTransactionAttribute = parentBuilder.build();
 
-		TransactionStatus childTransactionStatus = new TransactionStatus(
+		TransactionStatus childTransactionStatus = new TestTrasactionStatus(
 			true, false, false);
 
 		transactionLifecycleListener.created(
@@ -1154,6 +1154,37 @@ public class TransactionalPortalCacheTest {
 		}
 
 		private final Map<String, String> _properties = new HashMap<>();
+
+	}
+
+	private static class TestTrasactionStatus implements TransactionStatus {
+
+		@Override
+		public boolean isCompleted() {
+			return _completed;
+		}
+
+		@Override
+		public boolean isNewTransaction() {
+			return _newTransaction;
+		}
+
+		@Override
+		public boolean isRollbackOnly() {
+			return _rollbackOnly;
+		}
+
+		private TestTrasactionStatus(
+			boolean newTransaction, boolean rollbackOnly, boolean completed) {
+
+			_newTransaction = newTransaction;
+			_rollbackOnly = rollbackOnly;
+			_completed = completed;
+		}
+
+		private final boolean _completed;
+		private final boolean _newTransaction;
+		private final boolean _rollbackOnly;
 
 	}
 

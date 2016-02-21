@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
-import com.liferay.portal.kernel.transaction.TransactionStatus;
 
 /**
  * @author Michael C. Han
@@ -43,44 +42,35 @@ public abstract class BaseTransactionExecutor implements TransactionExecutor {
 		return builder.build();
 	}
 
-	protected TransactionStatus createTransactionStatus(
-		org.springframework.transaction.TransactionStatus transactionStatus) {
-
-		return new TransactionStatus(
-			transactionStatus.isNewTransaction(),
-			transactionStatus.isRollbackOnly(),
-			transactionStatus.isCompleted());
-	}
-
 	protected void fireTransactionCommittedEvent(
 		org.springframework.transaction.interceptor.TransactionAttribute
 			transactionAttribute,
-		org.springframework.transaction.TransactionStatus transactionStatus) {
+		TransactionStatusAdaptor transactionStatusAdaptor) {
 
 		TransactionLifecycleManager.fireTransactionCommittedEvent(
 			createTransactionAttribute(transactionAttribute),
-			createTransactionStatus(transactionStatus));
+			transactionStatusAdaptor);
 	}
 
 	protected void fireTransactionCreatedEvent(
 		org.springframework.transaction.interceptor.TransactionAttribute
 			transactionAttribute,
-		org.springframework.transaction.TransactionStatus transactionStatus) {
+		TransactionStatusAdaptor transactionStatusAdaptor) {
 
 		TransactionLifecycleManager.fireTransactionCreatedEvent(
 			createTransactionAttribute(transactionAttribute),
-			createTransactionStatus(transactionStatus));
+			transactionStatusAdaptor);
 	}
 
 	protected void fireTransactionRollbackedEvent(
 		org.springframework.transaction.interceptor.TransactionAttribute
 			transactionAttribute,
-		org.springframework.transaction.TransactionStatus transactionStatus,
+		TransactionStatusAdaptor transactionStatusAdaptor,
 		Throwable throwable) {
 
 		TransactionLifecycleManager.fireTransactionRollbackedEvent(
 			createTransactionAttribute(transactionAttribute),
-			createTransactionStatus(transactionStatus), throwable);
+			transactionStatusAdaptor, throwable);
 	}
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
 
 import java.lang.reflect.AccessibleObject;
@@ -33,20 +33,19 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 
 	@Override
 	public <T> T invoke(
-			TransactionAttribute transactionAttribute, Callable<T> callable)
+			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 
 		return (T)_transactionExecutor.execute(
 			_platformTransactionManager,
 			TransactionAttributeBuilder.build(
-				true, transactionAttribute.getIsolation(),
-				transactionAttribute.getPropagation(),
-				transactionAttribute.isReadOnly(),
-				transactionAttribute.getTimeout(),
-				transactionAttribute.getRollbackForClasses(),
-				transactionAttribute.getRollbackForClassNames(),
-				transactionAttribute.getNoRollbackForClasses(),
-				transactionAttribute.getNoRollbackForClassNames()),
+				true, transactionConfig.getIsolation(),
+				transactionConfig.getPropagation(),
+				transactionConfig.isReadOnly(), transactionConfig.getTimeout(),
+				transactionConfig.getRollbackForClasses(),
+				transactionConfig.getRollbackForClassNames(),
+				transactionConfig.getNoRollbackForClasses(),
+				transactionConfig.getNoRollbackForClassNames()),
 			new CallableMethodInvocation(callable));
 	}
 

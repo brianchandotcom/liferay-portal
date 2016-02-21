@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 
 /**
  * @author Brian Wing Shun Chan
@@ -71,8 +71,7 @@ public interface ActionableDynamicQuery {
 
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName);
 
-	public void setTransactionAttribute(
-		TransactionAttribute transactionAttribute);
+	public void setTransactionConfig(TransactionConfig transactionConfig);
 
 	public interface AddCriteriaMethod {
 

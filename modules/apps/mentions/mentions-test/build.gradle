@@ -1,4 +1,0 @@
-dependencies {
-	testCompile project(":apps:mentions:mentions-api")
-	testCompile project(":apps:mentions:mentions-service")
-}

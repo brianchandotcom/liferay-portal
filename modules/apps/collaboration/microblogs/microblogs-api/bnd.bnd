@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Mircoblogs API
+Bundle-SymbolicName: com.liferay.microblogs.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.microblogs.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Microblogs
+-include: ../../../../../marketplace/collaboration/bnd.bnd

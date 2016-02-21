@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Comment Sanitizer
+Bundle-SymbolicName: com.liferay.comment.sanitizer
+Bundle-Version: 1.0.0
+Import-Package:\
+	!javax.annotation,\
+	\
+	!sun.misc,\
+	*
+Include-Resource:\
+	@lib/guava.jar,\
+	@lib/owasp-java-html-sanitizer.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Comments
+-include: ../../../../../marketplace/collaboration/bnd.bnd

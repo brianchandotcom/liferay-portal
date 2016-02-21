@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Invitation Web
+Bundle-SymbolicName: com.liferay.invitation.web
+Bundle-Version: 1.0.0
+Include-Resource: @../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /invitation-web
+-include: ../../../../../marketplace/collaboration/bnd.bnd

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Wiki Engine Input Editor Common
+Bundle-SymbolicName: com.liferay.wiki.engine.input.editor.common
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.wiki.engine.input.editor.common
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+Web-ContextPath: /wiki-engine-input-editor-common
+-include: ../../../../../marketplace/collaboration/bnd.bnd

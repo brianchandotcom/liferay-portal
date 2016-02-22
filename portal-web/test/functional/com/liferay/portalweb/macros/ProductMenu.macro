@@ -237,6 +237,18 @@
 		</execute>
 	</command>
 
+	<command name="gotoSitesMembers" summary="Navigate to Product Menu > Sites > Members > ${portlet}">
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Members" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
 	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${page}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
@@ -254,18 +266,6 @@
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Publishing Tools" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoSitesUsers" summary="Navigate to Product Menu > Sites > Users > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanelSites" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Users" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">

@@ -309,7 +309,7 @@
 			<var name="site" value="${siteScopeName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesUsers">
+		<execute macro="ProductMenu#gotoSitesMembers">
 			<var name="portlet" value="${portletName}" />
 		</execute>
 

@@ -497,7 +497,7 @@
 			<var name="siteType" value="Site Template" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesUsers">
+		<execute macro="ProductMenu#gotoSitesMembers">
 			<var name="portlet" value="Site Memberships" />
 			<var name="site" value="Site Name" />
 		</execute>

@@ -257,7 +257,7 @@
 			<var name="portletName" value="User Statistics" />
 		</execute>
 
-		<execute macro="SignIn#signInViaDockbar">
+		<execute macro="SignIn#signIn">
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="userPassword" value="test" />
 		</execute>

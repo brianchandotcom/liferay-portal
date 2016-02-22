@@ -16,53 +16,45 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:choose>
-	<c:when test="<%= permissionChecker.isOmniadmin() %>">
+<%
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 
-		<%
-		int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+PortletURL portletURL = renderResponse.createRenderURL();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
+portletURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs2", tabs2);
+%>
 
-		portletURL.setParameter("mvcRenderCommandName", "/server_admin/view");
-		portletURL.setParameter("tabs1", tabs1);
-		portletURL.setParameter("tabs2", tabs2);
-		%>
+<portlet:renderURL var="redirectURL">
+	<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
+</portlet:renderURL>
 
-		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
-			<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
-		</portlet:renderURL>
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+	<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
+</aui:form>
 
-			<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
-		</aui:form>
+<portlet:renderURL var="redirectURL">
+	<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
+	<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
+</portlet:renderURL>
 
-		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
-			<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
-			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
-		</portlet:renderURL>
-
-		<aui:script use="liferay-admin">
-			new Liferay.Portlet.Admin(
-				{
-					form: document.<portlet:namespace />fm,
-					namespace: '<portlet:namespace />',
-					redirectUrl: '<%= redirectURL %>',
-					submitButton: '.save-server-button',
-					url: '<portlet:actionURL name="/server_admin/edit_server" />'
-				}
-			);
-		</aui:script>
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/portlet_access_denied.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+<aui:script use="liferay-admin">
+	new Liferay.Portlet.Admin(
+		{
+			form: document.<portlet:namespace />fm,
+			namespace: '<portlet:namespace />',
+			redirectUrl: '<%= redirectURL %>',
+			submitButton: '.save-server-button',
+			url: '<portlet:actionURL name="/server_admin/edit_server" />'
+		}
+	);
+</aui:script>

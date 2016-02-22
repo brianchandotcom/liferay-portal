@@ -31,7 +31,7 @@
 
 	for (AnnouncementsEntry entry : entries) {
 		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute("view_entry.jsp-flagValue", flag);
+		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, flag);
 	%>
 
 		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />

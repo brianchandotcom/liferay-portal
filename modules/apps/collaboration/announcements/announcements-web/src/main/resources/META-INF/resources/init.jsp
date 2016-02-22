@@ -39,6 +39,7 @@ page import="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalSer
 page import="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil" %><%@
 page import="com.liferay.announcements.kernel.util.AnnouncementsUtil" %><%@
 page import="com.liferay.announcements.web.constants.AnnouncementsPortletKeys" %><%@
+page import="com.liferay.announcements.web.constants.AnnouncementsWebKeys" %><%@
 page import="com.liferay.announcements.web.display.context.AnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.display.context.DefaultAnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.display.context.util.AnnouncementsRequestHelper" %><%@

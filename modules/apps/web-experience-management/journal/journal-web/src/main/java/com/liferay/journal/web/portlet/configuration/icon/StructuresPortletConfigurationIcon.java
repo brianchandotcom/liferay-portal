@@ -73,7 +73,7 @@ public class StructuresPortletConfigurationIcon
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		portletURL.setParameter(

@@ -272,6 +272,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 					eventName: 'selectTemplate',
 					groupId: $('.template-preview-content').attr('data-group-id'),
 					mvcPath: '/select_template.jsp',
+					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_TEMPLATE %>',
 					refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 					resourceClassNameId: $('.template-preview-content').attr('data-structure-id'),
 					showAncestorScopes: true,

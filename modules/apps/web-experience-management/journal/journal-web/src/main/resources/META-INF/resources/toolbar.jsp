@@ -171,7 +171,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					},
 					'strings.add': '<liferay-ui:message key="done" />',
 					title: '<liferay-ui:message key="select-structure" />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="ddmStructureKey" value="<%= journalDisplayContext.getDDMStructureKey() %>" /></portlet:renderURL>'
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.SELECT_STRUCTURE %>" /><portlet:param name="ddmStructureKey" value="<%= journalDisplayContext.getDDMStructureKey() %>" /></portlet:renderURL>'
 				}
 			);
 

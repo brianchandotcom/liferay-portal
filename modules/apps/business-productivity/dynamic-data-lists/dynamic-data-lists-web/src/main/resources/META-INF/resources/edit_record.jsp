@@ -136,7 +136,9 @@ else {
 
 				<liferay-ui:section>
 					<div class="sidebar-body">
-						<liferay-util:include page="/view_record_history.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/view_record_history.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="redirect" value="<%= redirect %>" />
+						</liferay-util:include>
 					</div>
 				</liferay-ui:section>
 			</liferay-ui:tabs>

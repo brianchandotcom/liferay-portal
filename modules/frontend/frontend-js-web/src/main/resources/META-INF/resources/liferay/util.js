@@ -1285,6 +1285,10 @@
 				ddmURL.setParameter('mvcPath', '/view.jsp');
 			}
 
+			if ('navigationStartsOn' in config) {
+				ddmURL.setParameter('navigationStartsOn', config.navigationStartsOn);
+			}
+
 			ddmURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
 
 			if ('redirect' in config) {

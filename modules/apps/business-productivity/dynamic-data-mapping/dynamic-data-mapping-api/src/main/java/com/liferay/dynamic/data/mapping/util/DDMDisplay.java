@@ -33,6 +33,8 @@ public interface DDMDisplay {
 
 	public String getAvailableFields();
 
+	public DDMNavigationHelper getDDMNavigationHelper();
+
 	public String getDefaultTemplateLanguage();
 
 	public String getEditStructureDefaultValuesURL(
@@ -82,6 +84,11 @@ public interface DDMDisplay {
 	public String getTemplateType(DDMTemplate template, Locale locale);
 
 	public String getTitle(Locale locale);
+
+	public String getViewStructuresBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception;
 
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,

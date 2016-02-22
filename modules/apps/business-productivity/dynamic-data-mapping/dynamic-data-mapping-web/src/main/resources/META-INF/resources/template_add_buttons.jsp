@@ -21,8 +21,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
@@ -44,7 +42,6 @@ String message = "add";
 
 				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addTemplateURL">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -68,7 +65,6 @@ String message = "add";
 
 				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addTemplateURL">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -114,7 +110,6 @@ String message = "add";
 
 					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="addPortletDisplayTemplateURL">
 						<portlet:param name="mvcPath" value="/edit_template.jsp" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 					</liferay-portlet:renderURL>

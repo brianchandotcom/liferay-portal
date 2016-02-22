@@ -16,6 +16,7 @@ package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -76,7 +77,9 @@ public class TemplatesPortletConfigurationIcon
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES);
+		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		portletURL.setParameter(

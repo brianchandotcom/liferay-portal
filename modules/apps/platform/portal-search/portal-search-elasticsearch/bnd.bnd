@@ -9,7 +9,6 @@ Bundle-ClassPath:\
 	lib/asm.jar,\
 	lib/commons-lang.jar,\
 	lib/compress-lzf.jar,\
-	lib/elasticsearch.jar,\
 	lib/guava.jar,\
 	lib/hppc.jar,\
 	lib/icu4j.jar,\
@@ -38,6 +37,7 @@ Bundle-ClassPath:\
 	lib/lucene-suggest.jar,\
 	lib/netty.jar,\
 	lib/noggit.jar,\
+	lib/org.elasticsearch.jar,\
 	lib/snakeyaml.jar,\
 	lib/spatial4j.jar,\
 	lib/t-digest.jar
@@ -122,7 +122,6 @@ Include-Resource:\
 	lib/asm.jar=lib/asm.jar,\
 	lib/commons-lang.jar=lib/commons-lang.jar,\
 	lib/compress-lzf.jar=lib/compress-lzf.jar,\
-	lib/elasticsearch.jar=lib/elasticsearch.jar,\
 	lib/guava.jar=lib/guava.jar,\
 	lib/hppc.jar=lib/hppc.jar,\
 	lib/icu4j.jar=lib/icu4j.jar,\
@@ -151,6 +150,7 @@ Include-Resource:\
 	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
 	lib/netty.jar=lib/netty.jar,\
 	lib/noggit.jar=lib/noggit.jar,\
+	lib/org.elasticsearch.jar=lib/org.elasticsearch.jar,\
 	lib/snakeyaml.jar=lib/snakeyaml.jar,\
 	lib/spatial4j.jar=lib/spatial4j.jar,\
 	lib/t-digest.jar=lib/t-digest.jar

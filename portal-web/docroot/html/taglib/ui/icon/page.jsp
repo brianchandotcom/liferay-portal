@@ -91,7 +91,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:otherwise>
 		<span class="<%= cssClass %>"
 			<c:if test="<%= !label && Validator.isNotNull(message) %>">
-				onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="<%= HtmlUtil.escapeJS(message) %>" />')"
+				title="<liferay-ui:message key='<%= HtmlUtil.escapeAttribute(message) %>' />"
 			</c:if>
 		>
 			<c:choose>
@@ -124,4 +124,25 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 			}
 		);
 	</aui:script>
+</c:if>
+
+<c:if test="<%= toolTip %>">
+	<liferay-util:html-bottom outputKey="taglib_ui_icon_help">
+		<aui:script use="aui-tooltip">
+			var tooltip = new A.TooltipDelegate(
+				{
+					position: 'right',
+					trigger: '.lfr-portal-tooltip',
+					visible: false
+				}
+			);
+
+			Liferay.once(
+				'screenLoad',
+				function() {
+					tooltip.destroy();
+				}
+			)
+		</aui:script>
+	</liferay-util:html-bottom>
 </c:if>

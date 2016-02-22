@@ -734,11 +734,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(1, classPK);
 			}
 
-			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				return new HashMap<>();
-			}
-
 			private static final String _ACTIVITY_CLASSNAME =
 				"com.liferay.knowledgebase.model.KBComment";
 

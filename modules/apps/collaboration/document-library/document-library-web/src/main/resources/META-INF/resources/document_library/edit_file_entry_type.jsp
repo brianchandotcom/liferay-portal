@@ -162,7 +162,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				mvcPath: '/select_structure.jsp',
-				navStartsOn: 'selectStructures',
+				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
 				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,

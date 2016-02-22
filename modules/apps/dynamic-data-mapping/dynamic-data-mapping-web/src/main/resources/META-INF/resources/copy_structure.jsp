@@ -48,28 +48,13 @@ String backURL = ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, lifer
 
 		<%
 		String title = LanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false);
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL);
+
+		renderResponse.setTitle(title);
 		%>
 
-		<c:choose>
-			<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
-
-				<%
-				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(backURL);
-
-				renderResponse.setTitle(title);
-				%>
-
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:header
-					backURL="<%= backURL %>"
-					localizeTitle="<%= true %>"
-					showBackURL="<%= showBackURL %>"
-					title="<%= title %>"
-				/>
-			</c:otherwise>
-		</c:choose>
 	</c:if>
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />

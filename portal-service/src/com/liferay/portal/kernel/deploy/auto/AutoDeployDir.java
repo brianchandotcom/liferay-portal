@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.File;
 
@@ -47,6 +50,28 @@ public class AutoDeployDir {
 			AutoDeploymentContext autoDeploymentContext,
 			List<AutoDeployListener> autoDeployListeners)
 		throws AutoDeployException {
+
+		AutoDeployListener autoDeployListener = _serviceTracker.getService();
+
+		if (autoDeployListener != null) {
+
+			// If an AutoDeployListener is registered as an OSGi service, and it
+			// can handle the current deployment, it will take precedence over
+			// any existing listener.
+
+			// This will allow us to override the current behaviour when
+			// deploying the TCK apps
+
+			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+				autoDeployListener.deploy(autoDeploymentContext);
+
+				File file = autoDeploymentContext.getFile();
+
+				file.delete();
+
+				return;
+			}
+		}
 
 		String[] moduleFrameworkAutoDeployDirs = PropsUtil.getArray(
 			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
@@ -153,6 +178,8 @@ public class AutoDeployDir {
 		if (_autoDeployScanner != null) {
 			_autoDeployScanner.pause();
 		}
+
+		_serviceTracker.close();
 	}
 
 	public void unregisterListener(AutoDeployListener autoDeployListener) {
@@ -271,6 +298,16 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
+	private static final ServiceTracker<AutoDeployListener, AutoDeployListener>
+		_serviceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(AutoDeployListener.class);
+
+		_serviceTracker.open();
+	}
 
 	private final List<AutoDeployListener> _autoDeployListeners;
 	private final Map<String, Long> _blacklistFileTimestamps;

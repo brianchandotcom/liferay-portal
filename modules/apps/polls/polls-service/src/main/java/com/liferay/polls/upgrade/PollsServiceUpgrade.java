@@ -19,7 +19,6 @@ import com.liferay.polls.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.polls.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,8 +33,15 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.polls.service", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeClassNames(),
+			"com.liferay.polls.service", "0.0.1", "0.0.2",
+			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.polls.service", "0.0.2", "0.0.3",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.polls.service", "0.0.3", "1.0.0",
 			new UpgradeLastPublishDate());
 	}
 

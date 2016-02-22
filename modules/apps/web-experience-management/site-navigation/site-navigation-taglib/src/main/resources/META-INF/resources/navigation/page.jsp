@@ -23,6 +23,7 @@ if (portletDisplayDDMTemplate != null) {
 	Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 	contextObjects.put("branchNavItems", branchNavItems);
+	contextObjects.put("displayDepth", displayDepth);
 	contextObjects.put("includedLayouts", includedLayouts);
 	contextObjects.put("preview", preview);
 	contextObjects.put("rootLayoutLevel", rootLayoutLevel);

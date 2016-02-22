@@ -13,7 +13,9 @@
 		<#assign navItems = entries />
 
 		<#list navItems as navItem>
-			<#if navItem.isBrowsable() || navItem.hasBrowsableChildren() >
+			<#assign showChildren = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+
+			<#if navItem.isBrowsable() || showChildren >
 				<#assign nav_item_caret = "" />
 				<#assign nav_item_css_class = "" />
 				<#assign nav_item_href_link = "" />
@@ -22,7 +24,7 @@
 					<#assign nav_item_css_class = "active" />
 				</#if>
 
-				<#if navItem.hasBrowsableChildren() >
+				<#if showChildren >
 					<#assign toggle_text>
 						<@liferay.language key="toggle" />
 					</#assign>
@@ -37,7 +39,7 @@
 				<div class="btn-group navbar-site">
 					<a aria-labelledby="layout_${navItem.getLayoutId()}" class="${nav_item_css_class} btn btn-default" ${nav_item_href_link}><span>${navItem.getName()}</span></a>${nav_item_caret}
 
-					<#if navItem.hasBrowsableChildren() >
+					<#if showChildren >
 						<ul class="child-menu dropdown-menu" role="menu">
 							<#list navItem.getBrowsableChildren() as childNavigationItem>
 								<#assign nav_child_attr_selected = "" />

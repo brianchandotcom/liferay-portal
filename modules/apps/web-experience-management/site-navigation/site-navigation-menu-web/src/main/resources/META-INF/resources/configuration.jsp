@@ -85,6 +85,21 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 							</aui:select>
 						</div>
 
+						<aui:select name="preferences--displayDepth--">
+							<aui:option label="unlimited" value="0" />
+
+							<%
+							for (int i = 1; i <= 20; i++) {
+							%>
+
+								<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getDisplayDepth() == i %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
 						<aui:script>
 							Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutType', 'select', '<portlet:namespace />rootLayoutUuid');
 
@@ -122,6 +137,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');
 
+	var selectDisplayDepth = form.fm('displayDepth');
 	var selectDisplayStyle = form.fm('displayStyle');
 	var selectIncludedLayouts = form.fm('includedLayouts');
 	var selectRootLayoutLevel = form.fm('rootLayoutLevel');
@@ -139,6 +155,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 				preview: true
 			};
 
+			data.displayDepth = selectDisplayDepth.val();
 			data.includedLayouts = selectIncludedLayouts.val();
 			data.rootLayoutLevel = selectRootLayoutLevel.val();
 			data.rootLayoutType = selectRootLayoutType.val();

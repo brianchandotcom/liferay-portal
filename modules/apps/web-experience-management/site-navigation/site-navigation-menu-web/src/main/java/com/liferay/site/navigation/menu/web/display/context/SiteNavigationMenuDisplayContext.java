@@ -69,6 +69,18 @@ public class SiteNavigationMenuDisplayContext {
 		return _ddmTemplateKey;
 	}
 
+	public int getDisplayDepth() {
+		if (_displayDepth != -1) {
+			return _displayDepth;
+		}
+
+		_displayDepth = ParamUtil.getInteger(
+			_request, "displayDepth",
+			_siteNavigationMenuPortletInstanceConfiguration.displayDepth());
+
+		return _displayDepth;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -173,6 +185,7 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	private String _ddmTemplateKey;
+	private int _displayDepth = -1;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _includedLayouts;

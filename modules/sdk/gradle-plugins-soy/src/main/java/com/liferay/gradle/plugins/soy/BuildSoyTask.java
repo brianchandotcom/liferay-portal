@@ -22,6 +22,7 @@ import java.util.List;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
@@ -54,10 +55,9 @@ public class BuildSoyTask extends SourceTask {
 			});
 	}
 
+	@InputFiles
 	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		return project.files(_classpath);
+		return _classpath;
 	}
 
 	@OutputFiles
@@ -76,7 +76,7 @@ public class BuildSoyTask extends SourceTask {
 		return outputFiles;
 	}
 
-	public void setClasspath(Object classpath) {
+	public void setClasspath(FileCollection classpath) {
 		_classpath = classpath;
 	}
 
@@ -99,6 +99,6 @@ public class BuildSoyTask extends SourceTask {
 		return sb.substring(0, sb.length() - 1);
 	}
 
-	private Object _classpath;
+	private FileCollection _classpath;
 
 }

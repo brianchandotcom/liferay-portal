@@ -31,6 +31,8 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -79,8 +81,8 @@ public class SoyPlugin implements Plugin<Project> {
 			_VERSION);
 	}
 
-	protected BuildSoyTask addTaskBuildSoy(final Project project) {
-		BuildSoyTask buildSoyTask = GradleUtil.addTask(
+	protected BuildSoyTask addTaskBuildSoy(Project project) {
+		final BuildSoyTask buildSoyTask = GradleUtil.addTask(
 			project, BUILD_SOY_TASK_NAME, BuildSoyTask.class);
 
 		buildSoyTask.setDescription(
@@ -88,12 +90,15 @@ public class SoyPlugin implements Plugin<Project> {
 		buildSoyTask.setGroup(BasePlugin.BUILD_GROUP);
 		buildSoyTask.setIncludes(Collections.singleton("**/*.soy"));
 
-		buildSoyTask.setSource(
-			new Callable<File>() {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
 
 				@Override
-				public File call() throws Exception {
-					return getResourcesDir(project);
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskBuildSoyForJavaPlugin(buildSoyTask);
 				}
 
 			});
@@ -105,6 +110,20 @@ public class SoyPlugin implements Plugin<Project> {
 		BuildSoyTask buildSoyTask, FileCollection fileCollection) {
 
 		buildSoyTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTaskBuildSoyForJavaPlugin(
+		final BuildSoyTask buildSoyTask) {
+
+		buildSoyTask.setSource(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return getResourcesDir(buildSoyTask.getProject());
+				}
+
+			});
 	}
 
 	protected void configureTasksBuildSoy(

@@ -19,6 +19,9 @@ package com.liferay.announcements.web.constants;
  */
 public class AnnouncementsWebKeys {
 
+	public static final String ANNOUNCEMENTS_ENTRY =
+		"LIFERAY_SHARED_ANNOUNCEMENTS_ENTRY";
+
 	public static final String VIEW_ENTRY_FLAG_VALUE = "VIEW_ENTRY_FLAG_VALUE";
 
 }

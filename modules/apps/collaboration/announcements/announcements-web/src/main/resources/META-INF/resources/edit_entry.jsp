@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
+AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 

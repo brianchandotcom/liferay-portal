@@ -30,7 +30,7 @@
 	searchContainer.setResults(entries);
 
 	for (AnnouncementsEntry entry : entries) {
-		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+		request.setAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY, entry);
 		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, flag);
 	%>
 

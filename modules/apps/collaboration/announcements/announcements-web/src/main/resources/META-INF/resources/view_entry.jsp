@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
+AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY);
 int flagValue = GetterUtil.getInteger(request.getAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE));
 
 if (flagValue != AnnouncementsFlagConstants.HIDDEN) {

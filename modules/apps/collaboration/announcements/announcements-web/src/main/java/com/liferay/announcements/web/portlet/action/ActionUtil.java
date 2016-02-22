@@ -16,9 +16,9 @@ package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil;
+import com.liferay.announcements.web.constants.AnnouncementsWebKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -38,7 +38,7 @@ public class ActionUtil {
 			entry = AnnouncementsEntryServiceUtil.getEntry(entryId);
 		}
 
-		request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+		request.setAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY, entry);
 	}
 
 	public static void getEntry(PortletRequest portletRequest)

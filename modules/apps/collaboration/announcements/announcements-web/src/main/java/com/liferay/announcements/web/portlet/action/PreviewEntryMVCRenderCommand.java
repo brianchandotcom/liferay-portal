@@ -57,7 +57,8 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
 			AnnouncementsFlagConstants.NOT_HIDDEN);
 		renderRequest.setAttribute(
-			WebKeys.ANNOUNCEMENTS_ENTRY, getAnnouncementsEntry(renderRequest));
+			AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY,
+			getAnnouncementsEntry(renderRequest));
 
 		return "/view_entry.jsp";
 	}

@@ -25,9 +25,6 @@ public interface WebKeys {
 
 	public static final String ADDRESS = "ADDRESS";
 
-	@Distributed
-	public static final String ANNOUNCEMENTS_ENTRY = "LIFERAY_SHARED_ANNOUNCEMENTS_ENTRY";
-
 	public static final String ASSET_ADDON_ENTRIES = "ASSET_ADDON_ENTRIES";
 
 	public static final String ASSET_ADDON_ENTRY = "ASSET_ADDON_ENTRY";

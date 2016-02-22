@@ -68,7 +68,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -131,44 +131,132 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="name"
-			>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="sites"
+						toggleRowChecker="<%= true %>"
+					/>
 
-				<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
-				<%
-				int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
-				%>
+						<%
+						Date createDate = layoutSetPrototype.getModifiedDate();
 
-				<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-					<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= layoutSetPrototype.getDescription(locale) %>"
-			/>
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+						</h6>
 
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				property="createDate"
-			/>
+						<h5>
+							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+						</h5>
 
-			<liferay-ui:search-container-column-text
-				cssClass="list-group-item-field"
-				name="active"
-			>
-				<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>
-			</liferay-ui:search-container-column-text>
+						<h6 class="text-default">
+							<c:choose>
+								<c:when test="<%= layoutSetPrototype.isActive() %>">
+									<span><liferay-ui:message key="active" /></span>
+								</c:when>
+								<c:otherwise>
+									<span><liferay-ui:message key="not-active" /></span>
+								</c:otherwise>
+							</c:choose>
+						</h6>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				href="<%= rowURL %>"
-				path="/layout_set_prototype_action.jsp"
-			/>
+					<liferay-ui:search-container-column-jsp
+						path="/layout_set_prototype_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/layout_set_prototype_action.jsp"
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							icon="sites"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= layoutSetPrototype.getName(locale) %>"
+							url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
+						>
+							<liferay-frontend:vertical-card-header>
+
+								<%
+								Date createDate = layoutSetPrototype.getModifiedDate();
+
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
+
+								<label class="text-default">
+									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
+								</label>
+							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<label class="text-default">
+									<c:choose>
+										<c:when test="<%= layoutSetPrototype.isActive() %>">
+											<liferay-ui:message key="active" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="not-active" />
+										</c:otherwise>
+									</c:choose>
+								</label>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="name"
+					>
+
+						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+
+						<%
+						int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
+						%>
+
+						<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
+							<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= layoutSetPrototype.getDescription(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="create-date"
+						property="createDate"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="list-group-item-field"
+						name="active"
+						value='<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>'
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						href="<%= rowURL %>"
+						path="/layout_set_prototype_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

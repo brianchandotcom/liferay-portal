@@ -23,13 +23,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 
 String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 
-RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
-
-OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(ddlDisplayContext.getOrderByCol(), ddlDisplayContext.getOrderByType());
-
-recordSetSearch.setOrderByCol(ddlDisplayContext.getOrderByCol());
-recordSetSearch.setOrderByComparator(orderByComparator);
-recordSetSearch.setOrderByType(ddlDisplayContext.getOrderByType());
+RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletURL);
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />

@@ -46,11 +46,8 @@ page import="com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil" %><
 page import="com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil" %><%@
 page import="com.liferay.dynamic.data.lists.service.permission.DDLPermission" %><%@
 page import="com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission" %><%@
-page import="com.liferay.dynamic.data.lists.util.DDLUtil" %><%@
-page import="com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration" %><%@
 page import="com.liferay.dynamic.data.lists.web.display.context.DDLDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.web.display.context.DDLViewRecordsDisplayContext" %><%@
-page import="com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearchTerms" %><%@
@@ -83,6 +80,7 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.*" %><%@
 page import="com.liferay.portal.kernel.model.impl.*" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
@@ -100,6 +98,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -138,9 +137,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(request);
-
-DDLWebConfiguration ddlWebConfiguration = (DDLWebConfiguration)request.getAttribute(DDLWebConfiguration.class.getName());
+DDLDisplayContext ddlDisplayContext = (DDLDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/init-ext.jsp" %>

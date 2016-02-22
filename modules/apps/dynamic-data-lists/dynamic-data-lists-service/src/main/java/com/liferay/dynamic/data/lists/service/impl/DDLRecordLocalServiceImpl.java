@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
@@ -23,7 +24,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.DDL;
-import com.liferay.dynamic.data.lists.util.DDLUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
@@ -36,19 +36,24 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,9 +61,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -443,14 +450,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		SearchContext searchContext) {
 
 		try {
-			Indexer<DDLRecord> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DDLRecord.class);
+			Indexer<DDLRecord> indexer = getDDLRecordIndexer();
 
 			Hits hits = indexer.search(searchContext, DDL.SELECTED_FIELD_NAMES);
 
-			List<DDLRecord> ddlRecords = DDLUtil.getRecords(hits);
+			List<DDLRecord> records = getRecords(hits);
 
-			return new BaseModelSearchResult<>(ddlRecords, hits.getLength());
+			return new BaseModelSearchResult<>(records, hits.getLength());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -782,6 +788,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			companyId, groupId, DDLRecord.class.getName(), recordVersionId);
 	}
 
+	protected Indexer<DDLRecord> getDDLRecordIndexer() {
+		Indexer<DDLRecord> indexer = indexerRegistry.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		return indexer;
+	}
+
 	protected String getNextVersion(
 		String version, boolean majorVersion, int workflowAction) {
 
@@ -800,6 +813,40 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected List<DDLRecord> getRecords(Hits hits) throws PortalException {
+		List<DDLRecord> records = new ArrayList<>();
+
+		for (Document document : hits.toList()) {
+			long recordId = GetterUtil.getLong(
+				document.get(
+					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
+
+			try {
+				DDLRecord record = getRecord(recordId);
+
+				records.add(record);
+			}
+			catch (NoSuchRecordException nsre) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"DDL record index is stale and contains record " +
+							recordId,
+						nsre);
+				}
+
+				long companyId = GetterUtil.getLong(
+					document.get(
+						com.liferay.portal.kernel.search.Field.COMPANY_ID));
+
+				Indexer<DDLRecord> indexer = getDDLRecordIndexer();
+
+				indexer.delete(companyId, document.getUID());
+			}
+		}
+
+		return records;
 	}
 
 	protected String getWorkflowAssetClassName(DDLRecordSet recordSet) {
@@ -904,5 +951,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		ddlRecordVersionPersistence.update(recordVersion);
 	}
+
+	@ServiceReference(type = IndexerRegistry.class)
+	protected IndexerRegistry indexerRegistry;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLRecordLocalServiceImpl.class);
 
 }

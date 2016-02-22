@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.liferay.portal.security.service.access.policy">
+	<namespace>SAP</namespace>
+	<entity name="SAPEntry" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="sapEntryId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="allowedServiceSignatures" type="String" />
+		<column name="defaultSAPEntry" type="boolean" />
+		<column name="enabled" type="boolean" />
+		<column name="name" type="String" />
+		<column name="title" type="String" localized="true" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_D" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="defaultSAPEntry" />
+		</finder>
+		<finder name="C_N" return-type="SAPEntry">
+			<finder-column name="companyId" />
+			<finder-column name="name" case-sensitive="false" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
+		<reference package-path="com.liferay.portal" entity="Role" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateSAPEntryName</exception>
+		<exception>RequiredSAPEntry</exception>
+		<exception>SAPEntryName</exception>
+		<exception>SAPEntryTitle</exception>
+	</exceptions>
+</service-builder>

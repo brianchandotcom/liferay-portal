@@ -19,6 +19,7 @@
 <liferay-site-navigation:navigation
 	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
 	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
+	displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
 	includedLayouts="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>"
 	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
 	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"

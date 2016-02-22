@@ -15,6 +15,7 @@
 package com.liferay.wiki.engine;
 
 import com.liferay.wiki.exception.PageContentException;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
@@ -68,7 +69,7 @@ public interface WikiEngine {
 
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage page)
+			WikiNode node, WikiPage page)
 		throws IOException, ServletException;
 
 	/**

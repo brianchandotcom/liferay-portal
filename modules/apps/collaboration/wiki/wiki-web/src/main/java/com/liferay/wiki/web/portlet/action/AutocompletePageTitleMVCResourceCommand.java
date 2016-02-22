@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -80,6 +81,13 @@ public class AutocompletePageTitleMVCResourceCommand
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void set_wikiPageTitleSearcher(
+		WikiPageTitleSearcher wikiPageTitleSearcher) {
+
+		_wikiPageTitleSearcher = wikiPageTitleSearcher;
+	}
+
 	protected JSONArray getJSONArray(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortalException {
@@ -93,12 +101,13 @@ public class AutocompletePageTitleMVCResourceCommand
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		WikiPageTitleSearcher wikiPageTitleSearcher =
-			new WikiPageTitleSearcher();
-
 		searchContext.setKeywords(StringUtil.toLowerCase(query));
 
-		Hits hits = wikiPageTitleSearcher.search(searchContext);
+		long nodeId = ParamUtil.getLong(resourceRequest, "nodeId");
+
+		searchContext.setNodeIds(new long[] {nodeId});
+
+		Hits hits = _wikiPageTitleSearcher.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -113,5 +122,7 @@ public class AutocompletePageTitleMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutocompletePageTitleMVCResourceCommand.class);
+
+	private WikiPageTitleSearcher _wikiPageTitleSearcher;
 
 }

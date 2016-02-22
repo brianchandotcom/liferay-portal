@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -37,13 +39,17 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.search.WikiPageTitleSearcher;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -79,6 +85,8 @@ public class WikiPageTitleSearcherTest {
 		_node = WikiTestUtil.addNode(_group.getGroupId());
 
 		_searchContext = getSearchContext(_group);
+
+		_searchContext.setNodeIds(new long[] {_node.getNodeId()});
 	}
 
 	@After
@@ -112,6 +120,19 @@ public class WikiPageTitleSearcherTest {
 	}
 
 	@Test
+	public void testBasicSearchWithOneTermOnlyInCurrentNode() throws Exception {
+		addPage("Barcelona", RandomTestUtil.randomString());
+		addPage("Madrid", RandomTestUtil.randomString());
+
+		WikiNode node = WikiTestUtil.addNode(_group.getGroupId());
+
+		addPage(node.getNodeId(), "Barcelona", RandomTestUtil.randomString());
+
+		assertSearch("Barcelona", 1);
+		assertSearchNode("Barcelona", _node.getNodeId());
+	}
+
+	@Test
 	public void testLikeSearchWithOneTerm() throws Exception {
 		addPage("Gejon", RandomTestUtil.randomString());
 		addPage("Gijom", RandomTestUtil.randomString());
@@ -126,6 +147,21 @@ public class WikiPageTitleSearcherTest {
 		assertSearch("Gijon", 1);
 
 		assertSearchTitle("Gijon", "Gijon");
+	}
+
+	protected void addPage(long nodeId, String title, String content)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		WikiTestUtil.addPage(
+			_user.getUserId(), nodeId, title, content, true, serviceContext);
+	}
+
+	protected void addPage(String title, String content) throws Exception {
+		addPage(_node.getNodeId(), title, content);
 	}
 
 	protected void assertSearch(final String keywords, final int length)
@@ -145,6 +181,39 @@ public class WikiPageTitleSearcherTest {
 					Hits hits = indexer.search(_searchContext);
 
 					Assert.assertEquals(length, hits.getLength());
+
+					return null;
+				}
+
+			});
+	}
+
+	protected void assertSearchNode(final String keywords, final long nodeId)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_searchContext.setKeywords(
+						StringUtil.toLowerCase(keywords));
+
+					Indexer<?> indexer = WikiPageTitleSearcher.getInstance();
+
+					Hits hits = indexer.search(_searchContext);
+
+					List<SearchResult> searchResults =
+						SearchResultUtil.getSearchResults(
+							hits, LocaleUtil.getDefault());
+
+					for (SearchResult searchResult : searchResults) {
+						WikiPage page = WikiPageLocalServiceUtil.getPage(
+							searchResult.getClassPK());
+
+						Assert.assertEquals(nodeId, page.getNodeId());
+					}
 
 					return null;
 				}
@@ -207,16 +276,6 @@ public class WikiPageTitleSearcherTest {
 		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
-
-	private void addPage(String title, String content) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		WikiTestUtil.addPage(
-			_user.getUserId(), _node.getNodeId(), title, content, true,
-			serviceContext);
 	}
 
 	@DeleteAfterTestRun

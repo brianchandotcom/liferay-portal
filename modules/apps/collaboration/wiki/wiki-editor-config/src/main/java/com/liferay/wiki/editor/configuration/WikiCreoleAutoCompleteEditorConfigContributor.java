@@ -75,6 +75,13 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 
 		autoCompletePageTitleURL.setResourceID("/wiki/autocomplete_page_title");
 
+		Map<String, String> fileBrowserParams =
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
+
+		autoCompletePageTitleURL.setParameter(
+			"nodeId", fileBrowserParams.get("nodeId"));
+
 		String source =
 			autoCompletePageTitleURL.toString() + "&" +
 				PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI);

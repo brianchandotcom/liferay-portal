@@ -174,16 +174,6 @@
 		</if>
 	</command>
 
-	<command name="signInViaDockbar">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="SignIn#_signInViaDockbar">
-			<var name="rememberMe" value="${rememberMe}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userPassword" value="${userPassword}" />
-		</execute>
-	</command>
-
 	<command name="signInViaGoogle">
 		<execute macro="Navigator#openURL" />
 

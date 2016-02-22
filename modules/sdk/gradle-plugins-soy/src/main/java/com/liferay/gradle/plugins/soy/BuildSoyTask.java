@@ -22,6 +22,7 @@ import java.util.List;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
@@ -54,6 +55,7 @@ public class BuildSoyTask extends SourceTask {
 			});
 	}
 
+	@InputFiles
 	public FileCollection getClasspath() {
 		Project project = getProject();
 

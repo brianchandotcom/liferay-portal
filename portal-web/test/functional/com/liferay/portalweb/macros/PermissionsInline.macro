@@ -140,11 +140,8 @@
 	<command name="gotoConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
+			<var name="portletOption" value="Permissions" />
 		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>

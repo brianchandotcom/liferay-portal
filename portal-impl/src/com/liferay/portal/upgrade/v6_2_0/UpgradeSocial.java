@@ -977,9 +977,9 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			@Override
 			public String getEntityQuery() {
-				return "select title, version from WikiPage where" +
+				return "select title, version from WikiPage where " +
 					"companyId = ? and groupId = ? and resourcePrimKey = ? " +
-						"and head = true";
+						"and head = ?";
 			}
 
 			@Override
@@ -994,6 +994,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(2, groupId);
 
 				ps.setLong(3, classPK);
+
+				ps.setBoolean(4, true);
 			}
 
 			@Override

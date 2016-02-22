@@ -120,9 +120,13 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
+		<var name="key_subCategoryName" value="${subCategoryName}" />
+
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" value1="${subCategoryName}" />
+
 		<execute function="AssertClick" locator1="Button#ADD_SUBCATEGORY" value1="Add Subcategory" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${subCategorySubCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -411,15 +415,13 @@
 
 	<command name="viewSubcategoryFromSubcategoryPG">
 		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_subCategoryDescription" value="${subCategoryDescription}" />
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_THREADS" value1="0" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_POSTS" value1="0" />
-		<execute function="AssertElementPresent" locator1="MessageBoards#SUBCATEGORY_TABLE_ACTIONS" />
-		<execute function="Click" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" value1="${subCategoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY_DESCRIPTION" value1="${subCategoryDescription}" />
+		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${subCategoryName}" />
 	</command>
 

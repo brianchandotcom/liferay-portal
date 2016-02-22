@@ -198,8 +198,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_LIST_SUBCATEGORY</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_subCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_LIST_CATEGORY_DESCRIPTION</td>
 	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_categoryName}')]/../..//h5[contains(.,'${key_categoryDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_SUBCATEGORY_DESCRIPTION</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_subCategoryName}')]/../..//h5[contains(.,'${key_subCategoryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

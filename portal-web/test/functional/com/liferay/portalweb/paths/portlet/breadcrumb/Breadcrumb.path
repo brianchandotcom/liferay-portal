@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_EMBEDDED</td>
-	<td>//div[contains(@id,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
+	<td>//div[contains(@id,'breadcrumb') and contains(@id,'site_navigation')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>

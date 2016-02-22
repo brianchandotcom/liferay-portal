@@ -133,9 +133,10 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#addSubcategoryToSubcategoryPG">
-			<var name="categoryName" value="MB Subcategory Name" />
+			<var name="categoryName" value="MB Category Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
-			<var name="subCategoryName" value="MB Subcategory Subcategory Name" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
+			<var name="subCategorySubCategoryName" value="MB Subcategory Subcategory Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -158,6 +159,7 @@
 			<var name="categoryName" value="MB Category Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewSubcategoryFromSubcategoryPG">
@@ -201,6 +203,7 @@
 			<var name="categoryName" value="MB Category Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewSubcategoryFromSubcategoryPG">
@@ -239,6 +242,7 @@
 			<var name="categoryName" value="MB Category Name" />
 			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewSubcategoryFromSubcategoryPG">

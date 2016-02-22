@@ -204,11 +204,22 @@
 						path: 'ddm_form.js',
 						requires: [
 							'aui-base',
+							'aui-datatable',
 							'aui-datatype',
+							'aui-image-viewer',
 							'aui-io-request',
 							'aui-parse-content',
+							'aui-set',
+							'aui-sortable-list',
+							'json',
+							'liferay-form',
 							'liferay-item-selector-dialog',
+							'liferay-layouts-tree',
+							'liferay-layouts-tree-radio',
+							'liferay-layouts-tree-selectable',
 							'liferay-map-base',
+							'liferay-notice',
+							'liferay-portlet-url',
 							'liferay-translation-manager'
 						]
 					},

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.web.constants;
+package com.liferay.exportimport.constants;
 
 /**
  * @author Daniel Kocsis

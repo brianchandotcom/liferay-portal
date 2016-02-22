@@ -134,7 +134,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 						%>
 
 						<liferay-util:include page="/export/export_templates/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+							<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 							<liferay-util:param name="treeId" value="<%= treeId %>" />

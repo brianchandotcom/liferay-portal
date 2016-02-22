@@ -263,7 +263,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 				<c:if test="<%= !group.isCompany() %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 						<liferay-util:include page="/new_publication/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+							<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 							<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

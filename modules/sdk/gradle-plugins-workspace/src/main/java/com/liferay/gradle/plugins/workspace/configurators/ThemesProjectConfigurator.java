@@ -48,6 +48,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
@@ -173,7 +174,12 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		ArtifactHandler artifacts = project.getArtifacts();
 
+		ConfigurableFileCollection artifactsBuiltBy = project.files(outputFile);
+
+		artifactsBuiltBy.builtBy("gulp");
+
 		artifacts.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
+
 	}
 
 	protected void configureRootTaskDistBundle(

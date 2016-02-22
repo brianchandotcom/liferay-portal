@@ -6774,6 +6774,12 @@ if (ppstate.equals("normal")) {
 		<antcall target="record-testray-logs-jenkins-console" />
 
 		<antcall target="record-testray-logs-poshi-report" />
+
+		<for list="production,uat" param="testray.base.dir.name">
+			<sequential>
+				<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="record-testray-logs-jenkins-console">
@@ -6800,12 +6806,6 @@ if (ppstate.equals("normal")) {
 				/>
 
 				<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
-
-				<for list="production,uat" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-					</sequential>
-				</for>
 			</then>
 		</if>
 	</target>
@@ -6824,12 +6824,6 @@ if (ppstate.equals("normal")) {
 				<copy todir="testray-logs/${testray.logs.dir.name}">
 					<fileset dir="portal-web/test-results/${poshi.dir.name}" erroronmissingdir="false" />
 				</copy>
-
-				<for list="production,uat" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-					</sequential>
-				</for>
 			</then>
 		</if>
 	</target>

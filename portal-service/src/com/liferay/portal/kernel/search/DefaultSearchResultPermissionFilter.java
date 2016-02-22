@@ -52,8 +52,14 @@ public class DefaultSearchResultPermissionFilter
 			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
+		long companyId = _permissionChecker.getCompanyId();
+
+		boolean isCompanyAdmin = _permissionChecker.isCompanyAdmin(companyId);
+
 		for (int i = 0; i < documents.length; i++) {
-			if (_isIncludeDocument(documents[i], status)) {
+			if (_isIncludeDocument(
+					documents[i], status, isCompanyAdmin, companyId)) {
+
 				docs.add(documents[i]);
 				scores.add(hits.score(i));
 			}
@@ -77,10 +83,6 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected boolean isGroupAdmin(SearchContext searchContext) {
-		if (_permissionChecker.isCompanyAdmin(searchContext.getCompanyId())) {
-			return true;
-		}
-
 		long[] groupIds = searchContext.getGroupIds();
 
 		if (groupIds == null) {
@@ -96,7 +98,20 @@ public class DefaultSearchResultPermissionFilter
 		return true;
 	}
 
-	private boolean _isIncludeDocument(Document document, int status) {
+	private boolean _isIncludeDocument(
+		Document document, int status, boolean isCompanyAdmin, long companyId) {
+
+		long entryCompanyId = GetterUtil.getLong(
+			document.get(Field.COMPANY_ID));
+
+		if (entryCompanyId != companyId) {
+			return false;
+		}
+
+		if (isCompanyAdmin) {
+			return true;
+		}
+
 		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);

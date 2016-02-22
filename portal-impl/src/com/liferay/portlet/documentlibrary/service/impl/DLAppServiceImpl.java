@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -2255,6 +2256,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		try {
 			Repository repository = getRepository(repositoryId);
 
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			searchContext.setCompanyId(permissionChecker.getCompanyId());
+			searchContext.setUserId(permissionChecker.getUserId());
+
 			return repository.search(searchContext);
 		}
 		catch (Exception e) {
@@ -2269,6 +2275,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		try {
 			Repository repository = getRepository(repositoryId);
+
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			searchContext.setCompanyId(permissionChecker.getCompanyId());
+			searchContext.setUserId(permissionChecker.getUserId());
 
 			return repository.search(searchContext, query);
 		}

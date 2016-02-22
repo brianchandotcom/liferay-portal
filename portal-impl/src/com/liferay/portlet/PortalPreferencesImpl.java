@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,18 +52,17 @@ public class PortalPreferencesImpl
 	extends BasePreferencesImpl
 	implements Cloneable, PortalPreferences, Serializable {
 
-	public static final TransactionAttribute SUPPORTS_TRANSACTION_ATTRIBUTE;
+	public static final TransactionConfig SUPPORTS_TRANSACTION_CONFIG;
 
 	static {
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.SUPPORTS);
 		builder.setReadOnly(true);
 		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
-		SUPPORTS_TRANSACTION_ATTRIBUTE = builder.build();
+		SUPPORTS_TRANSACTION_CONFIG = builder.build();
 	}
 
 	public PortalPreferencesImpl() {
@@ -462,7 +461,7 @@ public class PortalPreferencesImpl
 		throws Throwable {
 
 		return TransactionInvokerUtil.invoke(
-			SUPPORTS_TRANSACTION_ATTRIBUTE,
+			SUPPORTS_TRANSACTION_CONFIG,
 			new Callable<com.liferay.portal.kernel.model.PortalPreferences>() {
 
 				@Override

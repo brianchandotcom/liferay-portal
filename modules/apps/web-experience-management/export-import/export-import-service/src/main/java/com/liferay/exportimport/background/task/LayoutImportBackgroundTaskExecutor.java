@@ -82,7 +82,7 @@ public class LayoutImportBackgroundTaskExecutor
 				FileUtil.write(file, attachmentsFileEntry.getContentStream());
 
 				TransactionInvokerUtil.invoke(
-					transactionAttribute,
+					transactionConfig,
 					new LayoutImportCallable(exportImportConfiguration, file));
 			}
 			catch (Throwable t) {

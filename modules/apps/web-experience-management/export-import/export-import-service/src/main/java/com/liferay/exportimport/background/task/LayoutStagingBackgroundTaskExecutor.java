@@ -123,7 +123,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId(), "exported");
 
 			missingReferences = TransactionInvokerUtil.invoke(
-				transactionAttribute,
+				transactionConfig,
 				new LayoutStagingImportCallable(
 					backgroundTask.getBackgroundTaskId(),
 					exportImportConfiguration, file, sourceGroupId,

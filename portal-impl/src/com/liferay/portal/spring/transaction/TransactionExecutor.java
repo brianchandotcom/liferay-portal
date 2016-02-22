@@ -17,7 +17,6 @@ package com.liferay.portal.spring.transaction;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Michael C. Han
@@ -27,7 +26,7 @@ public interface TransactionExecutor {
 
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
-			TransactionAttribute transactionAttribute,
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
 			MethodInvocation methodInvocation)
 		throws Throwable;
 

@@ -72,7 +72,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -201,7 +201,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		Callable<Group> groupCallable = new GroupCallable(actionRequest);
 
 		Group group = TransactionInvokerUtil.invoke(
-			_transactionAttribute, groupCallable);
+			_transactionConfig, groupCallable);
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
@@ -916,8 +916,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
-	private static final TransactionAttribute _transactionAttribute =
-		TransactionAttribute.Factory.create(
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private class GroupCallable implements Callable<Group> {

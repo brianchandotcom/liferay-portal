@@ -168,8 +168,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 				}
 
 			});
-		actionableDynamicQuery.setTransactionAttribute(
-			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_ATTRIBUTE);
+		actionableDynamicQuery.setTransactionConfig(
+			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
 		actionableDynamicQuery.performActions();
 	}

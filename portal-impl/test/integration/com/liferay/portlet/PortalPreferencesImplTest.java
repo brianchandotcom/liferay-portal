@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionAttributeAdaptor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
+import com.liferay.portal.spring.transaction.TransactionStatusAdaptor;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,8 +59,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Matthew Tambara
@@ -104,7 +104,7 @@ public class PortalPreferencesImplTest {
 	public void tearDown() throws Throwable {
 		_synchronizeThreadLocal.set(false);
 
-		Builder builder = new Builder();
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		TransactionInvokerUtil.invoke(
 			builder.build(),
@@ -459,21 +459,21 @@ public class PortalPreferencesImplTest {
 		@Override
 		public void commit(
 			PlatformTransactionManager platformTransactionManager,
-			TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus) {
+			TransactionAttributeAdaptor transactionAttributeAdaptor,
+			TransactionStatusAdaptor transactionStatusAdaptor) {
 
 			if (!_synchronizeThreadLocal.get()) {
 				_originalTransactionExecutor.commit(
-					platformTransactionManager, transactionAttribute,
-					transactionStatus);
+					platformTransactionManager, transactionAttributeAdaptor,
+					transactionStatusAdaptor);
 			}
 
 			try {
 				_cyclicBarrier.await();
 
 				_originalTransactionExecutor.commit(
-					platformTransactionManager, transactionAttribute,
-					transactionStatus);
+					platformTransactionManager, transactionAttributeAdaptor,
+					transactionStatusAdaptor);
 			}
 			catch (Throwable t) {
 				ReflectionUtil.throwException(t);

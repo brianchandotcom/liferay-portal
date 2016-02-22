@@ -18,7 +18,6 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
-import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -46,7 +45,7 @@ public class TransactionInvokerUtilTest {
 
 		try {
 			TransactionInvokerUtil.invoke(
-				_transactionAttribute,
+				_transactionConfig,
 				new Callable<Void>() {
 
 					@Override
@@ -80,7 +79,7 @@ public class TransactionInvokerUtilTest {
 
 		try {
 			TransactionInvokerUtil.invoke(
-				_transactionAttribute,
+				_transactionConfig,
 				new Callable<Void>() {
 
 					@Override
@@ -115,15 +114,15 @@ public class TransactionInvokerUtilTest {
 		}
 	}
 
-	private static final TransactionAttribute _transactionAttribute;
+	private static final TransactionConfig _transactionConfig;
 
 	static {
-		Builder builder = new Builder();
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.REQUIRED);
 		builder.setRollbackForClasses(Exception.class);
 
-		_transactionAttribute = builder.build();
+		_transactionConfig = builder.build();
 	}
 
 }

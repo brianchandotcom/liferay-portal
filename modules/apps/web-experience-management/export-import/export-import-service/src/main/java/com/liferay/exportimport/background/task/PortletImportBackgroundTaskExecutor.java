@@ -83,7 +83,7 @@ public class PortletImportBackgroundTaskExecutor
 				FileUtil.write(file, attachmentsFileEntry.getContentStream());
 
 				TransactionInvokerUtil.invoke(
-					transactionAttribute,
+					transactionConfig,
 					new PortletImportCallable(exportImportConfiguration, file));
 			}
 			catch (Throwable t) {

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
@@ -41,14 +41,13 @@ public class TransactionalTestRule implements TestRule {
 	}
 
 	public TransactionalTestRule(Propagation propagation) {
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(propagation);
 		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
-		_transactionAttribute = builder.build();
+		_transactionConfig = builder.build();
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class TransactionalTestRule implements TestRule {
 			@Override
 			public void evaluate() throws Throwable {
 				TransactionInvokerUtil.invoke(
-					getTransactionAttribute(),
+					getTransactionConfig(),
 					new Callable<Void>() {
 
 						@Override
@@ -85,10 +84,10 @@ public class TransactionalTestRule implements TestRule {
 		};
 	}
 
-	public TransactionAttribute getTransactionAttribute() {
-		return _transactionAttribute;
+	public TransactionConfig getTransactionConfig() {
+		return _transactionConfig;
 	}
 
-	private final TransactionAttribute _transactionAttribute;
+	private final TransactionConfig _transactionConfig;
 
 }

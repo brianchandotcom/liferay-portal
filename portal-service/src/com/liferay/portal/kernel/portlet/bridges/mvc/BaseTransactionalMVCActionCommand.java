@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.util.concurrent.Callable;
@@ -49,8 +49,7 @@ public abstract class BaseTransactionalMVCActionCommand
 
 			};
 
-			return TransactionInvokerUtil.invoke(
-				_transactionAttribute, callable);
+			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
 		catch (Throwable t) {
 			if (t instanceof PortletException) {
@@ -65,16 +64,15 @@ public abstract class BaseTransactionalMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
-	private static final TransactionAttribute _transactionAttribute;
+	private static final TransactionConfig _transactionConfig;
 
 	static {
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.REQUIRES_NEW);
 		builder.setRollbackForClasses(Exception.class);
 
-		_transactionAttribute = builder.build();
+		_transactionConfig = builder.build();
 	}
 
 }

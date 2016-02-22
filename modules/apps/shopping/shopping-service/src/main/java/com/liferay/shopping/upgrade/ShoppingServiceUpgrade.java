@@ -35,8 +35,15 @@ public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.shopping.service", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeClassNames(),
+			"com.liferay.shopping.service", "0.0.1", "0.0.2",
+			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.shopping.service", "0.0.2", "0.0.3",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.shopping.service", "0.0.3", "1.0.0",
 			new UpgradeCompanyId(), new UpgradeShopping(),
 			new UpgradeShoppingPreferences());
 	}

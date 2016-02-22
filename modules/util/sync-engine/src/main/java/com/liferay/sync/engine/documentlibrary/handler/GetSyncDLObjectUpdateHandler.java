@@ -322,14 +322,16 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		SyncFileService.update(targetSyncFile);
 	}
 
-	protected void deleteFile(SyncFile sourceSyncFile, boolean trashed)
+	protected void deleteFile(SyncFile sourceSyncFile, SyncFile targetSyncFile)
 		throws Exception {
 
 		if (sourceSyncFile.getUiEvent() == SyncFile.UI_EVENT_DELETED_LOCAL) {
 			return;
 		}
 
-		if (trashed) {
+		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
+
+		if (targetSyncFile.getEvent() == SyncFile.EVENT_TRASH) {
 			sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_TRASHED_REMOTE);
 		}
 		else {
@@ -580,7 +582,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					return;
 				}
 
-				deleteFile(sourceSyncFile, false);
+				deleteFile(sourceSyncFile, targetSyncFile);
 			}
 			else if (event.equals(SyncFile.EVENT_MOVE)) {
 				if (sourceSyncFile == null) {
@@ -613,7 +615,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					return;
 				}
 
-				deleteFile(sourceSyncFile, true);
+				deleteFile(sourceSyncFile, targetSyncFile);
 			}
 			else if (event.equals(SyncFile.EVENT_UPDATE)) {
 				if (sourceSyncFile == null) {

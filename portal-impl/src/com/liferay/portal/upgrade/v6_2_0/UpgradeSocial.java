@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -548,7 +549,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				activityQueryParameters.put(
 					3,
 					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_UPDATE_ENTRY)));
+						Integer.class.getName(),
+						String.valueOf(_UPDATE_ENTRY)));
 
 				return activityQueryParameters;
 			}
@@ -615,7 +617,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				activityQueryParameters.put(
 					3,
 					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_UPDATE_ENTRY)));
+						Integer.class.getName(),
+						String.valueOf(_UPDATE_ENTRY)));
 
 				return activityQueryParameters;
 			}
@@ -711,7 +714,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			@Override
 			public String getEntityQuery() {
-				return "select title from KBArticle where resourceprimkey = ?";
+				return "select title from KBArticle where resourcePrimKey = ?";
 			}
 
 			@Override
@@ -788,8 +791,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			@Override
 			public String getEntityQuery() {
-				return "select classnameid, classpk from KBComment where " +
-					"kbcommentid = ?";
+				return "select classNameId, classPK from KBComment where " +
+					"kbCommentId = ?";
 			}
 
 			@Override
@@ -799,8 +802,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				JSONObject extraDataJSONObject = null;
 
-				long classnameId = entityResultSet.getLong("classnameid");
-				long classpk = entityResultSet.getLong("classpk");
+				long classnameId = entityResultSet.getLong("classNameId");
+				long classpk = entityResultSet.getLong("classPK");
 
 				Connection con = null;
 				PreparedStatement ps = null;
@@ -833,7 +836,7 @@ public class UpgradeSocial extends UpgradeProcess {
 						while (rs.next()) {
 							extraDataJSONObject =
 								extraDataGenerator.getExtraDataJSONObject(
-									rs, "");
+									rs, StringPool.BLANK);
 						}
 					}
 				}
@@ -905,7 +908,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			@Override
 			public String getEntityQuery() {
-				return "select title from KBTemplate where kbtemplateid = ?";
+				return "select title from KBTemplate where kbTemplateId = ?";
 			}
 
 			@Override

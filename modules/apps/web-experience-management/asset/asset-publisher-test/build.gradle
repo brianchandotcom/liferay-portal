@@ -2,8 +2,8 @@ dependencies {
 	provided project(":apps:web-experience-management:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:web-experience-management:asset:asset-publisher-web")
 	testIntegrationCompile project(":apps:web-experience-management:journal:journal-api")
 }

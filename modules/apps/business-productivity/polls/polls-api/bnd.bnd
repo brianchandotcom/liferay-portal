@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Polls API
+Bundle-SymbolicName: com.liferay.polls.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.polls.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Polls
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

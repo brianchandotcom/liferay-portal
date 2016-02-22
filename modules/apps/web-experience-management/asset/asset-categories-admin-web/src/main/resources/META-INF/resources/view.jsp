@@ -17,57 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner");
-
-vocabulariesSearchContainer.setSearch(Validator.isNotNull(keywords));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
-
-vocabulariesSearchContainer.setOrderByCol(orderByCol);
-
-boolean orderByAsc = false;
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<AssetVocabulary> orderByComparator = new AssetVocabularyCreateDateComparator(orderByAsc);
-
-vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
-
-vocabulariesSearchContainer.setOrderByType(orderByType);
-vocabulariesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-
-List<AssetVocabulary> vocabularies = null;
-int vocabulariesCount = 0;
-
-if (Validator.isNotNull(keywords)) {
-	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
-
-	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), sort);
-
-	vocabulariesCount = assetVocabularyDisplay.getTotal();
-
-	vocabulariesSearchContainer.setTotal(vocabulariesCount);
-
-	vocabularies = assetVocabularyDisplay.getVocabularies();
-}
-else {
-	vocabulariesCount = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
-
-	vocabulariesSearchContainer.setTotal(vocabulariesCount);
-
-	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), vocabulariesSearchContainer.getOrderByComparator());
-}
-
-vocabulariesSearchContainer.setResults(vocabularies);
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
@@ -78,7 +27,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<aui:nav-item href="<%= mainURL.toString() %>" label="vocabularies" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= Validator.isNotNull(keywords) || (vocabulariesCount > 0) %>">
+	<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesSearch() %>">
 		<liferay-portlet:renderURL varImpl="portletURL" />
 
 		<aui:nav-bar-search>
@@ -90,7 +39,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= vocabulariesCount <= 0 %>"
+	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="assetVocabularies"
 >
@@ -102,8 +51,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			/>
 
 			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
+				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
+				orderByType="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 				orderColumns='<%= new String[] {"create-date"} %>'
 				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
 			/>
@@ -112,7 +61,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
 			portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -135,7 +84,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<liferay-ui:search-container
 		id="assetVocabularies"
-		searchContainer="<%= vocabulariesSearchContainer %>"
+		searchContainer="<%= assetCategoriesDisplayContext.getVocabulariesSearchContainer() %>"
 	>
 
 		<liferay-ui:search-container-row

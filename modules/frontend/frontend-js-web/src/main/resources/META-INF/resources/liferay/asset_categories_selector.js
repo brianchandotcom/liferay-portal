@@ -568,7 +568,6 @@ AUI.add(
 							{
 								children: [
 									{
-										icon: 'icon-search',
 										label: instance.get('label'),
 										on: {
 											click: A.bind('_showSelectPopup', instance)

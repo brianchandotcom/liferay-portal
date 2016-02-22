@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -243,48 +241,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		runSQL("drop table SO_SocialActivity");
 	}
 
-	protected static abstract class BaseExtraDataGenerator
-		implements ExtraDataGenerator {
-
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-
-			Map<String, KeyValuePair> extraDataMap = getExtraDataMap();
-
-			if (MapUtil.isNotEmpty(extraDataMap)) {
-				for (Map.Entry<String, KeyValuePair> entry :
-						extraDataMap.entrySet()) {
-
-					String entryKey = entry.getKey();
-
-					KeyValuePair entryValue = entry.getValue();
-
-					String clazz = entryValue.getKey();
-
-					if (clazz.equals(String.class.getName())) {
-						result.put(
-							entryKey,
-							entityResultSet.getString(entryValue.getValue()));
-					}
-					else if (clazz.equals(Double.class.getName())) {
-						result.put(
-							entryKey,
-							entityResultSet.getDouble(entryValue.getValue()));
-					}
-				}
-			}
-
-			return result;
-		}
-
-		protected abstract Map<String, KeyValuePair> getExtraDataMap();
-
-	}
-
 	protected interface ExtraDataGenerator {
 
 		public String getActivityQueryWhereClause();
@@ -308,7 +264,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 	private static final ExtraDataGenerator _addAssetCommentExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -336,8 +292,9 @@ public class UpgradeSocial extends UpgradeProcess {
 				catch (JSONException jsone) {
 				}
 
-				JSONObject result = super.getExtraDataJSONObject(
-					entityResultSet, extraData);
+				JSONObject result = JSONFactoryUtil.createJSONObject();
+
+				result.put("title", entityResultSet.getString("subject"));
 
 				result.put("messageId", messageId);
 
@@ -372,23 +329,12 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(1, messageId);
 			}
 
-			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
-
-				extraDataMap.put(
-					"title",
-					new KeyValuePair(String.class.getName(), "subject"));
-
-				return extraDataMap;
-			}
-
 			private static final int _TYPE_ADD_COMMENT = 10005;
 
 		};
 
 	private static final ExtraDataGenerator _addMessageExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -420,14 +366,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title",
-					new KeyValuePair(String.class.getName(), "subject"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("subject"));
+
+				return result;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -440,7 +387,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _blogsEntryExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -472,13 +419,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "title"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("title"));
+
+				return result;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -491,7 +440,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -523,13 +472,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "name"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("name"));
+
+				return result;
 			}
 
 			private static final int _ADD_ENTRY = 1;
@@ -542,7 +493,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _dlFileEntryExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -577,13 +528,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "title"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("title"));
+
+				return result;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -595,7 +548,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		new ArrayList<>();
 
 	private static final ExtraDataGenerator _kbArticleExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -629,13 +582,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "title"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("title"));
+
+				return result;
 			}
 
 			private static final int _ADD_KB_ARTICLE = 1;
@@ -650,7 +605,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _kbCommentExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -744,7 +699,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _kbTemplateExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -776,13 +731,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "title"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				return extraDataMap;
+				result.put("title", entityResultSet.getString("subject"));
+
+				return result;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -795,7 +752,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		};
 
 	private static final ExtraDataGenerator _wikiPageExtraDataGenerator =
-		new BaseExtraDataGenerator() {
+		new ExtraDataGenerator() {
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -835,17 +792,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<String, KeyValuePair> getExtraDataMap() {
-				Map<String, KeyValuePair> extraDataMap = new HashMap<>();
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
 
-				extraDataMap.put(
-					"title", new KeyValuePair(String.class.getName(), "title"));
+				JSONObject result = JSONFactoryUtil.createJSONObject();
 
-				extraDataMap.put(
-					"version",
-					new KeyValuePair(Double.class.getName(), "version"));
+				result.put("title", entityResultSet.getString("title"));
+				result.put("version", entityResultSet.getDouble("version"));
 
-				return extraDataMap;
+				return result;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =

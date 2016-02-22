@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-String redirect = searchContainer.getIteratorURL().toString();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
@@ -101,7 +97,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:actionURL>
 

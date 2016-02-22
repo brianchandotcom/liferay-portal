@@ -535,8 +535,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		UserPermissionUtil.check(
-			getPermissionChecker(), userId, ActionKeys.VIEW);
+		boolean checkPermissions = true;
+
+		if (userId == getPermissionChecker().getUserId()) {
+			checkPermissions = false;
+		}
+
+		if (checkPermissions) {
+			UserPermissionUtil.check(
+				getPermissionChecker(), userId, ActionKeys.VIEW);
+		}
 
 		if (user.isDefaultUser()) {
 			return Collections.emptyList();
@@ -558,7 +566,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				userSiteGroups.add(user.getGroup());
 
 				if (userSiteGroups.size() == max) {
-					return filterGroups(new ArrayList<>(userSiteGroups));
+					if (checkPermissions) {
+						return filterGroups(new ArrayList<>(userSiteGroups));
+					}
+					else {
+						return new ArrayList<>(userSiteGroups);
+					}
 				}
 			}
 		}
@@ -590,8 +603,13 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 
-							return filterGroups(
-								new ArrayList<>(userSiteGroups));
+							if (checkPermissions) {
+								return filterGroups(
+									new ArrayList<>(userSiteGroups));
+							}
+							else {
+								return new ArrayList<>(userSiteGroups);
+							}
 						}
 					}
 				}
@@ -603,15 +621,25 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 
-							return filterGroups(
-								new ArrayList<>(userSiteGroups));
+							if (checkPermissions) {
+								return filterGroups(
+									new ArrayList<>(userSiteGroups));
+							}
+							else {
+								return new ArrayList<>(userSiteGroups);
+							}
 						}
 					}
 				}
 			}
 		}
 
-		return filterGroups(new ArrayList<>(userSiteGroups));
+		if (checkPermissions) {
+			return filterGroups(new ArrayList<>(userSiteGroups));
+		}
+		else {
+			return new ArrayList<>(userSiteGroups);
+		}
 	}
 
 	/**

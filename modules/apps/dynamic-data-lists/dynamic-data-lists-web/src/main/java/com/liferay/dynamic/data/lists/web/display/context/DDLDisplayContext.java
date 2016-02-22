@@ -17,24 +17,35 @@ package com.liferay.dynamic.data.lists.web.display.context;
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.util.DDL;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.display.context.util.DDLRequestHelper;
-import com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil;
+import com.liferay.dynamic.data.lists.web.search.RecordSetSearch;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -42,8 +53,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +66,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDLDisplayContext {
 
-	public DDLDisplayContext(HttpServletRequest request) {
+	public DDLDisplayContext(
+		HttpServletRequest request, DDL ddl,
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDLWebConfiguration ddlWebConfiguration,
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
 		_ddlRequestHelper = new DDLRequestHelper(request);
+		_ddl = ddl;
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddlWebConfiguration = ddlWebConfiguration;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -70,6 +92,10 @@ public class DDLDisplayContext {
 		}
 	}
 
+	public boolean changeableDefaultLanguage() {
+		return _ddlWebConfiguration.changeableDefaultLanguage();
+	}
+
 	public String getAddDDMTemplateTitle() throws PortalException {
 		DDMDisplay ddmDisplay = getDDMDisplay();
 
@@ -77,11 +103,40 @@ public class DDLDisplayContext {
 			_recordSet.getDDMStructure(), null, getLocale());
 	}
 
+	public DDLDisplayContext getDDLDisplayContext() throws PortalException {
+		return new DDLDisplayContext(
+			_ddlRequestHelper.getRequest(), _ddl, _ddlRecordSetLocalService,
+			_ddlWebConfiguration, _ddmTemplateLocalService);
+	}
+
 	public String getDDLRecordSetDisplayStyle() {
 		if (_ddlRecordDisplayStyle == null) {
-			_ddlRecordDisplayStyle = DDLPortletUtil.getDDLRecordSetDisplayStyle(
-				_ddlRequestHelper.getRenderRequest(),
-				getDDLRecordSetDisplayViews());
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					_ddlRequestHelper.getRenderRequest());
+
+			_ddlRecordDisplayStyle = ParamUtil.getString(
+				_ddlRequestHelper.getRenderRequest(), "displayStyle");
+
+			if (Validator.isNull(_ddlRecordDisplayStyle)) {
+				_ddlRecordDisplayStyle = portalPreferences.getValue(
+					DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",
+					_ddlWebConfiguration.defaultDisplayView());
+			}
+			else if (ArrayUtil.contains(
+						getDDLRecordSetDisplayViews(),
+						_ddlRecordDisplayStyle)) {
+
+				portalPreferences.setValue(
+					DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",
+					_ddlRecordDisplayStyle);
+			}
+
+			if (!ArrayUtil.contains(
+					getDDLRecordSetDisplayViews(), _ddlRecordDisplayStyle)) {
+
+				_ddlRecordDisplayStyle = getDDLRecordSetDisplayViews()[0];
+			}
 		}
 
 		return _ddlRecordDisplayStyle;
@@ -89,6 +144,32 @@ public class DDLDisplayContext {
 
 	public String[] getDDLRecordSetDisplayViews() {
 		return _DISPLAY_VIEWS;
+	}
+
+	public OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDLRecordSet> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new DDLRecordSetCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDLRecordSetModifiedDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new DDLRecordSetNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public long getDisplayDDMTemplateId() {
@@ -159,7 +240,7 @@ public class DDLDisplayContext {
 			return _recordSet;
 		}
 
-		_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
+		_recordSet = _ddlRecordSetLocalService.fetchDDLRecordSet(
 			getRecordSetId());
 
 		return _recordSet;
@@ -169,6 +250,37 @@ public class DDLDisplayContext {
 		return PrefsParamUtil.getLong(
 			_ddlRequestHelper.getPortletPreferences(),
 			_ddlRequestHelper.getRenderRequest(), "recordSetId");
+	}
+
+	public JSONArray getRecordSetJSONArray(
+			DDLRecordSet recordSet, Locale locale)
+		throws Exception {
+
+		return _ddl.getRecordSetJSONArray(recordSet, locale);
+	}
+
+	public RecordSetSearch getRecordSetSearch(PortletURL portletURL) {
+		RecordSetSearch recordSetSearch = new RecordSetSearch(
+			_ddlRequestHelper.getRenderRequest(), portletURL);
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		OrderByComparator<DDLRecordSet> orderByComparator =
+			getDDLRecordSetOrderByComparator(orderByCol, orderByType);
+
+		recordSetSearch.setOrderByCol(orderByCol);
+		recordSetSearch.setOrderByComparator(orderByComparator);
+		recordSetSearch.setOrderByType(orderByType);
+
+		return recordSetSearch;
+	}
+
+	public JSONArray getRecordsJSONArray(
+			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
+		throws Exception {
+
+		return _ddl.getRecordsJSONArray(records, latestRecordVersion, locale);
 	}
 
 	public boolean isAdminPortlet() {
@@ -315,7 +427,7 @@ public class DDLDisplayContext {
 			return _displayDDMTemplate;
 		}
 
-		_displayDDMTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+		_displayDDMTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			getDisplayDDMTemplateId());
 
 		return _displayDDMTemplate;
@@ -326,7 +438,7 @@ public class DDLDisplayContext {
 			return _formDDMTemplate;
 		}
 
-		_formDDMTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+		_formDDMTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			getFormDDMTemplateId());
 
 		return _formDDMTemplate;
@@ -392,8 +504,12 @@ public class DDLDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
+	private final DDL _ddl;
 	private String _ddlRecordDisplayStyle;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDLRequestHelper _ddlRequestHelper;
+	private final DDLWebConfiguration _ddlWebConfiguration;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;

@@ -366,6 +366,7 @@ renderResponse.setTitle(title);
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= scopeGroupId %>,
 				mvcPath: '/select_structure.jsp',
+				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
 				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 				showAncestorScopes: true,
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'

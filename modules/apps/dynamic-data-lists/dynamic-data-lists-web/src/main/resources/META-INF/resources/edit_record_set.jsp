@@ -166,6 +166,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				eventName: '<portlet:namespace />selectDDMStructure',
 				groupId: <%= groupId %>,
 				mvcPath: '/select_structure.jsp',
+				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
 
 				<%
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());

@@ -59,10 +59,11 @@ if (recordSet != null) {
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
-					<portlet:param name="refererPortletName" value="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" />
+					<portlet:param name="refererPortletName" value="<%= portletName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
+					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 				</liferay-portlet:renderURL>
@@ -86,10 +87,11 @@ if (recordSet != null) {
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
-					<portlet:param name="refererPortletName" value="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" />
+					<portlet:param name="refererPortletName" value="<%= portletName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
+					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 				</liferay-portlet:renderURL>
@@ -115,8 +117,9 @@ if (recordSet != null) {
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
-					<portlet:param name="refererPortletName" value="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" />
+					<portlet:param name="refererPortletName" value="<%= portletName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(ddlDisplayContext.getDisplayDDMTemplateId()) %>" />
 					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
@@ -144,10 +147,11 @@ if (recordSet != null) {
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
-					<portlet:param name="refererPortletName" value="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" />
+					<portlet:param name="refererPortletName" value="<%= portletName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
+					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
 					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_FORM %>" />

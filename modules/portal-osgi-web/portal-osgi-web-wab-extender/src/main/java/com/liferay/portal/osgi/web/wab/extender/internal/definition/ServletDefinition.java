@@ -38,6 +38,10 @@ public class ServletDefinition {
 		return _initParameters;
 	}
 
+	public String getJspFile() {
+		return _jspFile;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -70,6 +74,10 @@ public class ServletDefinition {
 		_initParameters = initParameters;
 	}
 
+	public void setJSPFile(String jspFile) {
+		_jspFile = jspFile;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -85,6 +93,7 @@ public class ServletDefinition {
 	private boolean _asyncSupported;
 	private final List<String> _errorPages = new ArrayList<>();
 	private Map<String, String> _initParameters = new HashMap<>();
+	private String _jspFile;
 	private String _name;
 	private Servlet _servlet;
 	private List<String> _urlPatterns = new ArrayList<>();

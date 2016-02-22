@@ -548,6 +548,10 @@ public class JspServlet extends HttpServlet {
 
 		private URL getResource(String path) {
 			try {
+				if ((path == null) || path.equals(StringPool.BLANK)) {
+					return null;
+				}
+
 				if (path.charAt(0) != '/') {
 					path = '/' + path;
 				}

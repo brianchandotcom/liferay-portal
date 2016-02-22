@@ -39,6 +39,39 @@ import org.gradle.internal.hash.HashValue;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
+	public static Set<File> flattenAndSort(Iterable<File> files, File rootDir)
+		throws IOException {
+
+		final Set<File> sortedFiles = new TreeSet<>(
+			new FileComparator(rootDir));
+
+		for (File file : files) {
+			if (file.isDirectory()) {
+				Files.walkFileTree(
+					file.toPath(),
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult visitFile(
+								Path path,
+								BasicFileAttributes basicFileAttributes)
+							throws IOException {
+
+							sortedFiles.add(path.toFile());
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
+			}
+			else {
+				sortedFiles.add(file);
+			}
+		}
+
+		return sortedFiles;
+	}
+
 	public static String getDigest(File file) {
 		String digest;
 
@@ -69,28 +102,6 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return digest;
-	}
-
-	public static Iterable<File> getFiles(File dir) throws IOException {
-		final Set<File> files = new TreeSet<>(new FileComparator(dir));
-
-		Files.walkFileTree(
-			dir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					files.add(path.toFile());
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		return files;
 	}
 
 	public static String getRelativePath(File file, File startFile) {

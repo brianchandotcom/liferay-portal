@@ -202,31 +202,23 @@ public class TaskCacheApplicator {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (File testFile : taskCache.getTestFiles()) {
+		Set<File> testFiles;
+
+		try {
+			testFiles = FileUtil.flattenAndSort(
+				taskCache.getTestFiles(), taskCache.getBaseDir());
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to flatten test files", ioe);
+		}
+
+		for (File testFile : testFiles) {
 			if (!testFile.exists()) {
 				continue;
 			}
 
-			if (testFile.isDirectory()) {
-				Iterable<File> files;
-
-				try {
-					files = FileUtil.getFiles(testFile);
-				}
-				catch (IOException ioe) {
-					throw new GradleException(
-						"Unable to get files in " + testFile, ioe);
-				}
-
-				for (File file : files) {
-					sb.append(FileUtil.getDigest(file));
-					sb.append(_DIGEST_SEPARATOR);
-				}
-			}
-			else {
-				sb.append(FileUtil.getDigest(testFile));
-				sb.append(_DIGEST_SEPARATOR);
-			}
+			sb.append(FileUtil.getDigest(testFile));
+			sb.append(_DIGEST_SEPARATOR);
 		}
 
 		if (sb.length() == 0) {

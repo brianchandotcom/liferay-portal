@@ -150,7 +150,31 @@ if (filterManageableOrganizations) {
 	</c:otherwise>
 </c:choose>
 
-<%@ include file="/add_menu.jspf" %>
+<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION) %>">
+	<liferay-frontend:add-menu>
+		<portlet:renderURL var="viewUsersURL">
+			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+			<portlet:param name="usersListView" value="<%= usersListView %>" />
+		</portlet:renderURL>
+
+		<%
+		for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+		%>
+
+			<portlet:renderURL var="addOrganizationURL">
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
+				<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+				<portlet:param name="type" value="<%= organizationType %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request, "organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

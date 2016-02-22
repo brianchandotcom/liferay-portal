@@ -302,7 +302,21 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
-<%@ include file="/add_menu.jspf" %>
+<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) %>">
+	<liferay-frontend:add-menu>
+		<portlet:renderURL var="viewUsersURL">
+			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+			<portlet:param name="usersListView" value="<%= usersListView %>" />
+		</portlet:renderURL>
+
+		<portlet:renderURL var="addUserURL">
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
+			<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', '#<portlet:namespace /><%= searchContainerReference.getId(request, "userSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

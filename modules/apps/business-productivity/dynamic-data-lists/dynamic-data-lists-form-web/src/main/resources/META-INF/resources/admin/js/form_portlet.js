@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
-		var _ = AUI._;
-
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
@@ -277,7 +275,7 @@ AUI.add(
 					_isSameState: function() {
 						var instance = this;
 
-						return _.isEqual(
+						return AUI._.isEqual(
 							instance.getState(),
 							instance.initialState,
 							function(value1, value2, key) {

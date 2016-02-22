@@ -49,7 +49,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateActivities();
 	}
 
-	protected Map<Long, String> generateExtraData(
+	protected Map<Long, String> getExtraDataMap(
 			ExtraDataGenerator extraDataGenerator)
 		throws Exception {
 
@@ -149,7 +149,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		Map<Long, String> extraDataMap = generateExtraData(extraDataGenerator);
+		Map<Long, String> extraDataMap = getExtraDataMap(extraDataGenerator);
 
 		try {
 			StringBundler sb = new StringBundler(2);
@@ -248,15 +248,18 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		public static final String ACTIVITY_TYPE_CLAUSE = "type_ = ?";
 
+		@Override
 		public String getActivityQueryWhereClause() {
 			return ACTIVITY_QUERY_WHERE_CLAUSE;
 		}
 
+		@Override
 		public String getEntityQuery() {
 			return "select " + ENTITY_SELECT_CLAUSE + " from " +
 				ENTITY_FROM_CLAUSE + " where " + ENTITY_WHERE_CLAUSE;
 		}
 
+		@Override
 		public JSONObject getExtraData(
 				ResultSet entityResultSet, String extraData)
 			throws SQLException {
@@ -289,6 +292,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			return result;
 		}
 
+		@Override
 		public void setActivityQueryParameters(PreparedStatement ps)
 			throws SQLException {
 

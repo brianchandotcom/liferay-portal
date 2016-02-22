@@ -82,7 +82,7 @@ public class AutocompletePageTitleMVCResourceCommand
 	}
 
 	@Reference(unbind = "-")
-	public void set_wikiPageTitleSearcher(
+	public void setWikiPageTitleSearcher(
 		WikiPageTitleSearcher wikiPageTitleSearcher) {
 
 		_wikiPageTitleSearcher = wikiPageTitleSearcher;

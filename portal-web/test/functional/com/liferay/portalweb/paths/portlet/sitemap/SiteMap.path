@@ -26,12 +26,12 @@
 <!--ADT_MULTI_COLUMN-->
 <tr>
 	<td>ADT_MULTI_COLUMN_PAGE_DISPLAY</td>
-	<td>//div[contains(@class,'column-content')]/div/h3[contains(.,'${pageName}')]</td>
+	<td>//div[contains(@class,'col-md-3')]/div/h3[contains(.,'${pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY</td>
-	<td>//div[contains(@class,'column-content')]/ul[@class='child-pages']/li[contains(.,'${childPageName}')]</td>
+	<td>//div[contains(@class,'col-md-3')]/ul[@class='child-pages']/li[contains(.,'${childPageName}')]</td>
 	<td></td>
 </tr>
 </tbody>

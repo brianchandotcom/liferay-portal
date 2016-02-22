@@ -796,8 +796,10 @@
 	</command>
 
 	<command name="RestoreAPArchivedSetup" priority="4">
-		<execute macro="AssetPublisherPortlet#saveArchivedSetupPG">
-			<var name="archiveName" value="AP Archive Name" />
+		<execute macro="AssetPublisherPortlet#configureManualAssetSelectionPG" />
+
+		<execute macro="AssetPublisherPortlet#saveConfigurationTemplatePG">
+			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -805,7 +807,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#restoreArchivedSetupPG">
-			<var name="archiveName" value="AP Archive Name" />
+			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -813,7 +815,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewRestoredSetupPG">
-			<var name="archiveName" value="AP Archive Name" />
+			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -821,7 +823,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#deleteArchivedSetupPG">
-			<var name="archiveName" value="AP Archive Name" />
+			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 	</command>
 </definition>

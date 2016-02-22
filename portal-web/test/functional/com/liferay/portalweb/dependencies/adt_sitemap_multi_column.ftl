@@ -1,21 +1,25 @@
 <#if entries?has_content>
-	<@liferay_aui.layout>
+	<@liferay_aui.row>
 		<#list entries as entry>
-		    <@liferay_aui.column columnWidth=25>
+			<@liferay_aui.col width=25>
 				<div class="results-header">
 					<h3>
-						<#assign layoutURL = portalUtil.getLayoutURL(entry, themeDisplay)>
+						<a
 
-						<a href="${layoutURL}">${entry.getName(locale)}</a>
+						<#assign layoutType = entry.getLayoutType()>
+
+						<#if layoutType.isBrowsable()>
+							href="${portalUtil.getLayoutURL(entry, themeDisplay)}"
+						</#if>
+
+						>${entry.getName(locale)}</a>
 					</h3>
 				</div>
 
-				<#assign pages = entry.getChildren()>
-
-				<@displayPages pages=pages />
-		    </@liferay_aui.column>
+				<@displayPages pages=entry.getChildren() />
+			</@liferay_aui.col>
 		</#list>
-	</@liferay_aui.layout>
+	</@liferay_aui.row>
 </#if>
 
 <#macro displayPages
@@ -25,13 +29,17 @@
 		<ul class="child-pages">
 			<#list pages as page>
 				<li>
-					<#assign pageLayoutURL = portalUtil.getLayoutURL(page, themeDisplay)>
+					<a
 
-					<a href="${pageLayoutURL}">${page.getName(locale)}</a>
+					<#assign pageType = page.getLayoutType()>
 
-					<#assign childPages = page.getChildren()>
+					<#if pageType.isBrowsable()>
+						href="${portalUtil.getLayoutURL(page, themeDisplay)}"
+					</#if>
 
-					<@displayPages pages=childPages />
+					>${page.getName(locale)}</a>
+
+					<@displayPages pages=page.getChildren() />
 				</li>
 			</#list>
 		</ul>

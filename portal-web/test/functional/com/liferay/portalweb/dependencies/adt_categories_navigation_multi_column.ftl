@@ -1,7 +1,7 @@
 <#if entries?has_content>
-	<@liferay_aui.layout>
+	<@liferay_aui.row>
 		<#list entries as entry>
-			<@liferay_aui.column columnWidth=25>
+			<@liferay_aui.col width=25>
 				<div class="results-header">
 					<h3>
 						${entry.getUnambiguousTitle(entries, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())}
@@ -11,9 +11,9 @@
 				<#assign categories = entry.getCategories()>
 
 				<@displayCategories categories=categories />
-			</@liferay_aui.column>
+			</@liferay_aui.col>
 		</#list>
-	</@liferay_aui.layout>
+	</@liferay_aui.row>
 </#if>
 
 <#macro displayCategories

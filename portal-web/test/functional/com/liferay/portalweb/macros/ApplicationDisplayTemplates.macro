@@ -14,6 +14,10 @@
 			</then>
 		</if>
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Display Settings" />
+		</execute>
+
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${adtType} Test ADT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
@@ -22,8 +26,11 @@
 
 	<command name="addCP">
 		<var name="key_adtType" value="${adtType}" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no templates." />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+
 		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
@@ -31,7 +38,9 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
@@ -85,6 +94,10 @@
 				<execute function="AssertClick" locator1="Configuration#SETUP_DISPLAY_SETTINGS" value1="Display Settings" />
 			</then>
 		</if>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Display Settings" />
+		</execute>
 
 		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 

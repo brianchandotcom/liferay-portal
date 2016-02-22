@@ -380,11 +380,11 @@
 	<command name="configureManualAssetSelectionPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
-			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
 
 		<if>
@@ -649,24 +649,20 @@
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 	</command>
 
-	<command name="saveArchivedSetupPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+	<command name="saveConfigurationTemplatePG">
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="AssertClick" locator1="Configuration#ARCHIVE_RESTORE" value1="Archive/Restore Setup" />
+		<execute function="AssertClick" locator1="Configuration#SAVE_CONFIGURATION_TEMPLATE" value1="Save Current Configuration as Template" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no archived setups." />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${archiveName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${configurationName}" />
 
 		<execute macro="Button#clickSave" />
 
-		<var name="key_archiveName" value="${archiveName}" />
+		<var name="key_configurationName" value="${configurationName}" />
 
-		<execute function="AssertTextEquals" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
+		<execute function="AssertTextEquals" locator1="Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME" value1="${configurationName}" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 

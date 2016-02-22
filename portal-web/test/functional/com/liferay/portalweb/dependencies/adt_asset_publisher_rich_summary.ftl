@@ -24,7 +24,7 @@
 	</#if>
 
 	<div class="asset-abstract">
-		<div class="asset-actions lfr-meta-actions">
+		<div class="lfr-meta-actions asset-actions">
 			<@getPrintIcon />
 
 			<@getFlagsIcon />
@@ -108,7 +108,7 @@
 
 <#macro getFlagsIcon>
 	<#if getterUtil.getBoolean(enableFlags)>
-		<@liferay_ui["flags"]
+		<@liferay_flags["flags"]
 			className=entry.getClassName()
 			classPK=entry.getClassPK()
 			contentTitle=entry.getTitle(locale)
@@ -165,7 +165,7 @@
 		${printURL.setParameter("viewMode", "print")}
 		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}
 
-		<#if (validator.isNotNull(assetRenderer.getUrlTitle()))>
+		<#if (assetRenderer.getUrlTitle()??) && validator.isNotNull(assetRenderer.getUrlTitle())>
 			<#if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId())>
 				${printURL.setParameter("groupId", assetRenderer.getGroupId()?string)}
 			</#if>

@@ -66,6 +66,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_CONFIGURATION_TEMPLATE</td>
+	<td>//div[contains(@class,'text-center')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_TEMPLATE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_configurationName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'pageDelta')]</td>
 	<td></td>

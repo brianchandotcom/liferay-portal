@@ -60,7 +60,8 @@ page import="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
-<%@ page import="java.util.Set" %>
+<%@ page import="java.util.Date" %><%@
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@

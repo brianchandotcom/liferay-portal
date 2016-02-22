@@ -68,7 +68,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -131,44 +131,93 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="name"
-			>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
 
-				<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
 
-				<%
-				int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
-				%>
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/layout_set_prototype_action.jsp"
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							icon="sites"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= layoutSetPrototype.getName(locale) %>"
+							url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
+						>
+							<liferay-frontend:vertical-card-header>
 
-				<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-					<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
+								<%
+								Date createDate = layoutSetPrototype.getModifiedDate();
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= layoutSetPrototype.getDescription(locale) %>"
-			/>
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
 
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				property="createDate"
-			/>
+								<label class="text-default">
+									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
+								</label>
+							</liferay-frontend:vertical-card-header>
 
-			<liferay-ui:search-container-column-text
-				cssClass="list-group-item-field"
-				name="active"
-			>
-				<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>
-			</liferay-ui:search-container-column-text>
+							<liferay-frontend:vertical-card-footer>
+								<label class="text-default">
+									<c:choose>
+										<c:when test="<%= layoutSetPrototype.isActive() %>">
+											<liferay-ui:message key="active" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="not-active" />
+										</c:otherwise>
+									</c:choose>
+								</label>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="name"
+					>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				href="<%= rowURL %>"
-				path="/layout_set_prototype_action.jsp"
-			/>
+						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+
+						<%
+						int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
+						%>
+
+						<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
+							<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= layoutSetPrototype.getDescription(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="create-date"
+						property="createDate"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="list-group-item-field"
+						name="active"
+					>
+						<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						href="<%= rowURL %>"
+						path="/layout_set_prototype_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

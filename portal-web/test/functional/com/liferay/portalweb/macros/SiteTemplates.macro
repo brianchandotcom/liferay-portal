@@ -83,7 +83,7 @@
 				<if>
 					<equals arg1="${pageType}" arg2="Link to URL" />
 					<then>
-						<execute macro="SitePage#addSitePageTypeLinkToURLCP">
+						<execute macro="Page#_addPageTypeLinkToURL">
 							<var name="pageTypeDescription" value="${pageTypeDescription}" />
 							<var name="pageTypeURL" value="${pageTypeURL}" />
 						</execute>

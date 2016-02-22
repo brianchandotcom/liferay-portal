@@ -412,7 +412,7 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#viewFriendlyURLCP">
+		<execute macro="Page#viewFriendlyURL">
 			<var name="siteFriendlyURL" value="/site-name" />
 			<var name="sitePageName" value="Site Page" />
 		</execute>

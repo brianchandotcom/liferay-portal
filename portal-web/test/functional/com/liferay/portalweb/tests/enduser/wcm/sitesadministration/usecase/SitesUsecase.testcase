@@ -57,7 +57,7 @@
 			<var name="pageName" value="Home" />
 		</execute>
 
-		<execute macro="SitePage#addPageTranslations">
+		<execute macro="Page#addPageTranslations">
 			<var name="page" value="Home" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="pageTranslationName" value="Casa" />
@@ -90,7 +90,7 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addPageTranslations">
+		<execute macro="Page#addPageTranslations">
 			<var name="page" value="Blog Page" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="pageTranslationName" value="Blog Página" />

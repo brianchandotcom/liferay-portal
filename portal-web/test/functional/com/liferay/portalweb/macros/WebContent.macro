@@ -1444,7 +1444,7 @@
 	<command name="viewLinkToPagePGViaWCD">
 		<execute function="AssertClick" locator1="WCD#WEB_CONTENT_LINK_TO_PAGE" value1="Link to Page" />
 
-		<execute macro="Page#viewChildPG">
+		<execute macro="Page#viewChildPageDropdown">
 			<var name="childPageName" value="${childPageName}" />
 			<var name="javaScriptPage" value="${javaScriptPage}" />
 			<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />

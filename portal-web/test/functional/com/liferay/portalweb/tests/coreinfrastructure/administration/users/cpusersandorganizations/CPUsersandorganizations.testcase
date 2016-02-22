@@ -419,13 +419,13 @@
 			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 
-		<execute macro="SitePage#viewPG">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Private Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Private Page" />
-			<var name="sitePageURL" value="http://localhost:8080/group/organization-name/private-page" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:8080/group/organization-name/private-page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Private Page" />
 		</execute>
 	</command>
 
@@ -459,12 +459,13 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro="SitePage#viewPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Public Page" />
-			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Public Page" />
-			<var name="sitePageURL" value="http://localhost:8080/web/organization-name/public-page" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:8080/web/organization-name/public-page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Public Page" />
 		</execute>
 	</command>
 

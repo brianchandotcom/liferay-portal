@@ -71,7 +71,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#viewPageTemplatePG" >
+		<execute macro="Page#viewPageTemplate" >
 			<var name="page" value="Site Page" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
@@ -115,7 +115,7 @@
 
 		<execute macro="SitePageNavigator#gotoAddPage" />
 
-		<execute macro="SitePage#viewPageTemplateTypeNotPresentCP">
+		<execute macro="Page#viewPageTemplateTypeNotPresent">
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
@@ -147,7 +147,7 @@
 
 		<execute macro="SitePageNavigator#gotoAddPage" />
 
-		<execute macro="SitePage#viewPageTemplateTypePresentCP">
+		<execute macro="Page#viewPageTemplateTypePresent">
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>

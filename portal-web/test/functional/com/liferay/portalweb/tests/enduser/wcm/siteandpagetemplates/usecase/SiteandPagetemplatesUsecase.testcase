@@ -83,7 +83,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+		<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
 			<var name="page" value="Site Child Page Name" />
 		</execute>
 	</command>
@@ -259,7 +259,7 @@
 				<var name="site" value="UG UserGroup Name" />
 			</execute>
 
-			<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+			<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
 				<var name="page" value="${page}" />
 			</execute>
 		</for>
@@ -395,15 +395,15 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SitePage#editTemplatePagesCP">
+		<execute macro="Page#gotoEditTemplatePages">
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="SitePage#disallowEditViaSiteAdminEditCP">
+		<execute macro="Page#disallowEditViaSiteAdminEditCP">
 			<var name="sitePageName" value="Locked Page Name" />
 		</execute>
 
-		<execute macro="SitePage#viewPagesCP">
+		<execute macro="Page#viewSiteTemplatePages">
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
@@ -423,7 +423,7 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePage#pageTemplateLockCheckPG" />
+		<execute macro="Page#viewPageTemplateLockCheck" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="false" />
@@ -442,7 +442,7 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SitePage#editTemplatePagesCP">
+		<execute macro="Page#gotoEditTemplatePages">
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -450,7 +450,7 @@
 			<var name="sitePageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePage#viewPagesCP">
+		<execute macro="Page#viewSiteTemplatePages">
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
@@ -461,7 +461,7 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePage#pageTemplateNotLockedCheckPG" />
+		<execute macro="Page#viewPageTemplateNoLockCheck" />
 
 		<execute function="Close" />
 
@@ -561,9 +561,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SitePage#pageLockCheckPG" />
+		<execute macro="Page#viewPageLockCheck" />
 
-		<execute macro="SitePage#viewOnlyAddOptionViaSiteAdminCP" />
+		<execute macro="Page#viewOnlyAddOptionViaSiteAdmin" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
@@ -580,11 +580,11 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SitePage#editTemplatePagesCP">
+		<execute macro="Page#gotoEditTemplatePages">
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="SitePage#viewPagesCP">
+		<execute macro="Page#viewSiteTemplatePages">
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
@@ -700,7 +700,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="link=home" />
 
-		<execute macro="SitePage#viewOnlyAddOptionViaSiteAdminCP" />
+		<execute macro="Page#viewOnlyAddOptionViaSiteAdmin" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Locked Page Name" />
@@ -708,7 +708,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SitePage#pageLockCheckPG" />
+		<execute macro="Page#viewPageLockCheck" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -726,7 +726,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SitePage#viewOnlyAddOptionViaSiteAdminCP" />
+		<execute macro="Page#viewOnlyAddOptionViaSiteAdmin" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="password" value="test" />
@@ -747,7 +747,7 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SitePage#editTemplatePagesCP">
+		<execute macro="Page#gotoEditTemplatePages">
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -775,7 +775,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SitePage#pageNotLockCheckPG" />
+		<execute macro="Page#viewPageNoLockCheck" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />

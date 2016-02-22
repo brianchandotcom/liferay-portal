@@ -167,13 +167,13 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Organization Name 1" />
 			<var name="siteTemplate" value="Community" />
 		</execute>
 
-		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Organization Name 2" />
 			<var name="siteTemplate" value="Intranet" />
@@ -929,7 +929,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Site1 Name" />
 			<var name="siteTemplate" value="Community" />
@@ -1036,7 +1036,7 @@
 
 		<execute macro="ProductMenu#gotoPublicPages" />
 
-		<execute macro="SitePage#addJavaScript">
+		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
 			<var name="sitePageName" value="Arenas" />
 		</execute>
@@ -1046,7 +1046,7 @@
 		<execute macro="Page#viewCustomLogoPG" />
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
-			<execute macro="Page#viewChildPG">
+			<execute macro="Page#viewChildPageDropdown">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="javaScriptPage" value="Welcome to Russia." />
 				<var name="pageName" value="Arenas" />
@@ -1058,7 +1058,7 @@
 
 		<execute macro="ProductMenu#gotoPublicPages" />
 
-		<execute macro="SitePage#addJavaScript">
+		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value=" " />
 			<var name="sitePageName" value="Arenas" />
 		</execute>
@@ -1160,7 +1160,7 @@
 		</execute>
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
-			<execute macro="Page#viewChildPG">
+			<execute macro="Page#viewChildPageDropdown">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="pageName" value="Arenas" />
 				<var name="viewChildPageDropdown" value="PAGE_2" />

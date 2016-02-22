@@ -1508,7 +1508,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
 		</execute>
 
@@ -1519,7 +1519,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
 		</execute>
 
@@ -1556,7 +1556,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
@@ -1580,7 +1580,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
 		</execute>
 
@@ -1677,7 +1677,7 @@
 			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
 		</execute>
 
@@ -1692,7 +1692,7 @@
 			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
 		</execute>
 
@@ -1707,7 +1707,7 @@
 			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
-		<execute macro="Page#viewPG">
+		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 	</command>
@@ -3328,9 +3328,8 @@
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<execute macro="SitePage#deleteSitepagesCP">
-			<var name="siteName" value="Community Site Name" />
-			<var name="sitePageName" value="Wiki" />
+		<execute macro="Page#deletePG">
+			<var name="pageName" value="Wiki" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -3776,7 +3775,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#selectSitePagesVariationNameCP">
+		<execute macro="Page#selectSitePagesVariationName">
 			<var name="sitePagesVariationName" value="Main Variation" />
 		</execute>
 
@@ -3784,7 +3783,7 @@
 			<var name="page" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePage#viewIncompletePageViaStagingPageVariationCP">
+		<execute macro="Staging#viewIncompletePageViaStagingPageVariation">
 			<var name="pageName" value="Test Page Name" />
 			<var name="sitePagesVariationName" value="main-variation" />
 		</execute>
@@ -4373,7 +4372,7 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="SitePage#viewPagesOrderCP">
+		<execute macro="Page#viewPagesOrder">
 			<var name="pageName1" value="Staging Test Page" />
 			<var name="pageName2" value="Test Page 1" />
 			<var name="pageName3" value="Test Page 2" />

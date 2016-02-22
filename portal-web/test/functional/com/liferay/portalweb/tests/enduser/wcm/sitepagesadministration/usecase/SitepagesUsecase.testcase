@@ -31,8 +31,6 @@
 
 				<execute macro="Page#tearDownPG" />
 
-				<execute macro="SitePage#tearDownPrivateCP" />
-
 				<execute macro="User#tearDownCP" />
 
 				<execute macro="Role#tearDownCP" />
@@ -91,8 +89,8 @@
 			<var name="page" value="Private Pages" />
 		</execute>
 
-		<execute macro="SitePage#deletePrivatePageCP">
-			<var name="sitePageName" value="Site Page Name" />
+		<execute macro="Page#assertCannotDeleteOnlyPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 	</command>
 
@@ -101,9 +99,8 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#deletePublicPageCP">
-			<var name="lastPublicSitepage" value="true" />
-			<var name="sitePageName" value="Welcome" />
+		<execute macro="Page#assertCannotDeleteOnlyPage">
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -116,8 +113,8 @@
 
 		<execute macro="ProductMenu#gotoPublicPages" />
 
-		<execute macro="SitePage#deletePublicPageCP">
-			<var name="sitePageName" value="Site Page Name" />
+		<execute macro="Page#deletePG">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 	</command>
 
@@ -164,11 +161,11 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#changePageTypeLayoutCP">
+		<execute macro="Page#editSelectPageType">
 			<var name="indexNumber" value="4" />
+			<var name="page" value="Site Page2 Name" />
 			<var name="pageName" value="- - Child Page Name" />
 			<var name="pageType" value="Link to a Page of This Site" />
-			<var name="sitePageName" value="Site Page2 Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -181,8 +178,8 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#viewChildPage">
-			<var name="sitePageName" value="Child Page Name" />
+		<execute macro="Page#viewChildPage">
+			<var name="pageName" value="Child Page Name" />
 		</execute>
 	</command>
 
@@ -239,7 +236,7 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#viewLoadMoreResultsPages">
+		<execute macro="Page#viewLoadMoreResultsPages">
 			<var name="siteChildPages" value="false" />
 		</execute>
 
@@ -256,7 +253,7 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#viewLoadMoreResultsPages">
+		<execute macro="Page#viewLoadMoreResultsPages">
 			<var name="siteChildPages" value="true" />
 		</execute>
 	</command>
@@ -1244,7 +1241,7 @@
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
-		<execute macro="SitePage#firstPageCanNotBeOfTypeLinkToURL">
+		<execute macro="Page#firstPageCanNotBeOfTypeLinkToURL">
 			<var name="sitePageName" value="Blank Page" />
 		</execute>
 
@@ -1270,7 +1267,7 @@
 			<var name="sitePageType" value="Panel" />
 		</execute>
 
-		<execute macro="SitePage#viewPanelPortletListCP">
+		<execute macro="Page#viewPanelPortletListCP">
 			<var name="componentName" value="Community" />
 			<var name="portletNameList" value="Bookmarks,Friends Directory,Invitation,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory" />
 			<var name="sitePageName" value="Panel Page" />

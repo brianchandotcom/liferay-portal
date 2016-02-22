@@ -1287,8 +1287,8 @@
 
 			ddmURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
 
-			if ('navStartsOn' in config) {
-				ddmURL.setParameter('navStartsOn', config.navStartsOn);
+			if ('navigationStartsOn' in config) {
+				ddmURL.setParameter('navigationStartsOn', config.navigationStartsOn);
 			}
 
 			if ('redirect' in config) {

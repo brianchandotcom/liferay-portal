@@ -320,7 +320,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						<c:when test='<%= displayStyle.equals("icon") %>'>
 
 							<%
-							row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+							row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6");
 							%>
 
 							<liferay-ui:search-container-column-text>
@@ -488,7 +488,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						<c:when test='<%= displayStyle.equals("icon") %>'>
 
 							<%
-							row.setCssClass("col-md-3 col-sm-4 col-xs-12");
+							row.setCssClass("col-md-3 col-sm-4 folder-entry");
 
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 

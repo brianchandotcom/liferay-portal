@@ -38,7 +38,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 		</div>
 	</c:if>
 
-	<ul class="tabular-list-group">
+	<ul class="display-style-descriptive tabular-list-group">
 		<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 			<li class="list-group-heading"><liferay-ui:message key="<%= headerNames.get(0) %>" /></li>
 		</c:if>

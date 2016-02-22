@@ -303,7 +303,7 @@ if (Validator.isNotNull(keywords)) {
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 
 								<%
-								row.setCssClass("col-md-3");
+								row.setCssClass("col-md-3 folder-entry");
 
 								if (folder != null) {
 									PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);

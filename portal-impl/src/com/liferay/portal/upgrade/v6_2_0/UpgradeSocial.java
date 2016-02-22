@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -251,94 +252,217 @@ public class UpgradeSocial extends UpgradeProcess {
 		runSQL("drop table SO_SocialActivity");
 	}
 
-	protected static BaseExtraDataGenerator _addAssetCommentExtraDataGenerator =
-		new BaseExtraDataGenerator() {
-			{
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(TYPE_ADD_COMMENT)));
+	protected static abstract class BaseExtraDataGenerator
+		implements ExtraDataGenerator {
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_TYPE_CLAUSE;
+		public static final String ACTIVITY_CLASSNAMEID_CLAUSE =
+			"classNameId = ?";
 
-				ENTITY_SELECT_CLAUSE ="subject";
+		public static final String ACTIVITY_TYPE_CLAUSE = "type_ = ?";
 
-				ENTITY_FROM_CLAUSE ="MBMessage";
+		public String getActivityQueryWhereClause() {
+			return ACTIVITY_QUERY_WHERE_CLAUSE;
+		}
 
-				ENTITY_WHERE_CLAUSE ="messageId = ?";
+		public String getEntityQuery() {
+			return "select " + ENTITY_SELECT_CLAUSE + " from " +
+				ENTITY_FROM_CLAUSE + " where " + ENTITY_WHERE_CLAUSE;
+		}
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "subject"));
+		public JSONObject getExtraData(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+
+			if (MapUtil.isNotEmpty(EXTRA_DATA_MAP)) {
+				for (Map.Entry<String, KeyValuePair> entry :
+						EXTRA_DATA_MAP.entrySet()) {
+
+					String entryKey = entry.getKey();
+
+					KeyValuePair entryValue = entry.getValue();
+
+					String clazz = entryValue.getKey();
+
+					if (clazz.equals(String.class.getName())) {
+						result.put(
+							entryKey,
+							entityResultSet.getString(entryValue.getValue()));
+					}
+					else if (clazz.equals(Double.class.getName())) {
+						result.put(
+							entryKey,
+							entityResultSet.getDouble(entryValue.getValue()));
+					}
+				}
 			}
 
-			public static final int TYPE_ADD_COMMENT = 10005;
+			return result;
+		}
 
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				long messageId = 0;
+			if (MapUtil.isNotEmpty(ACTIVITY_QUERY_PARAMS)) {
+				for (Map.Entry<Integer, KeyValuePair> entry :
+						ACTIVITY_QUERY_PARAMS.entrySet()) {
 
-				try {
-					JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
-						extraData);
+					Integer entryKey = entry.getKey();
 
-					messageId = extraDataJson.getLong("messageId");
+					KeyValuePair entryValue = entry.getValue();
+
+					String clazz = entryValue.getKey();
+
+					if (clazz.equals(Long.class.getName())) {
+						ps.setLong(
+							entryKey, Long.valueOf(entryValue.getValue()));
+					}
+					else if (clazz.equals(Integer.class.getName())) {
+						ps.setInt(
+							entryKey, Integer.valueOf(entryValue.getValue()));
+					}
 				}
-				catch (JSONException jsone) {
-				}
-
-				ps.setLong(1, messageId);
 			}
+		}
 
-			public JSONObject getExtraData(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		public String ACTIVITY_CLASSNAME = "";
 
-				long messageId = 0;
+		public Map<Integer, KeyValuePair> ACTIVITY_QUERY_PARAMS =
+			new HashMap<>();
 
-				try {
-					JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
-						extraData);
+		public String ACTIVITY_QUERY_WHERE_CLAUSE = "";
 
-					messageId = extraDataJson.getLong("messageId");
+		public String ENTITY_FROM_CLAUSE = "";
+
+		public String ENTITY_SELECT_CLAUSE = "";
+
+		public String ENTITY_WHERE_CLAUSE = "";
+
+		public Map<String, KeyValuePair> EXTRA_DATA_MAP = new HashMap<>();
+
+	}
+
+	protected interface ExtraDataGenerator {
+
+		public String getActivityQueryWhereClause();
+
+		public String getEntityQuery();
+
+		public JSONObject getExtraData(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException;
+
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException;
+
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException;
+
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
+
+	private static final BaseExtraDataGenerator
+		_addAssetCommentExtraDataGenerator =
+			new BaseExtraDataGenerator() {
+				{
+					ACTIVITY_QUERY_PARAMS.put(
+						1,
+						new KeyValuePair(
+							Integer.class.getName(),
+							String.valueOf(TYPE_ADD_COMMENT)));
+
+					ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_TYPE_CLAUSE;
+
+					ENTITY_SELECT_CLAUSE = "subject";
+
+					ENTITY_FROM_CLAUSE = "MBMessage";
+
+					ENTITY_WHERE_CLAUSE = "messageId = ?";
+
+					EXTRA_DATA_MAP.put(
+						"title",
+						new KeyValuePair(String.class.getName(), "subject"));
 				}
-				catch (JSONException jsone) {
+
+				public static final int TYPE_ADD_COMMENT = 10005;
+
+				public void setEntityQueryParameters(
+						PreparedStatement ps, long companyId, long groupId,
+						long userId, long classNameId, long classPK, int type,
+						String extraData)
+					throws SQLException {
+
+					long messageId = 0;
+
+					try {
+						JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
+							extraData);
+
+						messageId = extraDataJson.getLong("messageId");
+					}
+					catch (JSONException jsone) {
+					}
+
+					ps.setLong(1, messageId);
 				}
 
-				JSONObject result = super.getExtraData(
-					entityResultSet, extraData);
+				public JSONObject getExtraData(
+						ResultSet entityResultSet, String extraData)
+					throws SQLException {
 
-				result.put("messageId", messageId);
+					long messageId = 0;
 
-				return result;
-			}
+					try {
+						JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
+							extraData);
 
-		};
+						messageId = extraDataJson.getLong("messageId");
+					}
+					catch (JSONException jsone) {
+					}
 
-	protected static BaseExtraDataGenerator _addMessageExtraDataGenerator =
+					JSONObject result = super.getExtraData(
+						entityResultSet, extraData);
+
+					result.put("messageId", messageId);
+
+					return result;
+				}
+
+			};
+
+	private static final BaseExtraDataGenerator _addMessageExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.portlet.messageboards.model.MBMessage";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(ADD_MESSAGE)));
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(ADD_MESSAGE)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(REPLY_MESSAGE)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
 				ENTITY_SELECT_CLAUSE =
 					_addAssetCommentExtraDataGenerator.ENTITY_SELECT_CLAUSE;
@@ -349,7 +473,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				ENTITY_WHERE_CLAUSE =
 					_addAssetCommentExtraDataGenerator.ENTITY_WHERE_CLAUSE;
 
-				EXTRA_DATA_MAP.put("title",
+				EXTRA_DATA_MAP.put(
+					"title",
 					new KeyValuePair(String.class.getName(), "subject"));
 			}
 
@@ -368,37 +493,42 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static ExtraDataGenerator _blogsEntryExtraDataGenerator =
+	private static final ExtraDataGenerator _blogsEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.portlet.blogs.model.BlogsEntry";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(ADD_ENTRY)));
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(ADD_ENTRY)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(UPDATE_ENTRY)));
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(UPDATE_ENTRY)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
-				ENTITY_SELECT_CLAUSE ="title";
+				ENTITY_SELECT_CLAUSE = "title";
 
-				ENTITY_FROM_CLAUSE ="BlogsEntry";
+				ENTITY_FROM_CLAUSE = "BlogsEntry";
 
-				ENTITY_WHERE_CLAUSE ="entryId = ?";
+				ENTITY_WHERE_CLAUSE = "entryId = ?";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "title"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "title"));
 			}
 
 			public static final int ADD_ENTRY = 2;
@@ -416,38 +546,43 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
+	private static final ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 
 				ACTIVITY_CLASSNAME =
 					"com.liferay.portlet.bookmarks.model.BookmarksEntry";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(ADD_ENTRY)));
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(ADD_ENTRY)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(UPDATE_ENTRY)));
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(UPDATE_ENTRY)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
-				ENTITY_SELECT_CLAUSE ="name";
+				ENTITY_SELECT_CLAUSE = "name";
 
-				ENTITY_FROM_CLAUSE ="BookmarksEntry";
+				ENTITY_FROM_CLAUSE = "BookmarksEntry";
 
-				ENTITY_WHERE_CLAUSE ="entryId = ?";
+				ENTITY_WHERE_CLAUSE = "entryId = ?";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "name"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "name"));
 			}
 
 			public static final int ADD_ENTRY = 1;
@@ -465,14 +600,16 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static ExtraDataGenerator _dlFileEntryExtraDataGenerator =
+	private static final ExtraDataGenerator _dlFileEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.portlet.documentlibrary.model.DLFileEntry";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
@@ -485,8 +622,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				ENTITY_WHERE_CLAUSE =
 					"companyId = ? and groupId = ? and fileEntryId = ?";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "title"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "title"));
 			}
 
 			public void setEntityQueryParameters(
@@ -504,44 +641,53 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static List<ExtraDataGenerator> _extraDataGenerators =
+	private static final List<ExtraDataGenerator> _extraDataGenerators =
 		new ArrayList<>();
 
-	protected static BaseExtraDataGenerator _kbArticleExtraDataGenerator =
+	private static final BaseExtraDataGenerator _kbArticleExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.knowledgebase.model.KBArticle";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(ADD_KB_ARTICLE)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(UPDATE_KB_ARTICLE)));
 
-				ACTIVITY_QUERY_PARAMS.put(4,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					4,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(MOVE_KB_ARTICLE)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							" or " + ACTIVITY_TYPE_CLAUSE + ")";
 
-				ENTITY_SELECT_CLAUSE ="title";
+				ENTITY_SELECT_CLAUSE = "title";
 
-				ENTITY_FROM_CLAUSE ="KBArticle";
+				ENTITY_FROM_CLAUSE = "KBArticle";
 
-				ENTITY_WHERE_CLAUSE ="resourceprimkey = ?";
+				ENTITY_WHERE_CLAUSE = "resourceprimkey = ?";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "title"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "title"));
 			}
 
 			public static final int ADD_KB_ARTICLE = 1;
@@ -561,34 +707,41 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static ExtraDataGenerator _kbCommentExtraDataGenerator =
+	private static final ExtraDataGenerator _kbCommentExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.knowledgebase.model.KBComment";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(ADD_KB_COMMENT)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(UPDATE_KB_COMMENT)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
-				ENTITY_SELECT_CLAUSE ="classnameid, classpk";
+				ENTITY_SELECT_CLAUSE = "classnameid, classpk";
 
-				ENTITY_FROM_CLAUSE ="KBComment";
+				ENTITY_FROM_CLAUSE = "KBComment";
 
-				ENTITY_WHERE_CLAUSE ="kbcommentid = ?";
+				ENTITY_WHERE_CLAUSE = "kbcommentid = ?";
 			}
 
 			public static final int ADD_KB_COMMENT = 5;
@@ -657,37 +810,44 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static BaseExtraDataGenerator _kbTemplateExtraDataGenerator =
+	private static final BaseExtraDataGenerator _kbTemplateExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 				ACTIVITY_CLASSNAME =
 					"com.liferay.knowledgebase.model.KBTemplate";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(ADD_KB_TEMPLATE)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(),
 						String.valueOf(UPDATE_KB_TEMPLATE)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
-				ENTITY_SELECT_CLAUSE ="title";
+				ENTITY_SELECT_CLAUSE = "title";
 
-				ENTITY_FROM_CLAUSE ="KBTemplate";
+				ENTITY_FROM_CLAUSE = "KBTemplate";
 
-				ENTITY_WHERE_CLAUSE ="kbtemplateid = ?";
+				ENTITY_WHERE_CLAUSE = "kbtemplateid = ?";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "title"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "title"));
 			}
 
 			public static final int ADD_KB_TEMPLATE = 2;
@@ -705,41 +865,47 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		};
 
-	protected static ExtraDataGenerator _wikiPageExtraDataGenerator =
+	private static final ExtraDataGenerator _wikiPageExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
 
 				ACTIVITY_CLASSNAME = "com.liferay.portlet.wiki.model.WikiPage";
 
-				ACTIVITY_QUERY_PARAMS.put(1,
-					new KeyValuePair(Long.class.getName(),
+				ACTIVITY_QUERY_PARAMS.put(
+					1,
+					new KeyValuePair(
+						Long.class.getName(),
 						String.valueOf(
 							PortalUtil.getClassNameId(ACTIVITY_CLASSNAME))));
 
-				ACTIVITY_QUERY_PARAMS.put(2,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(ADD_PAGE)));
+				ACTIVITY_QUERY_PARAMS.put(
+					2,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(ADD_PAGE)));
 
-				ACTIVITY_QUERY_PARAMS.put(3,
-					new KeyValuePair(Integer.class.getName(),
-						String.valueOf(UPDATE_PAGE)));
+				ACTIVITY_QUERY_PARAMS.put(
+					3,
+					new KeyValuePair(
+						Integer.class.getName(), String.valueOf(UPDATE_PAGE)));
 
-				ACTIVITY_QUERY_WHERE_CLAUSE = ACTIVITY_CLASSNAMEID_CLAUSE +
-					" and (" + ACTIVITY_TYPE_CLAUSE + " or " +
-					ACTIVITY_TYPE_CLAUSE + ")";
+				ACTIVITY_QUERY_WHERE_CLAUSE =
+					ACTIVITY_CLASSNAMEID_CLAUSE + " and (" +
+						ACTIVITY_TYPE_CLAUSE + " or " + ACTIVITY_TYPE_CLAUSE +
+							")";
 
-				ENTITY_SELECT_CLAUSE ="title, version";
+				ENTITY_SELECT_CLAUSE = "title, version";
 
-				ENTITY_FROM_CLAUSE ="WikiPage";
+				ENTITY_FROM_CLAUSE = "WikiPage";
 
 				ENTITY_WHERE_CLAUSE =
 					"companyId = ? and groupId = ? and resourcePrimKey = ? " +
-					"and head = true";
+						"and head = true";
 
-				EXTRA_DATA_MAP.put("title",
-					new KeyValuePair(String.class.getName(), "title"));
+				EXTRA_DATA_MAP.put(
+					"title", new KeyValuePair(String.class.getName(), "title"));
 
-				EXTRA_DATA_MAP.put("version",
+				EXTRA_DATA_MAP.put(
+					"version",
 					new KeyValuePair(Double.class.getName(), "version"));
 			}
 
@@ -775,119 +941,5 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(_kbTemplateExtraDataGenerator);
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}
-
-	protected static abstract class BaseExtraDataGenerator
-		implements ExtraDataGenerator {
-
-		public static final String ACTIVITY_CLASSNAMEID_CLAUSE =
-			"classNameId = ?";
-
-		public static final String ACTIVITY_TYPE_CLAUSE = "type_ = ?";
-
-		public String getActivityQueryWhereClause() {
-			return ACTIVITY_QUERY_WHERE_CLAUSE;
-		}
-
-		public String getEntityQuery() {
-			return "select " + ENTITY_SELECT_CLAUSE +
-				" from " + ENTITY_FROM_CLAUSE +
-				" where " + ENTITY_WHERE_CLAUSE;
-		}
-
-		public JSONObject getExtraData(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-
-			if (EXTRA_DATA_MAP != null && EXTRA_DATA_MAP.size() > 0) {
-				for (Map.Entry<String, KeyValuePair> entry :
-						EXTRA_DATA_MAP.entrySet()) {
-
-					String entryKey = entry.getKey();
-
-					KeyValuePair entryValue = entry.getValue();
-
-					String clazz = entryValue.getKey();
-
-					if (clazz.equals(String.class.getName())) {
-						result.put(entryKey,
-							entityResultSet.getString(entryValue.getValue()));
-					}
-					else if (clazz.equals(Double.class.getName())) {
-						result.put(entryKey,
-							entityResultSet.getDouble(entryValue.getValue()));
-					}
-				}
-			}
-
-			return result;
-		}
-
-		public void setActivityQueryParameters(PreparedStatement ps)
-			throws SQLException {
-
-			if (ACTIVITY_QUERY_PARAMS != null &&
-				ACTIVITY_QUERY_PARAMS.size() > 0) {
-
-				for (Map.Entry<Integer, KeyValuePair> entry :
-						ACTIVITY_QUERY_PARAMS.entrySet()) {
-
-					Integer entryKey = entry.getKey();
-
-					KeyValuePair entryValue = entry.getValue();
-
-					String clazz = entryValue.getKey();
-
-					if (clazz.equals(Long.class.getName())) {
-						ps.setLong(entryKey,
-							Long.valueOf(entryValue.getValue()));
-					}
-					else if (clazz.equals(Integer.class.getName())) {
-						ps.setInt(entryKey,
-							Integer.valueOf(entryValue.getValue()));
-					}
-				}
-			}
-		}
-
-		public String ACTIVITY_CLASSNAME = "";
-
-		public Map<Integer, KeyValuePair> ACTIVITY_QUERY_PARAMS =
-			new HashMap<>();
-
-		public String ACTIVITY_QUERY_WHERE_CLAUSE = "";
-
-		public String ENTITY_FROM_CLAUSE = "";
-
-		public String ENTITY_SELECT_CLAUSE = "";
-
-		public String ENTITY_WHERE_CLAUSE = "";
-
-		public Map<String, KeyValuePair> EXTRA_DATA_MAP = new HashMap<>();
-
-	}
-
-	protected interface ExtraDataGenerator {
-
-		public String getActivityQueryWhereClause();
-
-		public String getEntityQuery();
-
-		public JSONObject getExtraData(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException;
-
-		public void setActivityQueryParameters(PreparedStatement ps)
-			throws SQLException;
-
-		public void setEntityQueryParameters(PreparedStatement ps,
-				long companyId, long groupId, long userId, long classNameId,
-				long classPK, int type, String extraData)
-			throws SQLException;
-
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 }

@@ -346,11 +346,13 @@ if (portletTitleBasedNavigation) {
 						</liferay-ui:custom-attributes-available>
 					</c:if>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= WikiPage.class.getName() %>"
-						/>
-					</aui:fieldset>
+					<c:if test="<%= wikiPage == null %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+							<liferay-ui:input-permissions
+									modelName="<%= WikiPage.class.getName() %>"
+							/>
+						</aui:fieldset>
+					</c:if>
 				</aui:fieldset-group>
 
 				<%

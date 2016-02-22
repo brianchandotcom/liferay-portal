@@ -84,7 +84,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -109,7 +109,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -225,7 +225,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -250,7 +250,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -354,7 +354,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -379,7 +379,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -481,7 +481,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -506,7 +506,7 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

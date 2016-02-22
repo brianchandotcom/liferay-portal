@@ -838,7 +838,7 @@
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="Icon#EDIT" />
+		<execute function="Click#makeVisibleClickAt" locator1="Icon#EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -895,7 +895,7 @@
 	<command name="editPGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="AP#ASSET_ABSTRACT_EDIT" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ASSET_ABSTRACT_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitleEdit}" />

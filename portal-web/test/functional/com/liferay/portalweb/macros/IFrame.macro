@@ -7,6 +7,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="closeFrame">
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+	</command>
+
 	<command name="saveConfiguration">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

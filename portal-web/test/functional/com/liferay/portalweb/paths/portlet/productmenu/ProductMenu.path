@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>SITES_COMPASS</td>
-	<td>//a[contains(@id,'manageSitesLink')]</td>
+	<td>//span/*[name()='svg'][contains(@class,'sites')]</td>
 	<td></td>
 </tr>
 <tr>

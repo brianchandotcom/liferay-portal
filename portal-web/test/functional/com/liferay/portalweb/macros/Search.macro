@@ -97,7 +97,7 @@
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
 			</then>
 		</if>
 	</command>

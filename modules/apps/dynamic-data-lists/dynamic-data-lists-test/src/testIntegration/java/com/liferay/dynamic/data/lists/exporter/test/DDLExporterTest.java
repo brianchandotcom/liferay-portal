@@ -62,13 +62,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.io.File;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -104,20 +101,7 @@ public class DDLExporterTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Collection<ServiceReference<DDLExporterFactory>> serviceReferences =
-			registry.getServiceReferences(
-				DDLExporterFactory.class,
-				"(component.name=" + DDLExporterFactory.class.getName() +")");
-
-		Iterator<ServiceReference<DDLExporterFactory>> iterator =
-			serviceReferences.iterator();
-
-		_serviceReference = iterator.next();
-
-		_ddlExporterFactory = registry.getService(_serviceReference);
-
+		setUpDDLExporterFactory();
 		setUpDDMFormFieldDataTypes();
 		setUpDDMFormFieldValues();
 		setUpPermissionChecker();
@@ -129,10 +113,6 @@ public class DDLExporterTest {
 		FileUtil.delete("record-set.csv");
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.ungetService(_serviceReference);
 	}
 
 	@Test
@@ -335,6 +315,12 @@ public class DDLExporterTest {
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 	}
 
+	protected void setUpDDLExporterFactory() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddlExporterFactory = registry.getService(DDLExporterFactory.class);
+	}
+
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldDataTypes() {
 		_ddmFormFieldDataTypes = new HashMap<>();
 
@@ -413,7 +399,6 @@ public class DDLExporterTest {
 	private Group _group;
 
 	private PermissionChecker _originalPermissionChecker;
-	private ServiceReference<DDLExporterFactory> _serviceReference;
 
 	private enum DDMFormFieldType {
 

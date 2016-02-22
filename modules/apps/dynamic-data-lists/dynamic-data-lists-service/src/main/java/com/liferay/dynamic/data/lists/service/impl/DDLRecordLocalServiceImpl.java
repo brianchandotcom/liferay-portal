@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -448,40 +450,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		SearchContext searchContext) {
 
 		try {
-			Indexer<DDLRecord> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DDLRecord.class);
+			Indexer<DDLRecord> indexer = getDDLRecordIndexer();
 
 			Hits hits = indexer.search(searchContext, DDL.SELECTED_FIELD_NAMES);
 
-			List<DDLRecord> records = new ArrayList<>();
-
-			List<Document> documents = hits.toList();
-
-			for (Document document : documents) {
-				long recordId = GetterUtil.getLong(
-					document.get(
-						com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
-
-				try {
-					DDLRecord record = getRecord(recordId);
-
-					records.add(record);
-				}
-				catch (NoSuchRecordException nsre) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"DDL record index is stale and contains record " +
-								recordId,
-							nsre);
-					}
-
-					long companyId = GetterUtil.getLong(
-						document.get(
-							com.liferay.portal.kernel.search.Field.COMPANY_ID));
-
-					indexer.delete(companyId, document.getUID());
-				}
-			}
+			List<DDLRecord> records = getRecords(hits);
 
 			return new BaseModelSearchResult<>(records, hits.getLength());
 		}
@@ -815,6 +788,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			companyId, groupId, DDLRecord.class.getName(), recordVersionId);
 	}
 
+	protected Indexer<DDLRecord> getDDLRecordIndexer() {
+		Indexer<DDLRecord> indexer = indexerRegistry.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		return indexer;
+	}
+
 	protected String getNextVersion(
 		String version, boolean majorVersion, int workflowAction) {
 
@@ -833,6 +813,40 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected List<DDLRecord> getRecords(Hits hits) throws PortalException {
+		List<DDLRecord> records = new ArrayList<>();
+
+		for (Document document : hits.toList()) {
+			long recordId = GetterUtil.getLong(
+				document.get(
+					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
+
+			try {
+				DDLRecord record = getRecord(recordId);
+
+				records.add(record);
+			}
+			catch (NoSuchRecordException nsre) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"DDL record index is stale and contains record " +
+							recordId,
+						nsre);
+				}
+
+				long companyId = GetterUtil.getLong(
+					document.get(
+						com.liferay.portal.kernel.search.Field.COMPANY_ID));
+
+				Indexer<DDLRecord> indexer = getDDLRecordIndexer();
+
+				indexer.delete(companyId, document.getUID());
+			}
+		}
+
+		return records;
 	}
 
 	protected String getWorkflowAssetClassName(DDLRecordSet recordSet) {
@@ -937,6 +951,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		ddlRecordVersionPersistence.update(recordVersion);
 	}
+
+	@ServiceReference(type = IndexerRegistry.class)
+	protected IndexerRegistry indexerRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordLocalServiceImpl.class);

@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
+AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
@@ -54,13 +54,7 @@ if (entry == null) {
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= entry != null %>">
-
-				<%
-				boolean showScopeName = true;
-				%>
-
 				<%@ include file="/entry_scope.jspf" %>
-
 			</c:when>
 			<c:otherwise>
 

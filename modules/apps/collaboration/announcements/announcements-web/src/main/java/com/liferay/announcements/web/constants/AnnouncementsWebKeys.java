@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.announcements.web.constants;
 
-<%
-request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.NOT_HIDDEN);
-request.setAttribute("view_entry.jsp-tabs1", "preview");
-%>
+/**
+ * @author Adolfo Pérez
+ */
+public class AnnouncementsWebKeys {
 
-<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
+	public static final String ANNOUNCEMENTS_ENTRY = "ANNOUNCEMENTS_ENTRY";
+
+	public static final String VIEW_ENTRY_FLAG_VALUE = "VIEW_ENTRY_FLAG_VALUE";
+
+}

@@ -281,38 +281,6 @@ public class UpgradeSocial extends UpgradeProcess {
 			return result;
 		}
 
-		@Override
-		public void setActivityQueryParameters(PreparedStatement ps)
-			throws SQLException {
-
-			Map<Integer, KeyValuePair> activityQueryParameters =
-				getActivityQueryParameters();
-
-			if (MapUtil.isNotEmpty(activityQueryParameters)) {
-				for (Map.Entry<Integer, KeyValuePair> entry :
-						activityQueryParameters.entrySet()) {
-
-					Integer entryKey = entry.getKey();
-
-					KeyValuePair entryValue = entry.getValue();
-
-					String clazz = entryValue.getKey();
-
-					if (clazz.equals(Long.class.getName())) {
-						ps.setLong(
-							entryKey, Long.valueOf(entryValue.getValue()));
-					}
-					else if (clazz.equals(Integer.class.getName())) {
-						ps.setInt(
-							entryKey, Integer.valueOf(entryValue.getValue()));
-					}
-				}
-			}
-		}
-
-		protected abstract Map<Integer, KeyValuePair>
-			getActivityQueryParameters();
-
 		protected abstract Map<String, KeyValuePair> getExtraDataMap();
 
 	}
@@ -377,6 +345,13 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setInt(1, _TYPE_ADD_COMMENT);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -395,20 +370,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				}
 
 				ps.setLong(1, messageId);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_TYPE_ADD_COMMENT)));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -440,6 +401,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_MESSAGE);
+				ps.setInt(3, _REPLY_MESSAGE);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -447,32 +417,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, classPK);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_ADD_MESSAGE)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_REPLY_MESSAGE)));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -519,29 +463,12 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
 
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_ADD_ENTRY)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_UPDATE_ENTRY)));
-
-				return activityQueryParameters;
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_ENTRY);
+				ps.setInt(3, _UPDATE_ENTRY);
 			}
 
 			@Override
@@ -587,29 +514,12 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
 
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_ADD_ENTRY)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_UPDATE_ENTRY)));
-
-				return activityQueryParameters;
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_ENTRY);
+				ps.setInt(3, _UPDATE_ENTRY);
 			}
 
 			@Override
@@ -646,6 +556,13 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -657,21 +574,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(2, groupId);
 
 				ps.setLong(3, classPK);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -707,6 +609,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_KB_ARTICLE);
+				ps.setInt(3, _UPDATE_KB_ARTICLE);
+				ps.setInt(4, _MOVE_KB_ARTICLE);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -714,39 +626,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, classPK);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_ADD_KB_ARTICLE)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_UPDATE_KB_ARTICLE)));
-
-				activityQueryParameters.put(
-					4,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_MOVE_KB_ARTICLE)));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -837,6 +716,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_KB_COMMENT);
+				ps.setInt(3, _UPDATE_KB_COMMENT);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -844,33 +732,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, classPK);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_ADD_KB_COMMENT)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_UPDATE_KB_COMMENT)));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -901,6 +762,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_KB_TEMPLATE);
+				ps.setInt(3, _UPDATE_KB_TEMPLATE);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -908,33 +778,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, classPK);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_ADD_KB_TEMPLATE)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(),
-						String.valueOf(_UPDATE_KB_TEMPLATE)));
-
-				return activityQueryParameters;
 			}
 
 			@Override
@@ -972,6 +815,15 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setInt(2, _ADD_PAGE);
+				ps.setInt(3, _UPDATE_PAGE);
+			}
+
+			@Override
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
 					long userId, long classNameId, long classPK, int type,
@@ -985,31 +837,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(3, classPK);
 
 				ps.setBoolean(4, true);
-			}
-
-			@Override
-			protected Map<Integer, KeyValuePair> getActivityQueryParameters() {
-				Map<Integer, KeyValuePair> activityQueryParameters =
-					new HashMap<>();
-
-				activityQueryParameters.put(
-					1,
-					new KeyValuePair(
-						Long.class.getName(),
-						String.valueOf(
-							PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME))));
-
-				activityQueryParameters.put(
-					2,
-					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_ADD_PAGE)));
-
-				activityQueryParameters.put(
-					3,
-					new KeyValuePair(
-						Integer.class.getName(), String.valueOf(_UPDATE_PAGE)));
-
-				return activityQueryParameters;
 			}
 
 			@Override

@@ -24,6 +24,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayDepth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>includedLayouts</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

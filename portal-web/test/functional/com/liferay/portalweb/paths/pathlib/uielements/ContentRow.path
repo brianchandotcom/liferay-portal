@@ -60,11 +60,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTENT_ENTRY_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME_LINK</td>
 	<td>//*[@data-qa-id='row']//a[contains(.,'${key_rowEntry}')]</td>
 	<td></td>

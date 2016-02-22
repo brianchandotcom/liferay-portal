@@ -116,23 +116,23 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_template.jsp" />
+	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
 	<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:renderURL>

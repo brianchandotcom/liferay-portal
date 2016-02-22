@@ -25,8 +25,8 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_structure.jsp");
-portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("navigationStartsOn", DDMNavigationHelper.SELECT_STRUCTURE);
+portletURL.setParameter("eventName", eventName);
 %>
 
 <aui:nav-bar markupView="lexicon">

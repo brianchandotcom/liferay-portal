@@ -14,6 +14,7 @@
 
 package com.liferay.staging.configuration.web.portlet.configuration.icon;
 
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.constants.StagingConfigurationPortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -101,6 +104,19 @@ public class StagingPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String rootPortletId = portletDisplay.getRootPortletId();
+
+		if (rootPortletId.equals(ExportImportPortletKeys.EXPORT) ||
+			rootPortletId.equals(ExportImportPortletKeys.EXPORT_IMPORT) ||
+			rootPortletId.equals(ExportImportPortletKeys.IMPORT) ||
+			rootPortletId.equals(
+				StagingProcessesPortletKeys.STAGING_PROCESSES) ||
+			rootPortletId.equals(
+				StagingConfigurationPortletKeys.STAGING_CONFIGURATION)) {
+
+			return false;
+		}
 
 		return portletDisplay.isShowStagingIcon();
 	}

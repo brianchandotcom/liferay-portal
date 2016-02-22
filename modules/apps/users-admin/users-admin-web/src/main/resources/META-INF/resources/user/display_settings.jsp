@@ -25,8 +25,6 @@ String timeZoneId = BeanParamUtil.getString(selUser, request, "timeZoneId", user
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<h3><liferay-ui:message key="display-settings" /></h3>
-
 <aui:fieldset>
 	<aui:input label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
 

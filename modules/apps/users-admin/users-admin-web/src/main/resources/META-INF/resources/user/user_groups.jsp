@@ -29,16 +29,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 <liferay-util:buffer var="removeUserGroupIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
+		icon="times"
+		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>
 
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="deleteUserGroupIds" type="hidden" />
-
-<h3><liferay-ui:message key="user-groups" /></h3>
 
 <liferay-ui:search-container
 	curParam="userGroupsCur"
@@ -63,7 +61,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		/>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && !UserGroupMembershipPolicyUtil.isMembershipRequired((selUser != null) ? selUser.getUserId() : 0, userGroup.getUserGroupId()) %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 				<a class="modify-link" data-rowId="<%= userGroup.getUserGroupId() %>" href="javascript:;"><%= removeUserGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -75,10 +73,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="openUserGroupsLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		url="javascript:;"
 	/>

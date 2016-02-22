@@ -24,8 +24,6 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 
-<h3><liferay-ui:message key="comments" /></h3>
-
 <aui:fieldset>
-	<aui:input label="" name="comments" />
+	<aui:input label="comments" name="comments" />
 </aui:fieldset>

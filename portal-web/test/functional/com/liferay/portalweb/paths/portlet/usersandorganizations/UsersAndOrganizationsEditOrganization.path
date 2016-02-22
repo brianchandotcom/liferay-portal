@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATION_NAME</td>
-	<td>//span[@class='organization-name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BACK</td>
 	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>

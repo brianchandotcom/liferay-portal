@@ -72,8 +72,6 @@ if (selUser != null) {
 }
 %>
 
-<h3><liferay-ui:message key="personal-site" /></h3>
-
 <aui:fieldset>
 
 	<%
@@ -120,7 +118,6 @@ if (selUser != null) {
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-search"
 									label="<%= true %>"
 									message="open-pages"
 									method="get"
@@ -191,7 +188,6 @@ if (selUser != null) {
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-search"
 									label="<%= true %>"
 									message="open-pages"
 									method="get"

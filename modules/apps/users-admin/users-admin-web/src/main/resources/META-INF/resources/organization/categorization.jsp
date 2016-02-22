@@ -28,8 +28,6 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 <liferay-ui:asset-tags-error />
 
-<h3><liferay-ui:message key="categorization" /></h3>
-
 <aui:fieldset>
 	<aui:input name="categories" type="assetCategories" />
 

@@ -324,21 +324,9 @@ if (portletTitleBasedNavigation) {
 					<c:if test="<%= wikiPage != null %>">
 						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-
-								<%
-								classPK = 0;
-
-								if (templatePage != null) {
-									classPK = templatePage.getPrimaryKey();
-								}
-								else if (page != null) {
-									classPK = wikiPage.getPrimaryKey();
-								}
-								%>
-
 								<liferay-ui:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"
-									classPK="<%= classPK %>"
+									classPK="<%= (templatePage != null) ? templatePage.getPrimaryKey() : wikiPage.getPrimaryKey() %>"
 									editable="<%= true %>"
 									label="<%= true %>"
 								/>

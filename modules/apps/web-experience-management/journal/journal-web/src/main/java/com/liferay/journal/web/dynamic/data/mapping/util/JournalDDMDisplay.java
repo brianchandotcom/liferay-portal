@@ -84,17 +84,23 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
-		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
+		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
 
-		if (navigationHelper.startsOnEditTemplates(liferayPortletRequest)) {
+		if (ddmNavigationHelper.isNavigationStartsOnEditTemplate(
+				liferayPortletRequest)) {
+
 			return StringPool.BLANK;
 		}
 
-		if (navigationHelper.startsOnSelectTemplates(liferayPortletRequest)) {
+		if (ddmNavigationHelper.isNavigationStartsOnSelectTemplate(
+				liferayPortletRequest)) {
+
 			return ParamUtil.getString(liferayPortletRequest, "redirect");
 		}
 
-		if (navigationHelper.startsOnTemplates(liferayPortletRequest)) {
+		if (ddmNavigationHelper.isNavigationStartsOnViewTemplates(
+				liferayPortletRequest)) {
+
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId, 0,
 				resourceClassNameId);
@@ -143,17 +149,18 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
+		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
 
-		if (navigationHelper.startsOnEditStructures(liferayPortletRequest)) {
+		if (ddmNavigationHelper.isNavigationStartsOnEditStructure(
+				liferayPortletRequest)) {
+
 			return StringPool.BLANK;
 		}
 
-		if (navigationHelper.startsOnTemplates(liferayPortletRequest)) {
-			String backURL = ParamUtil.getString(
-				liferayPortletRequest, "backURL");
+		if (ddmNavigationHelper.isNavigationStartsOnViewTemplates(
+				liferayPortletRequest)) {
 
-			return backURL;
+			return ParamUtil.getString(liferayPortletRequest, "backURL");
 		}
 
 		return super.getViewTemplatesBackURL(

@@ -244,9 +244,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		DDMNavigationHelper navigationHelper = getDDMNavigationHelper();
+		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
 
-		if (navigationHelper.startsOnSelectStructures(liferayPortletRequest)) {
+		if (ddmNavigationHelper.isNavigationStartsOnSelectStructure(
+				liferayPortletRequest)) {
+
 			return ParamUtil.getString(liferayPortletRequest, "redirect");
 		}
 		else {

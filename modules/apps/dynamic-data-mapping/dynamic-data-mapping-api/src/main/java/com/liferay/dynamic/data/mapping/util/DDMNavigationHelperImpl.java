@@ -22,72 +22,49 @@ import com.liferay.portal.kernel.util.ParamUtil;
  */
 public class DDMNavigationHelperImpl implements DDMNavigationHelper {
 
-	public boolean startsOnEditStructures(
+	public boolean isNavigationStartsOnEditStructure(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_EDIT_STRUCTURE);
+		return isNavigationStartsOn(liferayPortletRequest, EDIT_STRUCTURE);
 	}
 
-	public boolean startsOnEditTemplates(
+	public boolean isNavigationStartsOnEditTemplate(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_EDIT_TEMPLATE);
+		return isNavigationStartsOn(liferayPortletRequest, EDIT_TEMPLATE);
 	}
 
-	public boolean startsOnSelectStructures(
+	public boolean isNavigationStartsOnSelectStructure(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_SELECT_STRUCTURE);
+		return isNavigationStartsOn(liferayPortletRequest, SELECT_STRUCTURE);
 	}
 
-	public boolean startsOnSelectTemplates(
+	public boolean isNavigationStartsOnSelectTemplate(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_SELECT_TEMPLATE);
+		return isNavigationStartsOn(liferayPortletRequest, SELECT_TEMPLATE);
 	}
 
-	public boolean startsOnStructures(
+	public boolean isNavigationStartsOnViewStructures(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_STRUCTURE);
+		return isNavigationStartsOn(liferayPortletRequest, VIEW_STRUCTURES);
 	}
 
-	public boolean startsOnTemplates(
+	public boolean isNavigationStartsOnViewTemplates(
 		LiferayPortletRequest liferayPortletRequest) {
 
-		return isStartedOn(
-			liferayPortletRequest, _NAVIGATION_START_POINT_TEMPLATE);
+		return isNavigationStartsOn(liferayPortletRequest, VIEW_TEMPLATES);
 	}
 
-	private boolean isStartedOn(
+	protected boolean isNavigationStartsOn(
 		LiferayPortletRequest liferayPortletRequest, String startPoint) {
 
-		String navStartsOn = ParamUtil.getString(
-			liferayPortletRequest, "navStartsOn");
+		String navigationStartsOn = ParamUtil.getString(
+			liferayPortletRequest, "navigationStartsOn");
 
-		return navStartsOn.equals(startPoint);
+		return navigationStartsOn.equals(startPoint);
 	}
-
-	private static final String _NAVIGATION_START_POINT_EDIT_STRUCTURE =
-		"editStructure";
-
-	private static final String _NAVIGATION_START_POINT_EDIT_TEMPLATE =
-		"editTemplate";
-
-	private static final String _NAVIGATION_START_POINT_SELECT_STRUCTURE =
-		"selectStructures";
-
-	private static final String _NAVIGATION_START_POINT_SELECT_TEMPLATE =
-		"selectTemplates";
-
-	private static final String _NAVIGATION_START_POINT_STRUCTURE =
-		"structures";
-
-	private static final String _NAVIGATION_START_POINT_TEMPLATE = "templates";
 
 }

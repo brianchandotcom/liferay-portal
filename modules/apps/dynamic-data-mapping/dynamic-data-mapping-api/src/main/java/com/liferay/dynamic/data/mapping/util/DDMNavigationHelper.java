@@ -21,22 +21,34 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
  */
 public interface DDMNavigationHelper {
 
-	public boolean startsOnEditStructures(
+	public static final String EDIT_STRUCTURE = "EDIT_STRUCTURE";
+
+	public static final String EDIT_TEMPLATE = "EDIT_TEMPLATE";
+
+	public static final String SELECT_STRUCTURE = "SELECT_STRUCTURE";
+
+	public static final String SELECT_TEMPLATE = "SELECT_TEMPLATE";
+
+	public static final String VIEW_STRUCTURES = "VIEW_STRUCTURES";
+
+	public static final String VIEW_TEMPLATES = "VIEW_TEMPLATES";
+
+	public boolean isNavigationStartsOnEditStructure(
 		LiferayPortletRequest liferayPortletRequest);
 
-	public boolean startsOnEditTemplates(
+	public boolean isNavigationStartsOnEditTemplate(
 		LiferayPortletRequest liferayPortletRequest);
 
-	public boolean startsOnSelectStructures(
+	public boolean isNavigationStartsOnSelectStructure(
 		LiferayPortletRequest liferayPortletRequest);
 
-	public boolean startsOnSelectTemplates(
+	public boolean isNavigationStartsOnSelectTemplate(
 		LiferayPortletRequest liferayPortletRequest);
 
-	public boolean startsOnStructures(
+	public boolean isNavigationStartsOnViewStructures(
 		LiferayPortletRequest liferayPortletRequest);
 
-	public boolean startsOnTemplates(
+	public boolean isNavigationStartsOnViewTemplates(
 		LiferayPortletRequest liferayPortletRequest);
 
 }

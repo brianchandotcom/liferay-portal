@@ -14,12 +14,11 @@
  */
 --%>
 
-<%@ include file="/asset/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%
-DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext = (DDLFormViewRecordDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
+<%@ page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<div class="container-fluid-1280">
-	<%= ddlFormViewRecordDisplayContext.getDDMFormHTML() %>
-</div>
+<aui:script>
+	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
+</aui:script>

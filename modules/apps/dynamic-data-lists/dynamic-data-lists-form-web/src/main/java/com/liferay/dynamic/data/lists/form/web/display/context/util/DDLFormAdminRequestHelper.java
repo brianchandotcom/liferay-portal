@@ -19,10 +19,16 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Marcellus Tavares
  */
 public class DDLFormAdminRequestHelper extends BaseRequestHelper {
+
+	public DDLFormAdminRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
+	}
 
 	public DDLFormAdminRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));

@@ -36,13 +36,11 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
@@ -120,7 +118,18 @@ public class DDLFormAdminDisplayContext {
 			renderRequest);
 	}
 
-	public DDLFormViewRecordsDisplayContext getDDLFormViewDisplayContext()
+	public DDLFormViewRecordDisplayContext
+		getDDLFormViewRecordDisplayContext() {
+
+		return new DDLFormViewRecordDisplayContext(
+			PortalUtil.getHttpServletRequest(_renderRequest),
+			PortalUtil.getHttpServletResponse(_renderResponse),
+			_ddlRecordLocalService, _ddmFormRenderer,
+			_ddmStructureLocalService);
+	}
+
+	public DDLFormViewRecordsDisplayContext
+			getDDLFormViewRecordsDisplayContext()
 		throws PortalException {
 
 		return new DDLFormViewRecordsDisplayContext(
@@ -140,25 +149,10 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getDDMFormHTML() throws PortalException {
-		DDLRecord record = getRecord();
+		DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext =
+			getDDLFormViewRecordDisplayContext();
 
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext();
-
-		ddmFormRenderingContext.setDDMFormValues(record.getDDMFormValues());
-
-		DDMStructure ddmStructure = getDDMStructure();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			setDDMFormFieldReadOnly(ddmFormField);
-		}
-
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
-
-		return getDDMFormRenderer().render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+		return ddlFormViewRecordDisplayContext.getDDMFormHTML();
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {
@@ -458,23 +452,6 @@ public class DDLFormAdminDisplayContext {
 			ActionKeys.VIEW);
 	}
 
-	protected DDMFormRenderingContext createDDMFormRenderingContext() {
-		DDMFormRenderingContext ddmFormRenderingContext =
-			new DDMFormRenderingContext();
-
-		ddmFormRenderingContext.setHttpServletRequest(
-			PortalUtil.getHttpServletRequest(_renderRequest));
-		ddmFormRenderingContext.setHttpServletResponse(
-			PortalUtil.getHttpServletResponse(_renderResponse));
-		ddmFormRenderingContext.setLocale(
-			_ddlFormAdminRequestHelper.getLocale());
-		ddmFormRenderingContext.setPortletNamespace(
-			_renderResponse.getNamespace());
-		ddmFormRenderingContext.setReadOnly(true);
-
-		return ddmFormRenderingContext;
-	}
-
 	protected OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -499,10 +476,6 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return orderByComparator;
-	}
-
-	protected DDMFormRenderer getDDMFormRenderer() {
-		return _ddmFormRenderer;
 	}
 
 	protected String getDisplayStyle(
@@ -572,16 +545,6 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return jsonArray.toString();
-	}
-
-	protected void setDDMFormFieldReadOnly(DDMFormField ddmFormField) {
-		ddmFormField.setReadOnly(true);
-
-		for (DDMFormField nestedDDMFormField :
-				ddmFormField.getNestedDDMFormFields()) {
-
-			setDDMFormFieldReadOnly(nestedDDMFormField);
-		}
 	}
 
 	protected JSONObject toJSONObject(

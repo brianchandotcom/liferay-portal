@@ -52,7 +52,7 @@ if (Validator.isNull(defaultLanguageId)) {
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
-boolean changeableDefaultLanguage = ddlWebConfiguration.changeableDefaultLanguage();
+boolean changeableDefaultLanguage = ddlDisplayContext.changeableDefaultLanguage();
 
 if (ddmFormValues != null) {
 	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
@@ -176,6 +176,7 @@ else {
 			<c:if test="<%= !translating %>">
 				<aui:translation-manager
 					availableLocales="<%= availableLocales %>"
+					changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
 					defaultLanguageId="<%= defaultLanguageId %>"
 					id="translationManager"
 				/>

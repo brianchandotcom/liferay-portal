@@ -70,7 +70,7 @@ if (!user.isDefaultUser()) {
 	recordSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 }
 
-OrderByComparator<DDLRecord> orderByComparator = DDLPortletUtil.getDDLRecordOrderByComparator(ddlViewRecordsDisplayContext.getOrderByCol(), ddlViewRecordsDisplayContext.getOrderByType());
+OrderByComparator<DDLRecord> orderByComparator = ddlViewRecordsDisplayContext.getDDLRecordOrderByComparator(ddlViewRecordsDisplayContext.getOrderByCol(), ddlViewRecordsDisplayContext.getOrderByType());
 
 recordSearchContainer.setOrderByCol(ddlViewRecordsDisplayContext.getOrderByCol());
 recordSearchContainer.setOrderByComparator(orderByComparator);

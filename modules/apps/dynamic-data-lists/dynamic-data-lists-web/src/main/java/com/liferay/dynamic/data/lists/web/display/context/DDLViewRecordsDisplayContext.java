@@ -15,13 +15,17 @@
 package com.liferay.dynamic.data.lists.web.display.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordCreateDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -45,6 +49,27 @@ public class DDLViewRecordsDisplayContext {
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		_ddmStructure = _ddlRecordSet.getDDMStructure(formDDMTemplateId);
+	}
+
+	public OrderByComparator<DDLRecord> getDDLRecordOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDLRecord> orderByComparator = null;
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDLRecordModifiedDateComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new DDLRecordCreateDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public DDLRecordSet getDDLRecordSet() {

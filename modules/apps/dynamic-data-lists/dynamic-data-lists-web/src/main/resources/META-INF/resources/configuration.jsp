@@ -21,7 +21,15 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
+long displayDDMTemplateId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "displayDDMTemplateId");
+long formDDMTemplateId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "formDDMTemplateId");
+
+boolean editable = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "editable", true);
+boolean spreadsheet = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "spreadsheet");
+
+long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "recordSetId");
+
+DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 %>
 
 <div class="alert alert-info">
@@ -110,7 +118,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= ddlDisplayContext.getRecordSetId() %>" />
+	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
 
 	<c:if test="<%= selRecordSet != null %>">
 		<aui:fieldset label="optional-configuration">
@@ -123,7 +131,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 				for (DDMTemplate template : templates) {
 					boolean selected = false;
 
-					if (ddlDisplayContext.getDisplayDDMTemplateId() == template.getTemplateId()) {
+					if (displayDDMTemplateId == template.getTemplateId()) {
 						selected = true;
 					}
 				%>
@@ -145,7 +153,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 				for (DDMTemplate template : templates) {
 					boolean selected = false;
 
-					if (ddlDisplayContext.getFormDDMTemplateId() == template.getTemplateId()) {
+					if (formDDMTemplateId == template.getTemplateId()) {
 						selected = true;
 					}
 				%>
@@ -158,9 +166,9 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 
 			</aui:select>
 
-			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= ddlDisplayContext.isEditable() %>" />
+			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
 
-			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= ddlDisplayContext.isSpreadsheet() %>" />
+			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
 		</aui:fieldset>
 	</c:if>
 

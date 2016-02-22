@@ -6284,9 +6284,6 @@ public class JournalArticleLocalServiceImpl
 
 			String elInstanceId = imageEl.attributeValue("instance-id");
 			String elName = imageEl.attributeValue("name");
-			String elIndex = imageEl.attributeValue("index");
-
-			String name = elName + StringPool.UNDERLINE + elIndex;
 
 			List<Element> dynamicContentEls = imageEl.elements(
 				"dynamic-content");
@@ -6306,7 +6303,7 @@ public class JournalArticleLocalServiceImpl
 
 				imageId = journalArticleImageLocalService.getArticleImageId(
 					newArticle.getGroupId(), newArticle.getArticleId(),
-					newArticle.getVersion(), elInstanceId, name, languageId);
+					newArticle.getVersion(), elInstanceId, elName, languageId);
 
 				imageLocalService.updateImage(imageId, oldImage.getTextObj());
 
@@ -6390,14 +6387,10 @@ public class JournalArticleLocalServiceImpl
 			else if (elType.equals("image")) {
 				String elName = element.attributeValue(
 					"name", StringPool.BLANK);
-				String elIndex = element.attributeValue(
-					"index", StringPool.BLANK);
-
-				String name = elName + StringPool.UNDERLINE + elIndex;
 
 				formatImage(
 					groupId, articleId, version, incrementVersion, element,
-					elInstanceId, name, images);
+					elInstanceId, elName, images);
 			}
 			else if (elType.equals("text_area") || elType.equals("text") ||
 					 elType.equals("text_box")) {

@@ -284,7 +284,7 @@ public class JournalArticleTrashHandlerTest
 		Map<String, byte[]> images = new HashMap<>();
 
 		images.put(
-			"_image_1_0_en_US",
+			"uewn_image_1_en_US",
 			FileUtil.getBytes(
 				clazz, "/com/liferay/journal/dependencies/liferay.png"));
 

@@ -579,16 +579,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 						return sql;
 					}
-
-					if (ResourcePermissionLocalServiceUtil.
-							hasResourcePermission(
-								companyId, className,
-								ResourceConstants.SCOPE_COMPANY,
-								String.valueOf(companyId), roleIds,
-								ActionKeys.VIEW)) {
-
-						return sql;
-					}
 				}
 				catch (PortalException pe) {
 					if (_log.isDebugEnabled()) {
@@ -624,6 +614,24 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (companyId == 0) {
 			companyId = permissionChecker.getCompanyId();
+		}
+
+		try {
+			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+					companyId, className, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(companyId), getRoleIds(0),
+					ActionKeys.VIEW)) {
+
+				return sql;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get resource permissions for " +
+						className + " with companyId " + companyId,
+					pe);
+			}
 		}
 
 		String permissionJoin = StringPool.BLANK;

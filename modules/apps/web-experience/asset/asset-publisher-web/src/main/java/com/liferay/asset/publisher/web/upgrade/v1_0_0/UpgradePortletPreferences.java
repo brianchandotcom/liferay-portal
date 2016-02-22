@@ -16,6 +16,9 @@ package com.liferay.asset.publisher.web.upgrade.v1_0_0;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -51,12 +54,15 @@ import javax.portlet.PortletPreferences;
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	public UpgradePortletPreferences(
-		DateFormatFactoryUtil dateFormatFactoryUtil) {
+		DateFormatFactoryUtil dateFormatFactoryUtil,
+		DDMStructureLocalService ddmStructureLocalService) {
 
 		_newDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 		_oldDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
+
+		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	protected JSONObject getDDMStructureJSONObject(long structureId)
@@ -69,29 +75,24 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return ddmStructureJSONObject;
 		}
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select definition from DDMStructure where structureId = ?")) {
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			structureId);
 
-			ps.setLong(1, structureId);
+		if (Validator.isNotNull(ddmStructure)) {
+			String definition = ddmStructure.getDefinition();
 
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					String definition = rs.getString("definition");
+			ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
+				definition);
+			_ddmSructureJSONObjects.put(structureId, ddmStructureJSONObject);
 
 					ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
 						definition);
 
-					_ddmSructureJSONObjects.put(
-						structureId, ddmStructureJSONObject);
-
-					return ddmStructureJSONObject;
-				}
-
-				throw new UpgradeException(
-					"Unable to find dynamic data mapping structure " +
-						structureId);
-			}
+			return ddmStructureJSONObject;
 		}
+
+		throw new UpgradeException(
+			"Unable to find dynamic data mapping structure " + structureId);
 	}
 
 	protected JSONObject getFieldJSONObject(
@@ -266,13 +267,13 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		String value = GetterUtil.getString(
-				portletPreferences.getValue(column, null));
+			portletPreferences.getValue(column, null));
 
 		if (Validator.isNotNull(value) &&
-				(value.startsWith(DDM_FIELD_OLD_PREFIX) ||
-					value.startsWith(DDM_FIELD_PREFIX))) {
+			(value.startsWith(DDM_FIELD_OLD_PREFIX) ||
+			 value.startsWith(DDM_FIELD_PREFIX))) {
 
-			String [] values = new String[0];
+			String[] values = new String[0];
 
 			boolean isOldFormat = false;
 
@@ -289,18 +290,18 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			} else if (values.length == 3) {
 				long structureId = GetterUtil.getLong(values[1]);
 
-				JSONObject ddmStructureJSONObject =
-					getDDMStructureJSONObject(structureId);
+				JSONObject ddmStructureJSONObject = getDDMStructureJSONObject(
+					structureId);
 
-				JSONArray fieldsJSONArray =
-					ddmStructureJSONObject.getJSONArray("fields");
+				JSONArray fieldsJSONArray = ddmStructureJSONObject.getJSONArray(
+					"fields");
 
 				JSONObject fieldJSONObject = getFieldJSONObject(
 					fieldsJSONArray, values[2]);
 
 				if (fieldJSONObject != null &&
-						Validator.isNotNull(
-							fieldJSONObject.getString("indexType"))) {
+					Validator.isNotNull(
+						fieldJSONObject.getString("indexType"))) {
 
 					StringBundler sb = new StringBundler(7);
 					sb.append(values[0]);
@@ -319,14 +320,12 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		}
 	}
 
-	protected void upgradeOrderByColumns(
-			PortletPreferences portletPreferences)
+	protected void upgradeOrderByColumns(PortletPreferences portletPreferences)
 		throws Exception {
 
 		upgradeOrderByColumn(portletPreferences, _ORDER_BY_COLUMN_1);
 
 		upgradeOrderByColumn(portletPreferences, _ORDER_BY_COLUMN_2);
-
 	}
 
 	@Override
@@ -401,18 +400,21 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		}
 	}
 
-	public static final String DDM_FIELD_NAMESPACE = "ddm";
+	private static final String DDM_FIELD_NAMESPACE = "ddm";
 
-	public static final String DDM_FIELD_OLD_SEPARATOR =
+	private static final String DDM_FIELD_OLD_PREFIX =
+		DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH;
+
+	private static final String DDM_FIELD_OLD_SEPARATOR =
 		StringPool.FORWARD_SLASH;
 
-	public static final String DDM_FIELD_OLD_PREFIX =
-		DDM_FIELD_NAMESPACE + DDM_FIELD_OLD_SEPARATOR;
+	private static final String DDM_FIELD_PREFIX =
+		DDM_FIELD_NAMESPACE + StringPool.DOUBLE_UNDERLINE;
 
-	public static final String DDM_FIELD_SEPARATOR =
+	private static final String DDM_FIELD_SEPARATOR =
 		StringPool.DOUBLE_UNDERLINE;
 
-	public static final String DDM_FIELD_PREFIX =
+	private static final String DDM_FIELD_PREFIX =
 		DDM_FIELD_NAMESPACE + DDM_FIELD_SEPARATOR;
 
 	private static final String _DDM_STRUCTURE_FIELD_NAME =
@@ -433,15 +435,14 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private static final String _JOURNAL_FILTER_BY_FIELD_ENABLED_KEY =
 		"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory";
 
-	private static final String _ORDER_BY_COLUMN_1 =
-		"orderByColumn1";
+	private static final String _ORDER_BY_COLUMN_1 = "orderByColumn1";
 
-	private static final String _ORDER_BY_COLUMN_2 =
-		"orderByColumn2";
+	private static final String _ORDER_BY_COLUMN_2 = "orderByColumn2";
 
 	private static final Map<Long, JSONObject> _ddmSructureJSONObjects =
 		new HashMap<>();
 
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DateFormat _newDateFormat;
 	private final DateFormat _oldDateFormat;
 

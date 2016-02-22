@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.upgrade;
 
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -38,7 +39,8 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
 			new UpgradePortletId(),
-			new UpgradePortletPreferences(_dateFormatFactoryUtil));
+			new UpgradePortletPreferences(
+				_dateFormatFactoryUtil, _ddmStructureLocalService));
 	}
 
 	@Reference(unbind = "-")
@@ -48,6 +50,14 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 		_dateFormatFactoryUtil = dateFormatFactoryUtil;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	private DateFormatFactoryUtil _dateFormatFactoryUtil;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

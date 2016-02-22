@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.web.portlet;
 
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

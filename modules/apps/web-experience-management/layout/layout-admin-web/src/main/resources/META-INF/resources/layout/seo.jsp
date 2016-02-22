@@ -43,6 +43,10 @@ if (selLayout != null) {
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
 	<h4><liferay-ui:message key="sitemap" /></h4>
 
+	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message arguments='<%= LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template") %>' key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x" translateArguments="<%= false %>" />
+	</div>
+
 	<liferay-ui:error exception="<%= SitemapChangeFrequencyException.class %>" message="please-select-a-valid-change-frequency" />
 	<liferay-ui:error exception="<%= SitemapIncludeException.class %>" message="please-select-a-valid-include-value" />
 	<liferay-ui:error exception="<%= SitemapPagePriorityException.class %>" message="please-enter-a-valid-page-priority" />
@@ -51,7 +55,7 @@ if (selLayout != null) {
 	boolean sitemapInclude = GetterUtil.getBoolean(layoutTypeSettings.getProperty("sitemap-include"), true);
 	%>
 
-	<aui:select label="include" name="TypeSettingsProperties--sitemap-include--">
+	<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
 		<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
 		<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
 	</aui:select>
@@ -60,7 +64,7 @@ if (selLayout != null) {
 	String sitemapPriority = layoutTypeSettings.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
 	%>
 
-	<aui:input helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value="<%= sitemapPriority %>">
+	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value="<%= sitemapPriority %>">
 		<aui:validator name="number" />
 		<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 	</aui:input>
@@ -69,7 +73,7 @@ if (selLayout != null) {
 	String siteMapChangeFrequency = layoutTypeSettings.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 	%>
 
-	<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value="<%= siteMapChangeFrequency %>">
+	<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value="<%= siteMapChangeFrequency %>">
 		<aui:option label="always" />
 		<aui:option label="hourly" />
 		<aui:option label="daily" />

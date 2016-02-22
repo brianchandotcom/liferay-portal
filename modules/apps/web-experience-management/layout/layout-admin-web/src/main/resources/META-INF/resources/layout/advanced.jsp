@@ -34,18 +34,22 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
 
+	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message arguments='<%= LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template") %>' key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x" translateArguments="<%= false %>" />
+	</div>
+
 	<%
 	String queryString = GetterUtil.getString(layoutTypeSettings.getProperty("query-string"));
 	%>
 
-	<aui:input helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value="<%= queryString %>" />
+	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value="<%= queryString %>" />
 </c:if>
 
 <%
 String curTarget = GetterUtil.getString(layoutTypeSettings.getProperty("target"));
 %>
 
-<aui:input label="target" name="TypeSettingsProperties--target--" size="15" type="text" value="<%= HtmlUtil.escapeAttribute(curTarget) %>" />
+<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value="<%= HtmlUtil.escapeAttribute(curTarget) %>" />
 
 <aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 	<liferay-ui:logo-selector

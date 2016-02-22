@@ -29,7 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
+page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

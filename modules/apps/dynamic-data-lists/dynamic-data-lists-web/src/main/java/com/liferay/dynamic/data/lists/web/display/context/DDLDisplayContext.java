@@ -103,12 +103,6 @@ public class DDLDisplayContext {
 			_recordSet.getDDMStructure(), null, getLocale());
 	}
 
-	public DDLDisplayContext getDDLDisplayContext() throws PortalException {
-		return new DDLDisplayContext(
-			_ddlRequestHelper.getRequest(), _ddl, _ddlRecordSetLocalService,
-			_ddlWebConfiguration, _ddmTemplateLocalService);
-	}
-
 	public String getDDLRecordSetDisplayStyle() {
 		if (_ddlRecordDisplayStyle == null) {
 			PortalPreferences portalPreferences =

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,9 +70,11 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 		triggerJSONObject.put("tplReplace", "<a href=\"{title}\">{title}</a>");
 		triggerJSONObject.put("tplResults", "{title}");
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		ResourceURL autoCompletePageTitleURL =
 			(ResourceURL)requestBackedPortletURLFactory.createResourceURL(
-				WikiPortletKeys.WIKI);
+				portletDisplay.getId());
 
 		autoCompletePageTitleURL.setResourceID("/wiki/autocomplete_page_title");
 
@@ -84,7 +87,7 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 
 		String source =
 			autoCompletePageTitleURL.toString() + "&" +
-				PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI);
+				PortalUtil.getPortletNamespace(portletDisplay.getId());
 
 		triggerJSONObject.put("source", source);
 

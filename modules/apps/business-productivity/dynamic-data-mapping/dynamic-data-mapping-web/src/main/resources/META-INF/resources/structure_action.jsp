@@ -81,32 +81,20 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
-		<portlet:renderURL var="copyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:renderURL var="copyURL">
 			<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>
 
-		<%
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("javascript:");
-		sb.append(renderResponse.getNamespace());
-		sb.append("copyStructure");
-		sb.append("('");
-		sb.append(copyURL);
-		sb.append("');");
-		%>
-
 		<liferay-ui:icon
 			message="copy"
-			url="<%= sb.toString() %>"
+			url="<%= copyURL %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteStructure" var="deleteURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:actionURL>

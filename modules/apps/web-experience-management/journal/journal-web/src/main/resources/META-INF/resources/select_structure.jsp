@@ -26,6 +26,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_structure.jsp");
 portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("navigationStartsOn", DDMNavigationHelper.SELECT_STRUCTURE);
 %>
 
 <aui:nav-bar markupView="lexicon">

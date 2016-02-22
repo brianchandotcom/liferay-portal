@@ -75,8 +75,6 @@ public class CopyTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 
 		DDMTemplate template = copyTemplate(actionRequest);
 
-		addSuccessMessage(actionRequest, actionResponse);
-
 		setRedirectAttribute(actionRequest, template);
 	}
 

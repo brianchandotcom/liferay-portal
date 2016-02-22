@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.lists.web.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,6 +30,16 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMDisplay.class
 )
 public class DDLDisplayDDMDisplay extends DDLDDMDisplay {
+
+	@Override
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, long resourceClassNameId, String portletResource)
+		throws Exception {
+
+		return ParamUtil.getString(liferayPortletRequest, "redirect");
+	}
 
 	@Override
 	public String getPortletId() {

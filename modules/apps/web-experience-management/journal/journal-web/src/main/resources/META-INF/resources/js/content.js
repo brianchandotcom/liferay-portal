@@ -226,6 +226,7 @@ AUI.add(
 								eventName: instance.ns(STR_SELECT_STRUCTURE),
 								groupId: ddm.groupId,
 								mvcPath: '/select_structure.jsp',
+								navigationStartsOn: 'SELECT_STRUCTURE',
 								refererPortletName: ddm.refererPortletName,
 								showAncestorScopes: true,
 								title: strings.structures
@@ -268,6 +269,7 @@ AUI.add(
 								eventName: instance.ns(STR_SELECT_TEMPLATE),
 								groupId: ddm.groupId,
 								mvcPath: '/select_template.jsp',
+								navigationStartsOn: 'SELECT_TEMPLATE',
 								refererPortletName: ddm.refererPortletName,
 								resourceClassNameId: ddm.resourceClassNameId,
 								showAncestorScopes: true,

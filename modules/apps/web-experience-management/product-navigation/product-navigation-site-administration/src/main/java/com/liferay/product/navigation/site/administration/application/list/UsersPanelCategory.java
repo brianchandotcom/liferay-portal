@@ -38,7 +38,7 @@ public class UsersPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_USERS;
+		return PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS;
 	}
 
 	@Override

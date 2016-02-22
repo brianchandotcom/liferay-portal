@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -278,7 +279,8 @@ public class InputEditorTag extends IncludeTag {
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				portletId, getConfigKey(), getEditorName(request), attributes,
+				PortletConstants.getRootPortletId(portletId), getConfigKey(),
+				getEditorName(request), attributes,
 				themeDisplay, getRequestBackedPortletURLFactory());
 
 		Map<String, Object> data = editorConfiguration.getData();

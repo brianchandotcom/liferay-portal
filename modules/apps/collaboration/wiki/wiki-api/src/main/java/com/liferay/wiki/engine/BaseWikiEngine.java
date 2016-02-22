@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.exception.PageContentException;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
@@ -40,6 +41,10 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public abstract class BaseWikiEngine implements WikiEngine {
+
+	public static WikiNode getWikiNode(ServletRequest servletRequest) {
+		return (WikiNode)servletRequest.getAttribute(_WIKI_NODE);
+	}
 
 	public static WikiPage getWikiPage(ServletRequest servletRequest) {
 		return (WikiPage)servletRequest.getAttribute(_WIKI_PAGE);
@@ -88,7 +93,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	@Override
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage page)
+			WikiNode node, WikiPage page)
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getEditPageServletContext();
@@ -97,6 +102,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 			servletContext.getRequestDispatcher(getEditPageJSP());
 
 		servletRequest.setAttribute(_WIKI_PAGE, page);
+		servletRequest.setAttribute(_WIKI_NODE, node);
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
@@ -115,6 +121,9 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
+
+	private static final String _WIKI_NODE =
+		BaseWikiEngine.class.getName() + "#WIKI_NODE";
 
 	private static final String _WIKI_PAGE =
 		BaseWikiEngine.class.getName() + "#WIKI_PAGE";

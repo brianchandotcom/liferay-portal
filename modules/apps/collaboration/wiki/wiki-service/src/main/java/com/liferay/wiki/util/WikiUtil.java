@@ -378,7 +378,8 @@ public class WikiUtil {
 	}
 
 	public static void renderEditPageHTML(
-			String format, PageContext pageContext, WikiPage page)
+			String format, PageContext pageContext, WikiNode node,
+			WikiPage page)
 		throws IOException, ServletException {
 
 		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
@@ -394,7 +395,7 @@ public class WikiUtil {
 			response, unsyncStringWriter);
 
 		wikiEngine.renderEditPage(
-			pageContext.getRequest(), pipingServletResponse, page);
+			pageContext.getRequest(), pipingServletResponse, node, page);
 
 		Writer writer = pageContext.getOut();
 

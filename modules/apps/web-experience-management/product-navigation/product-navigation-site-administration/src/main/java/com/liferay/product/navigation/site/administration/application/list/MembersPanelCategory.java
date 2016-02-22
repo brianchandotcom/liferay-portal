@@ -43,7 +43,7 @@ public class MembersPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.site_administration.users");
+		return LanguageUtil.get(locale, "category.site_administration.members");
 	}
 
 }

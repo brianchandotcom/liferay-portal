@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Values Query
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.values.query
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.mapping.form.values.query
+Import-Package:\
+	!javax.imageio.*,\
+	\
+	!javax.print.*,\
+	\
+	!javax.swing.*,\
+	*
+Include-Resource:\
+	@lib/antlr4-runtime.jar,\
+	@lib/org.abego.treelayout.core.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

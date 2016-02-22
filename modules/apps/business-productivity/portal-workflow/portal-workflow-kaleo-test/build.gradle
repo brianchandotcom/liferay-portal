@@ -1,0 +1,6 @@
+dependencies {
+	testCompile project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-api")
+	testCompile project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-service")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+}

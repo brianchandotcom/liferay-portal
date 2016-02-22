@@ -12,7 +12,7 @@ dependencies {
 	provided project(":apps:collaboration:item-selector:item-selector-api")
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	provided project(":apps:collaboration:item-selector:item-selector-taglib")
-	provided project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
+	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Calendar Test
+Bundle-SymbolicName: com.liferay.calendar.test
+Bundle-Version: 1.0.0
+Include-Resource: test-classes/integration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Calendar
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

@@ -1,5 +1,4 @@
 dependencies {
-	provided group: "com.google.template", name: "soy", version: "2012-12-21"
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

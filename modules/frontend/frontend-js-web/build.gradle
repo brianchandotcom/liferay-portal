@@ -21,7 +21,7 @@ task buildSvg4everybody(type: Copy)
 String alloyUIVersion = "3.0.3-deprecated.17"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "0.2.2"
+String lexiconVersion = "0.2.3"
 String liferayAMDLoaderVersion = "1.4.3"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"

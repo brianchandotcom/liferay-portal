@@ -384,8 +384,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="anonymous" value="true" />
+		<execute macro="MessageboardsThread#addPGAsAnonymous">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -464,7 +463,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addPGWithAttachment">
 			<var name="mbThreadAttachment" value="${mbThreadAttachment}" />
 			<var name="mbThreadAttachmentFileSize" value="${mbThreadAttachmentFileSize}" />
 			<var name="threadBody" value="${threadBody}" />
@@ -593,8 +592,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="markAsQuestion" value="true" />
+		<execute macro="MessageboardsThread#addPGAsQuestion">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -1202,8 +1200,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="priority" value="true" />
+		<execute macro="MessageboardsThread#addPGWithPriority">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
@@ -1284,9 +1281,8 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagName" value="${tagName}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -1333,8 +1329,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="priority" value="true" />
+		<execute macro="MessageboardsThread#addPGWithPriority">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
@@ -2232,9 +2227,8 @@
 			<var name="categoryName" value="${categoryName2}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody2}" />
 			<var name="threadSubject" value="${threadSubject2}" />
 		</execute>

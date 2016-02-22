@@ -567,10 +567,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addPGWithPermissions">
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="viewableBy" value="true" />
 			<var name="viewableBySelection" value="Site Members" />
 		</execute>
 
@@ -799,10 +798,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addPGWithPermissions">
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="viewableBy" value="true" />
 			<var name="viewableBySelection" value="Site Members" />
 		</execute>
 
@@ -1043,10 +1041,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addPGWithPermissions">
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-			<var name="viewableBy" value="true" />
 			<var name="viewableBySelection" value="Site Members" />
 		</execute>
 

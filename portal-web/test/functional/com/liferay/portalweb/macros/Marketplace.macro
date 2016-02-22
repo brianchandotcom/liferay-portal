@@ -512,22 +512,13 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="anonymous" value="${anonymous}" />
-			<var name="fontSize" value="${fontSize}" />
-			<var name="key_fontSize" value="${key_fontSize}" />
-			<var name="markAsQuestion" value="false" />
-			<var name="mbThreadAttachment" value="${mbThreadAttachment}" />
 			<var name="preview" value="${preview}" />
 			<var name="priority" value="${priority}" />
 			<var name="saveAsDraft" value="${saveAsDraft}" />
 			<var name="source" value="${source}" />
-			<var name="threadAddTag" value="${threadAddTag}" />
 			<var name="threadBody" value="${mbThreadBody}" />
-			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${mbThreadSubject}" />
 			<var name="userName" value="${userName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-			<var name="viewableBySelection" value="${viewableBySelection}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -548,7 +539,6 @@
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="fontSize" value="${fontSize}" />
-			<var name="markAsQuestion" value="false" />
 			<var name="postCount" value="1" />
 			<var name="threadBody" value="${mbThreadBody}" />
 			<var name="threadBody2" value="${threadBody2}" />

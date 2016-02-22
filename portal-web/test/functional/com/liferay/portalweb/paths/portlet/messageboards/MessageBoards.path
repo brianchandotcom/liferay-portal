@@ -397,8 +397,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_LIST_PRIORITY_ICON</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/h4/span[contains(@title,'${key_threadPriority}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_LIST_LAST_POST</td>
 	<td>//li[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_QUESTION_MARK_ICON</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/h4/span/*[name()='svg'][contains(@class,'icon-question-circle')]</td>
 	<td></td>
 </tr>
 <tr>

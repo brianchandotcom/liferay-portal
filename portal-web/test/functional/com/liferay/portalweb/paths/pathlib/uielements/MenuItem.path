@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>ADD_SUBFOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>

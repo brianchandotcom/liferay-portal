@@ -4705,9 +4705,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
@@ -4980,9 +4979,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
@@ -5271,9 +5269,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
@@ -5564,9 +5561,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="MessageboardsThread#addTagPGCmd">
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
-			<var name="threadAddTag" value="true" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />

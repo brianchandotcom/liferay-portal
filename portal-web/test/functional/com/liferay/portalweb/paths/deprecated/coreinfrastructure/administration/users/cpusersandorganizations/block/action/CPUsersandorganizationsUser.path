@@ -386,8 +386,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_SITE_ROLES_IFRAME_TITLE</td>
-	<td>//tr[contains(.,'${key_siteRoleName}')]/td/span</td>
+	<td>ROLES_SITE_ROLES_TITLE</td>
+	<td>//tr[contains(.,'${key_siteRoleName}')]/td</td>
 	<td></td>
 </tr>
 <tr>

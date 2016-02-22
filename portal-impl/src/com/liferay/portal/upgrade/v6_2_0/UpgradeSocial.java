@@ -295,21 +295,23 @@ public class UpgradeSocial extends UpgradeProcess {
 				long messageId = 0;
 
 				try {
-					JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
-						extraData);
+					JSONObject extraDataJsonObject =
+						JSONFactoryUtil.createJSONObject(extraData);
 
-					messageId = extraDataJson.getLong("messageId");
+					messageId = extraDataJsonObject.getLong("messageId");
 				}
 				catch (JSONException jsone) {
 				}
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("subject"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("subject"));
 
-				result.put("messageId", messageId);
+				extraDataJSONObject.put("messageId", messageId);
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			@Override
@@ -329,10 +331,10 @@ public class UpgradeSocial extends UpgradeProcess {
 				long messageId = 0;
 
 				try {
-					JSONObject extraDataJson = JSONFactoryUtil.createJSONObject(
-						extraData);
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject(extraData);
 
-					messageId = extraDataJson.getLong("messageId");
+					messageId = extraDataJSONObject.getLong("messageId");
 				}
 				catch (JSONException jsone) {
 				}
@@ -381,11 +383,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("subject"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("subject"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -434,11 +438,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("title"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("title"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -487,11 +493,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("name"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("name"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final int _ADD_ENTRY = 1;
@@ -543,11 +551,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("title"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("title"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -597,11 +607,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("title"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("title"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final int _ADD_KB_ARTICLE = 1;
@@ -746,11 +758,13 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("subject"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("subject"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =
@@ -807,12 +821,15 @@ public class UpgradeSocial extends UpgradeProcess {
 					ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject result = JSONFactoryUtil.createJSONObject();
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				result.put("title", entityResultSet.getString("title"));
-				result.put("version", entityResultSet.getDouble("version"));
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("title"));
+				extraDataJSONObject.put(
+					"version", entityResultSet.getDouble("version"));
 
-				return result;
+				return extraDataJSONObject;
 			}
 
 			private static final String _ACTIVITY_CLASSNAME =

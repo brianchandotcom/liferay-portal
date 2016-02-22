@@ -253,7 +253,14 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input name="name" placeholder="process-name-placeholder" />
+					<c:choose>
+						<c:when test="<%= exportImportConfiguration == null %>">
+							<aui:input name="name" placeholder="process-name-placeholder" />
+						</c:when>
+						<c:otherwise>
+							<aui:input name="name" value="<%= exportImportConfiguration.getName() %>" />
+						</c:otherwise>
+					</c:choose>
 				</aui:fieldset>
 
 				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">

@@ -142,7 +142,14 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<div class="export-dialog-tree">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input name="name" placeholder="process-name-placeholder" />
+					<c:choose>
+						<c:when test="<%= exportImportConfiguration == null %>">
+							<aui:input name="name" placeholder="process-name-placeholder" />
+						</c:when>
+						<c:otherwise>
+							<aui:input name="name" value="<%= exportImportConfiguration.getName() %>" />
+						</c:otherwise>
+					</c:choose>
 				</aui:fieldset>
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">

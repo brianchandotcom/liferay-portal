@@ -17,6 +17,7 @@
 		<@buildNavigation
 			branchNavItems=branchNavItems
 			cssClass="layouts"
+			displayDepth=displayDepth
 			includeAllChildNavItems=includeAllChildNavItems
 			navItemLevel=1
 			navItems=entries

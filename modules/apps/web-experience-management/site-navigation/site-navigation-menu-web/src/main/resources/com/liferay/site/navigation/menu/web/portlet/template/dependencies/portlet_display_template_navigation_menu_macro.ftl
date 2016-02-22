@@ -1,11 +1,12 @@
 <#macro buildNavigation
 	branchNavItems
 	cssClass
+	displayDepth
 	includeAllChildNavItems
 	navItemLevel
 	navItems
 >
-	<#if navItems?has_content>
+	<#if navItems?has_content && ((displayDepth == 0) || (navItemLevel <= displayDepth))>
 		<ul class="${cssClass} level-${navItemLevel}">
 			<#list navItems as navItem>
 				<#assign nav_item_attr_selected = "" />
@@ -31,6 +32,7 @@
 						<@buildNavigation
 							branchNavItems=branchNavItems
 							cssClass=cssClass
+							displayDepth=displayDepth
 							includeAllChildNavItems=includeAllChildNavItems
 							navItemLevel=(navItemLevel + 1)
 							navItems=navItem.getChildren()

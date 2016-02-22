@@ -35,6 +35,9 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(required = false)
 	public String bulletStyle();
 
+	@Meta.AD(deflt = "0", required = false)
+	public int displayDepth();
+
 	@Meta.AD(required = false)
 	public String displayStyle();
 

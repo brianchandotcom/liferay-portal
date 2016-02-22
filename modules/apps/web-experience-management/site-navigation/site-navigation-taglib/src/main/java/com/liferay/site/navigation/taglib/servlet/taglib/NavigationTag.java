@@ -48,6 +48,10 @@ public class NavigationTag extends IncludeTag {
 		_ddmTemplateKey = ddmTemplateKey;
 	}
 
+	public void setDisplayDepth(int displayDepth) {
+		_displayDepth = displayDepth;
+	}
+
 	public void setIncludedLayouts(String includedLayouts) {
 		_includedLayouts = includedLayouts;
 	}
@@ -79,6 +83,7 @@ public class NavigationTag extends IncludeTag {
 	protected void cleanUp() {
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
+		_displayDepth = 0;
 		_includedLayouts = "auto";
 		_preview = false;
 		_rootLayoutLevel = 1;
@@ -189,6 +194,9 @@ public class NavigationTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-site-navigation:navigation:displayDepth",
+			String.valueOf(_displayDepth));
+		request.setAttribute(
 			"liferay-site-navigation:navigation:displayStyle",
 			getDisplayStyle());
 		request.setAttribute(
@@ -229,6 +237,7 @@ public class NavigationTag extends IncludeTag {
 
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;
+	private int _displayDepth;
 	private String _includedLayouts = "auto";
 	private boolean _preview;
 	private int _rootLayoutLevel = 1;

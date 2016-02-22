@@ -21,6 +21,7 @@ page import="com.liferay.portal.kernel.theme.NavItem" %>
 
 <%
 List<NavItem> branchNavItems = (List)request.getAttribute("liferay-site-navigation:navigation:branchNavItems");
+int displayDepth = GetterUtil.getInteger((String)request.getAttribute("liferay-site-navigation:navigation:displayDepth"));
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-site-navigation:navigation:displayStyle"));
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-site-navigation:navigation:displayStyleGroupId"));
 String includedLayouts = (String)request.getAttribute("liferay-site-navigation:navigation:includedLayouts");

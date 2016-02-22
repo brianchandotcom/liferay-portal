@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Dynamic Data Mapping Taglib
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib,\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"
+Web-ContextPath: /dynamic-data-mapping-taglib
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

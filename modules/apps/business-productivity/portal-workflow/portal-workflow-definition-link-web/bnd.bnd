@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Workflow Definition Link Web
+Bundle-SymbolicName: com.liferay.portal.workflow.definition.link.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Workflow
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

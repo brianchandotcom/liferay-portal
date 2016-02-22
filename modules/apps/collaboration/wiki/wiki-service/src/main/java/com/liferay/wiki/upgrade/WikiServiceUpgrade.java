@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradeClassNames;
@@ -54,11 +53,6 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCompanyId(), new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),
 			new UpgradeWikiPageResource());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

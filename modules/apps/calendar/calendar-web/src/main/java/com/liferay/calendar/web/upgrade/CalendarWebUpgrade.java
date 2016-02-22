@@ -16,12 +16,10 @@ package com.liferay.calendar.web.upgrade;
 
 import com.liferay.calendar.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.calendar.web.upgrade.v1_0_0.UpgradePortletPreferences;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -47,11 +45,6 @@ public class CalendarWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.calendar.web", "1.0.0", "1.0.1",
 			new com.liferay.calendar.web.upgrade.v1_0_1.
 				UpgradePortletPreferences());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

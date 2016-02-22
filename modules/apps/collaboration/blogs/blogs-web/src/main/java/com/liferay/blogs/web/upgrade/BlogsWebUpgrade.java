@@ -16,7 +16,6 @@ package com.liferay.blogs.web.upgrade;
 
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -46,11 +45,6 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

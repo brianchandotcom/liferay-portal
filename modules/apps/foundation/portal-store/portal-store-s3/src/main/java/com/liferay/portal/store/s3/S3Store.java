@@ -38,6 +38,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.Upload;
 
 import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -96,30 +99,18 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
+			long companyId, long repositoryId, String fileName, File file)
+		throws PortalException {
+
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, file);
+	}
+
+	@Override
+	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {
 
-		if (hasFile(companyId, repositoryId, fileName)) {
-			throw new DuplicateFileException(companyId, repositoryId, fileName);
-		}
-
-		try {
-			String key = _s3KeyTransformer.getFileVersionKey(
-				companyId, repositoryId, fileName, VERSION_DEFAULT);
-
-			PutObjectRequest putObjectRequest = new PutObjectRequest(
-				_bucketName, key, is, new ObjectMetadata());
-
-			putObjectRequest.withStorageClass(_storageClass);
-
-			_amazonS3.putObject(putObjectRequest);
-		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
-		}
-		finally {
-			StreamUtil.cleanUp(is);
-		}
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
 
 	@Override
@@ -338,6 +329,20 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file)
+		throws PortalException {
+
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+
+		putObject(companyId, repositoryId, fileName, versionLabel, file);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
 		throws PortalException {
 
@@ -347,21 +352,17 @@ public class S3Store extends BaseStore {
 		}
 
 		try {
-			String key = _s3KeyTransformer.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
+			File file = FileUtil.createTempFile(is);
 
-			PutObjectRequest putObjectRequest = new PutObjectRequest(
-				_bucketName, key, is, new ObjectMetadata());
-
-			_amazonS3.putObject(putObjectRequest);
-		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
-		}
-		finally {
+			putObject(companyId, repositoryId, fileName, versionLabel, file);
+	 	} catch (java.io.IOException ioe) {
+			throw new SystemException(ioe);
+	 	}
+	 	finally{
 			StreamUtil.cleanUp(is);
 		}
 	}
+
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -373,6 +374,8 @@ public class S3Store extends BaseStore {
 		_amazonS3 = getAmazonS3(_awsCredentialsProvider);
 
 		_bucketName = _s3StoreConfiguration.bucketName();
+
+		_transferManager = getTransferManager(_amazonS3);
 
 		try {
 			if (Validator.isNull(_s3StoreConfiguration.s3StorageClass())) {
@@ -481,6 +484,12 @@ public class S3Store extends BaseStore {
 		amazonS3.setRegion(region);
 
 		return amazonS3;
+	}
+
+	protected TransferManager getTransferManager(AmazonS3 amazonS3) {
+		TransferManager transferManager = new TransferManager(amazonS3);
+
+		return transferManager;
 	}
 
 	protected AWSCredentialsProvider getAWSCredentialsProvider() {
@@ -679,6 +688,32 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	protected void putObject(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file)
+		throws PortalException {
+
+		try {
+			String key = _s3KeyTransformer.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
+
+			PutObjectRequest putObjectRequest = new PutObjectRequest(
+				_bucketName, key, file);
+
+			putObjectRequest.withStorageClass(_storageClass);
+
+			Upload upload = _transferManager.upload(putObjectRequest);
+
+			upload.waitForCompletion();
+		}
+		catch (AmazonClientException ace) {
+			throw transform(ace);
+		}
+		catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setS3FileCache(S3FileCache s3FileCache) {
 		_s3FileCache = s3FileCache;
@@ -742,5 +777,6 @@ public class S3Store extends BaseStore {
 	private S3FileCache _s3FileCache;
 	private S3KeyTransformer _s3KeyTransformer;
 	private StorageClass _storageClass;
+	private TransferManager _transferManager;
 
 }

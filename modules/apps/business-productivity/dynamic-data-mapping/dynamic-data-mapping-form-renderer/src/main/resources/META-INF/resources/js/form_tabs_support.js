@@ -24,19 +24,23 @@ AUI.add(
 			getTabView: function() {
 				var instance = this;
 
-				if (!instance._tabView) {
+				var tabView = instance._tabView;
+
+				if (!tabView) {
 					var tabs = instance.get('container').one('.lfr-ddm-form-tabs');
 
 					if (tabs) {
-						instance._tabView = new A.TabView(
+						tabView = new A.TabView(
 							{
 								srcNode: tabs
 							}
 						);
+
+						instance._tabView = tabView;
 					}
 				}
 
-				return instance._tabView;
+				return tabView;
 			},
 
 			_afterTabsRender: function() {

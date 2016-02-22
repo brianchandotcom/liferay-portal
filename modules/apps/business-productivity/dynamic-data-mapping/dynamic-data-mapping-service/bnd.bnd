@@ -1,0 +1,32 @@
+Bundle-Name: Liferay Dynamic Data Mapping Service
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dynamic.data.mapping.background.task,\
+	com.liferay.dynamic.data.mapping.configuration,\
+	com.liferay.dynamic.data.mapping.exportimport.content.processor,\
+	com.liferay.dynamic.data.mapping.model.impl,\
+	com.liferay.dynamic.data.mapping.search,\
+	com.liferay.dynamic.data.mapping.service.permission,\
+	com.liferay.dynamic.data.mapping.storage.impl,\
+	com.liferay.dynamic.data.mapping.template,\
+	com.liferay.dynamic.data.mapping.upgrade,\
+	com.liferay.dynamic.data.mapping.upgrade.v1_0_0,\
+	com.liferay.dynamic.data.mapping.util.impl,\
+	com.liferay.dynamic.data.mapping.verify,\
+	com.liferay.dynamic.data.mapping.webdav
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/business-productivity/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -1,0 +1,42 @@
+Bundle-Name: Liferay Calendar Service
+Bundle-SymbolicName: com.liferay.calendar.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.calendar.model.impl,\
+	com.liferay.calendar.notification.impl,\
+	com.liferay.calendar.search,\
+	com.liferay.calendar.service.configuration,\
+	com.liferay.calendar.service.configuration.configurator,\
+	com.liferay.calendar.service.permission,\
+	com.liferay.calendar.upgrade.*,\
+	com.liferay.calendar.util,\
+	com.liferay.calendar.workflow
+Import-Package:\
+	!edu.emory.*,\
+	\
+	!groovy.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!org.codehaus.*,\
+	*
+Include-Resource:\
+	@${app.server.lib.portal.dir}/backport-concurrent.jar,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@lib/net.fortuna.ical4j.jar
+
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Calendar
+Liferay-Require-SchemaVersion: 1.0.3
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/business-productivity/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

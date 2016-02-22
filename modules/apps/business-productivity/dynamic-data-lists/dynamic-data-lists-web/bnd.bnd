@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Dynamic Data Lists Web
+Bundle-SymbolicName: com.liferay.dynamic.data.lists.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dynamic.data.lists.web.asset,\
+	com.liferay.dynamic.data.lists.web.constants,\
+	com.liferay.dynamic.data.lists.web.lar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Lists
+Web-ContextPath: /dynamic-data-lists-web
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

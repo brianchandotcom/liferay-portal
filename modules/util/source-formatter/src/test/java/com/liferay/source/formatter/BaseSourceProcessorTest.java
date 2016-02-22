@@ -35,9 +35,10 @@ public class BaseSourceProcessorTest {
 	@Test
 	public void testGetModuleLangPath() {
 		Assert.assertEquals(
-			"./modules/apps/dynamic-data-mapping/dynamic-data-mapping-lang",
+			"./modules/apps/business-productivity/dynamic-data-mapping/" +
+				"dynamic-data-mapping-lang",
 			_baseSourceProcessor.getModuleLangDir(
-				"./modules/apps/dynamic-data-mapping/" +
+				"./modules/apps/business-productivity/dynamic-data-mapping/" +
 					"dynamic-data-mapping-web"));
 		Assert.assertEquals(
 			"./modules/apps/web-experience-management/staging/staging-lang",

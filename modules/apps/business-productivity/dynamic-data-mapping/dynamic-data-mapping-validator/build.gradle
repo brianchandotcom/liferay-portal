@@ -1,0 +1,15 @@
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
+	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
+	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
+
+	testCompile project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-test-util")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

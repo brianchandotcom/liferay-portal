@@ -28,17 +28,23 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SAPConfiguration {
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean useSystemSAPEntries();
+
+	@Meta.AD(deflt = "SYSTEM_DEFAULT", required = false)
+	public String systemDefaultSAPEntryName();
+
 	@Meta.AD(
 		deflt = "System Service Access Policy Applied on Every Request",
 		required = false
 	)
 	public String systemDefaultSAPEntryDescription();
 
-	@Meta.AD(deflt = "SYSTEM_DEFAULT", required = false)
-	public String systemDefaultSAPEntryName();
-
 	@Meta.AD(deflt = "", required = false)
 	public String systemDefaultSAPEntryServiceSignatures();
+
+	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)
+	public String systemUserPasswordSAPEntryName();
 
 	@Meta.AD(
 		deflt =
@@ -48,13 +54,7 @@ public interface SAPConfiguration {
 	)
 	public String systemUserPasswordSAPEntryDescription();
 
-	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)
-	public String systemUserPasswordSAPEntryName();
-
 	@Meta.AD(deflt = "*", required = false)
 	public String systemUserPasswordSAPEntryServiceSignatures();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean useSystemSAPEntries();
 
 }

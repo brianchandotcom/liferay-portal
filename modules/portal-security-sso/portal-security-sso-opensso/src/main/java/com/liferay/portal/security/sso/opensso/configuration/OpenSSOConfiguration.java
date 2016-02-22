@@ -36,24 +36,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenSSOConfiguration {
 
-	@Meta.AD(deflt = "mail", required = false)
-	public String emailAddressAttr();
-
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "givenname", required = false)
-	public String firstNameAttr();
-
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true if you want to import the users from LDAP after successful login through OpenSSO. The LDAP settings need to be configured properly in the LDAP section. If this is set to false, the users will be created from OpenSSO provided data.",
+		deflt = "false", description = "%import-from-ldap-help",
 		required = false
 	)
 	public boolean importFromLDAP();
-
-	@Meta.AD(deflt = "sn", required = false)
-	public String lastNameAttr();
 
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login",
@@ -62,8 +52,7 @@ public interface OpenSSOConfiguration {
 	public String loginURL();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to log a user out of OpenSSO when the portal session expires.",
+		deflt = "false", description = "%logout-on-session-expiration-help",
 		required = false
 	)
 	public boolean logoutOnSessionExpiration();
@@ -74,12 +63,25 @@ public interface OpenSSOConfiguration {
 	)
 	public String logoutURL();
 
-	@Meta.AD(deflt = "uid", required = false)
-	public String screenNameAttr();
-
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso", required = false
 	)
 	public String serviceURL();
+
+	@Meta.AD(deflt = "uid", name = "%screen-name-attribute", required = false)
+	public String screenNameAttr();
+
+	@Meta.AD(
+		deflt = "mail", name = "%email-address-attribute", required = false
+	)
+	public String emailAddressAttr();
+
+	@Meta.AD(
+		deflt = "givenname", name = "%first-name-attribute", required = false
+	)
+	public String firstNameAttr();
+
+	@Meta.AD(deflt = "sn", name = "%last-name-attribute", required = false)
+	public String lastNameAttr();
 
 }

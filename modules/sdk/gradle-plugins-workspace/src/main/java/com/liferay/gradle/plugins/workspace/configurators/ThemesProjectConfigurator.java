@@ -179,7 +179,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		artifactsBuiltBy.builtBy("gulp");
 
 		artifacts.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
-
 	}
 
 	protected void configureRootTaskDistBundle(

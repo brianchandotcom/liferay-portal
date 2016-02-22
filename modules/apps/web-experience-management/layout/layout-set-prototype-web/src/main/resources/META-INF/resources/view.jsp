@@ -68,7 +68,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -132,6 +132,46 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			%>
 
 			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="sites"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+
+						<%
+						Date createDate = layoutSetPrototype.getModifiedDate();
+
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
+
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+						</h6>
+
+						<h5>
+							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<c:choose>
+								<c:when test="<%= layoutSetPrototype.isActive() %>">
+									<span><liferay-ui:message key="active" /></span>
+								</c:when>
+								<c:otherwise>
+									<span><liferay-ui:message key="not-active" /></span>
+								</c:otherwise>
+							</c:choose>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/layout_set_prototype_action.jsp"
+					/>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%

@@ -32,7 +32,7 @@ public class SiteMembershipsViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN;
 	}
 

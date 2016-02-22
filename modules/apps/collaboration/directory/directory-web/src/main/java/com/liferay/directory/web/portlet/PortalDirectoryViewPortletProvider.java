@@ -35,7 +35,7 @@ public class PortalDirectoryViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DirectoryPortletKeys.DIRECTORY;
 	}
 

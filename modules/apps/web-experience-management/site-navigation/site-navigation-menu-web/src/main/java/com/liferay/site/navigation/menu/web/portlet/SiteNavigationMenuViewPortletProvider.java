@@ -32,7 +32,7 @@ public class SiteNavigationMenuViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 	}
 

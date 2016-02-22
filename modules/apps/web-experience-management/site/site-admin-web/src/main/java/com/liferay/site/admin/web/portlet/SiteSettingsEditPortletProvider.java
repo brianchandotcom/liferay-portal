@@ -32,7 +32,7 @@ public class SiteSettingsEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteAdminPortletKeys.SITE_SETTINGS;
 	}
 

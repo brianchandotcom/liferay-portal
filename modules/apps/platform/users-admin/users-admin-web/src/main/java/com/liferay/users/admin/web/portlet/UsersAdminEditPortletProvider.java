@@ -38,7 +38,7 @@ public class UsersAdminEditPortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 

@@ -32,7 +32,7 @@ public class LayoutSetPrototypeViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE;
 	}
 

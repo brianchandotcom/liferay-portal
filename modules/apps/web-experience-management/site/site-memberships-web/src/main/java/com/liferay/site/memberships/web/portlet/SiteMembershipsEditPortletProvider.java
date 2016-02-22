@@ -37,7 +37,7 @@ public class SiteMembershipsEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN;
 	}
 

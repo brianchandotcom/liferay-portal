@@ -45,7 +45,7 @@ public class AssetPublisherAddPortletProvider
 	implements AddPortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return AssetPublisherPortletKeys.ASSET_PUBLISHER;
 	}
 

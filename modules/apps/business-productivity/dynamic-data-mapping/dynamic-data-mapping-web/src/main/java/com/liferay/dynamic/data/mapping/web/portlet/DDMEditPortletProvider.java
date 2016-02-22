@@ -37,7 +37,7 @@ public class DDMEditPortletProvider
 	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DDMPortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 

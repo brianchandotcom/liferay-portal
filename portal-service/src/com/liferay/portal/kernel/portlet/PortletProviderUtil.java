@@ -40,7 +40,7 @@ public class PortletProviderUtil {
 		PortletProvider portletProvider = getPortletProvider(className, action);
 
 		if (portletProvider != null) {
-			return portletProvider.getPortletId();
+			return portletProvider.getPortletName();
 		}
 
 		return StringPool.BLANK;

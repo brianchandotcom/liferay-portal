@@ -39,7 +39,7 @@ public class AlertsEditPortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return AnnouncementsPortletKeys.ALERTS;
 	}
 

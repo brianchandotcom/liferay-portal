@@ -43,7 +43,7 @@ public class MBAdminEditPortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 

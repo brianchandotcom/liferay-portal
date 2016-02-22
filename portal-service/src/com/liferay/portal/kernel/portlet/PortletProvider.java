@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PortletProvider {
 
-	public String getPortletId();
+	public String getPortletName();
 
 	public PortletURL getPortletURL(HttpServletRequest request)
 		throws PortalException;

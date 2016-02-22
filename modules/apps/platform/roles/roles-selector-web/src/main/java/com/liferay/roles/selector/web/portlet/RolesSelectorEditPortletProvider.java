@@ -32,7 +32,7 @@ public class RolesSelectorEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return RolesSelectorPortletKeys.ROLES_SELECTOR;
 	}
 

@@ -37,7 +37,7 @@ public class BlogsEditPortletProvider
 	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return BlogsPortletKeys.BLOGS;
 	}
 

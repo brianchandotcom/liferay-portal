@@ -32,7 +32,7 @@ public class SiteAdminManagePortletProvider
 	extends BasePortletProvider implements ManagePortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteAdminPortletKeys.SITE_ADMIN;
 	}
 

@@ -37,7 +37,7 @@ public class RolesAdminManagePortletProvider
 	extends BasePortletProvider implements ManagePortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return RolesAdminPortletKeys.ROLES_ADMIN;
 	}
 

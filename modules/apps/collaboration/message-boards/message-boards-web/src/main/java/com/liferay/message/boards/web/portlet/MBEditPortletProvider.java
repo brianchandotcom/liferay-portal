@@ -40,7 +40,7 @@ public class MBEditPortletProvider
 	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return MBPortletKeys.MESSAGE_BOARDS;
 	}
 

@@ -35,7 +35,7 @@ public class ProductNavigationUserPersonalBarViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return ProductNavigationUserPersonalBarPortletKeys.
 			PRODUCT_NAVIGATION_USER_PERSONAL_BAR;
 	}

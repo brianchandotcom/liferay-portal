@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="private-messaging-portlet" basedir="." default="deploy">
+	<property name="import.shared" value="private-messaging-shared" />
+
+	<import file="../build-common-portlet.xml" />
+</project>

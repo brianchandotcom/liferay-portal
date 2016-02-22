@@ -258,14 +258,7 @@ public class UpgradeSocial extends UpgradeProcess {
 					new KeyValuePair(String.class.getName(), "subject"));
 			}
 
-			// from SocialActivityConstants
-
 			public static final int TYPE_ADD_COMMENT = 10005;
-
-			/* WikiActivityKeys.ADD_COMMENT = 3 is not used in 6.1 for comments
-			 * on wiki pages
-			 * BlogsActivityKeys.ADD_COMMENT=1 is not used in 6.1 for comments
-			 * on blog entries */
 
 			public void setEntityQueryParameters(
 					PreparedStatement ps, long companyId, long groupId,
@@ -348,8 +341,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					new KeyValuePair(String.class.getName(), "subject"));
 			}
 
-			// from MBActivityKeys
-
 			public static final int ADD_MESSAGE = 1;
 
 			public static final int REPLY_MESSAGE = 2;
@@ -398,8 +389,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					new KeyValuePair(String.class.getName(), "title"));
 			}
 
-			// from BlogsActivityKeys
-
 			public static final int ADD_ENTRY = 2;
 
 			public static final int UPDATE_ENTRY = 3;
@@ -418,8 +407,6 @@ public class UpgradeSocial extends UpgradeProcess {
 	protected static ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
-
-				// use old classname as upgrade bookmark hasn't taken place yet
 
 				ACTIVITY_CLASSNAME =
 					"com.liferay.portlet.bookmarks.model.BookmarksEntry";
@@ -450,8 +437,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				EXTRA_DATA_MAP.put("title",
 					new KeyValuePair(String.class.getName(), "name"));
 			}
-
-			// BookmarksActivityKeys
 
 			public static final int ADD_ENTRY = 1;
 
@@ -547,8 +532,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					new KeyValuePair(String.class.getName(), "title"));
 			}
 
-			// from AdminActivityKeys
-
 			public static final int ADD_KB_ARTICLE = 1;
 
 			public static final int MOVE_KB_ARTICLE = 7;
@@ -595,8 +578,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				ENTITY_WHERE_CLAUSE ="kbcommentid = ?";
 			}
-
-			// from AdminActivityKeys
 
 			public static final int ADD_KB_COMMENT = 5;
 
@@ -697,8 +678,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					new KeyValuePair(String.class.getName(), "title"));
 			}
 
-			// from AdminActivityKeys
-
 			public static final int ADD_KB_TEMPLATE = 2;
 
 			public static final int UPDATE_KB_TEMPLATE = 4;
@@ -717,8 +696,6 @@ public class UpgradeSocial extends UpgradeProcess {
 	protected static ExtraDataGenerator _wikiPageExtraDataGenerator =
 		new BaseExtraDataGenerator() {
 			{
-
-				// use old classname as upgrade wiki hasn't taken place yet
 
 				ACTIVITY_CLASSNAME = "com.liferay.portlet.wiki.model.WikiPage";
 
@@ -787,11 +764,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
 	}
 
-	/**
-	 * Provides a partial implementation for ExtraDataGenerator which allows
-	 * subclasses to just define some attributes and provide the method
-	 * setEntityQueryParameters()
-	 */
 	protected static abstract class BaseExtraDataGenerator
 		implements ExtraDataGenerator {
 
@@ -869,10 +841,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		public String ACTIVITY_CLASSNAME = "";
 
-		/** maps each position in the activity query to a pair <type,
-		 * string value of that type>. setActivityQueryParameters() will
-		 * fill the prepared statement accordingly
-		 */
 		public Map<Integer, KeyValuePair> ACTIVITY_QUERY_PARAMS =
 			new HashMap<>();
 
@@ -884,64 +852,23 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		public String ENTITY_WHERE_CLAUSE = "";
 
-		/** maps each key in the extra data map JSON object to a pair
-		 * <type, field name of that type in the result set>.
-		 * getExtraData() will fill the JSON object from the result set
-		 * accordingly
-		 */
 		public Map<String, KeyValuePair> EXTRA_DATA_MAP = new HashMap<>();
 
 	}
 
-	/**
-	 * Defines the necessary methods to generate extra data from a set of
-	 * social activities of any kind. Implementors just have to focus on:
-	 *   1) What is the set of social activities this generator will generate
-	 *      extra data for (getActivityQueryWhereClause() and
-	 *      setActivityQueryParameters())
-	 *   2) How to obtain the model entities related to such activities
-	 *      (getEntityQuery() and setEntityQueryParameters()),
-	 *   3) How to generate extra data (getExtraData())
-	 */
 	protected interface ExtraDataGenerator {
 
-		/**
-		 * Returns the "where" clause in social activity query to select the
-		 * SocialActivity tuples this generator will generate extra data for
-		 */
 		public String getActivityQueryWhereClause();
 
-		/**
-		 * Returns the SQL query on any model entity which the selected
-		 * SocialActivity tuples refer to. Extra data will be generated from
-		 * the entities returned by this query
-		 */
 		public String getEntityQuery();
 
-		/**
-		 * Given a result from the #getEntityQuery() and the original extra
-		 * data in the SocialActivity tuple pointing to that entity, computes
-		 * the extra data that will be persisted in the SocialActivity tuple as
-		 * a result of the upgrade process.
-		 *
-		 * @return JSONObject containing the extra data
-		 */
 		public JSONObject getExtraData(
 				ResultSet entityResultSet, String extraData)
 			throws SQLException;
 
-		/**
-		 * Sets parameters required to run the activity query returned by
-		 * #getActivityQueryWhereClause() in this generator
-		 */
 		public void setActivityQueryParameters(PreparedStatement ps)
 			throws SQLException;
 
-		/**
-		 * Sets parameters required to run the entity query returned by
-		 * #getEntityQueryWhereClause() in this generator, based on fields
-		 * from the SocialActivity tuple
-		 */
 		public void setEntityQueryParameters(PreparedStatement ps,
 				long companyId, long groupId, long userId, long classNameId,
 				long classPK, int type, String extraData)

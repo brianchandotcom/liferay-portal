@@ -15,6 +15,10 @@
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
@@ -31,15 +35,17 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.upgrade.DDMServiceUpgrade;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -47,6 +53,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -1357,15 +1365,39 @@ public class UpgradeDynamicDataMappingTest {
 	protected void setUpUpgradeDynamicDataMapping() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		DDMServiceUpgrade ddmServiceUpgrade = registry.getService(
-			DDMServiceUpgrade.class);
+		AssetEntryLocalService assetEntryLocalService = registry.getService(
+			AssetEntryLocalService.class);
 
-		Map<Class<?>, UpgradeStep> upgradeStepsMap = mapByClass(
-			ddmServiceUpgrade.getUpgradeSteps("1.0.0"));
+		DLFileEntryLocalService dlFileEntryLocalService = registry.getService(
+			DLFileEntryLocalService.class);
 
-		_upgradeDynamicDataMapping =
-			(UpgradeDynamicDataMapping)upgradeStepsMap.get(
-				UpgradeDynamicDataMapping.class);
+		DLFileVersionLocalService dlFileVersionLocalService =
+			registry.getService(DLFileVersionLocalService.class);
+
+		DLFolderLocalService dlFolderLocalService = registry.getService(
+			DLFolderLocalService.class);
+
+		ExpandoRowLocalService expandoRowLocalService = registry.getService(
+			ExpandoRowLocalService.class);
+
+		ExpandoTableLocalService expandoTableLocalService = registry.getService(
+			ExpandoTableLocalService.class);
+
+		ExpandoValueLocalService expandoValueLocalService = registry.getService(
+			ExpandoValueLocalService.class);
+
+		ResourceActionLocalService resourceActionLocalService =
+			registry.getService(ResourceActionLocalService.class);
+
+		ResourcePermissionLocalService resourcePermissionLocalService =
+			registry.getService(ResourcePermissionLocalService.class);
+
+		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
+			assetEntryLocalService, dlFileEntryLocalService,
+			dlFileVersionLocalService, dlFolderLocalService,
+			expandoRowLocalService, expandoTableLocalService,
+			expandoValueLocalService, resourceActionLocalService,
+			resourcePermissionLocalService);
 	}
 
 	private static final Map<String, String> _structureModelResourceNames =

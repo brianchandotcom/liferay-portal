@@ -14,7 +14,6 @@
 
 package com.liferay.shopping.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeCompanyId;
@@ -23,7 +22,6 @@ import com.liferay.shopping.upgrade.v1_0_0.UpgradeShopping;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShoppingPreferences;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -35,15 +33,17 @@ public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.shopping.service", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeClassNames(),
+			"com.liferay.shopping.service", "0.0.1", "0.0.2",
+			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.shopping.service", "0.0.2", "0.0.3",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.shopping.service", "0.0.3", "1.0.0",
 			new UpgradeCompanyId(), new UpgradeShopping(),
 			new UpgradeShoppingPreferences());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

@@ -14,13 +14,11 @@
 
 package com.liferay.social.user.statistics.web.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -37,11 +35,6 @@ public class SocialUserStatisticsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.social.user.statistics.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

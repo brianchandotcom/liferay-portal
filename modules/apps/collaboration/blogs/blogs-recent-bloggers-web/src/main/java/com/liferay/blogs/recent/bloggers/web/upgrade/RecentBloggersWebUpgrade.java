@@ -15,13 +15,11 @@
 package com.liferay.blogs.recent.bloggers.web.upgrade;
 
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -51,11 +49,6 @@ public class RecentBloggersWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.blogs.recent.bloggers.web", "0.0.1", "1.0.0",
 			upgradePortletId);
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

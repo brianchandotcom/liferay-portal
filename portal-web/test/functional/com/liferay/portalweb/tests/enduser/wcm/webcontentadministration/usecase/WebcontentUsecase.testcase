@@ -205,7 +205,6 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
@@ -242,7 +241,6 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />

@@ -148,7 +148,6 @@
 		<!-- Verify SP is logged in -->
 
 		<execute macro="SAML#executeSPInitiatedSSO">
-			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="specificURL" value="http://www.able.com:9080" />
 			<var name="spURL" value="http://www.able.com:9080/" />

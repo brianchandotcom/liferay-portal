@@ -100,7 +100,8 @@ public class MaximizePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		if (!GetterUtil.getBoolean(
-				themeDisplay.getThemeSetting("show-maximize-minimize-links"))) {
+				themeDisplay.getThemeSetting(
+					"show-maximize-minimize-application-links"))) {
 
 			return false;
 		}

@@ -93,13 +93,17 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
+		boolean readOnly =
+			ddmFormFieldRenderingContext.isReadOnly() ||
+			ddmFormField.isReadOnly();
+
 		template.put(
 			"childElementsHTML",
 			ddmFormFieldRenderingContext.getChildElementsHTML());
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
-		template.put("readOnly", ddmFormFieldRenderingContext.isReadOnly());
+		template.put("readOnly", readOnly);
 		template.put("required", ddmFormFieldRenderingContext.isRequired());
 		template.put("showLabel", ddmFormField.isShowLabel());
 		template.put("tip", ddmFormFieldRenderingContext.getTip());

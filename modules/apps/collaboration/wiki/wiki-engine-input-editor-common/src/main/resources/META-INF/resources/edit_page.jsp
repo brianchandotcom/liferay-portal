@@ -19,6 +19,7 @@
 <%
 BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
 
+WikiNode node = BaseInputEditorWikiEngine.getWikiNode(request);
 WikiPage wikiPage = BaseInputEditorWikiEngine.getWikiPage(request);
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");

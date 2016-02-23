@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.input.editor.common.util.WikiEngineInputEditorCommonComponentProvider;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
@@ -97,12 +98,12 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 	@Override
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage page)
+			WikiNode node, WikiPage page)
 		throws IOException, ServletException {
 
 		servletRequest.setAttribute(_BASE_INPUT_EDITOR_WIKI_ENGINE, this);
 
-		super.renderEditPage(servletRequest, servletResponse, page);
+		super.renderEditPage(servletRequest, servletResponse, node, page);
 	}
 
 	@Override

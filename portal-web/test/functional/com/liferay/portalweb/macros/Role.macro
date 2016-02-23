@@ -16,6 +16,21 @@
 			</else>
 		</if>
 
+		<if>
+			<or>
+				<equals arg1="${roleType}" arg2="Organization" />
+				<equals arg1="${roleType}" arg2="Site" />
+			</or>
+			<then>
+				<var name="key_roleType" value="${roleType}" />
+			</then>
+			<else>
+				<var name="key_roleType" value="Regular" />
+			</else>
+		</if>
+
+		<execute function="AssertVisible" locator1="Roles#BREADCRUMB" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${roleName}" />

@@ -40,7 +40,6 @@ page import="com.liferay.dynamic.data.mapping.exception.TemplateNameException" %
 page import="com.liferay.dynamic.data.mapping.exception.TemplateScriptException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException" %><%@
-page import="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructureConstants" %><%@
@@ -71,10 +70,8 @@ page import="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationException" %><%@
-page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper" %><%@
 page import="com.liferay.dynamic.data.mapping.web.display.context.DDMDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
@@ -173,16 +170,9 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
-DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(renderRequest);
-DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
+DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmWebRequestHelper.getDDMGroupServiceConfiguration();
-
-DDMWebConfiguration ddmWebConfiguration = (DDMWebConfiguration)request.getAttribute(DDMWebConfiguration.class.getName());
-
-if (ddmWebConfiguration == null) {
-	ddmWebConfiguration = ddmWebRequestHelper.getDDMWebConfiguration();
-}
+DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmDisplayContext.getDDMGroupServiceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>

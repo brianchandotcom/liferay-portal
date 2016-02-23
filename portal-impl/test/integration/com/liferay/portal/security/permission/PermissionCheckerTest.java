@@ -62,28 +62,6 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testHasPermission() throws Exception {
-		_user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker = _getPermissionChecker(_user);
-
-		String withExceptionPortletId =
-			"com_liferay_blogs_web_portlet_BlogsAdminPortlet";
-		String withExceptionActionId = "ADD_TO_PAGE";
-		String withoutExceptionPortletId = "11";
-		String withoutExceptionActionId = "VIEW";
-
-		Assert.assertFalse(
-			permissionChecker.hasPermission(
-				_group.getGroupId(), withExceptionPortletId,
-				_group.getGroupId(), withExceptionActionId));
-		Assert.assertFalse(
-			permissionChecker.hasPermission(
-				_group.getGroupId(), withoutExceptionPortletId,
-				_group.getGroupId(), withoutExceptionActionId));
-	}
-
-	@Test
 	public void testIsCompanyAdminWithCompanyAdmin() throws Exception {
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			TestPropsValues.getUser());

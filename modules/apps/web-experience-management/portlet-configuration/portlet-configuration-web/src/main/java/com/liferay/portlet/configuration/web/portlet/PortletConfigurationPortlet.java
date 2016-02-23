@@ -412,6 +412,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -429,9 +432,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
+		portletInstanceModifiableSettings.reset();
+
 		portletInstanceModifiableSettings.setValues(archivedSettings);
 
 		portletInstanceModifiableSettings.store();
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
 	}
 
 	@Override

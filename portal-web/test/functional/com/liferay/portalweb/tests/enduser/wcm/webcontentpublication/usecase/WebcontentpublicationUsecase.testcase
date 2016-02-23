@@ -2190,7 +2190,5 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute function="Pause" locator1="1073" />
 	</command>
 </definition>

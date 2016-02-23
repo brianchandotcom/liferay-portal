@@ -868,8 +868,6 @@
 		</execute>
 
 		<execute macro="Search#viewUserSearchResultPG">
-			<var name="breadcrumb1" value="Test Test" />
-			<var name="breadcrumb2" value="Welcome" />
 			<var name="pageName" value="Welcome" />
 			<var name="siteName" value="Test Test" />
 		</execute>

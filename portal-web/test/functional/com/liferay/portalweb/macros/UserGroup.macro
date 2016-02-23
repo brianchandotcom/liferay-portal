@@ -440,8 +440,6 @@
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
 		<execute function="SelectWindow" locator1="home - ${userGroupName} - Liferay" />
 
-		<execute function="Pause" locator1="1073" />
-		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 
 		<var name="key_portletName" value="${portletName}" />

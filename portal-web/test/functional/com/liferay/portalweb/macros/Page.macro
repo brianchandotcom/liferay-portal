@@ -1044,16 +1044,6 @@
 		<execute function="Open" locator1="${sitePageURL}" />
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 
-		<if>
-			<isset var="childPageName" />
-			<then>
-				<execute function="Pause" locator1="1073" />
-			</then>
-			<else>
-				<execute function="Pause" locator1="1073" />
-			</else>
-		</if>
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
 		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
 	</command>
@@ -1070,7 +1060,6 @@
 	</command>
 
 	<command name="viewWithWorkflowPG">
-		<execute function="Pause" locator1="1073" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${workflowStatus}" />

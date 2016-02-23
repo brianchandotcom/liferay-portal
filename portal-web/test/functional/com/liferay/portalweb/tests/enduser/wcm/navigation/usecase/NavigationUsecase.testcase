@@ -107,9 +107,6 @@
 
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRIVATE_PAGE_LINK" value1="Test User Group Private Page" />
 
-		<execute function="Pause" locator1="1073" />
-		<execute function="Pause" locator1="1073" />
-
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="User#loginPG">

@@ -1402,6 +1402,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	private static final String _DDM_STRUCTURE_CLASS_NAME =
+		"com.liferay.dynamic.data.mapping.model.DDMStructure";
+
+	private static final String _DDM_TEMPLATE_CLASS_NAME =
+		"com.liferay.dynamic.data.mapping.model.DDMTemplate";
+
 	private static final String _INVALID_FIELD_NAME_CHARS_REGEX =
 		"([\\p{Punct}&&[^_]]|\\p{Space})+";
 
@@ -1419,35 +1425,35 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_structureModelResourceNames.put(
 			"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
-				DDMStructure.class.getName());
+				_DDM_STRUCTURE_CLASS_NAME);
 
 		_structureModelResourceNames.put(
 			"com.liferay.document.library.kernel.util.RawMetadataProcessor",
-			DDMStructure.class.getName());
+			_DDM_STRUCTURE_CLASS_NAME);
 
 		_structureModelResourceNames.put(
 			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
-				DDMStructure.class.getName());
+				_DDM_STRUCTURE_CLASS_NAME);
 
 		_structureModelResourceNames.put(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			"com.liferay.journal.model.JournalArticle-" +
-				DDMStructure.class.getName());
+				_DDM_STRUCTURE_CLASS_NAME);
 
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.display.template.PortletDisplayTemplate",
-			DDMTemplate.class.getName());
+			_DDM_TEMPLATE_CLASS_NAME);
 
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
-				DDMTemplate.class.getName());
+				_DDM_TEMPLATE_CLASS_NAME);
 
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			"com.liferay.journal.model.JournalArticle-" +
-				DDMTemplate.class.getName());
+				_DDM_TEMPLATE_CLASS_NAME);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -182,8 +180,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"update DDMStructure set classNameId = ? where " +
 					"classNameId = ?");
 
-			ps.setLong(1, PortalUtil.getClassNameId(DLFileEntryMetadata.class));
-			ps.setLong(2, PortalUtil.getClassNameId(DLFileEntry.class));
+			ps.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.documentlibrary.model." +
+						"DLFileEntryMetadata"));
+			ps.setLong(
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.documentlibrary.model.DLFileEntry"));
 
 			ps.executeUpdate();
 		}

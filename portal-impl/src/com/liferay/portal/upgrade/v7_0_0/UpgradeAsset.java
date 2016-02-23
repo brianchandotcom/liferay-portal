@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -95,16 +96,26 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				String structureId = rs.getString("structureId");
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update AssetEntry set classTypeId = ? where " +
+								"classNameId = ? and classPK = ?"));) {
 
-				long ddmStructureId = getDDMStructureId(structureId);
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String structureId = rs.getString("structureId");
 
-				runSQL(
-					"update AssetEntry set classTypeId = " + ddmStructureId +
-						" where classNameId = " + classNameId +
-							" and classPK = " + resourcePrimKey);
+					long ddmStructureId = getDDMStructureId(structureId);
+
+					ps2.setLong(1, ddmStructureId);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, resourcePrimKey);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
 		}
 		finally {
@@ -130,13 +141,23 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				long classPK = rs.getLong("resourcePrimKey");
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update AssetEntry set listable = ? where " +
+								"classNameId = ? and classPK = ?"))) {
 
-				runSQL(
-					"update AssetEntry set listable = [$FALSE$] where " +
-						"classNameId = " + classNameId + " and classPK = " +
-							classPK);
+				while (rs.next()) {
+					long classPK = rs.getLong("resourcePrimKey");
+
+					ps2.setBoolean(1, false);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, classPK);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
 		}
 		finally {

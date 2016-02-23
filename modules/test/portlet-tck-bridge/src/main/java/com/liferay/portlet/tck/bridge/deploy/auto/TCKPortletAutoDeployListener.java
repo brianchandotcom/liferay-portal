@@ -16,6 +16,7 @@ package com.liferay.portlet.tck.bridge.deploy.auto;
 
 import com.liferay.portal.deploy.auto.PortletAutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 
 import java.io.File;
 
@@ -24,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Miguel Pastor
  */
-@Component (
-	immediate = true,
-	service = com.liferay.portal.kernel.deploy.auto.AutoDeployListener.class
-)
+@Component(immediate = true, service = AutoDeployListener.class)
 public class TCKPortletAutoDeployListener extends PortletAutoDeployListener {
 
 	@Override

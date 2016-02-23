@@ -38,7 +38,7 @@ public interface NtlmConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "Set this to true to enable NTLM single sign on. NTLM will work only if LDAP authentication is also enabled and the authentication is made by screen name.",
+		description = "Set this to true to enable NTLM single sign on. NTLM will work only if both LDAP authentication is enabled and authentication is done via screen name.",
 		required = false
 	)
 	public boolean enabled();

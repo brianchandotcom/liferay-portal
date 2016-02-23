@@ -50,7 +50,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE);
 	}
 
-	String localizedName = LanguageUtil.get(request, name);
+	String localizedName = LanguageUtil.get(resourceBundle, name);
 
 	if (name.equals(localizedName)) {
 		localizedName = HtmlUtil.escape(TextFormatter.format(name, TextFormatter.J));

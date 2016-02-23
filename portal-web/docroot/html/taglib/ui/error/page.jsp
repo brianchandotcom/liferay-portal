@@ -71,7 +71,7 @@ if (bodyContent != null) {
 		<c:if test="<%= !SessionErrors.isEmpty(portletRequest) %>">
 			<liferay-ui:alert
 				icon="exclamation-full"
-				message='<%= LanguageUtil.get(request, "your-request-failed-to-complete") %>'
+				message='<%= LanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>'
 				timeout="0"
 				type="danger"
 			/>
@@ -83,7 +83,7 @@ if (bodyContent != null) {
 		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
 			<liferay-ui:alert
 				icon="exclamation-full"
-				message="<%= translateMessage ? LanguageUtil.get(request, message) : message %>"
+				message="<%= translateMessage ? LanguageUtil.get(resourceBundle, message) : message %>"
 				timeout="0"
 				type="danger"
 			/>

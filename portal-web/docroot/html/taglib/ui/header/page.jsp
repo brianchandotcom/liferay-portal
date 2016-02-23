@@ -18,14 +18,14 @@
 
 <%
 if (Validator.isNull(backLabel)) {
-	backLabel = LanguageUtil.get(request, "back");
+	backLabel = LanguageUtil.get(resourceBundle, "back");
 }
 
 if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
 	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
 }
 
-String headerTitle = (localizeTitle) ? LanguageUtil.get(request, title) : title;
+String headerTitle = (localizeTitle) ? LanguageUtil.get(resourceBundle, title) : title;
 %>
 
 <div class="taglib-header <%= cssClass %>">

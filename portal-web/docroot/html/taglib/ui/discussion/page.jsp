@@ -246,7 +246,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 									<%= randomNamespace %>showStatusMessage(
 										{
 											id: randomId,
-											message: '<%= UnicodeLanguageUtil.get(request, "your-request-completed-successfully") %>',
+											message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
 											type: 'success'
 										}
 									);
@@ -302,7 +302,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								width: 770
 							},
 							id: '<%= namespace %>signInDialog',
-							title: '<%= UnicodeLanguageUtil.get(request, "sign-in") %>',
+							title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
 							uri: '<%= loginURL.toString() %>'
 						}
 					);
@@ -337,7 +337,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							<%= randomNamespace %>showStatusMessage(
 								{
 									id: <%= randomNamespace %>,
-									message: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
+									message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 									type: 'error'
 								}
 							);
@@ -356,22 +356,22 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								Liferay.fire('<%= portletDisplay.getId() %>:messagePosted', response);
 							}
 							else {
-								var errorKey = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
+								var errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
 
 								if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(request, "maximum-number-of-comments-has-been-reached") %>';
+									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
 								}
 								else if (exception.indexOf('MessageBodyException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(request, "please-enter-a-valid-message") %>';
+									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
 								}
 								else if (exception.indexOf('NoSuchMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(request, "the-message-could-not-be-found") %>';
+									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
 								}
 								else if (exception.indexOf('PrincipalException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>';
+									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
 								}
 								else if (exception.indexOf('RequiredMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
+									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
 								}
 
 								<%= randomNamespace %>showStatusMessage(
@@ -484,7 +484,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								<%= randomNamespace %>showStatusMessage(
 									{
 										id: <%= randomNamespace %>,
-										message: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
+										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 										type: 'danger'
 									}
 								);

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -71,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AddRecordSetMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected DDMStructure addDDMStructure(ActionRequest actionRequest)
+	protected DDMStructure addDDMStructure(
+			ActionRequest actionRequest, DDMFormValues settingsDDMFormValues)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -80,8 +82,7 @@ public class AddRecordSetMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
-		String storageType = ParamUtil.getString(
-			actionRequest, "storageType", StorageType.JSON.toString());
+		String storageType = getStorageType(settingsDDMFormValues);
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
@@ -128,12 +129,17 @@ public class AddRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure ddmStructure = addDDMStructure(actionRequest);
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			actionRequest);
+
+		DDMStructure ddmStructure = addDDMStructure(
+			actionRequest, settingsDDMFormValues);
 
 		DDLRecordSet recordSet = addRecordSet(
 			actionRequest, ddmStructure.getStructureId());
 
-		updateRecordSetSettings(actionRequest, recordSet);
+		updateRecordSetSettings(
+			actionRequest, recordSet, settingsDDMFormValues);
 	}
 
 	protected DDMForm getDDMForm(ActionRequest actionRequest)
@@ -169,6 +175,41 @@ public class AddRecordSetMVCActionCommand
 		localizedMap.put(locale, value);
 
 		return localizedMap;
+	}
+
+	protected DDMFormValues getSettingsDDMFormValues(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		String serializedSettingsDDMFormValues = ParamUtil.getString(
+			actionRequest, "serializedSettingsDDMFormValues");
+
+		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
+
+		DDMFormValues settingsDDMFormValues =
+			ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, serializedSettingsDDMFormValues);
+		return settingsDDMFormValues;
+	}
+
+	protected String getStorageType(DDMFormValues ddmFormValues)
+		throws PortalException {
+
+		DDMFormValuesQuery ddmFormValuesQuery =
+			ddmFormValuesQueryFactory.create(ddmFormValues, "/storageType");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
+
+		Value value = ddmFormFieldValue.getValue();
+
+		String storageType = value.getString(ddmFormValues.getDefaultLocale());
+
+		if (Validator.isNull(storageType)) {
+			storageType = StorageType.JSON.toString();
+		}
+
+		return storageType;
 	}
 
 	protected String getWorkflowDefinition(DDMFormValues ddmFormValues)
@@ -237,17 +278,9 @@ public class AddRecordSetMVCActionCommand
 	}
 
 	protected void updateRecordSetSettings(
-			ActionRequest actionRequest, DDLRecordSet recordSet)
+			ActionRequest actionRequest, DDLRecordSet recordSet,
+			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
-
-		String serializedSettingsDDMFormValues = ParamUtil.getString(
-			actionRequest, "serializedSettingsDDMFormValues");
-
-		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
-
-		DDMFormValues settingsDDMFormValues =
-			ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedSettingsDDMFormValues);
 
 		ddlRecordSetService.updateRecordSet(
 			recordSet.getRecordSetId(), settingsDDMFormValues);

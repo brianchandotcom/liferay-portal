@@ -46,6 +46,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		updateJournalActivities();
 		updateSOSocialActivities();
+
 		updateActivities();
 	}
 
@@ -375,8 +376,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_MESSAGE);
 				ps.setInt(3, _REPLY_MESSAGE);
 			}
@@ -443,8 +444,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_ENTRY);
 				ps.setInt(3, _UPDATE_ENTRY);
 			}
@@ -501,8 +502,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_ENTRY);
 				ps.setInt(3, _UPDATE_ENTRY);
 			}
@@ -550,8 +551,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 			}
 
 			@Override
@@ -562,9 +563,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, companyId);
-
 				ps.setLong(2, groupId);
-
 				ps.setLong(3, classPK);
 			}
 
@@ -610,8 +609,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_ARTICLE);
 				ps.setInt(3, _UPDATE_KB_ARTICLE);
 				ps.setInt(4, _MOVE_KB_ARTICLE);
@@ -726,8 +725,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_COMMENT);
 				ps.setInt(3, _UPDATE_KB_COMMENT);
 			}
@@ -770,8 +769,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_TEMPLATE);
 				ps.setInt(3, _UPDATE_KB_TEMPLATE);
 			}
@@ -830,8 +829,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1,
-					PortalUtil.getClassNameId(getActivityClassName()));
+				ps.setLong(
+					1, PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_PAGE);
 				ps.setInt(3, _UPDATE_PAGE);
 			}
@@ -844,11 +843,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, companyId);
-
 				ps.setLong(2, groupId);
-
 				ps.setLong(3, classPK);
-
 				ps.setBoolean(4, true);
 			}
 

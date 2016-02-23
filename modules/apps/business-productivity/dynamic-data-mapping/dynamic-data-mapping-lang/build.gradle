@@ -1,3 +1,0 @@
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

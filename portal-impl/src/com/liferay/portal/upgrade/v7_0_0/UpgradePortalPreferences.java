@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.util.xml.XMLUtil;
 
 import java.sql.PreparedStatement;
@@ -77,36 +78,30 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				long portalPreferencesId = rs.getLong("portalPreferencesId");
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update PortalPreferences set preferences = ? " +
+								"where portalPreferencesId = ?"));) {
 
-				String preferences = rs.getString("preferences");
+				while (rs.next()) {
+					long portalPreferencesId = rs.getLong(
+						"portalPreferencesId");
 
-				upgradeUserStagingPreferences(portalPreferencesId, preferences);
+					String preferences = rs.getString("preferences");
+
+					ps2.setString(
+						1, convertStagingPreferencesToJSON(preferences));
+					ps2.setLong(2, portalPreferencesId);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
 		}
 		finally {
 			DataAccess.cleanUp(ps, rs);
-		}
-	}
-
-	protected void upgradeUserStagingPreferences(
-			long portalPreferencesId, String preferences)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update PortalPreferences set preferences = ? where " +
-					"portalPreferencesId = ?");
-
-			ps.setString(1, convertStagingPreferencesToJSON(preferences));
-			ps.setLong(2, portalPreferencesId);
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

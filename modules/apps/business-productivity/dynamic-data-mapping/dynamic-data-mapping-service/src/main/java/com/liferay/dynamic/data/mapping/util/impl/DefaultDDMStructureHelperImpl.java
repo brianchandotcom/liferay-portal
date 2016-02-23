@@ -140,7 +140,7 @@ public class DefaultDDMStructureHelperImpl
 			boolean cacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
 
-			String ddmTemplateKey = ddmStructureKey;
+			String ddmTemplateKey = name;
 
 			_ddmTemplateLocalService.addTemplate(
 				userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),

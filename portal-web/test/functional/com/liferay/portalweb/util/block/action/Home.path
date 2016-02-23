@@ -601,12 +601,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMINISTRATION_USERS</td>
-	<td>//div[@id='panel-manage-site_administration.users']/div</td>
+	<td>SITE_ADMINISTRATION_MEMBERS</td>
+	<td>//div[@id='panel-manage-site_administration.members']/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS</td>
+	<td>SITE_ADMINISTRATION_MEMBERS_SITE_MEMBERSHIPS</td>
 	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Memberships')]/span/a/span</td>
 	<td></td>
 </tr>
@@ -616,7 +616,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMINISTRATION_USERS_SITE_TEAMS</td>
+	<td>SITE_ADMINISTRATION_MEMBERS_SITE_TEAMS</td>
 	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Teams')]/span/a/span</td>
 	<td></td>
 </tr>

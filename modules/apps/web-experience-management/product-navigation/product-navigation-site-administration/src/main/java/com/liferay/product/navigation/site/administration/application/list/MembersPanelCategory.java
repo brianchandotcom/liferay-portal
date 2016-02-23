@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class UsersPanelCategory extends BasePanelCategory {
+public class MembersPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_USERS;
+		return PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.site_administration.users");
+		return LanguageUtil.get(locale, "category.site_administration.members");
 	}
 
 }

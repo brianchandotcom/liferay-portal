@@ -50,14 +50,14 @@ public interface PanelCategoryKeys {
 	public static final String SITE_ADMINISTRATION_CONTENT =
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 
+	public static final String SITE_ADMINISTRATION_MEMBERS =
+		PortletCategoryKeys.SITE_ADMINISTRATION_MEMBERS;
+
 	public static final String SITE_ADMINISTRATION_PAGES =
 		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES;
 
 	public static final String SITE_ADMINISTRATION_PUBLISHING_TOOLS =
 		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
-
-	public static final String SITE_ADMINISTRATION_USERS =
-		PortletCategoryKeys.SITE_ADMINISTRATION_USERS;
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
 		"sites_administration.my_sites";

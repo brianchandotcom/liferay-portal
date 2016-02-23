@@ -27,6 +27,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine" %><%@
+page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %>
 
 <%@ page import="java.util.HashMap" %><%@

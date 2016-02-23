@@ -231,7 +231,7 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
+							WikiUtil.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
 							%>
 
 						</div>

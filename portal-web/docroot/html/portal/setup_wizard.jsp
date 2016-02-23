@@ -50,14 +50,6 @@
 		<div id="main-content">
 
 			<%
-			String defaultEmailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
-
-			long emailAddressId = ParamUtil.getLong(request, "emailAddressId");
-
-			EmailAddress emailAddresModel = EmailAddressServiceUtil.fetchEmailAddress(emailAddressId);
-
-			String emailAddress = (emailAddresModel == null) ? defaultEmailAddress : emailAddresModel.getAddress();
-
 			UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);
 			%>
 
@@ -101,7 +93,7 @@
 							<aui:fieldset cssClass="col-md-6 column-last" label="administrator-user">
 								<%@ include file="/html/portal/setup_wizard_user_name.jspf" %>
 
-								<aui:input label="email" name="adminEmailAddress" value="<%= emailAddress %>">
+								<aui:input label="email" name="adminEmailAddress" value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
 									<aui:validator name="email" />
 									<aui:validator name="required" />
 								</aui:input>

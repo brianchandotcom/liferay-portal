@@ -17,4 +17,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Main-Class: com.liferay.rtl.css.RTLConverter
--include: ../../../marketplace/platform/bnd.bnd
+-include: ../../../../marketplace/platform/bnd.bnd

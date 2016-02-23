@@ -1,0 +1,58 @@
+import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
+import com.liferay.gradle.plugins.tasks.CompileThemeTask
+
+configurations {
+	frontendThemes
+}
+
+task buildTheme(type: CompileThemeTask)
+task buildThumbnails(type: BuildThumbnailsTask)
+task copyFavicon(type: Copy)
+
+File themeDestinationDir = file("src/main/resources/META-INF/resources/admin")
+
+buildCSS {
+	dependsOn buildTheme
+}
+
+buildTheme {
+	dependsOn buildThumbnails
+	dependsOn copyFavicon
+
+	diffsDir = new File(themeDestinationDir, "_diffs")
+	frontendThemeFiles = configurations.frontendThemes
+	themeParent = "_styled"
+	themeRootDir = themeDestinationDir
+	themeTypes = ["ftl"]
+}
+
+buildThumbnails {
+	imageDirs themeDestinationDir
+}
+
+classes {
+	dependsOn buildTheme
+}
+
+copyFavicon {
+	ext {
+		autoClean = false
+	}
+
+	from "../frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/images/favicon.ico"
+	into "src/main/resources/META-INF/resources"
+}
+
+dependencies {
+	frontendThemes project(":apps:platform:frontend:frontend-theme:frontend-theme-styled")
+	frontendThemes project(":apps:platform:frontend:frontend-theme:frontend-theme-unstyled")
+
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

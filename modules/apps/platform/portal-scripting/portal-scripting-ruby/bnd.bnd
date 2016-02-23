@@ -1,0 +1,26 @@
+Bundle-Name: Liferay Portal Scripting Ruby
+Bundle-SymbolicName: com.liferay.portal.scripting.ruby
+Bundle-Version: 1.0.0
+DynamicImport-Package: *
+Import-Package:\
+	!javax.swing.*,\
+	\
+	!org.apache.bsf.*,\
+	!org.apache.tools.ant.*,\
+	\
+	!org.joda.convert.*,\
+	\
+	!sun.management.*,\
+	\
+	!sun.misc.*,\
+	\
+	!sun.nio.cs*,\
+	*
+Include-Resource: @lib/jruby-complete.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Scripting Engines
+-fixupmessages:\
+	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
+	"The JAR is empty: ...";is:=ignore,\
+	"While setting properties ...";is:=ignore
+-include: ../../../../../marketplace/platform/bnd.bnd

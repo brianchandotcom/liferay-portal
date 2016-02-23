@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Cache Memory
+Bundle-SymbolicName: com.liferay.portal.cache.memory
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Cache Engines
+-include: ../../../../../marketplace/platform/bnd.bnd

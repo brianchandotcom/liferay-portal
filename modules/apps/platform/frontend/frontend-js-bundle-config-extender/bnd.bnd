@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Frontend JS Bundle Config Extender
+Bundle-SymbolicName: com.liferay.frontend.js.bundle.config.extender
+Bundle-Version: 1.0.0
+Include-Resource: @lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+-include: ../../../../../marketplace/platform/bnd.bnd

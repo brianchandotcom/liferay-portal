@@ -16,7 +16,7 @@ FileTree fileTree = fileTree(rootDir) {
 	}
 	else {
 		include "*/**/build.gradle"
-		include "frontend/frontend-theme/*/gulpfile.js"
+		include "apps/platform/frontend/frontend-theme/*/gulpfile.js"
 	}
 }
 

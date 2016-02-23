@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Settings Authentication Google Web
+Bundle-SymbolicName: com.liferay.portal.settings.authentication.google.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Portal Settings
+Web-ContextPath: /portal-settings-authentication-google-web
+-include: ../../../../../marketplace/platform/bnd.bnd

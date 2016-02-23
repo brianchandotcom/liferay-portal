@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Rules Engine Wiring
+Bundle-SymbolicName: com.liferay.portal.rules.engine.wiring
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Rules Engine
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Login Authentication Google Web
+Bundle-SymbolicName: com.liferay.login.authentication.google.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Login
+Web-ContextPath: /login-authentication-google-web
+-include: ../../../../../marketplace/platform/bnd.bnd

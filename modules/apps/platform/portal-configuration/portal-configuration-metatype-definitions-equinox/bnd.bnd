@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Configuration Metatype Definitons Equinox
+Bundle-SymbolicName: com.liferay.portal.configuration.metatype.definitions.equinox
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Metatype
+-include: ../../../../../marketplace/platform/bnd.bnd

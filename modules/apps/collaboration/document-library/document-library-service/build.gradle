@@ -11,11 +11,11 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:collaboration:document-library:document-library-api")
+	provided project(":apps:platform:portal-search:portal-search")
+	provided project(":apps:platform:portal:portal-instance-lifecycle")
+	provided project(":apps:platform:portal:portal-upgrade")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")
-	provided project(":portal-search:portal-search")
-	provided project(":portal:portal-instance-lifecycle")
-	provided project(":portal:portal-upgrade")
 }
 
 liferay {

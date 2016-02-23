@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal JMX
+Bundle-SymbolicName: com.liferay.portal.jmx
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.jmx.*;version=${plugin.full.version}
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Monitoring and Management
+-include: ../../../../../marketplace/platform/bnd.bnd

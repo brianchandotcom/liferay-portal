@@ -9,7 +9,7 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
-	provided project(":core:osgi-service-tracker-collections")
+	provided project(":apps:platform:osgi-service-tracker-collections")
 
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-io")

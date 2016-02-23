@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Configuration Extender
+Bundle-SymbolicName: com.liferay.portal.configuration.extender
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.configuration.extender
+Include-Resource:\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Configuration Framework
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,46 @@
+import com.liferay.gradle.util.FileUtil
+
+task processSanitizerConfiguration(type: Copy)
+
+String sanitizerConfigurationUrl = "https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml"
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided group: "org.owasp.antisamy", name: "antisamy", version: "1.5.3"
+	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+processResources {
+	dependsOn processSanitizerConfiguration
+}
+
+processSanitizerConfiguration {
+	File sanitizerConfigurationFile = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/sanitizer-configuration.xml")
+
+	filter {
+		String line ->
+
+		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
+			line = line.replace "20000", "200000"
+		}
+
+		return line
+	}
+
+	from {
+		FileUtil.get(project, sanitizerConfigurationUrl)
+	}
+
+	into sanitizerConfigurationFile.parentFile
+
+	rename {
+		sanitizerConfigurationFile.name
+	}
+}

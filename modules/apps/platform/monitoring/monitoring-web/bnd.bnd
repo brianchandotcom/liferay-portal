@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Monitoring Web
+Bundle-SymbolicName: com.liferay.monitoring.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/log4j/Levels.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /monitoring-web
+-include: ../../../../../marketplace/platform/bnd.bnd

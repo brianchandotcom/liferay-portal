@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Messaging
+Bundle-SymbolicName: com.liferay.portal.messaging
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.messaging.*;version=${plugin.full.version}
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Runtime
+-include: ../../../../../marketplace/platform/bnd.bnd

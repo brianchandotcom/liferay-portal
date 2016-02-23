@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Login Web
+Bundle-SymbolicName: com.liferay.login.web
+Bundle-Version: 1.0.0
+Include-Resource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

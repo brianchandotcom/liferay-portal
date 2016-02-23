@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal Language Resource Bundle
-Bundle-SymbolicName: com.liferay.portal.language.resource.bundle
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.language.resource.bundle
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--include: ../../../marketplace/platform/bnd.bnd

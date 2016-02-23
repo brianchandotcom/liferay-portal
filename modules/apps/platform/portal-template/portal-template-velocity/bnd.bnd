@@ -1,0 +1,27 @@
+Bundle-Name: Liferay Portal Template Velocity
+Bundle-SymbolicName: com.liferay.portal.template.velocity
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.sun.org.apache.xml.internal.utils,\
+	!com.sun.org.apache.xpath.internal,\
+	!com.sun.org.apache.xpath.internal.objects,\
+	\
+	!com.werken.xpath,\
+	\
+	!org.apache.commons.digester,\
+	!org.apache.commons.validator,\
+	!org.apache.log,\
+	!org.apache.log.format,\
+	!org.apache.log.output.io,\
+	!org.apache.oro.text.perl,\
+	\
+	!org.slf4j.spi,\
+	\
+	!org.zeroturnaround.javarebel,\
+	*
+Include-Resource:\
+	@lib/velocity.jar,\
+	@lib/velocity-tools.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines
+-include: ../../../../../marketplace/platform/bnd.bnd

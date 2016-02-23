@@ -1,0 +1,32 @@
+Bundle-ClassPath:\
+	.,\
+	lib/google-api-client.jar,\
+	lib/google-api-services-oauth2.jar,\
+	lib/google-http-client-jackson2.jar,\
+	lib/google-http-client.jar,\
+	lib/google-oauth-client.jar,\
+	lib/jackson-core.jar
+Bundle-Name: Liferay Portal Security SSO Google
+Bundle-SymbolicName: com.liferay.portal.security.sso.google
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.google,\
+	com.liferay.portal.security.sso.google.configuration,\
+	com.liferay.portal.security.sso.google.constants
+Import-Package:\
+	!com.fasterxml.jackson.core,\
+	\
+	!com.google.*,\
+	\
+	!org.apache.http.*,\
+	*
+Include-Resource:\
+	lib/google-api-client.jar=lib/google-api-client.jar,\
+	lib/google-api-services-oauth2.jar=lib/google-api-services-oauth2.jar,\
+	lib/google-http-client-jackson2.jar=lib/google-http-client-jackson2.jar,\
+	lib/google-http-client.jar=lib/google-http-client.jar,\
+	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
+	lib/jackson-core.jar=lib/jackson-core.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,11 @@
+Bundle-Name: Liferay OSGi Service Tracker Collections
+Bundle-SymbolicName: com.liferay.osgi.service.tracker.collections
+Bundle-Version: 1.0.1
+Export-Package:\
+	com.liferay.osgi.service.tracker.collections,\
+	com.liferay.osgi.service.tracker.collections.list,\
+	com.liferay.osgi.service.tracker.collections.map
+Include-Resource: @lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/platform/bnd.bnd

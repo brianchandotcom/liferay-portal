@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Configuration Admin Web
+Bundle-SymbolicName: com.liferay.configuration.admin.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Configuration Framework
+Private-Package: com.liferay.configuration.admin.web.*
+-include: ../../../../../marketplace/platform/bnd.bnd

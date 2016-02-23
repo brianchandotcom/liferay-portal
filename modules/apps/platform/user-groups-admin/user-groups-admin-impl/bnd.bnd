@@ -1,0 +1,7 @@
+Bundle-Name: Liferay User Groups Admin Implementation
+Bundle-SymbolicName: com.liferay.user.groups.admin.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/platform/bnd.bnd

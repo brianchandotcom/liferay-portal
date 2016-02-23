@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Security Service Access Policy Service
+Bundle-SymbolicName: com.liferay.portal.security.service.access.policy.service
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.security.service.access.policy.service.permission
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/platform/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

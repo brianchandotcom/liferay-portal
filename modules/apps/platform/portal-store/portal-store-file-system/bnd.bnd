@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Store File System
+Bundle-SymbolicName: com.liferay.portal.store.file.system
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Mobile Device Rules Test
+Bundle-SymbolicName: com.liferay.mobile.device.rules.test
+Bundle-Version: 1.0.0
+Include-Resource: test-classes/integration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Mobile Device Rules
+-include: ../../../../../marketplace/platform/bnd.bnd

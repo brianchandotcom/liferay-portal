@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Security Service Access Policy Web
+Bundle-SymbolicName: com.liferay.portal.security.service.access.policy.web
+Bundle-Version: 1.0.0
+Include-Resource: @../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

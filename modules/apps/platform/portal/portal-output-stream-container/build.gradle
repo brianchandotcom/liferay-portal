@@ -1,0 +1,13 @@
+dependencies {
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "log4j", name: "log4j", version: "1.2.17"
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":apps:platform:osgi-service-tracker-collections")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

@@ -1,0 +1,30 @@
+Bundle-Name: Liferay Portal Security SSO OpenID
+Bundle-SymbolicName: com.liferay.portal.security.sso.openid
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.openid;version=${plugin.full.version},\
+	com.liferay.portal.security.sso.openid.configuration;version=${plugin.full.version},\
+	com.liferay.portal.security.sso.openid.constants;version=${plugin.full.version}
+Import-Package:\
+	!com.google.inject.internal.asm.util.*,\
+	\
+	!net.sf.ehcache.*,\
+	\
+	!org.apache.avalon.*,\
+	!org.apache.html.dom.*,\
+	!org.apache.log.*,\
+	\
+	!sun.io.*,\
+	*
+Include-Resource:\
+	@lib/guice.jar,\
+	@lib/httpclient.jar,\
+	@lib/httpcore.jar,\
+	@lib/nekohtml.jar,\
+	@lib/openid4java.jar,\
+	@lib/org.apache.xml.resolver.jar,\
+	@lib/xercesImpl.jar,\
+	@lib/xml-apis.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,68 @@
+Bundle-Name: Liferay Portal Template FreeMarker
+Bundle-SymbolicName: com.liferay.portal.template.freemarker
+Bundle-Version: 1.0.0
+Export-Package:\
+	freemarker,\
+	\
+	freemarker.cache,\
+	\
+	freemarker.core,\
+	\
+	freemarker.ext,\
+	freemarker.ext.beans,\
+	freemarker.ext.jsp,\
+	freemarker.ext.servlet,\
+	\
+	freemarker.template,\
+	freemarker.template.utility
+Import-Package:\
+	!com.sun.javadoc,\
+	!com.sun.org.apache.xml.internal.utils,\
+	!com.sun.org.apache.xpath.internal,\
+	!com.sun.org.apache.xpath.internal.objects,\
+	!com.sun.tools.javadoc,\
+	\
+	!org.apache.crimson.jaxp,\
+	!org.apache.log,\
+	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
+	\
+	!org.mozilla.*,\
+	\
+	!org.python.*,\
+	\
+	!org.slf4j.spi,\
+	\
+	!org.zeroturnaround.javarebel,\
+	\
+	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.lang.jstl;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.lang.jstl.parser;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.lang.jstl.test;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.lang.jstl.test.beans;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.lang.support;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.resources;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.common.core;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.common.fmt;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.common.sql;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.common.xml;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.el.core;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.el.fmt;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.el.sql;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.el.xml;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.rt.core;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.rt.fmt;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.rt.sql;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tag.rt.xml;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tei;version='[1.2.3,2.0)',\
+	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
+	*
+Include-Resource:\
+	WEB-INF=src/main/resources/WEB-INF,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@lib/freemarker.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines
+-include: ../../../../../marketplace/platform/bnd.bnd

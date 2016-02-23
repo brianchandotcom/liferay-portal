@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Frontend CSS Web
+Bundle-SymbolicName: com.liferay.frontend.css.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+Web-ContextPath: /frontend-css-web
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Frontend Taglib FreeMarker Contributor
+Bundle-SymbolicName: com.liferay.frontend.taglib.freemarker.contributor
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.portal.template.freemarker
+Import-Package: com.liferay.frontend.taglib.servlet.taglib
+Include-Resource: @lib/com.liferay.frontend.taglib.jar!/META-INF/resources/liferay-frontend.tld
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

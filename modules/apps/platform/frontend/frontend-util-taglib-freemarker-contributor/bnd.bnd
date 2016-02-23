@@ -1,0 +1,32 @@
+Bundle-Name: Liferay Frontend Util Taglib FreeMarker Contributor
+Bundle-SymbolicName: com.liferay.frontend.util.taglib.freemarker.contributor
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.portal.template.freemarker
+Import-Package:\
+	com.liferay.alloy.taglib.alloy,\
+	com.liferay.alloy.taglib.alloy.base,\
+	com.liferay.alloy.taglib.alloy_util,\
+	com.liferay.alloy.taglib.alloy_util.base,\
+	com.liferay.alloy.taglib.liferay,\
+	com.liferay.alloy.taglib.liferay.base,\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib,\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base,\
+	com.liferay.staging.taglib.servlet.taglib,\
+	com.liferay.taglib,\
+	com.liferay.taglib.aui,\
+	com.liferay.taglib.aui.base,\
+	com.liferay.taglib.core,\
+	com.liferay.taglib.portlet,\
+	com.liferay.taglib.portletext,\
+	com.liferay.taglib.search,\
+	com.liferay.taglib.security,\
+	com.liferay.taglib.servlet,\
+	com.liferay.taglib.theme,\
+	com.liferay.taglib.ui,\
+	com.liferay.taglib.ui.display.context,\
+	com.liferay.taglib.ui.util,\
+	com.liferay.taglib.util
+Include-Resource: @lib/util-taglib.jar!/META-INF/*.tld
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -15,7 +15,7 @@ dependencies {
 	compile project(":apps:collaboration:message-boards:message-boards-web")
 	compile project(":apps:collaboration:wiki:wiki-api")
 	compile project(":apps:collaboration:wiki:wiki-service")
-	compile project(":apps:login:login-web")
+	compile project(":apps:platform:login:login-web")
 	compile project(":apps:web-experience-management:journal:journal-api")
 	compile project(":apps:web-experience-management:journal:journal-service")
 

@@ -6,7 +6,7 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	provided project(":apps:map:map-api")
-	provided project(":frontend:frontend-taglib")
+	provided project(":apps:platform:frontend:frontend-taglib")
 }
 
 liferay {

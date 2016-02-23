@@ -1,0 +1,56 @@
+Bundle-Name: Liferay Portal Cache Ehcache Provider
+Bundle-SymbolicName: com.liferay.portal.cache.ehcache.provider
+Bundle-Version: 1.0.0
+DynamicImport-Package:\
+	com.liferay.portal.cache.ehcache.cluster,\
+	com.liferay.portal.cache.io
+Export-Package:\
+	net.sf.ehcache,\
+	net.sf.ehcache.bootstrap,\
+	net.sf.ehcache.config,\
+	net.sf.ehcache.constructs,\
+	net.sf.ehcache.distribution,\
+	net.sf.ehcache.event,\
+	net.sf.ehcache.management,\
+	net.sf.ehcache.util
+Import-Package:\
+	!org.quartz,\
+	!org.quartz.impl,\
+	!org.quartz.impl.jdbcjobstore,\
+	!org.quartz.impl.matchers,\
+	!org.quartz.simpl,\
+	\
+	!org.terracotta.quartz,\
+	!org.terracotta.toolkit,\
+	!org.terracotta.toolkit.atomic,\
+	!org.terracotta.toolkit.builder,\
+	!org.terracotta.toolkit.cache,\
+	!org.terracotta.toolkit.cluster,\
+	!org.terracotta.toolkit.collections,\
+	!org.terracotta.toolkit.concurrent.locks,\
+	!org.terracotta.toolkit.config,\
+	!org.terracotta.toolkit.events,\
+	!org.terracotta.toolkit.feature,\
+	!org.terracotta.toolkit.internal,\
+	!org.terracotta.toolkit.internal.cache,\
+	!org.terracotta.toolkit.internal.cluster,\
+	!org.terracotta.toolkit.internal.collections,\
+	!org.terracotta.toolkit.internal.concurrent.locks,\
+	!org.terracotta.toolkit.internal.feature,\
+	!org.terracotta.toolkit.monitoring,\
+	!org.terracotta.toolkit.nonstop,\
+	!org.terracotta.toolkit.rejoin,\
+	!org.terracotta.toolkit.search,\
+	!org.terracotta.toolkit.search.attribute,\
+	!org.terracotta.toolkit.store,\
+	\
+	!sun.misc,\
+	*
+Include-Resource:\
+	@lib/ehcache.jar!/com/*,\
+	@lib/ehcache.jar!/net/*,\
+	@lib/ehcache.jar!/org/*,\
+	@lib/ehcache.jar!/META-INF/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Cache Engines
+-include: ../../../../../marketplace/platform/bnd.bnd

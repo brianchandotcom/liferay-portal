@@ -22,9 +22,9 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-form-values-query")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:platform:frontend:frontend-taglib")
+	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
-	provided project(":frontend:frontend-taglib")
-	provided project(":portal-configuration:portal-configuration-metatype")
 }
 
 liferay {

@@ -9,7 +9,7 @@ dependencies {
 	provided group: "joda-time", name: "joda-time", version: "1.6"
 	provided group: "org.apache.httpcomponents", name: "httpcore", version: "4.0.1"
 	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	provided project(":portal-security:portal-security-service-access-policy-api")
+	provided project(":apps:platform:portal-security:portal-security-service-access-policy-api")
 }
 
 liferay {

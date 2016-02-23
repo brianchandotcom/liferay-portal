@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Users Admin Web
+Bundle-SymbolicName: com.liferay.users.admin.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.users.admin.web.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /users-admin-web
+-include: ../../../../../marketplace/platform/bnd.bnd

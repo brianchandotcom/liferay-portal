@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal Scripting BeanShell
+Bundle-SymbolicName: com.liferay.portal.scripting.beanshell
+Bundle-Version: 1.0.0
+DynamicImport-Package: *
+Import-Package:\
+	!org.apache.bsf.*,\
+	*
+Include-Resource: @lib/bsh.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Scripting Engines
+-include: ../../../../../marketplace/platform/bnd.bnd

@@ -8,7 +8,7 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-api")
 	provided project(":apps:collaboration:flags:flags-service")
 	provided project(":apps:collaboration:flags:flags-taglib")
-	provided project(":portal:portal-upgrade")
+	provided project(":apps:platform:portal:portal-upgrade")
 }
 
 liferay {

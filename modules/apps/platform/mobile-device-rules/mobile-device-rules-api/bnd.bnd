@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Mobile Device Rules API
+Bundle-SymbolicName: com.liferay.mobile.device.rules.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.mobile.device.rules.action,\
+	com.liferay.mobile.device.rules.constants,\
+	com.liferay.mobile.device.rules.exception,\
+	com.liferay.mobile.device.rules.model,\
+	com.liferay.mobile.device.rules.rule,\
+	com.liferay.mobile.device.rules.service,\
+	com.liferay.mobile.device.rules.service.*,\
+	com.liferay.mobile.device.rules.util,\
+	com.liferay.mobile.device.rules.util.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/web-content-management/bnd.bnd

@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Security SSO Token
+Bundle-SymbolicName: com.liferay.portal.security.sso.token
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.token.constants.*;version=${plugin.full.version},\
+	com.liferay.portal.security.sso.token.events.*;version=${plugin.full.version},\
+	com.liferay.portal.security.sso.token.security.auth.*;version=${plugin.full.version}
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks
+-include: ../../../../../marketplace/platform/bnd.bnd

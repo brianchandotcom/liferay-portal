@@ -11,10 +11,10 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-taglib")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:message-boards:message-boards-service")
+	provided project(":apps:platform:frontend:frontend-taglib")
+	provided project(":apps:platform:portal:portal-upgrade")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
 	provided project(":apps:web-experience-management:trash:trash-taglib")
-	provided project(":frontend:frontend-taglib")
-	provided project(":portal:portal-upgrade")
 }
 
 liferay {

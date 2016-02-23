@@ -4,8 +4,8 @@ dependencies {
 	provided project(":apps:business-productivity:polls:polls-api")
 	provided project(":apps:collaboration:message-boards:message-boards-web")
 	provided project(":apps:collaboration:social:social-user-statistics-web")
+	provided project(":apps:platform:portal:portal-instance-lifecycle")
 	provided project(":apps:web-experience-management:layout:layout-set-prototype-api")
-	provided project(":portal:portal-instance-lifecycle")
 }
 
 liferay {

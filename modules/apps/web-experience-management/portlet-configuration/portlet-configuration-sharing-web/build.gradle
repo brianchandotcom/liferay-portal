@@ -6,7 +6,7 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided project(":portal:portal-upgrade")
+	provided project(":apps:platform:portal:portal-upgrade")
 }
 
 liferay {

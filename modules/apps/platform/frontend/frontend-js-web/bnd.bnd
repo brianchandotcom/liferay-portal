@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Frontend JS Web
+Bundle-SymbolicName: com.liferay.frontend.js.web
+Bundle-Version: 1.0.0
+Include-Resource: META-INF/resources=tmp/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+Provide-Capability: osgi.extender;osgi.extender="liferay.js";version:Version="${plugin.full.version}"
+Web-ContextPath: /frontend-js-web
+-donotcopy: (\.touch|.*_diffs.*)
+-include: ../../../../../marketplace/platform/bnd.bnd

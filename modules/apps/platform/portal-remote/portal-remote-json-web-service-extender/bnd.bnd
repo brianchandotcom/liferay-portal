@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Remote JSON Web Service Extender
+Bundle-SymbolicName: com.liferay.portal.remote.json.web.service.extender
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Remote Service Engines
+Private-Package: com.liferay.portal.remote.json.web.service.extender.internal
+-include: ../../../../../marketplace/platform/bnd.bnd

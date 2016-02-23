@@ -57,8 +57,8 @@ dependencies {
 	provided group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "3.2.15.RELEASE"
+	provided project(":apps:platform:osgi-service-tracker-collections")
 	provided project(":core:jaxws-osgi-bridge")
-	provided project(":core:osgi-service-tracker-collections")
 	provided project(":core:portal-app-license-api")
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")

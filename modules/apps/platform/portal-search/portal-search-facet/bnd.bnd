@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Search Facet
+Bundle-SymbolicName: com.liferay.portal.search.facet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.search.facet.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../../marketplace/platform/bnd.bnd

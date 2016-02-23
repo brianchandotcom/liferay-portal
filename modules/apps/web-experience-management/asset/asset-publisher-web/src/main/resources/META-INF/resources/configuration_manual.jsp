@@ -42,7 +42,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 				<%= selectScope %>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="model.resource.com.liferay.asset.kernel">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="model.resource.com.liferay.asset">
 
 				<%
 				List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);

@@ -32,33 +32,33 @@
 					<span class="icon-bar"></span>
 				</button>
 
-				<div class="navbar-header navbar-header-left-xs">
-					<div class="site-name" title="#language_format ("go-to-x", [$site_name])">
-						${layout_set_title}
-					</div>
-				</div>
-
 				<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
 
-				<nav class="hidden-xs text-center user-personal-bar">
-					<ul class="nav navbar-nav navbar-right">
+				<nav class="user-personal-bar">
+					<ul class="nav navbar-nav pull-right">
 						<@liferay.user_personal_bar />
 					</ul>
 				<nav>
 
 				<#assign VOID = freeMarkerPortletPreferences.reset()>
+
+				<div class="navbar-header navbar-header-left-xs">
+					<div class="site-name" title="#language_format ("go-to-x", [$site_name])">
+						${layout_set_title}
+					</div>
+				</div>
 			</div>
 
 		</div>
 	</header>
 
-	<aside class="${firstColumnClass}" id="userCard">
+	<aside class="col-md-12" id="userCard">
 		<div class="collapse navbar-collapse panel" id="navigationCollapse">
 			<#include "${full_templates_path}/navigation.ftl" />
 		</div>
 	</aside>
 
-	<section class="${secondColumnClass}" id="content">
+	<section class="col-md-12" id="content">
 		<div class="panel">
 			<#if selectable>
 				<@liferay_util["include"] page=content_include />

@@ -59,23 +59,6 @@ body {
 	}
 }
 
-.user-card-horizontal {
-	#userCard .user-container {
-		@include sm {
-			margin-bottom: 20px;
-			padding: 20px;
-		}
-	}
-
-	.navbar-blank {
-		float: none;
-
-		> li {
-			float: none;
-		}
-	}
-}
-
 #wrapper {
 	padding: 0;
 
@@ -101,6 +84,14 @@ body {
 		}
 
 		.user-personal-bar {
+			> ul {
+				margin: 18px 0;
+
+				@include sm {
+					margin: 14px 8px;
+				}
+			}
+
 			.user-full-name, .icon-caret-down {
 				display: none;
 			}

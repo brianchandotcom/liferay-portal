@@ -3,7 +3,7 @@
 
 	<div class="aspect-ratio-bg-cover text-center user-container">
 		<div class="user-info">
-			<div class="aspect-ratio-bg-cover user-icon ${userIconSize}" ${main_menu_style}></div>
+			<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
 
 			<div class="h3">${user_name}</div>
 

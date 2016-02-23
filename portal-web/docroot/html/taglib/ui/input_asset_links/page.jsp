@@ -25,7 +25,7 @@
 </liferay-util:buffer>
 
 <p class="text-muted <%= (inputAssetLinksDisplayContext.getAssetLinksCount() <= 0) ? StringPool.BLANK : "hide" %>" id="<%= inputAssetLinksDisplayContext.getRandomNamespace() + "emptyResultMessage" %>">
-	<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+	<%= StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "none")) %>
 </p>
 
 <liferay-ui:search-container

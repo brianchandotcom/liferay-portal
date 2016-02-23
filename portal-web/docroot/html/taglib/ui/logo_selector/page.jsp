@@ -61,7 +61,7 @@ else {
 
 				<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
 					<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
-						<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
+						<%= StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "none")) %>
 					</p>
 				</c:if>
 

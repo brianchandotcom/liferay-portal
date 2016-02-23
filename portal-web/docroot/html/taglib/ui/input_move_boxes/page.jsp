@@ -21,8 +21,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-move-boxes:cssClass"));
 
-String leftTitle = LanguageUtil.get(request, (String)request.getAttribute("liferay-ui:input-move-boxes:leftTitle"));
-String rightTitle = LanguageUtil.get(request, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
+String leftTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute("liferay-ui:input-move-boxes:leftTitle"));
+String rightTitle = LanguageUtil.get(resourceBundle, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
 
 String leftBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:leftBoxName");
 String rightBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:rightBoxName");

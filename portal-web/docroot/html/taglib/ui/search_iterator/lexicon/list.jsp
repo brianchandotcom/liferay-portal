@@ -95,7 +95,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 					String headerNameValue = null;
 
 					if ((rowChecker == null) || (i > 0)) {
-						headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
+						headerNameValue = LanguageUtil.get(resourceBundle, HtmlUtil.escape(headerName));
 					}
 					else {
 						headerNameValue = headerName;

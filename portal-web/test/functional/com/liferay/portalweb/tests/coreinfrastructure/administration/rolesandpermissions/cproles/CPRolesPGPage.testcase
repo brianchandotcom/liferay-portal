@@ -18,7 +18,7 @@
 		</if>
 	</tear-down>
 
-	<command name="RemoveNoGuestInlineView" priority="4">
+	<command name="RemoveNoGuestInlineView" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PermissionsInline#gotoPagePG">

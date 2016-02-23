@@ -35,7 +35,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddDMDocumentRegRole" priority="4">
+	<command name="AddDMDocumentRegRole" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">

@@ -157,7 +157,7 @@ AUI.add(
 					},
 
 					_onClickBoundingBox: function(event) {
-						if (event.target.test('.close')) {
+						if (event.target.ancestor('.close', true, '.liferayalert')) {
 							this._ignoreHideDelay = true;
 
 							this.hide();

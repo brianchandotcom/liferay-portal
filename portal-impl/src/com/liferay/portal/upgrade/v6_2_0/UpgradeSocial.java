@@ -562,9 +562,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, companyId);
-
 				ps.setLong(2, groupId);
-
 				ps.setLong(3, classPK);
 			}
 
@@ -844,11 +842,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				throws SQLException {
 
 				ps.setLong(1, companyId);
-
 				ps.setLong(2, groupId);
-
 				ps.setLong(3, classPK);
-
 				ps.setBoolean(4, true);
 			}
 

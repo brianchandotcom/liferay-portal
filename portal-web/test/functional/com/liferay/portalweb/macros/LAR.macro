@@ -264,7 +264,7 @@
 			</then>
 		</if>
 
-		<execute macro="ProductMenu#gotoSitesPublishingTools">
+		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Export" />
 		</execute>
 	</command>
@@ -279,7 +279,7 @@
 			</then>
 		</if>
 
-		<execute macro="ProductMenu#gotoSitesPublishingTools">
+		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Import" />
 		</execute>
 	</command>

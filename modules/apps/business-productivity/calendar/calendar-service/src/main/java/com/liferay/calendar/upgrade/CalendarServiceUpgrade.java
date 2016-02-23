@@ -19,7 +19,6 @@ import com.liferay.calendar.upgrade.v1_0_3.UpgradeCalendarResource;
 import com.liferay.calendar.upgrade.v1_0_3.UpgradeClassNames;
 import com.liferay.calendar.upgrade.v1_0_3.UpgradeCompanyId;
 import com.liferay.calendar.upgrade.v1_0_3.UpgradeLastPublishDate;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -72,11 +71,6 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

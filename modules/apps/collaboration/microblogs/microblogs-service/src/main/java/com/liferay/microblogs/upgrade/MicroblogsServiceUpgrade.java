@@ -16,11 +16,9 @@ package com.liferay.microblogs.upgrade;
 
 import com.liferay.microblogs.upgrade.v1_0_1.UpgradeUserNotificationEvent;
 import com.liferay.microblogs.upgrade.v1_0_2.UpgradeSocial;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -43,11 +41,6 @@ public class MicroblogsServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.microblogs.service", "1.0.1", "1.0.2",
 			new com.liferay.microblogs.upgrade.v1_0_2.UpgradeMicroblogsEntry(),
 			new UpgradeSocial());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

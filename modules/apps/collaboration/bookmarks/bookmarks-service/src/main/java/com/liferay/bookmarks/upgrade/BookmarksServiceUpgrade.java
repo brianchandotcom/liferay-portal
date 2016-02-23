@@ -18,7 +18,6 @@ import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -34,15 +33,17 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.bookmarks.service", "0.0.1", "1.0.0",
-			new UpgradeClassNames(), new UpgradePortletId(),
+			"com.liferay.bookmarks.service", "0.0.1", "0.0.2",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.bookmarks.service", "0.0.2", "0.0.3",
+			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.bookmarks.service", "0.0.3", "1.0.0",
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory));
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

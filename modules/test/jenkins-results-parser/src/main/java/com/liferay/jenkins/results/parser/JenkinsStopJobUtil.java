@@ -33,9 +33,18 @@ public class JenkinsStopJobUtil {
 			String jobURL, String username, String password)
 		throws Exception {
 
-		_stopJob(jobURL, username, password);
-
 		_stopDownstreamJobs(jobURL, username, password);
+
+		_stopJob(jobURL, username, password);
+	}
+
+	public static void stopJenkinsJob(
+			TopLevelJob topLevelJob, String username, String password)
+		throws Exception {
+
+		stopDownstreamJobs(topLevelJob, username, password);
+
+		stopJob(topLevelJob, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -82,8 +91,26 @@ public class JenkinsStopJobUtil {
 		}
 	}
 
+	private static void _stopDownstreamJobs(
+			TopLevelJob topLevelJob, String username, String password)
+		throws Exception {
+
+		List<DownstreamJob> downstreamJobs = topLevelJob.getDownstreamJobs(
+			"running");
+
+		for (DownstreamJob downstreamJob : downstreamJobs) {
+			stopJob(downstreamJob, username, password);
+		}
+	}
+
 	private static void _stopJob(
-			String jobURL, String username, String password)
+			BaseJob baseJob, String username, String password)
+		throws Exception {
+
+		stopJob(baseJob.getBuildURL(), username, password);
+	}
+
+	private static void stopJob(String jobURL, String username, String password)
 		throws Exception {
 
 		URL urlObject = new URL(

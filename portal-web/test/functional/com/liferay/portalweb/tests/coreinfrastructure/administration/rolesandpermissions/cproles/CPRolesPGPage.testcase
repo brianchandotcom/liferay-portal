@@ -19,6 +19,8 @@
 	</tear-down>
 
 	<command name="RemoveNoGuestInlineView" priority="4">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Welcome" />
 		</execute>

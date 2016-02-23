@@ -36,6 +36,8 @@
 	</tear-down>
 
 	<command name="AddDMDocumentRegRole" priority="4">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="portletName" value="Documents and Media" />

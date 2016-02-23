@@ -51,9 +51,22 @@
 		var rowSelector = '<%= rowHtmlTag %><%= rowCheckerRowSelector %>';
 
 		<c:if test="<%= rowChecker != null %>">
+
+		<%
+		boolean rowCheckerKeepSelection = rowChecker.getKeepSelection();
+		String rowCheckerKeepSelectionURLRegex = rowChecker.getKeepSelectionURLRegex();
+		%>
+
+			var keepSelection = <%= rowCheckerKeepSelection %>;
+
+			<c:if test="<%= rowCheckerKeepSelection && Validator.isNotNull(rowCheckerKeepSelectionURLRegex) %>">
+				keepSelection = '<%= rowCheckerKeepSelectionURLRegex %>';
+			</c:if>
+
 			plugins.push(
 				{
 					cfg: {
+						keepSelection: keepSelection,
 						rowSelector: rowSelector
 					},
 					fn: A.Plugin.SearchContainerSelect

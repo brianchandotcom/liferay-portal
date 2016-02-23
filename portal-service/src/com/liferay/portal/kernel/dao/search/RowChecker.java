@@ -129,6 +129,14 @@ public class RowChecker {
 		return _rowSelector;
 	}
 
+	public boolean getKeepSelection() {
+		return _keepSelection;
+	}
+
+	public String getKeepSelectionURLRegex() {
+		return _keepSelectionURLRegex;
+	}
+
 	public String getValign() {
 		return _valign;
 	}
@@ -171,6 +179,14 @@ public class RowChecker {
 
 	public void setRowSelector(String rowSelector) {
 		_rowSelector = getNamespacedValue(rowSelector);
+	}
+
+	public void setKeepSelection(boolean keepSelection) {
+		_keepSelection = keepSelection;
+	}
+
+	public void setKeepSelectionURLRegex(String keepSelectionURLRegex) {
+		_keepSelectionURLRegex = keepSelectionURLRegex;
 	}
 
 	public void setValign(String valign) {
@@ -302,6 +318,8 @@ public class RowChecker {
 	private final PortletResponse _portletResponse;
 	private String _rowIds;
 	private String _rowSelector;
+	private boolean _keepSelection = true;
+	private String _keepSelectionURLRegex;
 	private String _valign = VALIGN;
 
 }

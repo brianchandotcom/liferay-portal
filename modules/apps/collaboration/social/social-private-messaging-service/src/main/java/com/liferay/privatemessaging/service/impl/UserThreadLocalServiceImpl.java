@@ -50,11 +50,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.portlet.PrivateMessagingPortlet;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
 import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
 import com.liferay.privatemessaging.util.PortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingConstants;
+import com.liferay.util.ContentUtil;
 
 import java.io.InputStream;
 
@@ -69,6 +69,7 @@ import javax.mail.internet.InternetAddress;
 /**
  * @author Scott Lee
  * @author Jonathan Lee
+ * @author Peter Fellwock
  */
 public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
@@ -395,18 +396,20 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			sender.getCompanyId());
 
 		InternetAddress from = new InternetAddress(company.getEmailAddress());
-
-		String subject = StringUtil.read(
-			PrivateMessagingPortlet.class.getResourceAsStream(
-				"dependencies/notification_message_subject.tmpl"));
+		
+		String subject = ContentUtil.get(
+			UserThreadLocalServiceImpl.class.getClassLoader(),
+			"com/liferay/privatemessaging/dependencies/" +
+			"notification_message_subject.tmpl");
 
 		subject = StringUtil.replace(
 			subject, new String[] {"[$COMPANY_NAME$]", "[$FROM_NAME$]"},
 			new String[] {company.getName(), sender.getFullName()});
 
-		String body = StringUtil.read(
-			PrivateMessagingPortlet.class.getResourceAsStream(
-				"dependencies/notification_message_body.tmpl"));
+		String body = ContentUtil.get(
+			UserThreadLocalServiceImpl.class.getClassLoader(),
+			"com/liferay/privatemessaging/dependencies/" +
+			"notification_message_body.tmpl");
 
 		long portraitId = sender.getPortraitId();
 		String tokenId = WebServerServletTokenUtil.getToken(

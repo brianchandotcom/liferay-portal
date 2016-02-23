@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', 'metal-uri/src/Uri', 'senna/src/globals/globals', '../util/Utils.es'], function (exports, _App2, _dom, _Uri, _globals, _Utils) {
+define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', 'senna/src/globals/globals', 'metal-uri/src/Uri', '../util/Utils.es'], function (exports, _App2, _dom, _globals, _Uri, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -9,9 +9,9 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _Uri2 = _interopRequireDefault(_Uri);
-
 	var _globals2 = _interopRequireDefault(_globals);
+
+	var _Uri2 = _interopRequireDefault(_Uri);
 
 	var _Utils2 = _interopRequireDefault(_Utils);
 

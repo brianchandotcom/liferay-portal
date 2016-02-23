@@ -153,6 +153,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			});
 
+		task.setDescription(
+			"Generates the " + liferayThemeJsonFile.getName() +
+				" file for this project.");
+
 		return task;
 	}
 

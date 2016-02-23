@@ -106,6 +106,10 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 			});
 
+		updatePropertiesTask.setDescription(
+			"Updates the Plugins SDK build properties with the workspace " +
+				"configuration.");
+
 		String userName = System.getProperty("user.name");
 
 		updatePropertiesTask.setPropertiesFile(

@@ -3574,6 +3574,22 @@ go]]></replacevalue>
 			</then>
 			<elseif>
 				<and>
+					<equals arg1="${database.type}" arg2="mariadb" />
+					<not>
+						<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />
+					</not>
+				</and>
+				<then>
+					<copy todir="${todir}">
+						<fileset
+							dir="lib/development"
+							includes="${jdbc.mariadb.driver}"
+						/>
+					</copy>
+				</then>
+			</elseif>
+			<elseif>
+				<and>
 					<equals arg1="${database.type}" arg2="mysql" />
 					<not>
 						<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />

@@ -10,6 +10,7 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided project(":apps:platform:portal-background-task:portal-background-task-api")
+	provided project(":apps:platform:portal-background-task:portal-background-task-service")
 	provided project(":apps:platform:portal:portal-upgrade")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 }

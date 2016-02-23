@@ -14,6 +14,10 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
+					readOnlyFields : {
+						value : []
+					},
+
 					evaluation: {
 						value: null
 					},

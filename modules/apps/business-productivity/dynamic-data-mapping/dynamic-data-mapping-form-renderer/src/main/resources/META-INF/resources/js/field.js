@@ -69,6 +69,7 @@ AUI.add(
 					},
 
 					readOnly: {
+						getter: '_getReadOnly',
 						value: false
 					},
 
@@ -488,6 +489,26 @@ AUI.add(
 						}
 
 						instance.addTarget(val);
+					},
+
+					_getReadOnly : function(value) {
+						var instance = this;
+
+						if (value) {
+							return value;
+						}
+						else {
+							var form = instance.getRoot();
+
+							var name = instance.get('name');
+
+							return AArray.some(
+								form.get('readOnlyFields'),
+								function(item) {
+									return item === name;
+								}
+							);
+						}
 					},
 
 					_valueContainer: function() {

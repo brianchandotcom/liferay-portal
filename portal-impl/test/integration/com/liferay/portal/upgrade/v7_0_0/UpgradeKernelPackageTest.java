@@ -30,6 +30,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -156,8 +160,15 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			oldValue = rs.getString(columnName);
 		}
 
+		List<Future<Void>> futures = new ArrayList<>(1);
+
 		upgradeTable(
-			tableName, columnName, getClassNames(), WildcardMode.SURROUND);
+			futures, tableName, columnName, getClassNames(),
+			WildcardMode.SURROUND);
+
+		for (Future<Void> future : futures) {
+			future.get();
+		}
 
 		String newValue = StringUtil.replace(
 			oldValue, _OLD_CLASS_NAME, _NEW_CLASS_NAME);

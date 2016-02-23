@@ -1400,13 +1400,6 @@
 		</execute>
 
 		<if>
-			<isset var="loginViaDockbar" />
-			<then>
-				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-			</then>
-		</if>
-
-		<if>
 			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute macro="User#logoutPG" />
@@ -1470,12 +1463,7 @@
 			</else>
 		</if>
 
-		<if>
-			<isset var="loginViaDockbar" />
-			<then>
-				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-			</then>
-		</if>
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<if>
 			<and>
@@ -1486,7 +1474,6 @@
 				<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 				<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 			</else>
 		</if>

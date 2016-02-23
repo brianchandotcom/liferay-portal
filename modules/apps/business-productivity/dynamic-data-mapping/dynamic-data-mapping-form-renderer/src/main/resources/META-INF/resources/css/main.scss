@@ -57,6 +57,10 @@
 		select.form-control[multiple] {
 			height: auto;
 		}
+
+		textarea {
+			overflow-y: hidden;
+		}
 	}
 
 	.lfr-ddm-form-page {

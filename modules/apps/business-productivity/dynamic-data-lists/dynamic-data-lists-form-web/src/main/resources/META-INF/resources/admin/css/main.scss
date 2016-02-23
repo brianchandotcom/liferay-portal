@@ -833,6 +833,10 @@ $horizontal-spacing: 35px;
 		font-size: 11px;
 	}
 
+	.form-control[readonly] {
+		background-color: transparent;
+	}
+
 	.lfr-ddm-form-field-container + .form-builder-field-list-add-container {
 		display: none;
 	}

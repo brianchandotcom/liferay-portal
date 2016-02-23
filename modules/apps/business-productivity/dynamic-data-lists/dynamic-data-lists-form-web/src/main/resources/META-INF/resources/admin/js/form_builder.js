@@ -2,8 +2,11 @@ AUI.add(
 	'liferay-ddl-form-builder',
 	function(A) {
 		var AArray = A.Array;
+
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
+
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
+
 		var Lang = A.Lang;
 
 		var CSS_FORM_BUILDER_TABS = A.getClassName('form', 'builder', 'tabs');
@@ -127,6 +130,8 @@ AUI.add(
 
 						var fieldType = instance.findTypeOfField(field);
 
+						field.setPrimaryButtonLabel(Liferay.Language.get('save'));
+
 						instance.showFieldSettingsPanel(
 							field,
 							Lang.sub(
@@ -179,10 +184,14 @@ AUI.add(
 
 						var fieldType = event.fieldType;
 
+						var field = instance.createField(fieldType);
+
 						instance.hideFieldsPanel();
 
+						field.setPrimaryButtonLabel(Liferay.Language.get('add'));
+
 						instance.showFieldSettingsPanel(
-							instance.createField(fieldType),
+							field,
 							Lang.sub(
 								Liferay.Language.get('add-x-field'),
 								[fieldType.get('label')]

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,9 +46,17 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Lee
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.PRIVATE_MESSAGING},
+	service = UserNotificationHandler.class
+)
 public class PrivateMessagingUserNotificationHandler
 	extends BaseUserNotificationHandler {
 

@@ -54,8 +54,6 @@ public class ClassNameLocalServiceImpl
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkClassNames() {
-		_classNames.clear();
-
 		List<ClassName> classNames = classNamePersistence.findAll();
 
 		for (ClassName className : classNames) {
@@ -141,6 +139,7 @@ public class ClassNameLocalServiceImpl
 
 	@Override
 	public void invalidate() {
+		_classNames.clear();
 	}
 
 	private static final Map<String, ClassName> _classNames =

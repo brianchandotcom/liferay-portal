@@ -2541,7 +2541,6 @@
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 	</command>
@@ -2594,7 +2593,6 @@
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 	</command>

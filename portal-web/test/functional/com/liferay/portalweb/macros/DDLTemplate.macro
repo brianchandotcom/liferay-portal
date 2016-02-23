@@ -166,7 +166,7 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
 	</command>

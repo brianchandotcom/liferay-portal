@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
@@ -51,30 +50,32 @@ public class WikiLinksEditorConfigContributor
 
 		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
 
-		if (Validator.isNotNull(toolbarsJSONObject)) {
+		if (toolbarsJSONObject != null) {
 			JSONObject stylesToolbarJSONObject =
 				toolbarsJSONObject.getJSONObject("styles");
 
-			if (Validator.isNotNull(stylesToolbarJSONObject)) {
+			if (stylesToolbarJSONObject != null) {
 				JSONArray selectionsJSONArray =
 					stylesToolbarJSONObject.getJSONArray("selections");
 
-				if (Validator.isNotNull(selectionsJSONArray)) {
+				if (selectionsJSONArray != null) {
 					for (int i = 0; i < selectionsJSONArray.length(); i++) {
-						JSONObject selection =
+						JSONObject selectionJSONObject =
 							selectionsJSONArray.getJSONObject(i);
 
-						JSONArray buttonsJSONArray = selection.getJSONArray(
-							"buttons");
+						JSONArray buttonsJSONArray =
+							selectionJSONObject.getJSONArray("buttons");
 
 						String buttonsString = StringUtil.replace(
 							buttonsJSONArray.toString(),
 							new String[] {"\"link\"", "\"linkEdit\""},
-							new String[] {getWikiLinkConfig(
-								"link"), getWikiLinkConfig("linkEdit")
+							new String[] {
+								getWikiLinkConfig("link"),
+								getWikiLinkConfig("linkEdit")
 							});
 
-						selection.put("buttons", toJSONArray(buttonsString));
+						selectionJSONObject.put(
+							"buttons", toJSONArray(buttonsString));
 					}
 				}
 			}

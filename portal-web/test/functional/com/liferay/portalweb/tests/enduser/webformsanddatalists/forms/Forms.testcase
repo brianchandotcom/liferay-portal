@@ -1018,7 +1018,7 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Form" />
+			<var name="fieldLabel" value="Status" />
 			<var name="fieldValue" value="Approved" />
 		</execute>
 

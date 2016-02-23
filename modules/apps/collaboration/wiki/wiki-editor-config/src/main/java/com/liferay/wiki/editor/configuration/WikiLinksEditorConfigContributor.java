@@ -17,10 +17,10 @@ package com.liferay.wiki.editor.configuration;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
@@ -66,24 +66,74 @@ public class WikiLinksEditorConfigContributor
 						JSONArray buttonsJSONArray =
 							selectionJSONObject.getJSONArray("buttons");
 
-						String buttonsString = StringUtil.replace(
-							buttonsJSONArray.toString(),
-							new String[] {"\"link\"", "\"linkEdit\""},
-							new String[] {
-								getWikiLinkConfig("link"),
-								getWikiLinkConfig("linkEdit")
-							});
-
 						selectionJSONObject.put(
-							"buttons", toJSONArray(buttonsString));
+							"buttons",
+							updateAppendProtocolConfiguration(
+								buttonsJSONArray));
 					}
 				}
 			}
 		}
 	}
 
-	protected String getWikiLinkConfig(String buttonName) {
-		return "{name: \"" + buttonName + "\", cfg: {appendProtocol: false}}";
+	protected JSONObject getWikiLinkButtonJSONObject(String buttonName) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("name", buttonName);
+
+		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		cfgJSONObject.put("appendProtocol", false);
+
+		jsonObject.put("cfg", cfgJSONObject);
+
+		return jsonObject;
+	}
+
+	protected JSONArray updateAppendProtocolConfiguration(
+		JSONArray buttonsJSONArray) {
+
+		JSONArray newButtonsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (int j = 0; j < buttonsJSONArray.length(); j++) {
+			JSONObject buttonJSONObject = buttonsJSONArray.getJSONObject(j);
+
+			if (buttonJSONObject == null) {
+				String buttonName = buttonsJSONArray.getString(j);
+
+				if (buttonName.equals("link") ||
+					buttonName.equals("linkEdit")) {
+
+					buttonJSONObject = getWikiLinkButtonJSONObject(buttonName);
+
+					newButtonsJSONArray.put(buttonJSONObject);
+				}
+				else {
+					newButtonsJSONArray.put(buttonName);
+				}
+			}
+			else {
+				String buttonName = buttonJSONObject.getString("name");
+
+				if (buttonName.equals("link") ||
+					buttonName.equals("linkEdit")) {
+
+					JSONObject config = buttonJSONObject.getJSONObject("cfg");
+
+					if (config == null) {
+						config = JSONFactoryUtil.createJSONObject();
+
+						buttonJSONObject.put("cfg", config);
+					}
+
+					config.put("appendProtocol", false);
+				}
+
+				newButtonsJSONArray.put(buttonJSONObject);
+			}
+		}
+
+		return newButtonsJSONArray;
 	}
 
 }

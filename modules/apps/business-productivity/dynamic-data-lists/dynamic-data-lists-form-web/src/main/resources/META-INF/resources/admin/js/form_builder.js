@@ -12,6 +12,8 @@ AUI.add(
 
 		var CSS_PAGES = A.getClassName('form', 'builder', 'pages', 'lexicon');
 
+		var TPL_REQURIED_FIELDS = '<label class="hide required-warning">{message}</label>';
+
 		var FormBuilder = A.Component.create(
 			{
 				ATTRS: {
@@ -74,7 +76,8 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 
 						instance._eventHandlers = [
-							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a')
+							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
+							instance.after('fieldsChange', instance._afterFieldsChange, instance)
 						];
 					},
 
@@ -85,6 +88,7 @@ AUI.add(
 
 						instance._renderFields();
 						instance._renderPages();
+						instance._renderRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
 					},
 
@@ -147,7 +151,14 @@ AUI.add(
 
 						FormBuilder.superclass._afterActivePageNumberChange.apply(instance, arguments);
 
+						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
+					},
+
+					_afterFieldsChange: function(event) {
+						var instance = this;
+
+						instance._syncRequiredFieldsWarning();
 					},
 
 					_afterLayoutColsChange: function(event) {
@@ -280,6 +291,26 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_renderRequiredFieldsWarning: function() {
+						var instance = this;
+
+						var pageManager = instance._getPageManagerInstance();
+
+						instance._requiredFieldsWarningNode = A.Node.create(
+							Lang.sub(
+								TPL_REQURIED_FIELDS,
+								{
+									message: Lang.sub(
+										Liferay.Language.get('all-fields-marked-with-x-are-required'),
+										['<i class="icon-asterisk text-warning"></i>']
+									)
+								}
+							)
+						);
+
+						instance._requiredFieldsWarningNode.appendTo(pageManager.get('pageHeader'));
+					},
+
 					_setFieldToolbarConfig: function() {
 						var instance = this;
 
@@ -305,6 +336,33 @@ AUI.add(
 								return !item.get('system');
 							}
 						);
+					},
+
+					_syncRequiredFieldsWarning: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						var hasRequiredField = false;
+
+						var visitor = instance.get('visitor');
+
+						visitor.set('pages', instance.get('layouts'));
+
+						visitor.set(
+							'fieldHandler',
+							function(field) {
+								var fieldVisible = boundingBox.contains(field.get('container'));
+
+								if (fieldVisible && field.get('required')) {
+									hasRequiredField = true;
+								}
+							}
+						);
+
+						visitor.visit();
+
+						instance._requiredFieldsWarningNode.toggle(hasRequiredField);
 					},
 
 					_syncRowLastColumnUI: function(row) {

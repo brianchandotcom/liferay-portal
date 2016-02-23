@@ -1,5 +1,3 @@
-apply plugin: "com.liferay.lang.merger"
-
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion

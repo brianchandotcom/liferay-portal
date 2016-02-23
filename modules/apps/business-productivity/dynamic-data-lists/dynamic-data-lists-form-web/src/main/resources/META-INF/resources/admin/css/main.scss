@@ -526,6 +526,13 @@ $horizontal-spacing: 35px;
 			resize: none;
 		}
 
+		.required-warning {
+			display: block;
+			font-weight: inherit;
+			margin: -15px 0 15px;
+			text-align: left;
+		}
+
 		.toggle-switch-text {
 			word-break: break-word;
 		}
@@ -776,11 +783,13 @@ $horizontal-spacing: 35px;
 		.form-builder-page-header-description,
 		.form-builder-page-header-title {
 			display: block;
+			height: auto;
 			overflow: hidden;
 			width: 100%;
 		}
 
 		.form-builder-page-header-description {
+			margin-top: -15px;
 			padding-top: 0;
 		}
 

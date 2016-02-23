@@ -261,7 +261,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing > ${portlet}">
+	<command name="gotoSitesPublishing" summary="Navigate to Product Menu > Sites > Publishing > ${portlet}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

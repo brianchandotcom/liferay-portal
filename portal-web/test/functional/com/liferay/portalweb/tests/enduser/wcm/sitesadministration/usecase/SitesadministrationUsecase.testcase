@@ -1113,7 +1113,7 @@
 
 		<execute function="Open" locator1="http://localhost:8080/web/russia2018" />
 
-		<execute macro="ProductMenu#gotoSitesPublishingTools">
+		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Export" />
 		</execute>
 

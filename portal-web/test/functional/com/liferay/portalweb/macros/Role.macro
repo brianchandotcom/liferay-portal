@@ -1,22 +1,22 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
-
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLE" value1="Organization Role" />
+				<execute function="AssertClick" locator1="NavBar#ORGANIZATION_ROLES" value1="Organization Roles" />
 			</then>
 			<elseif>
 				<equals arg1="${roleType}" arg2="Site" />
 				<then>
-					<execute function="AssertClick" locator1="MenuItem#SITE_ROLE" value1="Site Role" />
+					<execute function="AssertClick" locator1="NavBar#SITE_ROLES" value1="Site Roles" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLE" value1="Regular Role" />
+				<execute function="AssertClick" locator1="NavBar#REGULAR_ROLES" value1="Regular Roles" />
 			</else>
 		</if>
+
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${roleName}" />
 

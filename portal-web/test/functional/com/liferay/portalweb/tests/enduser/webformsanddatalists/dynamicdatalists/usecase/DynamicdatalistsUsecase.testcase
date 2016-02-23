@@ -1492,8 +1492,6 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute macro="DDLDataDefinition#selectFrame" />
-
 		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
 			<execute macro="DDLDataDefinition#viewName">
 				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

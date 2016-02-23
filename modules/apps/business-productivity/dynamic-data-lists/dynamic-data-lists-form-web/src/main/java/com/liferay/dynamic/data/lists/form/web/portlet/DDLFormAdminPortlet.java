@@ -36,6 +36,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
@@ -62,6 +64,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -148,7 +151,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		return ddmFormRenderingContext;
 	}
 
-	protected DDMForm createSettingsDDMForm(ThemeDisplay themeDisplay)
+	protected DDMForm createSettingsDDMForm(
+			long recordSetId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
@@ -159,6 +163,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
+		// Workflow definition
+
 		DDMFormField ddmFormField = ddmFormFieldsMap.get("workflowDefinition");
 
 		DDMFormFieldOptions ddmFormFieldOptions =
@@ -166,7 +172,50 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
+		// Storage type
+
+		ddmFormField = ddmFormFieldsMap.get("storageType");
+
+		if (recordSetId > 0) {
+			ddmFormField.setReadOnly(true);
+		}
+
+		ddmFormFieldOptions = createStorageTypeDDMFormFieldOptions(
+			themeDisplay);
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
 		return ddmForm;
+	}
+
+	protected DDMFormFieldOptions createStorageTypeDDMFormFieldOptions(
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Locale locale = themeDisplay.getLocale();
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.setDefaultLocale(locale);
+
+		StorageAdapter storageAdapter =
+			StorageAdapterRegistryUtil.getDefaultStorageAdapter();
+
+		String storageTypeDefault = storageAdapter.getStorageType();
+
+		ddmFormFieldOptions.addOptionLabel(
+			storageTypeDefault, locale, storageTypeDefault);
+
+		Set<String> storageTypes = StorageAdapterRegistryUtil.getStorageTypes();
+
+		for (String storageType : storageTypes) {
+			if (!storageType.equals(storageTypeDefault)) {
+				ddmFormFieldOptions.addOptionLabel(
+					storageType, locale, storageType);
+			}
+		}
+
+		return ddmFormFieldOptions;
 	}
 
 	protected DDMFormFieldOptions createWorkflowDefinitionDDMFormFieldOptions(
@@ -310,7 +359,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 
 		long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
 
-		DDMForm ddmForm = createSettingsDDMForm(themeDisplay);
+		DDMForm ddmForm = createSettingsDDMForm(recordSetId, themeDisplay);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(renderRequest, renderResponse);

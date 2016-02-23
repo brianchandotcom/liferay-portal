@@ -429,9 +429,20 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
+		portletInstanceModifiableSettings.reset();
+
 		portletInstanceModifiableSettings.setValues(archivedSettings);
 
 		portletInstanceModifiableSettings.store();
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
 	}
 
 	@Override

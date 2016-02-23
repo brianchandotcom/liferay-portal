@@ -37,6 +37,7 @@ public class BlogsAdminEditPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
+	@Override
 	public String getPortletName() {
 		return BlogsPortletKeys.BLOGS_ADMIN;
 	}

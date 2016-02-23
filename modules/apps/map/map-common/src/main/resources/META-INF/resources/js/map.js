@@ -253,10 +253,12 @@ AUI.add(
 							geojsonLayer.destroy();
 						}
 
-						var searchControl = instance._customControls[Base.CONTROLS.SEARCH];
+						if (instance._customControls) {
+							var searchControl = instance._customControls[Base.CONTROLS.SEARCH];
 
-						if (searchControl) {
-							searchControl.destroy();
+							if (searchControl) {
+								searchControl.destroy();
+							}
 						}
 
 						(new A.EventHandle(instance._eventHandles)).detach();

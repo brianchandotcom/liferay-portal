@@ -39,6 +39,39 @@ import org.gradle.internal.hash.HashValue;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
+	public static Set<File> flattenAndSort(Iterable<File> files, File rootDir)
+		throws IOException {
+
+		final Set<File> sortedFiles = new TreeSet<>(
+			new FileComparator(rootDir));
+
+		for (File file : files) {
+			if (file.isDirectory()) {
+				Files.walkFileTree(
+					file.toPath(),
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult visitFile(
+								Path path,
+								BasicFileAttributes basicFileAttributes)
+							throws IOException {
+
+							sortedFiles.add(path.toFile());
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
+			}
+			else {
+				sortedFiles.add(file);
+			}
+		}
+
+		return sortedFiles;
+	}
+
 	public static String getDigest(File file) {
 		String digest;
 
@@ -71,38 +104,6 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return digest;
 	}
 
-	public static Iterable<File> getFiles(File dir) throws IOException {
-		final Set<File> files = new TreeSet<>(new FileComparator(dir));
-
-		Files.walkFileTree(
-			dir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					files.add(path.toFile());
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		return files;
-	}
-
-	public static String getRelativePath(File file, File startFile) {
-		String relativePath = relativize(file, startFile);
-
-		if (File.separatorChar != '/') {
-			relativePath = relativePath.replace(File.separatorChar, '/');
-		}
-
-		return relativePath;
-	}
-
 	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 
 	private static class FileComparator implements Comparator<File> {
@@ -113,10 +114,20 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 		@Override
 		public int compare(File file1, File file2) {
-			String relativePath1 = FileUtil.getRelativePath(file1, _rootDir);
-			String relativePath2 = FileUtil.getRelativePath(file2, _rootDir);
+			String relativePath1 = _getRelativePath(file1);
+			String relativePath2 = _getRelativePath(file2);
 
 			return relativePath1.compareTo(relativePath2);
+		}
+
+		private String _getRelativePath(File file) {
+			String relativePath = relativize(file, _rootDir);
+
+			if (File.separatorChar != '/') {
+				relativePath = relativePath.replace(File.separatorChar, '/');
+			}
+
+			return relativePath;
 		}
 
 		private final File _rootDir;

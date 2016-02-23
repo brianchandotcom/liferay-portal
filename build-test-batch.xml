@@ -210,6 +210,18 @@ mysql.executable=${mysql.executable}]]></echo>
 				</then>
 			</if>
 
+			<if>
+				<equals arg1="@{database.type}" arg2="mariadb" />
+				<then>
+					<var name="mariadb.executable" unset="true" />
+
+					<property name="mariadb.executable" value="mariadb" />
+
+					<echo append="true" file="sql/sql.${env.HOSTNAME}.properties"><![CDATA[
+mariadb.executable=${mariadb.executable}]]></echo>
+				</then>
+			</if>
+
 			<database-test-action database.type="@{database.type}">
 				<action>
 					<exec executable="${database.service.executable}">

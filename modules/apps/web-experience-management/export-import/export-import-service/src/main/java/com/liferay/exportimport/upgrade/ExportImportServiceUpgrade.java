@@ -15,7 +15,9 @@
 package com.liferay.exportimport.upgrade;
 
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.upgrade.v1_0_0.UpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.upgrade.v1_0_0.UpgradePublisherRequest;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -43,6 +45,7 @@ public class ExportImportServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.exportimport.service", "0.0.1", "1.0.0",
+			new UpgradeBackgroundTaskExecutorClassNames(),
 			new UpgradePublisherRequest(
 				_exportImportConfigurationLocalService, _groupLocalService,
 				_schedulerEngineHelper, _userLocalService));
@@ -65,6 +68,13 @@ public class ExportImportServiceUpgrade implements UpgradeStepRegistrator {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.background.task.service)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference(unbind = "-")

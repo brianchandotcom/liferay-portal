@@ -6366,9 +6366,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						</then>
 					</elseif>
 					<elseif>
-						<equals arg1="${database.type}" arg2="mysql" />
+						<or>
+							<equals arg1="${database.type}" arg2="mariadb" />
+							<equals arg1="${database.type}" arg2="mysql" />
+						</or>
 						<then>
-							<var name="mysql.arg.line" unset="true" />
+							<var name="arg.line" unset="true" />
 
 							<get-database-property property.name="database.password" />
 							<get-database-property property.name="database.username" />
@@ -6379,27 +6382,29 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									<equals arg1="${database.username}" arg2="" />
 								</and>
 								<then>
-									<var name="mysql.arg.line" value="" />
+									<var name="arg.line" value="" />
 								</then>
 								<elseif>
 									<equals arg1="${database.password}" arg2="" />
 									<then>
-										<var name="mysql.arg.line" value="-u ${database.username}" />
+										<var name="arg.line" value="-u ${database.username}" />
 									</then>
 								</elseif>
 								<elseif>
 									<equals arg1="${database.username}" arg2="" />
 									<then>
-										<var name="mysql.arg.line" value="-p${database.password}" />
+										<var name="arg.line" value="-p${database.password}" />
 									</then>
 								</elseif>
 								<else>
-									<var name="mysql.arg.line" value="-p${database.password} -u ${database.username}" />
+									<var name="arg.line" value="-p${database.password} -u ${database.username}" />
 								</else>
 							</if>
 
-							<exec executable="${mysql.executable}" input="create.sql" failonerror="true">
-								<arg line="${mysql.arg.line}" />
+							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
+
+							<exec executable="${database.executable}" input="create.sql" failonerror="true">
+								<arg line="${arg.line}" />
 							</exec>
 						</then>
 					</elseif>

@@ -133,11 +133,11 @@
 	</command>
 
 	<command name="saveWithoutFormName">
-		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertElementPresent" locator1="Form#SAVE_BUTTON_DISABLED" value1="Save" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DISABLED" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid form name." />
+		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewFormName">

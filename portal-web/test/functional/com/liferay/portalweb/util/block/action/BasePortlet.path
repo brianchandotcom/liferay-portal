@@ -151,7 +151,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//a[contains(@id,'_menu_export-import')]</td>
+	<td>//a[contains(@id,'_menu_export') and contains(@id,'import')]</td>
 	<td></td>
 </tr>
 <tr>

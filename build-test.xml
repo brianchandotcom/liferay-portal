@@ -3035,7 +3035,16 @@ create database lportal${database.index} character set utf8;</echo>
 								</if>
 
 								<property name="sql.dir" value="sql\create${database.create.suffix}\" />
-								<property name="sql.file" value="create${database.create.suffix}-${database.type}.sql" />
+
+								<if>
+									<equals arg1="${database.type}" arg2="mariadb" />
+									<then>
+										<property name="sql.file" value="create${database.create.suffix}-mysql.sql" />
+									</then>
+									<else>
+										<property name="sql.file" value="create${database.create.suffix}-${database.type}.sql" />
+									</else>
+								</if>
 							</then>
 						</if>
 

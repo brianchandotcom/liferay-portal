@@ -13,7 +13,7 @@ AUI.add(
 
 					closeableNode: {
 						valueFn: function() {
-							return A.Node.create('<button type="button" class="close"><svg class="lexicon-icon icon-monospaced"><use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /></svg></button>');
+							return A.Node.create('<button class="close" type="button">' + Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced') + '</button>');
 						}
 					},
 

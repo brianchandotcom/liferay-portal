@@ -32,12 +32,24 @@ import org.json.JSONObject;
  */
 public class JenkinsPerformanceDataUtil {
 
+	public static int getSlaveCount() {
+		return _slaveCount;
+	}
+
 	public static List<Result> getSlowestResults() {
 		if (_broken) {
 			return null;
 		}
 
 		return _results;
+	}
+
+	public static int getTestCount() {
+		return _testCount;
+	}
+
+	public static long getTotalDuration() {
+		return _totalDuration;
 	}
 
 	public static void processPerformanceData(
@@ -55,7 +67,12 @@ public class JenkinsPerformanceDataUtil {
 					JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
 					false);
 
-				_results.add(new Result(jobName, jsonObject));
+				Result result = new Result(jobName, jsonObject);
+
+				_slaveCount++;
+				_totalDuration += result.getDuration();
+
+				_results.add(result);
 
 				Collections.sort(_results);
 
@@ -78,7 +95,12 @@ public class JenkinsPerformanceDataUtil {
 						JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
 						false);
 
-					_results.add(new Result(jobName, jsonObject));
+					Result result = new Result(jobName, jsonObject);
+
+					_results.add(result);
+
+					_slaveCount++;
+					_totalDuration += result.getDuration();
 
 					break;
 				}
@@ -120,8 +142,10 @@ public class JenkinsPerformanceDataUtil {
 
 	public static void reset() {
 		_broken = false;
-
 		_results.clear();
+		_slaveCount = 0;
+		_testCount = 0;
+		_totalDuration = 0;
 	}
 
 	public static class Result implements Comparable<Result> {
@@ -258,6 +282,8 @@ public class JenkinsPerformanceDataUtil {
 			"childReports");
 
 		for (int i = 0; i < childReportsJSONArray.length(); i++) {
+			_slaveCount++;
+
 			JSONObject childReportJSONObject =
 				childReportsJSONArray.getJSONObject(i);
 
@@ -281,6 +307,8 @@ public class JenkinsPerformanceDataUtil {
 			JSONObject childResultJSONObject =
 				childReportJSONObject.getJSONObject("result");
 
+			_totalDuration += childResultJSONObject.getInt("duration");
+
 			JSONArray suitesJSONArray = childResultJSONObject.getJSONArray(
 				"suites");
 
@@ -291,6 +319,8 @@ public class JenkinsPerformanceDataUtil {
 					"cases");
 
 				for (int k = 0; k < casesJSONArray.length(); k++) {
+					_testCount++;
+
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
 					Result result = new Result(
@@ -320,5 +350,8 @@ public class JenkinsPerformanceDataUtil {
 
 	private static boolean _broken;
 	private static final List<Result> _results = new ArrayList<>();
+	private static int _slaveCount = 0;
+	private static int _testCount = 0;
+	private static long _totalDuration = 0;
 
 }

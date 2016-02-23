@@ -37,7 +37,8 @@ define("frontend-js-spa-web@1.0.0/liferay/init.es", ['exports', './screen/Action
 	}, {
 		handler: _RenderURLScreen2.default,
 		path: function path(url) {
-			if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+			if (url.indexOf(themeDisplay.getPathMain()) === 0 || url.indexOf('/documents') === 0 || url.indexOf('/image') === 0) {
+
 				return false;
 			}
 

@@ -29,8 +29,6 @@
 
 				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closePanelAdd" %>' image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
-
-			<div class="loading-animation"></div>
 		</div>
 	</div>
 
@@ -38,6 +36,13 @@
 		var addToggle = $('#<%= portletNamespace %>addToggleId');
 
 		addToggle.sideNavigation();
+
+		A.one('#<%= portletNamespace %>closePanelAdd').on(
+			'click',
+			function(event) {
+				addToggle.sideNavigation('hide');
+			}
+		);
 
 		Liferay.once(
 			'screenLoad',
@@ -47,22 +52,6 @@
 				if (sideNavigation) {
 					sideNavigation.destroy();
 				}
-			}
-		);
-
-		var addPanel = $('#<%= portletNamespace %>addPanelId');
-
-		addPanel.on(
-			'urlLoaded.lexicon.sidenav',
-			function() {
-				addPanel.find('.loading-animation').remove();
-			}
-		);
-
-		A.one('#<%= portletNamespace %>closePanelAdd').on(
-			'click',
-			function(event) {
-				addToggle.sideNavigation('hide');
 			}
 		);
 	</aui:script>

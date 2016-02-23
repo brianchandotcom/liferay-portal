@@ -37,7 +37,7 @@ public class UsersAdminBrowsePortletProvider
 	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 

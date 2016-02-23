@@ -32,7 +32,7 @@ public class LayoutAdminEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return LayoutAdminPortletKeys.GROUP_PAGES;
 	}
 

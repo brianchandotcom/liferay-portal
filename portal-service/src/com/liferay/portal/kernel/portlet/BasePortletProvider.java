@@ -50,12 +50,12 @@ public abstract class BasePortletProvider implements PortletProvider {
 
 		if (plid == controlPanelPlid) {
 			return PortalUtil.getControlPanelPortletURL(
-				request, group, getPortletId(), 0, 0,
+				request, group, getPortletName(), 0, 0,
 				PortletRequest.RENDER_PHASE);
 		}
 		else {
 			return PortletURLFactoryUtil.create(
-				request, getPortletId(), plid, PortletRequest.RENDER_PHASE);
+				request, getPortletName(), plid, PortletRequest.RENDER_PHASE);
 		}
 	}
 

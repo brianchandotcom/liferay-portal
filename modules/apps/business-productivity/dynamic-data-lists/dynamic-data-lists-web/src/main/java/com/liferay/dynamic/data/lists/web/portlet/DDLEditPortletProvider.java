@@ -32,7 +32,7 @@ public class DDLEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
 

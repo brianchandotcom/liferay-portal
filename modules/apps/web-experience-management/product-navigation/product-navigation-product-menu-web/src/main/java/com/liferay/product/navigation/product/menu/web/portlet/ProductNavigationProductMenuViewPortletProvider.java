@@ -35,7 +35,7 @@ public class ProductNavigationProductMenuViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return ProductNavigationProductMenuPortletKeys.
 			PRODUCT_NAVIGATION_PRODUCT_MENU;
 	}

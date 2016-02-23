@@ -36,7 +36,7 @@ public class SiteNavigationBreadcrumbEntryViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB;
 	}
 

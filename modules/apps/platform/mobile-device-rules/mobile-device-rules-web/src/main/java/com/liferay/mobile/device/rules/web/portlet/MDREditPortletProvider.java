@@ -34,7 +34,7 @@ public class MDREditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return MDRPortletKeys.MOBILE_DEVICE_RULES;
 	}
 

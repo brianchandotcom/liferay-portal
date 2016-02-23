@@ -32,7 +32,7 @@ public class CommentViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return CommentPortletKeys.COMMENT;
 	}
 

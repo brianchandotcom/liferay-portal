@@ -42,7 +42,7 @@ public class DDLDisplayAddPortletProvider
 	extends BasePortletProvider implements AddPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
 	}
 

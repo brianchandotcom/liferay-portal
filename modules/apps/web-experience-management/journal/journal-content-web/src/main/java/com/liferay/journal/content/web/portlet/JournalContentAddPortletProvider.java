@@ -44,7 +44,7 @@ public class JournalContentAddPortletProvider
 	extends BasePortletProvider implements AddPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return JournalContentPortletKeys.JOURNAL_CONTENT;
 	}
 

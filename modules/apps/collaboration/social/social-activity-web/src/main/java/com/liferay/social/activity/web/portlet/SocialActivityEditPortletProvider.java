@@ -35,7 +35,7 @@ public class SocialActivityEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SocialActivityPortletKeys.SOCIAL_ACTIVITY;
 	}
 

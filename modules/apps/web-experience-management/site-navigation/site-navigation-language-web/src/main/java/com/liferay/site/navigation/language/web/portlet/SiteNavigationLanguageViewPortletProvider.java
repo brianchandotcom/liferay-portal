@@ -36,7 +36,7 @@ public class SiteNavigationLanguageViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
 	}
 

@@ -32,7 +32,7 @@ public class DDMDataProviderEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
 	}
 

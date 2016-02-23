@@ -36,7 +36,7 @@ public class PortletConfigurationViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return PortletConfigurationPortletKeys.PORTLET_CONFIGURATION;
 	}
 

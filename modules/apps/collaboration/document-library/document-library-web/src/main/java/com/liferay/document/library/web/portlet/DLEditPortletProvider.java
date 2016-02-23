@@ -41,7 +41,7 @@ public class DLEditPortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 

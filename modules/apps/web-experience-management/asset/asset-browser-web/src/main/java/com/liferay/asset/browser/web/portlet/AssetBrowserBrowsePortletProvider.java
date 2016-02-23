@@ -32,7 +32,7 @@ public class AssetBrowserBrowsePortletProvider
 	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return AssetBrowserPortletKeys.ASSET_BROWSER;
 	}
 

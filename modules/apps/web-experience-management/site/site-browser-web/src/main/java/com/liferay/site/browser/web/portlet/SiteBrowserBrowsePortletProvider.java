@@ -32,7 +32,7 @@ public class SiteBrowserBrowsePortletProvider
 	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
-	public String getPortletId() {
+	public String getPortletName() {
 		return SiteBrowserPortletKeys.SITE_BROWSER;
 	}
 

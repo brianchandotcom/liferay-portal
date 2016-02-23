@@ -202,7 +202,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 					ConfigurableFileCollection configurableFileCollection =
 						project.files(getWarFile(project));
 
-					configurableFileCollection.builtBy(_GULP_DEPLOY_TASK_NAME);
+					configurableFileCollection.builtBy(_GULP_BUILD_TASK_NAME);
 
 					copySpec.from(configurableFileCollection);
 				}

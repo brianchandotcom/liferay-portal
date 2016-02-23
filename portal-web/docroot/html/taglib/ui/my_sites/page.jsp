@@ -120,14 +120,14 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, max);
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(request, "my-profile");
+										siteName = LanguageUtil.get(resourceBundle, "my-profile");
 									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);
 									}
 
 									if (showPublicSiteStaging) {
-										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(request, "staging"));
+										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(resourceBundle, "staging"));
 									}
 
 									if ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
@@ -161,14 +161,14 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, max);
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(request, "my-dashboard");
+										siteName = LanguageUtil.get(resourceBundle, "my-dashboard");
 									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);
 									}
 
 									if (showPrivateSiteStaging) {
-										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(request, "staging"));
+										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(resourceBundle, "staging"));
 									}
 
 									if ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {

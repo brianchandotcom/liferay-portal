@@ -23,7 +23,7 @@ String targetNode = (String)request.getAttribute("liferay-ui:success:targetNode"
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:success:translateMessage"));
 
 if (translateMessage) {
-	message = LanguageUtil.get(request, message);
+	message = LanguageUtil.get(resourceBundle, message);
 }
 %>
 

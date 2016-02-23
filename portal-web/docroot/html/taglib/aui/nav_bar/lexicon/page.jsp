@@ -24,7 +24,7 @@
 					<button class="<%= (navItemCount.getValue() > 1) ? "collapsed" : StringPool.BLANK %> navbar-toggle navbar-toggle-left navbar-toggle-page-name" data-target="<%= (navItemCount.getValue() > 1) ? "#" + namespace + "navTagNavbarCollapse" : StringPool.BLANK %>" data-toggle="<%= (navItemCount.getValue() > 1) ? "collapse" : StringPool.BLANK %>" id="<%= namespace %>navTagNavbarBtn" type="button">
 						<span class="sr-only"><liferay-ui:message key="toggle-navigation" /></span>
 
-						<span class="page-name"><%= LanguageUtil.get(request, selectedItemName) %></span>
+						<span class="page-name"><%= LanguageUtil.get(resourceBundle, selectedItemName) %></span>
 
 						<c:if test="<%= navItemCount.getValue() > 1 %>">
 							<span class="caret"></span>

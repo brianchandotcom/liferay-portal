@@ -26,7 +26,7 @@ if (bodyContent != null) {
 }
 
 if (Validator.isNull(title)) {
-	title = HtmlUtil.stripHtml(LanguageUtil.get(request, label));
+	title = HtmlUtil.stripHtml(LanguageUtil.get(resourceBundle, label));
 }
 %>
 

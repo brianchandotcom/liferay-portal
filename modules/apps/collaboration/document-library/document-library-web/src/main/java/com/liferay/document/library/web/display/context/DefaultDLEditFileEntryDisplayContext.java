@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.display.context;
 
-import com.liferay.document.library.kernel.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLFilePicker;
+import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;

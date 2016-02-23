@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
+package com.liferay.document.library.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.portal.kernel.display.context.BaseDisplayContextFactory;
+import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -26,46 +26,30 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseDLDisplayContextFactory
-	extends BaseDisplayContextFactory implements DLDisplayContextFactory {
+public interface DLDisplayContextFactory extends DisplayContextFactory {
 
-	@Override
-	public DLEditFileEntryDisplayContext
-		getDLEditFileEntryDisplayContext(
-			DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType) {
-
-		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		DLFileEntryType dlFileEntryType);
 
-		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileShortcut fileShortcut) {
+		FileEntry fileEntry);
 
-		return parentDLViewFileVersionDisplayContext;
-	}
-
-	@Override
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+			FileShortcut fileShortcut);
 
-		return parentDLViewFileVersionDisplayContext;
-	}
+	public DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion);
 
 }

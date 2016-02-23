@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.google.docs.display.context;
 
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.util.ResourceUtil;
-import com.liferay.document.library.kernel.display.context.DLUIItemKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;

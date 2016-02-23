@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.google.docs.display.context;
 
+import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.google.docs.util.FreeMarkerRenderer;
 import com.liferay.document.library.google.docs.util.GoogleDocsConfigurationHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
-import com.liferay.document.library.kernel.display.context.DLFilePicker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 

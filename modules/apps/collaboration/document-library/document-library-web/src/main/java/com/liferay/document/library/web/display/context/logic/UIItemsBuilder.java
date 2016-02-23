@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.display.context.logic;
 
-import com.liferay.document.library.kernel.display.context.DLUIItemKeys;
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;

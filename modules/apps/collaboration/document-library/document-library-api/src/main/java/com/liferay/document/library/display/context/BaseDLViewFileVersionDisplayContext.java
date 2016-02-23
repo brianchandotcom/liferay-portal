@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
+package com.liferay.document.library.display.context;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;

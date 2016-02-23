@@ -14,15 +14,14 @@
 
 package com.liferay.portal.kernel.display.context.bundle.basedisplaycontextfactory;
 
-import com.liferay.document.library.kernel.display.context.BaseDLDisplayContextFactory;
-import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
+import com.liferay.portal.kernel.display.context.TestDisplayContextFactory;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = DLDisplayContextFactory.class)
+@Component(immediate = true, service = TestDisplayContextFactory.class)
 public class TestBaseDisplayContextFactoryImpl
-	extends BaseDLDisplayContextFactory {
+	implements TestDisplayContextFactory {
 }

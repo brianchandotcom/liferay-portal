@@ -12,26 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
-
-import com.liferay.portal.kernel.display.context.BaseDisplayContext;
-
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.liferay.portal.kernel.display.context;
 
 /**
- * @author Iván Zaera
+ * @author Marcellus Tavares
  */
-public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
-	extends BaseDisplayContext<T> implements DLDisplayContext {
-
-	public BaseDLDisplayContext(
-		UUID uuid, T parentDLDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		super(uuid, parentDLDisplayContext, request, response);
-	}
-
+public interface TestDisplayContextFactory extends DisplayContextFactory {
 }

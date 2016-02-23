@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.display.context;
 
-import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
 import com.liferay.portal.kernel.display.context.bundle.basedisplaycontextfactory.TestBaseDisplayContextFactoryImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,7 +43,7 @@ public class BaseDisplayContextProviderTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_baseDisplayContextProvider = new BaseDisplayContextProvider<>(
-			DLDisplayContextFactory.class);
+			TestDisplayContextFactory.class);
 	}
 
 	@AfterClass
@@ -54,32 +53,32 @@ public class BaseDisplayContextProviderTest {
 
 	@Test
 	public void testDisplayContextHasBeenRegistered() throws Exception {
-		DLDisplayContextFactory dlDisplayContextFactoryExtension = null;
+		TestDisplayContextFactory testDisplayContextFactoryExtension = null;
 
-		Iterable<DLDisplayContextFactory> displayContextFactories =
+		Iterable<TestDisplayContextFactory> displayContextFactories =
 			_baseDisplayContextProvider.getDisplayContextFactories();
 
-		Iterator<DLDisplayContextFactory> iterator =
+		Iterator<TestDisplayContextFactory> iterator =
 			displayContextFactories.iterator();
 
 		while (iterator.hasNext()) {
-			DLDisplayContextFactory dlDisplayContextFactory = iterator.next();
+			TestDisplayContextFactory displayContextFactory = iterator.next();
 
-			Class<?> clazz = dlDisplayContextFactory.getClass();
+			Class<?> clazz = displayContextFactory.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(
 					TestBaseDisplayContextFactoryImpl.class.getName())) {
 
-				dlDisplayContextFactoryExtension = dlDisplayContextFactory;
+				testDisplayContextFactoryExtension = displayContextFactory;
 			}
 		}
 
-		Assert.assertNotNull(dlDisplayContextFactoryExtension);
+		Assert.assertNotNull(testDisplayContextFactoryExtension);
 	}
 
-	private static BaseDisplayContextProvider<DLDisplayContextFactory>
+	private static BaseDisplayContextProvider<TestDisplayContextFactory>
 		_baseDisplayContextProvider;
 
 }

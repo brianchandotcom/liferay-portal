@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.google.docs.display.context;
 
+import com.liferay.document.library.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
-import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
-import com.liferay.document.library.kernel.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
+package com.liferay.document.library.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;

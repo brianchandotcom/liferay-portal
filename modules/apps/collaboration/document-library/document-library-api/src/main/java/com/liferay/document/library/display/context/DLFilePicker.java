@@ -12,12 +12,25 @@
  * details.
  */
 
-package com.liferay.image.gallery.display.kernel.display.context;
+package com.liferay.document.library.display.context;
 
-import com.liferay.document.library.kernel.display.context.DLUIItemKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iván Zaera
  */
-public class IGUIItemKeys extends DLUIItemKeys {
+public interface DLFilePicker {
+
+	public String getDescriptionFieldName();
+
+	public String getIconFieldName();
+
+	public String getJavaScript() throws PortalException;
+
+	public String getJavaScriptModuleName();
+
+	public String getOnClickCallback();
+
+	public String getTitleFieldName();
+
 }

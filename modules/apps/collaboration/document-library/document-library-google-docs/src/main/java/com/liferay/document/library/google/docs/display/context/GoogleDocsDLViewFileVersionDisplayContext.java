@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.google.docs.display.context;
 
+import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.util.ResourceUtil;
-import com.liferay.document.library.kernel.display.context.BaseDLViewFileVersionDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;

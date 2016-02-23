@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
-import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.framework.ServiceReference;

@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.file.version.discussion.web.display;
 
-import com.liferay.document.library.kernel.display.context.BaseDLViewFileVersionDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -12,25 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.display.context;
+package com.liferay.document.library.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.display.context.DisplayContext;
 
 /**
  * @author Iván Zaera
  */
-public interface DLFilePicker {
-
-	public String getDescriptionFieldName();
-
-	public String getIconFieldName();
-
-	public String getJavaScript() throws PortalException;
-
-	public String getJavaScriptModuleName();
-
-	public String getOnClickCallback();
-
-	public String getTitleFieldName();
-
+public interface DLDisplayContext extends DisplayContext {
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.display.context.DLDisplayContextFactory;
+import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLDisplayContextFactory;
-import com.liferay.document.library.kernel.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.document.library.kernel.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;

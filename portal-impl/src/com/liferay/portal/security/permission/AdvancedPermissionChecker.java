@@ -358,6 +358,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 					group = GroupLocalServiceUtil.getGroup(groupId);
 				}
+				else if (group.isUserPersonalSite()) {
+					return false;
+				}
 
 				// If the group is a personal site, check the "User Personal
 				// Site" group.

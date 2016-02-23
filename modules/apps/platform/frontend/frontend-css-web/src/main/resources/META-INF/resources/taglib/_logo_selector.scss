@@ -1,0 +1,47 @@
+.portlet-image-uploader {
+	.button-holder {
+		margin-bottom: 5px;
+
+		> .form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.lfr-portrait-editor .dialog-footer {
+		z-index: 11;
+	}
+
+	.lfr-portrait-preview {
+		overflow: auto;
+		padding: 5px;
+	}
+
+	.main-content-card {
+		margin-bottom: 80px;
+		margin-top: 2px;
+	}
+}
+
+.taglib-logo-selector .avatar {
+	max-width: 100%;
+}
+
+// Probably can remove after https://developer.mozilla.org/en-US/Firefox/Releases/46, will ship in April 2016.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1230478
+// https://drafts.csswg.org/css-align/?c=M%3BO%3DD#overflow-values
+
+.gecko {
+	.fieldset {
+		.avatar {
+			max-height: 100%;
+			position: absolute;
+		}
+
+		.lfr-change-logo {
+			display: block;
+			overflow: hidden;
+			padding-bottom: 56.25%;
+			position: relative;
+		}
+	}
+}

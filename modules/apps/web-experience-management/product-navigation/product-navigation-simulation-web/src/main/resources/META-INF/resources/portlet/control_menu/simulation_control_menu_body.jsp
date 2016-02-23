@@ -29,8 +29,6 @@
 
 				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closeSimulationPanel" %>' image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
-
-			<div class="loading-animation"></div>
 		</div>
 	</div>
 
@@ -39,19 +37,21 @@
 
 		simulationToggle.sideNavigation();
 
-		var simulationPanel = $('#<%= portletNamespace %>simulationPanelId');
-
-		simulationPanel.on(
-			'urlLoaded.lexicon.sidenav',
-			function() {
-				simulationPanel.find('.loading-animation').remove();
-			}
-		);
-
 		A.one('#<%= portletNamespace %>closeSimulationPanel').on(
 			'click',
 			function(event) {
 				simulationToggle.sideNavigation('hide');
+			}
+		);
+
+		Liferay.once(
+			'screenLoad',
+			function() {
+				var sideNavigation = simulationToggle.data('lexicon.sidenav');
+
+				if (sideNavigation) {
+					sideNavigation.destroy();
+				}
 			}
 		);
 	</aui:script>

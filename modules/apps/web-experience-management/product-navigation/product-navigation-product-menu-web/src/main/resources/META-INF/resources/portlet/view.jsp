@@ -33,14 +33,9 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 	</h4>
 
 	<div class="sidebar-body">
-		<c:choose>
-			<c:when test='<%= Validator.equals(productMenuState, "open") %>'>
-				<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-				<div class="loading-animation"></div>
-			</c:otherwise>
-		</c:choose>
+		<c:if test='<%= Validator.equals(productMenuState, "open") %>'>
+			<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
+		</c:if>
 	</div>
 </div>
 
@@ -73,13 +68,6 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 		'open.lexicon.sidenav',
 		function(event) {
 			Liferay.Store('<%= ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE %>', 'open');
-		}
-	);
-
-	sidenavSlider.on(
-		'urlLoaded.lexicon.sidenav',
-		function() {
-			sidenavSlider.find('.loading-animation').remove();
 		}
 	);
 

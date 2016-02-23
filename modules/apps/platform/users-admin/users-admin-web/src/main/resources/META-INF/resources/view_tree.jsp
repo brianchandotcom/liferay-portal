@@ -82,14 +82,12 @@ if (organization != null) {
 
 				<%
 				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
-				String parentOrganizationName = LanguageUtil.get(request, "users-and-organizations-home");
 
 				if (!organization.isRoot()) {
 					Organization parentOrganization = organization.getParentOrganization();
 
 					if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
 						parentOrganizationId = parentOrganization.getOrganizationId();
-						parentOrganizationName = parentOrganization.getName();
 					}
 				}
 				%>
@@ -110,74 +108,6 @@ if (organization != null) {
 			</c:if>
 
 			<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
-				<c:if test="<%= organization != null %>">
-					<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
-
-					<span class="entry-categories">
-						<liferay-ui:asset-categories-summary
-							className="<%= Organization.class.getName() %>"
-							classPK="<%= organization.getOrganizationId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</span>
-
-					<span class="entry-tags">
-						<liferay-ui:asset-tags-summary
-							className="<%= Organization.class.getName() %>"
-							classPK="<%= organization.getOrganizationId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</span>
-
-					<%
-					request.setAttribute(WebKeys.ORGANIZATION, organization);
-
-					request.setAttribute("addresses.className", Organization.class.getName());
-					request.setAttribute("addresses.classPK", organizationId);
-					request.setAttribute("emailAddresses.className", Organization.class.getName());
-					request.setAttribute("emailAddresses.classPK", organizationId);
-					request.setAttribute("phones.className", Organization.class.getName());
-					request.setAttribute("phones.classPK", organizationId);
-					request.setAttribute("websites.className", Organization.class.getName());
-					request.setAttribute("websites.classPK", organizationId);
-
-					String directoryPortletId = PortletProviderUtil.getPortletId(PortalDirectoryApplicationType.PortalDirectory.CLASS_NAME, PortletProvider.Action.VIEW);
-					%>
-
-					<div class="organization-information">
-						<div class="section">
-							<liferay-util:include page="/common/additional_email_addresses.jsp" portletId="<%= directoryPortletId %>" />
-						</div>
-
-						<div class="section">
-							<liferay-util:include page="/common/websites.jsp" portletId="<%= directoryPortletId %>" />
-						</div>
-
-						<div class="section">
-							<liferay-util:include page="/organization/addresses.jsp" portletId="<%= directoryPortletId %>" />
-						</div>
-
-						<div class="section">
-							<liferay-util:include page="/organization/phone_numbers.jsp" portletId="<%= directoryPortletId %>" />
-						</div>
-
-						<div class="section">
-							<liferay-util:include page="/organization/comments.jsp" portletId="<%= directoryPortletId %>" />
-						</div>
-					</div>
-
-					<br />
-
-					<liferay-ui:custom-attributes-available className="<%= Organization.class.getName() %>">
-						<liferay-ui:custom-attribute-list
-							className="<%= Organization.class.getName() %>"
-							classPK="<%= organization.getOrganizationId() %>"
-							editable="<%= false %>"
-							label="<%= true %>"
-						/>
-					</liferay-ui:custom-attributes-available>
-				</c:if>
-
 				<%
 				boolean showOrganizations = false;
 				boolean showUsers = true;

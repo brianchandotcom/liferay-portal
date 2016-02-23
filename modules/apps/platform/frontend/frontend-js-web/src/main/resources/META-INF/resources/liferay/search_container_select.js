@@ -4,6 +4,10 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
+		var DEFAULT_MATCH_EVERYTHING = /.*/;
+
+		var DEFAULT_MATCH_NOTHING = /^[]/;
+
 		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]';
 
 		var STR_CHECKED = 'checked';
@@ -25,6 +29,20 @@ AUI.add(
 		var SearchContainerSelect = A.Component.create(
 			{
 				ATTRS: {
+					keepSelection: {
+						setter: function(keepSelection) {
+							if (Lang.isString(keepSelection)) {
+								keepSelection = new RegExp(keepSelection);
+							}
+							else if (!Lang.isRegExp(keepSelection)) {
+								keepSelection = keepSelection ? DEFAULT_MATCH_EVERYTHING : DEFAULT_MATCH_NOTHING;
+							}
+
+							return keepSelection;
+						},
+						value: DEFAULT_MATCH_EVERYTHING
+					},
+
 					rowCheckerSelector: {
 						validator: Lang.isString,
 						value: '.click-selector'
@@ -214,8 +232,10 @@ AUI.add(
 					_onStartNavigate: function(event) {
 						var instance = this;
 
-						instance._addRestoreTask();
-						instance._addRestoreTaskState();
+						if (instance.get('keepSelection').test(unescape(event.path))) {
+							instance._addRestoreTask();
+							instance._addRestoreTaskState();
+						}
 					}
 				},
 

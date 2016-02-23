@@ -34,7 +34,11 @@ public class BasePanelTag extends IncludeTag {
 			ApplicationListWebKeys.GROUP_PROVIDER);
 
 		if (groupProvider != null) {
-			return groupProvider.getGroup(request);
+			Group group = groupProvider.getGroup(request);
+
+			if (group != null) {
+				return group;
+			}
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

@@ -46,9 +46,9 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
@@ -165,20 +165,26 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		return task;
 	}
 
-	protected void configureArtifacts(Project project) {
-		String projectName = project.getName();
-
-		String outputFileName = "dist/" + projectName + ".war";
-
-		File outputFile = new File(outputFileName);
-
+	protected void configureArtifacts(final Project project) {
 		ArtifactHandler artifacts = project.getArtifacts();
 
-		ConfigurableFileCollection artifactsBuiltBy = project.files(outputFile);
+		File warFile = getWarFile(project);
 
-		artifactsBuiltBy.builtBy("gulp");
+		artifacts.add(
+			Dependency.ARCHIVES_CONFIGURATION, warFile,
+			new Closure<Void>(null) {
 
-		artifacts.add(Dependency.ARCHIVES_CONFIGURATION, outputFile);
+				@SuppressWarnings("unused")
+				public void doCall(
+					ConfigurablePublishArtifact configurablePublishArtifact) {
+
+					Task gulpBuildTask = GradleUtil.getTask(
+						project, _GULP_BUILD_TASK_NAME);
+
+					configurablePublishArtifact.builtBy(gulpBuildTask);
+				}
+
+			});
 	}
 
 	protected void configureRootTaskDistBundle(
@@ -281,6 +287,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			});
 
 		return projectDirs;
+	}
+
+	protected File getWarFile(Project project) {
+		return project.file("dist/" + project.getName() + ".war");
 	}
 
 	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";

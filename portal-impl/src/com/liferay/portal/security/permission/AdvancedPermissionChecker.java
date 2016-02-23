@@ -895,16 +895,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		stopWatch.start();
 
-		if (isOmniadmin()) {
-			return true;
-		}
-
-		if (name.equals(Organization.class.getName())) {
-			if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
-				return true;
-			}
-		}
-
 		long companyId = user.getCompanyId();
 
 		if (groupId > 0) {
@@ -930,6 +920,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					"or there is a bug in permission framework caller: " +
 						misrpe.getMessage(),
 				misrpe);
+		}
+
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (name.equals(Organization.class.getName())) {
+			if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
+				return true;
+			}
 		}
 
 		if (isCompanyAdminImpl(companyId)) {

@@ -36,6 +36,21 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 	@Override
 	public long companyId();
 
+	@Meta.AD(deflt = "com.sun.jndi.ldap.LdapCtxFactory", required = false)
+	public String factoryInitial();
+
+	@Meta.AD(
+		deflt = "follow", optionValues = {"follow", "ignore", "throws"},
+		required = false
+	)
+	public String referral();
+
+	@Meta.AD(deflt = "1000", description = "%page-size-help", required = false)
+	public int pageSize();
+
+	@Meta.AD(deflt = "1000", description = "%range-size-help", required = false)
+	public int rangeSize();
+
 	@Meta.AD(
 		deflt =
 			"com.sun.jndi.ldap.connect.pool=true|com.sun.jndi.ldap.connect.timeout=500|com.sun.jndi.ldap.read.timeout=15000",
@@ -63,20 +78,5 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 
 	@Meta.AD(deflt = "retry limit", required = false)
 	public String[] errorUserLockoutKeywords();
-
-	@Meta.AD(deflt = "com.sun.jndi.ldap.LdapCtxFactory", required = false)
-	public String factoryInitial();
-
-	@Meta.AD(deflt = "1000", description = "%page-size-help", required = false)
-	public int pageSize();
-
-	@Meta.AD(deflt = "1000", description = "%range-size-help", required = false)
-	public int rangeSize();
-
-	@Meta.AD(
-		deflt = "follow", optionValues = {"follow", "ignore", "throws"},
-		required = false
-	)
-	public String referral();
 
 }

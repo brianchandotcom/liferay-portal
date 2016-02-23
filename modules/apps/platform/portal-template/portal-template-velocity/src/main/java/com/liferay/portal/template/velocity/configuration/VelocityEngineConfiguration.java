@@ -33,22 +33,13 @@ public interface VelocityEngineConfiguration {
 	public boolean directiveIfToStringNullCheck();
 
 	@Meta.AD(
-		deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem",
-		required = false
-	)
-	public String logger();
-
-	@Meta.AD(deflt = "org.apache.velocity", required = false)
-	public String loggerCategory();
-
-	@Meta.AD(deflt = "60", required = false)
-	public int resourceModificationCheckInterval();
-
-	@Meta.AD(
 		deflt = "com.liferay.portal.template.velocity.VelocityBundleResourceParser|com.liferay.portal.template.velocity.VelocityServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
 		required = false
 	)
 	public String[] resourceParsers();
+
+	@Meta.AD(deflt = "60", required = false)
+	public int resourceModificationCheckInterval();
 
 	@Meta.AD(
 		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.Thread",
@@ -64,5 +55,14 @@ public interface VelocityEngineConfiguration {
 
 	@Meta.AD(deflt = "VM_global_library.vm|VM_liferay.vm", required = false)
 	public String[] velocimacroLibrary();
+
+	@Meta.AD(
+		deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem",
+		required = false
+	)
+	public String logger();
+
+	@Meta.AD(deflt = "org.apache.velocity", required = false)
+	public String loggerCategory();
 
 }

@@ -30,13 +30,6 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 )
 public interface TokenConfiguration {
 
-	@Meta.AD(
-		deflt ="SMIDENTITY|SMSESSION",
-		description = "Set this to the cookie names that must be removed after logout.",
-		required = false
-	)
-	public String[] authenticationCookies();
-
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
 
@@ -47,8 +40,12 @@ public interface TokenConfiguration {
 	)
 	public boolean importFromLDAP();
 
-	@Meta.AD(required = false)
-	public String logoutRedirectURL();
+	@Meta.AD(
+		deflt = "SM_USER",
+		description = "Set this to the name of the user token that authenticator passes to the portal.",
+		required = false
+	)
+	public String userTokenName();
 
 	@Meta.AD(
 		deflt = "REQUEST_HEADER",
@@ -58,10 +55,13 @@ public interface TokenConfiguration {
 	public TokenLocation tokenLocation();
 
 	@Meta.AD(
-		deflt = "SM_USER",
-		description = "Set this to the name of the user token that authenticator passes to the portal.",
+		deflt ="SMIDENTITY|SMSESSION",
+		description = "Set this to the cookie names that must be removed after logout.",
 		required = false
 	)
-	public String userTokenName();
+	public String[] authenticationCookies();
+
+	@Meta.AD(required = false)
+	public String logoutRedirectURL();
 
 }

@@ -29,17 +29,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FreeMarkerEngineConfiguration {
 
-	@Meta.AD(required = false)
-	public String[] allowedClasses();
-
 	@Meta.AD(deflt = "false", required = false)
 	public boolean localizedLookup();
 
-	@Meta.AD(deflt = "FTL_liferay.ftl as liferay", required = false)
-	public String[] macroLibrary();
-
 	@Meta.AD(deflt = "60", required = false)
 	public int resourceModificationCheck();
+
+	@Meta.AD(required = false)
+	public String[] allowedClasses();
 
 	@Meta.AD(
 		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.Thread",
@@ -61,5 +58,8 @@ public interface FreeMarkerEngineConfiguration {
 		required = false
 	)
 	public String[] templateParsers();
+
+	@Meta.AD(deflt = "FTL_liferay.ftl as liferay", required = false)
+	public String[] macroLibrary();
 
 }

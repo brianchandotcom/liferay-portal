@@ -412,9 +412,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -437,6 +434,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		portletInstanceModifiableSettings.setValues(archivedSettings);
 
 		portletInstanceModifiableSettings.store();
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
 
 		SessionMessages.add(
 			actionRequest,

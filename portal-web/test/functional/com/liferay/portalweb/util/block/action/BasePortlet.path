@@ -145,6 +145,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION_TEMPLATES</td>
+	<td>//a[contains(@id,'_menu_configuration-templates')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_MENULIST_PREFERENCES</td>
 	<td>//a[contains(@id,'_menu_preferences')]</td>
 	<td></td>

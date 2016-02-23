@@ -2,10 +2,10 @@
 
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import App from './app/App.es';
-import async from 'metal/src/async/async'
-import globals from 'senna/src/globals/globals'
+import async from 'metal/src/async/async';
+import globals from 'senna/src/globals/globals';
 import RenderURLScreen from './screen/RenderURLScreen.es';
-import Uri from 'metal-uri/src/Uri'
+import Uri from 'metal-uri/src/Uri';
 import utils from 'senna/src/utils/utils';
 
 let app = new App();
@@ -55,7 +55,7 @@ Liferay.Util.submitForm = function(form) {
 			}
 		}
 	);
-}
+};
 
 Liferay.SPA = {
 	app: app

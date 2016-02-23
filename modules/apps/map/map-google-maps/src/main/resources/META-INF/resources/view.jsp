@@ -30,7 +30,7 @@ String points =(String)request.getAttribute("liferay-map:map:points");
 name = namespace + name;
 %>
 
-<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
+<liferay-util:html-top outputKey="js_maps_google_skip_map_loading">
 	<script>
 		Liferay.namespace('Maps').onGMapsReady = function(event) {
 			Liferay.Maps.gmapsReady = true;
@@ -48,7 +48,7 @@ name = namespace + name;
 	%>
 
 	<script src="<%= apiURL %>" type="text/javascript"></script>
-</liferay-util:html-bottom>
+</liferay-util:html-top>
 
 <div class="lfr-map" id="<%= name %>Map"></div>
 

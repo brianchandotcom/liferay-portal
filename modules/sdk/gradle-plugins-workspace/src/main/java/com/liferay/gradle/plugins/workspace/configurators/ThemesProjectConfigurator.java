@@ -87,7 +87,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		addTaskDeploy(project);
 		configureArtifacts(project);
-		configureTaskAssemble(project);
 		configureTaskClean(project);
 		configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
 
@@ -212,12 +211,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
-	}
-
-	protected void configureTaskAssemble(Project project) {
-		Task task = GradleUtil.getTask(project, BasePlugin.ASSEMBLE_TASK_NAME);
-
-		task.dependsOn(_GULP_BUILD_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {

@@ -49,7 +49,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
-import org.gradle.api.file.ConfigurableFileTree;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
@@ -199,12 +199,12 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					ConfigurableFileTree fileTree = project.fileTree("dist");
+					ConfigurableFileCollection configurableFileCollection =
+						project.files(getWarFile(project));
 
-					fileTree.builtBy(_GULP_DEPLOY_TASK_NAME);
-					fileTree.include("*.war");
+					configurableFileCollection.builtBy(_GULP_DEPLOY_TASK_NAME);
 
-					copySpec.from(fileTree);
+					copySpec.from(configurableFileCollection);
 				}
 
 			});

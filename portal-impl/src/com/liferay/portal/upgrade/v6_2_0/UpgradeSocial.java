@@ -254,6 +254,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected interface ExtraDataGenerator {
 
+		public String getActivityClassName();
+
 		public String getActivityQueryWhereClause();
 
 		public String getEntityQuery();
@@ -276,6 +278,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _addAssetCommentExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return StringPool.BLANK;
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -350,6 +357,11 @@ public class UpgradeSocial extends UpgradeProcess {
 		new ExtraDataGenerator() {
 
 			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.messageboards.model.MBMessage";
+			}
+
+			@Override
 			public String getActivityQueryWhereClause() {
 				return "classNameId = ? and (type_ = ? or type_ = ?)";
 			}
@@ -363,7 +375,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_MESSAGE);
 				ps.setInt(3, _REPLY_MESSAGE);
 			}
@@ -392,9 +405,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				return extraDataJSONObject;
 			}
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.portlet.messageboards.model.MBMessage";
-
 			private static final int _ADD_MESSAGE = 1;
 
 			private static final int _REPLY_MESSAGE = 2;
@@ -403,6 +413,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _blogsEntryExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.blogs.model.BlogsEntry";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -428,7 +443,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_ENTRY);
 				ps.setInt(3, _UPDATE_ENTRY);
 			}
@@ -447,9 +463,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				return extraDataJSONObject;
 			}
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.portlet.blogs.model.BlogsEntry";
-
 			private static final int _ADD_ENTRY = 2;
 
 			private static final int _UPDATE_ENTRY = 3;
@@ -458,6 +471,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.bookmarks.model.BookmarksEntry";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -483,7 +501,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_ENTRY);
 				ps.setInt(3, _UPDATE_ENTRY);
 			}
@@ -506,13 +525,15 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			private static final int _UPDATE_ENTRY = 2;
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.portlet.bookmarks.model.BookmarksEntry";
-
 		};
 
 	private static final ExtraDataGenerator _dlFileEntryExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -529,7 +550,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 			}
 
 			@Override
@@ -560,9 +582,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				return extraDataJSONObject;
 			}
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry";
-
 		};
 
 	private static final List<ExtraDataGenerator> _extraDataGenerators =
@@ -570,6 +589,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _kbArticleExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.knowledgebase.model.KBArticle";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -586,7 +610,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_ARTICLE);
 				ps.setInt(3, _UPDATE_KB_ARTICLE);
 				ps.setInt(4, _MOVE_KB_ARTICLE);
@@ -622,13 +647,15 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			private static final int _UPDATE_KB_ARTICLE = 3;
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.knowledgebase.model.KBArticle";
-
 		};
 
 	private static final ExtraDataGenerator _kbCommentExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.knowledgebase.model.KBComment";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -661,12 +688,14 @@ public class UpgradeSocial extends UpgradeProcess {
 					ExtraDataGenerator extraDataGenerator = null;
 
 					if (classnameId == PortalUtil.getClassNameId(
-							"com.liferay.knowledgebase.model.KBArticle")) {
+							_kbArticleExtraDataGenerator.
+								getActivityClassName())) {
 
 						extraDataGenerator = _kbArticleExtraDataGenerator;
 					}
 					else if (classnameId == PortalUtil.getClassNameId(
-								"com.liferay.knowledgebase.model.KBTemplate")) {
+								_kbTemplateExtraDataGenerator.
+									getActivityClassName())) {
 
 						extraDataGenerator = _kbTemplateExtraDataGenerator;
 					}
@@ -697,7 +726,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_COMMENT);
 				ps.setInt(3, _UPDATE_KB_COMMENT);
 			}
@@ -712,9 +742,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				ps.setLong(1, classPK);
 			}
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.knowledgebase.model.KBComment";
-
 			private static final int _ADD_KB_COMMENT = 5;
 
 			private static final int _UPDATE_KB_COMMENT = 6;
@@ -723,6 +750,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _kbTemplateExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.knowledgebase.model.KBTemplate";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -738,7 +770,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_KB_TEMPLATE);
 				ps.setInt(3, _UPDATE_KB_TEMPLATE);
 			}
@@ -767,9 +800,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				return extraDataJSONObject;
 			}
 
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.knowledgebase.model.KBTemplate";
-
 			private static final int _ADD_KB_TEMPLATE = 2;
 
 			private static final int _UPDATE_KB_TEMPLATE = 4;
@@ -778,6 +808,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final ExtraDataGenerator _wikiPageExtraDataGenerator =
 		new ExtraDataGenerator() {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.wiki.model.WikiPage";
+			}
 
 			@Override
 			public String getActivityQueryWhereClause() {
@@ -795,7 +830,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(_ACTIVITY_CLASSNAME));
+				ps.setLong(1,
+					PortalUtil.getClassNameId(getActivityClassName()));
 				ps.setInt(2, _ADD_PAGE);
 				ps.setInt(3, _UPDATE_PAGE);
 			}
@@ -831,9 +867,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				return extraDataJSONObject;
 			}
-
-			private static final String _ACTIVITY_CLASSNAME =
-				"com.liferay.portlet.wiki.model.WikiPage";
 
 			private static final int _ADD_PAGE = 1;
 

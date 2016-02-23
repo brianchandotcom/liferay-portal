@@ -11,6 +11,12 @@ AUI.add(
 						value: true
 					},
 
+					closeableNode: {
+						valueFn: function() {
+							return A.Node.create('<button class="close" type="button">' + Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced') + '</button>');
+						}
+					},
+
 					icon: {
 						validator: Lang.isString,
 						value: 'info-circle'
@@ -151,7 +157,7 @@ AUI.add(
 					},
 
 					_onClickBoundingBox: function(event) {
-						if (event.target.test('.close')) {
+						if (event.target.ancestor('.close', true, '.liferayalert')) {
 							this._ignoreHideDelay = true;
 
 							this.hide();

@@ -23,7 +23,10 @@ app.addRoutes(
 		{
 			handler: RenderURLScreen,
 			path: function(url) {
-				if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+				if (url.indexOf(themeDisplay.getPathMain()) === 0 ||
+					url.indexOf('/documents') === 0 ||
+					url.indexOf('/image') === 0) {
+
 					return false;
 				}
 

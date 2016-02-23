@@ -28,17 +28,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CMISStoreConfiguration {
 
-	@Meta.AD(deflt = "none", required = true)
-	public String credentialsPassword();
-
-	@Meta.AD(deflt = "none", required = true)
-	public String credentialsUsername();
-
 	@Meta.AD(
 		deflt = "http://localhost:8080/alfresco/service/api/cmis",
 		required = true
 	)
 	public String repositoryUrl();
+
+	@Meta.AD(deflt = "none", required = true)
+	public String credentialsUsername();
+
+	@Meta.AD(deflt = "none", required = true)
+	public String credentialsPassword();
 
 	@Meta.AD(deflt = "Liferay Home", required = true)
 	public String systemRootDir();

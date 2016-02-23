@@ -31,16 +31,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CXFEndpointPublisherConfiguration {
 
-	@Meta.AD(
-		deflt = "auth.verifier.PortalSessionAuthVerifier.urls.includes=*",
-		name = "auth.verifier.properties", required = false
-	)
-	public String[] authVerifierProperties();
-
 	@Meta.AD(required = true)
 	public String contextPath();
 
-	@Meta.AD(name = "required.extensions", required = false)
+	@Meta.AD(
+		deflt = "auth.verifier.PortalSessionAuthVerifier.urls.includes=*",
+		name = "%auth-verifier-properties", required = false
+	)
+	public String[] authVerifierProperties();
+
+	@Meta.AD(name = "%required-extensions", required = false)
 	public String[] extensions();
 
 }

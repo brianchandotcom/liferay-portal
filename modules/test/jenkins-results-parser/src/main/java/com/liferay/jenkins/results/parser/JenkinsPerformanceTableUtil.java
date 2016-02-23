@@ -34,31 +34,51 @@ public class JenkinsPerformanceTableUtil {
 			return "<p>Performance data is not available.</p>";
 		}
 
-		Element element = new DefaultElement("table");
+		Element div = new DefaultElement("div");
+		Element p = new DefaultElement("p");
+		Element table = new DefaultElement("table");
 
-		element.addAttribute("border", "1");
-		element.addAttribute("cellspacing", "0");
+		div.add(p);
 
-		element.add(
+		div.add(table);
+
+		table.addAttribute("border", "1");
+		table.addAttribute("cellspacing", "0");
+
+		table.add(
 			_createRowElement(
 				"th", "Axis", "Class Name", "Duration (Seconds)", "Job Name",
 				"Name", "Status", null));
 
 		for (JenkinsPerformanceDataUtil.Result result : results) {
-			element.add(
+			table.add(
 				_createRowElement(
 					"td", result.getAxis(), result.getClassName(),
 					Float.toString(result.getDuration()), result.getJobName(),
 					result.getName(), result.getStatus(), result.getUrl()));
 		}
 
+		p.addText(
+			(JenkinsPerformanceDataUtil.getSlaveCount() + 1) + " slaves used.");
+
+		p.add(new DefaultElement("br"));
+
+		p.addText(
+			JenkinsPerformanceDataUtil.getTestCount() + " tests executed.");
+
+		p.add(new DefaultElement("br"));
+
+		p.addText(
+			JenkinsPerformanceDataUtil.getTotalDuration() + " seconds of CPU " +
+				"time used.");
+
+		p.add(new DefaultElement("br"));
+
 		JenkinsPerformanceDataUtil.reset();
 
-		StringBuilder sb = new StringBuilder();
+		System.out.println(JenkinsResultsParserUtil.format(p));
 
-		sb.append(JenkinsResultsParserUtil.format(element));
-
-		return sb.toString();
+		return JenkinsResultsParserUtil.format(div);
 	}
 
 	private static Element _createAxisElement(

@@ -41,6 +41,10 @@
 						${site_name}
 					</span>
 				</#if>
+
+				<div class="pull-right user-personal-bar">
+					<@liferay.user_personal_bar />
+				</div>
 			</div>
 
 			<#include "${full_templates_path}/navigation.ftl" />

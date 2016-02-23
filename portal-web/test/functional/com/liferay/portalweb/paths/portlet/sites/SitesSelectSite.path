@@ -33,7 +33,7 @@
 <!--SITES_TABLE-->
 <tr>
 	<td>SITES_TABLE_NAME</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table//tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

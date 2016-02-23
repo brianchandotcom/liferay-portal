@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_TD_1_SITE_LINK</td>
-	<td>xpath=(//*[@data-qa-id='row'])//a[contains(.,'${key_site}')]</td>
+	<td>//*[@data-qa-id='row']//a[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>

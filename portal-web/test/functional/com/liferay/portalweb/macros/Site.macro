@@ -132,16 +132,16 @@
 				<execute function="SelectFrame" locator1="SitesSelectSite#SELECT_SITE_IFRAME" />
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
 				<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
-				<execute function="AssertTextEquals" locator1="SitesSelectSite#SITES_TABLE_NAME" value1="${parentSiteName}" />
 
-				<var name="key_siteName" value="${parentSiteName}" />
+				<var name="key_site" value="${parentSiteName}" />
 
-				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
+				<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" value1="${parentSiteName}" />
+
+				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK" />
 
 				<var name="key_parentSiteName" value="${parentSiteName}" />
 
-				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="AssertTextEquals" locator1="SitesEditSite#PARENT_SITE_TABLE_NAME" value1="${parentSiteName}" />
+				<execute function="SelectFrameTop" />
 			</then>
 		</if>
 

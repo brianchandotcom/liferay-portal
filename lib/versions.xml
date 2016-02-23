@@ -519,6 +519,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/mariadb.jar</file-name>
+				<version>1.1.9</version>
+				<project-name>MariaDB Connector/J</project-name>
+				<project-url>https://mariadb.com/my_portal/download/java-client</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/maven-ant-tasks.jar</file-name>
 				<version>2.1.3</version>
 				<project-name>Maven Ant Tasks</project-name>

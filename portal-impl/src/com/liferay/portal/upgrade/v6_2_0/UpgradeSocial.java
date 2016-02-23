@@ -751,7 +751,7 @@ public class UpgradeSocial extends UpgradeProcess {
 					JSONFactoryUtil.createJSONObject();
 
 				extraDataJSONObject.put(
-					"title", entityResultSet.getString("subject"));
+					"title", entityResultSet.getString("title"));
 
 				return extraDataJSONObject;
 			}

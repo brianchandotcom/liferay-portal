@@ -34,17 +34,17 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class PublishingToolsPanelCategory extends BasePanelCategory {
+public class PublishingPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
+		return PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			locale, "category.site_administration.publishing_tools");
+			locale, "category.site_administration.publishing");
 	}
 
 }

@@ -76,6 +76,25 @@
 	margin-bottom: 1.5em;
 }
 
-.gecko .lfr-portrait-editor {
-	display: table-column;
+// Probably can remove after https://developer.mozilla.org/en-US/Firefox/Releases/46, will ship in April 2016.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1230478
+// https://drafts.csswg.org/css-align/?c=M%3BO%3DD#overflow-values
+
+.gecko {
+	.lfr-change-logo {
+		display: block;
+		overflow: hidden;
+		padding-bottom: 56.25%;
+		position: relative;
+
+		.avatar {
+			max-height: 100%;
+			max-width: 100%;
+			position: absolute;
+		}
+	}
+
+	.lfr-portrait-preview {
+		padding-bottom: 0;
+	}
 }

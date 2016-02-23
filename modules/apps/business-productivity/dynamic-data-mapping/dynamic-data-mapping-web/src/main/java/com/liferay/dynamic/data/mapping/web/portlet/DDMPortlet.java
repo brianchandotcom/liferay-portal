@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -39,6 +40,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
+import com.liferay.dynamic.data.mapping.web.display.context.DDMDisplayContext;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -173,8 +176,11 @@ public class DDMPortlet extends MVCPortlet {
 
 			setDDMStructureRequestAttribute(request);
 
+			DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
+				request, _ddmFormJSONDeserializer, ddmWebConfiguration);
+
 			request.setAttribute(
-				DDMWebConfiguration.class.getName(), ddmWebConfiguration);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
 		}
 		catch (NoSuchStructureException nsse) {
 
@@ -212,6 +218,13 @@ public class DDMPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormJSONDeserializer(
+		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -268,5 +281,7 @@ public class DDMPortlet extends MVCPortlet {
 	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
+
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 }

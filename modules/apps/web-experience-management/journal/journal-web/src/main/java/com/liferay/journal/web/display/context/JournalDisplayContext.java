@@ -491,6 +491,9 @@ public class JournalDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse);
 
 		entriesChecker.setCssClass("entry-selector");
+		entriesChecker.setKeepSelectionURLRegex(
+			"^(?!.*" + _liferayPortletResponse.getNamespace() + 
+			"redirect).*(folderId=" + getFolderId() + ")");
 
 		articleSearchContainer.setRowChecker(entriesChecker);
 

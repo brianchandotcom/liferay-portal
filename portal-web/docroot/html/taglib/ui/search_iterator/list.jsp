@@ -45,7 +45,7 @@ if (iteratorURL != null) {
 
 <c:if test="<%= emptyResultsMessage != null %>">
 	<div class="alert alert-info <%= resultRows.isEmpty() ? StringPool.BLANK : "hide" %>" id="<%= namespace + id %>EmptyResultsMessage">
-		<%= LanguageUtil.get(request, emptyResultsMessage) %>
+		<%= LanguageUtil.get(resourceBundle, emptyResultsMessage) %>
 	</div>
 </c:if>
 
@@ -162,7 +162,7 @@ if (iteratorURL != null) {
 							String headerNameValue = null;
 
 							if ((rowChecker == null) || (i > 0)) {
-								headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
+								headerNameValue = LanguageUtil.get(resourceBundle, HtmlUtil.escape(headerName));
 							}
 							else {
 								headerNameValue = headerName;

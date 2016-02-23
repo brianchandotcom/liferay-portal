@@ -66,7 +66,7 @@
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(value) %>">
-	<span class="lfr-btn-label"><%= LanguageUtil.get(request, value) %></span>
+	<span class="lfr-btn-label"><%= LanguageUtil.get(resourceBundle, value) %></span>
 </c:if>
 
 <c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("right") %>'>

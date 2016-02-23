@@ -51,7 +51,7 @@ if (useDialog && Validator.isNotNull(escapedHREF)) {
 	}
 
 	data.put("href", href);
-	data.put("title", LanguageUtil.get(request, value));
+	data.put("title", LanguageUtil.get(resourceBundle, value));
 
 	onClick = StringPool.BLANK;
 

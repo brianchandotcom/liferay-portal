@@ -56,7 +56,7 @@
 				cssClass="lfr-translation-manager-icon-menu"
 				direction="down"
 				icon="../aui/plus"
-				message='<%= LanguageUtil.get(request, "add-translation") %>'
+				message='<%= LanguageUtil.get(resourceBundle, "add-translation") %>'
 				showArrow="<%= true %>"
 				showWhenSingleIcon="<%= true %>"
 			>

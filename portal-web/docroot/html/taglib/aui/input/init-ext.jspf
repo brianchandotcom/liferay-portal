@@ -23,10 +23,10 @@ String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:b
 String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
 
 if (Validator.isNull(label) && changesContext) {
-	title = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, title), LanguageUtil.get(request, "changing-the-value-of-this-field-reloads-the-page"));
+	title = StringUtil.appendParentheticalSuffix(LanguageUtil.get(resourceBundle, title), LanguageUtil.get(resourceBundle, "changing-the-value-of-this-field-reloads-the-page"));
 }
 else if (Validator.isNotNull(title)) {
-	title = LanguageUtil.get(request, title);
+	title = LanguageUtil.get(resourceBundle, title);
 }
 
 boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean");

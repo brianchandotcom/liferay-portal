@@ -430,21 +430,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MESSAGE_REPLY_PERMISSIONS_1</td>
-	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_REPLY_PERMISSIONS_2</td>
-	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_REPLY_PERMISSIONS_3</td>
-	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MESSAGE_SPLIT_THREAD</td>
 	<td>//table[contains(.,'${key_threadBody}')]/tbody/tr/td[@class='thread-bottom']/ul//a[contains(.,'Split Thread')]</td>
 	<td></td>

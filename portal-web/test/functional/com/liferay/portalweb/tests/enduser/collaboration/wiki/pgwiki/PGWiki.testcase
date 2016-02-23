@@ -679,6 +679,8 @@
 				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
 				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
 			</execute>
+
+			<execute function="Refresh" />
 		</for>
 
 		<for list="${wikiPageCounterList}" param="entryCount" >

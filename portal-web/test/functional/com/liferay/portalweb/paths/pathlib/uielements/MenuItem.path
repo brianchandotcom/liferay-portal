@@ -614,6 +614,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUICK_REPLY</td>
+	<td>//a[@role='menuitem' and contains(.,'Quick Reply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//li/a[contains(@id,'menuItem') and contains(.,'Regular Role')]</td>
 	<td></td>

@@ -466,7 +466,12 @@ echo "Sent notification."]]>
 
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
 
-							<prepare-tomcat-setenv />
+							<if>
+								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<then>
+									<prepare-tomcat-setenv />
+								</then>
+							</if>
 						</else>
 					</if>
 

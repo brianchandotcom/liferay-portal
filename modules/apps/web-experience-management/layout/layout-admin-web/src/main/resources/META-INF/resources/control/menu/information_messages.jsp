@@ -23,7 +23,7 @@
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
-<%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
+<%@ page import="com.liferay.layout.admin.web.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>

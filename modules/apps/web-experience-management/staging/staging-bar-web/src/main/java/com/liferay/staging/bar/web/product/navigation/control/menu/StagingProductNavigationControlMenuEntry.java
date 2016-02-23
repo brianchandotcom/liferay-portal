@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.bar.web.control.menu;
+package com.liferay.staging.bar.web.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;

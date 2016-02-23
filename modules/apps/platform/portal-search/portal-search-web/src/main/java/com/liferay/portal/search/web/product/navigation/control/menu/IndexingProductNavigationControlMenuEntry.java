@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.control.menu;
+package com.liferay.portal.search.web.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

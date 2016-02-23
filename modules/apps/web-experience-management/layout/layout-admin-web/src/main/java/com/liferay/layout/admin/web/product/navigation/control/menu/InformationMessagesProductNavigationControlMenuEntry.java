@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.control.menu;
+package com.liferay.layout.admin.web.product.navigation.control.menu;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.control;
+package com.liferay.product.navigation.simulation.web.product.navigation.control.menu;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;

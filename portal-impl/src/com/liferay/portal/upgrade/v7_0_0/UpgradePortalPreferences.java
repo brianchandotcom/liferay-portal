@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
@@ -75,12 +74,8 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 
 		try {
 			ps1 = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select portalPreferencesId, preferences from " +
-						"PortalPreferences where CAST_TEXT(preferences) like " +
-							"?"));
-
-			ps1.setString(1, "%com.liferay.portlet.kernel.staging.Staging%");
+				"select portalPreferencesId, preferences from " +
+					"PortalPreferences");
 
 			rs = ps1.executeQuery();
 

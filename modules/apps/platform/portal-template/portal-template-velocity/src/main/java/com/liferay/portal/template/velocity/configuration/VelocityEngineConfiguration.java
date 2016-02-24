@@ -29,7 +29,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface VelocityEngineConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false",
+		description = "%directive-if-to-string-null-check-help",
+		required = false
+	)
 	public boolean directiveIfToStringNullCheck();
 
 	@Meta.AD(
@@ -38,7 +42,11 @@ public interface VelocityEngineConfiguration {
 	)
 	public String[] resourceParsers();
 
-	@Meta.AD(deflt = "60", required = false)
+	@Meta.AD(
+		deflt = "60",
+		description = "%resource-modification-check-interval-help",
+		required = false
+	)
 	public int resourceModificationCheckInterval();
 
 	@Meta.AD(

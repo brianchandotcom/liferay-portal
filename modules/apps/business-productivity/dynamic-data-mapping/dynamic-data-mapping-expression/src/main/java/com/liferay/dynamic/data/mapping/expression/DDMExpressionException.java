@@ -19,21 +19,48 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marcellus Tavares
  */
-public class DDMExpressionEvaluationException extends PortalException {
+public class DDMExpressionException extends PortalException {
 
-	public DDMExpressionEvaluationException() {
+	public DDMExpressionException() {
 	}
 
-	public DDMExpressionEvaluationException(String msg) {
+	public DDMExpressionException(String msg) {
 		super(msg);
 	}
 
-	public DDMExpressionEvaluationException(String msg, Throwable cause) {
+	public DDMExpressionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DDMExpressionEvaluationException(Throwable cause) {
+	public DDMExpressionException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class FunctionNotAllowed extends DDMExpressionException {
+
+		public FunctionNotAllowed(String functionName) {
+			super(
+				String.format(
+					"The function name '%s' is not allowed.", functionName));
+
+			_functionName = functionName;
+		}
+
+		public String getFunctionName() {
+			return _functionName;
+		}
+
+		private String _functionName;
+
+	}
+
+	public static class NumberExceedsSupportedRange
+		extends DDMExpressionException {
+
+		public NumberExceedsSupportedRange() {
+			super("The number entered exceeds the supported range.");
+		}
+
 	}
 
 }

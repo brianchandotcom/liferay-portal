@@ -28,7 +28,7 @@ import org.junit.Test;
 public class VariableDependenciesTest {
 
 	@Test
-	public void testVariableDependenciesMap() {
+	public void testVariableDependenciesMap() throws Exception {
 		DDMExpression<Long> ddmExpression =
 			_ddmExpressionFactory.createLongDDMExpression("var1 + var2 + var3");
 

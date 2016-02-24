@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
@@ -100,8 +100,9 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected boolean evaluateBooleanExpression(
-		String expressionString,
-		Set<DDMFormFieldValue> ancestorDDMFormFieldValues) {
+			String expressionString,
+			Set<DDMFormFieldValue> ancestorDDMFormFieldValues)
+		throws PortalException {
 
 		if (Validator.isNull(expressionString)) {
 			return true;
@@ -116,7 +117,7 @@ public class DDMFormEvaluatorHelper {
 		try {
 			return ddmExpression.evaluate();
 		}
-		catch (DDMExpressionEvaluationException ddmeee) {
+		catch (DDMExpressionException ddmee) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Invalid expression or expression that is making " +
@@ -263,9 +264,10 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void setDDMExpressionVariables(
-		DDMExpression<Boolean> ddmExpression,
-		List<DDMFormFieldValue> ddmFormFieldValues,
-		Set<DDMFormFieldValue> ancestorDDMFormFieldValues) {
+			DDMExpression<Boolean> ddmExpression,
+			List<DDMFormFieldValue> ddmFormFieldValues,
+			Set<DDMFormFieldValue> ancestorDDMFormFieldValues)
+		throws PortalException {
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			String name = ddmFormFieldValue.getName();
@@ -294,7 +296,7 @@ public class DDMFormEvaluatorHelper {
 
 	protected void setExpressionVariableValue(
 		DDMExpression<Boolean> ddmExpression, String variableName,
-		String variableType, String variableValue) {
+		String variableType, String variableValue) throws PortalException {
 
 		if (variableType.equals("boolean")) {
 			ddmExpression.setBooleanVariableValue(

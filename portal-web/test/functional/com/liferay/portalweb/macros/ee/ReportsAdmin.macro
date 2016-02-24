@@ -110,7 +110,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureEmailFrom">
@@ -118,7 +118,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureNotificationsEmail">
@@ -126,7 +126,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="deleteReportEntryFile">
@@ -206,7 +206,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
 		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
@@ -224,7 +224,7 @@ Sincerely,<br />
 
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 
 		<var name="notificationSubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
@@ -242,7 +242,7 @@ Sincerely,<br />
 
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="tearDownDefinitions">

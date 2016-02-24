@@ -7,7 +7,7 @@
 		</for>
 
 		<execute function="Click" locator1="Button#SAVE" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">

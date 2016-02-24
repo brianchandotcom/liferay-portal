@@ -196,7 +196,7 @@
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_NAME_FIELD" value1="${userName}" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
 
@@ -206,7 +206,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RECEIVED_TAB" value1="Suggestion Received Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
 
@@ -216,7 +216,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_IN_PROGRESS_TAB" value1="Suggestion in Progress Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
 
@@ -226,7 +226,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RESOLVED_TAB" value1="Suggestion Resolved Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
 
@@ -270,7 +270,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -324,7 +324,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -346,7 +346,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureKBRatingTypePG">
@@ -387,7 +387,7 @@
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureKBSocialBookmarkSites">
@@ -861,7 +861,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

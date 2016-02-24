@@ -11,7 +11,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
 
 		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
@@ -19,7 +19,7 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

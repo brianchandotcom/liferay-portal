@@ -26,6 +26,7 @@ import aQute.bnd.osgi.Domain;
 import aQute.bnd.osgi.Instruction;
 import aQute.bnd.osgi.Instructions;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.JarResource;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.AnalyzerPlugin;
@@ -33,6 +34,7 @@ import aQute.bnd.service.AnalyzerPlugin;
 import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
@@ -44,6 +46,16 @@ import java.util.TreeSet;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Raymond Augé
@@ -279,6 +291,17 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		Set<String> taglibRequirements = new TreeSet<String>();
 
 		for (String uri : getTaglibURIs(content)) {
+
+			// Check to see if the jar provides this TLD itself which would
+			// indicate that it also have the classes, so don't require it.
+
+			if (containsTld(analyzer, analyzer.getJar(), "META-INF", uri) ||
+				containsTld(analyzer, analyzer.getJar(), "WEB-INF/tld", uri) ||
+				containsTldInBundleClassPath(analyzer, "META-INF", uri)) {
+
+				continue;
+			}
+
 			if (Arrays.binarySearch(_JSTL_CORE_URIS, uri) < 0) {
 				addTaglibRequirement(taglibRequirements, uri);
 			}
@@ -349,11 +372,103 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return taglibURis;
 	}
 
+	protected boolean containsTld(
+		Analyzer analyzer, Jar jar, String root, String uri) {
+
+		Map<String, Map<String, Resource>> directories = jar.getDirectories();
+		Map<String,Resource> dir = directories.get(root);
+
+		if (dir == null || dir.isEmpty()) {
+			Resource resource = jar.getResource(root);
+
+			if ((resource != null) &&
+				matchesURI(analyzer, root, resource, uri)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		for (Entry<String, Resource> entry : dir.entrySet()) {
+			String path = entry.getKey();
+			Resource resource = entry.getValue();
+
+			Matcher matcher = _tldPattern.matcher(path);
+
+			if (matcher.matches() &&
+				matchesURI(analyzer, path, resource, uri)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean containsTldInBundleClassPath(
+		Analyzer analyzer, String root, String uri) {
+
+		Parameters parameters = new Parameters(
+			analyzer.getProperty(Constants.BUNDLE_CLASSPATH));
+
+		if (parameters.isEmpty()) {
+			return false;
+		}
+
+		Jar jar = analyzer.getJar();
+
+		for (String entry : parameters.keySet()) {
+			Resource resource = jar.getResource(entry);
+
+			if (!(resource instanceof JarResource)) {
+				continue;
+			}
+
+			JarResource jarResource = (JarResource)resource;
+
+			Jar classPathJar = jarResource.getJar();
+
+			if (containsTld(analyzer, classPathJar, root, uri)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean matchesURI(
+		Analyzer analyzer, String path, Resource resource, final String uri) {
+
+		try {
+			URIFinder uriFinder = new URIFinder(uri);
+
+			SAXParser saxParser = _saxFactory.newSAXParser();
+
+			XMLReader reader = saxParser.getXMLReader();
+			reader.setContentHandler(uriFinder);
+			reader.setFeature(_LOAD_EXTERNAL_DTD, false);
+			reader.setEntityResolver(new NullResolver());
+			reader.parse(new InputSource(resource.openInputStream()));
+
+			return uriFinder.hasURI();
+		}
+		catch (Exception e) {
+			analyzer.error(
+				"Unexpected exception in processing tld " + path + " " + e);
+		}
+
+		return false;
+	}
+
 	private static final String[] _JSTL_CORE_URIS = new String[] {
 		"http://java.sun.com/jsp/jstl/core", "http://java.sun.com/jsp/jstl/fmt",
 		"http://java.sun.com/jsp/jstl/functions",
 		"http://java.sun.com/jsp/jstl/sql", "http://java.sun.com/jsp/jstl/xml"
 	};
+
+	private static final String _LOAD_EXTERNAL_DTD =
+		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
 	private static final String[] _REQUIRED_PACKAGE_NAMES = new String[] {
 		"javax.servlet", "javax.servlet.http"
@@ -361,5 +476,70 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 	private static final Pattern _packagePattern = Pattern.compile(
 		"[_A-Za-z$][_A-Za-z0-9$]*(\\.[_A-Za-z$][_A-Za-z0-9$]*)*");
+
+	private static final Pattern _tldPattern = Pattern.compile(".*\\.tld");
+
+	private final SAXParserFactory _saxFactory = SAXParserFactory.newInstance();
+
+	private class NullResolver implements EntityResolver {
+
+		@Override
+		public InputSource resolveEntity(
+				String publicId, String systemId)
+			throws SAXException, IOException {
+
+			return new InputSource();
+		}
+
+	}
+
+	private class URIFinder extends DefaultHandler {
+
+		public URIFinder(String uri) {
+			_uri = uri;
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName)
+			throws SAXException {
+
+			if (qName.equals("uri")) {
+				_inURI = false;
+			}
+		}
+
+		@Override
+		public void startElement(
+				String uri, String localName, String qName,
+				Attributes attributes)
+			throws SAXException {
+
+			if (qName.equals("uri")) {
+				_inURI = true;
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length)
+			throws SAXException {
+
+			if (!_inURI) {
+				return;
+			}
+
+			String value = new String(ch, start, length);
+
+			_hasURI = _uri.equals(value.trim());
+		}
+
+		public boolean hasURI() {
+			return _hasURI;
+		}
+
+		private boolean _hasURI = false;
+		private boolean _inURI = false;
+		private String _uri;
+
+	}
 
 }

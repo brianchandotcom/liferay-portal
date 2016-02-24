@@ -44,7 +44,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 			}
 			%>
 
-			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>" />
+			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
+				<aui:validator name="maxLength">75</aui:validator>
+			</aui:input>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

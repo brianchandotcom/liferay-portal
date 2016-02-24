@@ -336,6 +336,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public void deleteStructures(long groupId, long classNameId)
 		throws PortalException;
 
+	public DDMForm deserialize(java.lang.String serializedDDMForm)
+		throws PortalException;
+
 	public DynamicQuery dynamicQuery();
 
 	/**

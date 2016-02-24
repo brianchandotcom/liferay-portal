@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -106,6 +107,9 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public DDMForm deserialize(java.lang.String serializedDDMForm)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();

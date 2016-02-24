@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON_DISABLED</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(@class,'disabled') and contains(.,'Save')]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save') and contains(@class,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -133,8 +133,6 @@
 	</command>
 
 	<command name="saveWithoutFormName">
-		<execute function="AssertElementPresent" locator1="Form#SAVE_BUTTON_DISABLED" value1="Save" />
-
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DISABLED" value1="Save" />
 
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />

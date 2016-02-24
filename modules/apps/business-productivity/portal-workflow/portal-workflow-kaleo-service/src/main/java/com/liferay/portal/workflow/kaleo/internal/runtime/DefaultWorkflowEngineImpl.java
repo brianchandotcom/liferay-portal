@@ -275,7 +275,8 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassName, assetClassPK, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -297,7 +298,8 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassNames, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -321,7 +323,8 @@ public class DefaultWorkflowEngineImpl
 					workflowDefinitionName, workflowDefinitionVersion,
 					completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -345,7 +348,8 @@ public class DefaultWorkflowEngineImpl
 					userId, assetType, nodeName, kaleoDefinitionName, completed,
 					start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);

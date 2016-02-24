@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.KaleoTaskAssignmentFactory;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
@@ -35,7 +36,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
-import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
@@ -255,7 +255,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 			for (Organization organization : organizations) {
 				KaleoTaskAssignment organizationKaleoTaskAssignment =
-					new KaleoTaskAssignmentImpl();
+					_kaleoTaskAssignmentFactory.createKaleoTaskAssignment();
 
 				organizationKaleoTaskAssignment.setGroupId(
 					organization.getGroup().getGroupId());
@@ -279,6 +279,9 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Reference
+	private KaleoTaskAssignmentFactory _kaleoTaskAssignmentFactory;
 
 	@Reference
 	private KaleoTaskInstanceTokenLocalService

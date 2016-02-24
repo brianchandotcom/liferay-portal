@@ -108,7 +108,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="title" />
+			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 		</aui:fieldset>

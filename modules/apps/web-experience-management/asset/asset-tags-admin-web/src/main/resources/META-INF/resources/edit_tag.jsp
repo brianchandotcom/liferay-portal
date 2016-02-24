@@ -25,14 +25,10 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-long tagId = ParamUtil.getLong(request, "tagId");
-
-AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "new-tag") : tag.getName()));
+renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 %>
 
 <portlet:actionURL name="editTag" var="editTagURL">
@@ -55,11 +51,11 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "new-tag") : 
 
 	<liferay-ui:error exception="<%= DuplicateTagException.class %>" message="a-tag-with-that-name-already-exists" />
 
-	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
+	<aui:model-context bean="<%= assetTagsDisplayContext.getTag() %>" model="<%= AssetTag.class %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
+			<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
 
 			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
 		</aui:fieldset>

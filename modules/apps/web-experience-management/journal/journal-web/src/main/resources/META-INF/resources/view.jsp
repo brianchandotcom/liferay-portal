@@ -18,6 +18,12 @@
 
 <%
 ArticleSearch articleSearchContainer = journalDisplayContext.getSearchContainer();
+
+String title = journalDisplayContext.getFolderTitle();
+
+if (Validator.isNotNull(title)) {
+	renderResponse.setTitle(journalDisplayContext.getFolderTitle());
+}
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -75,9 +81,7 @@ data.put("qa-id", "navigation");
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test="<%= journalDisplayContext.isShowBreadcrumb() %>">
-					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
-				</c:if>
+				<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
 			</div>
 
 			<%

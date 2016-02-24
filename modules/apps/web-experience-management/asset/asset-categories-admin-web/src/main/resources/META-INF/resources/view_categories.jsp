@@ -111,13 +111,15 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 
 			<liferay-ui:search-container-column-text
 				cssClass="text-strong"
-				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, curCategory.getCategoryId(), assetCategoriesDisplayContext.getVocabularyId()) > 0) ? rowURL : null %>"
+				href="<%= rowURL %>"
 				name="category"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="description"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
 			/>
 

@@ -99,13 +99,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 			<liferay-ui:search-container-column-text
 				cssClass="text-strong"
-				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, vocabulary.getVocabularyId()) > 0) ? rowURL : null %>"
+				href="<%= rowURL %>"
 				name="name"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="description"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 			/>
 

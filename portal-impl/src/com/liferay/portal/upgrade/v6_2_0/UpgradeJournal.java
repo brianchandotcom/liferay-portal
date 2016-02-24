@@ -374,14 +374,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
-		Connection con = null;
 		PreparedStatement ps1 = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps1 = con.prepareStatement(
+			ps1 = connection.prepareStatement(
 				"select companyId, groupId, resourcePrimKey, structureId " +
 					"from JournalArticle where structureId != ''");
 
@@ -389,7 +386,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			try (PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						con.prepareStatement(
+						connection.prepareStatement(
 							"update AssetEntry set classTypeId = ? where " +
 								"classPK = ?"))) {
 
@@ -412,7 +409,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps1, rs);
+			DataAccess.cleanUp(ps1, rs);
 		}
 	}
 
@@ -550,14 +547,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateStructures() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from JournalStructure");
+			ps = connection.prepareStatement("select * from JournalStructure");
 
 			rs = ps.executeQuery();
 
@@ -566,21 +560,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table JournalStructure");
 	}
 
 	protected void updateTemplates() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from JournalTemplate");
+			ps = connection.prepareStatement("select * from JournalTemplate");
 
 			rs = ps.executeQuery();
 
@@ -626,7 +617,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table JournalTemplate");

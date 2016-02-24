@@ -1535,7 +1535,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		baseModuleName = baseModuleName.substring(
 			y + 1, baseModuleName.length());
 
-		return moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
+		String moduleLangDir =
+			moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
+
+		File dir = new File(moduleLangDir);
+
+		if (!dir.exists() && moduleLangDir.contains("/modules/ee/")) {
+			moduleLangDir = StringUtil.replaceFirst(
+				moduleLangDir, "/modules/ee/", "/modules/");
+		}
+
+		return moduleLangDir;
 	}
 
 	protected Properties getModuleLangLanguageProperties(String absolutePath)

@@ -209,6 +209,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	protected BigDecimal evaluate(com.udojava.evalex.Expression expression) {
 		setExpressionCustomFunctions(expression);
+		setExpressionCustomOperators(expression);
 		setExpressionMathContext(expression);
 
 		return expression.eval();
@@ -485,6 +486,75 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 					}
 
 					return sum;
+				}
+
+			});
+	}
+
+	protected void setExpressionCustomOperators(
+		com.udojava.evalex.Expression expression) {
+
+		expression.addOperator(
+			expression.new Operator("+", 20, true) {
+
+				@Override
+				public BigDecimal eval(
+					BigDecimal parameter1, BigDecimal parameter2) {
+
+					return new BigDecimal(
+						parameter1.doubleValue() + parameter2.doubleValue());
+				}
+
+			});
+
+		expression.addOperator(
+			expression.new Operator("-", 20, true) {
+
+				@Override
+				public BigDecimal eval(
+					BigDecimal parameter1, BigDecimal parameter2) {
+
+					return new BigDecimal(
+						parameter1.doubleValue() - parameter2.doubleValue());
+				}
+
+			});
+
+		expression.addOperator(
+			expression.new Operator("*", 30, true) {
+
+				@Override
+				public BigDecimal eval(
+					BigDecimal parameter1, BigDecimal parameter2) {
+
+					return new BigDecimal(
+						parameter1.doubleValue() * parameter2.doubleValue());
+				}
+
+			});
+
+		expression.addOperator(
+			expression.new Operator("/", 30, true) {
+
+				@Override
+				public BigDecimal eval(
+					BigDecimal parameter1, BigDecimal parameter2) {
+
+					return new BigDecimal(
+						parameter1.doubleValue() / parameter2.doubleValue());
+				}
+
+			});
+
+		expression.addOperator(
+			expression.new Operator("%", 30, true) {
+
+				@Override
+				public BigDecimal eval(
+					BigDecimal parameter1, BigDecimal parameter2) {
+
+					return new BigDecimal(
+						parameter1.doubleValue() % parameter2.doubleValue());
 				}
 
 			});

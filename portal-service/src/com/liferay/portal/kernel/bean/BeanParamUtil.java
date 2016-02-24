@@ -14,10 +14,12 @@
 
 package com.liferay.portal.kernel.bean;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -415,6 +417,34 @@ public class BeanParamUtil {
 			bean, param, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, defaultValue);
+	}
+
+	public static <T> T setParameterMap(
+			Class<T> clazz, T configurationBean,
+			Map<String, String[]> parameterMap)
+		throws ConfigurationException {
+
+		ParameterOverrideInvocationHandler<T>
+			parameterOverrideInvocationHandler =
+				new ParameterOverrideInvocationHandler<>(
+					clazz, configurationBean, parameterMap);
+
+		return parameterOverrideInvocationHandler.createProxy();
+	}
+
+	public static <T> T setParameterMap(
+			Class<T> clazz, T configurationBean,
+			Map<String, String[]> parameterMap, String parameterPrefix,
+			String parameterSuffix)
+		throws ConfigurationException {
+
+		ParameterOverrideInvocationHandler<T>
+			parameterOverrideInvocationHandler =
+				new ParameterOverrideInvocationHandler<>(
+					clazz, configurationBean, parameterMap, parameterPrefix,
+					parameterSuffix);
+
+		return parameterOverrideInvocationHandler.createProxy();
 	}
 
 }

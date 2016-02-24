@@ -38,16 +38,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CASConfiguration {
 
-	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to enable CAS single sign on.",
-		required = false
-	)
+	@Meta.AD(deflt = "false", description = "%enabled-help", required = false)
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "A user may be authenticated from CAS and not yet exist in the portal. Set this to true to automatically import users from LDAP if they do not exist in the portal.",
+		deflt = "false", description = "%import-from-ldap-help",
 		required = false
 	)
 	public boolean importFromLDAP();
@@ -56,8 +51,7 @@ public interface CASConfiguration {
 	public String loginURL();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to log out the user from CAS when the portal session expires.",
+		deflt = "false", description = "%logout-on-session-expiration-help",
 		required = false
 	)
 	public boolean logoutOnSessionExpiration();
@@ -66,8 +60,7 @@ public interface CASConfiguration {
 	public String logoutURL();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080",
-		description = "Setting server name allows deep linking. See LEP-4423.",
+		deflt = "http://localhost:8080", description = "%server-name-help",
 		required = false
 	)
 	public String serverName();

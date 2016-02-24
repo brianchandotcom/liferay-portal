@@ -648,11 +648,15 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
+		<execute function="Click" locator1="Comments#COMMENT_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type#typeAlloyEditor" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editCommentPG">

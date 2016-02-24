@@ -1,18 +1,26 @@
 <definition>
 	<command name="addDocumentum">
+		<if>
+			<condition function="IsNotVisible" locator1="DocumentsAndMediaEditRepository#CABINET_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="Panel#ENTRY_REPOSITORY_CONFIGURATION" value1="Repository Configuration" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#CABINET_FIELD" value1="${dmCabinetName}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#REPOSITORY_FIELD" value1="${dmRepositoryFieldName}" />
 	</command>
 
 	<command name="addSharepoint">
+		<if>
+			<condition function="IsNotVisible" locator1="DocumentsAndMediaEditRepository#SITE_URL_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="Panel#ENTRY_REPOSITORY_CONFIGURATION" value1="Repository Configuration" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
-	</command>
-
-	<command name="gotoAdd">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-
-		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 	</command>
 
 	<command name="gotoCP">

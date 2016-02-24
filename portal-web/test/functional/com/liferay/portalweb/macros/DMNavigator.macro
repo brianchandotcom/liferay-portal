@@ -9,6 +9,12 @@
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 
+	<command name="gotoAddRepositoryCP">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
+	</command>
+
 	<command name="gotoDocumentCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

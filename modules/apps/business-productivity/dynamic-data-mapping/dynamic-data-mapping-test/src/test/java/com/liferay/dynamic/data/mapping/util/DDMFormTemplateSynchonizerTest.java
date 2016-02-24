@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -55,7 +54,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormJSONSerializerUtil();
-		setUpDDMFormJSONDeserializerUtil();
+		setUpDDMFormJSONDeserializer();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
@@ -193,7 +192,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMTemplate ddmTemplate)
 		throws Exception {
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = ddmFormJSONDeserializer.deserialize(
 			ddmTemplate.getScript());
 
 		return ddmForm.getDDMFormFieldsMap(true);
@@ -299,9 +298,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		public MockDDMFormTemplateSynchronizer(DDMForm structureDDMForm) {
 			super(
-				structureDDMForm,
-				DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer(),
 				DDMFormJSONSerializerUtil.getDDMFormJSONSerializer(),
+				structureDDMForm, ddmFormJSONDeserializer,
 				DDMTemplateLocalServiceUtil.getService());
 		}
 

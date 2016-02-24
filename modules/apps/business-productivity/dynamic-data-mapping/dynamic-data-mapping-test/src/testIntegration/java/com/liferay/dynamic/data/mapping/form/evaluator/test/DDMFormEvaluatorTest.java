@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
@@ -56,6 +56,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+		setUpDDMFormJSONDeserializer();
 		setUpDDMFormValuesJSONDeserializer();
 	}
 
@@ -64,7 +65,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-valid-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
@@ -98,7 +99,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
@@ -131,7 +132,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
@@ -159,6 +160,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		Assert.assertTrue(checkboxDDMFormFieldEvaluationResult.isVisible());
 	}
 
+	protected void setUpDDMFormJSONDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormJSONDeserializer = registry.getService(
+			DDMFormJSONDeserializer.class);
+	}
+
 	protected void setUpDDMFormValuesJSONDeserializer() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -166,6 +174,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 			DDMFormValuesJSONDeserializer.class);
 	}
 
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 
 }

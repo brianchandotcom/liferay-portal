@@ -15,7 +15,7 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.privatemessaging.portlet;
+package com.liferay.privatemessaging.web.portlet;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
@@ -66,15 +66,47 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
  * @author Eudaldo Alonso
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=private-messaging-portlet",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.friendly-url-mapping=private_messaging",
+		"com.liferay.portlet.header-portlet-css=/css/main.scss",
+		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.remoteable=true",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Private Messaging",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Private Messaging",
+		"javax.portlet.info.short-title=Private Messaging",
+		"javax.portlet.info.title=Private Messaging",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+	},
+	service = Portlet.class
+)
 public class PrivateMessagingPortlet extends MVCPortlet {
 
 	public void deleteMessages(

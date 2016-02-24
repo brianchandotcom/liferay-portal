@@ -89,7 +89,7 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 		}
 
 		List<Object> objects = SocialConfigurationUtil.read(
-			hotDeployEvent.getContextClassLoader(), xmls);
+			servletContext.getClassLoader(), xmls);
 
 		_objects.put(servletContextName, objects);
 

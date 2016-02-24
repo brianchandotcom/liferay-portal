@@ -13,7 +13,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -39,7 +39,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_webContentTitle" value="${subfolderName}" />
 
@@ -94,7 +94,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>

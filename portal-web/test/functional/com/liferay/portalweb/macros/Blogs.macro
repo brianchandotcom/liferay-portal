@@ -32,7 +32,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithCategory">
@@ -51,7 +51,7 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithHTML">
@@ -89,7 +89,7 @@
 			<var name="viewableBy" value="${viewableBy}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithTag">
@@ -107,7 +107,7 @@
 			<var name="tagName" value="${tagName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithTags">
@@ -127,7 +127,7 @@
 			</execute>
 		</for>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithUploadedCoverImage">
@@ -194,7 +194,7 @@
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -357,7 +357,7 @@
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="enableSocialBookmarkSites">
@@ -397,7 +397,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="subscribePG">

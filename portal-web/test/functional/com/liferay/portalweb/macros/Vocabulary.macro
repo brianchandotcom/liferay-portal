@@ -15,7 +15,7 @@
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
 		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -57,7 +57,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -71,7 +71,7 @@
 		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -84,7 +84,7 @@
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1=" " />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
@@ -105,7 +105,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -128,7 +128,7 @@
 		</execute>
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -189,7 +189,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<if>

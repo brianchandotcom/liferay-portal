@@ -1,6 +1,6 @@
 <definition>
 	<command name="_saveDisplaySettings">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -15,7 +15,7 @@
 			<then>
 				<execute function="Check" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -30,7 +30,7 @@
 				<then>
 					<execute function="Uncheck#clickAt" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -54,7 +54,7 @@
 			<then>
 				<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -69,7 +69,7 @@
 				<then>
 					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
 
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -85,7 +85,7 @@
 				<then>
 					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
 
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -134,7 +134,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -146,7 +146,7 @@
 		<execute function="Type" locator1="TextInput#GOOGLE_APPS_API_KEY" value1="${googleAppsAPIKey}" />
 		<execute function="Type" locator1="TextInput#GOOGLE_CLIENT_ID" value1="${googleClientID}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -170,7 +170,7 @@
 
 		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
@@ -202,7 +202,7 @@
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -222,7 +222,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -245,7 +245,7 @@
 
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -269,7 +269,7 @@
 
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -293,7 +293,7 @@
 
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -316,7 +316,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
 
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -336,7 +336,7 @@
 
 		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
 		<execute function="Type#typeCKEditor" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -357,19 +357,19 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editDefaultLandingPageCP">
 		<execute function="Type" locator1="PortalSettings#DEFAULT_LANDING_PAGE_FIELD" value1="${defaultLandingPage}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editVirtualHostCP">
 		<execute function="Type" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 	</command>
@@ -383,7 +383,7 @@
 
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -407,7 +407,7 @@
 
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -431,7 +431,7 @@
 
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -454,7 +454,7 @@
 		</execute>
 
 		<execute function="Select" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
@@ -466,7 +466,7 @@
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -487,7 +487,7 @@
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">

@@ -20,7 +20,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -34,7 +34,7 @@
 
 		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_ACTIVE" value1="No" />
 	</command>

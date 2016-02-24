@@ -6,7 +6,7 @@
 
 		<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="accountSignIn">

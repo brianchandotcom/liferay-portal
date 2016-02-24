@@ -5,7 +5,7 @@
 		<var name="key_userAction" value="${userAction}" />
 
 		<execute function="AssertClick" locator1="SocialActivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="configureActionCP">
@@ -65,12 +65,12 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="enableCP">
 		<execute function="Check" locator1="Checkbox#BLOGS_ENTRY" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="removeActionCP">
@@ -78,7 +78,7 @@
 
 		<execute function="Click" locator1="SocialActivity#CLOSE_ICON" />
 		<execute function="AssertTextEquals" locator1="SocialActivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="viewPGViaUserStatistics">

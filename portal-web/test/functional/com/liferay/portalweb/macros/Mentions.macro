@@ -11,7 +11,7 @@
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addMentionViaComments">
@@ -87,7 +87,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
@@ -101,7 +101,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
@@ -114,7 +114,7 @@
 
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
@@ -128,7 +128,7 @@
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />

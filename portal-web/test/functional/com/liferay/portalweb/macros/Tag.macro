@@ -15,7 +15,7 @@
 		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG_AUTOCOMPLETE" value1="${tagName}" />
 		<execute function="AssertClick" locator1="AssetCategorization#TAG_AUTOCOMPLETE" value1="${tagName}" />
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addCP">
@@ -27,7 +27,7 @@
 				<var name="errorMessage1"><![CDATA[, = > / < [ { % | + # ` ? " ; / * ~.]]></var>
 
 				<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewRequestFailedToComplete" />
 			</then>
@@ -35,7 +35,7 @@
 				<equals arg1="${tagNameVariation}" arg2="Duplicate" />
 				<then>
 					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -46,14 +46,14 @@
 					<execute function="Click" locator1="Button#PLUS" />
 
 					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestFailedToComplete" />
 				</then>
 			</elseif>
 			<else>
 				<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
@@ -90,7 +90,7 @@
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -100,7 +100,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
@@ -166,7 +166,7 @@
 
 		<execute function="Type" locator1="Tags#NAME_FIELD" value1="${tagNameEdit}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>

@@ -55,7 +55,7 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -208,7 +208,7 @@
 			<execute function="Type" locator1="DDMField#DDM_INPUT" value1="Edited ${structureFieldName} Field" />
 		</for>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />

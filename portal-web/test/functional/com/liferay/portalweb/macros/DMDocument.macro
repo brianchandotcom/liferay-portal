@@ -460,7 +460,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_SUCCESS_MESSAGE" value1="Successfully saved." />
 	</command>
 
@@ -531,7 +531,7 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
 		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE" value1="Choose" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -793,7 +793,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -1104,7 +1104,7 @@
 
 		<execute function="Check" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -1455,7 +1455,7 @@
 
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -1483,7 +1483,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>

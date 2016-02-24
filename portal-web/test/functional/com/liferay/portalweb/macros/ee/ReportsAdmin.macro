@@ -6,7 +6,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
 		<execute function="Select" locator1="ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
 		<execute function="UploadCommonFile" locator1="ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -100,7 +100,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -109,7 +109,7 @@
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -117,7 +117,7 @@
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -125,7 +125,7 @@
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -205,7 +205,7 @@
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
@@ -223,7 +223,7 @@ Sincerely,<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
 		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 
@@ -241,7 +241,7 @@ Sincerely,<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 

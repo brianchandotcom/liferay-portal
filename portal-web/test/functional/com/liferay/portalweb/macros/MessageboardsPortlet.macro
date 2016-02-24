@@ -27,7 +27,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -52,7 +52,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -80,7 +80,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -111,7 +111,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -138,7 +138,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -154,7 +154,7 @@
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${scopeName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -194,12 +194,12 @@
 		<execute function="AssertClick" locator1="MessageBoardsAdminConfiguration#SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
 		<execute function="Check" locator1="MessageBoardsAdminConfiguration#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="AssertClick" locator1="MessageBoardsAdminConfiguration#SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
 		<execute function="Check" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -215,7 +215,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Check" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 

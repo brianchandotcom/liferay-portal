@@ -56,7 +56,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -76,7 +76,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLInvalid}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${bookmarkDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#URL_REQUIRED" value1="URL" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#URL_REQUIRED" value1="Required" />
@@ -92,7 +92,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLInvalid}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${bookmarkDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#URL_REQUIRED" value1="URL Required Please enter a valid URL." />
 	</command>
@@ -116,7 +116,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#URL_REQUIRED" value1="URL" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#URL_REQUIRED" value1="Required" />
@@ -161,7 +161,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -180,7 +180,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkName}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURL}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -206,7 +206,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURL}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${bookmarkDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -257,7 +257,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -280,7 +280,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkNameEdit}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLEdit}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 

@@ -9,7 +9,7 @@
 
 		<execute function="Click" locator1="Radio#ADVANCED" />
 		<execute function="Type" locator1="SearchConfiguration#ADVANCED_SEARCH_CONFIGURATION" value1="${advancedSearchConfiguration}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -29,7 +29,7 @@
 
 		<execute function="AssertClick" locator1="SearchConfiguration#SEARCH_PORTLET_CONFIGURATION_MOVE_TO_AVAILABLE_BUTTON" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 

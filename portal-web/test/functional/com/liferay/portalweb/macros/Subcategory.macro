@@ -22,7 +22,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -39,7 +39,7 @@
 		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
@@ -67,7 +67,7 @@
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -123,7 +123,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryNameEdit}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 

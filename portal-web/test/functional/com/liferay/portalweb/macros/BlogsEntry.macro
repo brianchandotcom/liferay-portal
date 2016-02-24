@@ -319,7 +319,7 @@
 
 		<execute function="Select" locator1="ReportContent#REASON_SELECT" value1="${flagReason}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="ReportContent#SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
 
@@ -377,10 +377,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
-	</command>
-
-	<command name="publish">
-		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="publishWithInvalidContent">
@@ -458,7 +454,7 @@
 
 		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

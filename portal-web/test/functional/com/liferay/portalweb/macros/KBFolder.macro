@@ -8,7 +8,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<isset var="kbAddDuplicate" />
@@ -42,7 +42,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>

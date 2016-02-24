@@ -6,7 +6,7 @@
 
 		<execute function="Type" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_NAME_FIELD" value1="${catagoryName}" />
 		<execute function="Select" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -68,7 +68,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 

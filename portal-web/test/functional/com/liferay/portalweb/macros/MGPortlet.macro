@@ -11,7 +11,7 @@
 		<execute function="Check" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>

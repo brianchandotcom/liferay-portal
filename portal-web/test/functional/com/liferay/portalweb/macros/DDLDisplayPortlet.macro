@@ -21,7 +21,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 

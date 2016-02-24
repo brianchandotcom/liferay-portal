@@ -73,7 +73,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${currentDisplayStyleViews}" arg2="" />
@@ -107,7 +107,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

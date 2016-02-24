@@ -11,7 +11,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${customFieldKey}" />
 		<execute function="Select" locator1="Select#TYPE" value1="${customFieldType}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
@@ -45,7 +45,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>

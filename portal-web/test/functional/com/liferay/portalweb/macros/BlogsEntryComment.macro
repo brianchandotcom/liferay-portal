@@ -31,7 +31,7 @@
 		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="uniqueSuccess" value="Your comment has already been posted. Would you like to create an account with the provided information?" />
 

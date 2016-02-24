@@ -8,7 +8,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -66,7 +66,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -96,7 +96,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequiredField" />
 	</command>
@@ -110,7 +110,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -128,7 +128,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategorySubCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -222,7 +222,7 @@
 
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

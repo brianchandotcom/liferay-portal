@@ -165,7 +165,7 @@
 					</elseif>
 				</if>
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</if>
@@ -293,7 +293,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -317,7 +317,7 @@
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="You may join the Restricted Site." />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your reply will be sent to the user by email." />
 		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
@@ -358,7 +358,7 @@
 		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ROW_1_BUTTON" value1="${teamName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -481,7 +481,7 @@
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
 		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -585,7 +585,7 @@
 	<command name="editCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteNameEdit}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteNameEdit}" />
@@ -601,7 +601,7 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${friendlyURLInvalid}" arg2="true" />
@@ -626,7 +626,7 @@
 
 		<execute function="Type" locator1="TextInput#GOOGLE_ANALYTICS_ID" value1="${googleAnalyticsID}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -636,7 +636,7 @@
 
 		<execute function="Check" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -692,7 +692,7 @@
 
 		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -729,7 +729,7 @@
 
 					<execute function="Type" locator1="TextArea#COMMENTS" value1="Please allow me to join the Restricted Site." />
 
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
@@ -820,7 +820,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -937,7 +937,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 

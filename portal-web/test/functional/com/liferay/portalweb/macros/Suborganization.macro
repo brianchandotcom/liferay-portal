@@ -7,7 +7,7 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE_SELECT" value1="${suborgType}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_orgType" value="${orgType}" />
 

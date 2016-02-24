@@ -1802,7 +1802,7 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
@@ -1990,7 +1990,7 @@
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

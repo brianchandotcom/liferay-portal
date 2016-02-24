@@ -940,7 +940,7 @@
 		<execute function="Click" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_HEADER" />
 
 		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="30000000" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="Page#gotoPG">

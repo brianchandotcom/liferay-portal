@@ -142,7 +142,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Bar minimally styled" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 

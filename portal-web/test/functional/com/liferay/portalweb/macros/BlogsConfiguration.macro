@@ -26,7 +26,7 @@
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${scopeSelection}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -42,7 +42,7 @@
 	</command>
 
 	<command name="saveConfigurationIFrame">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="selectConfigurationIFrame">

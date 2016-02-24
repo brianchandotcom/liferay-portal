@@ -20,7 +20,7 @@
 		</if>
 
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="a0a822b80b2b" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -35,6 +35,6 @@
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="" />
 		<execute function="Type" locator1="Akismet#REPORTABLE_TIME_FIELD" value1="30" />
 		<execute function="Type" locator1="Akismet#CHECK_THRESHOLD_FIELD" value1="50" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 </definition>

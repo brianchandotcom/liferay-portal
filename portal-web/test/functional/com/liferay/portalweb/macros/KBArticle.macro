@@ -191,7 +191,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_EMAIL_FROM_TAB" value1="Email From" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_NAME_FIELD" value1="${userName}" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
@@ -201,7 +201,7 @@
 			<then>
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RECEIVED_TAB" value1="Suggestion Received Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
@@ -211,7 +211,7 @@
 			<then>
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_IN_PROGRESS_TAB" value1="Suggestion in Progress Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
@@ -221,7 +221,7 @@
 			<then>
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RESOLVED_TAB" value1="Suggestion Resolved Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</then>
 		</if>
@@ -264,7 +264,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -319,7 +319,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -341,7 +341,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -367,7 +367,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -382,7 +382,7 @@
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
@@ -417,7 +417,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
@@ -642,7 +642,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -823,7 +823,7 @@
 
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -851,7 +851,7 @@
 
 		<execute function="Select" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
@@ -869,7 +869,7 @@
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
 		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

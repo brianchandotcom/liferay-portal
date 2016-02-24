@@ -70,7 +70,7 @@
 
 		<execute function="Check" locator1="RolesPermissions#CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The role permissions were updated." />
 
@@ -385,7 +385,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="Child SiteName2" />
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="Navigator#openURL" />

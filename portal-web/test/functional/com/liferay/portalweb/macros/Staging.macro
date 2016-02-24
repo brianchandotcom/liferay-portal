@@ -72,7 +72,7 @@
 		<if>
 			<equals arg1="${editActivateStaging}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 			</then>
 			<elseif>
 				<equals arg1="${remoteStaging}" arg2="true" />
@@ -476,7 +476,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="Pause" locator1="5000" />
 	</command>
@@ -696,7 +696,7 @@
 	</command>
 
 	<command name="savePublishTemplate">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />
 

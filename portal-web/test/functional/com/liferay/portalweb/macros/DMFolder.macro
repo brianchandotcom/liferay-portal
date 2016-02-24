@@ -18,7 +18,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
@@ -49,7 +49,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${dmFolder}" arg2="Duplicate" />
@@ -83,7 +83,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -108,7 +108,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${dmSubFolder}" arg2="Duplicate" />
@@ -147,7 +147,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${dmSubFolder}" arg2="Duplicate" />
@@ -181,7 +181,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgSubfolderDescription}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -209,7 +209,7 @@
 			<then>
 				<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 			</then>
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
@@ -236,7 +236,7 @@
 				<then>
 					<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
 					<execute function="Select" locator1="DocumentsAndMediaEditFolder#WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 				</then>
 			</elseif>
 		</if>
@@ -287,7 +287,7 @@
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmFolderNameEdit}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#DESCRIPTION_FIELD" value1="${dmFolderDescriptionEdit}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
@@ -306,7 +306,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${dmFolderNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmFolderDescriptionEdit}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_dmFolderNameEdit" value="${dmFolderNameEdit}" />
 
@@ -321,7 +321,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescriptionEdit}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -424,7 +424,7 @@
 
 		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${dmFolderName}" />
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

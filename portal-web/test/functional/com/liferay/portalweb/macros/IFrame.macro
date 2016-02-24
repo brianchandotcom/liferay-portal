@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Type" locator1="TextInput#SOURCE_URL" value1="${sourceURL}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -14,7 +14,7 @@
 	</command>
 
 	<command name="saveConfiguration">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />

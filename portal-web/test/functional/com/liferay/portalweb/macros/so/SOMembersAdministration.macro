@@ -24,7 +24,7 @@
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Approved" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />
@@ -154,7 +154,7 @@
 		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
 		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${singleApproverWorkflow}" arg2="true" />
@@ -165,10 +165,10 @@
 			<else>
 				<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 
 				<execute function="Close#closeWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
 			</else>
@@ -200,7 +200,7 @@
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Deny" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Denied" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />

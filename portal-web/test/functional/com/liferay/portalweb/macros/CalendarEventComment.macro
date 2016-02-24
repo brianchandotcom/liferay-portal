@@ -9,7 +9,7 @@
 				<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
 				<execute function="Type#type" locator1="TextInput#NAME" value1="${calendarName}" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute macro="Button#clickSave" />
 				<execute function="Click" locator1="Button#SAVE" />
 
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
@@ -23,7 +23,7 @@
 					<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
 					<execute function="Type#type" locator1="TextInput#NAME" value1="${calendarName}" />
-					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute macro="Button#clickSave" />
 					<execute function="Click" locator1="Button#SAVE" />
 
 					<execute macro="Alert#viewRequestCompletedSuccessMessage" />

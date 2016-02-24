@@ -703,7 +703,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(9);
-				
+
 				sb.append("Using ");
 				sb.append(name);
 				sb.append(" as the primary key instead of the legacy primary ");

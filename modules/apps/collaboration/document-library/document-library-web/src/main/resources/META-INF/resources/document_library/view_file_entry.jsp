@@ -317,7 +317,7 @@ if (portletTitleBasedNavigation) {
 									ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
 									fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 									readOnly="<%= true %>"
-									requestedLocale="<%= locale %>"
+									requestedLocale="<%= Validator.isNull(ddmFormValues.getDefaultLocale()) ? locale : ddmFormValues.getDefaultLocale() %>"
 									showEmptyFieldLabel="<%= false %>"
 								/>
 							</liferay-ui:panel>

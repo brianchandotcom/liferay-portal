@@ -68,6 +68,7 @@ public class EditTemplatePortletConfigurationIcon
 
 		sb.append("Liferay.Util.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', destroyOnHide: true, id: '");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

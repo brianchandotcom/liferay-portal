@@ -546,6 +546,8 @@ public class JournalContentDisplayContext {
 		JournalArticle article = getArticle();
 
 		try {
+			redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
 			AssetRenderer<JournalArticle> latestArticleAssetRenderer =
 				assetRendererFactory.getAssetRenderer(
 					article.getResourcePrimKey());
@@ -553,6 +555,10 @@ public class JournalContentDisplayContext {
 			PortletURL portletURL = latestArticleAssetRenderer.getURLEdit(
 				(LiferayPortletRequest)_portletRequest, null,
 				LiferayWindowState.POP_UP, redirectURL);
+
+			portletURL.setParameter(
+				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+			portletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 			return portletURL.toString();
 		}
@@ -586,6 +592,9 @@ public class JournalContentDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		try {
+			portletURL.setParameter(
+				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 			portletURL.setPortletMode(PortletMode.VIEW);
 
@@ -601,7 +610,8 @@ public class JournalContentDisplayContext {
 			"referringPortletResource", portletDisplay.getId());
 
 		portletURL.setParameter("mvcPath", "/edit_template.jsp");
-		portletURL.setParameter("backURL", redirectURL.toString());
+		portletURL.setParameter("navigationStartsOn", "SELECT_TEMPLATE");
+		portletURL.setParameter("redirect", redirectURL.toString());
 		portletURL.setParameter("showBackURL", Boolean.FALSE.toString());
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter(

@@ -56,6 +56,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		_portalKaleoManager = portalKaleoManager;
 	}
 
+	@Reference
 	private PortalKaleoManager _portalKaleoManager;
 
 }

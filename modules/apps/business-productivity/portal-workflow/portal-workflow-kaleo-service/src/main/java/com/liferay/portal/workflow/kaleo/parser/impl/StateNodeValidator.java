@@ -18,11 +18,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.State;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true, property = {"node.type=STATE"},
+	service = NodeValidator.class
+)
 public class StateNodeValidator extends BaseNodeValidator<State> {
 
 	@Override

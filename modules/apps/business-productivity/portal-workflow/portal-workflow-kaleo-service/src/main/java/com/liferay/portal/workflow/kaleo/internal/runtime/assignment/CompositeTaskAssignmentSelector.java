@@ -15,6 +15,9 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
@@ -23,9 +26,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = CompositeTaskAssignmentSelector.class)
 public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 
 	@Override
@@ -49,10 +59,54 @@ public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 			kaleoTaskAssignment, executionContext);
 	}
 
-	public void setTaskAssignmentSelectors(
-		Map<String, TaskAssignmentSelector> taskAssignmentSelectors) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(assignee.class.name=*)",
+		unbind = "removeTaskAssignmentSelector"
+	)
+	protected void addTaskAssignmentSelector(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
 
-		_taskAssignmentSelectors.putAll(taskAssignmentSelectors);
+		String[] assigneeClassNames = getAssigneeClassNames(
+			taskAssignmentSelector, properties);
+
+		for (String assigneeClassName : assigneeClassNames) {
+			_taskAssignmentSelectors.put(
+				assigneeClassName, taskAssignmentSelector);
+		}
+	}
+
+	protected String[] getAssigneeClassNames(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
+
+		Object value = properties.get("assignee.class.name");
+
+		String[] assigneeClassNames = GetterUtil.getStringValues(
+			value, new String[] {String.valueOf(value)});
+
+		if (ArrayUtil.isEmpty(assigneeClassNames)) {
+			throw new IllegalArgumentException(
+				"Must have an assignee.class.name property for: " +
+					ClassUtil.getClassName(taskAssignmentSelector));
+		}
+
+		return assigneeClassNames;
+	}
+
+	protected void removeTaskAssignmentSelector(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
+
+		String[] assigneeClassNames = getAssigneeClassNames(
+			taskAssignmentSelector, properties);
+
+		for (String assigneeClassName : assigneeClassNames) {
+			_taskAssignmentSelectors.remove(assigneeClassName);
+		}
 	}
 
 	private final Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =

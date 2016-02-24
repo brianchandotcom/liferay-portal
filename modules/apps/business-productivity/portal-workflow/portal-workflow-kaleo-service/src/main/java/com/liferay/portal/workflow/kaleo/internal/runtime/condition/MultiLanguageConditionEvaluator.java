@@ -15,6 +15,9 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.condition;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -23,9 +26,16 @@ import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = ConditionEvaluator.class)
 public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 
 	@Override
@@ -48,20 +58,55 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		return conditionEvaluator.evaluate(kaleoCondition, executionContext);
 	}
 
-	public void setConditionEvaluators(
-		Map<String, ConditionEvaluator> conditionEvaluators) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(scripting.language=*)", unbind = "removeConditionEvaluator"
+	)
+	protected void addConditionEvaluator(
+		ConditionEvaluator conditionEvaluator,
+		Map<String, Object> properties) {
 
-		for (Map.Entry<String, ConditionEvaluator> entry :
-				conditionEvaluators.entrySet()) {
+		String[] scriptingLanguages = getScriptingLanguages(
+			conditionEvaluator, properties);
 
-			ScriptLanguage scriptLanguage = ScriptLanguage.parse(
-				entry.getKey());
-
-			_conditionEvaluators.put(scriptLanguage, entry.getValue());
+		for (String scriptingLanguage : scriptingLanguages) {
+			_conditionEvaluators.put(scriptingLanguage, conditionEvaluator);
 		}
 	}
 
-	private final Map<ScriptLanguage, ConditionEvaluator> _conditionEvaluators =
+	protected String[] getScriptingLanguages(
+		ConditionEvaluator conditionEvaluator,
+		Map<String, Object> properties) {
+
+		Object value = properties.get("scripting.language");
+
+		String[] scriptingLanguages = GetterUtil.getStringValues(
+			value, new String[] {String.valueOf(value)});
+
+		if (ArrayUtil.isEmpty(scriptingLanguages)) {
+			throw new IllegalArgumentException(
+				"Must have a scripting.language property for: " +
+					ClassUtil.getClassName(conditionEvaluator));
+		}
+
+		return scriptingLanguages;
+	}
+
+	protected void removeConditionEvaluator(
+		ConditionEvaluator conditionEvaluator,
+		Map<String, Object> properties) {
+
+		String[] scriptingLanguages = getScriptingLanguages(
+			conditionEvaluator, properties);
+
+		for (String scriptingLanguage : scriptingLanguages) {
+			_conditionEvaluators.remove(scriptingLanguage);
+		}
+	}
+
+	private final Map<String, ConditionEvaluator> _conditionEvaluators =
 		new HashMap<>();
 
 }

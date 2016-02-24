@@ -16,11 +16,11 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilderUtil;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -30,9 +30,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"scripting.language=beanshell", "scripting.language=groovy",
+		"scripting.language=javascript", "scripting.language=python",
+		"scripting.language=ruby"
+	},
+	service = TaskAssignmentSelector.class
+)
 public class ScriptingLanguagesTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
@@ -43,7 +55,7 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		throws PortalException {
 
 		Map<String, Object> inputObjects =
-			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
+			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
 		String assigneeScript = kaleoTaskAssignment.getAssigneeScript();
 
@@ -72,7 +84,10 @@ public class ScriptingLanguagesTaskAssignmentSelector
 		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
 
-	@ServiceReference(type = Scripting.class)
+	@Reference
 	private Scripting _scripting;
+
+	@Reference
+	private ScriptingContextBuilder _scriptingContextBuilder;
 
 }

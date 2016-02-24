@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.AddressRecipient;
 import com.liferay.portal.workflow.kaleo.definition.AssigneesRecipient;
@@ -51,39 +49,45 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
-public abstract class BaseNodeBuilder
-	extends BaseKaleoBean implements NodeBuilder {
+public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 
 	@Override
-	public Node buildNode(KaleoNode kaleoNode) throws PortalException {
-		Node node = createNode(kaleoNode);
+	public T buildNode(KaleoNode kaleoNode) throws PortalException {
+		T t = createNode(kaleoNode);
 
 		Set<Action> actions = buildActions(
 			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
 
-		node.setActions(actions);
+		t.setActions(actions);
 
-		node.setMetadata(kaleoNode.getMetadata());
+		t.setMetadata(kaleoNode.getMetadata());
 
 		Set<Notification> notifications = buildNotifications(
 			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
 
-		node.setNotifications(notifications);
+		t.setNotifications(notifications);
 
 		Set<Timer> timers = buildTimers(
 			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
 
-		node.setTimers(timers);
+		t.setTimers(timers);
 
-		return node;
+		return t;
 	}
 
 	protected void addNotificationRecipients(
@@ -116,7 +120,7 @@ public abstract class BaseNodeBuilder
 				recipient = new AssigneesRecipient();
 			}
 			else if (recipientClassName.equals(RecipientType.ROLE.getValue())) {
-				Role role = _roleLocalService.fetchRole(recipientClassPK);
+				Role role = roleLocalService.fetchRole(recipientClassPK);
 
 				recipient = new RoleRecipient(
 					role.getName(), role.getTypeLabel());
@@ -131,7 +135,7 @@ public abstract class BaseNodeBuilder
 			}
 			else if (recipientClassName.equals(RecipientType.USER.getValue())) {
 				if (recipientClassPK > 0) {
-					User user = _userLocalService.getUser(recipientClassPK);
+					User user = userLocalService.getUser(recipientClassPK);
 
 					recipient = new UserRecipient(
 						user.getUserId(), user.getScreenName(),
@@ -203,7 +207,7 @@ public abstract class BaseNodeBuilder
 					kaleoTaskAssignment.getAssigneeActionId());
 			}
 			else if (assigneeClassName.equals(Role.class.getName())) {
-				Role role = _roleLocalService.fetchRole(assigneeClassPK);
+				Role role = roleLocalService.fetchRole(assigneeClassPK);
 
 				assignment = new RoleAssignment(
 					role.getName(), role.getTypeLabel());
@@ -213,7 +217,7 @@ public abstract class BaseNodeBuilder
 					assignment = new UserAssignment();
 				}
 				else {
-					User user = _userLocalService.getUser(assigneeClassPK);
+					User user = userLocalService.getUser(assigneeClassPK);
 
 					assignment = new UserAssignment(
 						user.getUserId(), user.getScreenName(),
@@ -314,13 +318,28 @@ public abstract class BaseNodeBuilder
 		return timers;
 	}
 
-	protected abstract Node createNode(KaleoNode kaleoNode)
-		throws PortalException;
+	protected abstract T createNode(KaleoNode kaleoNode) throws PortalException;
 
-	@ServiceReference(type = RoleLocalService.class)
-	private RoleLocalService _roleLocalService;
+	@Reference
+	protected KaleoActionLocalService kaleoActionLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
-	private UserLocalService _userLocalService;
+	@Reference
+	protected KaleoNotificationLocalService kaleoNotificationLocalService;
+
+	@Reference
+	protected KaleoNotificationRecipientLocalService
+		kaleoNotificationRecipientLocalService;
+
+	@Reference
+	protected KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService;
+
+	@Reference
+	protected KaleoTimerLocalService kaleoTimerLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
 
 }

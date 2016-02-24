@@ -14,24 +14,58 @@
 
 package com.liferay.portal.workflow.kaleo.export.builder;
 
+import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = NodeBuilderRegistry.class)
 public class NodeBuilderRegistry {
 
-	public static NodeBuilder getNodeBuilder(String nodeTypeString) {
-		return nodeBuilders.getNodeTypeDependentObjects(nodeTypeString);
+	public NodeBuilder<Node> getNodeBuilder(String nodeTypeString) {
+		return _nodeBuilders.getNodeTypeDependentObjects(nodeTypeString);
 	}
 
-	public void setNodeBuilders(Map<String, NodeBuilder> nodeBuilders) {
-		this.nodeBuilders.setNodeTypeDependentObjects(nodeBuilders);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeNodeValidator"
+	)
+	protected void addNodeValidator(
+		NodeBuilder<Node> nodeBuilder, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeBuilders.addNodeTypeDependentObject(nodeType, nodeBuilder);
 	}
 
-	protected static NodeTypeDependentObjectRegistry<NodeBuilder>
-		nodeBuilders = new NodeTypeDependentObjectRegistry<>();
+	protected void removeNodeValidator(
+		NodeBuilder<Node> nodeBuilder, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeBuilders.removeNodeTypeDependentObjects(nodeType);
+	}
+
+	private final NodeTypeDependentObjectRegistry<NodeBuilder<Node>>
+		_nodeBuilders = new NodeTypeDependentObjectRegistry<>();
 
 }

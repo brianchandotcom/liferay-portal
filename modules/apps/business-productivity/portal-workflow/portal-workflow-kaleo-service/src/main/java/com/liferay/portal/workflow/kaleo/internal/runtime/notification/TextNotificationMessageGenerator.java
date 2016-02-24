@@ -17,9 +17,15 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"template.language=text"},
+	service = NotificationMessageGenerator.class
+)
 public class TextNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 

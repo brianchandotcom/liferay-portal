@@ -226,12 +226,6 @@ public class DefaultPortalKaleoManager
 		_definitionFiles.putAll(definitionFiles);
 	}
 
-	public void setWorkflowDefinitionManager(
-		WorkflowDefinitionManager workflowDefinitionManager) {
-
-		_workflowDefinitionManager = workflowDefinitionManager;
-	}
-
 	protected void deployDefaultDefinitionLink(
 			User defaultUser, long companyId, Group companyGroup,
 			String assetClassName, String workflowDefinitionName)
@@ -295,6 +289,8 @@ public class DefaultPortalKaleoManager
 	private final Map<String, String> _defaultRoles = new HashMap<>();
 	private final Map<String, String> _definitionAssets = new HashMap<>();
 	private final Map<String, String> _definitionFiles = new HashMap<>();
+
+	@ServiceReference(type = WorkflowDefinitionManager.class)
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

@@ -30,10 +30,19 @@ import com.liferay.portal.workflow.kaleo.util.comparators.KaleoDefinitionOrderBy
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true,
+	service = {
+		WorkflowDefinitionManager.class, WorkflowDefinitionManagerImpl.class
+	}
+)
 public class WorkflowDefinitionManagerImpl
 	implements WorkflowDefinitionManager {
 
@@ -267,10 +276,6 @@ public class WorkflowDefinitionManagerImpl
 		}
 	}
 
-	public void setWorkflowEngine(WorkflowEngine workflowEngine) {
-		_workflowEngine = workflowEngine;
-	}
-
 	@Override
 	public void undeployWorkflowDefinition(
 			long companyId, long userId, String name, int version)
@@ -362,6 +367,7 @@ public class WorkflowDefinitionManagerImpl
 		return workflowDefinitions;
 	}
 
+	@Reference
 	private WorkflowEngine _workflowEngine;
 
 }

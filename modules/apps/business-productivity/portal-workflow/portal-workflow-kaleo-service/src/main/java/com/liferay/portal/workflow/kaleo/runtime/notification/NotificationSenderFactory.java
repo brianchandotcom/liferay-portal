@@ -14,17 +14,27 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.notification;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = NotificationSenderFactory.class)
 public class NotificationSenderFactory {
 
-	public static NotificationSender getNotificationSender(
-			String notificationType)
+	public NotificationSender getNotificationSender(String notificationType)
 		throws WorkflowException {
 
 		NotificationSender notificationSender = _notificationSenders.get(
@@ -38,12 +48,54 @@ public class NotificationSenderFactory {
 		return notificationSender;
 	}
 
-	public void setNotificationSenders(
-		Map<String, NotificationSender> notificationSenders) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(notification.type=*)", unbind = "removeNotificationSender"
+	)
+	protected void addNotificationSender(
+		NotificationSender notificationSender,
+		Map<String, Object> properties) {
 
-		_notificationSenders = notificationSenders;
+		String[] notificationTypes = getNotificationTypes(
+			notificationSender, properties);
+
+		for (String notificationType : notificationTypes) {
+			_notificationSenders.put(notificationType, notificationSender);
+		}
 	}
 
-	private static Map<String, NotificationSender> _notificationSenders;
+	protected String[] getNotificationTypes(
+		NotificationSender notificationSender, Map<String, Object> properties) {
+
+		Object value = properties.get("notification.type");
+
+		String[] notificationTypes = GetterUtil.getStringValues(
+			value, new String[] {String.valueOf(value)});
+
+		if (ArrayUtil.isEmpty(notificationTypes)) {
+			throw new IllegalArgumentException(
+				"Must have a notification.type property for: " +
+					ClassUtil.getClassName(notificationSender));
+		}
+
+		return notificationTypes;
+	}
+
+	protected void removeNotificationSender(
+		NotificationSender notificationSender,
+		Map<String, Object> properties) {
+
+		String[] notificationTypes = getNotificationTypes(
+			notificationSender, properties);
+
+		for (String notificationType : notificationTypes) {
+			_notificationSenders.remove(notificationType);
+		}
+	}
+
+	private final Map<String, NotificationSender> _notificationSenders =
+		new HashMap<>();
 
 }

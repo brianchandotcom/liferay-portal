@@ -17,10 +17,17 @@ package com.liferay.portal.workflow.kaleo.export;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=TASK"},
+	service = NodeExporter.class
+)
 public class TaskNodeExporter extends BaseNodeExporter implements NodeExporter {
 
 	@Override

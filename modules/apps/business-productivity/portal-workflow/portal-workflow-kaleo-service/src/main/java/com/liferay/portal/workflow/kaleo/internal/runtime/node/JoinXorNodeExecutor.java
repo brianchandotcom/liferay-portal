@@ -22,12 +22,21 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=JOIN_XOR"},
+	service = NodeExecutor.class
+)
 public class JoinXorNodeExecutor extends BaseNodeExecutor {
 
 	@Override
@@ -39,7 +48,7 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 			executionContext.getKaleoInstanceToken();
 
 		kaleoInstanceToken =
-			kaleoInstanceTokenLocalService.getKaleoInstanceToken(
+			_kaleoInstanceTokenLocalService.getKaleoInstanceToken(
 				kaleoInstanceToken.getKaleoInstanceTokenId());
 
 		if (kaleoInstanceToken.isCompleted()) {
@@ -47,7 +56,7 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 		}
 
 		kaleoInstanceToken =
-			kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
+			_kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
 				kaleoInstanceToken.getKaleoInstanceTokenId());
 
 		KaleoInstanceToken parentKaleoInstanceToken =
@@ -65,7 +74,7 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 		for (KaleoInstanceToken childrenKaleoInstanceToken :
 				childrenKaleoInstanceTokens) {
 
-			kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
+			_kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
 				childrenKaleoInstanceToken.getKaleoInstanceTokenId());
 		}
 
@@ -91,7 +100,7 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 		}
 
 		parentKaleoInstanceToken =
-			kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
+			_kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
 				parentKaleoInstanceToken.getKaleoInstanceTokenId(),
 				currentKaleoNode.getKaleoNodeId());
 
@@ -120,5 +129,8 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 	}
+
+	@Reference
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
 
 }

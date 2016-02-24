@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
@@ -35,18 +35,27 @@ import java.util.Set;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"fromAdress=no-reply@liferay.com",
+		"fromName=Liferay Portal Workflow Notifications",
+		"notification.type=email"
+	},
+	service = NotificationSender.class
+)
 public class EmailNotificationSender
 	extends BaseNotificationSender implements NotificationSender {
 
-	public void setFromAddress(String fromAddress) {
-		_fromAddress = fromAddress;
-	}
-
-	public void setFromName(String fromName) {
-		_fromName = fromName;
+	protected void activate(Map<String, Object> properties) {
+		_fromAddress = (String)properties.get("fromAddress");
+		_fromName = (String)properties.get("fromName");
 	}
 
 	@Override
@@ -96,7 +105,7 @@ public class EmailNotificationSender
 			getInternetAddresses(
 				notificationRecipients.get(NotificationReceptionType.BCC)));
 
-		MailServiceUtil.sendEmail(mailMessage);
+		_mailService.sendEmail(mailMessage);
 	}
 
 	protected InternetAddress[] getInternetAddresses(
@@ -122,5 +131,8 @@ public class EmailNotificationSender
 
 	private String _fromAddress;
 	private String _fromName;
+
+	@Reference
+	private MailService _mailService;
 
 }

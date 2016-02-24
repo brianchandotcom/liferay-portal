@@ -17,10 +17,17 @@ package com.liferay.portal.workflow.kaleo.parser.impl;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.JoinXor;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=JOIN_XOR"},
+	service = NodeValidator.class
+)
 public class JoinXorNodeValidator extends BaseNodeValidator<JoinXor> {
 
 	@Override

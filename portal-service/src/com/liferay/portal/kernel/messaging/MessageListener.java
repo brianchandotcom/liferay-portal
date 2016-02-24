@@ -19,6 +19,9 @@ package com.liferay.portal.kernel.messaging;
  */
 public interface MessageListener {
 
+	public static final String MESSAGE_LISTENER_OPERATING_CLASS_LOADER =
+		"message.listener.operating.class.loader";
+
 	public void receive(Message message) throws MessageListenerException;
 
 }

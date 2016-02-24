@@ -21,11 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class SchedulerUtil {
 
-	public static final String WORKFLOW_TIMER_DESTINATION_NAME =
-		"liferay/workflow_timer";
-
 	public static final String getGroupName(long kaleoTimerInstanceTokenId) {
-		String groupName = WORKFLOW_TIMER_DESTINATION_NAME.concat(
+		String groupName = DestinationNames.WORKFLOW_TIMER.concat(
 			StringPool.SLASH).concat(String.valueOf(kaleoTimerInstanceTokenId));
 
 		return groupName;

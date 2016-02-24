@@ -41,6 +41,10 @@ public class DefaultWorkflowDestinationEventListener
 		}
 
 		MessageBusUtil.unregisterMessageListener(
+			DestinationNames.WORKFLOW_COMPARATOR,
+			_workflowComparatorFactoryListener);
+
+		MessageBusUtil.unregisterMessageListener(
 			DestinationNames.WORKFLOW_DEFINITION,
 			_workflowDefinitionManagerListener);
 
@@ -72,6 +76,10 @@ public class DefaultWorkflowDestinationEventListener
 		}
 
 		MessageBusUtil.registerMessageListener(
+			DestinationNames.WORKFLOW_COMPARATOR,
+			_workflowComparatorFactoryListener);
+
+		MessageBusUtil.registerMessageListener(
 			DestinationNames.WORKFLOW_DEFINITION,
 			_workflowDefinitionManagerListener);
 
@@ -87,6 +95,12 @@ public class DefaultWorkflowDestinationEventListener
 
 		MessageBusUtil.registerMessageListener(
 			DestinationNames.WORKFLOW_TASK, _workflowTaskManagerListener);
+	}
+
+	public void setWorkflowComparatorFactoryListener(
+		MessageListener workflowComparatorFactoryListener) {
+
+		_workflowComparatorFactoryListener = workflowComparatorFactoryListener;
 	}
 
 	public void setWorkflowDefinitionManagerListener(
@@ -137,6 +151,7 @@ public class DefaultWorkflowDestinationEventListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultWorkflowDestinationEventListener.class);
 
+	private MessageListener _workflowComparatorFactoryListener;
 	private MessageListener _workflowDefinitionManagerListener;
 	private MessageListener _workflowEngineManagerListener;
 	private String _workflowEngineName;

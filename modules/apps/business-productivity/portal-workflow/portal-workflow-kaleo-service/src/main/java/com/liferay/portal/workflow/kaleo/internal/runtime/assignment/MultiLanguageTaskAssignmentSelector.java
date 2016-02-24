@@ -16,6 +16,9 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -27,9 +30,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"assignee.class.name=SCRIPT"},
+	service = TaskAssignmentSelector.class
+)
 public class MultiLanguageTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
@@ -76,10 +89,54 @@ public class MultiLanguageTaskAssignmentSelector
 		return taskAssignments;
 	}
 
-	public void setTaskAssignmentSelectors(
-		Map<String, TaskAssignmentSelector> taskAssignmentSelectors) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(scripting.language=*)",
+		unbind = "removeTaskAssignmentSelector"
+	)
+	protected void addTaskAssignmentSelector(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
 
-		_taskAssignmentSelectors.putAll(taskAssignmentSelectors);
+		String[] scriptingLanguages = getScriptingLanguages(
+			taskAssignmentSelector, properties);
+
+		for (String scriptingLanguage : scriptingLanguages) {
+			_taskAssignmentSelectors.put(
+				scriptingLanguage, taskAssignmentSelector);
+		}
+	}
+
+	protected String[] getScriptingLanguages(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
+
+		Object value = properties.get("scripting.language");
+
+		String[] scriptingLanguages = GetterUtil.getStringValues(
+			value, new String[] {String.valueOf(value)});
+
+		if (ArrayUtil.isEmpty(scriptingLanguages)) {
+			throw new IllegalArgumentException(
+				"Must have a scripting.language property for: " +
+					ClassUtil.getClassName(taskAssignmentSelector));
+		}
+
+		return scriptingLanguages;
+	}
+
+	protected void removeTaskAssignmentSelector(
+		TaskAssignmentSelector taskAssignmentSelector,
+		Map<String, Object> properties) {
+
+		String[] scriptingLanguages = getScriptingLanguages(
+			taskAssignmentSelector, properties);
+
+		for (String scriptingLanguage : scriptingLanguages) {
+			_taskAssignmentSelectors.remove(scriptingLanguage);
+		}
 	}
 
 	private final Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =

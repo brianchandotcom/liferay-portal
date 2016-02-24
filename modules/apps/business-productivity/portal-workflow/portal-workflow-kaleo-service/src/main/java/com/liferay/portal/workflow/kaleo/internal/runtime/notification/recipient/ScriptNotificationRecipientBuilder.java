@@ -32,9 +32,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"recipient.type=SCRIPT"},
+	service = NotificationRecipientBuilder.class
+)
 public class ScriptNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {
 
@@ -88,19 +95,10 @@ public class ScriptNotificationRecipientBuilder
 		throws Exception {
 	}
 
-	public void setNotificationRecipientEvaluator(
-		NotificationRecipientEvaluator notificationRecipientEvaluator) {
-
-		_notificationRecipientEvaluator = notificationRecipientEvaluator;
-	}
-
-	public void setRoleNotificationRecipientBuilder(
-		RoleNotificationRecipientBuilder roleNotificationRecipientBuilder) {
-
-		_roleNotificationRecipientBuilder = roleNotificationRecipientBuilder;
-	}
-
+	@Reference
 	private NotificationRecipientEvaluator _notificationRecipientEvaluator;
+
+	@Reference
 	private RoleNotificationRecipientBuilder _roleNotificationRecipientBuilder;
 
 }

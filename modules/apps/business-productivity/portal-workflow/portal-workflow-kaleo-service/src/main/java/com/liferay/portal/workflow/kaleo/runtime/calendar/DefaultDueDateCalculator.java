@@ -21,9 +21,12 @@ import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = DueDateCalculator.class)
 public class DefaultDueDateCalculator implements DueDateCalculator {
 
 	@Override

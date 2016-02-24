@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -46,7 +47,7 @@ public class DefaultGraphWalker extends BaseKaleoBean implements GraphWalker {
 		throws PortalException {
 
 		if (sourceKaleoNode != null) {
-			NodeExecutor nodeExecutor = NodeExecutorFactory.getNodeExecutor(
+			NodeExecutor nodeExecutor = _nodeExecutorFactory.getNodeExecutor(
 				sourceKaleoNode.getType());
 
 			nodeExecutor.exit(
@@ -58,7 +59,7 @@ public class DefaultGraphWalker extends BaseKaleoBean implements GraphWalker {
 				executionContext.getKaleoInstanceToken(), sourceKaleoNode,
 				targetKaleoNode, executionContext.getServiceContext());
 
-			NodeExecutor nodeExecutor = NodeExecutorFactory.getNodeExecutor(
+			NodeExecutor nodeExecutor = _nodeExecutorFactory.getNodeExecutor(
 				targetKaleoNode.getType());
 
 			boolean performExecute = nodeExecutor.enter(
@@ -72,5 +73,8 @@ public class DefaultGraphWalker extends BaseKaleoBean implements GraphWalker {
 
 		ExecutionUtil.checkKaleoInstanceComplete(executionContext);
 	}
+
+	@ServiceReference(type = NodeExecutorFactory.class)
+	private NodeExecutorFactory _nodeExecutorFactory;
 
 }

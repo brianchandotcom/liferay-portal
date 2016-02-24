@@ -364,9 +364,11 @@ public class DefaultMessageBus implements MessageBus {
 
 		try {
 			ClassLoader operatingClassLoader = (ClassLoader)properties.get(
-				"message.listener.operating.class.loader");
+				MessageListener.MESSAGE_LISTENER_OPERATING_CLASS_LOADER);
 
-			currentThread.setContextClassLoader(operatingClassLoader);
+			if (operatingClassLoader != null) {
+				currentThread.setContextClassLoader(operatingClassLoader);
+			}
 
 			String destinationName = MapUtil.getString(
 				properties, "destination.name");

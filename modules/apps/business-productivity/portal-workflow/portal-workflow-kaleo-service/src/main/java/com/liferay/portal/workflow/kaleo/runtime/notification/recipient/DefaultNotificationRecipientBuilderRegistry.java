@@ -14,14 +14,25 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.notification.recipient;
 
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, service = NotificationRecipientBuilderRegistry.class
+)
 public class DefaultNotificationRecipientBuilderRegistry
 	implements NotificationRecipientBuilderRegistry {
 
@@ -40,14 +51,49 @@ public class DefaultNotificationRecipientBuilderRegistry
 		return notificationRecipientBuilder;
 	}
 
-	public void setNotificationRecipientBuilders(
-		Map<RecipientType, NotificationRecipientBuilder>
-			notificationRecipientBuilders) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeNotificationRecipientBuilder"
+	)
+	protected void addNotificationRecipientBuilder(
+		NotificationRecipientBuilder notificationRecipientBuilder,
+		Map<String, Object> properties) {
 
-		_notificationRecipientBuilders = notificationRecipientBuilders;
+		RecipientType recipientType = getRecipientType(
+			notificationRecipientBuilder, properties);
+
+		_notificationRecipientBuilders.put(
+			recipientType, notificationRecipientBuilder);
 	}
 
-	private Map<RecipientType, NotificationRecipientBuilder>
+	protected void removeNotificationRecipientBuilder(
+		NotificationRecipientBuilder notificationRecipientBuilder,
+		Map<String, Object> properties) {
+
+		RecipientType recipientType = getRecipientType(
+			notificationRecipientBuilder, properties);
+
+		_notificationRecipientBuilders.remove(recipientType);
+	}
+
+	private RecipientType getRecipientType(
+		NotificationRecipientBuilder notificationRecipientBuilder,
+		Map<String, Object> properties) {
+
+		String value = (String)properties.get("recipient.type");
+
+		if (Validator.isNull(value)) {
+			throw new IllegalArgumentException(
+				"Must have an recipient.type property in order to add: " +
+					ClassUtil.getClassName(notificationRecipientBuilder));
+		}
+
+		return RecipientType.valueOf(value);
+	}
+
+	private final Map<RecipientType, NotificationRecipientBuilder>
 		_notificationRecipientBuilders = new HashMap<>();
 
 }

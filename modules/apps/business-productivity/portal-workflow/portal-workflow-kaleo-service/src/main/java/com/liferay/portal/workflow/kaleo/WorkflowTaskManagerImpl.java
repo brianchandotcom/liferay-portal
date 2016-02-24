@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -63,10 +62,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true,
+	service = {WorkflowTaskManager.class, WorkflowTaskManagerImpl.class}
+)
 public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override
@@ -155,8 +161,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				WorkflowConstants.CONTEXT_TASK_COMMENTS, comment);
 			workflowContext.put(
 				WorkflowConstants.CONTEXT_TRANSITION_NAME, transitionName);
-			workflowContext.put(
-				WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId));
 
 			ExecutionContext executionContext = new ExecutionContext(
 				kaleoInstanceToken, kaleoTaskInstanceToken, workflowContext,
@@ -257,7 +261,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					calculatedKaleoTaskAssignment.getAssigneeClassPK();
 
 				if (assigneeClassName.equals(User.class.getName())) {
-					User user = UserLocalServiceUtil.fetchUser(assigneeClassPK);
+					User user = _userLocalService.fetchUser(assigneeClassPK);
 
 					if (user != null) {
 						pooledActors.put(user.getFullName(), user.getUserId());
@@ -266,14 +270,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					continue;
 				}
 
-				Role role = RoleLocalServiceUtil.getRole(
+				Role role = _roleLocalService.getRole(
 					calculatedKaleoTaskAssignment.getAssigneeClassPK());
 
 				if ((role.getType() == RoleConstants.TYPE_SITE) ||
 					(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
 					List<UserGroupRole> userGroupRoles =
-						UserGroupRoleLocalServiceUtil.
+						_userGroupRoleLocalService.
 							getUserGroupRolesByGroupAndRole(
 								kaleoTaskInstanceToken.getGroupId(),
 								assigneeClassPK);
@@ -285,7 +289,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					}
 
 					List<UserGroupGroupRole> userGroupGroupRoles =
-						UserGroupGroupRoleLocalServiceUtil.
+						_userGroupGroupRoleLocalService.
 							getUserGroupGroupRolesByGroupAndRole(
 								kaleoTaskInstanceToken.getGroupId(),
 								assigneeClassPK);
@@ -294,7 +298,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 							userGroupGroupRoles) {
 
 						List<User> userGroupUsers =
-							UserLocalServiceUtil.getUserGroupUsers(
+							_userLocalService.getUserGroupUsers(
 								userGroupGroupRole.getUserGroupId());
 
 						for (User user : userGroupUsers) {
@@ -305,7 +309,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				}
 				else {
 					List<User> inheritedRoleUsers =
-						UserLocalServiceUtil.getInheritedRoleUsers(
+						_userLocalService.getInheritedRoleUsers(
 							assigneeClassPK, QueryUtil.ALL_POS,
 							QueryUtil.ALL_POS, null);
 
@@ -770,20 +774,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 	}
 
-	public void setKaleoSignaler(KaleoSignaler kaleoSignaler) {
-		_kaleoSignaler = kaleoSignaler;
-	}
-
-	public void setTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector) {
-
-		_taskAssignmentSelector = taskAssignmentSelector;
-	}
-
-	public void setTaskManager(TaskManager taskManager) {
-		_taskManager = taskManager;
-	}
-
 	@Override
 	public WorkflowTask updateDueDate(
 			long companyId, long userId, long workflowTaskInstanceId,
@@ -856,11 +846,28 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return workflowTasks;
 	}
 
-	@ServiceReference(type = LockManager.class)
+	@Reference
 	protected LockManager lockManager;
 
+	@Reference
 	private KaleoSignaler _kaleoSignaler;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private TaskAssignmentSelector _taskAssignmentSelector;
+
+	@Reference
 	private TaskManager _taskManager;
+
+	@Reference
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

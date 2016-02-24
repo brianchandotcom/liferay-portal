@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
@@ -36,9 +36,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"recipient.type=ROLE"},
+	service = {
+		NotificationRecipientBuilder.class,
+		RoleNotificationRecipientBuilder.class
+	}
+)
 public class RoleNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {
 
@@ -67,7 +77,7 @@ public class RoleNotificationRecipientBuilder
 
 		long roleId = kaleoTaskAssignmentInstance.getAssigneeClassPK();
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		Role role = _roleLocalService.getRole(roleId);
 
 		addRoleRecipientAddresses(
 			notificationRecipients, roleId, role.getType(),
@@ -97,7 +107,7 @@ public class RoleNotificationRecipientBuilder
 		throws Exception {
 
 		if (roleType == RoleConstants.TYPE_REGULAR) {
-			return UserLocalServiceUtil.getInheritedRoleUsers(
+			return _userLocalService.getInheritedRoleUsers(
 				roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 
@@ -107,7 +117,7 @@ public class RoleNotificationRecipientBuilder
 			executionContext.getKaleoInstanceToken();
 
 		List<UserGroupRole> userGroupRoles =
-			UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(
+			_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 				kaleoInstanceToken.getGroupId(), roleId);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
@@ -115,17 +125,29 @@ public class RoleNotificationRecipientBuilder
 		}
 
 		List<UserGroupGroupRole> userGroupGroupRoles =
-			UserGroupGroupRoleLocalServiceUtil.
+			_userGroupGroupRoleLocalService.
 				getUserGroupGroupRolesByGroupAndRole(
 					kaleoInstanceToken.getGroupId(), roleId);
 
 		for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
 			users.addAll(
-				UserLocalServiceUtil.getUserGroupUsers(
+				_userLocalService.getUserGroupUsers(
 					userGroupGroupRole.getUserGroupId()));
 		}
 
 		return users;
 	}
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

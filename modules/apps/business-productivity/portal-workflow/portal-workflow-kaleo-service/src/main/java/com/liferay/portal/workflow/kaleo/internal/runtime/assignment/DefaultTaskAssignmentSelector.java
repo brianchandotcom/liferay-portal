@@ -22,9 +22,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"assignee.class.name=com.liferay.portal.kernel.model.User"},
+	service = TaskAssignmentSelector.class
+)
 public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 
 	@Override

@@ -21,8 +21,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 /**
  * @author Michael C. Han
  */
-public interface NodeBuilder {
+public interface NodeBuilder<T extends Node> {
 
-	public Node buildNode(KaleoNode kaleoNode) throws PortalException;
+	public T buildNode(KaleoNode kaleoNode) throws PortalException;
 
 }

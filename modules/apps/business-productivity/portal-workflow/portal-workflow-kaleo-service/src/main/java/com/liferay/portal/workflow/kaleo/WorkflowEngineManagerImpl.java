@@ -19,9 +19,15 @@ import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 import java.util.Collections;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	service = {WorkflowEngineManager.class, WorkflowEngineManagerImpl.class}
+)
 public class WorkflowEngineManagerImpl implements WorkflowEngineManager {
 
 	@Override

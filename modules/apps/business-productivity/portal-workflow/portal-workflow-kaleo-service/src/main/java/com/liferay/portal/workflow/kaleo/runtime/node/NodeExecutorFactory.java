@@ -18,20 +18,53 @@ import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = NodeExecutorFactory.class)
 public class NodeExecutorFactory {
 
-	public static NodeExecutor getNodeExecutor(String nodeTypeString) {
+	public NodeExecutor getNodeExecutor(String nodeTypeString) {
 		return _nodeExecutors.getNodeTypeDependentObjects(nodeTypeString);
 	}
 
-	public void setNodeExectors(Map<String, NodeExecutor> nodeExecutors) {
-		_nodeExecutors.setNodeTypeDependentObjects(nodeExecutors);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeNodeExporter"
+	)
+	protected void addNodeExporter(
+		NodeExecutor nodeExecutor, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeExecutors.addNodeTypeDependentObject(nodeType, nodeExecutor);
 	}
 
-	private static final NodeTypeDependentObjectRegistry<NodeExecutor>
+	protected void removeNodeExporter(
+		NodeExecutor nodeExecutor, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeExecutors.removeNodeTypeDependentObjects(nodeType);
+	}
+
+	private final NodeTypeDependentObjectRegistry<NodeExecutor>
 		_nodeExecutors = new NodeTypeDependentObjectRegistry<>();
 
 }

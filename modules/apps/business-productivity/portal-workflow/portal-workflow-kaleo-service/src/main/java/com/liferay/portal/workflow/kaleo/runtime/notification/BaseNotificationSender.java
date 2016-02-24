@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
@@ -58,14 +60,6 @@ public abstract class BaseNotificationSender implements NotificationSender {
 		}
 	}
 
-	public void setNotificationRecipientBuilderRegistry(
-		NotificationRecipientBuilderRegistry
-			notificationRecipientBuilderRegistry) {
-
-		_notificationRecipientBuilderRegistry =
-			notificationRecipientBuilderRegistry;
-	}
-
 	protected abstract void doSendNotification(
 			Map<NotificationReceptionType, Set<NotificationRecipient>>
 				notificationRecipientsMap,
@@ -88,7 +82,7 @@ public abstract class BaseNotificationSender implements NotificationSender {
 					notificationRecipientsMap, NotificationReceptionType.TO);
 
 			NotificationRecipientBuilder notificationRecipientBuilder =
-				_notificationRecipientBuilderRegistry.
+				notificationRecipientBuilderRegistry.
 					getNotificationRecipientBuilder(RecipientType.ASSIGNEES);
 
 			notificationRecipientBuilder.processKaleoNotificationRecipient(
@@ -113,7 +107,7 @@ public abstract class BaseNotificationSender implements NotificationSender {
 				kaleoNotificationRecipient.getRecipientClassName());
 
 			NotificationRecipientBuilder notificationRecipientBuilder =
-				_notificationRecipientBuilderRegistry.
+				notificationRecipientBuilderRegistry.
 					getNotificationRecipientBuilder(recipientType);
 
 			notificationRecipientBuilder.processKaleoNotificationRecipient(
@@ -142,7 +136,8 @@ public abstract class BaseNotificationSender implements NotificationSender {
 		return notificationRecipients;
 	}
 
-	private NotificationRecipientBuilderRegistry
-		_notificationRecipientBuilderRegistry;
+	@Reference
+	protected NotificationRecipientBuilderRegistry
+		notificationRecipientBuilderRegistry;
 
 }

@@ -31,9 +31,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = ScriptingContextBuilder.class)
 public class ScriptingContextBuilderImpl implements ScriptingContextBuilder {
 
 	@Override

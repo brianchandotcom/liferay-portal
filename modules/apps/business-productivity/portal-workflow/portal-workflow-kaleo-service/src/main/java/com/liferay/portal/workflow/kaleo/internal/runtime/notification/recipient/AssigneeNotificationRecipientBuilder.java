@@ -28,9 +28,19 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.Notifica
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"recipient.type=ASSIGNEES"},
+	service = NotificationRecipientBuilder.class
+)
 public class AssigneeNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {
 
@@ -58,14 +68,6 @@ public class AssigneeNotificationRecipientBuilder
 		addAssignedRecipients(
 			notificationRecipients, notificationReceptionType,
 			executionContext);
-	}
-
-	public void setNotificationRecipientBuilderRegistry(
-		NotificationRecipientBuilderRegistry
-			notificationRecipientBuilderRegistry) {
-
-		_notificationRecipientBuilderRegistry =
-			notificationRecipientBuilderRegistry;
 	}
 
 	protected void addAssignedRecipients(
@@ -106,7 +108,12 @@ public class AssigneeNotificationRecipientBuilder
 		}
 	}
 
-	private NotificationRecipientBuilderRegistry
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile NotificationRecipientBuilderRegistry
 		_notificationRecipientBuilderRegistry;
 
 }

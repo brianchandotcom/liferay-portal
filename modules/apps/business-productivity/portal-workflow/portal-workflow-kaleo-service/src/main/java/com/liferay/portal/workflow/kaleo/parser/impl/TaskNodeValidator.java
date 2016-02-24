@@ -18,13 +18,20 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true, property = {"node.type=TASK"},
+	service = NodeValidator.class
+)
 public class TaskNodeValidator extends BaseNodeValidator<Task> {
 
 	@Override

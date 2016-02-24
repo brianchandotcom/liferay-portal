@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
-import com.liferay.portal.workflow.kaleo.parser.NodeValidator;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.Map;
 

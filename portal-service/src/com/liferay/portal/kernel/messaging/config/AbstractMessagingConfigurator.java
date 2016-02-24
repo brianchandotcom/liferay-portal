@@ -482,7 +482,7 @@ public abstract class AbstractMessagingConfigurator
 
 			properties.put("destination.name", _destinationName);
 			properties.put(
-				"message.listener.operating.class.loader",
+				MessageListener.MESSAGE_LISTENER_OPERATING_CLASS_LOADER,
 				operatingClassLoader);
 
 			for (MessageListener messageListener : _messageListeners) {

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
@@ -33,9 +33,16 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"notification.type=user-notification"},
+	service = NotificationSender.class
+)
 public class UserNotificationMessageSender
 	extends BaseNotificationSender implements NotificationSender {
 
@@ -59,12 +66,10 @@ public class UserNotificationMessageSender
 					continue;
 				}
 
-				UserNotificationEventLocalServiceUtil.
-					sendUserNotificationEvents(
-						notificationRecipient.getUserId(),
-						PortletKeys.MY_WORKFLOW_TASK,
-						UserNotificationDeliveryConstants.TYPE_WEBSITE,
-						jsonObject);
+				_userNotificationEventLocalService.sendUserNotificationEvents(
+					notificationRecipient.getUserId(),
+					PortletKeys.MY_WORKFLOW_TASK,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, jsonObject);
 			}
 		}
 	}
@@ -72,7 +77,7 @@ public class UserNotificationMessageSender
 	protected JSONObject populateJSONObject(
 		String notificationMessage, ExecutionContext executionContext) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
@@ -125,5 +130,12 @@ public class UserNotificationMessageSender
 
 		return jsonObject;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

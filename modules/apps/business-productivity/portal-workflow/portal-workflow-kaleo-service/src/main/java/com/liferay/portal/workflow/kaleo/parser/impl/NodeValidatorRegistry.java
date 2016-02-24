@@ -16,27 +16,58 @@ package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.parser.NodeValidator;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = NodeValidatorRegistry.class)
 public class NodeValidatorRegistry {
 
 	public NodeValidator<Node> getNodeValidator(NodeType nodeType) {
 		return _nodeValidators.getNodeTypeDependentObjects(nodeType);
 	}
 
-	public void setNodeValidators(
-		Map<String, NodeValidator<Node>> nodeValidators) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeNodeValidator"
+	)
+	protected void addNodeValidator(
+		NodeValidator<Node> nodeValidator, Map<String, Object> properties) {
 
-		_nodeValidators.setNodeTypeDependentObjects(nodeValidators);
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeValidators.addNodeTypeDependentObject(nodeType, nodeValidator);
 	}
 
-	private static final NodeTypeDependentObjectRegistry<NodeValidator<Node>>
+	protected void removeNodeValidator(
+		NodeValidator<Node> nodeValidator, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeValidators.removeNodeTypeDependentObjects(nodeType);
+	}
+
+	private final NodeTypeDependentObjectRegistry<NodeValidator<Node>>
 		_nodeValidators = new NodeTypeDependentObjectRegistry<>();
 
 }

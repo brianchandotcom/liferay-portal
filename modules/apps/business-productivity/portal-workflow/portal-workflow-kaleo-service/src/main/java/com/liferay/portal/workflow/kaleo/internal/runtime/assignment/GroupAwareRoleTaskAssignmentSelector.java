@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
@@ -30,9 +30,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"assignee.class.name=com.liferay.portal.kernel.model.Role"},
+	service = TaskAssignmentSelector.class
+)
 public class GroupAwareRoleTaskAssignmentSelector
 	implements TaskAssignmentSelector {
 
@@ -50,11 +57,10 @@ public class GroupAwareRoleTaskAssignmentSelector
 		long groupId = kaleoInstanceToken.getGroupId();
 
 		if (groupId != WorkflowConstants.DEFAULT_GROUP_ID) {
-			group = GroupLocalServiceUtil.getGroup(groupId);
+			group = _groupLocalService.getGroup(groupId);
 
 			if (group.isLayout()) {
-				group = GroupLocalServiceUtil.getGroup(
-					group.getParentGroupId());
+				group = _groupLocalService.getGroup(group.getParentGroupId());
 			}
 		}
 
@@ -74,7 +80,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 
 		long roleId = kaleoTaskAssignment.getAssigneeClassPK();
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		Role role = _roleLocalService.getRole(roleId);
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			return true;
@@ -92,5 +98,11 @@ public class GroupAwareRoleTaskAssignmentSelector
 
 		return false;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

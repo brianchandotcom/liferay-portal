@@ -49,20 +49,25 @@ import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
-import com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser;
+import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 
 import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
+@Component(immediate = true, service = WorkflowModelParser.class)
 public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	@Override
@@ -78,6 +83,11 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	public void setValidate(boolean validate) {
 		_validate = validate;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_validate = GetterUtil.getBoolean(properties.get("validating"), true);
 	}
 
 	protected Definition doParse(InputStream inputStream) throws Exception {

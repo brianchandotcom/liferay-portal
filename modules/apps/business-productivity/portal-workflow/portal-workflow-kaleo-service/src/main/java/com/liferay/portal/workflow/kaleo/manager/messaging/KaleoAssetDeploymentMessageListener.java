@@ -16,11 +16,21 @@ package com.liferay.portal.workflow.kaleo.manager.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
+import com.liferay.portal.workflow.kaleo.util.DestinationNames;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.WORKFLOW_DEFINITION_LINK},
+	service = MessageListener.class
+)
 public class KaleoAssetDeploymentMessageListener extends BaseMessageListener {
 
 	public void setPortalKaleoManager(PortalKaleoManager portalKaleoManager) {
@@ -34,6 +44,7 @@ public class KaleoAssetDeploymentMessageListener extends BaseMessageListener {
 		_portalKaleoManager.deployDefaultDefinitionLink(assetClassName);
 	}
 
+	@Reference
 	private PortalKaleoManager _portalKaleoManager;
 
 }

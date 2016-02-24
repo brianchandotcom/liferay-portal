@@ -15,24 +15,58 @@
 package com.liferay.portal.workflow.kaleo.export;
 
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = NodeExporterRegistry.class)
 public class NodeExporterRegistry {
 
-	public static NodeExporter getNodeExporter(NodeType nodeType) {
+	public NodeExporter getNodeExporter(NodeType nodeType) {
 		return _nodeExporters.getNodeTypeDependentObjects(nodeType);
 	}
 
-	public void setNodeExporter(Map<String, NodeExporter> nodeExporters) {
-		_nodeExporters.setNodeTypeDependentObjects(nodeExporters);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeNodeExporter"
+	)
+	protected void addNodeExporter(
+		NodeExporter nodeExporter, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeExporters.addNodeTypeDependentObject(nodeType, nodeExporter);
 	}
 
-	private static final NodeTypeDependentObjectRegistry<NodeExporter>
+	protected void removeNodeExporter(
+		NodeExporter nodeExporter, Map<String, Object> properties) {
+
+		String nodeType = (String)properties.get("node.type");
+
+		if (nodeType == null) {
+			throw new IllegalArgumentException("Must specify a node type");
+		}
+
+		_nodeExporters.removeNodeTypeDependentObjects(nodeType);
+	}
+
+	private final NodeTypeDependentObjectRegistry<NodeExporter>
 		_nodeExporters = new NodeTypeDependentObjectRegistry<>();
 
 }

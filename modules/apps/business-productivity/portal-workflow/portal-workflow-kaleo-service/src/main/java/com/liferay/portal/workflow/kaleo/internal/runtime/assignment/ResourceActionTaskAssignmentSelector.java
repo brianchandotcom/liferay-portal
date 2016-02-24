@@ -16,13 +16,14 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.assignment;
 
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
 
 import java.io.Serializable;
 
@@ -31,10 +32,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true, property = {"assignee.class.name=com.liferay.portal.kernel.model.ResourceAction"},
+	service = TaskAssignmentSelector.class
+)
 public class ResourceActionTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
@@ -64,7 +72,7 @@ public class ResourceActionTaskAssignmentSelector
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		List<Role> roles = RoleLocalServiceUtil.getResourceRoles(
+		List<Role> roles = _roleLocalService.getResourceRoles(
 			serviceContext.getCompanyId(), resourceName,
 			ResourceConstants.SCOPE_INDIVIDUAL, resourceClassPK,
 			kaleoTaskAssignment.getAssigneeActionId());
@@ -76,5 +84,8 @@ public class ResourceActionTaskAssignmentSelector
 
 		return kaleoTaskAssignments;
 	}
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

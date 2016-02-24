@@ -14,11 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.action;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -31,9 +29,16 @@ import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = KaleoActionExecutor.class)
 public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 
 	@Override
@@ -79,7 +84,7 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 		}
 	}
 
-	@ServiceReference(type = ActionExecutorManager.class)
+	@Reference
 	protected ActionExecutorManager actionExecutorManager;
 
 	private static final String _COMMENT_ACTION_SUCCESS =
@@ -88,13 +93,25 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoActionExecutorImpl.class);
 
-	@BeanReference(type = KaleoActionLocalService.class)
-	private KaleoActionLocalService _kaleoActionLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoActionLocalService _kaleoActionLocalService;
 
-	@BeanReference(type = KaleoInstanceLocalService.class)
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoInstanceLocalService _kaleoInstanceLocalService;
 
-	@BeanReference(type = KaleoLogLocalService.class)
-	private KaleoLogLocalService _kaleoLogLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoLogLocalService _kaleoLogLocalService;
 
 }

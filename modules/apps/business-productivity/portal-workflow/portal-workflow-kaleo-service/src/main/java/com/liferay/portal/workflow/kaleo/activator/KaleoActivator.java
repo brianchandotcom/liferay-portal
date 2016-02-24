@@ -26,7 +26,7 @@ import org.springframework.context.ApplicationContext;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-@Component(immediate = true)
+@Component(immediate = true, service = KaleoActivator.class)
 public class KaleoActivator {
 
 	@Activate

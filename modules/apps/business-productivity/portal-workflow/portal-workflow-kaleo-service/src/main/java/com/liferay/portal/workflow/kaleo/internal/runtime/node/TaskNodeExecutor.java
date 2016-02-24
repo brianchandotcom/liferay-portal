@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
@@ -41,7 +41,10 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.io.Serializable;
 
@@ -53,20 +56,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=TASK"},
+	service = NodeExecutor.class
+)
 public class TaskNodeExecutor extends BaseNodeExecutor {
-
-	public void setDueDateCalculator(DueDateCalculator dueDateCalculator) {
-		_dueDateCalculator = dueDateCalculator;
-	}
-
-	public void setTaskAssignmentSelector(
-		TaskAssignmentSelector taskAssignmentSelector) {
-
-		_taskAssignmentSelector = taskAssignmentSelector;
-	}
 
 	protected Date calculateDueDate(KaleoTask kaleoTask) {
 		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
@@ -125,7 +125,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			kaleoTaskAssignments.addAll(organizationKaleoTaskAssignments);
 		}
 
-		return kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
+		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId(),
 			kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
 			kaleoTaskAssignments, dueDate, workflowContext, serviceContext);
@@ -143,7 +143,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		KaleoTask kaleoTask = kaleoTaskLocalService.getKaleoNodeKaleoTask(
+		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoNodeKaleoTask(
 			currentKaleoNode.getKaleoNodeId());
 
 		Date dueDate = calculateDueDate(kaleoTask);
@@ -158,11 +158,11 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		NotificationUtil.sendKaleoNotifications(
+		notificationUtil.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		kaleoLogLocalService.addTaskAssignmentKaleoLog(
+		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
 			null, kaleoTaskInstanceToken, "Assigned initial task.",
 			workflowContext, serviceContext);
 
@@ -188,7 +188,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			return;
 		}
 
-		TaskAssignerUtil.reassignKaleoTask(
+		_taskAssignerUtil.reassignKaleoTask(
 			kaleoTaskReassignments, executionContext);
 	}
 
@@ -230,7 +230,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 		long userId = executionContext.getKaleoInstanceToken().getUserId();
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		List<Organization> organizations = user.getOrganizations();
 
@@ -247,7 +247,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 			long roleId = kaleoTaskAssignment.getAssigneeClassPK();
 
-			Role role = RoleLocalServiceUtil.getRole(roleId);
+			Role role = _roleLocalService.getRole(roleId);
 
 			if (role.getType() != RoleConstants.TYPE_ORGANIZATION) {
 				continue;
@@ -274,7 +274,29 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		return organizationKaleoTaskAssignments;
 	}
 
+	@Reference
 	private DueDateCalculator _dueDateCalculator;
+
+	@Reference
+	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
+
+	@Reference
+	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TaskAssignerUtil _taskAssignerUtil;
+
+	@Reference
 	private TaskAssignmentSelector _taskAssignmentSelector;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

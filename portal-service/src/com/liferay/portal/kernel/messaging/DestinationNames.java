@@ -143,6 +143,9 @@ public interface DestinationNames {
 
 	public static final String TEST_TRANSACTION = "liferay/test_transaction";
 
+	public static final String WORKFLOW_COMPARATOR =
+		"liferay/workflow_comparator";
+
 	public static final String WORKFLOW_DEFINITION =
 		"liferay/workflow_definition";
 

@@ -23,9 +23,15 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"notification.type=private-message"},
+	service = NotificationSender.class
+)
 public class PrivateMessageNotificationSender
 	extends BaseNotificationSender implements NotificationSender {
 

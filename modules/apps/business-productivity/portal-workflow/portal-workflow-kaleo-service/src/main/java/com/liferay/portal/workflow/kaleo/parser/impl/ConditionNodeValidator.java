@@ -17,11 +17,18 @@ package com.liferay.portal.workflow.kaleo.parser.impl;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true, property = {"node.type=CONDITION"},
+	service = NodeValidator.class
+)
 public class ConditionNodeValidator extends BaseNodeValidator<Condition> {
 
 	@Override

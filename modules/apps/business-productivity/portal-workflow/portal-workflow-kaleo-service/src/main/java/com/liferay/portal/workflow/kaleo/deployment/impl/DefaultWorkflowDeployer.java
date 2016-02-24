@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
@@ -26,20 +25,31 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
-import com.liferay.portal.workflow.kaleo.deployment.WorkflowDeployer;
+import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
-public class DefaultWorkflowDeployer
-	extends BaseKaleoBean implements WorkflowDeployer {
+@Component(immediate = true, service = WorkflowDeployer.class)
+public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 	@Override
 	public WorkflowDefinition deploy(
@@ -47,18 +57,18 @@ public class DefaultWorkflowDeployer
 		throws PortalException {
 
 		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionLocalService.fetchLatestKaleoDefinition(
+			_kaleoDefinitionLocalService.fetchLatestKaleoDefinition(
 				title, serviceContext);
 
 		if (kaleoDefinition == null) {
-			kaleoDefinition = kaleoDefinitionLocalService.addKaleoDefinition(
+			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
 				definition.getName(), title, definition.getDescription(),
 				definition.getContent(), definition.getVersion(),
 				serviceContext);
 		}
 		else {
 			kaleoDefinition =
-				kaleoDefinitionLocalService.incrementKaleoDefinition(
+				_kaleoDefinitionLocalService.incrementKaleoDefinition(
 					definition, title, serviceContext);
 		}
 
@@ -69,7 +79,7 @@ public class DefaultWorkflowDeployer
 		Map<String, KaleoNode> kaleoNodesMap = new HashMap<>();
 
 		for (Node node : nodes) {
-			KaleoNode kaleoNode = kaleoNodeLocalService.addKaleoNode(
+			KaleoNode kaleoNode = _kaleoNodeLocalService.addKaleoNode(
 				kaleoDefinitionId, node, serviceContext);
 
 			kaleoNodesMap.put(node.getName(), kaleoNode);
@@ -79,14 +89,14 @@ public class DefaultWorkflowDeployer
 			if (nodeType.equals(NodeType.TASK)) {
 				Task task = (Task)node;
 
-				kaleoTaskLocalService.addKaleoTask(
+				_kaleoTaskLocalService.addKaleoTask(
 					kaleoDefinitionId, kaleoNode.getKaleoNodeId(), task,
 					serviceContext);
 			}
 			else if (nodeType.equals(NodeType.CONDITION)) {
 				Condition condition = (Condition)node;
 
-				kaleoConditionLocalService.addKaleoCondition(
+				_kaleoConditionLocalService.addKaleoCondition(
 					kaleoDefinitionId, kaleoNode.getKaleoNodeId(), condition,
 					serviceContext);
 			}
@@ -114,7 +124,7 @@ public class DefaultWorkflowDeployer
 							transition.getTargetNode());
 				}
 
-				kaleoTransitionLocalService.addKaleoTransition(
+				_kaleoTransitionLocalService.addKaleoTransition(
 					kaleoNode.getKaleoDefinitionId(),
 					kaleoNode.getKaleoNodeId(), transition, sourceKaleoNode,
 					targetKaleoNode, serviceContext);
@@ -131,10 +141,45 @@ public class DefaultWorkflowDeployer
 
 		KaleoNode kaleoNode = kaleoNodesMap.get(startKaleoNodeName);
 
-		kaleoDefinitionLocalService.activateKaleoDefinition(
+		_kaleoDefinitionLocalService.activateKaleoDefinition(
 			kaleoDefinitionId, kaleoNode.getKaleoNodeId(), serviceContext);
 
 		return WorkflowModelUtil.toWorkflowDefinition(kaleoDefinition);
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 }

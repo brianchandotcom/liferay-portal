@@ -24,17 +24,23 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=CONDITION"},
+	service = NodeExecutor.class
+)
 public class ConditionNodeExecutor extends BaseNodeExecutor {
-
-	public void setConditionEvaluator(ConditionEvaluator conditionEvaluator) {
-		_conditionEvaluator = conditionEvaluator;
-	}
 
 	@Override
 	protected boolean doEnter(
@@ -53,13 +59,13 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 			executionContext.getKaleoInstanceToken();
 
 		KaleoCondition kaleoCondition =
-			kaleoConditionLocalService.getKaleoNodeKaleoCondition(
+			_kaleoConditionLocalService.getKaleoNodeKaleoCondition(
 				currentKaleoNode.getKaleoNodeId());
 
 		String transitionName = _conditionEvaluator.evaluate(
 			kaleoCondition, executionContext);
 
-		kaleoInstanceLocalService.updateKaleoInstance(
+		_kaleoInstanceLocalService.updateKaleoInstance(
 			kaleoInstanceToken.getKaleoInstanceId(),
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());
@@ -90,6 +96,13 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 		List<PathElement> remainingPathElements) {
 	}
 
+	@Reference
 	private ConditionEvaluator _conditionEvaluator;
+
+	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 }

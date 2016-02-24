@@ -16,20 +16,27 @@ package com.liferay.portal.workflow.kaleo.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
-import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=CONDITION"},
+	service = NodeBuilder.class
+)
 public class ConditionNodeBuilder
-	extends BaseNodeBuilder implements NodeBuilder {
+	extends BaseNodeBuilder<Condition> implements NodeBuilder {
 
 	@Override
-	protected Node createNode(KaleoNode kaleoNode) throws PortalException {
+	protected Condition createNode(KaleoNode kaleoNode) throws PortalException {
 		KaleoCondition kaleoCondition =
-			kaleoConditionLocalService.getKaleoNodeKaleoCondition(
+			_kaleoConditionLocalService.getKaleoNodeKaleoCondition(
 				kaleoNode.getKaleoNodeId());
 
 		return new Condition(
@@ -37,5 +44,8 @@ public class ConditionNodeBuilder
 			kaleoCondition.getScript(), kaleoCondition.getScriptLanguage(),
 			kaleoCondition.getScriptRequiredContexts());
 	}
+
+	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -27,9 +27,16 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.Notifica
 
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"recipient.type=USER"},
+	service = NotificationRecipientBuilder.class
+)
 public class UserNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {
 
@@ -76,7 +83,7 @@ public class UserNotificationRecipientBuilder
 			userId = kaleoInstance.getUserId();
 		}
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isActive()) {
 			NotificationRecipient notificationRecipient =
@@ -85,5 +92,8 @@ public class UserNotificationRecipientBuilder
 			notificationRecipients.add(notificationRecipient);
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

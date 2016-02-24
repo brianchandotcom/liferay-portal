@@ -23,9 +23,15 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.Notifica
 
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"recipient.type=ADDRESS"},
+	service = NotificationRecipientBuilder.class
+)
 public class AddressNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {
 

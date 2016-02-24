@@ -24,6 +24,14 @@ import java.util.Map;
  */
 public class NodeTypeDependentObjectRegistry<T> {
 
+	public void addNodeTypeDependentObject(
+		String nodeTypeString, T nodeTypeDependentObject) {
+
+		NodeType nodeType = NodeType.valueOf(nodeTypeString);
+
+		_nodeTypeDependentObjects.put(nodeType, nodeTypeDependentObject);
+	}
+
 	public T getNodeTypeDependentObjects(NodeType nodeType) {
 		T nodeTypeDependentObject = _nodeTypeDependentObjects.get(nodeType);
 
@@ -40,10 +48,14 @@ public class NodeTypeDependentObjectRegistry<T> {
 		return getNodeTypeDependentObjects(nodeType);
 	}
 
+	public T removeNodeTypeDependentObjects(String nodeTypeString) {
+		NodeType nodeType = NodeType.valueOf(nodeTypeString);
+
+		return _nodeTypeDependentObjects.remove(nodeType);
+	}
+
 	public void setNodeTypeDependentObjects(
 		Map<String, T> nodeTypeDependentObjects) {
-
-		_nodeTypeDependentObjects = new HashMap<>();
 
 		for (Map.Entry<String, T> entry : nodeTypeDependentObjects.entrySet()) {
 			NodeType nodeType = NodeType.valueOf(entry.getKey());
@@ -52,6 +64,6 @@ public class NodeTypeDependentObjectRegistry<T> {
 		}
 	}
 
-	private Map<NodeType, T> _nodeTypeDependentObjects;
+	private final Map<NodeType, T> _nodeTypeDependentObjects = new HashMap<>();
 
 }

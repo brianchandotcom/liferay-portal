@@ -18,23 +18,21 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.State;
-import com.liferay.portal.workflow.kaleo.parser.NodeValidator;
-import com.liferay.portal.workflow.kaleo.parser.WorkflowValidator;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
+import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
 
 import java.util.Collection;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = WorkflowValidator.class)
 public class DefaultWorkflowValidator implements WorkflowValidator {
-
-	public void setNodeValidatorRegistry(
-		NodeValidatorRegistry nodeValidatorRegistry) {
-
-		_nodeValidatorRegistry = nodeValidatorRegistry;
-	}
 
 	@Override
 	public void validate(Definition definition) throws WorkflowException {
@@ -65,6 +63,7 @@ public class DefaultWorkflowValidator implements WorkflowValidator {
 		}
 	}
 
+	@Reference
 	private NodeValidatorRegistry _nodeValidatorRegistry;
 
 }

@@ -22,12 +22,21 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=JOIN"},
+	service = NodeExecutor.class
+)
 public class JoinNodeExecutor extends BaseNodeExecutor {
 
 	@Override
@@ -38,7 +47,7 @@ public class JoinNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
+		_kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId());
 
 		return true;
@@ -63,7 +72,7 @@ public class JoinNodeExecutor extends BaseNodeExecutor {
 		}
 
 		parentKaleoInstanceToken =
-			kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
+			_kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
 				parentKaleoInstanceToken.getKaleoInstanceTokenId(),
 				currentKaleoNode.getKaleoNodeId());
 
@@ -92,5 +101,8 @@ public class JoinNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 	}
+
+	@Reference
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
 
 }

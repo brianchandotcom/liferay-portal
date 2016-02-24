@@ -22,14 +22,23 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"node.type=FORK"},
+	service = NodeExecutor.class
+)
 public class ForkNodeExecutor extends BaseNodeExecutor {
 
 	@Override
@@ -56,7 +65,7 @@ public class ForkNodeExecutor extends BaseNodeExecutor {
 				executionContext.getKaleoInstanceToken();
 
 			KaleoInstanceToken childKaleoInstanceToken =
-				kaleoInstanceTokenLocalService.addKaleoInstanceToken(
+				_kaleoInstanceTokenLocalService.addKaleoInstanceToken(
 					parentKaleoInstanceToken.getKaleoInstanceTokenId(),
 					executionContext.getWorkflowContext(),
 					executionContext.getServiceContext());
@@ -92,5 +101,8 @@ public class ForkNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 	}
+
+	@Reference
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
 
 }

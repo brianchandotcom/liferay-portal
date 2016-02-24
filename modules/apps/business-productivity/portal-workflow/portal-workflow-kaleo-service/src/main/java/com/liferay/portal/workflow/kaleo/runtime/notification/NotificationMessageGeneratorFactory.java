@@ -14,16 +14,29 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.notification;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, service = NotificationMessageGeneratorFactory.class
+)
 public class NotificationMessageGeneratorFactory {
 
-	public static NotificationMessageGenerator getNotificationMessageGenerator(
+	public NotificationMessageGenerator getNotificationMessageGenerator(
 			String templateLanguage)
 		throws WorkflowException {
 
@@ -38,14 +51,57 @@ public class NotificationMessageGeneratorFactory {
 		return notificationMessageGenerator;
 	}
 
-	public void setNotificationMessageGenerators(
-		Map<String, NotificationMessageGenerator>
-			notificationMessageGenerators) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(template.language=*)",
+		unbind = "removeNotificationMessageGenerator"
+	)
+	protected void addNotificationMessageGenerator(
+		NotificationMessageGenerator notificationMessageGenerator,
+		Map<String, Object> properties) {
 
-		_notificationMessageGenerators = notificationMessageGenerators;
+		String[] templateLanguages = getTemplateLanguages(
+			notificationMessageGenerator, properties);
+
+		for (String templateLanguage : templateLanguages) {
+			_notificationMessageGenerators.put(
+				templateLanguage, notificationMessageGenerator);
+		}
 	}
 
-	private static Map<String, NotificationMessageGenerator>
-		_notificationMessageGenerators;
+	protected String[] getTemplateLanguages(
+		NotificationMessageGenerator notificationMessageGenerator,
+		Map<String, Object> properties) {
+
+		Object value = properties.get("template.language");
+
+		String[] templateLanguages = GetterUtil.getStringValues(
+			value, new String[] {String.valueOf(value)});
+
+		if (ArrayUtil.isEmpty(templateLanguages)) {
+			throw new IllegalArgumentException(
+				"Must have an template.language property for: " +
+					ClassUtil.getClassName(notificationMessageGenerator));
+		}
+
+		return templateLanguages;
+	}
+
+	protected void removeNotificationMessageGenerator(
+		NotificationMessageGenerator notificationMessageGenerator,
+		Map<String, Object> properties) {
+
+		String[] templateLanguages = getTemplateLanguages(
+			notificationMessageGenerator, properties);
+
+		for (String templateLanguage : templateLanguages) {
+			_notificationMessageGenerators.remove(templateLanguage);
+		}
+	}
+
+	private final Map<String, NotificationMessageGenerator>
+		_notificationMessageGenerators = new HashMap<>();
 
 }

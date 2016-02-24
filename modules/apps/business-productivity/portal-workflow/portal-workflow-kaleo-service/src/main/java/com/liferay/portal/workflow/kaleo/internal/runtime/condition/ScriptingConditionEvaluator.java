@@ -16,11 +16,10 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.condition;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
-import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilderUtil;
+import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -29,9 +28,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"scripting.language=beanshell", "scripting.language=groovy",
+		"scripting.language=javascript", "scripting.language=python",
+		"scripting.language=ruby"
+	},
+	service = ConditionEvaluator.class
+)
 public class ScriptingConditionEvaluator implements ConditionEvaluator {
 
 	@Override
@@ -40,7 +51,7 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 		throws PortalException {
 
 		Map<String, Object> inputObjects =
-			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
+			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
 		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputNames,
@@ -73,7 +84,10 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
 
-	@ServiceReference(type = Scripting.class)
+	@Reference
 	private Scripting _scripting;
+
+	@Reference
+	private ScriptingContextBuilder _scriptingContextBuilder;
 
 }

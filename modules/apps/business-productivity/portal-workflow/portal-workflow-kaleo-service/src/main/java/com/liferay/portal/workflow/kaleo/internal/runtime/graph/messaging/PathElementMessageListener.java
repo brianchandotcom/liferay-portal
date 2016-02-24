@@ -16,27 +16,36 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.graph.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
+import com.liferay.portal.workflow.kaleo.util.DestinationNames;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.KALEO_GRAPH_WALKER},
+	service = MessageListener.class
+)
 public class PathElementMessageListener extends BaseMessageListener {
 
-	public void setDestinationName(String destinationName) {
+	@Activate
+	protected void activate() {
 		_singleDestinationMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
-				createSingleDestinationMessageSender(destinationName);
-	}
-
-	public void setGraphWalker(GraphWalker graphWalker) {
-		_graphWalker = graphWalker;
+			_singleDestinationMessageSenderFactory.
+				createSingleDestinationMessageSender(
+					DestinationNames.KALEO_GRAPH_WALKER);
 	}
 
 	@Override
@@ -54,7 +63,13 @@ public class PathElementMessageListener extends BaseMessageListener {
 		}
 	}
 
+	@Reference
 	private GraphWalker _graphWalker;
+
 	private SingleDestinationMessageSender _singleDestinationMessageSender;
+
+	@Reference
+	private SingleDestinationMessageSenderFactory
+		_singleDestinationMessageSenderFactory;
 
 }

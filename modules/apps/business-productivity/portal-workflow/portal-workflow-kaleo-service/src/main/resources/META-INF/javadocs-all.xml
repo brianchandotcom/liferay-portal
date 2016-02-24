@@ -6236,7 +6236,7 @@
 			<name>setWorkflowDeployer</name>
 			<param>
 				<name>workflowDeployer</name>
-				<type>com.liferay.portal.workflow.kaleo.deployment.WorkflowDeployer</type>
+				<type>com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -6244,7 +6244,7 @@
 			<name>setWorkflowModelParser</name>
 			<param>
 				<name>workflowModelParser</name>
-				<type>com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser</type>
+				<type>com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -6252,7 +6252,7 @@
 			<name>setWorkflowValidator</name>
 			<param>
 				<name>workflowValidator</name>
-				<type>com.liferay.portal.workflow.kaleo.parser.WorkflowValidator</type>
+				<type>com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -10189,44 +10189,6 @@
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
-	</javadoc>
-	<javadoc>
-		<name>ScriptingContextBuilderUtil</name>
-		<type>com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilderUtil</type>
-		<author><![CDATA[Michael C. Han]]></author>
-		<method>
-			<name>buildScriptingContext</name>
-			<param>
-				<name>executionContext</name>
-				<type>com.liferay.portal.workflow.kaleo.runtime.ExecutionContext</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-				<comment><![CDATA[]]></comment>
-			</throws>
-		</method>
-		<method>
-			<name>getScriptingContextBuilder</name>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-		</method>
-		<method>
-			<name>setScriptingContextBuilder</name>
-			<param>
-				<name>scriptingContextBuilder</name>
-				<type>ScriptingContextBuilder</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-		</method>
-		<field>
-			<name>_scriptingContextBuilder</name>
-		</field>
 	</javadoc>
 	<javadoc>
 		<name>KaleoActionLocalServiceImpl</name>

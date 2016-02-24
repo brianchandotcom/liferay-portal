@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
@@ -40,10 +41,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"template.language=freemarker", "template.language=soy",
+		"template.language=velocity"
+	},
+	service = NotificationMessageGenerator.class
+)
 public class TemplateNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 
@@ -86,10 +99,12 @@ public class TemplateNotificationMessageGenerator
 		}
 	}
 
-	public void setTemplateManagerNames(
-		Map<String, String> templateManagerNames) {
-
-		_templateManagerNames = templateManagerNames;
+	@Activate
+	protected void activate() {
+		_templateManagerNames.put(
+			"freemarker", TemplateConstants.LANG_TYPE_FTL);
+		_templateManagerNames.put("soy", TemplateConstants.LANG_TYPE_SOY);
+		_templateManagerNames.put("velocity", TemplateConstants.LANG_TYPE_VM);
 	}
 
 	protected void populateContextVariables(
@@ -130,7 +145,7 @@ public class TemplateNotificationMessageGenerator
 			ServiceContext serviceContext =
 				executionContext.getServiceContext();
 
-			User user = UserLocalServiceUtil.getUser(
+			User user = _userLocalService.getUser(
 				serviceContext.getGuestOrUserId());
 
 			template.put("userId", user.getUserId());
@@ -158,6 +173,9 @@ public class TemplateNotificationMessageGenerator
 		}
 	}
 
-	private Map<String, String> _templateManagerNames = new HashMap<>();
+	private final Map<String, String> _templateManagerNames = new HashMap<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

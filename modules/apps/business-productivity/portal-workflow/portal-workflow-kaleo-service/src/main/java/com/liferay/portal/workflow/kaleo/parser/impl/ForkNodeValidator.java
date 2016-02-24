@@ -22,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.definition.Join;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
+import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,11 +30,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  * @author Norbert Kocsis
  */
+@Component(
+	immediate = true, property = {"node.type=FORK"},
+	service = NodeValidator.class
+)
 public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 
 	@Override

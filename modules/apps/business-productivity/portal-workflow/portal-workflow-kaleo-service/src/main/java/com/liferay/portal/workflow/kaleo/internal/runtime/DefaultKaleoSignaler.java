@@ -16,10 +16,11 @@ package com.liferay.portal.workflow.kaleo.internal.runtime;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -43,10 +44,14 @@ import java.util.List;
 public class DefaultKaleoSignaler
 	extends BaseKaleoBean implements KaleoSignaler {
 
-	public void setDestinationName(String destinationName) {
+	public void afterPropertiesSet() {
 		_singleDestinationMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
-				createSingleDestinationMessageSender(destinationName);
+			_singleDestinationMessageSenderFactory.
+				createSingleDestinationMessageSender(_destinationName);
+	}
+
+	public void setDestinationName(String destinationName) {
+		_destinationName = destinationName;
 	}
 
 	@Override
@@ -74,7 +79,7 @@ public class DefaultKaleoSignaler
 			KaleoNode currentKaleoNode, ExecutionContext executionContext)
 		throws PortalException {
 
-		NodeExecutor nodeExecutor = NodeExecutorFactory.getNodeExecutor(
+		NodeExecutor nodeExecutor = _nodeExecutorFactory.getNodeExecutor(
 			currentKaleoNode.getType());
 
 		List<PathElement> remainingPathElements = new ArrayList<>();
@@ -107,6 +112,15 @@ public class DefaultKaleoSignaler
 		_singleDestinationMessageSender.send(pathElement);
 	}
 
+	private String _destinationName;
+
+	@ServiceReference(type = NodeExecutorFactory.class)
+	private NodeExecutorFactory _nodeExecutorFactory;
+
 	private SingleDestinationMessageSender _singleDestinationMessageSender;
+
+	@ServiceReference(type = SingleDestinationMessageSenderFactory.class)
+	private SingleDestinationMessageSenderFactory
+		_singleDestinationMessageSenderFactory;
 
 }

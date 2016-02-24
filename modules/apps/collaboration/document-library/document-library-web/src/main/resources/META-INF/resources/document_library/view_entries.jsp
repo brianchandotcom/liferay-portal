@@ -58,6 +58,9 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, n
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
+entriesChecker.setKeepSelectionURLRegex(
+	"^(?!.*" + liferayPortletResponse.getNamespace() + 
+	"redirect).*(folderId=" + String.valueOf(folderId) + ")");
 
 EntriesMover entriesMover = new EntriesMover(scopeGroupId);
 

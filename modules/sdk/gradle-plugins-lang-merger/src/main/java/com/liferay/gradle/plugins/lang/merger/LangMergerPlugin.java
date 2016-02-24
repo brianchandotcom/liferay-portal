@@ -145,15 +145,30 @@ public class LangMergerPlugin implements Plugin<Project> {
 			return null;
 		}
 
-		for (Project siblingProject : parentProject.getSubprojects()) {
-			String name = siblingProject.getName();
+		String langProjectPath =
+			parentProject.getPath() + ":" + parentProject.getName() + "-lang";
 
-			if (name.endsWith("-lang")) {
-				return siblingProject;
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Looking for " + langProjectPath);
+		}
+
+		Project langProject = project.findProject(langProjectPath);
+
+		if (langProject == null) {
+			int index = langProjectPath.indexOf(':', 1);
+
+			if (index != -1) {
+				langProjectPath = langProjectPath.substring(index);
+
+				if (_logger.isDebugEnabled()) {
+					_logger.debug("Looking for " + langProjectPath);
+				}
+
+				langProject = project.findProject(langProjectPath);
 			}
 		}
 
-		return null;
+		return langProject;
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

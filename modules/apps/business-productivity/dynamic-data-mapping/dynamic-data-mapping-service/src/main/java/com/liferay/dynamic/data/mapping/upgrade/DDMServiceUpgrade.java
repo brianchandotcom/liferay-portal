@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeKernelPackages;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -50,7 +50,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.dynamic.data.mapping.service", "0.0.2", "0.0.3",
-			new UpgradeClassNames());
+			new UpgradeKernelPackages());
 
 		registry.register(
 			"com.liferay.dynamic.data.mapping.service", "0.0.3", "1.0.0",

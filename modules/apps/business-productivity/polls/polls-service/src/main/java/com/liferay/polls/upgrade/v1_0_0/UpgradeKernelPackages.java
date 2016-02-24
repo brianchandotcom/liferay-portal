@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
+package com.liferay.polls.upgrade.v1_0_0;
 
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Marcellus Tavares
+ * @author Miguel Pastor
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeKernelPackages extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getClassNames() {
@@ -33,23 +33,22 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-			"com.liferay.dynamic.data.list.model.DDLRecordSet"
+			"com.liferay.portlet.polls.model.PollsChoice",
+			"com.liferay.polls.model.PollsChoice"
 		},
 		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion",
-			"com.liferay.dynamic.data.list.model.DDLRecordVersion"
+			"com.liferay.portlet.polls.model.PollsQuestion",
+			"com.liferay.polls.model.PollsQuestion"
 		},
 		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
-			"com.liferay.dynamic.data.list.model.DDLRecord"
+			"com.liferay.portlet.polls.model.PollsVote",
+			"com.liferay.polls.model.PollsVote"
 		}
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatalists",
-			"com.liferay.dynamic.data.lists"
+			"com.liferay.portlet.polls", "com.liferay.polls"
 		}
 	};
 

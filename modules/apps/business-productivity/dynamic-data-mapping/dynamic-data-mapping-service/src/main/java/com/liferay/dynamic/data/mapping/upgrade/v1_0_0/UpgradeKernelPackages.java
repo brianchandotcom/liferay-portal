@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.polls.upgrade.v1_0_0;
+package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Miguel Pastor
+ * @author Marcellus Tavares
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeKernelPackages extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getClassNames() {
@@ -33,22 +33,35 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.polls.model.PollsChoice",
-			"com.liferay.polls.model.PollsChoice"
+			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
+			"com.liferay.dynamic.data.mapping.model.DDMStructure"
 		},
 		{
-			"com.liferay.portlet.polls.model.PollsQuestion",
-			"com.liferay.polls.model.PollsQuestion"
+			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
+			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
 		},
 		{
-			"com.liferay.portlet.polls.model.PollsVote",
-			"com.liferay.polls.model.PollsVote"
+			"com.liferay.portlet.dynamicdatamapping.model.DDMContent",
+			"com.liferay.dynamic.data.mapping.model.DDMContent"
+		},
+		{
+			"com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink",
+			"com.liferay.dynamic.data.mapping.model.DDMStorageLink"
+		},
+		{
+			"com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink",
+			"com.liferay.dynamic.data.mapping.model.DDMStructureLink"
+		},
+		{
+			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
+			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
 		}
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.polls", "com.liferay.polls"
+			"com.liferay.portlet.dynamicdatamapping",
+			"com.liferay.dynamic.data.mapping"
 		}
 	};
 

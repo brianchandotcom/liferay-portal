@@ -62,8 +62,6 @@ else {
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="websites" />
 
-<h3><liferay-ui:message key="websites" /></h3>
-
 <div class="alert alert-info">
 	<liferay-ui:message key="url-and-type-are-required-fields.-websites-must-start-with-http-or-https" />
 </div>
@@ -71,7 +69,7 @@ else {
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
-<aui:fieldset>
+<aui:fieldset id="websites">
 
 	<%
 	for (int i = 0; i < websitesIndexes.length; i++) {
@@ -102,16 +100,11 @@ else {
 </aui:fieldset>
 
 <aui:script use="liferay-auto-fields">
-	Liferay.once(
-		'formNavigator:reveal<portlet:namespace />websites',
-		function() {
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />websites > fieldset',
-					fieldIndexes: '<portlet:namespace />websitesIndexes',
-					namespace: '<portlet:namespace />'
-				}
-			).render();
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />websites',
+			fieldIndexes: '<portlet:namespace />websitesIndexes',
+			namespace: '<portlet:namespace />'
 		}
-	);
+	).render();
 </aui:script>

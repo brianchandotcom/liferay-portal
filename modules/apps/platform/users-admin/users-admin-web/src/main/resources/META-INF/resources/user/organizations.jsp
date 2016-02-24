@@ -32,16 +32,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 <liferay-util:buffer var="removeOrganizationIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
+		icon="times"
+		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>
 
 <aui:input name="addOrganizationIds" type="hidden" value="<%= organizationIdsString %>" />
 <aui:input name="deleteOrganizationIds" type="hidden" />
-
-<h3><liferay-ui:message key="organizations" /></h3>
 
 <liferay-ui:search-container
 	curParam="organizationsCur"
@@ -86,7 +84,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		/>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:;"><%= removeOrganizationIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -98,10 +96,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="selectOrganizationLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		method="get"
 		url="javascript:;"

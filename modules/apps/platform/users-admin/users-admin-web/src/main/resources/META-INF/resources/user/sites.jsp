@@ -30,16 +30,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 <liferay-util:buffer var="removeGroupIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
+		icon="times"
+		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>
 
 <aui:input name="addGroupIds" type="hidden" />
 <aui:input name="deleteGroupIds" type="hidden" />
-
-<h3><liferay-ui:message key="sites" /></h3>
 
 <liferay-ui:search-container
 	curParam="sitesCur"
@@ -74,7 +72,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		/>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 				<c:if test="<%= group.isManualMembership() %>">
 					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 				</c:if>
@@ -88,10 +86,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
-		iconCssClass="icon-search"
 		id="selectSiteLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default"
+		linkCssClass="btn btn-default btn-lg"
 		message="select"
 		url="javascript:;"
 	/>

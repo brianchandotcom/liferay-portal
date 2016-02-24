@@ -76,8 +76,6 @@ if (organization != null) {
 }
 %>
 
-<h3><liferay-ui:message key="organization-site" /></h3>
-
 <c:choose>
 	<c:when test="<%= (organizationGroup == null) || GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.UPDATE) %>">
 		<aui:fieldset>

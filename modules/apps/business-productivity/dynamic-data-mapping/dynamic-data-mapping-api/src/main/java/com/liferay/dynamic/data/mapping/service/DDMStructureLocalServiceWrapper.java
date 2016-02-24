@@ -405,6 +405,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMForm deserialize(
+		java.lang.String serializedDDMForm)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLocalService.deserialize(serializedDDMForm);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmStructureLocalService.dynamicQuery();
 	}

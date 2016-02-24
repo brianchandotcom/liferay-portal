@@ -3,7 +3,8 @@ Bundle-SymbolicName: com.liferay.dynamic.data.mapping.test.util
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.test.util,\
-	com.liferay.dynamic.data.mapping.test.util.search
+	com.liferay.dynamic.data.mapping.test.util.search,\
+	com.liferay.dynamic.data.mapping.test.util.storage
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../../../../marketplace/business-productivity/bnd.bnd

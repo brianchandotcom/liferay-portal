@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.bookmarks.upgrade.v1_0_0;
 
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Marcellus Tavares
+ * @author Miguel Pastor
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeKernelPackages extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getClassNames() {
@@ -33,35 +33,18 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
-			"com.liferay.dynamic.data.mapping.model.DDMStructure"
+			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+			"com.liferay.bookmarks.model.BookmarksEntry"
 		},
 		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMContent",
-			"com.liferay.dynamic.data.mapping.model.DDMContent"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStructureLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
+			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
+			"com.liferay.bookmarks.model.BookmarksFolder"
 		}
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatamapping",
-			"com.liferay.dynamic.data.mapping"
+			"com.liferay.portlet.bookmarks", "com.liferay.bookmarks"
 		}
 	};
 

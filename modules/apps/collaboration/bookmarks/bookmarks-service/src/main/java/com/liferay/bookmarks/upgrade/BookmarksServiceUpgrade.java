@@ -14,7 +14,7 @@
 
 package com.liferay.bookmarks.upgrade;
 
-import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeKernelPackages;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.bookmarks.upgrade.v1_0_0.UpgradePortletSettings;
@@ -34,7 +34,7 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.bookmarks.service", "0.0.1", "0.0.2",
-			new UpgradeClassNames());
+			new UpgradeKernelPackages());
 
 		registry.register(
 			"com.liferay.bookmarks.service", "0.0.2", "0.0.3",

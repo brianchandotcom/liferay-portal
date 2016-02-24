@@ -19,7 +19,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 /**
  * @author Philip Jones
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeKernelPackages extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getClassNames() {

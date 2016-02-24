@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.util.impl;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -160,8 +160,7 @@ public class DDMImpl implements DDM {
 			DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 				classPK);
 
-			return DDMFormJSONDeserializerUtil.deserialize(
-				template.getScript());
+			return _ddmFormJSONDeserializer.deserialize(template.getScript());
 		}
 
 		return null;
@@ -175,7 +174,7 @@ public class DDMImpl implements DDM {
 			String definition = ParamUtil.getString(
 				portletRequest, "definition");
 
-			return DDMFormJSONDeserializerUtil.deserialize(definition);
+			return _ddmFormJSONDeserializer.deserialize(definition);
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
@@ -723,7 +722,7 @@ public class DDMImpl implements DDM {
 		}
 
 		try {
-			DDMForm scriptDDMForm = DDMFormJSONDeserializerUtil.deserialize(
+			DDMForm scriptDDMForm = _ddmFormJSONDeserializer.deserialize(
 				script);
 
 			return getDDMFormFieldsJSONArray(
@@ -1179,6 +1178,13 @@ public class DDMImpl implements DDM {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormJSONDeserializer(
+		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
@@ -1210,6 +1216,7 @@ public class DDMImpl implements DDM {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);
 
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DLAppLocalService _dlAppLocalService;
 	private ImageLocalService _imageLocalService;

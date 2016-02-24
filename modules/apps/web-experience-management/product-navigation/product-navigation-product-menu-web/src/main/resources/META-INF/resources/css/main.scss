@@ -350,7 +350,7 @@ body {
 	}
 
 	.tree-node-content {
-		.layout-tree-add, .layout-tree-delete, .layout-tree-edit, .layout-set-tree-add, .layout-set-tree-edit {
+		.layout-tree-add, .layout-tree-delete, .layout-tree-edit {
 			opacity: 0;
 
 			&:focus {
@@ -387,14 +387,6 @@ body {
 		padding: 0 0 2em 0;
 		width: 100%;
 
-		.layout-set-tree-add, .layout-set-tree-edit {
-			opacity: 0;
-
-			&:focus {
-				opacity: 1;
-			}
-		}
-
 		.layout-set-tab {
 			a {
 				&:hover {
@@ -429,19 +421,6 @@ body {
 
 			a {
 				max-width: 108px;
-			}
-		}
-
-		.selected-layout-set, .layout-set-tab:hover {
-			.layout-set-tree-add, .layout-set-tree-edit {
-				margin-left: 10px;
-				opacity: 1;
-			}
-		}
-
-		.layout-set-link:focus, .layout-set-tree-add:focus, .layout-set-tree-edit:focus {
-			~ .layout-set-tree-add, ~ .layout-set-tree-edit {
-				opacity: 1;
 			}
 		}
 	}

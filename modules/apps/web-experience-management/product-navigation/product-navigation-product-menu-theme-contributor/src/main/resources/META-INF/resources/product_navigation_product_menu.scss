@@ -314,8 +314,10 @@
 	}
 
 	.layout-set-tabs {
-		.selected-layout-set a {
-			color: $product-menu-nav-link-active-color;
+		.selected-layout-set {
+			.layout-set-link, .icon-monospaced {
+				color: $product-menu-nav-link-active-color;
+			}
 		}
 	}
 

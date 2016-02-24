@@ -48,7 +48,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
 					<c:if test="<%= !layoutsTreeDisplayContext.isPrivateLayout() %>">
-						<span class="pages-options pull-right">
+						<liferay-ui:icon-menu cssClass="pull-right" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 							<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 								<%
@@ -59,10 +59,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									icon="plus"
 									label="<%= false %>"
-									linkCssClass="layout-set-tree-add"
-									markupView="lexicon"
 									message="add-page"
 									url="<%= addLayoutURL.toString() %>"
 								/>
@@ -78,15 +75,12 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									icon="cog"
 									label="<%= false %>"
-									linkCssClass="layout-set-tree-edit"
-									markupView="lexicon"
 									message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getRootNodeName(false)) %>'
 									url="<%= editLayoutURL.toString() %>"
 								/>
 							</c:if>
-						</span>
+						</liferay-ui:icon-menu>
 					</c:if>
 				</span>
 			</c:if>
@@ -101,7 +95,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(true) %>" />
 
 					<c:if test="<%= layoutsTreeDisplayContext.isPrivateLayout() %>">
-						<span class="pages-options pull-right">
+						<liferay-ui:icon-menu cssClass="pull-right" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 							<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 								<%
@@ -112,10 +106,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									icon="plus"
 									label="<%= false %>"
-									linkCssClass="layout-set-tree-add"
-									markupView="lexicon"
 									message="add-page"
 									url="<%= addLayoutURL.toString() %>"
 								/>
@@ -131,15 +122,12 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									icon="cog"
 									label="<%= false %>"
-									linkCssClass="layout-set-tree-edit"
-									markupView="lexicon"
 									message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getRootNodeName(true)) %>'
 									url="<%= editLayoutURL.toString() %>"
 								/>
 							</c:if>
-						</span>
+						</liferay-ui:icon-menu>
 					</c:if>
 				</span>
 			</c:if>

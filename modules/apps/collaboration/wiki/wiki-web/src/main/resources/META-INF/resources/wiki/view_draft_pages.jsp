@@ -18,18 +18,20 @@
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:header
-	title="draft-pages"
-/>
-
-<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="navigation" value="draft-pages" />
-</liferay-util:include>
-
-<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, WikiPage.class.getName()) %>">
-	<h2><liferay-ui:message key="pending-approval" /></h2>
+<div class="main-content-body">
+	<liferay-ui:header
+		title="draft-pages"
+	/>
 
 	<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="navigation" value="pending-pages" />
+		<liferay-util:param name="navigation" value="draft-pages" />
 	</liferay-util:include>
-</c:if>
+
+	<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, WikiPage.class.getName()) %>">
+		<h2><liferay-ui:message key="pending-approval" /></h2>
+
+		<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="navigation" value="pending-pages" />
+		</liferay-util:include>
+	</c:if>
+</div>

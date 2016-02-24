@@ -18,10 +18,12 @@
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:header
-	title="orphan-pages"
-/>
+<div class="main-content-body">
+	<liferay-ui:header
+		title="orphan-pages"
+	/>
 
-<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="navigation" value="orphan-pages" />
-</liferay-util:include>
+	<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navigation" value="orphan-pages" />
+	</liferay-util:include>
+</div>

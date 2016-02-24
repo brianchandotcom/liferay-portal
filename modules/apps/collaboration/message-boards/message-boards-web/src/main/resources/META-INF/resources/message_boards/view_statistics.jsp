@@ -31,54 +31,56 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 <liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" markupView="lexicon" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" markupView="lexicon" persistState="<%= true %>" title="general">
-		<dl>
-			<dt>
-				<liferay-ui:message key="num-of-categories" />:
-			</dt>
-			<dd>
-				<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-			</dd>
-			<dt>
-				<liferay-ui:message key="num-of-posts" />:
-			</dt>
-			<dd>
-				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-			</dd>
-			<dt>
-				<liferay-ui:message key="num-of-participants" />:
-			</dt>
-			<dd>
-				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-			</dd>
-		</dl>
-	</liferay-ui:panel>
+<div class="main-content-body">
+	<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" markupView="lexicon" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" markupView="lexicon" persistState="<%= true %>" title="general">
+			<dl>
+				<dt>
+					<liferay-ui:message key="num-of-categories" />:
+				</dt>
+				<dd>
+					<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
+				</dd>
+				<dt>
+					<liferay-ui:message key="num-of-posts" />:
+				</dt>
+				<dd>
+					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
+				</dd>
+				<dt>
+					<liferay-ui:message key="num-of-participants" />:
+				</dt>
+				<dd>
+					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
+				</dd>
+			</dl>
+		</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" markupView="lexicon" persistState="<%= true %>" title="top-posters">
-		<liferay-ui:search-container
-			emptyResultsMessage="there-are-no-top-posters"
-			iteratorURL="<%= portletURL %>"
-			total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.message.boards.kernel.model.MBStatsUser"
-				keyProperty="statsUserId"
-				modelVar="statsUser"
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" markupView="lexicon" persistState="<%= true %>" title="top-posters">
+			<liferay-ui:search-container
+				emptyResultsMessage="there-are-no-top-posters"
+				iteratorURL="<%= portletURL %>"
+				total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
 			>
-				<liferay-ui:search-container-column-jsp
-					path="/message_boards/top_posters_user_display.jsp"
+				<liferay-ui:search-container-results
+					results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
-			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
-		</liferay-ui:search-container>
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+				<liferay-ui:search-container-row
+					className="com.liferay.message.boards.kernel.model.MBStatsUser"
+					keyProperty="statsUserId"
+					modelVar="statsUser"
+				>
+					<liferay-ui:search-container-column-jsp
+						path="/message_boards/top_posters_user_display.jsp"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+			</liferay-ui:search-container>
+		</liferay-ui:panel>
+	</liferay-ui:panel-container>
+</div>
 
 <%
 PortalUtil.setPageSubtitle(LanguageUtil.get(request, "statistics"), request);

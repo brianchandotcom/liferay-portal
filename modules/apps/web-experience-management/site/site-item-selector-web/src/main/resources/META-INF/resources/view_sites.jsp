@@ -107,7 +107,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 										resultRow="<%= row %>"
 										rowChecker="<%= searchContainer.getRowChecker() %>"
 										showCheckbox="<%= false %>"
-										title="<%= group.getName(locale) %>"
+										title="<%= group.getDescriptiveName(locale) %>"
 									>
 										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 											<liferay-frontend:vertical-card-footer>
@@ -126,7 +126,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 										resultRow="<%= row %>"
 										rowChecker="<%= searchContainer.getRowChecker() %>"
 										showCheckbox="<%= false %>"
-										title="<%= group.getName(locale) %>"
+										title="<%= group.getDescriptiveName(locale) %>"
 									>
 										<liferay-frontend:vertical-card-footer>
 											<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">

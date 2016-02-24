@@ -151,7 +151,7 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" />
 	</command>

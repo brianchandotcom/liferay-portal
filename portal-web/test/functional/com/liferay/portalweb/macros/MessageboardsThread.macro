@@ -556,7 +556,7 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads nor categories." />
@@ -850,7 +850,7 @@
 			<condition function="IsElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS_GENERIC" />
 			<then>
 				<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS_GENERIC" />
-				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute macro="PortletEntry#clickMoveToRecycleBin" />
 			</then>
 		</while>
 
@@ -860,7 +860,7 @@
 			<condition function="IsElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS_GENERIC" />
 			<then>
 				<execute function="Click" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS_GENERIC" />
-				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute macro="PortletEntry#clickMoveToRecycleBin" />
 			</then>
 		</while>
 

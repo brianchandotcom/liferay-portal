@@ -158,25 +158,6 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
-	<command name="addFrontPageDraftPG">
-		<execute function="AssertTextEquals" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="AssertTextNotPresent" value1="${wikiPageContent}" />
-
-		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
-
-		<execute function="AssertTextEquals" locator1="Wiki#WORKFLOW_STATUS" value1="Draft" />
-
-		<var name="key_wikiPageContent" value="${wikiPageContent}" />
-
-		<execute function="AssertTextEquals" locator1="Wiki#VIEW_BODY_FIELD" value1="${wikiPageContent}" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
 	<command name="addFrontPagePG">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
@@ -993,21 +974,6 @@
 		<var name="key_wikiVersionSummary" value="${wikiVersionSummary}" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#HISTORY_VERSIONS_SUMMARY" value1="${wikiVersionSummary}" />
-	</command>
-
-	<command name="saveAsDraftFrontPagePG">
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertTextEquals" locator1="Wiki#WORKFLOW_STATUS" value1="Draft" />
-
-		<var name="key_wikiPageContent" value="${wikiPageContent}" />
-
-		<execute function="AssertTextEquals" locator1="Wiki#VIEW_BODY_FIELD" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="searchPG">

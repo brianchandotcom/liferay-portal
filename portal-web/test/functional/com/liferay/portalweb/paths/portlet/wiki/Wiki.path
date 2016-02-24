@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_BODY_FIELD</td>
-	<td>//html/body[contains(@class,'portlet-wiki') and contains(.,'${key_wikiPageContent}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEW_COUNT</td>
 	<td>//div[@class='page-actions']/div[@class='stats']</td>
 	<td></td>

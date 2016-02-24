@@ -713,41 +713,6 @@
 		</execute>
 	</command>
 
-	<command name="AddSOWikiFrontPageDraft" priority="4">
-		<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		<var name="wikiPageTitle" value="FrontPage" />
-
-		<execute macro="Page#gotoPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiPage#saveAsDraftFrontPagePG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiPage#viewSaveAsDraftFrontPagePG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${adminName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPageDraftPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
-	</command>
-
 	<command name="AddSOWikiFrontPageTag" priority="3">
 		<var name="tagName" value="Tag Name 1" />
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />

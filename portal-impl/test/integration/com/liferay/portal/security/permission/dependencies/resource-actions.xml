@@ -3,6 +3,23 @@
 
 <resource-action-mapping>
 	<portlet-resource>
+		<portlet-name>com_liferay_portal_security_PermissionCheckerTestNonSitePortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_TEST_RESULT</action-key>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults>
+				<action-key>ADD_TEST_RESULT</action-key>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported />
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
 		<permissions>
 			<supports>
@@ -19,6 +36,21 @@
 			<guest-unsupported />
 		</permissions>
 	</portlet-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.security.permission.nonsite</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestNonSitePortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_TEST</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.security.permission.site</model-name>
 		<portlet-ref>

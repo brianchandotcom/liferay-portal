@@ -373,8 +373,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		String backURL = ParamUtil.getString(actionRequest, "backURL");
-
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -383,7 +381,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter("backURL", backURL, false);
 		portletURL.setParameter(
 			"groupId", String.valueOf(entry.getGroupId()), false);
 		portletURL.setParameter(

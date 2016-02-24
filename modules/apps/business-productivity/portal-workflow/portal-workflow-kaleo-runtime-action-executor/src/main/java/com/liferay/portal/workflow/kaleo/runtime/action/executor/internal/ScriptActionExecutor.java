@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.action.executor.internal;
 
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
@@ -76,12 +75,9 @@ public class ScriptActionExecutor implements ActionExecutor {
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
-		String[] scriptRequiredContexts = StringUtil.split(
-			kaleoAction.getScriptRequiredContexts());
-
 		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
-			kaleoAction.getScript(), scriptRequiredContexts);
+			kaleoAction.getScript());
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(

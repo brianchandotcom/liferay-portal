@@ -210,7 +210,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 				sql,
 				getAssetTypes(
 					kaleoTaskInstanceTokenQuery,
-					Validator.isNull(
+					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys())));
 
 			if (Validator.isNotNull(
@@ -225,26 +225,26 @@ public class KaleoTaskInstanceTokenFinderImpl
 				sql,
 				getDueDateGT(
 					kaleoTaskInstanceTokenQuery,
-					(Validator.isNull(
+					(ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
-					 Validator.isNull(
-						 kaleoTaskInstanceTokenQuery.getAssetTypes()))));
+					ArrayUtil.isEmpty(
+						kaleoTaskInstanceTokenQuery.getAssetTypes()))));
 			sql = CustomSQLUtil.appendCriteria(
 				sql,
 				getDueDateLT(
 					kaleoTaskInstanceTokenQuery,
-					(Validator.isNull(
+					(ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
-					 Validator.isNull(
+					 ArrayUtil.isEmpty(
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null))));
 			sql = CustomSQLUtil.appendCriteria(
 				sql,
 				getTaskName(
 					kaleoTaskInstanceTokenQuery,
-					(Validator.isNull(
+					(ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
-					 Validator.isNull(
+					 ArrayUtil.isEmpty(
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null))));

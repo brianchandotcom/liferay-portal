@@ -27,12 +27,14 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
-import com.liferay.portal.workflow.kaleo.export.builder.DefinitionBuilder;
+import com.liferay.portal.workflow.kaleo.definition.internal.export.builder.DefinitionBuilder;
 
 import java.io.IOException;
 
 import java.util.Collection;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,12 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DefinitionExporter.class)
 public class XMLDefinitionExporter implements DefinitionExporter {
-
-	public void afterPropertiesSet() {
-		_namespace = "urn:liferay.com:liferay-workflow_" + _version;
-		_schemaVersion = StringUtil.replace(
-			_version, StringPool.PERIOD, StringPool.UNDERLINE);
-	}
 
 	@Override
 	public String export(long kaleoDefinitionId) throws PortalException {
@@ -68,6 +64,13 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 
 	public void setVersion(String version) {
 		_version = version;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_namespace = "urn:liferay.com:liferay-workflow_" + _version;
+		_schemaVersion = StringUtil.replace(
+			_version, StringPool.PERIOD, StringPool.UNDERLINE);
 	}
 
 	protected String doExport(Definition definition) {

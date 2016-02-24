@@ -84,7 +84,7 @@ if (categoryId == 0) {
 	entriesChecker.setKeepSelectionURLRegex("mvcRenderCommandName=/message_boards/view(&.|$)");
 }
 else {
-	entriesChecker.setKeepSelectionURLRegex("mbCategoryId=" + categoryId );
+	entriesChecker.setKeepSelectionURLRegex("mbCategoryId=" + categoryId);
 }
 
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);

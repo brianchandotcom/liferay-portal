@@ -115,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
 
-			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
+			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu"  id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
 
 			<h4><liferay-ui:message key="type" /></h4>
 

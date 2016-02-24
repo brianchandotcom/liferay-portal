@@ -1,7 +1,7 @@
 'use strict';
 
-import dom from 'metal-dom/src/dom'
-import HtmlScreen from 'senna/src/screen/HtmlScreen'
+import dom from 'metal-dom/src/dom';
+import HtmlScreen from 'senna/src/screen/HtmlScreen';
 import globalEval from 'metal-dom/src/globalEval';
 import { CancellablePromise } from 'metal-promise/src/promise/Promise';
 import Utils from '../util/Utils.es';
@@ -64,7 +64,7 @@ class EventScreen extends HtmlScreen {
 						app: Liferay.SPA.app,
 						screen: this
 					}
-				)
+				);
 			});
 	}
 

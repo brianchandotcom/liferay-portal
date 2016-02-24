@@ -222,9 +222,7 @@
 	</command>
 
 	<command name="editContentViaCardViewPG">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -278,9 +276,7 @@
 	</command>
 
 	<command name="editTitleViaCardViewPG">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="${entryTitle}" />

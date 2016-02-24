@@ -58,9 +58,7 @@
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute function="Type" locator1="CPPortalinstancesEdit#MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
 

@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
@@ -117,7 +117,7 @@ public class DDMFormEvaluatorHelper {
 		try {
 			return ddmExpression.evaluate();
 		}
-		catch (DDMExpressionEvaluationException ddmeee) {
+		catch (DDMExpressionException ddmee) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Invalid expression or expression that is making " +

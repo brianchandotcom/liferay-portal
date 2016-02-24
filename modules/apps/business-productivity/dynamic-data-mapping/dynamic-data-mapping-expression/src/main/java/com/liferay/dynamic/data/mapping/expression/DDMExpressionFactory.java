@@ -21,23 +21,23 @@ public interface DDMExpressionFactory {
 
 	public DDMExpression<Boolean> createBooleanDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionEvaluationException;
+		throws DDMExpressionException;
 
 	public DDMExpression<Double> createDoubleDDMExpression(
-		String ddmExpressionString) throws DDMExpressionEvaluationException;
+		String ddmExpressionString) throws DDMExpressionException;
 
 	public DDMExpression<Float> createFloatDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionEvaluationException;
+		throws DDMExpressionException;
 
 	public DDMExpression<Integer> createIntegerDDMExpression(
-		String ddmExpressionString) throws DDMExpressionEvaluationException;
+		String ddmExpressionString) throws DDMExpressionException;
 
 	public DDMExpression<Long> createLongDDMExpression(
 			String ddmExpressionString)
-		throws DDMExpressionEvaluationException;
+		throws DDMExpressionException;
 
 	public DDMExpression<String> createStringDDMExpression(
-		String ddmExpressionString) throws DDMExpressionEvaluationException;
+		String ddmExpressionString) throws DDMExpressionException;
 
 }

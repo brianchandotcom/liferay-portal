@@ -8,9 +8,9 @@
 			<var name="pageName" value="Web Content" />
 		</execute>
 
-		<!--<execute macro="WebContent#viewPGViaWCD">
+		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
-		</execute>-->
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Document" />
@@ -47,11 +47,11 @@
 			<var name="threadSubject" value="Message Boards Subject" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<!--<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki" />
 		</execute>
 
-		<!--<execute macro="WikiPage#viewFrontPagePG">
+		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="Wiki Front Page Content" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>-->

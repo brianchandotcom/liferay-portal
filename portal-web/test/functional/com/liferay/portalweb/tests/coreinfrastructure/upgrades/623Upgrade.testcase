@@ -6,6 +6,7 @@
 
 	<command name="View623DataArchive" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewUpgrade" />
 	</command>

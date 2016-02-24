@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.List;
 
@@ -127,13 +128,15 @@ public class VerifyPortletPreferences extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		CacheRegistryUtil.setActive(true);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			CacheRegistryUtil.setActive(true);
 
-		try {
-			cleanUpLayoutRevisionPortletPreferences();
-		}
-		finally {
-			CacheRegistryUtil.setActive(false);
+			try {
+				cleanUpLayoutRevisionPortletPreferences();
+			}
+			finally {
+				CacheRegistryUtil.setActive(false);
+			}
 		}
 	}
 

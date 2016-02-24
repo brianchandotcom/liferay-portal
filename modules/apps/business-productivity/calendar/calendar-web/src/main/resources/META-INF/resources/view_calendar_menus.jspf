@@ -485,8 +485,6 @@ String backURL = PortalUtil.getCurrentURL(request);
 					visible: !window.<portlet:namespace />calendarListsMenu.get('visible')
 				}
 			);
-
-			event.stopImmediatePropagation();
 		},
 		'.calendar-list-item-arrow'
 	);

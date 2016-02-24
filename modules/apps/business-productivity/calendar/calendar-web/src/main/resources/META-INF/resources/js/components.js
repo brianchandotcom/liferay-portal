@@ -506,8 +506,6 @@
 							var target = event.target.ancestor(STR_DOT + CSS_CALENDAR_LIST_ITEM_ARROW, true, STR_DOT + CSS_CALENDAR_LIST_ITEM);
 
 							if (target) {
-								event.stopPropagation();
-
 								var activeNode = instance.activeNode;
 
 								if (activeNode) {

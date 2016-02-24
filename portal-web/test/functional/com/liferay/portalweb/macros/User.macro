@@ -1290,6 +1290,12 @@
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Display Settings" />
+		</execute>
+
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
 			<then>

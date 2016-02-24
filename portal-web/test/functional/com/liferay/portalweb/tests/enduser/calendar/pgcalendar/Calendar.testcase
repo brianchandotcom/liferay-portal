@@ -4576,6 +4576,8 @@
 	</command>
 
 	<command name="ViewCalendarTimeZoneDefaults" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="UserBar#gotoMyAccount" />
 
 		<execute macro="User#editUserDisplaySettingsTimeZonePacific">

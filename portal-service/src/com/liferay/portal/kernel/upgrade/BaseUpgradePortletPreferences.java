@@ -208,27 +208,20 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	protected void updatePortletPreferences() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("select portletPreferencesId, ownerId, ownerType, ");
+		sb.append("plid, portletId, preferences from PortletPreferences");
 
-			sb.append("select portletPreferencesId, ownerId, ownerType, ");
-			sb.append("plid, portletId, preferences from PortletPreferences");
+		String whereClause = getUpdatePortletPreferencesWhereClause();
 
-			String whereClause = getUpdatePortletPreferencesWhereClause();
+		if (Validator.isNotNull(whereClause)) {
+			sb.append(" where ");
+			sb.append(whereClause);
+		}
 
-			if (Validator.isNotNull(whereClause)) {
-				sb.append(" where ");
-				sb.append(whereClause);
-			}
-
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
@@ -296,9 +289,6 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					deletePortletPreferences(portletPreferencesId);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

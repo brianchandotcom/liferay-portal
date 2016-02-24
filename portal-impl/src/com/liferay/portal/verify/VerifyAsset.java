@@ -20,11 +20,16 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.tools.StopWatchLoggingHelper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Douglas Wong
@@ -70,8 +75,21 @@ public class VerifyAsset extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
+			_log, "VerifyAsset.deleteOrphanedAssetEntries");
+
 		deleteOrphanedAssetEntries();
+
+		StopWatchLoggingHelper.endLogging(
+			stopWatch, _log, "VerifyAsset.deleteOrphanedAssetEntries");
+
+		stopWatch = StopWatchLoggingHelper.startLogging(
+			_log, "VerifyAsset.rebuildTree");
+
 		rebuildTree();
+
+		StopWatchLoggingHelper.endLogging(
+			stopWatch, _log, "VerifyAsset.rebuildTree");
 	}
 
 	protected void rebuildTree() throws Exception {
@@ -95,5 +113,7 @@ public class VerifyAsset extends VerifyProcess {
 			DataAccess.cleanUp(ps, rs);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(VerifyAsset.class);
 
 }

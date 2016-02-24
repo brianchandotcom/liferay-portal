@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -49,8 +51,8 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		sb.append("<link href=\"");
 		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathContext());
-		sb.append("/o/comliferaymentionsweb/css/mentions.css");
+		sb.append(_servletContext.getContextPath());
+		sb.append("/css/mentions.css");
 		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />");
 
 		printWriter.println(sb.toString());
@@ -60,5 +62,8 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.mentions.web)")
+	private ServletContext _servletContext;
 
 }

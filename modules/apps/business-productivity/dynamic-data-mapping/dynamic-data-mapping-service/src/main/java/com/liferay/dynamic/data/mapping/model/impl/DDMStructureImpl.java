@@ -105,6 +105,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+				return new DDMForm();
 			}
 		}
 

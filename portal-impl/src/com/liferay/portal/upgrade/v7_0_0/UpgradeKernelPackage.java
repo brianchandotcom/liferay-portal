@@ -96,65 +96,65 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			String[][] names, WildcardMode wildcardMode)
 		throws SQLException {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler updateSB = new StringBundler(7);
+		StringBundler updateSB = new StringBundler(7);
 
-			updateSB.append("update ");
-			updateSB.append(tableName);
-			updateSB.append(" set ");
-			updateSB.append(columnName);
-			updateSB.append(" = ? where ");
-			updateSB.append(columnName);
-			updateSB.append(" = ?");
+		updateSB.append("update ");
+		updateSB.append(tableName);
+		updateSB.append(" set ");
+		updateSB.append(columnName);
+		updateSB.append(" = ? where ");
+		updateSB.append(columnName);
+		updateSB.append(" = ?");
 
-			String updateSQL = updateSB.toString();
+		String updateSQL = updateSB.toString();
 
-			StringBundler selectPrefixSB = new StringBundler(7);
+		StringBundler selectPrefixSB = new StringBundler(7);
 
-			selectPrefixSB.append("select distinct ");
-			selectPrefixSB.append(columnName);
-			selectPrefixSB.append(" from ");
-			selectPrefixSB.append(tableName);
-			selectPrefixSB.append(" where ");
-			selectPrefixSB.append(columnName);
+		selectPrefixSB.append("select distinct ");
+		selectPrefixSB.append(columnName);
+		selectPrefixSB.append(" from ");
+		selectPrefixSB.append(tableName);
+		selectPrefixSB.append(" where ");
+		selectPrefixSB.append(columnName);
 
-			if (wildcardMode.equals(WildcardMode.LEADING) ||
-				wildcardMode.equals(WildcardMode.SURROUND)) {
+		if (wildcardMode.equals(WildcardMode.LEADING) ||
+			wildcardMode.equals(WildcardMode.SURROUND)) {
 
-				selectPrefixSB.append(" like '%");
-			}
-			else {
-				selectPrefixSB.append(" like '");
-			}
+			selectPrefixSB.append(" like '%");
+		}
+		else {
+			selectPrefixSB.append(" like '");
+		}
 
-			String selectPrefix = selectPrefixSB.toString();
+		String selectPrefix = selectPrefixSB.toString();
 
-			String selectPostfix = StringPool.APOSTROPHE;
+		String selectPostfix = StringPool.APOSTROPHE;
 
-			if (wildcardMode.equals(WildcardMode.SURROUND) ||
-				wildcardMode.equals(WildcardMode.TRAILING)) {
+		if (wildcardMode.equals(WildcardMode.SURROUND) ||
+			wildcardMode.equals(WildcardMode.TRAILING)) {
 
-				selectPostfix = "%'";
-			}
+			selectPostfix = "%'";
+		}
 
-			for (String[] name : names) {
-				String selectSQL = selectPrefix.concat(name[0]).concat(
-					selectPostfix);
+		for (String[] name : names) {
+			String selectSQL = selectPrefix.concat(name[0]).concat(
+				selectPostfix);
 
-				futures.add(
-					_threadPoolExecutor.submit(
-						new UpgradeKernelPackageCallable(
-							columnName, selectSQL, updateSQL, name)));
-			}
+			futures.add(
+				_threadPoolExecutor.submit(
+					new UpgradeKernelPackageCallable(
+						tableName, columnName, selectSQL, updateSQL, name)));
 		}
 	}
 
 	protected void upgradeTable(
-			String columnName, String selectSQL, String updateSQL,
-			String[] name)
+			String tableName, String columnName, String selectSQL,
+			String updateSQL, String[] name)
 		throws SQLException {
 
-		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				tableName.concat(StringPool.POUND).concat(columnName));
+			PreparedStatement ps1 = connection.prepareStatement(selectSQL);
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(updateSQL))) {
@@ -681,15 +681,17 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 		@Override
 		public Void call() throws SQLException {
-			upgradeTable(_columnName, _selectSQL, _updateSQL, _name);
+			upgradeTable(
+				_tableName, _columnName, _selectSQL, _updateSQL, _name);
 
 			return null;
 		}
 
 		private UpgradeKernelPackageCallable(
-			String columnName, String selectSQL, String updateSQL,
-			String[] name) {
+			String tableName, String columnName, String selectSQL,
+			String updateSQL, String[] name) {
 
+			_tableName = tableName;
 			_columnName = columnName;
 			_selectSQL = selectSQL;
 			_updateSQL = updateSQL;
@@ -699,6 +701,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		private final String _columnName;
 		private final String[] _name;
 		private final String _selectSQL;
+		private final String _tableName;
 		private final String _updateSQL;
 
 	}

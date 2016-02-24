@@ -112,27 +112,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			LayoutConstants.DEFAULT_PLID, portletName, queryString);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #actionURL(String, String,
-	 *             Boolean, Boolean, Boolean, String, long, long, String,
-	 *             Boolean, Boolean, long, long, Boolean, String)}
-	 */
-	@Deprecated
-	@Override
-	public String actionURL(
-			String windowState, String portletMode, Boolean secure,
-			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
-			long plid, long refererPlid, String portletName, Boolean anchor,
-			Boolean encrypt, long doAsUserId, Boolean portletConfiguration,
-			String queryString)
-		throws Exception {
-
-		return actionURL(
-			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, name, plid, refererPlid, portletName, anchor, encrypt, 0,
-			doAsUserId, portletConfiguration, queryString);
-	}
-
 	@Override
 	public String actionURL(
 			String windowState, String portletMode, Boolean secure,
@@ -299,23 +278,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		discussionTag.runTag();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #discussion(String, long,
-	 *             String, String, boolean, boolean, String, long)})}
-	 */
-	@Deprecated
-	@Override
-	public void discussion(
-			String className, long classPK, String formAction, String formName,
-			boolean hideControls, boolean ratingsEnabled, String redirect,
-			String subject, long userId)
-		throws Exception {
-
-		discussion(
-			className, classPK, formAction, formName, hideControls,
-			ratingsEnabled, redirect, userId);
-	}
-
 	@Override
 	public void doAsURL(long doAsUserId) throws Exception {
 		DoAsURLTag.doTag(doAsUserId, _request);
@@ -449,15 +411,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		iconTag.runTag();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #iconBack}
-	 */
-	@Deprecated
-	@Override
-	public void iconBack() throws Exception {
-		portletIconBack();
-	}
-
 	@Override
 	public void iconHelp(String message) throws Exception {
 		com.liferay.taglib.ui.IconHelpTag iconHelpTag =
@@ -468,33 +421,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		iconHelpTag.setMessage(message);
 
 		iconHelpTag.runTag();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconOptions}
-	 */
-	@Deprecated
-	@Override
-	public void iconOptions() throws Exception {
-		portletIconOptions();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet}
-	 */
-	@Deprecated
-	@Override
-	public void iconPortlet() throws Exception {
-		portletIconPortlet();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet(Portlet)}
-	 */
-	@Deprecated
-	@Override
-	public void iconPortlet(Portlet portlet) throws Exception {
-		portletIconPortlet();
 	}
 
 	@Override
@@ -609,24 +535,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		MetaTagsTag.doTag(_servletContext, _request, _response);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #mySites}
-	 */
-	@Deprecated
-	@Override
-	public void myPlaces() throws Exception {
-		mySites();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #mySites(int)}
-	 */
-	@Deprecated
-	@Override
-	public void myPlaces(int max) throws Exception {
-		mySites(max);
-	}
-
 	@Override
 	public void mySites() throws Exception {
 		MySitesTag mySitesTag = new MySitesTag();
@@ -657,23 +565,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return PermissionsURLTag.doTag(
 			redirect, modelResource, modelResourceDescription, resourceGroupId,
 			resourcePrimKey, windowState, roleTypes, _request);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
-	 *             String, String, Object, String, String, int[])}
-	 */
-	@Deprecated
-	@Override
-	public String permissionsURL(
-			String redirect, String modelResource,
-			String modelResourceDescription, String resourcePrimKey,
-			String windowState, int[] roleTypes)
-		throws Exception {
-
-		return permissionsURL(
-			redirect, modelResourceDescription, modelResourceDescription, null,
-			resourcePrimKey, windowState, roleTypes);
 	}
 
 	/**
@@ -795,28 +686,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			removedParameterNames, _request);
 
 		return portletURL.toString();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #renderURL(String, String,
-	 *             Boolean, Boolean, Boolean, long, long, String, Boolean,
-	 *             Boolean, long, long, Boolean, String)}
-	 */
-	@Deprecated
-	@Override
-	public String renderURL(
-			String windowState, String portletMode, Boolean secure,
-			Boolean copyCurrentRenderParameters, Boolean escapeXml, long plid,
-			String portletName, Boolean anchor, Boolean encrypt,
-			long doAsUserId, Boolean portletConfiguration, String queryString)
-		throws Exception {
-
-		long refererPlid = LayoutConstants.DEFAULT_PLID;
-
-		return renderURL(
-			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, plid, refererPlid, portletName, anchor, encrypt, 0,
-			doAsUserId, portletConfiguration, queryString);
 	}
 
 	@Override

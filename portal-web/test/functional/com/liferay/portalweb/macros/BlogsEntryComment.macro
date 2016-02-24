@@ -51,7 +51,7 @@
 	<command name="delete">
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
+		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
 		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
@@ -80,7 +80,7 @@
 	<command name="edit">
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
+		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" />
 
 		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
@@ -95,7 +95,7 @@
 		<var name="key_entryComment" value="${entryCommentEdit}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryCommentEdit}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryCommentEdit}" />
 	</command>
 
 	<command name="subscribePG">
@@ -113,7 +113,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="${commentCount} Comments" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 	</command>
 
 	<command name="viewDefault">
@@ -131,7 +131,7 @@
 		<var name="key_userFullName" value="${userFullName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#USER_NAME" value1="${userFullName}" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 	</command>
 
 	<command name="viewSearchResultPG">

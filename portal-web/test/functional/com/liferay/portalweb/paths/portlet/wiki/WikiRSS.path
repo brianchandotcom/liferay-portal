@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>FEED_LINK</td>
+	<td>//p/a[contains(@title,'(Opens New Window') and contains(.,'Feed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEED_TITLE</td>
 	<td>//*[@id='feedTitleText']</td>
 	<td></td>

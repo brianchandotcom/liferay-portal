@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_TYPES</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Document Types')]</td>
 	<td></td>

@@ -4,10 +4,10 @@
 			<var name="commentBody" value="${commentBody}" />
 		</execute>
 
-		<var name="key_commentBody" value="${commentBody}" />
+		<var name="key_entryComment" value="${commentBody}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
@@ -34,7 +34,7 @@
 
 		<var name="key_entryComment" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
@@ -80,7 +80,7 @@
 
 		<var name="key_entryComment" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
@@ -91,7 +91,7 @@
 
 		<var name="key_entryComment" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 </definition>

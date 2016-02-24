@@ -554,8 +554,6 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoDetails" />
-
 		<execute macro="WikiPage#viewRSS">
 			<var name="version" value="1.0" />
 			<var name="wikiPageContent" value="Wiki Page Content" />

@@ -429,7 +429,17 @@
 	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMPARE_VERSIONS-->
+<tr>
+	<td>COMPARE_VERSIONS_DATE</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersion}')]/td[2]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>COMPARE_VERSIONS_DIFF</td>
 	<td>//span[contains(@class,'diff-html') and contains(.,'${key_wikiPageVersionDiff}')]</td>
@@ -446,8 +456,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMPARE_VERSIONS_IFRAME</td>
+	<td>//iframe[contains(@id,'compareVersions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS_PARAGRAPH_FULL</td>
 	<td>//div[contains(@class,'portlet-wiki')]//p[contains(.,'${key_wikiPageContentCompareFull}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARE_VERSIONS_VERSION</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersion}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARE_VERSIONS_VERSION_ACTIONS</td>
+	<td>//h4[contains(.,'${key_wikiPageVersion}')]/..//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARE_VERSIONS_VERSION_LINK</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr/td/a[contains(@class,'selector-button') and contains(.,'${key_wikiPageVersion}')]</td>
 	<td></td>
 </tr>
 <tr>

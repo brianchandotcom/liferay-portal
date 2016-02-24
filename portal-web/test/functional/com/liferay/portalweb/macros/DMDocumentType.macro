@@ -114,6 +114,8 @@
 			<then>
 				<var name="key_metadataSetName" value="${metadataSetName}" />
 
+				<execute function="Click" locator1="DocumentsAndMediaEditDocumentType#PANEL_ADDITIONAL_METADATA_FIELDS" />
+
 				<execute function="AssertClick" locator1="DocumentsAndMediaEditDocumentType#REMOVE_METADATA_SET_BUTTON" value1="Remove" />
 			</then>
 		</if>

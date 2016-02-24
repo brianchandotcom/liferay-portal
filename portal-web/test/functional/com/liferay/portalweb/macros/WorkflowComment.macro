@@ -11,7 +11,7 @@
 	<command name="_viewBody">
 		<var name="key_entryComment" value="${workflowComment}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${workflowComment}" />
 	</command>
 
 	<command name="add">

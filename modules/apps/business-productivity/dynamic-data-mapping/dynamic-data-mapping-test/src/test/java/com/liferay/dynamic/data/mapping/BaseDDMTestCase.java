@@ -14,11 +14,12 @@
 
 package com.liferay.dynamic.data.mapping;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -83,7 +85,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -98,8 +99,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
-		DDMFormFieldTypeServicesTrackerUtil.class,
-		DDMFormJSONSerializerUtil.class,
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
 		LocaleUtil.class, PortalClassLoaderUtil.class, ResourceBundleUtil.class
 	}
@@ -107,7 +106,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
 	{
-		"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil",
 		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
 		"com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil"
 	}
@@ -372,8 +370,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected DDMStructure createStructure(String name, DDMForm ddmForm) {
-		return createStructure(
-			name, DDMFormJSONSerializerUtil.serialize(ddmForm));
+		return createStructure(name, ddmFormJSONSerializer.serialize(ddmForm));
 	}
 
 	protected DDMStructure createStructure(String name, String definition) {
@@ -457,6 +454,57 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return valuesMap;
 	}
 
+	protected DDMForm deserialize(String serializedDDMForm) {
+		try {
+			return DDMStructureLocalServiceUtil.deserialize(serializedDDMForm);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected DDMFormFieldTypeServicesTracker
+		getMockedDDMFormFieldTypeServicesTracker() {
+
+		setUpDefaultDDMFormFieldType();
+
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
+			DDMFormFieldTypeServicesTracker.class);
+
+		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
+			DDMFormFieldRenderer.class);
+
+		when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+				Matchers.anyString())
+		).thenReturn(
+			ddmFormFieldRenderer
+		);
+
+		when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+				Matchers.anyString())
+		).thenReturn(
+			_defaultDDMFormFieldType
+		);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("ddm.form.field.type.icon", "my-icon");
+		properties.put(
+			"ddm.form.field.type.js.class.name", "myJavaScriptClass");
+		properties.put("ddm.form.field.type.js.module", "myJavaScriptModule");
+
+		when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				Matchers.anyString())
+		).thenReturn(
+			properties
+		);
+
+		return ddmFormFieldTypeServicesTracker;
+	}
+
 	protected DDMStructure getStructure(long structureId) {
 		try {
 			return DDMStructureLocalServiceUtil.getStructure(structureId);
@@ -489,42 +537,43 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			new ConfigurationFactoryImpl());
 	}
 
-	protected void setUpDDMFormFieldTypeServicesTrackerUtil() {
-		setUpDefaultDDMFormFieldType();
-
-		mockStatic(DDMFormFieldTypeServicesTrackerUtil.class);
-
-		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(
-				Matchers.anyString())
-		).thenReturn(
-			_defaultDDMFormFieldType
-		);
-	}
-
 	protected void setUpDDMFormJSONDeserializer() throws Exception {
-		field(
-			DDMFormJSONDeserializerImpl.class, "_jsonFactory"
-		).set(
-			ddmFormJSONDeserializer, new JSONFactoryImpl()
-		);
 
-		field(
+		// DDM form field type services tracker
+
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
 			DDMFormJSONDeserializerImpl.class,
-			"_ddmFormFieldTypeServicesTracker"
-		).set(
-			ddmFormJSONDeserializer, _ddmFormFieldTypeServicesTracker
-		);
+			"_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			ddmFormJSONDeserializer,
+			getMockedDDMFormFieldTypeServicesTracker());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONDeserializerImpl.class, "_jsonFactory");
+
+		field.set(ddmFormJSONDeserializer, new JSONFactoryImpl());
 	}
 
-	protected void setUpDDMFormJSONSerializerUtil() {
-		mockStatic(DDMFormJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
+	protected void setUpDDMFormJSONSerializer() throws Exception {
 
-		stub(
-			method(DDMFormJSONSerializerUtil.class, "getDDMFormJSONSerializer")
-		).toReturn(
-			new DDMFormJSONSerializerImpl()
-		);
+		// DDM form field type services tracker
+
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class,
+			"_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(ddmFormJSONSerializer, new JSONFactoryImpl());
 	}
 
 	protected void setUpDDMStructureLocalServiceUtil() {
@@ -544,6 +593,26 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 					Long structureId = (Long)args[0];
 
 					return structures.get(structureId);
+				}
+
+			}
+		);
+
+		when(
+			deserialize(Matchers.anyString())
+		).then(
+			new Answer<DDMForm>() {
+
+				@Override
+				public DDMForm answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					String serializedDDMForm = (String)args[0];
+
+					return ddmFormJSONDeserializer.deserialize(
+						serializedDDMForm);
 				}
 
 			}
@@ -801,6 +870,9 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected final DDMFormJSONDeserializer ddmFormJSONDeserializer =
 		new DDMFormJSONDeserializerImpl();
+	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
+		new DDMFormJSONSerializerImpl();
+
 	@Mock
 	protected Language language;
 

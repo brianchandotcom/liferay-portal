@@ -15,15 +15,13 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -43,7 +41,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
+@PrepareForTest({LocaleUtil.class})
 public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
@@ -52,8 +50,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormJSONSerializerUtil();
+		setUpDDMFormJSONSerializer();
 		setUpDDMFormJSONDeserializer();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
@@ -151,12 +148,12 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		_createDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Create Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-			DDMFormJSONSerializerUtil.serialize(ddmForm));
+			ddmFormJSONSerializer.serialize(ddmForm));
 
 		_editDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Edit Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_EDIT,
-			DDMFormJSONSerializerUtil.serialize(ddmForm));
+			ddmFormJSONSerializer.serialize(ddmForm));
 	}
 
 	@Override
@@ -298,9 +295,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		public MockDDMFormTemplateSynchronizer(DDMForm structureDDMForm) {
 			super(
-				DDMFormJSONSerializerUtil.getDDMFormJSONSerializer(),
 				structureDDMForm, ddmFormJSONDeserializer,
-				DDMTemplateLocalServiceUtil.getService());
+				ddmFormJSONSerializer, new DDMTemplateLocalServiceImpl());
 		}
 
 		@Override
@@ -317,8 +313,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		protected void updateDDMTemplate(
 			DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-			String script = DDMFormJSONSerializerUtil.serialize(
-				templateDDMForm);
+			String script = ddmFormJSONSerializer.serialize(templateDDMForm);
 
 			ddmTemplate.setScript(script);
 

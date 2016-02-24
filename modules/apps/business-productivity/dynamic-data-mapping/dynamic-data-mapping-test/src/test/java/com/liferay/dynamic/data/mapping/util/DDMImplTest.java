@@ -15,6 +15,10 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -25,7 +29,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -47,9 +53,11 @@ public class DDMImplTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormJSONSerializerUtil();
+		setUpDDM();
 		setUpDDMFormJSONDeserializer();
+		setUpDDMFormJSONSerializer();
+		setUpDDMFormValuesJSONDeserializer();
+		setUpDDMFormValuesJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpJSONFactoryUtil();
 		setUpHtmlUtil();
@@ -63,7 +71,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 	public void testGetDefaultDDMFormLayout() {
 		DDMForm ddmForm = createDDMForm("Text1", "Text2");
 
-		DDMFormLayout ddmFormLayout = _ddmImpl.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		List<DDMFormLayoutPage> ddmFormLayoutPages =
 			ddmFormLayout.getDDMFormLayoutPages();
@@ -113,7 +121,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Fields newFields = createFields(newField, newFieldsDisplayField);
 
-		Fields mergedFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields mergedFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field fieldsDisplayField = mergedFields.get(
 			DDMImpl.FIELDS_DISPLAY_NAME);
@@ -163,7 +171,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Fields newFields = createFields(newContentField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualContentField = actualFields.get("Content");
 
@@ -208,7 +216,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields newFields = createFields(
 			existingTitleField, newContentField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualContentField = actualFields.get("Content");
 
@@ -251,7 +259,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Fields newFields = createFields(newContentField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualContentField = actualFields.get("Content");
 
@@ -295,7 +303,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Fields newFields = createFields(newTitleField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualContentField = actualFields.get("Title");
 
@@ -367,7 +375,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields newFields = createFields(
 			newNameField, newPhoneField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualNameField = actualFields.get("Name");
 
@@ -434,7 +442,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Fields newFields = createFields(newContentField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualContentField = actualFields.get("Content");
 
@@ -490,10 +498,9 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields newFields = createFields(
 			newLocalizedField, newFieldsDisplayField);
 
-		Fields mergedFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields mergedFields = _ddm.mergeFields(newFields, existingFields);
 
-		Field fieldsDisplayField = mergedFields.get(
-			_ddmImpl.FIELDS_DISPLAY_NAME);
+		Field fieldsDisplayField = mergedFields.get(_ddm.FIELDS_DISPLAY_NAME);
 
 		Assert.assertNotNull(fieldsDisplayField);
 
@@ -537,7 +544,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields newFields = createFields(newContentField, newFieldsDisplayField);
 
 		try {
-			_ddmImpl.mergeFields(newFields, existingFields);
+			_ddm.mergeFields(newFields, existingFields);
 
 			Assert.fail();
 		}
@@ -595,7 +602,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields newFields = createFields(
 			newNameField, newNameNestedField, newFieldsDisplayField);
 
-		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+		Fields actualFields = _ddm.mergeFields(newFields, existingFields);
 
 		Field actualNameField = actualFields.get("Name");
 
@@ -635,6 +642,37 @@ public class DDMImplTest extends BaseDDMTestCase {
 			DDMFormLayoutColumn.FULL, actualDDMFormLayoutColumn.getSize());
 	}
 
+	protected void setUpDDM() throws Exception {
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			DDMImpl.class, "_ddmFormJSONDeserializer");
+
+		field.set(_ddm, ddmFormJSONDeserializer);
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMImpl.class, "_ddmFormValuesJSONDeserializer");
+
+		field.set(_ddm, _ddmFormValuesJSONDeserializer);
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMImpl.class, "_ddmFormValuesJSONSerializer");
+
+		field.set(_ddm, _ddmFormValuesJSONSerializer);
+	}
+
+	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormValuesJSONDeserializer, new JSONFactoryImpl());
+	}
+
+	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormValuesJSONSerializer, new JSONFactoryImpl());
+	}
+
 	protected void testValues(
 		List<Serializable> actualValues, String... expectedValues) {
 
@@ -653,6 +691,10 @@ public class DDMImplTest extends BaseDDMTestCase {
 		}
 	}
 
-	private final DDMImpl _ddmImpl = new DDMImpl();
+	private final DDMImpl _ddm = new DDMImpl();
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
+		new DDMFormValuesJSONDeserializerImpl();
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
+		new DDMFormValuesJSONSerializerImpl();
 
 }

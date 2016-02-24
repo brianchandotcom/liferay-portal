@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.model.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.Set;
 
@@ -57,6 +59,8 @@ public class DDLRecordSetImplTest {
 		_group = GroupTestUtil.addGroup();
 
 		_ddlRecordSetTestHelper = new DDLRecordSetTestHelper(_group);
+
+		setUpDDMFormJSONSerializer();
 	}
 
 	@Test
@@ -75,7 +79,7 @@ public class DDLRecordSetImplTest {
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class), "json",
-			DDMFormJSONSerializerUtil.serialize(ddmForm), LocaleUtil.US);
+			_ddmFormJSONSerializer.serialize(ddmForm), LocaleUtil.US);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
@@ -90,7 +94,15 @@ public class DDLRecordSetImplTest {
 		Assert.assertEquals(fieldNames, recordSetDDMStructure.getFieldNames());
 	}
 
+	protected void setUpDDMFormJSONSerializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormJSONSerializer = registry.getService(
+			DDMFormJSONSerializer.class);
+	}
+
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
 
 	@DeleteAfterTestRun
 	private Group _group;

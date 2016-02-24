@@ -14,4 +14,10 @@
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
+
+	<command name="save">
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+	</command>
 </definition>

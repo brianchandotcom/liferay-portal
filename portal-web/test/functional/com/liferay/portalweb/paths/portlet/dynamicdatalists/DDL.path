@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[contains(@class,'button-holder ')]/button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

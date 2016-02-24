@@ -68,8 +68,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">

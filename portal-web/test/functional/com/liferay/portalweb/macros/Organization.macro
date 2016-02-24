@@ -14,8 +14,7 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
 	</command>
 
@@ -38,8 +37,7 @@
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_TYPE_SELECT" value1="${orgAddressType}" />
 		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_MAILING_CHECKBOX" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_PRIMARY_RADIO" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addCategorizationCP">
@@ -78,8 +76,7 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#MISCELLANEOUS_COMMENTS" value1="Comments" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
 	</command>
 
@@ -167,8 +164,7 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_PRIMARY_RADIO" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 	</command>
 
@@ -186,8 +182,7 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_TEXT_FIELD" value1="${orgReminderQuery}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
@@ -206,8 +201,7 @@
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT" value1="${orgServicesClosed}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT" value1="${orgServicesClosed}" />
 	</command>
@@ -277,8 +271,7 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_PRIMARY_RADIO" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
 	</command>
 
@@ -405,8 +398,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
 	</command>
 
@@ -462,8 +454,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="removeMemberCP">
@@ -514,8 +505,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME" value1="${parentOrgName}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="tearDownCP">

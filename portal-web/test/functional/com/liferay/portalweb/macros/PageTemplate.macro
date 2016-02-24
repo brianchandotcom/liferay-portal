@@ -12,8 +12,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 

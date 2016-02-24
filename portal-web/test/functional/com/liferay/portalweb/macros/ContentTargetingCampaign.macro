@@ -251,8 +251,7 @@
 
 	<command name="saveCP">
 		<execute function="Pause" locator1="5000" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="updateReportCP">

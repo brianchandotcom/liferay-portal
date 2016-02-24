@@ -317,8 +317,7 @@
 	</command>
 
 	<command name="saveCP">
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="viewCP">

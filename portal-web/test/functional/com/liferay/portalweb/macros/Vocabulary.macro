@@ -15,8 +15,7 @@
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
 		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addCP" summary="Add a vocabulary named '${vocabularyName}'">
@@ -57,8 +56,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addViewableByCP">
@@ -105,8 +103,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -128,8 +125,7 @@
 		</execute>
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteByIconCP">
@@ -189,8 +185,7 @@
 			</elseif>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<if>
 			<isset var="vocabularyNameEdit" />

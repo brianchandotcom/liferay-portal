@@ -20,8 +20,7 @@
 		</if>
 
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="a0a822b80b2b" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="tearDownConfiguration">

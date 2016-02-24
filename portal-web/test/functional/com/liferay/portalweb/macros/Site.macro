@@ -481,8 +481,7 @@
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
 		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureCurrentLanguagesCP">
@@ -636,8 +635,7 @@
 
 		<execute function="Check" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="exportSite">
@@ -820,8 +818,7 @@
 			</elseif>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="removeMemberCP">
@@ -937,8 +934,7 @@
 			</elseif>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="selectParentSite">

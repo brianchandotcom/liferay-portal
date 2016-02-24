@@ -4,8 +4,7 @@
 
 		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />
 		<execute function="Check" locator1="AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>

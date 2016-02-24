@@ -213,8 +213,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of the page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addPageTitle">
@@ -244,8 +243,7 @@
 
 		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addPageTypePanelPG">
@@ -303,8 +301,7 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrameTop" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
@@ -407,8 +404,7 @@
 			</elseif>
 		</if>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">

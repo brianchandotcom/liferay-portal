@@ -385,8 +385,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="Child SiteName2" />
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 

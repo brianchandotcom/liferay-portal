@@ -36,7 +36,6 @@ RecordSetSearch recordSetSearch = ddlFormAdminDisplayContext.getRecordSetSearch(
 		<aui:input name="deleteRecordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-forms-were-found"
 			id="ddlRecordSet"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= recordSetSearch %>"

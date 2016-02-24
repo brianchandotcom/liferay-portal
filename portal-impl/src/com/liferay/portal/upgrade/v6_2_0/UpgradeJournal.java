@@ -374,15 +374,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
-		PreparedStatement ps1 = null;
-		ResultSet rs = null;
-
-		try {
-			ps1 = connection.prepareStatement(
+		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select companyId, groupId, resourcePrimKey, structureId " +
 					"from JournalArticle where structureId != ''");
-
-			rs = ps1.executeQuery();
+			ResultSet rs = ps1.executeQuery()) {
 
 			try (PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
@@ -407,9 +402,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 				ps2.executeBatch();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps1, rs);
 		}
 	}
 
@@ -547,33 +539,22 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateStructures() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement("select * from JournalStructure");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from JournalStructure");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				updateStructure(rs);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table JournalStructure");
 	}
 
 	protected void updateTemplates() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement("select * from JournalTemplate");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from JournalTemplate");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String uuid_ = rs.getString("uuid_");
@@ -615,9 +596,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					"com.liferay.portlet.dynamicdatamapping.DDMTemplate", id_,
 					ddmTemplateId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table JournalTemplate");

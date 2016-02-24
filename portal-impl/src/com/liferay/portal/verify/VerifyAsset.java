@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -37,24 +36,19 @@ import org.apache.commons.lang.time.StopWatch;
 public class VerifyAsset extends VerifyProcess {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		long classNameId = PortalUtil.getClassNameId(
+			DLFileEntryConstants.getClassName());
 
-		try {
-			long classNameId = PortalUtil.getClassNameId(
-				DLFileEntryConstants.getClassName());
+		StringBundler sb = new StringBundler(5);
 
-			StringBundler sb = new StringBundler(5);
+		sb.append("select classPK, entryId from AssetEntry where ");
+		sb.append("classNameId = ");
+		sb.append(classNameId);
+		sb.append(" and classPK not in (select fileVersionId from ");
+		sb.append("DLFileVersion)");
 
-			sb.append("select classPK, entryId from AssetEntry where ");
-			sb.append("classNameId = ");
-			sb.append(classNameId);
-			sb.append(" and classPK not in (select fileVersionId from ");
-			sb.append("DLFileVersion)");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
@@ -67,9 +61,6 @@ public class VerifyAsset extends VerifyProcess {
 					AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -93,24 +84,16 @@ public class VerifyAsset extends VerifyProcess {
 	}
 
 	protected void rebuildTree() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct groupId from AssetCategory where " +
 					"(leftCategoryId is null) or (rightCategoryId is null)");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 
 				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

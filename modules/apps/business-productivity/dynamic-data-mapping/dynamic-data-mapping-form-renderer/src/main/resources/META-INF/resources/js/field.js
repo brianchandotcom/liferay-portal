@@ -230,7 +230,7 @@ AUI.add(
 					getLocalizedValue: function(localizedValue) {
 						var instance = this;
 
-						if (Lang.isObject(localizedValue)) {
+						if (Lang.isObject(localizedValue) && !Array.isArray(localizedValue)) {
 							localizedValue = localizedValue[instance.get('locale')];
 						}
 

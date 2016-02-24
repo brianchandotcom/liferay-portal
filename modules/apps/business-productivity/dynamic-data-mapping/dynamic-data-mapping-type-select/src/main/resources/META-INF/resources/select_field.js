@@ -107,7 +107,8 @@ AUI.add(
 							{
 								multiple: instance.get('multiple') ? 'multiple' : '',
 								options: instance.getOptions(),
-								strings: instance.get('strings')
+								strings: instance.get('strings'),
+								value: instance.getContextValue()
 							}
 						);
 					},
@@ -185,13 +186,7 @@ AUI.add(
 
 						var status = '';
 
-						var value = instance.getContextValue();
-
-						if (instance.get('localizable') && Array.isArray(value)) {
-							value = value[instance.get('locale')] || [];
-						}
-
-						if (value.indexOf(option.value) > -1) {
+						if (instance.getContextValue() === option.value) {
 							status = 'selected';
 						}
 

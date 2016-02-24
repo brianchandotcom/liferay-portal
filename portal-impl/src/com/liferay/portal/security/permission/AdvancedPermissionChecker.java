@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -700,13 +701,22 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			(primKey.equals(String.valueOf(companyId)) &&
 			 !name.equals(Company.class.getName()))) {
 
-			String message =
-				"Legacy primary key " + primKey + " was used for " +
-					"permission checking of " + name + " in company " +
-					companyId + ". Please use " + name + " as the " +
-					"primary key.";
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(9);
+				
+				sb.append("Using ");
+				sb.append(name);
+				sb.append(" as the primary key instead of the legacy primary ");
+				sb.append("key ");
+				sb.append(primKey);
+				sb.append(" that was used for permission checking of ");
+				sb.append(name);
+				sb.append(" in company ");
+				sb.append(companyId);
 
-			_log.error(message, new IllegalArgumentException(message));
+				_log.warn(
+					sb.toString(), new IllegalArgumentException(sb.toString()));
+			}
 
 			return name;
 		}
@@ -847,9 +857,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			throw new IllegalArgumentException(
-				"Somebody is trying to circumvent permission framework " +
-					"or there is a bug in permission framework caller: " +
-						nsrpe.getMessage(),
+				"Someone may be trying to circumvent the permission checker: " +
+					nsrpe.getMessage(),
 				nsrpe);
 		}
 		catch (Exception e) {
@@ -926,9 +935,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			throw new IllegalArgumentException(
-				"Somebody is trying to circumvent permission framework " +
-					"or there is a bug in permission framework caller: " +
-						nsrpe.getMessage(),
+				"Someone may be trying to circumvent the permission checker: " +
+					nsrpe.getMessage(),
 				nsrpe);
 		}
 

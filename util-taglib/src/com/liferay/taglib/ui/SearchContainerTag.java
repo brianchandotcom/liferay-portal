@@ -95,6 +95,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 			_searchContainer.setDeltaConfigurable(_deltaConfigurable);
 
+			if (Validator.isNotNull(_cssClass)) {
+				_searchContainer.setCssClass(_cssClass);
+			}
+
 			if (Validator.isNotNull(_emptyResultsMessage)) {
 				_searchContainer.setEmptyResultsMessage(_emptyResultsMessage);
 			}

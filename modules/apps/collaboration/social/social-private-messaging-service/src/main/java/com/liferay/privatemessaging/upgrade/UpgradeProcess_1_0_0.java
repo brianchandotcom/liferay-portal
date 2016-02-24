@@ -15,24 +15,24 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.privatemessaging.hook.upgrade;
+package com.liferay.privatemessaging.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.privatemessaging.hook.upgrade.v1_0_1.UpgradeResourcePermission;
+import com.liferay.privatemessaging.web.upgrade.v1_0_0.UpgradePrivateMessaging;
 
 /**
- * @author Sherry Yang
+ * @author Scott Lee
  */
-public class UpgradeProcess_1_0_1 extends UpgradeProcess {
+public class UpgradeProcess_1_0_0 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 101;
+		return 100;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeResourcePermission.class);
+		upgrade(UpgradePrivateMessaging.class);
 	}
 
 }

@@ -15,7 +15,7 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.privatemessaging.hook.upgrade.v1_0_1;
+package com.liferay.privatemessaging.web.upgrade.v1_0_1;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.message.boards.web.constants.MBPortletKeys;

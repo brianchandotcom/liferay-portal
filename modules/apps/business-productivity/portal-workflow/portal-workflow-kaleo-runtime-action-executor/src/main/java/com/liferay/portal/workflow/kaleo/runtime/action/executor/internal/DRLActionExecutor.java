@@ -61,7 +61,7 @@ public class DRLActionExecutor implements ActionExecutor {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
-		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
+		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
 			executionContext);
 
 		RulesResourceRetriever rulesResourceRetriever =
@@ -78,6 +78,9 @@ public class DRLActionExecutor implements ActionExecutor {
 		WorkflowContextUtil.mergeWorkflowContexts(
 			executionContext, resultsWorkflowContext);
 	}
+
+	@Reference
+	private RulesContextBuilder _rulesContextBuilder;
 
 	@Reference
 	private RulesEngine _rulesEngine;

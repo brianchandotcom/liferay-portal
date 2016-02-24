@@ -48,7 +48,7 @@ public class DRLConditionEvaluator implements ConditionEvaluator {
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
-		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
+		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
 			executionContext);
 
 		RulesResourceRetriever rulesResourceRetriever =
@@ -79,6 +79,9 @@ public class DRLConditionEvaluator implements ConditionEvaluator {
 	}
 
 	private static final String _RETURN_VALUE = "returnValue";
+
+	@Reference
+	private RulesContextBuilder _rulesContextBuilder;
 
 	@Reference
 	private RulesEngine _rulesEngine;

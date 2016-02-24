@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.ClassNameUpgradeUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -525,6 +526,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			LiferayRepository.class);
 		long portletRepositoryClassNameId = PortalUtil.getClassNameId(
 			PortletRepository.class);
+
+		if (portletRepositoryClassNameId == 0) {
+			portletRepositoryClassNameId = increment();
+
+			ClassNameUpgradeUtil.addClassName(
+				connection, portletRepositoryClassNameId,
+				PortletRepository.class.getName());
+		}
 
 		PreparedStatement ps = null;
 

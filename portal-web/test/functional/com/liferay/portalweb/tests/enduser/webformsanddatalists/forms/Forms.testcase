@@ -538,7 +538,7 @@
 
 		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="Text" />
-			<var name="previousFieldName" value="name" />
+			<var name="previousFieldLabel" value="name" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -754,7 +754,7 @@
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="Checkbox" />
-			<var name="previousFieldName" value="TextField" />
+			<var name="previousFieldLabel" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -765,7 +765,7 @@
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="Radio" />
-			<var name="previousFieldName" value="CheckboxField" />
+			<var name="previousFieldLabel" value="Checkbox Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -787,7 +787,7 @@
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="Select" />
-			<var name="previousFieldName" value="RadioField" />
+			<var name="previousFieldLabel" value="Radio Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1900,7 +1900,7 @@
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="Text" />
-			<var name="previousFieldName" value="VisibleField" />
+			<var name="previousFieldLabel" value="Visible Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">

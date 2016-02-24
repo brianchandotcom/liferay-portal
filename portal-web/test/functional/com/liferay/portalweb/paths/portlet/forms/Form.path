@@ -93,7 +93,7 @@
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_ADDITIONAL_FIELD</td>
-	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//div[contains(@data-fieldname,'${key_previousFieldName}')]/../following-sibling::div//label[@class='form-builder-field-list-add-button-label']/label</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}') and contains(.,'${key_previousFieldLabel}')]/../../following-sibling::div//span[contains(@class,'plus-icon')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -82,7 +82,7 @@
 
 	<command name="gotoAddAdditionalField">
 		<var name="key_columnSize" value="${columnSize}" />
-		<var name="key_previousFieldName" value="${previousFieldName}" />
+		<var name="key_previousFieldLabel" value="${previousFieldLabel}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_ADDITIONAL_FIELD" />
 

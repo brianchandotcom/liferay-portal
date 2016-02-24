@@ -1636,7 +1636,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#editCommentPG">
+		<execute macro="WikiPage#editComment">
 			<var name="commentBody" value="${commentBody}" />
 			<var name="commentBodyEdit" value="${commentBodyEdit}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />

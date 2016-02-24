@@ -117,6 +117,13 @@ public class DDMStructureLayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout deserialize(
+		java.lang.String serializedDDMFormLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLayoutLocalService.deserialize(serializedDDMFormLayout);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmStructureLayoutLocalService.dynamicQuery();
 	}

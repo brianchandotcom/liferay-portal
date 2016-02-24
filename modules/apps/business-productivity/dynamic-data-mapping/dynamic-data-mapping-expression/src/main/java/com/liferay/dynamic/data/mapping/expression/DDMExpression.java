@@ -23,9 +23,10 @@ import java.util.Map;
  */
 public interface DDMExpression<T> {
 
-	public T evaluate() throws DDMExpressionEvaluationException;
+	public T evaluate() throws DDMExpressionException;
 
-	public Map<String, VariableDependencies> getVariableDependenciesMap();
+	public Map<String, VariableDependencies> getVariableDependenciesMap()
+		throws DDMExpressionException;
 
 	public void setBooleanVariableValue(
 		String variableName, Boolean variableValue);
@@ -46,6 +47,7 @@ public interface DDMExpression<T> {
 	public void setMathContext(MathContext mathContext);
 
 	public void setStringVariableValue(
-		String variableName, String variableValue);
+			String variableName, String variableValue)
+		throws DDMExpressionException;
 
 }

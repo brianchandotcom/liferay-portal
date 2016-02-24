@@ -20,21 +20,24 @@ package com.liferay.dynamic.data.mapping.expression;
 public interface DDMExpressionFactory {
 
 	public DDMExpression<Boolean> createBooleanDDMExpression(
-		String ddmExpressionString);
+			String ddmExpressionString)
+		throws DDMExpressionException;
 
 	public DDMExpression<Double> createDoubleDDMExpression(
-		String ddmExpressionString);
+		String ddmExpressionString) throws DDMExpressionException;
 
 	public DDMExpression<Float> createFloatDDMExpression(
-		String ddmExpressionString);
+			String ddmExpressionString)
+		throws DDMExpressionException;
 
 	public DDMExpression<Integer> createIntegerDDMExpression(
-		String ddmExpressionString);
+		String ddmExpressionString) throws DDMExpressionException;
 
 	public DDMExpression<Long> createLongDDMExpression(
-		String ddmExpressionString);
+			String ddmExpressionString)
+		throws DDMExpressionException;
 
 	public DDMExpression<String> createStringDDMExpression(
-		String ddmExpressionString);
+		String ddmExpressionString) throws DDMExpressionException;
 
 }

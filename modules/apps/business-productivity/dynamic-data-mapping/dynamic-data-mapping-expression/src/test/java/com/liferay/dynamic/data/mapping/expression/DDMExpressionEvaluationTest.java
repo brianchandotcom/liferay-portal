@@ -61,7 +61,7 @@ public class DDMExpressionEvaluationTest {
 		Assert.assertFalse(ddmExpression2.evaluate());
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testEvaluateBlankExpression() throws Exception {
 		DDMExpression<Boolean> ddmExpression =
 			_ddmExpressionFactory.createBooleanDDMExpression("");
@@ -203,7 +203,7 @@ public class DDMExpressionEvaluationTest {
 			(Float)(var1 + var2 + var3), ddmExpression.evaluate());
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = DDMExpressionException.FunctionNotAllowed.class)
 	public void testEvaluateFloorDoubleExpression() throws Exception {
 		DDMExpression<Double> ddmExpression =
 			_ddmExpressionFactory.createDoubleDDMExpression(
@@ -254,7 +254,7 @@ public class DDMExpressionEvaluationTest {
 		Assert.assertEquals(var1 + var2 + var3, (int)ddmExpression.evaluate());
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = DDMExpressionException.class)
 	public void testEvaluateInvalidExpression() throws Exception {
 		DDMExpression<Boolean> ddmExpression =
 			_ddmExpressionFactory.createBooleanDDMExpression("var1 >=+P var2");
@@ -313,7 +313,7 @@ public class DDMExpressionEvaluationTest {
 		Assert.assertEquals(var1 + var2 + var3, (long)ddmExpression.evaluate());
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testEvaluateNullExpression() throws Exception {
 		DDMExpression<Boolean> ddmExpression =
 			_ddmExpressionFactory.createBooleanDDMExpression(null);
@@ -334,7 +334,7 @@ public class DDMExpressionEvaluationTest {
 		Assert.assertEquals(228886641, actualPowValue);
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = DDMExpressionException.class)
 	public void testEvaluatePowInfinityExpression() throws Exception {
 		DDMExpression<Double> ddmExpression =
 			_ddmExpressionFactory.createDoubleDDMExpression("214742836^114837");
@@ -342,7 +342,7 @@ public class DDMExpressionEvaluationTest {
 		ddmExpression.evaluate();
 	}
 
-	@Test(expected = DDMExpressionEvaluationException.class)
+	@Test(expected = DDMExpressionException.NumberExceedsSupportedRange.class)
 	public void testEvaluateRemainderExpression() throws Exception {
 		StringBundler sb = new StringBundler(1001);
 

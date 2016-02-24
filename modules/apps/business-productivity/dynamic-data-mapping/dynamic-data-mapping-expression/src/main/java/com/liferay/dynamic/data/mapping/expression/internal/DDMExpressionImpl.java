@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionEvaluationException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -38,13 +38,15 @@ import java.util.TreeMap;
 public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	public DDMExpressionImpl(String expressionString, Class<T> expressionClass)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
-		Map<String, String> variableMap = _tokensExtractor.extract(
-			expressionString);
+		TokenExtractor tokenExtractor = new TokenExtractor(expressionString);
+
+		Map<String, String> variableMap = tokenExtractor.getVariableMap();
 
 		for (String variableName : variableMap.keySet()) {
 			Variable variable = new Variable(variableName);
+
 			_variables.put(variableName, variable);
 
 			String token = variableMap.get(variableName);
@@ -54,13 +56,13 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 			}
 		}
 
-		_expressionString = _tokensExtractor.getExpression();
+		_expressionString = tokenExtractor.getExpression();
 		_expressionClass = expressionClass;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T evaluate() throws DDMExpressionEvaluationException {
+	public T evaluate() throws DDMExpressionException {
 		try {
 			com.udojava.evalex.Expression expression =
 				new com.udojava.evalex.Expression(_expressionString);
@@ -76,13 +78,13 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 			return (T)toRetunType(result);
 		}
 		catch (Exception e) {
-			throw new DDMExpressionEvaluationException(e);
+			throw new DDMExpressionException(e);
 		}
 	}
 
 	@Override
 	public Map<String, VariableDependencies> getVariableDependenciesMap()
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
 		Map<String, VariableDependencies> variableDependenciesMap =
 			new HashMap<>();
@@ -150,21 +152,21 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	@Override
 	public void setStringVariableValue(
 			String variableName, String variableValue)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
-		Double doubleValue = doubleValue(variableValue);
+		Double doubleValue = parseDoubleValue(variableValue);
 
-		if (doubleValue != null) {
-			if (doubleValue.isNaN() || doubleValue.isInfinite()) {
-				throw new DDMExpressionEvaluationException(
-					"The value entered exceeds the supported range.");
-			}
-			else {
-				setVariableValue(variableName, new BigDecimal(variableValue));
-			}
+		if (doubleValue == null) {
+			setVariableValue(variableName, encode(variableValue));
+
+			return;
+		}
+
+		if (doubleValue.isNaN() || doubleValue.isInfinite()) {
+			throw new DDMExpressionException.NumberExceedsSupportedRange();
 		}
 		else {
-			setVariableValue(variableName, encode(variableValue));
+			setVariableValue(variableName, new BigDecimal(variableValue));
 		}
 	}
 
@@ -185,15 +187,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		BigInteger bigInteger = new BigInteger(bigDecimal.toString());
 
 		return new String(bigInteger.toByteArray());
-	}
-
-	protected Double doubleValue(String value) {
-		try {
-			return Double.parseDouble(value);
-		}
-		catch (NumberFormatException nfe) {
-			return null;
-		}
 	}
 
 	protected BigDecimal encode(Boolean variableValue) {
@@ -223,15 +216,14 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	protected com.udojava.evalex.Expression getExpression(
 			String expressionString)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
 		com.udojava.evalex.Expression expression =
 			new com.udojava.evalex.Expression(expressionString);
 
-		TokenExtractor tokenExtractor = new TokenExtractor();
+		TokenExtractor tokenExtractor = new TokenExtractor(expressionString);
 
-		Map<String, String> variableMap = tokenExtractor.extract(
-			expressionString);
+		Map<String, String> variableMap = tokenExtractor.getVariableMap();
 
 		for (String key : variableMap.keySet()) {
 			Variable variable = _variables.get(key);
@@ -247,7 +239,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	protected com.udojava.evalex.Expression getExpression(Variable variable)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
 		if (variable.getExpressionString() == null) {
 			return null;
@@ -260,7 +252,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	protected BigDecimal getVariableValue(Variable variable)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
 		BigDecimal variableValue = _variableValues.get(variable.getName());
 
@@ -291,10 +283,19 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		return true;
 	}
 
+	protected Double parseDoubleValue(String value) {
+		try {
+			return Double.parseDouble(value);
+		}
+		catch (NumberFormatException nfe) {
+			return null;
+		}
+	}
+
 	protected VariableDependencies populateVariableDependenciesMap(
 			Variable variable,
 			Map<String, VariableDependencies> variableDependenciesMap)
-		throws DDMExpressionEvaluationException {
+		throws DDMExpressionException {
 
 		VariableDependencies variableDependencies = variableDependenciesMap.get(
 			variable.getName());
@@ -306,16 +307,17 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		variableDependencies = new VariableDependencies(variable.getName());
 
 		if (variable.getExpressionString() != null) {
-			TokenExtractor tokensExtractor = new TokenExtractor();
-
-			Map<String, String> variableMap = tokensExtractor.extract(
+			TokenExtractor tokensExtractor = new TokenExtractor(
 				variable.getExpressionString());
+
+			Map<String, String> variableMap = tokensExtractor.getVariableMap();
 
 			Set<String> variableNames = variableMap.keySet();
 
 			for (String variableName : variableNames) {
 				if (!_variables.containsKey(variableName)) {
 					Variable newVariable = new Variable(variableName);
+
 					_variables.put(variableName, newVariable);
 
 					String token = variableMap.get(variableName);
@@ -546,7 +548,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	private final Class<?> _expressionClass;
 	private final String _expressionString;
 	private MathContext _mathContext = MathContext.UNLIMITED;
-	private final TokenExtractor _tokensExtractor = new TokenExtractor();
 	private final Map<String, Variable> _variables = new TreeMap<>();
 	private final Map<String, BigDecimal> _variableValues = new HashMap<>();
 

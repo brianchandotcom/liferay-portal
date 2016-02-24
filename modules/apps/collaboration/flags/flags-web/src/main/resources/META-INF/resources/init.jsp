@@ -29,7 +29,6 @@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
@@ -39,7 +38,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <portlet:defineObjects />
 
 <%
-FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(FlagsGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(themeDisplay.getCompanyId(), "com.liferay.flags.configuration.FlagsConfiguration"));
+FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(FlagsGroupServiceConfiguration.class, themeDisplay.getCompanyId());
 %>
 
 <%@ include file="/init-ext.jsp" %>

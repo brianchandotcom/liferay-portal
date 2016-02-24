@@ -30,7 +30,6 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
@@ -53,7 +52,7 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
-FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(FlagsGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(themeDisplay.getCompanyId(), "com.liferay.flags.configuration.FlagsConfiguration"));
+FlagsGroupServiceConfiguration flagsGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(FlagsGroupServiceConfiguration.class, themeDisplay.getCompanyId());
 
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 

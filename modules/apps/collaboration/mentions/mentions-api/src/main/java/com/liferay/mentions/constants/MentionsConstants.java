@@ -21,6 +21,4 @@ public class MentionsConstants {
 
 	public static final int NOTIFICATION_TYPE_MENTION = 0;
 
-	public static final String SERVICE_NAME = "com.liferay.mentions";
-
 }

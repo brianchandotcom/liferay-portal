@@ -4,6 +4,7 @@
 	<var name="userPasswordReminderAnswer" value="test" />
 
 	<command name="_signIn">
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${userPassword}" />
 
@@ -31,16 +32,6 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SIGN_IN" value1="Sign In" />
-	</command>
-
-	<command name="_signInViaDockbar">
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute macro="SignIn#_signIn">
-			<var name="rememberMe" value="${rememberMe}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userPassword" value="${userPassword}" />
-		</execute>
 	</command>
 
 	<command name="agreeToTermsOfUse" summary="Agree to Liferay Portal Terms of Use">
@@ -181,16 +172,6 @@
 				<execute macro="SignIn#setPasswordReminder" />
 			</then>
 		</if>
-	</command>
-
-	<command name="signInViaDockbar">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="SignIn#_signInViaDockbar">
-			<var name="rememberMe" value="${rememberMe}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userPassword" value="${userPassword}" />
-		</execute>
 	</command>
 
 	<command name="signInViaGoogle">

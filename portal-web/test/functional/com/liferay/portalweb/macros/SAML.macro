@@ -122,7 +122,6 @@
 
 		<execute macro="User#loginPG">
 			<var name="authenticationMethod" value="${authenticationMethod}" />
-			<var name="loginViaDockbar" value="${loginViaDockbar}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${password}" />
 			<var name="rememberMeChecked" value="${rememberMeChecked}" />

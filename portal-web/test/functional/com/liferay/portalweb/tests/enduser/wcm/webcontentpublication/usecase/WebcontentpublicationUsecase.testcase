@@ -146,7 +146,6 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#firstLoginPG">
-			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
@@ -170,7 +169,6 @@
 		</for>
 
 		<execute macro="User#firstLoginPG">
-			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />

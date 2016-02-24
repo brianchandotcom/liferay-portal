@@ -39,7 +39,7 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 	</liferay-portlet:actionURL>
 
 	<aui:button data-delete-message-url="<%= deleteMessageURL %>" name="deleteMessage" value="delete" />
-</aui:button-row >
+</aui:button-row>
 
 <liferay-ui:header
 	backLabel="messages"

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.calendar;
+package com.liferay.portal.workflow.kaleo.internal.runtime.calendar;
 
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
@@ -21,6 +21,7 @@ import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import org.osgi.service.component.annotations.Component;
 
 /**

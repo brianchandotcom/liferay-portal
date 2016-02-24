@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.notification;
+package com.liferay.portal.workflow.kaleo.internal.runtime.notification;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;

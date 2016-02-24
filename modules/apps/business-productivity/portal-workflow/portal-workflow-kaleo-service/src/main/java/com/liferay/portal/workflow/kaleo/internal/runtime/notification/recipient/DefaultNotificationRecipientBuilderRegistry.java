@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.notification.recipient;
+package com.liferay.portal.workflow.kaleo.internal.runtime.notification.recipient;
 
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -21,6 +21,8 @@ import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilderRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;

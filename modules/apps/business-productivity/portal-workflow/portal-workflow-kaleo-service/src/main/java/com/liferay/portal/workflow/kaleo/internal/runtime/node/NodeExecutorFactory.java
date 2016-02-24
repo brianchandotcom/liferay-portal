@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.internal.runtime.node;
 
+import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
 import com.liferay.portal.workflow.kaleo.definition.Node;
-import com.liferay.portal.workflow.kaleo.util.NodeTypeDependentObjectRegistry;
+import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
 
 import java.util.Map;
 

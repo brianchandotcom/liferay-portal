@@ -33,7 +33,8 @@ public abstract class BaseUpgradePortletRepository extends UpgradeProcess {
 
 			runSQL(
 				"update Repository set portletId = '" + newPortletName +
-					"' where portletId = " + oldPortletName);
+					"', name = '" + newPortletName + "' where portletId = " +
+						oldPortletName);
 		}
 	}
 

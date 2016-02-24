@@ -24,6 +24,8 @@ import java.util.List;
  * @author Michael C. Han
  */
 public interface RulesContextBuilder {
+
 	public List<Fact<?>> buildRulesContext(ExecutionContext executionContext)
 		throws PortalException;
+
 }

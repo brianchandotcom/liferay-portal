@@ -969,6 +969,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, int type, int status, boolean andOperator);
 
+	public java.lang.String serialize(DDMForm ddmForm);
+
 	/**
 	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

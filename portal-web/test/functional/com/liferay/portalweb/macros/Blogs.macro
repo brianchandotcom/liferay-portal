@@ -71,9 +71,7 @@
 
 		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${entryContent}" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addEntryWithPermissions">
@@ -223,9 +221,7 @@
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescription}" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addWithDefaultAbstract">
@@ -241,9 +237,7 @@
 
 		<execute function="AssertChecked" locator1="Radio#FIRST_400_ABSTRACT" value1="Use the first 400 characters of the entry content." />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addWithInvalidContent">

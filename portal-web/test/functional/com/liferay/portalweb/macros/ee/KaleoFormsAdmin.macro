@@ -388,9 +388,7 @@
 	</command>
 
 	<command name="publishWorkflow">
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />

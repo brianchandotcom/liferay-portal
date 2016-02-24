@@ -1074,9 +1074,7 @@
 	</command>
 
 	<command name="publish">
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="saveAsDraft">

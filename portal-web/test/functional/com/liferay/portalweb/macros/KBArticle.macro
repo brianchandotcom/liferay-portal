@@ -7,9 +7,7 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbChildArticleContent}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addChildPGViaKBDisplay">
@@ -167,9 +165,7 @@
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ATTACHMENTS_INVALID_SIZE_ERROR" value1="Request is larger than 1024 and could not be processed." />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addCPWithInvalidTitle">
@@ -475,9 +471,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="editKBArticlePriorityCP">
@@ -505,9 +499,7 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">

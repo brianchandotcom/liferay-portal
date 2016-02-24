@@ -18,7 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -126,6 +126,14 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_RADIO = "radio";
 
 	public static final String TYPE_SELECT = "select";
+
+	public DDMFormValues deserialize(
+			DDMForm ddmForm, String serializedDDMFormValues)
+		throws PortalException {
+
+		return _ddmFormValuesJSONDeserializer.deserialize(
+			ddmForm, serializedDDMFormValues);
+	}
 
 	@Override
 	public DDMForm getDDMForm(long classNameId, long classPK)
@@ -896,10 +904,8 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
-				ddmStructure.getFullHierarchyDDMForm(),
-				serializedDDMFormValues);
+		DDMFormValues ddmFormValues = deserialize(
+			ddmStructure.getFullHierarchyDDMForm(), serializedDDMFormValues);
 
 		return DDMFormValuesToFieldsConverterUtil.convert(
 			ddmStructure, ddmFormValues);
@@ -1173,6 +1179,13 @@ public class DDMImpl implements DDM {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
@@ -1197,6 +1210,7 @@ public class DDMImpl implements DDM {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);
 
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DLAppLocalService _dlAppLocalService;
 	private ImageLocalService _imageLocalService;
 	private LayoutLocalService _layoutLocalService;

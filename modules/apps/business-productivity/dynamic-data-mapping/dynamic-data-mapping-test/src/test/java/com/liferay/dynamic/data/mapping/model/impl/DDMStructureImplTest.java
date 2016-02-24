@@ -44,9 +44,8 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormJSONSerializerUtil();
 		setUpDDMFormJSONDeserializer();
+		setUpDDMFormJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();

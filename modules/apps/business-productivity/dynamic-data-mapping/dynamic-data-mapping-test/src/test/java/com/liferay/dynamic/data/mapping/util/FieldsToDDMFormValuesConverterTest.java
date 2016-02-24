@@ -53,9 +53,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormJSONSerializerUtil();
 		setUpDDMFormJSONDeserializer();
+		setUpDDMFormJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpFieldsToDDMFormValuesConverter();
 		setUpHtmlUtil();

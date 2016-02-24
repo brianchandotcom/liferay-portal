@@ -19,17 +19,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.StopWatchLoggingHelper;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Preston Crary
@@ -39,90 +37,28 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws UpgradeException {
 		try {
-			StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#Counter");
-
 			upgradeTable(
 				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log, "UpgradeKernelPackage.upgradeTable#Counter");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ClassName_");
-
 			upgradeTable(
 				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ClassName_");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourceAction");
-
 			upgradeTable(
 				"ResourceAction", "name", getClassNames(),
 				WildcardMode.SURROUND);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourceAction");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourceBlock");
-
 			upgradeTable(
 				"ResourceBlock", "name", getClassNames(),
 				WildcardMode.SURROUND);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourceBlock");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourcePermission");
-
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourcePermission");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourceAction");
-
 			upgradeTable(
 				"ResourceAction", "name", getResourceNames(),
 				WildcardMode.LEADING);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourceAction");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourceBlock");
-
 			upgradeTable(
 				"ResourceBlock", "name", getResourceNames(),
 				WildcardMode.LEADING);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourceBlock");
-
-			stopWatch = StopWatchLoggingHelper.startLogging(
-				_log, "UpgradeKernelPackage.upgradeTable#ResourcePermission");
-
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
-
-			StopWatchLoggingHelper.endLogging(
-				stopWatch, _log,
-				"UpgradeKernelPackage.upgradeTable#ResourcePermission");
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);
@@ -168,51 +104,55 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws SQLException {
 
-		StringBundler updateSB = new StringBundler(7);
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"UpgradeKernelPackage.upgradeTable#" + tableName)) {
 
-		updateSB.append("update ");
-		updateSB.append(tableName);
-		updateSB.append(" set ");
-		updateSB.append(columnName);
-		updateSB.append(" = ? where ");
-		updateSB.append(columnName);
-		updateSB.append(" = ?");
+			StringBundler updateSB = new StringBundler(7);
 
-		String updateSQL = updateSB.toString();
+			updateSB.append("update ");
+			updateSB.append(tableName);
+			updateSB.append(" set ");
+			updateSB.append(columnName);
+			updateSB.append(" = ? where ");
+			updateSB.append(columnName);
+			updateSB.append(" = ?");
 
-		StringBundler selectPrefixSB = new StringBundler(7);
+			String updateSQL = updateSB.toString();
 
-		selectPrefixSB.append("select distinct ");
-		selectPrefixSB.append(columnName);
-		selectPrefixSB.append(" from ");
-		selectPrefixSB.append(tableName);
-		selectPrefixSB.append(" where ");
-		selectPrefixSB.append(columnName);
+			StringBundler selectPrefixSB = new StringBundler(7);
 
-		if (wildcardMode.equals(WildcardMode.LEADING) ||
-			wildcardMode.equals(WildcardMode.SURROUND)) {
+			selectPrefixSB.append("select distinct ");
+			selectPrefixSB.append(columnName);
+			selectPrefixSB.append(" from ");
+			selectPrefixSB.append(tableName);
+			selectPrefixSB.append(" where ");
+			selectPrefixSB.append(columnName);
 
-			selectPrefixSB.append(" like '%");
-		}
-		else {
-			selectPrefixSB.append(" like '");
-		}
+			if (wildcardMode.equals(WildcardMode.LEADING) ||
+				wildcardMode.equals(WildcardMode.SURROUND)) {
 
-		String selectPrefix = selectPrefixSB.toString();
+				selectPrefixSB.append(" like '%");
+			}
+			else {
+				selectPrefixSB.append(" like '");
+			}
 
-		String selectPostfix = StringPool.APOSTROPHE;
+			String selectPrefix = selectPrefixSB.toString();
 
-		if (wildcardMode.equals(WildcardMode.SURROUND) ||
-			wildcardMode.equals(WildcardMode.TRAILING)) {
+			String selectPostfix = StringPool.APOSTROPHE;
 
-			selectPostfix = "%'";
-		}
+			if (wildcardMode.equals(WildcardMode.SURROUND) ||
+				wildcardMode.equals(WildcardMode.TRAILING)) {
 
-		for (String[] name : names) {
-			String selectSQL = selectPrefix.concat(name[0]).concat(
-				selectPostfix);
+				selectPostfix = "%'";
+			}
 
-			upgradeTable(columnName, selectSQL, updateSQL, name);
+			for (String[] name : names) {
+				String selectSQL = selectPrefix.concat(name[0]).concat(
+					selectPostfix);
+
+				upgradeTable(columnName, selectSQL, updateSQL, name);
+			}
 		}
 	}
 

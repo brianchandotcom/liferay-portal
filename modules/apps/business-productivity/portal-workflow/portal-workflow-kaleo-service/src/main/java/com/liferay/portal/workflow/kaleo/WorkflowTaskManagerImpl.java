@@ -49,7 +49,6 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 import com.liferay.portal.workflow.kaleo.util.comparators.KaleoTaskInstanceTokenOrderByComparator;
 
 import java.io.Serializable;
@@ -192,7 +191,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 
 		try {
-			return WorkflowModelUtil.toWorkflowTask(
+			return _kaleoWorkflowModelConverter.toWorkflowTask(
 				kaleoTaskInstanceToken,
 				WorkflowContextUtil.convert(
 					kaleoTaskInstanceToken.getWorkflowContext()));
@@ -336,7 +335,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				KaleoTaskInstanceTokenLocalServiceUtil.
 					getKaleoTaskInstanceToken(workflowTaskInstanceId);
 
-			return WorkflowModelUtil.toWorkflowTask(
+			return _kaleoWorkflowModelConverter.toWorkflowTask(
 				kaleoTaskInstanceToken,
 				WorkflowContextUtil.convert(
 					kaleoTaskInstanceToken.getWorkflowContext()));
@@ -481,7 +480,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					getKaleoTaskInstanceTokens(
 						completed, start, end,
 						KaleoTaskInstanceTokenOrderByComparator.
-							getOrderByComparator(orderByComparator),
+							getOrderByComparator(
+								orderByComparator,
+								_kaleoWorkflowModelConverter),
 						serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -507,7 +508,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					getKaleoTaskInstanceTokens(
 						Role.class.getName(), roleId, completed, start, end,
 						KaleoTaskInstanceTokenOrderByComparator.
-							getOrderByComparator(orderByComparator),
+							getOrderByComparator(
+								orderByComparator,
+								_kaleoWorkflowModelConverter),
 						serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -533,7 +536,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					getSubmittingUserKaleoTaskInstanceTokens(
 						userId, completed, start, end,
 						KaleoTaskInstanceTokenOrderByComparator.
-							getOrderByComparator(orderByComparator),
+							getOrderByComparator(
+								orderByComparator,
+								_kaleoWorkflowModelConverter),
 						serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -559,7 +564,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					getKaleoTaskInstanceTokens(
 						User.class.getName(), userId, completed, start, end,
 						KaleoTaskInstanceTokenOrderByComparator.
-							getOrderByComparator(orderByComparator),
+							getOrderByComparator(
+								orderByComparator,
+								_kaleoWorkflowModelConverter),
 						serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -585,7 +592,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				KaleoTaskInstanceTokenLocalServiceUtil.search(
 					null, completed, Boolean.TRUE, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(orderByComparator),
+						getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
 					serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -616,7 +624,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					getKaleoTaskInstanceTokens(
 						workflowInstanceId, completed, start, end,
 						KaleoTaskInstanceTokenOrderByComparator.
-							getOrderByComparator(orderByComparator),
+							getOrderByComparator(
+								orderByComparator,
+								_kaleoWorkflowModelConverter),
 						serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -643,7 +653,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				KaleoTaskInstanceTokenLocalServiceUtil.search(
 					keywords, completed, searchByUserRoles, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(orderByComparator),
+						getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
 					serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -673,7 +684,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					taskName, assetType, assetPrimaryKey, dueDateGT, dueDateLT,
 					completed, searchByUserRoles, andOperator, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(orderByComparator),
+						getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
 					serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -701,7 +713,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					keywords, assetTypes, completed, searchByUserRoles, start,
 					end,
 					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(orderByComparator),
+						getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
 					serviceContext);
 
 			return toWorkflowTasks(kaleoTaskInstanceTokens);
@@ -836,11 +849,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
 				kaleoTaskInstanceTokens) {
 
-			workflowTasks.add(
-				WorkflowModelUtil.toWorkflowTask(
+			WorkflowTask workflowTask =
+				_kaleoWorkflowModelConverter.toWorkflowTask(
 					kaleoTaskInstanceToken,
 					WorkflowContextUtil.convert(
-						kaleoTaskInstanceToken.getWorkflowContext())));
+						kaleoTaskInstanceToken.getWorkflowContext()));
+
+			workflowTasks.add(workflowTask);
 		}
 
 		return workflowTasks;
@@ -851,6 +866,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Reference
 	private KaleoSignaler _kaleoSignaler;
+
+	@Reference
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

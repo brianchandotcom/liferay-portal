@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 import com.liferay.portal.workflow.kaleo.util.comparators.KaleoLogOrderByComparator;
 
 import java.util.ArrayList;
@@ -79,7 +78,7 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 				_kaleoLogLocalService.getKaleoInstanceKaleoLogs(
 					workflowInstanceId, logTypes, start, end,
 					KaleoLogOrderByComparator.getOrderByComparator(
-						orderByComparator));
+						orderByComparator, _kaleoWorkflowModelConverter));
 
 			return toWorkflowLogs(kaleoLogs);
 		}
@@ -100,7 +99,7 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 				_kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogs(
 					workflowTaskId, logTypes, start, end,
 					KaleoLogOrderByComparator.getOrderByComparator(
-						orderByComparator));
+						orderByComparator, _kaleoWorkflowModelConverter));
 
 			return toWorkflowLogs(kaleoLogs);
 		}
@@ -113,7 +112,10 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 		List<WorkflowLog> workflowLogs = new ArrayList<>(kaleoLogs.size());
 
 		for (KaleoLog kaleoLog : kaleoLogs) {
-			workflowLogs.add(WorkflowModelUtil.toWorkflowLog(kaleoLog));
+			WorkflowLog workflowLog =
+				_kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog);
+
+			workflowLogs.add(workflowLog);
 		}
 
 		return workflowLogs;
@@ -121,5 +123,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Reference
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 }

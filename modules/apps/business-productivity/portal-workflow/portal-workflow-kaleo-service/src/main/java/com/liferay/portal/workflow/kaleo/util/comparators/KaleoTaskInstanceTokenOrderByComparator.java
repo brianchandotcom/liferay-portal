@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 
 /**
  * @author William Newbury
@@ -30,19 +30,21 @@ public class KaleoTaskInstanceTokenOrderByComparator
 
 	public static OrderByComparator<KaleoTaskInstanceToken>
 		getOrderByComparator(
-			OrderByComparator<WorkflowTask> orderByComparator) {
+			OrderByComparator<WorkflowTask> orderByComparator,
+			KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		if (orderByComparator == null) {
 			return null;
 		}
 
-		return new KaleoTaskInstanceTokenOrderByComparator(orderByComparator);
+		return new KaleoTaskInstanceTokenOrderByComparator(
+			orderByComparator, kaleoWorkflowModelConverter);
 	}
 
 	@Override
 	public WorkflowTask adapt(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		try {
-			return WorkflowModelUtil.toWorkflowTask(
+			return _kaleoWorkflowModelConverter.toWorkflowTask(
 				kaleoTaskInstanceToken,
 				WorkflowContextUtil.convert(
 					kaleoTaskInstanceToken.getWorkflowContext()));
@@ -53,9 +55,14 @@ public class KaleoTaskInstanceTokenOrderByComparator
 	}
 
 	private KaleoTaskInstanceTokenOrderByComparator(
-		OrderByComparator<WorkflowTask> orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		super(orderByComparator);
+
+		_kaleoWorkflowModelConverter = kaleoWorkflowModelConverter;
 	}
+
+	private final KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 }

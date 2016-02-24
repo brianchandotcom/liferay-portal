@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 
 /**
  * @author William Newbury
@@ -31,6 +31,7 @@ public class KaleoInstanceOrderByComparator
 
 	public static OrderByComparator<KaleoInstance> getOrderByComparator(
 		OrderByComparator<WorkflowInstance> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter,
 		ServiceContext serviceContext) {
 
 		if (orderByComparator == null) {
@@ -38,7 +39,7 @@ public class KaleoInstanceOrderByComparator
 		}
 
 		return new KaleoInstanceOrderByComparator(
-			orderByComparator, serviceContext);
+			orderByComparator, kaleoWorkflowModelConverter, serviceContext);
 	}
 
 	public WorkflowInstance adapt(KaleoInstance kaleoInstance) {
@@ -46,7 +47,7 @@ public class KaleoInstanceOrderByComparator
 			KaleoInstanceToken rootKaleoInstanceToken =
 				kaleoInstance.getRootKaleoInstanceToken(_serviceContext);
 
-			return WorkflowModelUtil.toWorkflowInstance(
+			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, rootKaleoInstanceToken);
 		}
 		catch (Exception e) {
@@ -56,13 +57,16 @@ public class KaleoInstanceOrderByComparator
 
 	private KaleoInstanceOrderByComparator(
 		OrderByComparator<WorkflowInstance> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter,
 		ServiceContext serviceContext) {
 
 		super(orderByComparator);
 
+		_kaleoWorkflowModelConverter = kaleoWorkflowModelConverter;
 		_serviceContext = serviceContext;
 	}
 
+	private final KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 	private final ServiceContext _serviceContext;
 
 }

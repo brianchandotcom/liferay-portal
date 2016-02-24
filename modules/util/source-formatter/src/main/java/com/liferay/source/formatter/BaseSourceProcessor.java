@@ -1525,7 +1525,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _mainReleaseVersion;
 	}
 
-	protected String getModuleLangDir(String moduleLocation) {
+	protected String getModuleLangDirName(String moduleLocation) {
 		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
 
 		String baseModuleName = moduleLocation.substring(0, x);
@@ -1535,17 +1535,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		baseModuleName = baseModuleName.substring(
 			y + 1, baseModuleName.length());
 
-		String moduleLangDir =
+		String moduleLangDirName =
 			moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
 
-		File dir = new File(moduleLangDir);
+		File moduleLangDir = new File(moduleLangDirName);
 
-		if (!dir.exists() && moduleLangDir.contains("/modules/ee/")) {
-			moduleLangDir = StringUtil.replaceFirst(
-				moduleLangDir, "/modules/ee/", "/modules/");
+		if (!moduleLangDir.exists() &&
+			moduleLangDirName.contains("/modules/ee/")) {
+
+			moduleLangDirName = StringUtil.replaceFirst(
+				moduleLangDirName, "/modules/ee/", "/modules/");
 		}
 
-		return moduleLangDir;
+		return moduleLangDirName;
 	}
 
 	protected Properties getModuleLangLanguageProperties(String absolutePath)
@@ -1591,10 +1593,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String moduleLocation = StringUtil.replaceLast(
 			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 
-		String moduleLangDir = getModuleLangDir(moduleLocation);
+		String moduleLangDirName = getModuleLangDirName(moduleLocation);
 
 		String moduleLangLanguagePropertiesFileName =
-			moduleLangDir + "/src/main/resources/content/Language.properties";
+			moduleLangDirName +
+				"/src/main/resources/content/Language.properties";
 
 		File file = new File(moduleLangLanguagePropertiesFileName);
 

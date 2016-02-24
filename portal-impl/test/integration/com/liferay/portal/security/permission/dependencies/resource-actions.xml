@@ -19,4 +19,21 @@
 			<guest-unsupported />
 		</permissions>
 	</portlet-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.security.permission.site</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_SITE_TEST</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>ADD_SITE_TEST</action-key>
+			</site-member-defaults>
+			<guest-defaults />
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

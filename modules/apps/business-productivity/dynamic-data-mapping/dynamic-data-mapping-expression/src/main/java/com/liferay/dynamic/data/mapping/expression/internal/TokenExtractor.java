@@ -105,7 +105,8 @@ public class TokenExtractor {
 
 		_variableMap.put(variableName, token);
 
-		_expression = StringUtil.replace(_expression, token, variableName);
+		_expression = _expression.replaceAll(
+			"\\b" + token + "\\b", variableName);
 	}
 
 	protected Iterator<String> getExpressionTokens() {

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.expression;
 
 import com.liferay.dynamic.data.mapping.expression.internal.TokenExtractor;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
@@ -127,6 +128,29 @@ public class TokenExtractorTest {
 	}
 
 	@Test
+	public void testExpressionWithRepeatedCharSequence() throws Exception {
+		String expressionString = "11 + 111";
+
+		TokenExtractor tokenExtractor = new TokenExtractor(expressionString);
+
+		Map<String, String> variableMap = tokenExtractor.getVariableMap();
+
+		Assert.assertEquals(2, variableMap.size());
+
+		Collection<String> values = variableMap.values();
+
+		Assert.assertTrue(values.contains("11"));
+		Assert.assertTrue(values.contains("111"));
+
+		String variableName11 = getVariableName(variableMap, "11");
+		String variableName111 = getVariableName(variableMap, "111");
+
+		Assert.assertEquals(
+			variableName11 + " + " + variableName111,
+			tokenExtractor.getExpression());
+	}
+
+	@Test
 	public void testExpressionWithStringConstants() throws Exception {
 		String expressionString = "name != \"Joe\"";
 
@@ -160,6 +184,18 @@ public class TokenExtractorTest {
 		Collection<String> values = variableMap.values();
 
 		Assert.assertTrue(values.contains("5"));
+	}
+
+	protected String getVariableName(
+		Map<String, String> variableMap, String value) {
+
+		for (Map.Entry<String, String> entry : variableMap.entrySet()) {
+			if (Validator.equals(entry.getValue(), value)) {
+				return entry.getKey();
+			}
+		}
+
+		return null;
 	}
 
 }

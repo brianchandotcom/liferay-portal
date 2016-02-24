@@ -812,9 +812,9 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<get-testray-logs-dir-name />
 
-			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt" />
-			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html" />
-			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html" />
+			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt.gz" />
+			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html.gz" />
+			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html.gz" />
 		</sequential>
 	</macrodef>
 

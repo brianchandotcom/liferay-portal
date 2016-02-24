@@ -46,9 +46,11 @@ public class BaseSourceProcessorTest {
 				"./modules/apps/web-experience-management/staging" +
 					"/staging-bar-web"));
 		Assert.assertEquals(
-			"./modules/apps/workflow/workflow-lang",
+			"./modules/apps/business-productivity/portal-workflow/" +
+				"portal-workflow-lang",
 			_baseSourceProcessor.getModuleLangDir(
-				"./modules/apps/workflow/workflow-definition-web"));
+				"./modules/apps/business-productivity/portal-workflow/" +
+					"portal-workflow-definition-web"));
 	}
 
 	protected void setUpBaseSourceProcessor() {

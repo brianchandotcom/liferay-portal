@@ -95,6 +95,14 @@ public class RowChecker {
 		return _formName;
 	}
 
+	public boolean getKeepSelection() {
+		return _keepSelection;
+	}
+
+	public String getKeepSelectionURLRegex() {
+		return _keepSelectionURLRegex;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by  {@link
 	 *             #getRowCheckBox(HttpServletRequest, boolean, boolean,
@@ -127,14 +135,6 @@ public class RowChecker {
 
 	public String getRowSelector() {
 		return _rowSelector;
-	}
-
-	public boolean getKeepSelection() {
-		return _keepSelection;
-	}
-
-	public String getKeepSelectionURLRegex() {
-		return _keepSelectionURLRegex;
 	}
 
 	public String getValign() {
@@ -173,20 +173,20 @@ public class RowChecker {
 		_formName = getNamespacedValue(formName);
 	}
 
-	public void setRowIds(String rowIds) {
-		_rowIds = getNamespacedValue(rowIds);
-	}
-
-	public void setRowSelector(String rowSelector) {
-		_rowSelector = getNamespacedValue(rowSelector);
-	}
-
 	public void setKeepSelection(boolean keepSelection) {
 		_keepSelection = keepSelection;
 	}
 
 	public void setKeepSelectionURLRegex(String keepSelectionURLRegex) {
 		_keepSelectionURLRegex = keepSelectionURLRegex;
+	}
+
+	public void setRowIds(String rowIds) {
+		_rowIds = getNamespacedValue(rowIds);
+	}
+
+	public void setRowSelector(String rowSelector) {
+		_rowSelector = getNamespacedValue(rowSelector);
 	}
 
 	public void setValign(String valign) {
@@ -315,11 +315,11 @@ public class RowChecker {
 	private String _cssClass = CSS_CLASS;
 	private Map<String, Object> _data;
 	private String _formName;
+	private boolean _keepSelection = true;
+	private String _keepSelectionURLRegex;
 	private final PortletResponse _portletResponse;
 	private String _rowIds;
 	private String _rowSelector;
-	private boolean _keepSelection = true;
-	private String _keepSelectionURLRegex;
 	private String _valign = VALIGN;
 
 }

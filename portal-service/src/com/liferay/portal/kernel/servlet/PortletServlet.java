@@ -42,14 +42,6 @@ public class PortletServlet extends HttpServlet {
 	public static final String PORTLET_APP =
 		"com.liferay.portal.kernel.model.PortletApp";
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             PluginContextListener#PLUGIN_CLASS_LOADER}
-	 */
-	@Deprecated
-	public static final String PORTLET_CLASS_LOADER =
-		PluginContextListener.PLUGIN_CLASS_LOADER;
-
 	public static final String PORTLET_SERVLET_CONFIG =
 		"com.liferay.portal.kernel.servlet.PortletServletConfig";
 

@@ -72,16 +72,14 @@ public class OSGiHotDeployListenerTest {
 
 	@Test
 	public void testInvokeDeploy() throws HotDeployException {
-		_hotDeployListener.invokeDeploy(
-			new HotDeployEvent(_servletContext, null));
+		_hotDeployListener.invokeDeploy(new HotDeployEvent(_servletContext));
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
 	public void testInvokeUndeploy() throws HotDeployException {
-		_hotDeployListener.invokeUndeploy(
-			new HotDeployEvent(_servletContext, null));
+		_hotDeployListener.invokeUndeploy(new HotDeployEvent(_servletContext));
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

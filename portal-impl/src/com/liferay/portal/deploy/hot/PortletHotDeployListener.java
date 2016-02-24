@@ -302,7 +302,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		boolean phpPortlet = false;
 		boolean strutsBridges = false;
 
-		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
+		ClassLoader classLoader = servletContext.getClassLoader();
 
 		Iterator<Portlet> itr = portlets.iterator();
 

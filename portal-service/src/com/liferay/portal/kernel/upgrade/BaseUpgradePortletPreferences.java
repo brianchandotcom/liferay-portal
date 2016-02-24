@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -208,85 +209,92 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	protected void updatePortletPreferences() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select portletPreferencesId, ownerId, ownerType, ");
-		sb.append("plid, portletId, preferences from PortletPreferences");
+			sb.append("select portletPreferencesId, ownerId, ownerType, ");
+			sb.append("plid, portletId, preferences from PortletPreferences");
 
-		String whereClause = getUpdatePortletPreferencesWhereClause();
+			String whereClause = getUpdatePortletPreferencesWhereClause();
 
-		if (Validator.isNotNull(whereClause)) {
-			sb.append(" where ");
-			sb.append(whereClause);
-		}
+			if (Validator.isNotNull(whereClause)) {
+				sb.append(" where ");
+				sb.append(whereClause);
+			}
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
 
-			while (rs.next()) {
-				long portletPreferencesId = rs.getLong("portletPreferencesId");
-				long ownerId = rs.getLong("ownerId");
-				int ownerType = rs.getInt("ownerType");
-				long plid = rs.getLong("plid");
-				String portletId = rs.getString("portletId");
-				String preferences = GetterUtil.getString(
-					rs.getString("preferences"));
+				ResultSet rs = ps.executeQuery()) {
 
-				long companyId = 0;
+				while (rs.next()) {
+					long portletPreferencesId = rs.getLong(
+						"portletPreferencesId");
+					long ownerId = rs.getLong("ownerId");
+					int ownerType = rs.getInt("ownerType");
+					long plid = rs.getLong("plid");
+					String portletId = rs.getString("portletId");
+					String preferences = GetterUtil.getString(
+						rs.getString("preferences"));
 
-				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-					companyId = getCompanyId(
-						"select companyId from PortletItem where " +
-							"portletItemId = ?",
-						ownerId);
-				}
-				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
-					companyId = ownerId;
-				}
-				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-					Object[] group = getGroup(ownerId);
+					long companyId = 0;
 
-					if (group != null) {
-						companyId = (Long)group[1];
+					if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+						companyId = getCompanyId(
+							"select companyId from PortletItem where " +
+								"portletItemId = ?",
+							ownerId);
 					}
-				}
-				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-					Object[] layout = getLayout(plid);
+					else if (ownerType ==
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
 
-					if (layout != null) {
-						companyId = (Long)layout[1];
+						companyId = ownerId;
 					}
-				}
-				else if (ownerType ==
-							PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
+					else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
+						Object[] group = getGroup(ownerId);
 
-					companyId = getCompanyId(
-						"select companyId from Organization_ where " +
-							"organizationId = ?",
-						ownerId);
-				}
-				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-					companyId = getCompanyId(
-						"select companyId from User_ where userId = ?",
-						ownerId);
-				}
-				else {
-					throw new UnsupportedOperationException(
-						"Unsupported owner type " + ownerType);
-				}
-
-				if (companyId > 0) {
-					String newPreferences = upgradePreferences(
-						companyId, ownerId, ownerType, plid, portletId,
-						preferences);
-
-					if (!preferences.equals(newPreferences)) {
-						updatePortletPreferences(
-							portletPreferencesId, newPreferences);
+						if (group != null) {
+							companyId = (Long)group[1];
+						}
 					}
-				}
-				else {
-					deletePortletPreferences(portletPreferencesId);
+					else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+						Object[] layout = getLayout(plid);
+
+						if (layout != null) {
+							companyId = (Long)layout[1];
+						}
+					}
+					else if (ownerType ==
+								PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
+
+						companyId = getCompanyId(
+							"select companyId from Organization_ where " +
+								"organizationId = ?",
+							ownerId);
+					}
+					else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+						companyId = getCompanyId(
+							"select companyId from User_ where userId = ?",
+							ownerId);
+					}
+					else {
+						throw new UnsupportedOperationException(
+							"Unsupported owner type " + ownerType);
+					}
+
+					if (companyId > 0) {
+						String newPreferences = upgradePreferences(
+							companyId, ownerId, ownerType, plid, portletId,
+							preferences);
+
+						if (!preferences.equals(newPreferences)) {
+							updatePortletPreferences(
+								portletPreferencesId, newPreferences);
+						}
+					}
+					else {
+						deletePortletPreferences(portletPreferencesId);
+					}
 				}
 			}
 		}

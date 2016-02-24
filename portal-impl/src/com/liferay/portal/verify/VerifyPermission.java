@@ -42,19 +42,17 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
-import com.liferay.portal.tools.StopWatchLoggingHelper;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Tobias Kaefer
@@ -65,37 +63,41 @@ import org.apache.commons.lang.time.StopWatch;
 public class VerifyPermission extends VerifyProcess {
 
 	protected void checkPermissions() throws Exception {
-		List<String> modelNames = ResourceActionsUtil.getModelNames();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<String> modelNames = ResourceActionsUtil.getModelNames();
 
-		for (String modelName : modelNames) {
-			List<String> actionIds =
-				ResourceActionsUtil.getModelResourceActions(modelName);
+			for (String modelName : modelNames) {
+				List<String> actionIds =
+					ResourceActionsUtil.getModelResourceActions(modelName);
 
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, actionIds, true);
-		}
+				ResourceActionLocalServiceUtil.checkResourceActions(
+					modelName, actionIds, true);
+			}
 
-		List<String> portletNames = ResourceActionsUtil.getPortletNames();
+			List<String> portletNames = ResourceActionsUtil.getPortletNames();
 
-		for (String portletName : portletNames) {
-			List<String> actionIds =
-				ResourceActionsUtil.getPortletResourceActions(portletName);
+			for (String portletName : portletNames) {
+				List<String> actionIds =
+					ResourceActionsUtil.getPortletResourceActions(portletName);
 
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				portletName, actionIds, true);
+				ResourceActionLocalServiceUtil.checkResourceActions(
+					portletName, actionIds, true);
+			}
 		}
 	}
 
 	protected void deleteDefaultPrivateLayoutPermissions() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			try {
-				deleteDefaultPrivateLayoutPermissions_6(companyId);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+			for (long companyId : companyIds) {
+				try {
+					deleteDefaultPrivateLayoutPermissions_6(companyId);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
 				}
 			}
 		}
@@ -124,169 +126,153 @@ public class VerifyPermission extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "VerifyPermission.deleteDefaultPrivateLayoutPermissions");
-
 		deleteDefaultPrivateLayoutPermissions();
 
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log,
-			"VerifyPermission.deleteDefaultPrivateLayoutPermissions");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "VerifyPermission.checkPermissions");
-
 		checkPermissions();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "VerifyPermission.checkPermissions");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "VerifyPermission.fixOrganizationRolePermissions");
-
 		fixOrganizationRolePermissions();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "VerifyPermission.fixOrganizationRolePermissions");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "VerifyPermission.fixUserDefaultRolePermissions");
-
 		fixUserDefaultRolePermissions();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "VerifyPermission.fixUserDefaultRolePermissions");
 	}
 
 	protected void fixOrganizationRolePermissions() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ResourcePermission.class);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+				ResourcePermission.class);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("name", Organization.class.getName()));
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"name", Organization.class.getName()));
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
+			List<ResourcePermission> resourcePermissions =
+				ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			ResourcePermission groupResourcePermission = null;
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				ResourcePermission groupResourcePermission = null;
 
-			try {
-				groupResourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
+				try {
+					groupResourcePermission =
+						ResourcePermissionLocalServiceUtil.
+							getResourcePermission(
+								resourcePermission.getCompanyId(),
+								Group.class.getName(),
+								resourcePermission.getScope(),
+								resourcePermission.getPrimKey(),
+								resourcePermission.getRoleId());
+				}
+				catch (Exception e) {
+					ResourcePermissionLocalServiceUtil.setResourcePermissions(
 						resourcePermission.getCompanyId(),
 						Group.class.getName(), resourcePermission.getScope(),
 						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId());
-			}
-			catch (Exception e) {
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					resourcePermission.getCompanyId(), Group.class.getName(),
-					resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(),
-					ResourcePermissionLocalServiceImpl.EMPTY_ACTION_IDS);
+						resourcePermission.getRoleId(),
+						ResourcePermissionLocalServiceImpl.EMPTY_ACTION_IDS);
 
-				groupResourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
-						resourcePermission.getCompanyId(),
-						Group.class.getName(), resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId());
-			}
+					groupResourcePermission =
+						ResourcePermissionLocalServiceUtil.
+							getResourcePermission(
+								resourcePermission.getCompanyId(),
+								Group.class.getName(),
+								resourcePermission.getScope(),
+								resourcePermission.getPrimKey(),
+								resourcePermission.getRoleId());
+				}
 
-			for (String actionId : _DEPRECATED_ORGANIZATION_ACTION_IDS) {
-				if (resourcePermission.hasActionId(actionId)) {
-					resourcePermission.removeResourceAction(actionId);
+				for (String actionId : _DEPRECATED_ORGANIZATION_ACTION_IDS) {
+					if (resourcePermission.hasActionId(actionId)) {
+						resourcePermission.removeResourceAction(actionId);
 
-					groupResourcePermission.addResourceAction(actionId);
+						groupResourcePermission.addResourceAction(actionId);
+					}
+				}
+
+				try {
+					resourcePermission.resetOriginalValues();
+
+					ResourcePermissionLocalServiceUtil.updateResourcePermission(
+						resourcePermission);
+
+					groupResourcePermission.resetOriginalValues();
+
+					ResourcePermissionLocalServiceUtil.updateResourcePermission(
+						groupResourcePermission);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 
-			try {
-				resourcePermission.resetOriginalValues();
-
-				ResourcePermissionLocalServiceUtil.updateResourcePermission(
-					resourcePermission);
-
-				groupResourcePermission.resetOriginalValues();
-
-				ResourcePermissionLocalServiceUtil.updateResourcePermission(
-					groupResourcePermission);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			PermissionCacheUtil.clearResourceCache();
 		}
-
-		PermissionCacheUtil.clearResourceCache();
 	}
 
 	protected void fixUserDefaultRolePermissions() throws Exception {
-		long userClassNameId = PortalUtil.getClassNameId(User.class);
-		long userGroupClassNameId = PortalUtil.getClassNameId(UserGroup.class);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long userClassNameId = PortalUtil.getClassNameId(User.class);
+			long userGroupClassNameId = PortalUtil.getClassNameId(
+				UserGroup.class);
 
-		DB db = DBManagerUtil.getDB();
+			DB db = DBManagerUtil.getDB();
 
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			Role powerUserRole = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.POWER_USER);
-			Role userRole = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.USER);
+			for (long companyId : companyIds) {
+				Role powerUserRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.POWER_USER);
+				Role userRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.USER);
 
-			StringBundler joinSB = new StringBundler(6);
+				StringBundler joinSB = new StringBundler(6);
 
-			joinSB.append("ResourcePermission inner join Layout on ");
-			joinSB.append("ResourcePermission.companyId = Layout.companyId ");
-			joinSB.append("and ResourcePermission.primKey like ");
-			joinSB.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
-			joinSB.append("cast_text(Layout.plid)) inner join Group_ on ");
-			joinSB.append("Layout.groupId = Group_.groupId");
+				joinSB.append("ResourcePermission inner join Layout on ");
+				joinSB.append(
+					"ResourcePermission.companyId = Layout.companyId ");
+				joinSB.append("and ResourcePermission.primKey like ");
+				joinSB.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
+				joinSB.append("cast_text(Layout.plid)) inner join Group_ on ");
+				joinSB.append("Layout.groupId = Group_.groupId");
 
-			StringBundler whereSB = new StringBundler(13);
+				StringBundler whereSB = new StringBundler(13);
 
-			whereSB.append("where ResourcePermission.scope = ");
-			whereSB.append(ResourceConstants.SCOPE_INDIVIDUAL);
-			whereSB.append(" and ResourcePermission.primKey like '%");
-			whereSB.append(PortletConstants.LAYOUT_SEPARATOR);
-			whereSB.append("%' and ResourcePermission.roleId = ");
-			whereSB.append(powerUserRole.getRoleId());
-			whereSB.append(" and (Group_.classNameId = ");
-			whereSB.append(userClassNameId);
-			whereSB.append(" or Group_.classNameId = ");
-			whereSB.append(userGroupClassNameId);
-			whereSB.append(") and Layout.type_ = '");
-			whereSB.append(LayoutConstants.TYPE_PORTLET);
-			whereSB.append(StringPool.APOSTROPHE);
+				whereSB.append("where ResourcePermission.scope = ");
+				whereSB.append(ResourceConstants.SCOPE_INDIVIDUAL);
+				whereSB.append(" and ResourcePermission.primKey like '%");
+				whereSB.append(PortletConstants.LAYOUT_SEPARATOR);
+				whereSB.append("%' and ResourcePermission.roleId = ");
+				whereSB.append(powerUserRole.getRoleId());
+				whereSB.append(" and (Group_.classNameId = ");
+				whereSB.append(userClassNameId);
+				whereSB.append(" or Group_.classNameId = ");
+				whereSB.append(userGroupClassNameId);
+				whereSB.append(") and Layout.type_ = '");
+				whereSB.append(LayoutConstants.TYPE_PORTLET);
+				whereSB.append(StringPool.APOSTROPHE);
 
-			StringBundler sb = new StringBundler(8);
+				StringBundler sb = new StringBundler(8);
 
-			if (db.getDBType() == DBType.MYSQL) {
-				sb.append("update ");
-				sb.append(joinSB.toString());
-				sb.append(" set ResourcePermission.roleId = ");
-				sb.append(userRole.getRoleId());
-				sb.append(StringPool.SPACE);
-				sb.append(whereSB.toString());
+				if (db.getDBType() == DBType.MYSQL) {
+					sb.append("update ");
+					sb.append(joinSB.toString());
+					sb.append(" set ResourcePermission.roleId = ");
+					sb.append(userRole.getRoleId());
+					sb.append(StringPool.SPACE);
+					sb.append(whereSB.toString());
+				}
+				else {
+					sb.append("update ResourcePermission set roleId = ");
+					sb.append(userRole.getRoleId());
+					sb.append(" where resourcePermissionId in (select ");
+					sb.append("resourcePermissionId from ");
+					sb.append(joinSB.toString());
+					sb.append(StringPool.SPACE);
+					sb.append(whereSB.toString());
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				}
+
+				runSQL(sb.toString());
 			}
-			else {
-				sb.append("update ResourcePermission set roleId = ");
-				sb.append(userRole.getRoleId());
-				sb.append(" where resourcePermissionId in (select ");
-				sb.append("resourcePermissionId from ");
-				sb.append(joinSB.toString());
-				sb.append(StringPool.SPACE);
-				sb.append(whereSB.toString());
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
 
-			runSQL(sb.toString());
+			EntityCacheUtil.clearCache();
+			FinderCacheUtil.clearCache();
 		}
-
-		EntityCacheUtil.clearCache();
-		FinderCacheUtil.clearCache();
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

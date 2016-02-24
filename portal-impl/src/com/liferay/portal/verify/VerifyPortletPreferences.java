@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.tools.StopWatchLoggingHelper;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.List;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Andrew Betts
@@ -130,22 +128,16 @@ public class VerifyPortletPreferences extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
-			_log,
-			"VerifyPortletPreferences.cleanUpLayoutRevisionPortletPreferences");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			CacheRegistryUtil.setActive(true);
 
-		CacheRegistryUtil.setActive(true);
-
-		try {
-			cleanUpLayoutRevisionPortletPreferences();
+			try {
+				cleanUpLayoutRevisionPortletPreferences();
+			}
+			finally {
+				CacheRegistryUtil.setActive(false);
+			}
 		}
-		finally {
-			CacheRegistryUtil.setActive(false);
-		}
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log,
-			"VerifyPortletPreferences.cleanUpLayoutRevisionPortletPreferences");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

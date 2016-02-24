@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.StopWatchLoggingHelper;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 
@@ -42,8 +42,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Brian Wing Shun Chan
@@ -219,37 +217,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "UpgradeJournal.updateStructures");
-
 		updateStructures();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "UpgradeJournal.updateStructures");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "UpgradeJournal.updateTemplates");
-
 		updateTemplates();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "UpgradeJournal.updateTemplates");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "UpgradeJournal.updateAssetEntryClassTypeId");
 
 		updateAssetEntryClassTypeId();
 
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "UpgradeJournal.updateAssetEntryClassTypeId");
-
-		stopWatch = StopWatchLoggingHelper.startLogging(
-			_log, "UpgradeJournal.super.doUpgrade");
-
 		super.doUpgrade();
-
-		StopWatchLoggingHelper.endLogging(
-			stopWatch, _log, "UpgradeJournal.super.doUpgrade");
 	}
 
 	protected long getCompanyGroupId(long companyId) throws Exception {
@@ -374,7 +347,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateAssetEntryClassTypeId() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select companyId, groupId, resourcePrimKey, structureId " +
 					"from JournalArticle where structureId != ''");
 			ResultSet rs = ps1.executeQuery()) {
@@ -539,20 +513,22 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateStructures() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from JournalStructure");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				updateStructure(rs);
 			}
-		}
 
-		runSQL("drop table JournalStructure");
+			runSQL("drop table JournalStructure");
+		}
 	}
 
 	protected void updateTemplates() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from JournalTemplate");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -596,9 +572,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					"com.liferay.portlet.dynamicdatamapping.DDMTemplate", id_,
 					ddmTemplateId);
 			}
-		}
 
-		runSQL("drop table JournalTemplate");
+			runSQL("drop table JournalTemplate");
+		}
 	}
 
 	@Override

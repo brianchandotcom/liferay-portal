@@ -27,7 +27,7 @@
 
 		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -139,7 +139,7 @@
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_WARNING_OVERWRITE_RADIO" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="restoreWarningCP">
@@ -152,7 +152,7 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO" />
 		<execute function="Type" locator1="RecycleBin#RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD" value1="${newAssetName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_assetType" value="${newAssetName}" />
 

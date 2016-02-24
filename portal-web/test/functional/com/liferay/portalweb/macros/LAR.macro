@@ -572,7 +572,7 @@
 	</command>
 
 	<command name="saveExportTemplateCP">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

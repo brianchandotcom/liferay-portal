@@ -1196,6 +1196,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			andOperator);
 	}
 
+	@Override
+	public java.lang.String serialize(
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm) {
+		return _ddmStructureLocalService.serialize(ddmForm);
+	}
+
 	/**
 	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

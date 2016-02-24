@@ -24,14 +24,6 @@
 	<header class="container-fluid-1280" id="banner" role="banner">
 		<div class="row">
 			<div class="navbar-header" id="heading">
-				<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-					<span class="icon-bar"></span>
-
-					<span class="icon-bar"></span>
-
-					<span class="icon-bar"></span>
-				</button>
-
 				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 					<img alt="${logo_description}" height="64" src="${site_logo}" width="64" />
 				</a>
@@ -41,6 +33,16 @@
 						${site_name}
 					</span>
 				</#if>
+
+				<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="pull-right user-personal-bar">
+					<@liferay.user_personal_bar />
+				</div>
 			</div>
 
 			<#include "${full_templates_path}/navigation.ftl" />

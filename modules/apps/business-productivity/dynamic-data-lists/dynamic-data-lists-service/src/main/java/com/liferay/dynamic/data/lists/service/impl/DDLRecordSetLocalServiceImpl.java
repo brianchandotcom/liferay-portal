@@ -19,7 +19,9 @@ import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyEx
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
@@ -198,6 +200,14 @@ public class DDLRecordSetLocalServiceImpl
 		for (DDLRecordSet recordSet : recordSets) {
 			ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}
+	}
+
+	public DDMFormValues deserialize(
+			DDMForm ddmForm, String serializedDDMFormValues)
+		throws PortalException {
+
+		return ddmFormValuesJSONDeserializer.deserialize(
+			ddmForm, serializedDDMFormValues);
 	}
 
 	@Override
@@ -425,6 +435,9 @@ public class DDLRecordSetLocalServiceImpl
 				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
+
+	@ServiceReference(type = DDMFormValuesJSONDeserializer.class)
+	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
 
 	@ServiceReference(type = DDMFormValuesJSONSerializer.class)
 	protected DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer;

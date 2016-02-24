@@ -175,11 +175,34 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<liferay-util:buffer var="linkTemplate">
 		<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-		<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" unicode="<%= true %>" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="add-child-page-of-x" /></span></a>
+		<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+				<aui:icon image="ellipsis-v" markupView="lexicon" />
+			</a>
 
-		<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="edit" unicode="<%= true %>" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
+			<ul class="dropdown-menu dropdown-menu-left-side">
+				<li>
+					<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add">
+						<span aria-hidden="true"><liferay-ui:message key="add-child-page" /></span>
+						<span class="sr-only"><liferay-ui:message arguments="{label}" key="add-child-page-of-x" /></span>
+					</a>
+				</li>
 
-		<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="delete" unicode="<%= true %>" />')"><aui:icon image="trash" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="delete-x" /></span></a>
+				<li>
+					<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
+						<span aria-hidden="true"><liferay-ui:message key="edit" /></span>
+						<span class="sr-only"><liferay-ui:message arguments="{label}" key="edit-x" /></span>
+					</a>
+				</li>
+
+				<li>
+					<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete">
+						<span aria-hidden="true"><liferay-ui:message key="delete" /></span>
+						<span class="sr-only"><liferay-ui:message arguments="{label}" key="delete-x" /></span>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</liferay-util:buffer>
 
 	<liferay-ui:success key="layoutAdded" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />

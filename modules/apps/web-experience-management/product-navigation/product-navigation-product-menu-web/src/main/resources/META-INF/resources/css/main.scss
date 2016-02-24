@@ -223,134 +223,8 @@ body {
 		}
 	}
 
-	.tree-container {
-		.layout-tree-delete {
-			left: -40px;
-		}
-
-		.tree-container {
-			.layout-tree-delete {
-				left: -60px;
-			}
-
-			.tree-container {
-				.layout-tree-delete {
-					left: -80px;
-				}
-
-				.tree-container {
-					.layout-tree-delete {
-						left: -100px;
-					}
-
-					.tree-container {
-						.layout-tree-delete {
-							left: -120px;
-						}
-
-						.tree-container {
-							.layout-tree-delete {
-								left: -140px;
-							}
-
-							.tree-container {
-								.layout-tree-delete {
-									left: -160px;
-								}
-
-								.tree-container {
-									.layout-tree-delete {
-										left: -180px;
-									}
-
-									.tree-container {
-										.layout-tree-delete {
-											left: -200px;
-										}
-
-										.tree-container {
-											.layout-tree-delete {
-												left: -220px;
-											}
-
-											.tree-container {
-												.layout-tree-delete {
-													left: -240px;
-												}
-
-												.tree-container {
-													.layout-tree-delete {
-														left: -260px;
-													}
-
-													.tree-container {
-														.layout-tree-delete {
-															left: -280px;
-														}
-
-														.tree-container {
-															.layout-tree-delete {
-																left: -300px;
-															}
-
-															.tree-container {
-																.layout-tree-delete {
-																	left: -320px;
-																}
-
-																.tree-container {
-																	.layout-tree-delete {
-																		left: -340px;
-																	}
-
-																	.tree-container {
-																		.layout-tree-delete {
-																			left: -360px;
-																		}
-
-																		.tree-container {
-																			.layout-tree-delete {
-																				left: -380px;
-																			}
-
-																			.tree-container {
-																				.layout-tree-delete {
-																					left: -400px;
-																				}
-
-																				.tree-container {
-																					.layout-tree-delete {
-																						left: -420px;
-																					}
-
-																					.tree-container {
-																						.layout-tree-delete {
-																							left: -440px;
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	.tree-node-content {
-		.layout-tree-add, .layout-tree-delete, .layout-tree-edit {
+		.layout-tree-options {
 			opacity: 0;
 
 			&:focus {
@@ -358,22 +232,16 @@ body {
 			}
 		}
 
-		.layout-tree-delete {
-			position: absolute;
-		}
-
 		&.tree-node-selected, &:active, &.active, &:hover {
 			.tree-label {
-				> .layout-tree-add, > .layout-tree-delete, > .layout-tree-edit {
+				> .layout-tree-options {
 					opacity: 1;
 				}
 			}
 		}
 
-		.layout-tree:focus, .layout-tree-add:focus, .layout-tree-delete:focus, .layout-tree-edit:focus {
-			~ .layout-tree-add, ~ .layout-tree-delete, ~ .layout-tree-edit {
-				opacity: 1;
-			}
+		.layout-tree:focus ~ .layout-tree-options, .layout-tree-options:hover{
+			opacity: 1;
 		}
 
 		.layout-tree-add[data-parentable="false"], .layout-tree-delete[data-deleteable="false"], .layout-tree-edit[data-updateable="false"] {

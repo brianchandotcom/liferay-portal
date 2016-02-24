@@ -313,7 +313,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions
 			translatedDDMFormFieldOptions =
-				new com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions();
+				new com.liferay.dynamic.data.mapping.kernel.
+					DDMFormFieldOptions();
 
 		translatedDDMFormFieldOptions.setDefaultLocale(
 			ddmFormFieldOptions.getDefaultLocale());

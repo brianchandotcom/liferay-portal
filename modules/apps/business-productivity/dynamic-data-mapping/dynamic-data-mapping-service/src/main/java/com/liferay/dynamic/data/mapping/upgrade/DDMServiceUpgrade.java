@@ -65,12 +65,11 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDynamicDataMapping(
 				_assetEntryLocalService, _ddm, _ddmFormJSONDeserializer,
 				_ddmFormJSONSerializer, _ddmFormLayoutJSONSerializer,
-				_ddmFormValuesJSONDeserializer,
-				_ddmFormValuesJSONSerializer, _ddmFormXSDDeserializer,
-				_dlFileEntryLocalService, _dlFileVersionLocalService,
-				_dlFolderLocalService, _expandoRowLocalService,
-				_expandoTableLocalService, _expandoValueLocalService,
-				_resourceActionLocalService,
+				_ddmFormValuesJSONDeserializer, _ddmFormValuesJSONSerializer,
+				_ddmFormXSDDeserializer, _dlFileEntryLocalService,
+				_dlFileVersionLocalService, _dlFolderLocalService,
+				_expandoRowLocalService, _expandoTableLocalService,
+				_expandoValueLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService),
 			new UpgradeLastPublishDate());
 	}

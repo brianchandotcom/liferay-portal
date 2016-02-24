@@ -14,26 +14,42 @@ AUI.add(
 			destructor: function() {
 				var instance = this;
 
-				var tabView = instance.tabView;
+				var tabView = instance.getTabView();
 
 				if (tabView) {
 					tabView.destroy();
 				}
 			},
 
+			getTabView: function() {
+				var instance = this;
+
+				var tabView = instance._tabView;
+
+				if (!tabView) {
+					var tabs = instance.get('container').one('.lfr-ddm-form-tabs');
+
+					if (tabs) {
+						tabView = new A.TabView(
+							{
+								srcNode: tabs
+							}
+						);
+
+						instance._tabView = tabView;
+					}
+				}
+
+				return tabView;
+			},
+
 			_afterTabsRender: function() {
 				var instance = this;
 
-				var container = instance.get('container');
+				var tabView = instance.getTabView();
 
-				var tabs = container.one('.lfr-ddm-form-tabs');
-
-				if (!instance.tabView && tabs) {
-					instance.tabView = new A.TabView(
-						{
-							srcNode: tabs
-						}
-					).render();
+				if (tabView) {
+					tabView.render();
 				}
 			}
 		};

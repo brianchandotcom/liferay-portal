@@ -198,23 +198,9 @@ for (Group group : allGroups) {
 	}
 	%>
 
-	<liferay-util:buffer var="htmlTop">
-		<c:if test="<%= selUser != null %>">
-			<div class="user-info">
-				<div class="float-container">
-					<liferay-ui:user-display
-						showUserName="<%= true %>"
-						userId="<%= selUser.getUserId() %>"
-					/>
-				</div>
-			</div>
-		</c:if>
-	</liferay-util:buffer>
-
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
 		formModelBean="<%= selUser %>"
-		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS %>"
 		markupView="lexicon"
 	/>

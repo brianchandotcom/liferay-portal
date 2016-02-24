@@ -14,26 +14,19 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletRepository;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeBlogsRepository extends UpgradeProcess {
+public class UpgradeBlogsRepository extends BaseUpgradePortletRepository {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateRepositoryPortletId();
+	protected String[][] getRenamePortletNamesArray() {
+		return new String[][] {
+			new String[] {"33", BlogsConstants.SERVICE_NAME}
+		};
 	}
-
-	protected void updateRepositoryPortletId() throws Exception {
-		runSQL(
-			"update Repository set portletId = '" +
-				BlogsConstants.SERVICE_NAME + "' where portletId = " +
-					_OLD_BLOGS_PORTLET_ID);
-	}
-
-	private static final String _OLD_BLOGS_PORTLET_ID = "33";
 
 }

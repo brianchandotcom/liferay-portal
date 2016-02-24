@@ -12,20 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
-
-import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletRepository;
+package com.liferay.portal.kernel.upgrade;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeMessageBoardsRepository
-	extends BaseUpgradePortletRepository {
+public abstract class BaseUpgradePortletRepository extends UpgradeProcess {
 
 	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {new String[] {"19", MBConstants.SERVICE_NAME}};
+	protected void doUpgrade() throws Exception {
+		updateRepositoryPortletId();
+	}
+
+	protected abstract String[][] getRenamePortletNamesArray();
+
+	protected void updateRepositoryPortletId() throws Exception {
+		for (String[] renamePortletNames : getRenamePortletNamesArray()) {
+			String oldPortletName = renamePortletNames[0];
+			String newPortletName = renamePortletNames[1];
+
+			runSQL(
+				"update Repository set portletId = '" + newPortletName +
+					"' where portletId = " + oldPortletName);
+		}
 	}
 
 }

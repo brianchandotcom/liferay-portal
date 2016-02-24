@@ -19,31 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY</td>
-	<td>//div[@class='wiki-body']//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_FIELD_MEDIAWIKI</td>
-	<td>//textarea[contains(@id,'wikiweb_content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_GENERIC</td>
-	<td>//div[@class='wiki-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_ASSET</td>
-	<td>//div[@class='portlet-body']/p[contains(.,'${key_wikiPageContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_HEADER</td>
-	<td>//div[@class='wiki-body']/h1</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_FIELD_CONTENT</td>
 	<td>//div[contains(@class,'custom-attributes')]/div/span[contains(.,'${key_customFieldContent}')]</td>
 	<td></td>
@@ -66,11 +41,6 @@
 <tr>
 	<td>FRONTPAGE_DEFAULT_MESSAGE</td>
 	<td>//div[@class='wiki-body']/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HTML_BODY</td>
-	<td>//div[@class='wiki-body']/${key_htmlTags}</td>
 	<td></td>
 </tr>
 <tr>

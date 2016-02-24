@@ -80,6 +80,12 @@
 					prototype: {
 						CONTENT_TEMPLATE: '<ul></ul>',
 
+						initializer: function() {
+							var instance = this;
+
+							instance._outsideHandler = null;
+						},
+
 						renderUI: function() {
 							var instance = this;
 
@@ -97,22 +103,21 @@
 
 							contentBox.delegate('click', instance._onClickItems, STR_DOT + CSS_SIMPLE_MENU_ITEM, instance);
 
-							contentBox.on('touchendoutside', instance._closeMenu, instance);
-
-							A.getDoc().on('click', instance._closeMenu, instance);
-
 							A.getWin().on(
 								'resize',
 								A.debounce(instance._positionMenu, 200, instance)
 							);
 
-							instance.after('visibleChange', instance._positionMenu, instance);
+							instance.after('visibleChange', instance._onVisibleChange, instance);
 						},
 
 						_closeMenu: function() {
 							var instance = this;
 
 							instance.hide();
+
+							instance._outsideHandler.detach();
+							instance._outsideHandler = null;
 						},
 
 						_onClickItems: function(event) {
@@ -126,6 +131,22 @@
 
 							if (handler) {
 								handler.apply(instance, arguments);
+							}
+						},
+
+						_onVisibleChange: function(event) {
+							var instance = this;
+
+							if (event.newVal) {
+								var contentBox = instance.get('contentBox');
+
+								instance._outsideHandler = contentBox.on(
+									'touchendoutside',
+									instance._closeMenu,
+									instance
+								);
+
+								instance._positionMenu();
 							}
 						},
 

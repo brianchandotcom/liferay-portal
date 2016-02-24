@@ -46,7 +46,10 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.file.ConfigurableFileTree;
+import org.gradle.api.artifacts.ConfigurablePublishArtifact;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
@@ -83,7 +86,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			project, workspaceExtension);
 
 		addTaskDeploy(project);
-		configureTaskAssemble(project);
+		configureArtifacts(project);
 		configureTaskClean(project);
 		configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
 
@@ -149,6 +152,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			});
 
+		task.setDescription(
+			"Generates the " + liferayThemeJsonFile.getName() +
+				" file for this project.");
+
 		return task;
 	}
 
@@ -159,6 +166,28 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		task.setDescription("Assembles the theme and deploys it to Liferay.");
 
 		return task;
+	}
+
+	protected void configureArtifacts(final Project project) {
+		ArtifactHandler artifacts = project.getArtifacts();
+
+		File warFile = getWarFile(project);
+
+		artifacts.add(
+			Dependency.ARCHIVES_CONFIGURATION, warFile,
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(
+					ConfigurablePublishArtifact configurablePublishArtifact) {
+
+					Task gulpBuildTask = GradleUtil.getTask(
+						project, _GULP_BUILD_TASK_NAME);
+
+					configurablePublishArtifact.builtBy(gulpBuildTask);
+				}
+
+			});
 	}
 
 	protected void configureRootTaskDistBundle(
@@ -173,21 +202,15 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					ConfigurableFileTree fileTree = project.fileTree("dist");
+					ConfigurableFileCollection configurableFileCollection =
+						project.files(getWarFile(project));
 
-					fileTree.builtBy(_GULP_DEPLOY_TASK_NAME);
-					fileTree.include("*.war");
+					configurableFileCollection.builtBy(_GULP_BUILD_TASK_NAME);
 
-					copySpec.from(fileTree);
+					copySpec.from(configurableFileCollection);
 				}
 
 			});
-	}
-
-	protected void configureTaskAssemble(Project project) {
-		Task task = GradleUtil.getTask(project, BasePlugin.ASSEMBLE_TASK_NAME);
-
-		task.dependsOn(_GULP_BUILD_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -261,6 +284,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			});
 
 		return projectDirs;
+	}
+
+	protected File getWarFile(Project project) {
+		return project.file("dist/" + project.getName() + ".war");
 	}
 
 	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";

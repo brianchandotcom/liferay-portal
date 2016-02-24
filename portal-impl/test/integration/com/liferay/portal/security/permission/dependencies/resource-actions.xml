@@ -36,4 +36,25 @@
 			<guest-unsupported />
 		</permissions>
 	</model-resource>
+	<model-resource>
+		<model-name>test.com.liferay.portal.security.permission.SiteTest</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>UPDATE</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

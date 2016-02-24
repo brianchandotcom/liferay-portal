@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -126,6 +127,10 @@ public class PermissionCheckerTest {
 				ResourceConstants.SCOPE_INDIVIDUAL, _PORTLET_RESOURCE_NAME);
 
 			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, _MODEL_RESOURCE_NAME);
+
+			ResourceLocalServiceUtil.deleteResource(
 				_user.getCompanyId(), _ROOT_MODEL_RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL, _ROOT_MODEL_RESOURCE_NAME);
 
@@ -165,6 +170,216 @@ public class PermissionCheckerTest {
 			ResourceLocalServiceUtil.deleteResource(
 				_user.getCompanyId(), _ROOT_MODEL_RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL, _group.getGroupId());
+		}
+	}
+
+	@Test
+	public void testHasPermissionWithCompanyScopeResourcePermission()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(
+			"PermissionTestRole", RoleConstants.TYPE_REGULAR);
+
+		UserLocalServiceUtil.setRoleUsers(
+			_role.getRoleId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		long resourceId = 12345;
+
+		ResourceLocalServiceUtil.addResources(
+			_user.getCompanyId(), 0, 0, _MODEL_RESOURCE_NAME, resourceId, false,
+			false, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+				ActionKeys.DELETE);
+
+			Assert.assertFalse(hasPermission);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_user.getCompanyId()), _role.getRoleId(),
+				new String[] {ActionKeys.DELETE});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+					ActionKeys.DELETE);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY, resourceId);
+			}
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+		}
+	}
+
+	@Test
+	public void testHasPermissionWithGroupScopeResourcePermission()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(
+			"PermissionTestRole", RoleConstants.TYPE_REGULAR);
+
+		UserLocalServiceUtil.setRoleUsers(
+			_role.getRoleId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		long resourceId = 12345;
+
+		ResourceLocalServiceUtil.addResources(
+			_user.getCompanyId(), _group.getGroupId(), 0, _MODEL_RESOURCE_NAME,
+			resourceId, false, false, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+				ActionKeys.DELETE);
+
+			Assert.assertFalse(hasPermission);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(_group.getGroupId()), _role.getRoleId(),
+				new String[] {ActionKeys.DELETE});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+					ActionKeys.DELETE);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+					ResourceConstants.SCOPE_GROUP, _group.getGroupId());
+			}
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+		}
+	}
+
+	@Test
+	public void testHasPermissionWithGroupTemplateScopeResourcePermission()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(
+			"PermissionTestRole", RoleConstants.TYPE_REGULAR);
+
+		UserLocalServiceUtil.setRoleUsers(
+			_role.getRoleId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		long resourceId = 12345;
+
+		ResourceLocalServiceUtil.addResources(
+			_user.getCompanyId(), _group.getGroupId(), 0, _MODEL_RESOURCE_NAME,
+			resourceId, false, false, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+				ActionKeys.DELETE);
+
+			Assert.assertFalse(hasPermission);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", _role.getRoleId(),
+				new String[] {ActionKeys.DELETE});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+					ActionKeys.DELETE);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, 0);
+			}
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+		}
+	}
+
+	@Test
+	public void testHasPermissionWithIndividualScopeResourcePermission()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(
+			"PermissionTestRole", RoleConstants.TYPE_REGULAR);
+
+		UserLocalServiceUtil.setRoleUsers(
+			_role.getRoleId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		long resourceId = 12345;
+
+		ResourceLocalServiceUtil.addResources(
+			_user.getCompanyId(), _group.getGroupId(), 0, _MODEL_RESOURCE_NAME,
+			resourceId, false, false, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+				ActionKeys.DELETE);
+
+			Assert.assertFalse(hasPermission);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(resourceId),
+				_role.getRoleId(), new String[] {ActionKeys.DELETE});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					_group.getGroupId(), _MODEL_RESOURCE_NAME, resourceId,
+					ActionKeys.DELETE);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+			}
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
 		}
 	}
 
@@ -523,6 +738,9 @@ public class PermissionCheckerTest {
 	}
 
 	private static final String _ADD_SITE_TEST_ACTION = "ADD_SITE_TEST";
+
+	private static final String _MODEL_RESOURCE_NAME =
+		"test.com.liferay.portal.security.permission.SiteTest";
 
 	private static final String _PORTLET_RESOURCE_NAME =
 		"com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet";

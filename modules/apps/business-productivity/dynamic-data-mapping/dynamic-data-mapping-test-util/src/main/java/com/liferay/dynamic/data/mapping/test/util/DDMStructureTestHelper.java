@@ -117,6 +117,38 @@ public class DDMStructureTestHelper {
 			storageType, type);
 	}
 
+	public DDMStructure updateStructure(long structureId, DDMForm ddmForm)
+		throws Exception {
+
+		return updateStructure(
+			structureId, "Test Structure", StringPool.BLANK, ddmForm);
+	}
+
+	public DDMStructure updateStructure(
+			long structureId, String name, String description, DDMForm ddmForm)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		return updateStructure(
+			structureId, name, description, ddmForm, ddmFormLayout);
+	}
+
+	public DDMStructure updateStructure(
+			long structureId, String name, String description, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		return DDMStructureLocalServiceUtil.updateStructure(
+			TestPropsValues.getUserId(), structureId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			getDefaultLocaleMap(name), getDefaultLocaleMap(description),
+			ddmForm, ddmFormLayout, serviceContext);
+	}
+
 	private final long _classNameId;
 	private final Group _group;
 

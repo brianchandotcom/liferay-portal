@@ -473,7 +473,7 @@
 			<then>
 				<var name="key_contentName" value="${isNotEditable}" />
 
-				<execute function="AssertNotEditable" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+				<execute function="AssertNotEditable" locator1="Checkbox#STAGED_CONTENT" />
 			</then>
 		</if>
 

@@ -19,7 +19,6 @@
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />

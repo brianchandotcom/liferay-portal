@@ -48,7 +48,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 					</portlet:renderURL>
 

@@ -70,7 +70,6 @@ portletURL.setParameter("navigation", navigation);
 	<portlet:renderURL var="addEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 		<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
-		<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

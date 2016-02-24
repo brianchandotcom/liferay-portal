@@ -34,11 +34,11 @@ public interface S3StoreConfiguration {
 	@Meta.AD(required = false)
 	public String secretKey();
 
-	@Meta.AD(deflt = "us-east-1", required = false)
-	public String s3Region();
-
 	@Meta.AD(required = true)
 	public String bucketName();
+
+	@Meta.AD(deflt = "us-east-1", required = false)
+	public String s3Region();
 
 	@Meta.AD(
 		deflt = "STANDARD", optionValues = {"REDUCED_REDUNDANCY", "STANDARD"},
@@ -46,17 +46,33 @@ public interface S3StoreConfiguration {
 	)
 	public String s3StorageClass();
 
+
 	@Meta.AD(deflt = "10000", required = false)
 	public int connectionTimeout();
 
 	@Meta.AD(deflt = "50", required = false)
 	public int httpClientMaxConnections();
 
+	@Meta.AD(deflt = "5", required = false)
+	public int httpClientMaxErrorRetry();
+
+	@Meta.AD(deflt = "7", required = false)
+	public int corePoolSize();
+
+	@Meta.AD(deflt = "20", required = false)
+	public int maxPoolSize();
+
 	@Meta.AD(deflt = "7", required = false)
 	public int cacheDirCleanUpExpunge();
 
 	@Meta.AD(deflt = "100", required = false)
 	public int cacheDirCleanUpFrequency();
+
+	@Meta.AD(deflt = "5242880", required = false)
+	public int minimumUploadPartSize();
+
+	@Meta.AD(deflt = "10485760", required = false)
+	public int multipartUploadThreshold();
 
 	@Meta.AD(required = false)
 	public String proxyHost();

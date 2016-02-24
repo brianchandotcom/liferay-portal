@@ -125,7 +125,46 @@ public class PermissionCheckerTest {
 				_user.getCompanyId(), _PORTLET_RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL, _PORTLET_RESOURCE_NAME);
 
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _ROOT_MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, _ROOT_MODEL_RESOURCE_NAME);
+
 			PortletLocalServiceUtil.destroyRemotePortlet(portlet);
+		}
+	}
+
+	@Test
+	public void testHasPermissionOnRootModelResource() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		ResourceLocalServiceUtil.addResources(
+			permissionChecker.getCompanyId(), _group.getGroupId(), 0,
+			_ROOT_MODEL_RESOURCE_NAME, _group.getGroupId(), false, true, false);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _ROOT_MODEL_RESOURCE_NAME,
+				_group.getGroupId(), _ADD_SITE_TEST_ACTION);
+
+			Assert.assertFalse(hasPermission);
+
+			UserLocalServiceUtil.setGroupUsers(
+				_group.getGroupId(), new long[] {_user.getUserId()});
+
+			permissionChecker = _getPermissionChecker(_user);
+
+			hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _ROOT_MODEL_RESOURCE_NAME,
+				_group.getGroupId(), _ADD_SITE_TEST_ACTION);
+
+			Assert.assertTrue(hasPermission);
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _ROOT_MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, _group.getGroupId());
 		}
 	}
 
@@ -438,6 +477,17 @@ public class PermissionCheckerTest {
 
 		ResourceActionLocalServiceUtil.checkResourceActions(
 			_PORTLET_RESOURCE_NAME, portletActions);
+
+		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
+			_PORTLET_RESOURCE_NAME);
+
+		for (String modelName : modelNames) {
+			List<String> modelActions =
+				ResourceActionsUtil.getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, modelActions);
+		}
 	}
 
 	protected static void removeResourceActions() {
@@ -449,6 +499,19 @@ public class PermissionCheckerTest {
 			ResourceActionLocalServiceUtil.deleteResourceAction(
 				portletResourceAction);
 		}
+
+		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
+			_PORTLET_RESOURCE_NAME);
+
+		for (String modelName : modelNames) {
+			List<ResourceAction> modelResourceActions =
+				ResourceActionLocalServiceUtil.getResourceActions(modelName);
+
+			for (ResourceAction modelResourceAction : modelResourceActions) {
+				ResourceActionLocalServiceUtil.deleteResourceAction(
+					modelResourceAction);
+			}
+		}
 	}
 
 	private PermissionChecker _getPermissionChecker(User user)
@@ -459,8 +522,13 @@ public class PermissionCheckerTest {
 		return PermissionCheckerFactoryUtil.create(user);
 	}
 
+	private static final String _ADD_SITE_TEST_ACTION = "ADD_SITE_TEST";
+
 	private static final String _PORTLET_RESOURCE_NAME =
 		"com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet";
+
+	private static final String _ROOT_MODEL_RESOURCE_NAME =
+		"com.liferay.portal.security.permission.site";
 
 	@DeleteAfterTestRun
 	private Company _company;

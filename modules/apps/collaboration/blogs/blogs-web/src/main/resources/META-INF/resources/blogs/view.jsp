@@ -83,7 +83,7 @@ searchContainer.setResults(results);
 	<aui:nav-bar markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 			<aui:nav-item
-				href="<%= portletURL %>"
+				href="<%= portletURL.toString() %>"
 				label="published"
 				selected='<%= !mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>'
 			/>

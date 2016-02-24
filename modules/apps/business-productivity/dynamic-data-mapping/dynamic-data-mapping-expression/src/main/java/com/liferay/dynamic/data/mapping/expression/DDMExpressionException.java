@@ -50,7 +50,7 @@ public class DDMExpressionException extends PortalException {
 			return _functionName;
 		}
 
-		private String _functionName;
+		private final String _functionName;
 
 	}
 

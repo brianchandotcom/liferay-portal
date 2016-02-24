@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.util;
-
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
+package com.liferay.portal.workflow.kaleo.definition;
 
 import java.util.HashMap;
 import java.util.Map;

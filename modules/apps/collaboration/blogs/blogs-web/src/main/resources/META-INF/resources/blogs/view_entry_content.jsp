@@ -94,7 +94,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
 								</h2>
 
-								<c:if test="<%= entry.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+								<c:if test="<%= !entry.isApproved() %>">
 									<h5>
 										<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 									</h5>

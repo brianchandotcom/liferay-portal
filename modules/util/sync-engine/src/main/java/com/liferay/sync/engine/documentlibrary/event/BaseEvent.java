@@ -155,18 +155,7 @@ public abstract class BaseEvent implements Event {
 
 		try {
 			if (_logger.isTraceEnabled()) {
-				Class<?> clazz = this.getClass();
-
-				SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
-
-				if (syncFile != null) {
-					_logger.trace(
-						"Processing event {} file path {}",
-						clazz.getSimpleName(), syncFile.getFilePathName());
-				}
-				else {
-					_logger.trace("Processing event {}", clazz.getSimpleName());
-				}
+				logEvent();
 			}
 
 			processRequest();
@@ -182,8 +171,25 @@ public abstract class BaseEvent implements Event {
 		return SessionManager.getSession(_syncAccountId);
 	}
 
+	protected void logEvent() {
+		Class<?> clazz = getClass();
+
+		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+		if (syncFile != null) {
+			_logger.trace(
+				"Processing event {} file path {}", clazz.getSimpleName(),
+				syncFile.getFilePathName());
+		}
+		else {
+			_logger.trace("Processing event {}", clazz.getSimpleName());
+		}
+	}
+
 	protected void processAsynchronousRequest() throws Exception {
-		BatchEvent batchEvent = BatchEventManager.getBatchEvent(_syncAccountId);
+		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+		BatchEvent batchEvent = BatchEventManager.getBatchEvent(syncFile);
 
 		if (!batchEvent.addEvent(this)) {
 			executeAsynchronousPost(_urlPath, _parameters);

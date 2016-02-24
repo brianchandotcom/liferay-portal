@@ -159,11 +159,11 @@ public class BaseHandler implements Handler<Void> {
 
 	@Override
 	public Void handleResponse(HttpResponse httpResponse) {
-		if (_event.isCancelled()) {
-			return null;
-		}
-
 		try {
+			if (_event.isCancelled()) {
+				return null;
+			}
+
 			StatusLine statusLine = httpResponse.getStatusLine();
 
 			if ((statusLine.getStatusCode() != HttpStatus.SC_OK) &&

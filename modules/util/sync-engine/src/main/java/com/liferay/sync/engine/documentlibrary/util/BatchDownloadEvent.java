@@ -19,7 +19,10 @@ import com.liferay.sync.engine.documentlibrary.event.DownloadFilesEvent;
 import com.liferay.sync.engine.documentlibrary.handler.DownloadFileHandler;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.JSONUtil;
 import com.liferay.sync.engine.util.PropsValues;
 
@@ -36,8 +39,11 @@ import org.slf4j.LoggerFactory;
  */
 public class BatchDownloadEvent {
 
-	public BatchDownloadEvent(long syncAccountId) throws Exception {
+	public BatchDownloadEvent(long syncAccountId, long syncSiteId)
+		throws Exception {
+
 		_syncAccountId = syncAccountId;
+		_syncSiteId = syncSiteId;
 	}
 
 	public synchronized boolean addEvent(DownloadFileEvent downloadFileEvent) {
@@ -111,6 +117,14 @@ public class BatchDownloadEvent {
 			Map<String, Object> parameters = new HashMap<>();
 
 			parameters.put("handlers", _handlers);
+
+			SyncSite syncSite = SyncSiteService.fetchSyncSite(_syncSiteId);
+
+			SyncFile syncFile = SyncFileService.fetchSyncFile(
+				syncSite.getFilePathName());
+
+			parameters.put("syncFile", syncFile);
+
 			parameters.put(
 				"zipFileIds", JSONUtil.writeValueAsString(_batchParameters));
 
@@ -141,6 +155,7 @@ public class BatchDownloadEvent {
 	private int _eventCount;
 	private final Map<String, DownloadFileHandler> _handlers = new HashMap<>();
 	private final long _syncAccountId;
+	private final long _syncSiteId;
 	private long _totalFileSize;
 
 }

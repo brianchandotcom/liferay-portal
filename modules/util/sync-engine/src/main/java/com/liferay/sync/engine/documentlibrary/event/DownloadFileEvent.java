@@ -66,7 +66,7 @@ public class DownloadFileEvent extends BaseEvent {
 
 		if ((boolean)getParameterValue("batch")) {
 			BatchDownloadEvent batchDownloadEvent =
-				BatchEventManager.getBatchDownloadEvent(getSyncAccountId());
+				BatchEventManager.getBatchDownloadEvent(syncFile);
 
 			if (batchDownloadEvent.addEvent(this)) {
 				return;

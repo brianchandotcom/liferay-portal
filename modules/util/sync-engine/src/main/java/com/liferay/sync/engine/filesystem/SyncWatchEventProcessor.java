@@ -16,16 +16,17 @@ package com.liferay.sync.engine.filesystem;
 
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.event.Event;
-import com.liferay.sync.engine.documentlibrary.util.BatchEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncFileModelListener;
+import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.model.SyncWatchEvent;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
@@ -59,6 +60,14 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		SyncFileModelListener syncFileModelListener =
 			new SyncFileModelListener() {
+
+				@Override
+				public void onRemove(SyncFile syncFile) {
+					_dependentSyncWatchEventsMaps.remove(
+						syncFile.getFilePathName());
+
+					_pendingTypePKSyncFileIds.remove(syncFile.getTypePK());
+				}
 
 				@Override
 				public void onUpdate(
@@ -136,9 +145,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			_logger.error(e.getMessage(), e);
 		}
 
-		BatchEvent batchEvent = BatchEventManager.getBatchEvent(_syncAccountId);
-
-		batchEvent.fireBatchEvent();
+		BatchEventManager.fireBatchEvents();
 	}
 
 	protected void addFile(SyncWatchEvent syncWatchEvent) throws Exception {
@@ -183,7 +190,12 @@ public class SyncWatchEventProcessor implements Runnable {
 				@Override
 				public void run() {
 					try {
-						if (!FileUtil.checkFilePath(targetFilePath)) {
+						SyncSite syncSite = SyncSiteService.fetchSyncSite(
+							parentSyncFile.getRepositoryId(), _syncAccountId);
+
+						if ((syncSite == null) || !syncSite.isActive() ||
+							!FileUtil.checkFilePath(targetFilePath)) {
+
 							return;
 						}
 

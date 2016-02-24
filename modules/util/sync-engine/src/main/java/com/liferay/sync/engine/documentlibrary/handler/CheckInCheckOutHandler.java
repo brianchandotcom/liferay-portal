@@ -34,6 +34,10 @@ public class CheckInCheckOutHandler extends BaseJSONHandler {
 
 		SyncFile localSyncFile = getLocalSyncFile();
 
+		if (localSyncFile == null) {
+			return;
+		}
+
 		localSyncFile.setLockExpirationDate(
 			remoteSyncFile.getLockExpirationDate());
 		localSyncFile.setLockUserId(remoteSyncFile.getLockUserId());

@@ -34,6 +34,10 @@ public class UpdateFolderHandler extends BaseSyncDLObjectHandler {
 
 		SyncFile localSyncFile = getLocalSyncFile();
 
+		if (localSyncFile == null) {
+			return;
+		}
+
 		processFilePathChange(localSyncFile, remoteSyncFile);
 
 		localSyncFile.setModifiedTime(remoteSyncFile.getModifiedTime());

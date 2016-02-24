@@ -14,6 +14,10 @@
 
 package com.liferay.sync.engine.documentlibrary.util;
 
+import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.service.SyncSiteService;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +29,32 @@ import org.slf4j.LoggerFactory;
  */
 public class BatchEventManager {
 
-	public static BatchDownloadEvent getBatchDownloadEvent(long syncAccountId) {
+	public static void fireBatchDownloadEvents() {
+		synchronized (_batchDownloadEvents) {
+			for (BatchDownloadEvent batchDownloadEvent :
+					_batchDownloadEvents.values()) {
+
+				batchDownloadEvent.fireBatchEvent();
+			}
+		}
+	}
+
+	public static void fireBatchEvents() {
+		synchronized (_batchDownloadEvents) {
+			for (BatchEvent batchEvent : _batchEvents.values()) {
+				batchEvent.fireBatchEvent();
+			}
+		}
+	}
+
+	public static BatchDownloadEvent getBatchDownloadEvent(SyncFile syncFile) {
 		synchronized (_batchDownloadEvents) {
 			try {
+				SyncSite syncSite = SyncSiteService.fetchSyncSite(
+					syncFile.getRepositoryId(), syncFile.getSyncAccountId());
+
 				BatchDownloadEvent batchDownloadEvent =
-					_batchDownloadEvents.get(syncAccountId);
+					_batchDownloadEvents.get(syncSite.getSyncSiteId());
 
 				if ((batchDownloadEvent != null) &&
 					!batchDownloadEvent.isClosed()) {
@@ -37,9 +62,11 @@ public class BatchEventManager {
 					return batchDownloadEvent;
 				}
 
-				batchDownloadEvent = new BatchDownloadEvent(syncAccountId);
+				batchDownloadEvent = new BatchDownloadEvent(
+					syncSite.getSyncAccountId(), syncSite.getSyncSiteId());
 
-				_batchDownloadEvents.put(syncAccountId, batchDownloadEvent);
+				_batchDownloadEvents.put(
+					syncSite.getSyncSiteId(), batchDownloadEvent);
 
 				return batchDownloadEvent;
 			}
@@ -53,18 +80,23 @@ public class BatchEventManager {
 		}
 	}
 
-	public static BatchEvent getBatchEvent(long syncAccountId) {
+	public static BatchEvent getBatchEvent(SyncFile syncFile) {
 		synchronized (_batchEvents) {
 			try {
-				BatchEvent batchEvent = _batchEvents.get(syncAccountId);
+				SyncSite syncSite = SyncSiteService.fetchSyncSite(
+					syncFile.getRepositoryId(), syncFile.getSyncAccountId());
+
+				BatchEvent batchEvent = _batchEvents.get(
+					syncSite.getSyncSiteId());
 
 				if ((batchEvent != null) && !batchEvent.isClosed()) {
 					return batchEvent;
 				}
 
-				batchEvent = new BatchEvent(syncAccountId);
+				batchEvent = new BatchEvent(
+					syncSite.getSyncAccountId(), syncSite.getSyncSiteId());
 
-				_batchEvents.put(syncAccountId, batchEvent);
+				_batchEvents.put(syncSite.getSyncSiteId(), batchEvent);
 
 				return batchEvent;
 			}

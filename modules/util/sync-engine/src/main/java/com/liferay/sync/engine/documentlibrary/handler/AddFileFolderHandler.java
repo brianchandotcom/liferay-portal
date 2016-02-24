@@ -45,6 +45,10 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 
 				SyncFile syncFile = getLocalSyncFile();
 
+				if (syncFile == null) {
+					return;
+				}
+
 				syncFile.setState(SyncFile.STATE_ERROR);
 				syncFile.setUiEvent(SyncFile.UI_EVENT_UPLOAD_EXCEPTION);
 
@@ -62,6 +66,10 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 		SyncFile remoteSyncFile = JSONUtil.readValue(response, SyncFile.class);
 
 		SyncFile localSyncFile = getLocalSyncFile();
+
+		if (localSyncFile == null) {
+			return;
+		}
 
 		localSyncFile.setCompanyId(remoteSyncFile.getCompanyId());
 		localSyncFile.setCreateTime(remoteSyncFile.getCreateTime());

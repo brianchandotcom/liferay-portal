@@ -75,7 +75,12 @@ public class FileUtil {
 			while (true) {
 				long size1 = FileUtils.sizeOf(filePath.toFile());
 
-				Thread.sleep(1000);
+				if (size1 == 0) {
+					Thread.sleep(50);
+				}
+				else {
+					Thread.sleep(size1 / 1048576);
+				}
 
 				long size2 = FileUtils.sizeOf(filePath.toFile());
 
@@ -87,8 +92,6 @@ public class FileUtil {
 			}
 		}
 		catch (Exception e) {
-			_logger.error(e.getMessage(), e);
-
 			return true;
 		}
 	}

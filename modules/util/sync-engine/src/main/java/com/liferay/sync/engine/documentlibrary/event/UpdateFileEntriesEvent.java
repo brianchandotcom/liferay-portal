@@ -19,6 +19,9 @@ import com.liferay.sync.engine.documentlibrary.handler.UpdateFileEntriesHandler;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shinn Lok
  */
@@ -38,12 +41,22 @@ public class UpdateFileEntriesEvent extends BaseEvent {
 	}
 
 	@Override
+	protected void logEvent() {
+		Class<?> clazz = getClass();
+
+		_logger.trace("Processing event {}", clazz.getSimpleName());
+	}
+
+	@Override
 	protected void processRequest() throws Exception {
 		executeAsynchronousPost(_URL_PATH, getParameters());
 	}
 
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/update-file-entries";
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		UpdateFileEntriesEvent.class);
 
 	private final Handler<Void> _handler;
 

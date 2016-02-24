@@ -80,8 +80,14 @@ public class DownloadFileHandler extends BaseHandler {
 
 				removeEvent();
 
+				SyncFile localSyncFile = getLocalSyncFile();
+
+				if (localSyncFile == null) {
+					return;
+				}
+
 				FileEventUtil.downloadFile(
-					getSyncAccountId(), getLocalSyncFile(), false);
+					getSyncAccountId(), localSyncFile, false);
 
 				return;
 			}
@@ -128,6 +134,10 @@ public class DownloadFileHandler extends BaseHandler {
 	@Override
 	public boolean handlePortalException(String exception) throws Exception {
 		SyncFile syncFile = getLocalSyncFile();
+
+		if (syncFile == null) {
+			return true;
+		}
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
@@ -291,7 +301,7 @@ public class DownloadFileHandler extends BaseHandler {
 
 		SyncFile syncFile = getLocalSyncFile();
 
-		if (isUnsynced(syncFile)) {
+		if ((syncFile == null) || isUnsynced(syncFile)) {
 			return;
 		}
 

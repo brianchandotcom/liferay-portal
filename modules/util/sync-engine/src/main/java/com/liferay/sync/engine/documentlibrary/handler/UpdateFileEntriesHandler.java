@@ -80,8 +80,8 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 				handler.processResponse(fieldValue.toString());
 			}
 			catch (Exception e) {
-				if (_logger.isDebugEnabled()) {
-					_logger.debug(e.getMessage(), e);
+				if (!isEventCancelled()) {
+					_logger.error(e.getMessage(), e);
 				}
 			}
 			finally {

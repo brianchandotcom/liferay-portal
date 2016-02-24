@@ -35,6 +35,7 @@ import com.liferay.sync.engine.documentlibrary.handler.GetAllFolderSyncDLObjects
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.PropsValues;
@@ -255,6 +256,14 @@ public class FileEventUtil {
 
 		parameters.put("repositoryId", repositoryId);
 
+		SyncSite syncSite = SyncSiteService.fetchSyncSite(
+			repositoryId, syncAccountId);
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(
+			syncSite.getFilePathName());
+
+		parameters.put("syncFile", syncFile);
+
 		GetAllFolderSyncDLObjectsEvent getAllFolderSyncDLObjectsEvent =
 			new GetAllFolderSyncDLObjectsEvent(syncAccountId, parameters);
 
@@ -278,6 +287,11 @@ public class FileEventUtil {
 		if (ServerInfo.supportsRetrieveFromCache(syncAccountId)) {
 			parameters.put("retrieveFromCache", retrieveFromCache);
 		}
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(
+			syncSite.getFilePathName());
+
+		parameters.put("syncFile", syncFile);
 
 		parameters.put("syncSite", syncSite);
 
@@ -368,10 +382,7 @@ public class FileEventUtil {
 			downloadFile(syncAccountId, downloadingSyncFile);
 		}
 
-		BatchDownloadEvent batchDownloadEvent =
-			BatchEventManager.getBatchDownloadEvent(syncAccountId);
-
-		batchDownloadEvent.fireBatchEvent();
+		BatchEventManager.fireBatchDownloadEvents();
 
 		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
 			syncAccountId, SyncFile.UI_EVENT_UPLOADING, "size", true);
@@ -443,9 +454,7 @@ public class FileEventUtil {
 			}
 		}
 
-		BatchEvent batchEvent = BatchEventManager.getBatchEvent(syncAccountId);
-
-		batchEvent.fireBatchEvent();
+		BatchEventManager.fireBatchEvents();
 	}
 
 	public static void updateFile(

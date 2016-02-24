@@ -17,7 +17,6 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 import java.util.Dictionary;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.Constants;
 
 /**
  * @author Raymond Augé
@@ -28,18 +27,6 @@ public class WabUtil {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
 		return headers.get("Web-ContextPath");
-	}
-
-	public static boolean isFragmentBundle(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
-
-		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-		if (fragmentHost == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

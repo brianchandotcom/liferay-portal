@@ -26,12 +26,10 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"mvc.command.name=/", "mvc.command.name=/message_boards/view",
-		"mvc.command.name=/message_boards/view_banned_users",
 		"mvc.command.name=/message_boards/view_category",
 		"mvc.command.name=/message_boards/view_my_posts",
 		"mvc.command.name=/message_boards/view_my_subscriptions",
-		"mvc.command.name=/message_boards/view_recent_posts",
-		"mvc.command.name=/message_boards/view_statistics"
+		"mvc.command.name=/message_boards/view_recent_posts"
 	},
 	service = MVCRenderCommand.class
 )

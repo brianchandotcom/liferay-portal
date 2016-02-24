@@ -17,12 +17,20 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -35,16 +43,22 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.List;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Roberto Díaz
+ * @author Tomas Polesovsky
  */
 @Sync
 public class PermissionCheckerTest {
@@ -56,9 +70,63 @@ public class PermissionCheckerTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		registerResourceActions();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		removeResourceActions();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testHasPermissionOnDefaultPortletResourcesWhenPortletDeploys()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.setGroupUsers(
+			_group.getGroupId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		Portlet portlet = new PortletImpl(
+			_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
+
+		PortletLocalServiceUtil.deployRemotePortlet(portlet, "category.hidden");
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _PORTLET_RESOURCE_NAME,
+				_PORTLET_RESOURCE_NAME, ActionKeys.VIEW);
+
+			Assert.assertTrue(hasPermission);
+
+			hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _PORTLET_RESOURCE_NAME,
+				_PORTLET_RESOURCE_NAME, ActionKeys.CONFIGURATION);
+
+			Assert.assertTrue(hasPermission);
+
+			hasPermission = permissionChecker.hasPermission(
+				_group.getGroupId(), _PORTLET_RESOURCE_NAME,
+				_PORTLET_RESOURCE_NAME, ActionKeys.ACCESS_IN_CONTROL_PANEL);
+
+			Assert.assertFalse(hasPermission);
+		}
+		finally {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), _PORTLET_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, _PORTLET_RESOURCE_NAME);
+
+			PortletLocalServiceUtil.destroyRemotePortlet(portlet);
+		}
 	}
 
 	@Test
@@ -356,11 +424,43 @@ public class PermissionCheckerTest {
 				_organization.getOrganizationId()));
 	}
 
+	protected static void registerResourceActions() throws Exception {
+		String packageName = PermissionCheckerTest.class.getPackage().getName();
+		String packagePath = packageName.replace('.', '/');
+
+		ResourceActionsUtil.read(
+			null, PermissionCheckerTest.class.getClassLoader(),
+			packagePath + "/dependencies/resource-actions.xml");
+
+		List<String> portletActions =
+			ResourceActionsUtil.getPortletResourceActions(
+				_PORTLET_RESOURCE_NAME);
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			_PORTLET_RESOURCE_NAME, portletActions);
+	}
+
+	protected static void removeResourceActions() {
+		List<ResourceAction> portletResourceActions =
+			ResourceActionLocalServiceUtil.getResourceActions(
+				_PORTLET_RESOURCE_NAME);
+
+		for (ResourceAction portletResourceAction : portletResourceActions) {
+			ResourceActionLocalServiceUtil.deleteResourceAction(
+				portletResourceAction);
+		}
+	}
+
 	private PermissionChecker _getPermissionChecker(User user)
 		throws Exception {
 
+		PermissionCacheUtil.clearCache(user.getUserId());
+
 		return PermissionCheckerFactoryUtil.create(user);
 	}
+
+	private static final String _PORTLET_RESOURCE_NAME =
+		"com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet";
 
 	@DeleteAfterTestRun
 	private Company _company;

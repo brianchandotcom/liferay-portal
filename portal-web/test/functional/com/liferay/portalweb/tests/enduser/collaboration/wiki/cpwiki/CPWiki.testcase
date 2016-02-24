@@ -361,7 +361,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
 
@@ -369,7 +369,7 @@
 			<var name="wikiChildPageTitle" value="Wiki Page 2" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 2" />
 		</execute>
 	</command>
@@ -515,7 +515,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1 Restored" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
 	</command>
@@ -550,7 +550,7 @@
 			<var name="wikiPageTitle" value="Wiki Page RSS" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 

@@ -151,6 +151,15 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues deserialize(
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		java.lang.String serializedDDMFormValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.deserialize(ddmForm,
+			serializedDDMFormValues);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddlRecordSetLocalService.dynamicQuery();
 	}

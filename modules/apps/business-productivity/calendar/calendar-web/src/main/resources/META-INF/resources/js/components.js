@@ -141,7 +141,7 @@
 								var contentBox = instance.get('contentBox');
 
 								instance._outsideHandler = contentBox.on(
-									'touchendoutside',
+									['mouseupoutside', 'touchendoutside'],
 									instance._closeMenu,
 									instance
 								);

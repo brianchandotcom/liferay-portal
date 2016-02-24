@@ -33,6 +33,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
 %>
 
+<div class="loading-animation" id="<portlet:namespace />loader"></div>
+
 <portlet:actionURL name="addRecordSet" var="addRecordSetURL">
 	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
 </portlet:actionURL>
@@ -41,7 +43,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
 </portlet:actionURL>
 
-<div class="portlet-forms" id="<portlet:namespace />formContainer">
+<div class="hide portlet-forms" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
@@ -115,9 +117,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<aui:input name="definition" type="hidden" />
 			<aui:input name="layout" type="hidden" />
 
-			<div id="<portlet:namespace />formBuilder">
-				<span class="ddl-loader icon-refresh icon-spin" id="<portlet:namespace />loader"></span>
-			</div>
+			<div id="<portlet:namespace />formBuilder"></div>
 		</aui:fieldset>
 
 		<div class="container-fluid-1280">

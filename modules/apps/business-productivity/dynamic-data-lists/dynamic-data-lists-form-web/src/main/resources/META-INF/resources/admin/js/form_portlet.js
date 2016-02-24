@@ -90,6 +90,8 @@ AUI.add(
 
 						instance.one('#loader').remove();
 
+						instance.one('.portlet-forms').removeClass('hide');
+
 						instance.get('formBuilder').render(instance.one('#formBuilder'));
 					},
 

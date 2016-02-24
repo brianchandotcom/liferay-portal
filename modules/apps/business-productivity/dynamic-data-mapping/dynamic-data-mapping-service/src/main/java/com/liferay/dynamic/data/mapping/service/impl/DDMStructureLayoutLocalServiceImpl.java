@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -79,6 +80,14 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Override
+	public DDMFormLayout deserialize(String serializedDDMFormLayout)
+		throws PortalException {
+
+		return ddmFormLayoutJSONDeserializer.deserialize(
+			serializedDDMFormLayout);
+	}
+
+	@Override
 	public DDMStructureLayout getStructureLayout(long structureLayoutId)
 		throws PortalException {
 
@@ -117,6 +126,9 @@ public class DDMStructureLayoutLocalServiceImpl
 
 		ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
+
+	@ServiceReference(type = DDMFormLayoutJSONDeserializer.class)
+	protected DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer;
 
 	@ServiceReference(type = DDMFormLayoutJSONSerializer.class)
 	protected DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer;

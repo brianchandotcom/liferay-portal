@@ -15,16 +15,21 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.StopWatchLoggingHelper;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Preston Crary
@@ -34,29 +39,90 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws UpgradeException {
 		try {
+			StopWatch stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#Counter");
+
 			upgradeTable(
 				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log, "UpgradeKernelPackage.upgradeTable#Counter");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ClassName_");
+
 			upgradeTable(
 				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ClassName_");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourceAction");
+
 			upgradeTable(
 				"ResourceAction", "name", getClassNames(),
 				WildcardMode.SURROUND);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourceAction");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourceBlock");
+
 			upgradeTable(
 				"ResourceBlock", "name", getClassNames(),
 				WildcardMode.SURROUND);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourceBlock");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourcePermission");
+
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
 
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourcePermission");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourceAction");
+
 			upgradeTable(
 				"ResourceAction", "name", getResourceNames(),
 				WildcardMode.LEADING);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourceAction");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourceBlock");
+
 			upgradeTable(
 				"ResourceBlock", "name", getResourceNames(),
 				WildcardMode.LEADING);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourceBlock");
+
+			stopWatch = StopWatchLoggingHelper.startLogging(
+				_log, "UpgradeKernelPackage.upgradeTable#ResourcePermission");
+
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
+
+			StopWatchLoggingHelper.endLogging(
+				stopWatch, _log,
+				"UpgradeKernelPackage.upgradeTable#ResourcePermission");
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);
@@ -644,5 +710,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.portlet.messageboards", "com.liferay.message.boards"
 		}
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeKernelPackage.class);
 
 }

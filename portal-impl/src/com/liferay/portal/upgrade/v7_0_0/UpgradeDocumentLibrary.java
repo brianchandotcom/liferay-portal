@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.ClassNameUpgradeUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,27 +48,6 @@ import java.util.Map;
  * @author Michael Young
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
-
-	protected void addClassName(long classNameId, String className)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"insert into ClassName_ (mvccVersion, classNameId, value) " +
-					"values (?, ?, ?)");
-
-			ps.setLong(1, 0);
-			ps.setLong(2, classNameId);
-			ps.setString(3, className);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
 
 	protected void addDDMStructureLink(
 			long ddmStructureLinkId, long classNameId, long classPK,
@@ -550,8 +530,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		if (portletRepositoryClassNameId == 0) {
 			portletRepositoryClassNameId = increment();
 
-			addClassName(
-				portletRepositoryClassNameId,
+			ClassNameUpgradeUtil.addClassName(
+				connection, portletRepositoryClassNameId,
 				PortletRepository.class.getName());
 		}
 

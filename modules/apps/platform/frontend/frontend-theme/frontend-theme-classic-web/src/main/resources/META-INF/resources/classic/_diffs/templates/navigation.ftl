@@ -12,12 +12,6 @@
 			</div>
 		</nav>
 	</#if>
-
-	<nav class="user-personal-bar">
-		<ul class="nav navbar-nav navbar-right">
-			<@liferay.user_personal_bar />
-		</ul>
-	<nav>
 </div>
 
 <#assign VOID = freeMarkerPortletPreferences.reset()>

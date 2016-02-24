@@ -9,7 +9,7 @@
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbChildArticleContent}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addChildPGViaKBDisplay">
@@ -147,7 +147,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -169,7 +169,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addCPWithInvalidTitle">
@@ -430,7 +430,7 @@
 		<execute function="AssertClick" locator1="NavBar#ACTIONS" value1="Actions" />
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="An unexpected error occurred while importing articles: File name is null." />
 	</command>
@@ -477,7 +477,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editKBArticlePriorityCP">
@@ -487,7 +487,7 @@
 		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
 	</command>
 
@@ -507,7 +507,7 @@
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">
@@ -652,7 +652,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="moveArticleCP">
@@ -735,7 +735,7 @@
 
 		<execute function="Click" locator1="Button#MOVE" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="searchPGViaKBSearch">
@@ -792,7 +792,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="Button#MOVE" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="selectParentViaKBDisplayPG">
@@ -805,7 +805,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="Button#MOVE" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -888,7 +888,7 @@
 		<execute function="Check" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CHECKBOX" />
 		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="setScopeCP">
@@ -902,7 +902,7 @@
 	<command name="subscribeCP">
 		<execute function="AssertClick" locator1="KnowledgeBase#LINK_SUBSCRIBE" value1="Subscribe" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="AssertElementPresent" locator1="KnowledgeBase#LINK_UNSUBSCRIBE" />
 	</command>
@@ -921,7 +921,7 @@
 				<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected articles?" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#MESSAGE_NO_ARTICLES_FOUND" value1="No articles were found." />
 			</then>
 		</if>

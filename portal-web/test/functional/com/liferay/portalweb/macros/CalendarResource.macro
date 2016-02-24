@@ -45,7 +45,7 @@
 		<execute function="AssertClickNoError" locator1="CalendarResources#RESOURCE_MENULIST_DELETE" value1="Delete" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertElementNotPresent" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 		<execute function="AssertTextNotPresent" value1="${calendarResourceName}" />
 	</command>
@@ -78,7 +78,7 @@
 
 		<var name="key_calendarResourceName" value="${calendarResourceName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="search">
@@ -97,7 +97,7 @@
 				<execute function="AssertClickNoError" locator1="CalendarResources#RESOURCE_MENULIST_DELETE" value1="Delete" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</while>
 

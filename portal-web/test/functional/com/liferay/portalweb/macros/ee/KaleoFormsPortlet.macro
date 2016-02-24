@@ -17,7 +17,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="assignProcessToMe">
@@ -39,7 +39,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_TASK_1" value1="${workflowTask}" />
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
@@ -65,7 +65,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="completeFormForSecondProcessTaskViaTable">
@@ -194,7 +194,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="resubmitPendingProcessViaInbox">
@@ -215,7 +215,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="resubmitPendingProcessViaMyPendingRequests">
@@ -232,13 +232,13 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveProcessRecord">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="submitNewProcess">
@@ -282,7 +282,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="viewCompleteFormFieldDate">
@@ -496,7 +496,7 @@
 		<execute function="AssertElementPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_END_DATE" />
 		<execute function="Click" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 		<execute function="AssertTextNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_STATUS" value1="${kfProcessStatus}" />
 		<execute function="AssertElementNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />

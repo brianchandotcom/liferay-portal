@@ -21,7 +21,7 @@
 
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="a0a822b80b2b" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="tearDownConfiguration">

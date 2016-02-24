@@ -346,7 +346,7 @@
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">

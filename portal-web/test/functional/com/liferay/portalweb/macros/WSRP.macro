@@ -13,7 +13,7 @@
 		<execute function="Paste" locator1="TextInput#URL" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addConsumerPortletCP">
@@ -28,7 +28,7 @@
 		<execute function="Select" locator1="Select#REMOTE_PORTLET" value1="${consumerPortletType}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addProducerCP">
@@ -42,7 +42,7 @@
 		<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<var name="key_producerName" value="${producerName}" />
 

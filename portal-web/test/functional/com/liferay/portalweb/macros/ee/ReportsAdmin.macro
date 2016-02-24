@@ -8,7 +8,7 @@
 		<execute function="UploadCommonFile" locator1="ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addReportEntry">
@@ -30,7 +30,7 @@
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
 		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="Pause" locator1="5000" />
 	</command>
 
@@ -81,7 +81,7 @@
 		<execute function="Type" locator1="ReportsAdminEditScheduleEntry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
 		<execute function="AssertClick" locator1="ReportsAdminEditScheduleEntry#SCHEDULE_BUTTON" value1="Schedule" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="Pause" locator1="5000" />
 	</command>
 
@@ -102,7 +102,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="configureDeliveryEmail">
@@ -136,7 +136,7 @@
 		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertElementNotPresent" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" />
 	</command>
 
@@ -151,7 +151,7 @@
 		<execute function="Type" locator1="ReportsAdminDeliverReport#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
 		<execute function="AssertClick" locator1="ReportsAdminDeliverReport#DELIVER_BUTTON" value1="Deliver" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="downloadReportEntryFile">
@@ -260,7 +260,7 @@ Sincerely,<br />
 				<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</while>
 
@@ -280,7 +280,7 @@ Sincerely,<br />
 				<execute function="Click" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="ReportsAdmin#REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</while>
 
@@ -302,7 +302,7 @@ Sincerely,<br />
 				<execute function="Click" locator1="ReportsAdmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="ReportsAdmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</while>
 

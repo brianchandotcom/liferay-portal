@@ -1911,7 +1911,7 @@
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />
-			<var name="fieldValue" value="VisibleField.equals(&quot;test&quot;)" />
+			<var name="fieldValue" value="equals(VisibleField, &quot;test&quot;)" />
 		</execute>
 
 		<execute macro="FormFields#save" />

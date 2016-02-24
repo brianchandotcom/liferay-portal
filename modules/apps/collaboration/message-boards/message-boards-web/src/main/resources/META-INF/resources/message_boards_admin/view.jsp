@@ -75,7 +75,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
-searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
+
+EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
+
+searchContainer.setRowChecker(entriesChecker);
+
+if (categoryId == 0) {
+	entriesChecker.setKeepSelectionURLRegex("mvcRenderCommandName=/message_boards/view(&.|$)");
+}
+else {
+	entriesChecker.setKeepSelectionURLRegex("mbCategoryId=" + categoryId );
+}
 
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 

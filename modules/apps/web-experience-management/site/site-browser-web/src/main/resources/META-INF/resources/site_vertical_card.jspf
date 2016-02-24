@@ -28,7 +28,7 @@ List<Group> childGroups = group.getChildren(true);
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				showCheckbox="<%= false %>"
-				title="<%= group.getName(locale) %>"
+				title="<%= group.getDescriptiveName(locale) %>"
 			>
 				<liferay-frontend:vertical-card-footer>
 					<label class="<%= childGroups.size() != 0 ? "text-default" : "disabled" %>">
@@ -45,7 +45,7 @@ List<Group> childGroups = group.getChildren(true);
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				showCheckbox="<%= false %>"
-				title="<%= group.getName(locale) %>"
+				title="<%= group.getDescriptiveName(locale) %>"
 			>
 				<liferay-frontend:vertical-card-footer>
 					<label class="<%= childGroups.size() != 0 ? "text-default" : "disabled" %>">

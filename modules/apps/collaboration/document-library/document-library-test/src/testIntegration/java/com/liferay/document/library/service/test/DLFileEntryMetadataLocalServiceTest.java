@@ -23,7 +23,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.ByteArrayInputStream;
 
@@ -76,6 +78,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormXSDDeserializer();
+
 		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
@@ -86,7 +90,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			getClass(), "dependencies/ddmstructure.xml");
 
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			DDMFormXSDDeserializerUtil.deserialize(new String(testFileBytes));
+			_ddmFormXSDDeserializer.deserialize(new String(testFileBytes));
 
 		serviceContext.setAttribute(
 			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
@@ -217,6 +221,14 @@ public class DLFileEntryMetadataLocalServiceTest {
 		return ddmFormValuesMap;
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;
 	private DLFileEntryType _dlFileEntryType;

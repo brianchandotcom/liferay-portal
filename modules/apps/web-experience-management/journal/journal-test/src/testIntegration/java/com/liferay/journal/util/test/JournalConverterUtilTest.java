@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -108,6 +108,8 @@ public class JournalConverterUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormXSDDeserializer();
+
 		_group = GroupTestUtil.addGroup();
 
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
@@ -117,7 +119,7 @@ public class JournalConverterUtilTest {
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
 			classNameId, null, "Test Structure", ddmForm,
@@ -312,7 +314,7 @@ public class JournalConverterUtilTest {
 	public void testGetDDMXSD() throws Exception {
 		String expectedXSD = read("test-ddm-structure-all-fields.xml");
 
-		DDMForm expectedDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+		DDMForm expectedDDMForm = _ddmFormXSDDeserializer.deserialize(
 			expectedXSD);
 
 		String actualXSD = _journalConverter.getDDMXSD(
@@ -320,8 +322,7 @@ public class JournalConverterUtilTest {
 
 		validateDDMXSD(actualXSD);
 
-		DDMForm actualDDMForm = DDMFormXSDDeserializerUtil.deserialize(
-			actualXSD);
+		DDMForm actualDDMForm = _ddmFormXSDDeserializer.deserialize(actualXSD);
 
 		assertEquals(expectedDDMForm, actualDDMForm);
 	}
@@ -932,6 +933,13 @@ public class JournalConverterUtilTest {
 			});
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
 	protected void udpateFieldsMap(
 		Element dynamicElementElement,
 		Map<String, Map<Locale, List<String>>> fieldsMap) {
@@ -993,6 +1001,7 @@ public class JournalConverterUtilTest {
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 	private DDMXML _ddmXML;

@@ -27,7 +27,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -119,6 +119,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpDDMFormXSDDeserializer();
 		setUpPermissionThreadLocal();
 		setUpPrincipalThreadLocal();
 
@@ -384,7 +385,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				"/ddmstructure.xml");
 
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			DDMFormXSDDeserializerUtil.deserialize(new String(bytes));
+			_ddmFormXSDDeserializer.deserialize(new String(bytes));
 
 		serviceContext.setAttribute(
 			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
@@ -474,6 +475,13 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		return _serviceTracker.getService();
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
 	protected void setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -511,6 +519,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
+
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
 	@DeleteAfterTestRun
 	private Group _group;

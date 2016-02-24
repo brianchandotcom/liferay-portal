@@ -120,7 +120,7 @@ public class DDMExpressionEvaluationTest {
 	}
 
 	@Test
-	public void testEvaluateDoubleExpression() throws Exception {
+	public void testEvaluateDoubleExpression1() throws Exception {
 		DDMExpression<Double> ddmExpression =
 			_ddmExpressionFactory.createDoubleDDMExpression(
 				"var1 + var2 + var3");
@@ -138,6 +138,16 @@ public class DDMExpressionEvaluationTest {
 
 		Assert.assertEquals(
 			(Double)(var1 + var2 + var3), ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateDoubleExpression2() throws Exception {
+		DDMExpression<Double> ddmExpression =
+			_ddmExpressionFactory.createDoubleDDMExpression("2.3 * 2");
+
+		double actualDoubleValue = ddmExpression.evaluate();
+
+		Assert.assertEquals(4.6, actualDoubleValue, 0.1);
 	}
 
 	@Test
@@ -235,7 +245,7 @@ public class DDMExpressionEvaluationTest {
 	}
 
 	@Test
-	public void testEvaluateIntegerExpression() throws Exception {
+	public void testEvaluateIntegerExpression1() throws Exception {
 		DDMExpression<Integer> ddmExpression =
 			_ddmExpressionFactory.createIntegerDDMExpression(
 				"var1 + var2 + var3");
@@ -252,6 +262,16 @@ public class DDMExpressionEvaluationTest {
 		int var3 = var1 + var2;
 
 		Assert.assertEquals(var1 + var2 + var3, (int)ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateIntegerExpression2() throws Exception {
+		DDMExpression<Integer> ddmExpression =
+			_ddmExpressionFactory.createIntegerDDMExpression("11 + 111");
+
+		int sumActualValue = ddmExpression.evaluate();
+
+		Assert.assertEquals(122, sumActualValue);
 	}
 
 	@Test(expected = DDMExpressionException.class)

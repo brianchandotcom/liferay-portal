@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>USER_SIGN_IN</td>
-	<td>//li[contains(@class,'sign-in')]/a</td>
+	<td>//span[contains(@class,'sign-in')]/a</td>
 	<td></td>
 </tr>
 </tbody>

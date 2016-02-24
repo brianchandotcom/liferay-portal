@@ -49,11 +49,11 @@
 
 		<c:choose>
 			<c:when test='<%= Validator.equals(displayStyle, "button") %>'>
-				<li class="user-avatar-link">
-					<a data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
+				<span class="user-avatar-link">
+					<a class="text-default" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
 						<%= userName %>
 					</a>
-				</li>
+				</span>
 
 				<aui:script sandbox="<%= true %>">
 					var sidenavUserToggle = $('#<portlet:namespace />sidenavUserToggle');
@@ -117,11 +117,13 @@
 	<c:otherwise>
 
 		<%
-		Map<String, String> anchorData = new HashMap<String, String>();
+		Map<String, Object> anchorData = new HashMap<String, Object>();
 
 		anchorData.put("redirect", String.valueOf(PortalUtil.isLoginRedirectRequired(request)));
 		%>
 
-		<aui:nav-item anchorData="<%= anchorData %>" cssClass="sign-in" href="<%= themeDisplay.getURLSignIn() %>" iconCssClass="icon-user" label="sign-in" />
+		<span class="sign-in text-default" role="presentation">
+			<aui:a cssClass="sign-in text-default" data="<%= anchorData %>" href="<%= themeDisplay.getURLSignIn() %>" iconCssClass="icon-user" label="sign-in" />
+		</span>
 	</c:otherwise>
 </c:choose>

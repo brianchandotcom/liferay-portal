@@ -255,7 +255,8 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			return false;
 		}
 
-		return true;
+		return ParamUtil.getBoolean(
+			liferayPortletRequest, "showLayoutTabs", true);
 	}
 
 	public boolean isShowPrivateLayoutsTree() throws PortalException {

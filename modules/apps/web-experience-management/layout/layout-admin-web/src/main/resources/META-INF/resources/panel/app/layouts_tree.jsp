@@ -234,6 +234,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 <liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
+	<portlet:param name="showLayoutTabs" value="<%= String.valueOf(Boolean.FALSE)%>" />
 </liferay-portlet:renderURL>
 
 <aui:script use="liferay-url-preview">

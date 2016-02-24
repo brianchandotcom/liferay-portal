@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -138,6 +139,9 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	public void deleteRecordSet(long recordSetId) throws PortalException;
 
 	public void deleteRecordSets(long groupId) throws PortalException;
+
+	public DDMFormValues deserialize(DDMForm ddmForm,
+		java.lang.String serializedDDMFormValues) throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 

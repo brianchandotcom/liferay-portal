@@ -606,6 +606,13 @@ public class DDMStructureLocalServiceImpl
 		deleteStructures(structures);
 	}
 
+	@Override
+	public DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
+
+		return ddmFormJSONDeserializer.deserialize(serializedDDMForm);
+	}
+
 	/**
 	 * Returns the structure with the ID.
 	 *

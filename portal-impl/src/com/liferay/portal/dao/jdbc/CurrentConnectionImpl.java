@@ -41,9 +41,10 @@ public class CurrentConnectionImpl implements CurrentConnection {
 
 			return null;
 		}
-		else {
-			return connectionHolder.getConnection();
-		}
+
+		connectionHolder.requested();
+
+		return connectionHolder.getConnection();
 	}
 
 }

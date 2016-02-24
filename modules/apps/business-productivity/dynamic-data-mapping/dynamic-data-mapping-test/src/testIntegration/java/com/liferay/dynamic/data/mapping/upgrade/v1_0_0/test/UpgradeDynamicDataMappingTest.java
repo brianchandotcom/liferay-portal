@@ -19,6 +19,12 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
@@ -1374,6 +1380,24 @@ public class UpgradeDynamicDataMappingTest {
 		DLFileVersionLocalService dlFileVersionLocalService =
 			registry.getService(DLFileVersionLocalService.class);
 
+		DDMFormJSONDeserializer ddmFormJSONDeserializer = registry.getService(
+			DDMFormJSONDeserializer.class);
+
+		DDMFormJSONSerializer ddmFormJSONSerializer = registry.getService(
+			DDMFormJSONSerializer.class);
+
+		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
+			registry.getService(DDMFormLayoutJSONSerializer.class);
+
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer =
+			registry.getService(DDMFormValuesJSONDeserializer.class);
+
+		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer =
+			registry.getService(DDMFormValuesJSONSerializer.class);
+
+		DDMFormXSDDeserializer ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+
 		DLFolderLocalService dlFolderLocalService = registry.getService(
 			DLFolderLocalService.class);
 
@@ -1393,7 +1417,10 @@ public class UpgradeDynamicDataMappingTest {
 			registry.getService(ResourcePermissionLocalService.class);
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			assetEntryLocalService, dlFileEntryLocalService,
+			assetEntryLocalService, ddmFormJSONDeserializer,
+			ddmFormJSONSerializer, ddmFormLayoutJSONSerializer,
+			ddmFormValuesJSONDeserializer, ddmFormValuesJSONSerializer,
+			ddmFormXSDDeserializer, dlFileEntryLocalService,
 			dlFileVersionLocalService, dlFolderLocalService,
 			expandoRowLocalService, expandoTableLocalService,
 			expandoValueLocalService, resourceActionLocalService,

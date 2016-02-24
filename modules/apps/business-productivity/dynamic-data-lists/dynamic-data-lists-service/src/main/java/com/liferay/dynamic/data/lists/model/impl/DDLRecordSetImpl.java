@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.model.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -78,7 +78,7 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 				DDMForm ddmForm = DDMFormFactory.create(
 					DDLRecordSetSettings.class);
 
-				_ddmFormValues = DDMFormValuesJSONDeserializerUtil.deserialize(
+				_ddmFormValues = DDLRecordSetLocalServiceUtil.deserialize(
 					ddmForm, getSettings());
 			}
 			catch (Exception e) {

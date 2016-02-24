@@ -211,6 +211,8 @@ if (portletTitleBasedNavigation) {
 				contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceOverriddenConfiguration);
 				%>
 
+				<div class="lfr-alert-container"></div>
+
 				<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
 					<c:choose>
 						<c:when test="<%= !portletTitleBasedNavigation %>">

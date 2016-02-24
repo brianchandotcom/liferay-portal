@@ -39,6 +39,10 @@ import javax.portlet.PortletRequest;
  */
 public interface DDM {
 
+	public DDMFormValues deserialize(
+			DDMForm ddmForm, String serializedDDMFormValues)
+		throws PortalException;
+
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException;
 
@@ -94,5 +98,7 @@ public interface DDM {
 		String orderByCol, String orderByType);
 
 	public Fields mergeFields(Fields newFields, Fields existingFields);
+
+	public String serialize(DDMFormValues ddmFormValues);
 
 }

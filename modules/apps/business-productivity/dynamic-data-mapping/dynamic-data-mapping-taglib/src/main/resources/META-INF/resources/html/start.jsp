@@ -53,7 +53,7 @@
 					repeatable: <%= repeatable %>
 
 					<c:if test="<%= ddmFormValues != null %>">
-						, values: <%= DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues) %>
+						, values: <%= DDMUtil.serialize(ddmFormValues) %>
 					</c:if>
 				}
 			);

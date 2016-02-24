@@ -124,6 +124,9 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	public void deleteStructureLayout(long structureLayoutId)
 		throws PortalException;
 
+	public DDMFormLayout deserialize(java.lang.String serializedDDMFormLayout)
+		throws PortalException;
+
 	public DynamicQuery dynamicQuery();
 
 	/**

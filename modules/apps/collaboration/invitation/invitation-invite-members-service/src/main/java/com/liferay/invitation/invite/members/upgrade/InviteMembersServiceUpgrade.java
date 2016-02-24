@@ -16,11 +16,9 @@ package com.liferay.invitation.invite.members.upgrade;
 
 import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradeNamespace;
 import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -33,11 +31,6 @@ public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.invitation.invite.members.service", "0.0.1", "1.0.0",
 			new UpgradeNamespace(), new UpgradePortletId());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

@@ -218,10 +218,29 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return selGroup.getDisplayURL(themeDisplay, false);
 	}
 
+	public boolean isShowAddBothRootLayoutButtons() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.hasPublicLayouts() && selGroup.hasPrivateLayouts()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowAddLayoutButton() throws PortalException {
 		return LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), getSelLayout(),
 			ActionKeys.ADD_LAYOUT);
+	}
+
+	@Override
+	public boolean isShowAddRootLayoutButton() throws PortalException {
+		if (isShowAddBothRootLayoutButtons()) {
+			return false;
+		}
+
+		return super.isShowAddRootLayoutButton();
 	}
 
 	public boolean isShowEditLayoutSetButton() throws PortalException {
@@ -276,7 +295,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	public boolean isShowPrivateLayoutsTree() throws PortalException {
 		Group selGroup = getSelGroup();
 
-		if (!selGroup.hasPrivateLayouts() && !isShowAddRootLayoutButton()) {
+		if (!selGroup.hasPrivateLayouts()) {
 			return false;
 		}
 
@@ -290,7 +309,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			return false;
 		}
 
-		if (!selGroup.hasPublicLayouts() && !isShowAddRootLayoutButton()) {
+		if (!selGroup.hasPublicLayouts()) {
 			return false;
 		}
 

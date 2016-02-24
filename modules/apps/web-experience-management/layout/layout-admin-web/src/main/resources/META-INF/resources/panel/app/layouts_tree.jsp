@@ -55,6 +55,35 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								/>
 							</c:if>
 
+							<c:if test="<%= layoutsTreeDisplayContext.isShowAddBothRootLayoutButtons() %>">
+
+								<%
+								PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+								data.put("qa-id", "addPublicPage");
+								%>
+
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= false %>"
+									message="add-public-page"
+									url="<%= addLayoutURL.toString() %>"
+								/>
+
+								<%
+								addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+								data.put("qa-id", "addPrivatePage");
+								%>
+
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= false %>"
+									message="add-private-page"
+									url="<%= addLayoutURL.toString() %>"
+								/>
+							</c:if>
+
 							<c:if test="<%= layoutsTreeDisplayContext.isShowEditLayoutSetButton() %>">
 
 								<%
@@ -107,6 +136,35 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									data="<%= data %>"
 									label="<%= false %>"
 									message="add-page"
+									url="<%= addLayoutURL.toString() %>"
+								/>
+							</c:if>
+
+							<c:if test="<%= layoutsTreeDisplayContext.isShowAddBothRootLayoutButtons() %>">
+
+								<%
+								PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+								data.put("qa-id", "addPrivatePage");
+								%>
+
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= false %>"
+									message="add-private-page"
+									url="<%= addLayoutURL.toString() %>"
+								/>
+
+								<%
+								addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+								data.put("qa-id", "addPublicPage");
+								%>
+
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= false %>"
+									message="add-public-page"
 									url="<%= addLayoutURL.toString() %>"
 								/>
 							</c:if>

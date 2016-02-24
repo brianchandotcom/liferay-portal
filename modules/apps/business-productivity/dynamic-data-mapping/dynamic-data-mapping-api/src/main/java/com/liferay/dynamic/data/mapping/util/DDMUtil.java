@@ -43,6 +43,13 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class DDMUtil {
 
+	public static DDMFormValues deserialize(
+			DDMForm ddmForm, String serializedDDMFormValues)
+		throws PortalException {
+
+		return getDDM().deserialize(ddmForm, serializedDDMFormValues);
+	}
+
 	public static DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 
@@ -148,6 +155,10 @@ public class DDMUtil {
 
 	public static Fields mergeFields(Fields newFields, Fields existingFields) {
 		return getDDM().mergeFields(newFields, existingFields);
+	}
+
+	public static String serialize(DDMFormValues ddmFormValues) {
+		return getDDM().serialize(ddmFormValues);
 	}
 
 	protected static DDM getDDM() {

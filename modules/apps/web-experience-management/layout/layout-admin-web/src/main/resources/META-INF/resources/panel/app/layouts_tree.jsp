@@ -21,16 +21,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 %>
 
 <div id="<portlet:namespace/>layoutsTreeContainer">
-	<liferay-ui:icon
-		cssClass="expand-pages-link icon-monospaced"
-		icon="expand"
-		id="expandPagesLink"
-		label="<%= false %>"
-		markupView="lexicon"
-		message="expand"
-		url="javascript:;"
-	/>
-
 	<c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
 
 		<%
@@ -80,6 +70,15 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									url="<%= editLayoutURL.toString() %>"
 								/>
 							</c:if>
+
+							<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
+								<liferay-ui:icon
+									id="expandPagesLink"
+									label="<%= false %>"
+									message="expand"
+									url="javascript:;"
+								/>
+							</c:if>
 						</liferay-ui:icon-menu>
 					</c:if>
 				</span>
@@ -125,6 +124,15 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									label="<%= false %>"
 									message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getRootNodeName(true)) %>'
 									url="<%= editLayoutURL.toString() %>"
+								/>
+							</c:if>
+
+							<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
+								<liferay-ui:icon
+									id="expandPagesLink"
+									label="<%= false %>"
+									message="expand"
+									url="javascript:;"
 								/>
 							</c:if>
 						</liferay-ui:icon-menu>
@@ -234,7 +242,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 <liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
-	<portlet:param name="showLayoutTabs" value="<%= String.valueOf(Boolean.FALSE)%>" />
+	<portlet:param name="showLayoutTabs" value="<%= String.valueOf(Boolean.FALSE) %>" />
 </liferay-portlet:renderURL>
 
 <aui:script use="liferay-url-preview">

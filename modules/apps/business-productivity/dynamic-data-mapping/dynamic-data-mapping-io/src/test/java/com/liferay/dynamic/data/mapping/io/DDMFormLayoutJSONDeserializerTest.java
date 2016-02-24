@@ -20,17 +20,30 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
 public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormLayoutJSONDeserializer();
+	}
 
 	@Test
 	public void testDDMFormLayoutDeserialization() throws Exception {
@@ -99,6 +112,16 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 				expectedDDMFormLayoutColumn,
 				actualDDMFormLayoutRow.getDDMFormLayoutColumn(i));
 		}
+	}
+
+	protected void setUpDDMFormLayoutJSONDeserializer() throws Exception {
+
+		// JSON factory
+
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormLayoutJSONDeserializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormLayoutJSONDeserializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer =

@@ -67,6 +67,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormValuesFactoryServiceTrackerMap();
+		setUpDDMFormValuesJSONSerializer();
 		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 	}
@@ -818,6 +819,14 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 			_ddmFormValuesFactory.getClass(), "_serviceTrackerMap");
 
 		field.set(_ddmFormValuesFactory, _serviceTrackerMap);
+	}
+
+	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
+		field(
+			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONSerializer, new JSONFactoryImpl()
+		);
 	}
 
 	protected void setUpJSONFactoryUtil() {

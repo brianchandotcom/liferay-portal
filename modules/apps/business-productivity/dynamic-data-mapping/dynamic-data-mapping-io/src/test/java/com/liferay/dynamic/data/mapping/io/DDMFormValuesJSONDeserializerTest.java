@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserialize
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +29,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -36,6 +38,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormValuesJSONDeserializer();
+	}
 
 	@Test
 	public void testDeserializationWithParentRepeatableField()
@@ -163,6 +173,14 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(),
 			documentLibraryValue.getString(LocaleUtil.BRAZIL), false);
+	}
+
+	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+		field(
+			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONDeserializer, new JSONFactoryImpl()
+		);
 	}
 
 	protected void testAvailableLocales(DDMFormValues ddmFormValues) {

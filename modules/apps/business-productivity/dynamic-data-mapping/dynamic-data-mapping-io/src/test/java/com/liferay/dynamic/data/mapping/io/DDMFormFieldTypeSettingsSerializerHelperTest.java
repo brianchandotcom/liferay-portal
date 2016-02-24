@@ -26,7 +26,11 @@ import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerI
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
+import java.lang.reflect.Field;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -37,6 +41,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class DDMFormFieldTypeSettingsSerializerHelperTest
 	extends BaseDDMFormSerializerTestCase {
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormLayoutJSONSerializer();
+	}
+
 	@Test
 	public void testGetSettingsLayout() throws Exception {
 		JSONFactory jsonFactory = new JSONFactoryImpl();
@@ -46,7 +58,7 @@ public class DDMFormFieldTypeSettingsSerializerHelperTest
 				new DDMFormFieldTypeSettingsSerializerHelper(
 					SampleDDMFormFieldTypeSettings.class,
 					new DDMFormJSONSerializerImpl(),
-					new DDMFormLayoutJSONSerializerImpl(), jsonFactory);
+					_ddmFormLayoutJSONSerializer, jsonFactory);
 
 		String expectedJSON = read(
 			"ddm-form-field-type-settings-layout-serializer-test-data.json");
@@ -68,7 +80,7 @@ public class DDMFormFieldTypeSettingsSerializerHelperTest
 				new DDMFormFieldTypeSettingsSerializerHelper(
 					SampleDDMFormFieldTypeSettingsWithDefaultColumnSize.class,
 					new DDMFormJSONSerializerImpl(),
-					new DDMFormLayoutJSONSerializerImpl(), jsonFactory);
+					_ddmFormLayoutJSONSerializer, jsonFactory);
 
 		String expectedJSON = read(
 			"ddm-form-field-type-settings-layout-serializer-test-data-" +
@@ -91,10 +103,23 @@ public class DDMFormFieldTypeSettingsSerializerHelperTest
 				new DDMFormFieldTypeSettingsSerializerHelper(
 					SampleDDMFormFieldTypeSettingsWithNoLayout.class,
 					new DDMFormJSONSerializerImpl(),
-					new DDMFormLayoutJSONSerializerImpl(), jsonFactory);
+					_ddmFormLayoutJSONSerializer, jsonFactory);
 
 		ddmFormFieldTypeSettingsSerializerHelper.getSettingsLayoutJSONObject();
 	}
+
+	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
+
+		// JSON factory
+
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
+	}
+
+	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer =
+		new DDMFormLayoutJSONSerializerImpl();
 
 	@DDMForm
 	@DDMFormLayout(

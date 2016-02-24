@@ -18,8 +18,13 @@ import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerI
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
+import java.lang.reflect.Field;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,6 +33,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormLayoutJSONSerializer();
+	}
 
 	@Test
 	public void testDDMFormLayoutSerialization() throws Exception {
@@ -76,6 +89,16 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 		title.addString(LocaleUtil.BRAZIL, ptTitle);
 
 		return ddmFormLayoutPage;
+	}
+
+	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
+
+		// JSON factory
+
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
 	}
 
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer =

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.cluster;
+package com.liferay.portal.configuration.cluster.internal;
 
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.cluster;
+package com.liferay.portal.configuration.cluster.internal;
 
 import com.liferay.portal.configuration.cluster.messaging.DestinationNames;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(immediate = true, service = SynchronousConfigurationListener.class)
 public class ConfigurationSynchronousConfigurationListener
 	implements SynchronousConfigurationListener {
 

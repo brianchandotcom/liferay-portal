@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.configuration.cluster;
+package com.liferay.portal.configuration.cluster.internal;
 
+import com.liferay.portal.configuration.cluster.ConfigurationThreadLocal;
 import com.liferay.portal.configuration.cluster.messaging.DestinationNames;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;

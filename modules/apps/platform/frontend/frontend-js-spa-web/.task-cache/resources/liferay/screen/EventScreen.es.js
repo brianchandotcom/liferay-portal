@@ -89,29 +89,39 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es", ['exports', 'm
 			});
 		};
 
-		EventScreen.prototype.flip = function flip(surfaces) {
+		EventScreen.prototype.evaluateStyles = function evaluateStyles(surfaces) {
 			var _this2 = this;
 
-			document.body.className = this.virtualDocument.querySelector('body').className;
+			return _HtmlScreen.prototype.evaluateStyles.call(this, surfaces).then(function () {
+				var alloyStyles = _this2.querySelectorAll_('[alloyuistyle]');
 
-			_dom2.default.addClasses(document.body, 'lfr-surface-loading');
+				alloyStyles.forEach(function (style) {
+					document.head.appendChild(style);
+				});
+			});
+		};
+
+		EventScreen.prototype.flip = function flip(surfaces) {
+			var _this3 = this;
+
+			document.body.className = this.virtualDocument.querySelector('body').className;
 
 			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
-					screen: _this2
+					screen: _this3
 				});
 			});
 		};
 
 		EventScreen.prototype.load = function load(path) {
-			var _this3 = this;
+			var _this4 = this;
 
 			return _HtmlScreen.prototype.load.call(this, path).then(function (content) {
 				Liferay.fire('screenLoad', {
 					app: Liferay.SPA.app,
 					content: content,
-					screen: _this3
+					screen: _this4
 				});
 
 				return content;

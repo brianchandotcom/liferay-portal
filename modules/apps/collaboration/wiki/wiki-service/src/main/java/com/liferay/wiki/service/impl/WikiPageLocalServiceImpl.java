@@ -2141,11 +2141,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.update(page);
 	}
 
-	@Deprecated
 	/**
 	 * @deprecated As of 7.0.0 replaced by {@link
 	 *             WikiPageTitleValidator#validate(String)}
 	 */
+	@Deprecated
 	@Override
 	public void validateTitle(String title) throws PortalException {
 		wikiPageTitleValidator.validate(title);

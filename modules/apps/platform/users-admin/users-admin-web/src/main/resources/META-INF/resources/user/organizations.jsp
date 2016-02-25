@@ -42,6 +42,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 <aui:input name="deleteOrganizationIds" type="hidden" />
 
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
 	curParam="organizationsCur"
 	emptyResultsMessage="no-organizations-were-found"
 	headerNames="name,type,roles,null"

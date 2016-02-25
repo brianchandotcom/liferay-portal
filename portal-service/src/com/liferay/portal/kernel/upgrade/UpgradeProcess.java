@@ -127,6 +127,12 @@ public abstract class UpgradeProcess
 			Class<?> tableClass, String columnName, String columnType)
 		throws Exception {
 
+		alterColumnType(tableClass, new String[] {columnName, columnType});
+	}
+
+	protected void alterColumnType(Class<?> tableClass, String[]... columnInfos)
+		throws Exception {
+
 		Field tableNameField = tableClass.getField("TABLE_NAME");
 
 		String tableName = (String)tableNameField.get(null);
@@ -155,34 +161,40 @@ public abstract class UpgradeProcess
 				columnNames.add(rs.getString("COLUMN_NAME"));
 			}
 
-			for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
-				Set<String> columnNames = entry.getValue();
+			for (String[] columnInfo : columnInfos) {
+				String columnName = columnInfo[0];
 
-				if (columnNames.contains(columnName)) {
-					runSQL("drop index " + entry.getKey() + " on " + tableName);
+				for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
+					Set<String> columnNames = entry.getValue();
+
+					if (columnNames.contains(columnName)) {
+						runSQL(
+							"drop index " + entry.getKey() + " on " +
+								tableName);
+					}
 				}
-			}
 
-			StringBundler sb = new StringBundler(6);
+				StringBundler sb = new StringBundler(6);
 
-			sb.append("alter_column_type ");
-			sb.append(tableName);
-			sb.append(" ");
-			sb.append(columnName);
-			sb.append(" ");
-			sb.append(columnType);
+				sb.append("alter_column_type ");
+				sb.append(tableName);
+				sb.append(" ");
+				sb.append(columnName);
+				sb.append(" ");
+				sb.append(columnInfo[1]);
 
-			runSQL(sb.toString());
+				runSQL(sb.toString());
 
-			for (ObjectValuePair<String, IndexMetadata> objectValuePair :
-					getIndexesSQL(tableClass.getClassLoader(), tableName)) {
+				for (ObjectValuePair<String, IndexMetadata> objectValuePair :
+						getIndexesSQL(tableClass.getClassLoader(), tableName)) {
 
-				IndexMetadata indexMetadata = objectValuePair.getValue();
+					IndexMetadata indexMetadata = objectValuePair.getValue();
 
-				if (ArrayUtil.contains(
-						indexMetadata.getColumnNames(), columnName)) {
+					if (ArrayUtil.contains(
+							indexMetadata.getColumnNames(), columnName)) {
 
-					runSQL(objectValuePair.getKey());
+						runSQL(objectValuePair.getKey());
+					}
 				}
 			}
 		}

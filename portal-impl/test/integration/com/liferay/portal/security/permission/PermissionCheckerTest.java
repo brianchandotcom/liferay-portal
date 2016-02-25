@@ -274,6 +274,63 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testHasPermissionWithDifferentCompanyAdmin() throws Exception {
+		long resourceId = 12345;
+
+		ResourceLocalServiceUtil.addResources(
+			_group.getCompanyId(), _group.getGroupId(), 0, _MODEL_RESOURCE_NAME,
+			resourceId, false, false, false);
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			_company = CompanyTestUtil.addCompany();
+
+			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+
+			_user = UserTestUtil.addCompanyAdminUser(_company);
+
+			PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+			boolean isCompanyAdmin = permissionChecker.isCompanyAdmin(
+				_company.getCompanyId());
+
+			Assert.assertTrue(isCompanyAdmin);
+
+			permissionChecker.hasPermission(
+				0, _MODEL_RESOURCE_NAME, resourceId, ActionKeys.VIEW);
+
+			Assert.fail();
+		}
+		catch (Throwable t) {
+			boolean found = false;
+
+			Throwable cause = t;
+
+			while (!found && (cause != null)) {
+				if (cause instanceof NoSuchResourcePermissionException) {
+					found = true;
+				}
+
+				cause = cause.getCause();
+			}
+
+			if (!found) {
+				Assert.fail(t.getMessage());
+
+				throw t;
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+
+			ResourceLocalServiceUtil.deleteResource(
+				_group.getCompanyId(), _MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+		}
+	}
+
+	@Test
 	public void testHasPermissionWithGroupScopeResourcePermission()
 		throws Exception {
 

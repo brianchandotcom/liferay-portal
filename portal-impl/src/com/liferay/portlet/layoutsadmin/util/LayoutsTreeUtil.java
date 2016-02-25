@@ -416,6 +416,11 @@ public class LayoutsTreeUtil {
 			Layout layout = layoutTreeNode.getLayout();
 
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
+			jsonObject.put(
+				"deleteable",
+				LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.DELETE));
 			jsonObject.put("friendlyURL", layout.getFriendlyURL());
 
 			if (layout instanceof VirtualLayout) {

@@ -5,7 +5,7 @@ dependencies {
 	provided project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-definition-api")
 	provided project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-service")
 	provided project(":apps:platform:osgi-service-tracker-collections")
-	provided project(":apps:platform:portal-rules-engine:portal-rules-engine-api")
+	provided project(":apps:business-productivity:portal-rules-engine:portal-rules-engine-api")
 }
 
 liferay {

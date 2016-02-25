@@ -20,7 +20,7 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div class="<portlet:namespace/>layoutsTreeContainer">
+<div id="<portlet:namespace/>layoutsTreeContainer">
 	<liferay-ui:icon
 		cssClass="expand-pages-link icon-monospaced"
 		icon="expand"

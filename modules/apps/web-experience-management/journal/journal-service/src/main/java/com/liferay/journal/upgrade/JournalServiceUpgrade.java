@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;

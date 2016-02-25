@@ -1072,7 +1072,6 @@ public class UserThreadLocalServiceClp implements UserThreadLocalService {
 		return (java.util.List<com.liferay.privatemessaging.model.UserThread>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {

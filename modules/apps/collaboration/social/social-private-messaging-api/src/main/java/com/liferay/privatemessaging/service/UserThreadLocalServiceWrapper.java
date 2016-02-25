@@ -344,14 +344,6 @@ public class UserThreadLocalServiceWrapper implements UserThreadLocalService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _userThreadLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
 	public void markUserThreadAsRead(long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_userThreadLocalService.markUserThreadAsRead(userId, mbThreadId);

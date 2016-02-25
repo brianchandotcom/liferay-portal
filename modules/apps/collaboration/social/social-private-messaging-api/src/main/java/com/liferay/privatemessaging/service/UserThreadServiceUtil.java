@@ -16,9 +16,9 @@ package com.liferay.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for UserThread. This utility wraps
@@ -73,34 +73,10 @@ public class UserThreadServiceUtil {
 		return getService().getUserUserThreads(deleted);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static UserThreadService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					UserThreadService.class.getName());
-
-			if (invokableService instanceof UserThreadService) {
-				_service = (UserThreadService)invokableService;
-			}
-			else {
-				_service = new UserThreadServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(UserThreadServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static UserThreadService _service;
+	private static ServiceTracker<UserThreadService, UserThreadService> _serviceTracker =
+		ServiceTrackerFactory.open(UserThreadService.class);
 }

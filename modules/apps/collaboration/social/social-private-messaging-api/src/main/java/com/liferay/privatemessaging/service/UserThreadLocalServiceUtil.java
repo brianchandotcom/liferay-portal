@@ -16,9 +16,9 @@ package com.liferay.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for UserThread. This utility wraps
@@ -319,12 +319,6 @@ public class UserThreadLocalServiceUtil {
 		return getService().getUserUserThreads(userId, read, deleted);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static void markUserThreadAsRead(long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().markUserThreadAsRead(userId, mbThreadId);
@@ -350,28 +344,10 @@ public class UserThreadLocalServiceUtil {
 		return getService().updateUserThread(userThread);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static UserThreadLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					UserThreadLocalService.class.getName());
-
-			if (invokableLocalService instanceof UserThreadLocalService) {
-				_service = (UserThreadLocalService)invokableLocalService;
-			}
-			else {
-				_service = new UserThreadLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(UserThreadLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static UserThreadLocalService _service;
+	private static ServiceTracker<UserThreadLocalService, UserThreadLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(UserThreadLocalService.class);
 }

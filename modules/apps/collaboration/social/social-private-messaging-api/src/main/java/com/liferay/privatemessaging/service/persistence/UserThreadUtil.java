@@ -16,13 +16,15 @@ package com.liferay.privatemessaging.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import com.liferay.privatemessaging.model.UserThread;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -996,16 +998,9 @@ public class UserThreadUtil {
 	}
 
 	public static UserThreadPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (UserThreadPersistence)PortletBeanLocatorUtil.locate(com.liferay.privatemessaging.service.ClpSerializer.getServletContextName(),
-					UserThreadPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(UserThreadUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	private static UserThreadPersistence _persistence;
+	private static ServiceTracker<UserThreadPersistence, UserThreadPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(UserThreadPersistence.class);
 }

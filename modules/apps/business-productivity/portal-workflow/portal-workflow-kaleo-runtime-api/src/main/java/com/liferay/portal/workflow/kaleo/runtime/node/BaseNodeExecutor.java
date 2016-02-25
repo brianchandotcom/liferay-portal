@@ -54,7 +54,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
-		_notificationUtilities.sendKaleoNotifications(
+		notificationUtilities.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -101,7 +101,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
-		_notificationUtilities.sendKaleoNotifications(
+		notificationUtilities.sendKaleoNotifications(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -128,7 +128,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 
-		_notificationUtilities.sendKaleoNotifications(
+		notificationUtilities.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 	}
@@ -153,7 +153,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 		throws PortalException;
 
 	@Reference
-	protected NotificationUtilities _notificationUtilities;
+	protected NotificationUtilities notificationUtilities;
 
 	@Reference
 	protected ExecutionContextUtilities executionContextUtilities;

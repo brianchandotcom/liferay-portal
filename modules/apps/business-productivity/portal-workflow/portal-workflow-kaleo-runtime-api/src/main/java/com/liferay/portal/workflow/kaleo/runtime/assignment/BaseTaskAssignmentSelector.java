@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseTaskAssignmentSelector
 	implements TaskAssignmentSelector {
 
+	@SuppressWarnings("unchecked")
 	protected Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
 		Map<String, ?> results) {
 

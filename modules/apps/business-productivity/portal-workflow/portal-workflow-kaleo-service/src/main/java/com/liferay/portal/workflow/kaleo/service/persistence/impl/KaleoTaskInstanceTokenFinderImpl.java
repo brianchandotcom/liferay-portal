@@ -141,13 +141,13 @@ public class KaleoTaskInstanceTokenFinderImpl
 	protected boolean appendSearchCriteria(
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		if (Validator.isNotNull(
+		if (ArrayUtil.isNotEmpty(
 				kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys())) {
 
 			return true;
 		}
 
-		if (Validator.isNotNull(kaleoTaskInstanceTokenQuery.getAssetTypes())) {
+		if (ArrayUtil.isNotEmpty(kaleoTaskInstanceTokenQuery.getAssetTypes())) {
 			return true;
 		}
 
@@ -196,9 +196,9 @@ public class KaleoTaskInstanceTokenFinderImpl
 		if (appendSearchCriteria(kaleoTaskInstanceTokenQuery)) {
 			sql = CustomSQLUtil.appendCriteria(sql, " AND (");
 
-			if (Validator.isNotNull(
+			if (ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) ||
-				Validator.isNotNull(
+				ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetTypes())) {
 
 				sql = CustomSQLUtil.appendCriteria(sql, " (");
@@ -213,9 +213,9 @@ public class KaleoTaskInstanceTokenFinderImpl
 					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys())));
 
-			if (Validator.isNotNull(
+			if (ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) ||
-				Validator.isNotNull(
+				ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetTypes())) {
 
 				sql = CustomSQLUtil.appendCriteria(sql, ") ");

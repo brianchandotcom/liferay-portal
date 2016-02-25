@@ -14,6 +14,8 @@
 
 package com.liferay.site.item.selector.web.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
@@ -26,6 +28,8 @@ import javax.portlet.PortletURL;
  * @author Julio Camarero
  */
 public interface SitesItemSelectorViewDisplayContext {
+
+	public String getGroupName(Group group) throws PortalException;
 
 	public GroupSearch getGroupSearch() throws Exception;
 

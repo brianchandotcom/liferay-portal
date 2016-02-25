@@ -94,12 +94,6 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 					Map<String, Object> linkData = new HashMap<String, Object>();
 
 					linkData.put("prevent-selection", true);
-
-					String groupTitle = group.getDescriptiveName(locale);
-
-					if (group.isStaged() && group.isStagingGroup()) {
-						groupTitle = groupTitle + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, "staging") + StringPool.CLOSE_PARENTHESIS;
-					}
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -113,7 +107,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 										resultRow="<%= row %>"
 										rowChecker="<%= searchContainer.getRowChecker() %>"
 										showCheckbox="<%= false %>"
-										title="<%= groupTitle %>"
+										title="<%= siteItemSelectorViewDisplayContext.getGroupName(group) %>"
 									>
 										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 											<liferay-frontend:vertical-card-footer>
@@ -132,7 +126,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 										resultRow="<%= row %>"
 										rowChecker="<%= searchContainer.getRowChecker() %>"
 										showCheckbox="<%= false %>"
-										title="<%= groupTitle %>"
+										title="<%= siteItemSelectorViewDisplayContext.getGroupName(group) %>"
 									>
 										<liferay-frontend:vertical-card-footer>
 											<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">

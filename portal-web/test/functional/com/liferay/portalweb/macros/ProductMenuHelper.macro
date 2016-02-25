@@ -95,10 +95,19 @@
 
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
+		<var name="key_portletLocalization" value="${portletLocalization}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PORTLET" value1="${portlet}" />
 
-		<execute function="AssertVisible" locator1="ProductMenu#PORTLET_SELECTED" />
+		<if>
+			<isset var="portletLocalization" />
+			<then>
+				<execute function="AssertVisible" locator1="ProductMenu#PORTLET_SELECTED_TRANSLATION" />
+			</then>
+			<else>
+				<execute function="AssertVisible" locator1="ProductMenu#PORTLET_SELECTED" />
+			</else>
+		</if>
 
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>

@@ -892,7 +892,8 @@
 			</then>
 		</if>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="ProductMenu#gotoLocalizedEditPage">
+			<var name="category" value="${category}" />
 			<var name="page" value="${page}" />
 		</execute>
 

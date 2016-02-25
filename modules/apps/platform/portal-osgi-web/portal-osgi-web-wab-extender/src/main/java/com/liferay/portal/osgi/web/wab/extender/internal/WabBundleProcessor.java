@@ -495,12 +495,14 @@ public class WabBundleProcessor implements ServletContextListener {
 			String[] classNames = getClassNames(
 				listenerDefinition.getEventListener());
 
-			ServiceRegistration<?> serviceRegistration =
-				_bundleContext.registerService(
-					classNames, listenerDefinition.getEventListener(),
-					properties);
+			if (classNames.length > 0) {
+				ServiceRegistration<?> serviceRegistration =
+					_bundleContext.registerService(
+						classNames, listenerDefinition.getEventListener(),
+						properties);
 
-			_listenerRegistrations.add(serviceRegistration);
+				_listenerRegistrations.add(serviceRegistration);
+			}
 
 			if (!ServletContextListener.class.isInstance(
 					listenerDefinition.getEventListener())) {
@@ -514,9 +516,10 @@ public class WabBundleProcessor implements ServletContextListener {
 						(ServletContextListener)
 							listenerDefinition.getEventListener());
 
-			serviceRegistration = _bundleContext.registerService(
-				ServletContextListener.class,
-				servletContextListenerExceptionAdaptor, properties);
+			ServiceRegistration<?> serviceRegistration =
+				_bundleContext.registerService(
+					ServletContextListener.class,
+					servletContextListenerExceptionAdaptor, properties);
 
 			Exception exception =
 				servletContextListenerExceptionAdaptor.getException();

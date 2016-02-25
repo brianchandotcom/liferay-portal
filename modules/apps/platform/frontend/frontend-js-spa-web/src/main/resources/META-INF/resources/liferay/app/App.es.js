@@ -2,8 +2,6 @@
 
 import App from 'senna/src/app/App';
 import dom from 'metal-dom/src/dom';
-import globals from 'senna/src/globals/globals';
-import Uri from 'metal-uri/src/Uri';
 import Utils from '../util/Utils.es';
 
 class LiferayApp extends App {

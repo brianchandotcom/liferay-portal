@@ -115,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
 
-			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
+			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu"  id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
 
 			<h4><liferay-ui:message key="type" /></h4>
 
@@ -157,7 +157,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 								<%= HtmlUtil.escape(layoutPrototype.getDescription(locale)) %>
 							</p>
 
-							<aui:input id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="automatically-apply-changes-done-to-the-page-template" name='<%= "layoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' type="toggle-switch" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />
+							<aui:input helpMessage='if-enabled-this-page-will-inherit-changes-made-to-the-page-template' id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="inherit-changes" name='<%= "layoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' type="toggle-switch" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />
 						</div>
 					</div>
 

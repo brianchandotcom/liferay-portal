@@ -44,7 +44,7 @@ if (selLayout != null) {
 	<h4><liferay-ui:message key="sitemap" /></h4>
 
 	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message arguments='<%= LanguageUtil.get(request, "automatically-apply-changes-done-to-the-page-template") %>' key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= new String[] {LanguageUtil.get(request, "inherit-changes"), "General"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= false %>" />
 	</div>
 
 	<liferay-ui:error exception="<%= SitemapChangeFrequencyException.class %>" message="please-select-a-valid-change-frequency" />

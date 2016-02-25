@@ -78,7 +78,6 @@ import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -99,6 +98,7 @@ import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
+import com.liferay.wiki.util.WikiPageTitleValidator;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
@@ -118,8 +118,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -1718,7 +1716,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException {
 
-		validateTitle(newTitle);
+		wikiPageTitleValidator.validate(newTitle);
 
 		if (StringUtil.equalsIgnoreCase(title, newTitle)) {
 			throw new DuplicatePageException(newTitle);
@@ -2143,26 +2141,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.update(page);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 replaced by {@link
+	 *             WikiPageTitleValidator#validate(String)}
+	 */
+	@Deprecated
 	@Override
 	public void validateTitle(String title) throws PortalException {
-		if (title.equals("all_pages") || title.equals("orphan_pages") ||
-			title.equals("recent_changes")) {
-
-			throw new PageTitleException(title + " is reserved");
-		}
-
-		if (Validator.isNotNull(
-				wikiGroupServiceConfiguration.pageTitlesRegexp())) {
-
-			Pattern pattern = Pattern.compile(
-				wikiGroupServiceConfiguration.pageTitlesRegexp());
-
-			Matcher matcher = pattern.matcher(title);
-
-			if (!matcher.matches()) {
-				throw new PageTitleException();
-			}
-		}
+		wikiPageTitleValidator.validate(title);
 	}
 
 	protected void clearPageCache(WikiPage page) {
@@ -3197,7 +3183,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new DuplicatePageException("{nodeId=" + nodeId + "}");
 		}
 
-		validateTitle(title);
+		wikiPageTitleValidator.validate(title);
 
 		validate(nodeId, content, format);
 	}
@@ -3205,7 +3191,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
 
-	@ServiceReference(type = WikiGroupServiceConfiguration.class)
-	protected WikiGroupServiceConfiguration wikiGroupServiceConfiguration;
+	@ServiceReference(type = WikiPageTitleValidator.class)
+	protected WikiPageTitleValidator wikiPageTitleValidator;
 
 }

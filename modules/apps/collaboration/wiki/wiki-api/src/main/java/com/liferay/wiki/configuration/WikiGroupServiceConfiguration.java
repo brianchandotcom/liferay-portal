@@ -128,23 +128,6 @@ public interface WikiGroupServiceConfiguration {
 	public boolean pageMinorEditSendEmail();
 
 	/**
-	 * Specify the requirements for the names of wiki pages. By default only a
-	 * few characters are forbidden. Uncomment the regular expression below to
-	 * allow only CamelCase titles.
-	 */
-	@Meta.AD(deflt = "[^\\\\\\[\\]\\|:;%<>]+", required = false)
-	public String pageTitlesRegexp();
-
-	/**
-	 * Specify the characters that will be automatically removed from the titles
-	 * when importing wiki pages. This regexp should remove any characters that
-	 * are forbidden in the regexp specified in the property
-	 * "wiki.page.titles.regexp".
-	 */
-	@Meta.AD(deflt = "[\\\\\\[\\]\\|:;%<>]+", required = false)
-	public String pageTitlesRemoveRegexp();
-
-	/**
 	 * Specify the supported protocols for the Creole parser.
 	 */
 	@Meta.AD(deflt = "ftp://|http://|https://|mailto:|mms://", required = false)

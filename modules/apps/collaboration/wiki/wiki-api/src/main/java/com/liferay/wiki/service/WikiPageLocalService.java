@@ -669,5 +669,10 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiPage updateWikiPage(WikiPage wikiPage);
 
+	/**
+	* @deprecated As of 7.0.0 replaced by {@link
+	WikiPageTitleValidator#validate(String)}
+	*/
+	@java.lang.Deprecated
 	public void validateTitle(java.lang.String title) throws PortalException;
 }

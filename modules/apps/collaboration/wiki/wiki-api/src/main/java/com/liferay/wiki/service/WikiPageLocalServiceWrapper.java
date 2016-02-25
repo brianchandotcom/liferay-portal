@@ -1049,6 +1049,11 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		return _wikiPageLocalService.updateWikiPage(wikiPage);
 	}
 
+	/**
+	* @deprecated As of 7.0.0 replaced by {@link
+	WikiPageTitleValidator#validate(String)}
+	*/
+	@Deprecated
 	@Override
 	public void validateTitle(java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {

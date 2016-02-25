@@ -55,6 +55,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
+import com.liferay.wiki.util.WikiPageTitleValidator;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.io.IOException;
@@ -71,7 +72,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -146,12 +146,6 @@ public class MediaWikiImporter implements WikiImporter {
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		_wikiPageTitlesRemovePattern = Pattern.compile(
-			_wikiGroupServiceConfiguration.pageTitlesRemoveRegexp());
 	}
 
 	protected String getCreoleRedirectContent(String redirectTitle) {
@@ -286,7 +280,7 @@ public class MediaWikiImporter implements WikiImporter {
 			options, WikiImporterKeys.OPTIONS_FRONT_PAGE);
 
 		if (Validator.isNotNull(frontPageTitle)) {
-			frontPageTitle = normalizeTitle(frontPageTitle);
+			frontPageTitle = _wikiPageTitleValidator.normalize(frontPageTitle);
 
 			try {
 				if (_wikiPageLocalService.getPagesCount(
@@ -330,14 +324,6 @@ public class MediaWikiImporter implements WikiImporter {
 		description = matcher.replaceAll(StringPool.BLANK);
 
 		return normalize(description, 255);
-	}
-
-	protected String normalizeTitle(String title) {
-		Matcher matcher = _wikiPageTitlesRemovePattern.matcher(title);
-
-		title = matcher.replaceAll(StringPool.BLANK);
-
-		return StringUtil.shorten(title, 255);
 	}
 
 	protected void processImages(
@@ -487,7 +473,7 @@ public class MediaWikiImporter implements WikiImporter {
 				continue;
 			}
 
-			title = normalizeTitle(title);
+			title = _wikiPageTitleValidator.normalize(title);
 
 			percentage = Math.min(
 				10 + (i * (maxPercentage - percentage)) / pageElements.size(),
@@ -609,7 +595,7 @@ public class MediaWikiImporter implements WikiImporter {
 		if (matcher.find()) {
 			redirectTitle = matcher.group(1);
 
-			redirectTitle = normalizeTitle(redirectTitle);
+			redirectTitle = _wikiPageTitleValidator.normalize(redirectTitle);
 
 			redirectTitle += " (disambiguation)";
 		}
@@ -625,7 +611,7 @@ public class MediaWikiImporter implements WikiImporter {
 		if (matcher.find()) {
 			redirectTitle = matcher.group(1);
 
-			redirectTitle = normalizeTitle(redirectTitle);
+			redirectTitle = _wikiPageTitleValidator.normalize(redirectTitle);
 		}
 
 		return redirectTitle;
@@ -722,6 +708,13 @@ public class MediaWikiImporter implements WikiImporter {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageTitleValidator(
+		WikiPageTitleValidator wikiPageTitleValidator) {
+
+		_wikiPageTitleValidator = wikiPageTitleValidator;
+	}
+
 	protected String translateMediaWikiImagePaths(String content) {
 		return content.replaceAll(
 			_imagesPattern.pattern(),
@@ -760,6 +753,6 @@ public class MediaWikiImporter implements WikiImporter {
 	private UserLocalService _userLocalService;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPageLocalService _wikiPageLocalService;
-	private Pattern _wikiPageTitlesRemovePattern;
+	private WikiPageTitleValidator _wikiPageTitleValidator;
 
 }

@@ -949,6 +949,11 @@ public class WikiPageLocalServiceUtil {
 		return getService().updateWikiPage(wikiPage);
 	}
 
+	/**
+	* @deprecated As of 7.0.0 replaced by {@link
+	WikiPageTitleValidator#validate(String)}
+	*/
+	@Deprecated
 	public static void validateTitle(java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validateTitle(title);

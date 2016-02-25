@@ -18,8 +18,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -61,6 +65,21 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		_companyLocalService = companyLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+	}
+
+	protected String getBasicWebContentStructureKey(long companyId)
+		throws Exception {
+
+		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
+			companyId);
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		List<Element> structureElements = getDDMStructures(defaultLocale);
+
+		Element structureElement = structureElements.get(0);
+
+		return structureElement.elementText("name");
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
@@ -158,21 +177,6 @@ public class UpgradeJournal extends UpgradeProcess {
 		updateJournalArticles();
 
 		addDDMTemplateLinks();
-	}
-
-	protected String getBasicWebContentStructureKey(long companyId)
-		throws Exception {
-
-		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
-			companyId);
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-
-		List<Element> structureElements = getDDMStructures(defaultLocale);
-
-		Element structureElement = structureElements.get(0);
-
-		return structureElement.elementText("name");
 	}
 
 	protected String getContent(String fileName) {

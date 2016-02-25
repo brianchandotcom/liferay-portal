@@ -30,8 +30,6 @@ import java.util.List;
  */
 public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 
-	public static final long DEFAULT_PARENT_KALEO_INSTANCE_TOKEN_ID = 0;
-
 	public KaleoInstanceTokenImpl() {
 	}
 

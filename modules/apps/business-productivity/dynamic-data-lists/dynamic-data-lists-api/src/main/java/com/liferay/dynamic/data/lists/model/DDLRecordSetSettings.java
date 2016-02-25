@@ -35,8 +35,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"requireCaptcha", "redirectURL",
-								"workflowDefinition", "storageType"
+								"requireCaptcha", "redirectURL", "storageType",
+								"workflowDefinition"
 							}
 						)
 					}

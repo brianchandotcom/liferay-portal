@@ -62,10 +62,12 @@ public class DBUpgrader {
 
 			stopWatch.start();
 
-			InitUtil.initWithSpring(true);
+			InitUtil.initWithSpring(true, false);
 
 			upgrade();
 			verify();
+
+			InitUtil.registerContext();
 
 			Registry registry = RegistryUtil.getRegistry();
 

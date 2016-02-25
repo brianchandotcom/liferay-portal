@@ -166,15 +166,28 @@ public class InitUtil {
 	public synchronized static void initWithSpring(
 		boolean initModuleFramework) {
 
+		initWithSpring(initModuleFramework, true);
+	}
+
+	public synchronized static void initWithSpring(
+		boolean initModuleFramework, boolean registerContext) {
+
 		List<String> configLocations = ListUtil.fromArray(
 			PropsUtil.getArray(
 				com.liferay.portal.kernel.util.PropsKeys.SPRING_CONFIGS));
 
-		initWithSpring(configLocations, initModuleFramework);
+		initWithSpring(configLocations, initModuleFramework, registerContext);
 	}
 
 	public synchronized static void initWithSpring(
 		List<String> configLocations, boolean initModuleFramework) {
+
+		initWithSpring(configLocations, initModuleFramework, true);
+	}
+
+	public synchronized static void initWithSpring(
+		List<String> configLocations, boolean initModuleFramework,
+		boolean registerContext) {
 
 		if (_initialized) {
 			return;
@@ -197,28 +210,35 @@ public class InitUtil {
 				ModuleFrameworkUtilAdapter.initFramework();
 			}
 
-			ApplicationContext applicationContext = new ArrayApplicationContext(
-				PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
+			ApplicationContext infrastructureApplicationContext =
+				new ArrayApplicationContext(
+					PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
 
 			if (initModuleFramework) {
-				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+				ModuleFrameworkUtilAdapter.registerContext(
+					infrastructureApplicationContext);
 
 				ModuleFrameworkUtilAdapter.startFramework();
 			}
 
-			applicationContext = new ClassPathXmlApplicationContext(
-				configLocations.toArray(new String[configLocations.size()]),
-				applicationContext);
+			ApplicationContext appApplicationContext =
+				new ClassPathXmlApplicationContext(
+					configLocations.toArray(new String[configLocations.size()]),
+					infrastructureApplicationContext);
 
 			BeanLocator beanLocator = new BeanLocatorImpl(
-				ClassLoaderUtil.getPortalClassLoader(), applicationContext);
+				ClassLoaderUtil.getPortalClassLoader(), appApplicationContext);
 
 			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
 			if (initModuleFramework) {
-				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
-
 				ModuleFrameworkUtilAdapter.startRuntime();
+			}
+
+			_appApplicationContext = appApplicationContext;
+
+			if (initModuleFramework && registerContext) {
+				registerContext();
 			}
 		}
 		catch (Exception e) {
@@ -230,6 +250,12 @@ public class InitUtil {
 
 	public static boolean isInitialized() {
 		return _initialized;
+	}
+
+	public static void registerContext() {
+		if (_appApplicationContext != null) {
+			ModuleFrameworkUtilAdapter.registerContext(_appApplicationContext);
+		}
 	}
 
 	public synchronized static void stopModuleFramework() {
@@ -252,6 +278,7 @@ public class InitUtil {
 
 	private static final boolean _PRINT_TIME = false;
 
+	private static ApplicationContext _appApplicationContext;
 	private static boolean _initialized;
 	private static boolean _neverInitialized = true;
 

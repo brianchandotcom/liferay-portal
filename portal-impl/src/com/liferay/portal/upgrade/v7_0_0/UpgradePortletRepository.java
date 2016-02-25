@@ -16,16 +16,19 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletRepository;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeMessageBoardsRepository
-	extends BaseUpgradePortletRepository {
+public class UpgradePortletRepository extends BaseUpgradePortletRepository {
 
 	@Override
 	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {new String[] {"19", MBConstants.SERVICE_NAME}};
+		return new String[][] {
+			new String[] {"19", MBConstants.SERVICE_NAME},
+			new String[] {"33", BlogsConstants.SERVICE_NAME}
+		};
 	}
 
 }

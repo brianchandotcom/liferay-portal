@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -426,6 +427,40 @@ public class PermissionCheckerTest {
 			ResourceLocalServiceUtil.deleteResource(
 				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);
+		}
+	}
+
+	@Test
+	public void testHasPermissionWithMissingResourcePermissions()
+		throws Exception {
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			TestPropsValues.getUser());
+
+		try {
+			permissionChecker.hasPermission(
+				0, _MODEL_RESOURCE_NAME, 12345, ActionKeys.VIEW);
+
+			Assert.fail();
+		}
+		catch (Throwable t) {
+			boolean found = false;
+
+			Throwable cause = t;
+
+			while (!found && (cause != null)) {
+				if (cause instanceof NoSuchResourcePermissionException) {
+					found = true;
+				}
+
+				cause = cause.getCause();
+			}
+
+			if (!found) {
+				Assert.fail(t.getMessage());
+
+				throw t;
+			}
 		}
 	}
 

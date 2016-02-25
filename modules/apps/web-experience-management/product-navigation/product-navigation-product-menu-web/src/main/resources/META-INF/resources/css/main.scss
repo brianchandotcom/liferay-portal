@@ -201,8 +201,6 @@ body {
 	/* Layouts Tree */
 
 	li.tree-node .tree-node-content {
-		z-index: 1;
-
 		&.lfr-root-node {
 			display: none;
 		}
@@ -218,7 +216,6 @@ body {
 				position: absolute;
 				right: -40px;
 				top: 0;
-				z-index: -1;
 			}
 		}
 	}
@@ -226,6 +223,9 @@ body {
 	.tree-node-content {
 		.layout-tree-options {
 			opacity: 0;
+			position: absolute;
+			right: 0;
+			top: 4px;
 
 			&:focus {
 				opacity: 1;
@@ -266,6 +266,8 @@ body {
 				}
 
 				@include ellipsis(87px);
+
+				padding-top: 8px;
 			}
 
 			display: table-cell;

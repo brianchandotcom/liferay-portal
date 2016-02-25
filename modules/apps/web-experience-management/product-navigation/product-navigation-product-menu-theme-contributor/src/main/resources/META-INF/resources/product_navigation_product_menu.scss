@@ -178,7 +178,7 @@
 
 	.list-group-item {
 		border-width: $product-menu-list-group-item-border-width;
-		padding: 8px 24px;
+		padding: 8px 8px 8px 24px;
 	}
 
 	.collapse, .collapsing {
@@ -426,7 +426,6 @@
 
 	.tree-view {
 		overflow: visible;
-		padding: 0 16px;
 	}
 }
 

@@ -1,9 +1,9 @@
 .input-localized {
-	.palette-item-inner img {
+	.palette-item-inner .lfr-input-localized-flag {
 		opacity: 0.5;
 	}
 
-	&.input-localized-focused .palette-item-inner img {
+	&.input-localized-focused .palette-item-inner .lfr-input-localized-flag {
 		opacity: 1;
 	}
 

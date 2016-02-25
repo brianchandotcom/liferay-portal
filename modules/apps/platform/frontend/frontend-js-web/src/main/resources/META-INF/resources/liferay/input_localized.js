@@ -124,7 +124,7 @@ AUI.add(
 					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{id}_{value}" name="{namespace}{fieldNamePrefix}{name}_{value}{fieldNameSuffix}" type="hidden" value="" />',
 
 					ITEM_TEMPLATE: '<li class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
-						'<a class="palette-item-inner" href="" onclick="return false;">' +
+						'<a class="palette-item-inner" href="javascript:;">' +
 							'<img class="lfr-input-localized-flag" data-languageId="{value}" src="' + themeDisplay.getPathThemeImages() + '/language/{value}.png" />' +
 							'<div class="lfr-input-localized-state {stateClass}"></div>' +
 						'</a>' +
@@ -232,7 +232,15 @@ AUI.add(
 						}
 
 						if (instance._inputPlaceholderDescription) {
-							instance._inputPlaceholderDescription.text(instance._flags.one('[data-languageId="' + languageId + '"]').attr('alt'));
+							var icon = instance._flags.one('[data-languageId="' + languageId + '"]');
+
+							var title = '';
+
+							if (icon) {
+								title = icon.attr('title');
+							}
+
+							instance._inputPlaceholderDescription.text(title);
 						}
 					},
 
@@ -570,7 +578,9 @@ AUI.add(
 					var input = currentTarget.ancestor('.input-localized').one(SELECTOR_LANG_VALUE);
 
 					if (input && flag) {
-						InputLocalized._initializeInputLocalized(event, input, flag.attr('data-languageid'));
+						var languageNode = flag.ancestor('[data-languageid]', true, '.palette-item') || flag;
+
+						InputLocalized._initializeInputLocalized(event, input, languageNode.attr('data-languageid'));
 					}
 				},
 

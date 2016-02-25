@@ -140,6 +140,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateActivities() throws Exception {
+		populateExtraDataGeneratorMap();
+
 		for (ExtraDataGenerator extraDataGenerator : _extraDataGenerators) {
 			updateActivities(extraDataGenerator);
 		}
@@ -264,611 +266,590 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	}
 
+	private void populateExtraDataGeneratorMap() {
+		_extraDataGenerators.add(new AddAssetCommentExtraDataGenerator());
+		_extraDataGenerators.add(new AddMessageExtraDataGenerator());
+		_extraDataGenerators.add(new BlogsEntryExtraDataGenerator());
+		_extraDataGenerators.add(new BookmarksEntryExtraDataGenerator());
+		_extraDataGenerators.add(new DlFileEntryExtraDataGenerator());
+		_extraDataGenerators.add(new KBArticleExtraDataGenerator());
+		_extraDataGenerators.add(new KBCommentExtraDataGenerator());
+		_extraDataGenerators.add(new KBTemplateExtraDataGenerator());
+		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
-	private static final ExtraDataGenerator _addAssetCommentExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class AddAssetCommentExtraDataGenerator implements
+		ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return StringPool.BLANK;
-			}
+		@Override
+		public String getActivityClassName() {
+			return StringPool.BLANK;
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "type_ = ?";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "type_ = ?";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select subject from MBMessage where messageId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select subject from MBMessage where messageId = ?";
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				long messageId = 0;
+			long messageId = 0;
 
-				try {
-					JSONObject extraDataJsonObject =
+			try {
+				JSONObject extraDataJsonObject =
 						JSONFactoryUtil.createJSONObject(extraData);
 
-					messageId = extraDataJsonObject.getLong("messageId");
-				}
-				catch (JSONException jsone) {
-				}
+				messageId = extraDataJsonObject.getLong("messageId");
+			}
+			catch (JSONException jsone) {
+			}
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("subject"));
 
-				extraDataJSONObject.put("messageId", messageId);
+			extraDataJSONObject.put("messageId", messageId);
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setInt(1, _TYPE_ADD_COMMENT);
-			}
+			ps.setInt(1, _TYPE_ADD_COMMENT);
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				long messageId = 0;
+			long messageId = 0;
 
-				try {
-					JSONObject extraDataJSONObject =
+			try {
+				JSONObject extraDataJSONObject =
 						JSONFactoryUtil.createJSONObject(extraData);
 
-					messageId = extraDataJSONObject.getLong("messageId");
-				}
-				catch (JSONException jsone) {
-				}
-
-				ps.setLong(1, messageId);
+				messageId = extraDataJSONObject.getLong("messageId");
+			}
+			catch (JSONException jsone) {
 			}
 
-			private static final int _TYPE_ADD_COMMENT = 10005;
+			ps.setLong(1, messageId);
+		}
 
-		};
+		private static final int _TYPE_ADD_COMMENT = 10005;
 
-	private static final ExtraDataGenerator _addMessageExtraDataGenerator =
-		new ExtraDataGenerator() {
+	};
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.messageboards.model.MBMessage";
-			}
+	private class AddMessageExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.messageboards.model.MBMessage";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select subject from MBMessage where messageId = ?";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
+		@Override
+		public String getEntityQuery() {
+			return "select subject from MBMessage where messageId = ?";
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_MESSAGE);
+			ps.setInt(3, _REPLY_MESSAGE);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
 				throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_MESSAGE);
-				ps.setInt(3, _REPLY_MESSAGE);
-			}
+			ps.setLong(1, classPK);
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				ps.setLong(1, classPK);
-			}
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("subject"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_MESSAGE = 1;
+		private static final int _ADD_MESSAGE = 1;
 
-			private static final int _REPLY_MESSAGE = 2;
+		private static final int _REPLY_MESSAGE = 2;
 
-		};
+	};
 
-	private static final ExtraDataGenerator _blogsEntryExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class BlogsEntryExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.blogs.model.BlogsEntry";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.blogs.model.BlogsEntry";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title from BlogsEntry where entryId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select title from BlogsEntry where entryId = ?";
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				ps.setLong(1, classPK);
-			}
+			ps.setLong(1, classPK);
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_ENTRY);
-				ps.setInt(3, _UPDATE_ENTRY);
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_ENTRY);
+			ps.setInt(3, _UPDATE_ENTRY);
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("title"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_ENTRY = 2;
+		private static final int _ADD_ENTRY = 2;
 
-			private static final int _UPDATE_ENTRY = 3;
+		private static final int _UPDATE_ENTRY = 3;
 
-		};
+	};
 
-	private static final ExtraDataGenerator _bookmarksEntryExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class BookmarksEntryExtraDataGenerator implements
+		ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.bookmarks.model.BookmarksEntry";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.bookmarks.model.BookmarksEntry";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select name from BookmarksEntry where entryId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select name from BookmarksEntry where entryId = ?";
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
 				throws SQLException {
 
-				ps.setLong(1, classPK);
-			}
+			ps.setLong(1, classPK);
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(
+			ps.setLong(
 					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_ENTRY);
-				ps.setInt(3, _UPDATE_ENTRY);
-			}
+			ps.setInt(2, _ADD_ENTRY);
+			ps.setInt(3, _UPDATE_ENTRY);
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
 				throws SQLException {
 
-				JSONObject extraDataJSONObject =
+			JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("name"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_ENTRY = 1;
+		private static final int _ADD_ENTRY = 1;
 
-			private static final int _UPDATE_ENTRY = 2;
+		private static final int _UPDATE_ENTRY = 2;
 
-		};
+	};
 
-	private static final ExtraDataGenerator _dlFileEntryExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class DlFileEntryExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ?";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ?";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title from DLFileEntry where companyId = ? " +
-					"and groupId = ? and fileEntryId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select title from DLFileEntry where companyId = ? " +
+				   "and groupId = ? and fileEntryId = ?";
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				ps.setLong(1, companyId);
-				ps.setLong(2, groupId);
-				ps.setLong(3, classPK);
-			}
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, classPK);
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("title"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-		};
+	};
 
 	private static final List<ExtraDataGenerator> _extraDataGenerators =
 		new ArrayList<>();
 
-	private static final ExtraDataGenerator _kbArticleExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class KBArticleExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.knowledgebase.model.KBArticle";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBArticle";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return
+		@Override
+		public String getActivityQueryWhereClause() {
+			return
 					"classNameId = ? and (type_ = ? or type_ = ? or type_ = ?)";
-			}
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title from KBArticle where resourcePrimKey = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select title from KBArticle where resourcePrimKey = ?";
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_KB_ARTICLE);
-				ps.setInt(3, _UPDATE_KB_ARTICLE);
-				ps.setInt(4, _MOVE_KB_ARTICLE);
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_ARTICLE);
+			ps.setInt(3, _UPDATE_KB_ARTICLE);
+			ps.setInt(4, _MOVE_KB_ARTICLE);
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				ps.setLong(1, classPK);
-			}
+			ps.setLong(1, classPK);
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("title"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_KB_ARTICLE = 1;
+		private static final int _ADD_KB_ARTICLE = 1;
 
-			private static final int _MOVE_KB_ARTICLE = 7;
+		private static final int _MOVE_KB_ARTICLE = 7;
 
-			private static final int _UPDATE_KB_ARTICLE = 3;
+		private static final int _UPDATE_KB_ARTICLE = 3;
 
-		};
+	};
 
-	private static final ExtraDataGenerator _kbCommentExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class KBCommentExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.knowledgebase.model.KBComment";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBComment";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select classNameId, classPK from KBComment where " +
-					"kbCommentId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select classNameId, classPK from KBComment where " +
+				   "kbCommentId = ?";
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject = null;
+			JSONObject extraDataJSONObject = null;
 
-				long classnameId = entityResultSet.getLong("classNameId");
-				long classpk = entityResultSet.getLong("classPK");
+			long classnameId = entityResultSet.getLong("classNameId");
+			long classpk = entityResultSet.getLong("classPK");
 
-				Connection con = null;
-				PreparedStatement ps = null;
-				ResultSet rs = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
 
-				try {
-					con = DataAccess.getUpgradeOptimizedConnection();
+			try {
+				ExtraDataGenerator extraDataGenerator = null;
 
-					ExtraDataGenerator extraDataGenerator = null;
+				if (classnameId == PortalUtil.getClassNameId(
+						_kbArticleExtraDataGenerator.getActivityClassName())) {
 
-					if (classnameId == PortalUtil.getClassNameId(
-							_kbArticleExtraDataGenerator.
-								getActivityClassName())) {
+					extraDataGenerator = _kbArticleExtraDataGenerator;
+				}
+				else if (classnameId == PortalUtil.getClassNameId(
+						_kbTemplateExtraDataGenerator.getActivityClassName())) {
 
-						extraDataGenerator = _kbArticleExtraDataGenerator;
-					}
-					else if (classnameId == PortalUtil.getClassNameId(
-								_kbTemplateExtraDataGenerator.
-									getActivityClassName())) {
+					extraDataGenerator = _kbTemplateExtraDataGenerator;
+				}
 
-						extraDataGenerator = _kbTemplateExtraDataGenerator;
-					}
-
-					if (extraDataGenerator != null) {
-						ps = con.prepareStatement(
+				if (extraDataGenerator != null) {
+					ps = connection.prepareStatement(
 							extraDataGenerator.getEntityQuery());
 
-						ps.setLong(1, classpk);
+					ps.setLong(1, classpk);
 
-						rs = ps.executeQuery();
+					rs = ps.executeQuery();
 
-						while (rs.next()) {
-							extraDataJSONObject =
+					while (rs.next()) {
+						extraDataJSONObject =
 								extraDataGenerator.getExtraDataJSONObject(
-									rs, StringPool.BLANK);
-						}
+										rs, StringPool.BLANK);
 					}
 				}
-				finally {
-					DataAccess.cleanUp(con, ps, rs);
-				}
-
-				return extraDataJSONObject;
+			}
+			finally {
+				DataAccess.cleanUp(ps, rs);
 			}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
 				throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_KB_COMMENT);
-				ps.setInt(3, _UPDATE_KB_COMMENT);
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_COMMENT);
+			ps.setInt(3, _UPDATE_KB_COMMENT);
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				ps.setLong(1, classPK);
-			}
+			ps.setLong(1, classPK);
+		}
 
-			private static final int _ADD_KB_COMMENT = 5;
+		private static final int _ADD_KB_COMMENT = 5;
 
-			private static final int _UPDATE_KB_COMMENT = 6;
+		private static final int _UPDATE_KB_COMMENT = 6;
 
-		};
+		private final KBArticleExtraDataGenerator
+			_kbArticleExtraDataGenerator = new KBArticleExtraDataGenerator();
 
-	private static final ExtraDataGenerator _kbTemplateExtraDataGenerator =
-		new ExtraDataGenerator() {
+		private final KBTemplateExtraDataGenerator
+			_kbTemplateExtraDataGenerator = new KBTemplateExtraDataGenerator();
+	};
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.knowledgebase.model.KBTemplate";
-			}
+	private class KBTemplateExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBTemplate";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title from KBTemplate where kbTemplateId = ?";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public String getEntityQuery() {
+			return "select title from KBTemplate where kbTemplateId = ?";
+		}
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_KB_TEMPLATE);
-				ps.setInt(3, _UPDATE_KB_TEMPLATE);
-			}
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_TEMPLATE);
+			ps.setInt(3, _UPDATE_KB_TEMPLATE);
+		}
 
-				ps.setLong(1, classPK);
-			}
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+			ps.setLong(1, classPK);
+		}
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				extraDataJSONObject.put(
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("title"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_KB_TEMPLATE = 2;
+		private static final int _ADD_KB_TEMPLATE = 2;
 
-			private static final int _UPDATE_KB_TEMPLATE = 4;
+		private static final int _UPDATE_KB_TEMPLATE = 4;
 
-		};
+	};
 
-	private static final ExtraDataGenerator _wikiPageExtraDataGenerator =
-		new ExtraDataGenerator() {
+	private class WikiPageExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.wiki.model.WikiPage";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.wiki.model.WikiPage";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ? and (type_ = ? or type_ = ?)";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title, version from WikiPage where " +
-					"companyId = ? and groupId = ? and resourcePrimKey = ? " +
-						"and head = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select title, version from WikiPage where " +
+				   "companyId = ? and groupId = ? and resourcePrimKey = ? " +
+				   "and head = ?";
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
-				ps.setInt(2, _ADD_PAGE);
-				ps.setInt(3, _UPDATE_PAGE);
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_PAGE);
+			ps.setInt(3, _UPDATE_PAGE);
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId,
-					long userId, long classNameId, long classPK, int type,
-					String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId,
+				long userId, long classNameId, long classPK, int type,
+				String extraData)
+			throws SQLException {
 
-				ps.setLong(1, companyId);
-				ps.setLong(2, groupId);
-				ps.setLong(3, classPK);
-				ps.setBoolean(4, true);
-			}
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, classPK);
+			ps.setBoolean(4, true);
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject =JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"title", entityResultSet.getString("title"));
-				extraDataJSONObject.put(
+			extraDataJSONObject.put(
 					"version", entityResultSet.getDouble("version"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			private static final int _ADD_PAGE = 1;
+		private static final int _ADD_PAGE = 1;
 
-			private static final int _UPDATE_PAGE = 2;
+		private static final int _UPDATE_PAGE = 2;
 
-		};
-
-	static {
-		_extraDataGenerators.add(_addAssetCommentExtraDataGenerator);
-		_extraDataGenerators.add(_addMessageExtraDataGenerator);
-		_extraDataGenerators.add(_blogsEntryExtraDataGenerator);
-		_extraDataGenerators.add(_bookmarksEntryExtraDataGenerator);
-		_extraDataGenerators.add(_dlFileEntryExtraDataGenerator);
-		_extraDataGenerators.add(_kbArticleExtraDataGenerator);
-		_extraDataGenerators.add(_kbCommentExtraDataGenerator);
-		_extraDataGenerators.add(_kbTemplateExtraDataGenerator);
-		_extraDataGenerators.add(_wikiPageExtraDataGenerator);
-	}
+	};
 
 }

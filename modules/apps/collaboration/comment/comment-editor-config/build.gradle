@@ -1,7 +1,7 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
 }
 
 liferay {

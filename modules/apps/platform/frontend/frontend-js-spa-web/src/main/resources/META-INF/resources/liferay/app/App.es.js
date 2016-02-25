@@ -3,6 +3,7 @@
 import App from 'senna/src/app/App';
 import dom from 'metal-dom/src/dom';
 import Utils from '../util/Utils.es';
+import LiferaySurface from '../surface/Surface.es';
 
 class LiferayApp extends App {
 	constructor() {
@@ -23,7 +24,7 @@ class LiferayApp extends App {
 
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
 
-		this.addSurfaces(document.body.id);
+		this.addSurfaces(new LiferaySurface(document.body.id));
 
 		dom.append(document.body, '<div class="lfr-surface-loading-bar"></div>');
 	}

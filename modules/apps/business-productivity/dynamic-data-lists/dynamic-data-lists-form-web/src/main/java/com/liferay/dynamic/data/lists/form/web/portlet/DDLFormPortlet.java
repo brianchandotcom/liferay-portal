@@ -194,8 +194,6 @@ public class DDLFormPortlet extends MVCPortlet {
 			LocaleUtil.fromLanguageId(languageId));
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
-		ddmFormRenderingContext.setReadOnly(
-			ParamUtil.getBoolean(renderRequest, "preview"));
 
 		return ddmFormRenderingContext;
 	}
@@ -253,6 +251,10 @@ public class DDLFormPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		boolean showSubmitButton = isShowSubmitButton(renderRequest);
+
+		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);
 
 		String submitLabel = getSubmitLabel(recordSet, themeDisplay);
 
@@ -358,6 +360,16 @@ public class DDLFormPortlet extends MVCPortlet {
 		String type = layout.getType();
 
 		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
+	}
+
+	protected boolean isShowSubmitButton(RenderRequest renderRequest) {
+		boolean preview = ParamUtil.getBoolean(renderRequest, "preview");
+
+		if (preview) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

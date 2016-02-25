@@ -35,6 +35,7 @@
  * @param portletNamespace
  * @param readOnly
  * @param showRequiredFieldsWarning
+ * @param showSubmitButton
  * @param submitLabel
  * @param templateNamespace
  * @param values
@@ -64,6 +65,7 @@
 							portletNamespace: '{$portletNamespace}',
 							readOnly: {$readOnly},
 							showRequiredFieldsWarning: {$showRequiredFieldsWarning},
+							showSubmitButton: {$showSubmitButton},
 							submitLabel: '{$submitLabel}',
 							templateNamespace: '{$templateNamespace}',
 							values: {$values|noAutoescape}
@@ -133,8 +135,8 @@
  *
  * @param containerId
  * @param pages
- * @param readOnly
  * @param requiredFieldsWarningMessageHTML
+ * @param showSubmitButton
  * @param submitLabel
  * @param strings
  */
@@ -190,7 +192,7 @@
 				{$strings.next} <i class="icon-angle-right"></i>
 			</button>
 
-			{if not $readOnly}
+			{if $showSubmitButton}
 				<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" disabled type="submit">{$submitLabel}</button>
 			{/if}
 		</div>

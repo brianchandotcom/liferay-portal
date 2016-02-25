@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +66,7 @@ public class ScreensAssetEntryServiceImpl
 		List<AssetEntry> assetEntries = assetEntryLocalService.getEntries(
 			assetEntryQuery);
 
-		checkAssetEntriesPermissions(assetEntries);
+		assetEntries = filterAssetEntries(assetEntries);
 
 		return toJSONArray(assetEntries, locale);
 	}
@@ -117,7 +118,7 @@ public class ScreensAssetEntryServiceImpl
 					AssetPublisherUtil.getAssetEntries(
 						portletPreferences, layout, groupId, max, false);
 
-				checkAssetEntriesPermissions(assetEntries);
+				assetEntries = filterAssetEntries(assetEntries);
 
 				return toJSONArray(assetEntries, locale);
 			}
@@ -135,7 +136,7 @@ public class ScreensAssetEntryServiceImpl
 						null, portletPreferences, permissionChecker,
 						new long[] {groupId}, false, false, false);
 
-				checkAssetEntriesPermissions(assetEntries);
+				assetEntries = filterAssetEntries(assetEntries);
 
 				return toJSONArray(assetEntries, locale);
 			}
@@ -148,13 +149,21 @@ public class ScreensAssetEntryServiceImpl
 		}
 	}
 
-	protected void checkAssetEntriesPermissions(List<AssetEntry> assetEntries)
+	protected List<AssetEntry> filterAssetEntries(List<AssetEntry> assetEntries)
 		throws PortalException {
 
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>(
+			assetEntries.size());
+
 		for (AssetEntry assetEntry : assetEntries) {
-			AssetEntryPermission.check(
-				getPermissionChecker(), assetEntry, ActionKeys.VIEW);
+			if (AssetEntryPermission.contains(
+					getPermissionChecker(), assetEntry, ActionKeys.VIEW)) {
+
+				filteredAssetEntries.add(assetEntry);
+			}
 		}
+
+		return filteredAssetEntries;
 	}
 
 	protected JSONObject getAssetObjectJSONObject(AssetEntry assetEntry)

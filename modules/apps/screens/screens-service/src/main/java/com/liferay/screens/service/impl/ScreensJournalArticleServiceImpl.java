@@ -35,11 +35,12 @@ public class ScreensJournalArticleServiceImpl
 	public String getJournalArticleContent(long classPK, Locale locale)
 		throws PortalException {
 
-		JournalArticlePermission.check(
-			getPermissionChecker(), classPK, ActionKeys.VIEW);
-
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
 			journalArticleResource.getGroupId(),
@@ -52,11 +53,12 @@ public class ScreensJournalArticleServiceImpl
 			long classPK, long ddmTemplateId, Locale locale)
 		throws PortalException {
 
-		JournalArticlePermission.check(
-			getPermissionChecker(), classPK, ActionKeys.VIEW);
-
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
 			journalArticleResource.getGroupId(),
@@ -71,7 +73,7 @@ public class ScreensJournalArticleServiceImpl
 		throws PortalException {
 
 		JournalArticlePermission.check(
-			getPermissionChecker(), groupId, ActionKeys.VIEW);
+			getPermissionChecker(), groupId, articleId, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
 			groupId, articleId, null, getDDMTemplateKey(ddmTemplateId),

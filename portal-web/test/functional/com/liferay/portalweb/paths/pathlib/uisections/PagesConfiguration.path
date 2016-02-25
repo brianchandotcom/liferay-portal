@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_SPECIFIC_PAGE_CHECKED</td>
+	<td>//li/div[contains(@class,'checked') and contains(.,'${key_pageName}')]//span[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
 	<td>//input[contains(@id,'DELETE_MISSING_LAYOUTS')]</td>
 	<td></td>

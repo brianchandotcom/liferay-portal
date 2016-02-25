@@ -355,26 +355,25 @@ public class PoshiRunnerGetterUtil {
 				if (methodName.equals(commandName)) {
 					Class<?>[] parameterTypes = method.getParameterTypes();
 
-					if (parameterTypes.length > 1) {
-						Object returnObject = method.invoke(
-							null, (Object[])integers);
+					Object returnObject = "";
 
-						if (returnObject == null) {
-							returnObject = "";
+					try {
+						if (parameterTypes.length > 1) {
+							returnObject = method.invoke(
+								null, (Object[])integers);
 						}
-
-						return returnObject.toString();
-					}
-					else {
-						Object returnObject = method.invoke(
-							null, new Object[] {integers});
-
-						if (returnObject == null) {
-							returnObject = "";
+						else {
+							returnObject = method.invoke(
+								null, new Object[] {integers});
 						}
-
-						return returnObject.toString();
 					}
+					catch (Exception e) {
+						Throwable throwable = e.getCause();
+
+						throw new Exception(throwable.getMessage(), e);
+					}
+
+					return returnObject.toString();
 				}
 			}
 		}

@@ -24,7 +24,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtilities;
 import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
@@ -54,7 +54,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
-		notificationUtil.sendKaleoNotifications(
+		_notificationUtilities.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -101,7 +101,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
-		notificationUtil.sendKaleoNotifications(
+		_notificationUtilities.sendKaleoNotifications(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -128,7 +128,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 
-		notificationUtil.sendKaleoNotifications(
+		_notificationUtilities.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 	}
@@ -153,6 +153,9 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 		throws PortalException;
 
 	@Reference
+	protected NotificationUtilities _notificationUtilities;
+
+	@Reference
 	protected ExecutionContextUtilities executionContextUtilities;
 
 	@Reference
@@ -164,8 +167,5 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 
 	@Reference
 	protected KaleoTimerLocalService kaleoTimerLocalService;
-
-	@Reference
-	protected NotificationUtil notificationUtil;
 
 }

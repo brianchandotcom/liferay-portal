@@ -26,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtilities;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
 
@@ -40,8 +41,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NotificationUtilitiesImpl.class)
-public class NotificationUtilitiesImpl {
+@Component(immediate = true, service = NotificationUtilities.class)
+public class NotificationUtilitiesImpl implements NotificationUtilities {
 
 	public void sendKaleoNotifications(
 			String kaleoClassName, long kaleoClassPK,

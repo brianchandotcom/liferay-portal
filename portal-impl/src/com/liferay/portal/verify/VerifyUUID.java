@@ -106,8 +106,8 @@ public class VerifyUUID extends VerifyProcess {
 					long pk = rs.getLong(
 						verifiableUUIDModel.getPrimaryKeyColumnName());
 
-					ps2.setString(0, PortalUUIDUtil.generate());
-					ps2.setLong(1, pk);
+					ps2.setString(1, PortalUUIDUtil.generate());
+					ps2.setLong(2, pk);
 
 					ps2.addBatch();
 				}

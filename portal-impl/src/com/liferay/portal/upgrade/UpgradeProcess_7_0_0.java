@@ -40,6 +40,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletId;
+import com.liferay.portal.upgrade.v7_0_0.UpgradePortletRepository;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePostgreSQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
@@ -88,6 +89,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradePhone.class);
 		upgrade(UpgradePortalPreferences.class);
 		upgrade(UpgradePortletDisplayTemplatePreferences.class);
+		upgrade(UpgradePortletRepository.class);
 		upgrade(UpgradePortletId.class);
 		upgrade(UpgradePostgreSQL.class);
 		upgrade(UpgradeRatings.class);

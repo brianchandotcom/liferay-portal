@@ -226,6 +226,9 @@ public class PropsValues {
 	public static final String TEST_POSHI_WARNINGS_FILE_NAME = PropsUtil.get(
 		"test.poshi.warnings.file.name");
 
+	public static final int TEST_RETRY_COMMAND_WAIT_TIME =
+		GetterUtil.getInteger(PropsUtil.get("test.retry.command.wait.time"));
+
 	public static final boolean TEST_RUN_LOCALLY = GetterUtil.getBoolean(
 		PropsUtil.get("test.run.locally"));
 

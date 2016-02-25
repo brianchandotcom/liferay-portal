@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action.executor.internal;
+package com.liferay.portal.workflow.kaleo.internal.runtime.action.executor;
 
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;

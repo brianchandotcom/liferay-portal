@@ -95,12 +95,8 @@ public class RowChecker {
 		return _formName;
 	}
 
-	public boolean getKeepSelection() {
-		return _keepSelection;
-	}
-
-	public String getKeepSelectionURLRegex() {
-		return _keepSelectionURLRegex;
+	public String getRememberCheckBoxStateURLRegexPattern() {
+		return _rememberCheckBoxStateURLRegexPattern;
 	}
 
 	/**
@@ -149,6 +145,10 @@ public class RowChecker {
 		return false;
 	}
 
+	public boolean isRememberCheckBoxState() {
+		return _rememberCheckBoxState;
+	}
+
 	public void setAlign(String align) {
 		_align = align;
 	}
@@ -173,12 +173,15 @@ public class RowChecker {
 		_formName = getNamespacedValue(formName);
 	}
 
-	public void setKeepSelection(boolean keepSelection) {
-		_keepSelection = keepSelection;
+	public void setRememberCheckBoxState(boolean rememberCheckBoxState) {
+		_rememberCheckBoxState = rememberCheckBoxState;
 	}
 
-	public void setKeepSelectionURLRegex(String keepSelectionURLRegex) {
-		_keepSelectionURLRegex = keepSelectionURLRegex;
+	public void setRememberCheckBoxStateURLRegexPattern(
+		String rememberCheckBoxStateURLRegexPattern) {
+
+		_rememberCheckBoxStateURLRegexPattern =
+			rememberCheckBoxStateURLRegexPattern;
 	}
 
 	public void setRowIds(String rowIds) {
@@ -315,9 +318,9 @@ public class RowChecker {
 	private String _cssClass = CSS_CLASS;
 	private Map<String, Object> _data;
 	private String _formName;
-	private boolean _keepSelection = true;
-	private String _keepSelectionURLRegex;
 	private final PortletResponse _portletResponse;
+	private boolean _rememberCheckBoxState = true;
+	private String _rememberCheckBoxStateURLRegexPattern;
 	private String _rowIds;
 	private String _rowSelector;
 	private String _valign = VALIGN;

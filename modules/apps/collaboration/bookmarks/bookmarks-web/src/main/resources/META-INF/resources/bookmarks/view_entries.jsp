@@ -28,10 +28,10 @@ bookmarksSearchContainer.setRowChecker(entriesChecker);
 entriesChecker.setCssClass("entry-selector");
 
 if (folderId == 0) {
-	entriesChecker.setKeepSelectionURLRegex("mvcRenderCommandName=/bookmarks/view(&.|$)");
+	entriesChecker.setRememberCheckBoxStateURLRegexPattern("mvcRenderCommandName=/bookmarks/view(&.|$)");
 }
 else {
-	entriesChecker.setKeepSelectionURLRegex(
+	entriesChecker.setRememberCheckBoxStateURLRegexPattern(
 		"^(?!.*" + liferayPortletResponse.getNamespace() + 
 		"redirect).*(folderId=" + folderId + ")");
 }

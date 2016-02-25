@@ -14,7 +14,6 @@
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>

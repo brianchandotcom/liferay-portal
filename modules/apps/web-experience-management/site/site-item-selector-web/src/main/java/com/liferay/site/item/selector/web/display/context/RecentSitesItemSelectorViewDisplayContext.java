@@ -14,7 +14,11 @@
 
 package com.liferay.site.item.selector.web.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.RecentGroupManager;
@@ -43,6 +47,25 @@ public class RecentSitesItemSelectorViewDisplayContext
 			portletURL);
 
 		_recentGroupManager = recentGroupManager;
+	}
+
+	@Override
+	public String getGroupName(Group group) throws PortalException {
+		String groupName = super.getGroupName(group);
+
+		if (group.isStaged() && group.isStagingGroup()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(groupName);
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(LanguageUtil.get(request, "staging"));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			groupName = sb.toString();
+		}
+
+		return groupName;
 	}
 
 	@Override

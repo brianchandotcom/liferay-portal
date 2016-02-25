@@ -14,9 +14,13 @@
 
 package com.liferay.site.item.selector.web.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import javax.portlet.PortletException;
@@ -41,6 +45,14 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		_siteItemSelectorCriterion = siteItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;
+	}
+
+	@Override
+	public String getGroupName(Group group) throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return group.getDescriptiveName(themeDisplay.getLocale());
 	}
 
 	@Override

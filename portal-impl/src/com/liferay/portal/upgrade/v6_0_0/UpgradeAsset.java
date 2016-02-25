@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -41,12 +40,9 @@ public class UpgradeAsset extends UpgradeProcess {
 			long parentCategoryId, String name, long vocabularyId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("insert into AssetCategory (uuid_, categoryId, ");
@@ -56,7 +52,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, entryId);
@@ -73,7 +69,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -87,12 +83,9 @@ public class UpgradeAsset extends UpgradeProcess {
 			int width, double priority, int viewCount)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("insert into AssetEntry (entryId, groupId, companyId, ");
@@ -105,7 +98,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, assetId);
 			ps.setLong(2, groupId);
@@ -134,7 +127,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -145,12 +138,9 @@ public class UpgradeAsset extends UpgradeProcess {
 			String key, String value)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("insert into ");
@@ -165,7 +155,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, propertyId);
 			ps.setLong(2, companyId);
@@ -180,7 +170,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -190,12 +180,9 @@ public class UpgradeAsset extends UpgradeProcess {
 			String name)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(3);
 
 			sb.append("insert into AssetTag (tagId, groupId, companyId, ");
@@ -204,7 +191,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, entryId);
 			ps.setLong(2, groupId);
@@ -218,7 +205,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -228,12 +215,9 @@ public class UpgradeAsset extends UpgradeProcess {
 			String name, String description)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("insert into AssetVocabulary (uuid_, vocabularyId, ");
@@ -243,7 +227,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, vocabularyId);
@@ -259,7 +243,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -267,14 +251,11 @@ public class UpgradeAsset extends UpgradeProcess {
 			long tagsEntryId, String tableName, String pkName)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from TagsAssets_TagsEntries where entryId = ?");
 
 			ps.setLong(1, tagsEntryId);
@@ -290,19 +271,16 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void copyEntriesToCategories(long vocabularyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from TagsEntry where vocabularyId = ?");
 
 			ps.setLong(1, vocabularyId);
@@ -335,7 +313,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -344,14 +322,11 @@ public class UpgradeAsset extends UpgradeProcess {
 			String assocationPKName)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from TagsProperty where entryId = ?");
 
 			ps.setLong(1, categoryId);
@@ -375,7 +350,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -388,14 +363,11 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetCategories() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from TagsVocabulary where folksonomy = ?");
 
 			ps.setBoolean(1, false);
@@ -421,19 +393,16 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateAssetEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from TagsAsset");
+			ps = connection.prepareStatement("select * from TagsAsset");
 
 			rs = ps.executeQuery();
 
@@ -471,19 +440,16 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateAssetTags() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select TE.* from TagsEntry TE inner join TagsVocabulary TV " +
 					"on TE.vocabularyId = TV.vocabularyId where " +
 						"TV.folksonomy = ?");
@@ -513,7 +479,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		updateAssetTagsCount();

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -34,13 +33,10 @@ public class UpgradePortletPreferences
 			long ownerId, int ownerType, String preferences)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"insert into PortalPreferences (portalPreferencesId, " +
 					"ownerId, ownerType, preferences) values (?, ?, ?, ?)");
 
@@ -52,7 +48,7 @@ public class UpgradePortletPreferences
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -61,13 +57,10 @@ public class UpgradePortletPreferences
 			String preferences)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"insert into PortletPreferences (portletPreferencesId, " +
 					"ownerId, ownerType, plid, portletId, preferences) " +
 						"values (?, ?, ?, ?, ?, ?)");
@@ -82,7 +75,7 @@ public class UpgradePortletPreferences
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -101,14 +94,11 @@ public class UpgradePortletPreferences
 	}
 
 	protected long getOwnerId(long plid) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Layout where plid = " + plid);
 
 			rs = ps.executeQuery();
@@ -118,7 +108,7 @@ public class UpgradePortletPreferences
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
@@ -133,14 +123,11 @@ public class UpgradePortletPreferences
 			long ownerId, int ownerType, long plid, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select portletPreferencesId from PortletPreferences where " +
 					"ownerId = ? and ownerType = ? and plid = ? and " +
 						"portletId = ?");
@@ -157,21 +144,18 @@ public class UpgradePortletPreferences
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
 	}
 
 	protected void updatePortalPreferences() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select ownerId, ownerType, preferences from " +
 					"PortletPreferences where portletId = ?");
 
@@ -192,18 +176,15 @@ public class UpgradePortletPreferences
 					PortletKeys.LIFERAY_PORTAL + "'");
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updatePortletPreferencesOwner() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("select portletPreferencesId, plid, portletId, ");
@@ -215,7 +196,7 @@ public class UpgradePortletPreferences
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -244,7 +225,7 @@ public class UpgradePortletPreferences
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -36,12 +35,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long classPK, String frequency)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("insert into Subscription (subscriptionId, companyId, ");
@@ -51,7 +47,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, subscriptionId);
 			ps.setLong(2, companyId);
@@ -66,7 +62,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -87,14 +83,11 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long companyId, long userId, long classNameId, long classPK)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select count(*) from Subscription where companyId = ? and " +
 					"userId = ? and classNameId = ? and classPK = ?");
 
@@ -116,18 +109,15 @@ public class UpgradeSubscription extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateMBMessages(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select userId, MIN(userName) as userName, ");
@@ -141,7 +131,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -166,7 +156,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

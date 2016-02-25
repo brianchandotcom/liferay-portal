@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,12 +58,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			String storageType, int type)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("insert into DDMStructure (uuid_, structureId, ");
@@ -76,7 +72,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmStructureId);
@@ -108,7 +104,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			throw e;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -148,12 +144,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			boolean smallImage, long smallImageId, String smallImageURL)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("insert into DDMTemplate (uuid_, templateId, groupId, ");
@@ -165,7 +158,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmTemplateId);
@@ -199,7 +192,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			throw e;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -226,14 +219,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getCompanyGroupId(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Group_ where classNameId = ? and " +
 					"classPK = ?");
 
@@ -251,7 +241,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -310,14 +300,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected Locale getDefaultLocale(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select languageId from User_ where companyId = ? and " +
 					"defaultUser = ?");
 
@@ -333,7 +320,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return LocaleUtil.getSiteDefault();
@@ -480,14 +467,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long updateStructure(String structureId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from JournalStructure where structureId = ?");
 
 			ps.setString(1, structureId);
@@ -508,7 +492,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			throw e;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

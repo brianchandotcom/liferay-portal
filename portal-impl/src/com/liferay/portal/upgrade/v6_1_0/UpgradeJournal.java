@@ -21,7 +21,6 @@ import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalStructureTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalTemplateTable;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,7 +67,6 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateStructureXsd() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -79,9 +77,7 @@ public class UpgradeJournal extends UpgradeProcess {
 						"'%image_gallery%'");
 		}
 		catch (Exception e) {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select id_, xsd from JournalStructure where xsd like " +
 					"'%image_gallery%'");
 
@@ -98,19 +94,16 @@ public class UpgradeJournal extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateStructureXsd(long id, String xsd) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update JournalStructure set xsd = ? where id_ = ?");
 
 			ps.setString(1, xsd);
@@ -119,7 +112,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

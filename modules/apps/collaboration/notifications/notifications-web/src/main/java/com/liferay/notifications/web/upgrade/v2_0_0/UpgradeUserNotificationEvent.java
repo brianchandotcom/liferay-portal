@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -40,14 +39,11 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			return;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select userNotificationEventId, actionRequired from " +
 					"Notifications_UserNotificationEvent");
 
@@ -69,7 +65,7 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

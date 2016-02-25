@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -39,14 +38,11 @@ import javax.portlet.PortletPreferences;
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 	protected long getIGImageFileEntryType(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select fileEntryTypeId from DLFileEntryType " +
 					"where name = ? AND companyId = ?");
 
@@ -62,7 +58,7 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

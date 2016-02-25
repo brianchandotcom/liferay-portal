@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -48,14 +47,11 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 	}
 
 	protected void updateCompany() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select companyId, virtualHost from Company where " +
 					"virtualHost != ''");
 
@@ -71,21 +67,18 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("alter table Company drop column virtualHost");
 	}
 
 	protected void updateLayoutSet() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
 					"where virtualHost != ''");
 
@@ -102,7 +95,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("alter table LayoutSet drop column virtualHost");

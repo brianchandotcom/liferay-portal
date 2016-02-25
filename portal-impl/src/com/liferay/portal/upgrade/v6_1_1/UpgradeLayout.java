@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -35,14 +34,11 @@ public class UpgradeLayout extends UpgradeProcess {
 	protected long getLayoutPrototypeGroupId(String layoutPrototypeUuid)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Group_ where classPK = (select " +
 					"layoutPrototypeId from LayoutPrototype where uuid_ = ?)");
 
@@ -57,7 +53,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
@@ -67,14 +63,11 @@ public class UpgradeLayout extends UpgradeProcess {
 			long groupId, String sourcePrototypeLayoutUuid)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select count(*) from Layout where uuid_ = ? and groupId = ? " +
 					"and privateLayout = ?");
 
@@ -96,19 +89,17 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;
 	}
 
 	protected void updateSourcePrototypeLayoutUuid() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			// Get pages with a sourcePrototypeLayoutUuid that have a page
 			// template. If the layoutUuid points to a page template, remove it.
@@ -121,7 +112,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			sb.append("layoutPrototypeUuid != '' and ");
 			sb.append("sourcePrototypeLayoutUuid != ''");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -146,7 +137,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_0_5;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -29,14 +28,11 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, liveGroupId from Group_ where liveGroupId " +
 					"!= 0");
 
@@ -50,19 +46,16 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateUUID(long groupId, long liveGroupId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select plid, privateLayout, layoutId, friendlyURL from " +
 					"Layout where groupId = ?");
 
@@ -81,7 +74,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -90,14 +83,11 @@ public class UpgradeLayout extends UpgradeProcess {
 			String friendlyURL)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select uuid_ from Layout where groupId = ? and friendlyURL " +
 					"= ?");
 
@@ -107,7 +97,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
-				ps = con.prepareStatement(
+				ps = connection.prepareStatement(
 					"select uuid_ from Layout where groupId = ? and " +
 						"privateLayout = ? and layoutId = ?");
 
@@ -129,7 +119,7 @@ public class UpgradeLayout extends UpgradeProcess {
 					plid);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

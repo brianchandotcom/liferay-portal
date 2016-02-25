@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -30,13 +29,10 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select Group_.groupId, Group_.liveGroupId, ");
@@ -44,7 +40,7 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			sb.append("Group_ on (LayoutSet.groupId = Group_.groupId and ");
 			sb.append("Group_.liveGroupId > 0 and LayoutSet.logo = ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setBoolean(1, true);
 
@@ -60,7 +56,7 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

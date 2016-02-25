@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -39,13 +38,10 @@ public class UpgradeExpando extends UpgradeProcess {
 	protected void updateColumnTypeSettings(long columnId, String typeSettings)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update ExpandoColumn set typeSettings = ? where columnId = ?");
 
 			ps.setString(1, typeSettings);
@@ -54,19 +50,16 @@ public class UpgradeExpando extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateColumnTypeSettingsIndexable() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select columnId, type_, typeSettings from ExpandoColumn " +
 					"where typeSettings like '%indexable%'");
 
@@ -114,19 +107,16 @@ public class UpgradeExpando extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateColumnTypeSettingsSelection() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select columnId, typeSettings from ExpandoColumn where " +
 					"typeSettings like '%selection%'");
 
@@ -146,7 +136,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

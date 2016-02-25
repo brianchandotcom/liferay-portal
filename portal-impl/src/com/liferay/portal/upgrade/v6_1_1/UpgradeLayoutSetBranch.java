@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -30,14 +29,11 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, layoutSetBranchId, privateLayout from " +
 					"LayoutSetBranch");
 
@@ -53,7 +49,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -64,12 +60,9 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("update LayoutSetBranch set themeId = ?, colorSchemeId ");
@@ -78,7 +71,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			sb.append("layoutSetPrototypeLinkEnabled = ? where ");
 			sb.append("layoutSetBranchId = ?");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, themeId);
 			ps.setString(2, colorSchemeId);
@@ -93,7 +86,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -101,13 +94,10 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			long layoutSetBranchId, long groupId, boolean privateLayout)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select themeId, colorSchemeId, wapThemeId, ");
@@ -115,7 +105,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			sb.append("layoutSetPrototypeUuid, layoutSetPrototypeLinkEnabled ");
 			sb.append("from LayoutSet where groupId = ? and privateLayout = ?");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, groupId);
 			ps.setBoolean(2, privateLayout);
@@ -141,7 +131,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

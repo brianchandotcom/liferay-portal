@@ -56,8 +56,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = connection.prepareStatement(
 				"insert into DDMStructureLink (structureLinkId, classNameId, " +
 					"classPK, structureId) values (?, ?, ?, ?)");

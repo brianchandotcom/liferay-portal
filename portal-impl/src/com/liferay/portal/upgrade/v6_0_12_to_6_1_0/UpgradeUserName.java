@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -38,13 +37,10 @@ public class UpgradeUserName extends UpgradeProcess {
 	protected void updateTable(String tableName, boolean setCompanyId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(11);
 
 			sb.append("select distinct User_.companyId, User_.userId, ");
@@ -61,7 +57,7 @@ public class UpgradeUserName extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -108,7 +104,7 @@ public class UpgradeUserName extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

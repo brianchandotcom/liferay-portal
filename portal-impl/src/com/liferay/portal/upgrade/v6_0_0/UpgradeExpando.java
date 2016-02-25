@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -35,14 +34,11 @@ public class UpgradeExpando extends UpgradeProcess {
 			long scTableId, long snTableId, long wolTableId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from ExpandoColumn where tableId = ?");
 
 			ps.setLong(1, wolTableId);
@@ -77,7 +73,7 @@ public class UpgradeExpando extends UpgradeProcess {
 				scColumnId, scTableId, snColumnId, snTableId, wolTableId);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -86,14 +82,11 @@ public class UpgradeExpando extends UpgradeProcess {
 			long wolTableId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from ExpandoRow where tableId = ?");
 
 			ps.setLong(1, wolTableId);
@@ -127,19 +120,16 @@ public class UpgradeExpando extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateTables() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from ExpandoTable where name = ?");
 
 			ps.setString(1, "WOL");
@@ -172,7 +162,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -181,14 +171,11 @@ public class UpgradeExpando extends UpgradeProcess {
 			long snRowId, long snTableId, long wolRowId, long wolTableId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from ExpandoValue where tableId = ? and rowId_ = ?");
 
 			ps.setLong(1, wolTableId);
@@ -219,7 +206,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

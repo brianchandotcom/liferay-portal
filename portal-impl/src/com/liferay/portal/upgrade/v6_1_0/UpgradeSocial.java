@@ -35,7 +35,6 @@ import com.liferay.social.kernel.model.SocialActivityCounterConstants;
 import com.liferay.social.kernel.model.SocialActivityCounterDefinition;
 import com.liferay.social.kernel.util.SocialCounterPeriodUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -125,13 +124,10 @@ public class UpgradeSocial extends UpgradeProcess {
 			int endPeriod)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into SocialActivityCounter (activityCounterId, ");
@@ -140,7 +136,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("startPeriod, endPeriod) values (?, ?, ?, ?, ?, ?, ?, ");
 			sb.append("?, ?, ?, ?, ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, activityCounterId);
 			ps.setLong(2, groupId);
@@ -158,7 +154,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -186,14 +182,11 @@ public class UpgradeSocial extends UpgradeProcess {
 			long classNameId, int activityType, String name, String value)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"insert into SocialActivitySetting (activitySettingId, " +
 					"groupId, companyId, classNameId, activityType, name, " +
 						"value) values (?, ?, ?, ?, ?, ?, ?)");
@@ -209,7 +202,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -248,13 +241,10 @@ public class UpgradeSocial extends UpgradeProcess {
 			int ownerType, int startPeriod, int endPeriod)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select activityCounterId, totalValue from ");
@@ -262,7 +252,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("classNameId = ? and classPK = ? and name = ? and ");
 			sb.append("ownerType = ? and startPeriod = ? and endPeriod = ?");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, groupId);
 			ps.setLong(2, classNameId);
@@ -284,19 +274,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected long[] getAssetEntryArray(long assetEntryId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, userId, classNameId, classPK " +
 					"from AssetEntry where entryId = " + assetEntryId);
 
@@ -317,20 +304,17 @@ public class UpgradeSocial extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected long[] getAssetEntryArray(String className, long classPK)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			long classNameId = PortalUtil.getClassNameId(className);
 
 			StringBundler sb = new StringBundler(5);
@@ -341,7 +325,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append(" and classPK = ");
 			sb.append(classPK);
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -358,19 +342,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected long getMBThreadRootMessageId(long mbThreadId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select rootMessageId from MBThread where threadId = " +
 					mbThreadId);
 
@@ -383,7 +364,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			return -1;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -392,13 +373,10 @@ public class UpgradeSocial extends UpgradeProcess {
 			int ownerType, int startPeriod)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select max(totalValue) as totalValue from ");
@@ -406,7 +384,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("classNameId = ? and classPK = ? and name = ? and ");
 			sb.append("ownerType = ? and startPeriod < ?");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, groupId);
 			ps.setLong(2, classNameId);
@@ -424,19 +402,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void migrateEquityGroupSettings() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, classNameId, enabled from " +
 					"SocialEquityGroupSetting where type_ = 1");
 
@@ -473,7 +448,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append(mbThreadClassNameId);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -497,7 +472,7 @@ public class UpgradeSocial extends UpgradeProcess {
 					mbThreadClassNameId);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -584,13 +559,10 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void migrateEquityLogs() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select AssetEntry.classNameId, AssetEntry.classPK, ");
@@ -598,7 +570,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("where SocialEquityLog.assetEntryId = ");
 			sb.append("AssetEntry.entryId order by actionDate");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -615,7 +587,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("from SocialActivityCounter group by groupId, ");
 			sb.append("classNameId, classPK, name");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -645,19 +617,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void migrateEquitySettings() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, classNameId, actionId, " +
 					"dailyLimit, type_, value from SocialEquitySetting");
 
@@ -724,7 +693,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

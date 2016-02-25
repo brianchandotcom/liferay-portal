@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -40,14 +39,11 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected long getJournalStructureId(String structureId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select id_ from JournalStructure where structureId = ?");
 
 			ps.setString(1, structureId);
@@ -61,7 +57,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -69,14 +65,11 @@ public class UpgradeAsset extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.journal.model.JournalArticle");
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +
 					"where structureId != ''");
 
@@ -95,7 +88,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -121,14 +114,11 @@ public class UpgradeAsset extends UpgradeProcess {
 			long dlFileEntryClassNameId, long igImageClassNameId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select fileEntryTypeId, companyId from DLFileEntryType " +
 					"where name = ?");
 
@@ -155,7 +145,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

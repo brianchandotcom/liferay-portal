@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -39,14 +38,11 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select plid, companyId, name, title, typeSettings from " +
 					"Layout");
 
@@ -63,7 +59,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -195,13 +191,10 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Layout set " + columName + " = ? where plid = " + plid);
 
 			ps.setString(1, xml);
@@ -209,20 +202,17 @@ public class UpgradeLayout extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 
 		return typeSettingsProperties;
 	}
 
 	protected void updateName(long plid, String name) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Layout set name = ? where plid = " + plid);
 
 			ps.setString(1, name);
@@ -230,18 +220,15 @@ public class UpgradeLayout extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateTitle(long plid, String title) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Layout set title = ? where plid = " + plid);
 
 			ps.setString(1, title);
@@ -249,20 +236,17 @@ public class UpgradeLayout extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateTypeSettings(long plid, String typeSettings)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Layout set typeSettings = ? where plid = " + plid);
 
 			ps.setString(1, typeSettings);
@@ -270,7 +254,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

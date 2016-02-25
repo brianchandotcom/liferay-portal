@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -36,12 +35,9 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 			boolean privateLayout, String friendlyURL)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into LayoutFriendlyURL (uuid_, ");
@@ -50,7 +46,7 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 			sb.append("privateLayout, friendlyURL, languageId) values (?, ?, ");
 			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, increment());
@@ -69,20 +65,17 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select plid, groupId, companyId, userId, userName, " +
 					"createDate, modifiedDate, privateLayout, friendlyURL " +
 						"from Layout");
@@ -106,7 +99,7 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -22,7 +22,6 @@ import com.liferay.util.Encryptor;
 
 import java.security.Key;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -39,14 +38,12 @@ public class UpgradeCompany extends UpgradeProcess {
 			return;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select companyId, key_ from Company");
+			ps = connection.prepareStatement(
+				"select companyId, key_ from Company");
 
 			rs = ps.executeQuery();
 
@@ -58,7 +55,7 @@ public class UpgradeCompany extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -77,14 +74,11 @@ public class UpgradeCompany extends UpgradeProcess {
 			}
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Company set key_ = ? where companyId = ?");
 
 			ps.setString(1, Base64.objectToString(Encryptor.generateKey()));
@@ -93,7 +87,7 @@ public class UpgradeCompany extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

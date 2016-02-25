@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DDMTemplateTable;
 import com.liferay.util.xml.XMLUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,14 +106,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			long structureId, String structureKey, String xsd)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update DDMStructure set structureKey = ?, xsd = ? where " +
 					"structureId = ?");
 
@@ -130,19 +126,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateStructures() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select structureId, structureKey, xsd from DDMStructure");
 
 			rs = ps.executeQuery();
@@ -164,19 +157,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateStructuresClassNameId() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update DDMStructure set classNameId = ? where " +
 					"classNameId = ?");
 
@@ -198,7 +188,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -206,14 +196,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			long templateId, String templateKey, String script)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update DDMTemplate set templateKey = ?, script = ? where " +
 					"templateId = ?");
 
@@ -224,19 +211,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateTemplates() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select templateId, templateKey, script from DDMTemplate " +
 					"where language = 'xsd'");
 
@@ -260,7 +244,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

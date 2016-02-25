@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -40,14 +39,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	protected List<Long> getFileVersionIds(long folderId, String name)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select fileVersionId from DLFileVersion where folderId = ? " +
 					"and name = ? order by version desc");
 
@@ -67,12 +63,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			return fileVersionIds;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateFileEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -82,9 +77,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			long classNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select tableId from ExpandoTable where classNameId = " +
 					classNameId);
 
@@ -97,13 +90,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select uuid_, fileEntryId, groupId, folderId, name, title " +
 					"from DLFileEntry");
 
@@ -146,7 +137,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -155,13 +146,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			String description, String extraSettings)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update DLFileVersion set extension = ?, title = ?, " +
 					"description = ?, extraSettings = ? where fileVersionId " +
 						"= ?");
@@ -175,19 +163,16 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateFileVersions() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select folderId, name, extension, title, description, " +
 					"extraSettings from DLFileEntry");
 
@@ -211,7 +196,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

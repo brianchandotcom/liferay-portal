@@ -19,7 +19,6 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -72,14 +71,11 @@ public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select messageId, groupId, companyId, userId, userName, " +
 					"threadId from MBMessage where classNameId = 0 and " +
 						"classPK = 0");
@@ -99,7 +95,7 @@ public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

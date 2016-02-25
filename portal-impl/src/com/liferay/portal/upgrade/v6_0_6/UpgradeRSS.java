@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -35,14 +34,11 @@ public class UpgradeRSS extends BaseUpgradePortletPreferences {
 		long groupId = 0;
 		String articleId = StringPool.BLANK;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, articleId from JournalArticle where " +
 					"resourcePrimKey = ?");
 
@@ -58,7 +54,7 @@ public class UpgradeRSS extends BaseUpgradePortletPreferences {
 		catch (Exception e) {
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return new String[] {String.valueOf(groupId), articleId};

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -78,14 +77,11 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		String uuid = StringPool.BLANK;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select uuid_ from " + tableName + " where " + columnName1 +
 					" = ? or " + columnName2 + " = ?");
 
@@ -99,7 +95,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return uuid;
@@ -108,13 +104,10 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateAssetEntry(long classNameId, long classPK, String uuid)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update AssetEntry set classUuid = ? where classNameId = ? " +
 					"and classPK = ?");
 
@@ -125,7 +118,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -159,14 +152,11 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select classPK from AssetEntry where classNameId = ?");
 
 			ps.setLong(1, classNameId);
@@ -183,7 +173,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

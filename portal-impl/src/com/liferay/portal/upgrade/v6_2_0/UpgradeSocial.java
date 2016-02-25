@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -46,13 +45,10 @@ public class UpgradeSocial extends UpgradeProcess {
 			long classPK, int type, String extraData, long receiverUserId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into SocialActivity (activityId, groupId, ");
@@ -61,7 +57,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("receiverUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
 			sb.append("?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, activityId);
 			ps.setLong(2, groupId);
@@ -83,7 +79,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -132,16 +128,13 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			Set<String> keys = new HashSet<>();
 
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, userId, modifiedDate, " +
 					"fileEntryId, title, version from DLFileVersion " +
 						"where status = ?");
@@ -181,7 +174,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -211,14 +204,11 @@ public class UpgradeSocial extends UpgradeProcess {
 			return;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select activityId, activitySetId from SO_SocialActivity");
 
 			rs = ps.executeQuery();
@@ -238,7 +228,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table SO_SocialActivity");
@@ -250,16 +240,13 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			Set<String> keys = new HashSet<>();
 
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, userId, modifiedDate, " +
 					"resourcePrimKey, version from WikiPage");
 
@@ -295,7 +282,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

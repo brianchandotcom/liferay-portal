@@ -88,8 +88,6 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-
 			ps1 = connection.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +
 					"where structureId != ''");

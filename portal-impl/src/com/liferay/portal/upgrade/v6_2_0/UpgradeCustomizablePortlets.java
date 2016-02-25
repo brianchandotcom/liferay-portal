@@ -29,7 +29,6 @@ import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -43,14 +42,11 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select ownerId, ownerType, preferences from " +
 					"PortalPreferences where preferences like " +
 						"'%com.liferay.portal.kernel.model.CustomizedPages%'");
@@ -73,7 +69,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -91,14 +87,11 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			long ownerId, int ownerType, long plid, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select portletPreferencesId, ownerId, ownerType, plid, " +
 					"portletId, preferences from PortletPreferences where " +
 						"ownerId = ?, ownerType = ?, plid = ?, portletId = ?");
@@ -128,7 +121,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			return portletPreferences;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -154,14 +147,11 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			long userId, long plid, String portletId, String newPortletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update PortletPreferences set ownerId = ?, ownerType = ?, " +
 					"plid = ?, portletId = ? where ownerId = ? and " +
 						"ownerType = ? and plid = ? and portletId = ?");
@@ -178,7 +168,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

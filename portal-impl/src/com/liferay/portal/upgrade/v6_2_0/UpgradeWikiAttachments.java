@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -72,13 +71,10 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select resourcePrimKey, groupId, companyId, ");
@@ -86,7 +82,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 			sb.append("nodeId from WikiPage group by resourcePrimKey, ");
 			sb.append("groupId, companyId, nodeId");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -104,7 +100,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

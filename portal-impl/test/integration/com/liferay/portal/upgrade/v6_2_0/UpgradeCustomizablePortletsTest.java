@@ -129,7 +129,7 @@ public class UpgradeCustomizablePortletsTest
 
 		portalPreferencesWrapper.store();
 
-		doUpgrade();
+		upgrade();
 
 		Assert.assertEquals(_newPortletIds.size(), 4);
 		Assert.assertFalse(PortletConstants.hasUserId(_newPortletIds.get(0)));

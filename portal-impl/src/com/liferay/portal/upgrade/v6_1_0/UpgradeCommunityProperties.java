@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -49,7 +48,6 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			String newValue)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -69,8 +67,6 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			runSQL(sb.toString());
 		}
 		catch (Exception e) {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			sb = new StringBundler(7);
 
 			sb.append("select ");
@@ -81,7 +77,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			sb.append(oldValue);
 			sb.append("%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -95,7 +91,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -106,7 +102,6 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 
 		preferences = StringUtil.replace(preferences, oldValue, newValue);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -119,9 +114,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		sb.append(" = ?");
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, preferences);
 			ps.setLong(2, primaryKey);
@@ -129,7 +122,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

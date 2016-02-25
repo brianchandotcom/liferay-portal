@@ -45,7 +45,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,12 +89,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			long largeImageId, long custom1ImageId, long custom2ImageId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("insert into DLFileEntry (uuid_, fileEntryId, groupId, ");
@@ -110,7 +106,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, uuid);
 			ps.setLong(2, fileEntryId);
@@ -142,7 +138,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -156,12 +152,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			Timestamp statusDate)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
@@ -175,7 +168,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, fileVersionId);
 			ps.setLong(2, groupId);
@@ -204,7 +197,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -215,12 +208,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			String name, String description, Timestamp lastPostDate)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into DLFolder (uuid_, folderId, groupId, ");
@@ -231,7 +221,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, uuid);
 			ps.setLong(2, folderId);
@@ -251,7 +241,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -260,14 +250,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			return;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select distinct companyId from IGImage");
+			ps = connection.prepareStatement(
+				"select distinct companyId from IGImage");
 
 			rs = ps.executeQuery();
 
@@ -283,7 +271,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -292,13 +280,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			Timestamp createDate, Timestamp modifiedDate)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("insert into DLFileEntryType (uuid_, groupId, ");
@@ -306,7 +291,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			sb.append("modifiedDate, name, description, fileEntryTypeId) ");
 			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, groupId);
@@ -322,7 +307,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -337,15 +322,13 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			"delete from ResourcePermission where name = ? and companyId = ? " +
 				"and scope = ? and primKey = ? and roleId = ?";
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps1 = con.prepareStatement(selectSQL);) {
-
+		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);) {
 			ps1.setString(1, igResourceName);
 
 			try (ResultSet rs = ps1.executeQuery();
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						con.prepareStatement(deleteSQL))) {
+						connection.prepareStatement(deleteSQL))) {
 
 				while (rs.next()) {
 					ps2.setString(1, dlResourceName);
@@ -397,14 +380,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select actionId, bitwiseValue from ResourceAction " +
 					"where name = ?");
 
@@ -424,19 +404,16 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			return bitwiseValues;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected long getCompanyGroupId(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Group_ where classNameId = ? and " +
 					"classPK = ?");
 
@@ -454,19 +431,16 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected byte[] getDatabaseImageAsBytes(Image image) throws SQLException {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select text_ from Image where imageId = ?");
 
 			ps.setLong(1, image.getImageId());
@@ -485,21 +459,18 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return new byte[0];
 	}
 
 	protected long getDefaultUserId(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select userId from User_ where companyId = ? and " +
 					"defaultUser = ?");
 
@@ -515,7 +486,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -545,14 +516,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected Image getImage(long imageId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select imageId, modifiedDate, type_, height, width, size_ " +
 					"from Image where imageId = " + imageId);
 
@@ -574,19 +542,16 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected long getMaxFileVersionId(long fileEntryId) {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select max(fileVersionId) from DLFileVersion where " +
 					"fileEntryId = " + fileEntryId);
 
@@ -604,7 +569,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
@@ -721,13 +686,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void migrateImageFiles() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select fileEntryId, companyId, groupId, folderId, ");
@@ -739,7 +701,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			sb.append("!= 0)) or ((custom2ImageId is not null) and ");
 			sb.append("(custom2ImageId != 0))");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -760,7 +722,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		if (_sourceHookClassName.equals(DLHook.class.getName())) {
@@ -768,9 +730,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select imageId from Image");
+			ps = connection.prepareStatement("select imageId from Image");
 
 			rs = ps.executeQuery();
 
@@ -781,7 +741,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		if (_sourceHookClassName.equals(DatabaseHook.class.getName())) {
@@ -821,14 +781,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void updateIGFolderEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from IGFolder order by folderId asc");
 
 			rs = ps.executeQuery();
@@ -866,7 +823,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			runSQL("drop table IGFolder");
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -881,14 +838,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void updateIGImageEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select fileEntryTypeId, companyId from DLFileEntryType " +
 					"where name = ?");
 
@@ -914,27 +868,24 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			runSQL("drop table IGImage");
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateIGImageEntries(long companyId, long fileEntryTypeId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			String sql = "select * from IGImage";
 
 			if (companyId != 0) {
 				sql = "select * from IGImage where companyId = ?";
 			}
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			if (companyId != 0) {
 				ps.setLong(1, companyId);
@@ -1008,7 +959,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -1017,14 +968,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			Map<Long, Long> folderIds)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select folderId from DLFolder where groupId = " + groupId +
 					" and parentFolderId = " + parentFolderId +
 						" and name = ?");
@@ -1046,7 +994,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;

@@ -16,7 +16,6 @@ package com.liferay.microblogs.upgrade.v1_0_1;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -38,60 +37,48 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			long userNotificationEventId, JSONObject jsonObject)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update UserNotificationEvent set payload = ? " +
-					"where userNotificationEventId = ?");
+					"where userNotificationEventId = ?")) {
 
 			ps.setString(1, jsonObject.toString());
 			ps.setLong(2, userNotificationEventId);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void upgradeNotifications() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select userNotificationEventId, payload from " +
-					"UserNotificationEvent where type_ = ?");
+					"UserNotificationEvent where type_ = ?")) {
 
 			ps.setString(1, MicroblogsPortletKeys.MICROBLOGS);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long userNotificationEventId = rs.getLong(
+						"userNotificationEventId");
+					String payload = rs.getString("payload");
 
-			while (rs.next()) {
-				long userNotificationEventId = rs.getLong(
-					"userNotificationEventId");
-				String payload = rs.getString("payload");
+					JSONObject payloadJSONObject =
+						JSONFactoryUtil.createJSONObject(payload);
 
-				JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
-					payload);
+					int notificationType = payloadJSONObject.getInt(
+						"notificationType");
 
-				int notificationType = payloadJSONObject.getInt(
-					"notificationType");
+					if (notificationType != 0) {
+						return;
+					}
 
-				if (notificationType != 0) {
-					return;
+					payloadJSONObject.put(
+						"notificationType",
+						MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY);
+
+					updateNotification(
+						userNotificationEventId, payloadJSONObject);
 				}
-
-				payloadJSONObject.put(
-					"notificationType",
-					MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY);
-
-				updateNotification(userNotificationEventId, payloadJSONObject);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

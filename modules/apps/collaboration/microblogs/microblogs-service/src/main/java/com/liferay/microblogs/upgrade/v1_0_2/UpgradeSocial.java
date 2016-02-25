@@ -15,7 +15,6 @@
 package com.liferay.microblogs.upgrade.v1_0_2;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -37,55 +36,43 @@ public class UpgradeSocial extends UpgradeProcess {
 	protected void updateSocialActivity(long activityId, JSONObject jsonObject)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update SocialActivity set extraData = ? where activityId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update SocialActivity set extraData = ? where activityId = " +
+					"?")) {
 
 			ps.setString(1, jsonObject.toString());
 			ps.setLong(2, activityId);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void upgradeMicroblogActivities() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select activityId, extraData from SocialActivity where " +
-					"classNameId = ?");
+					"classNameId = ?")) {
 
 			ps.setLong(1, PortalUtil.getClassNameId(MicroblogsEntry.class));
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long activityId = rs.getLong("activityId");
+					String extraData = rs.getString("extraData");
 
-			while (rs.next()) {
-				long activityId = rs.getLong("activityId");
-				String extraData = rs.getString("extraData");
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject(extraData);
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject(extraData);
+					long parentMicroblogsEntryId = extraDataJSONObject.getLong(
+						"receiverMicroblogsEntryId");
 
-				long parentMicroblogsEntryId = extraDataJSONObject.getLong(
-					"receiverMicroblogsEntryId");
+					extraDataJSONObject.put(
+						"parentMicroblogsEntryId", parentMicroblogsEntryId);
 
-				extraDataJSONObject.put(
-					"parentMicroblogsEntryId", parentMicroblogsEntryId);
+					extraDataJSONObject.remove("receiverMicroblogsEntryId");
 
-				extraDataJSONObject.remove("receiverMicroblogsEntryId");
-
-				updateSocialActivity(activityId, extraDataJSONObject);
+					updateSocialActivity(activityId, extraDataJSONObject);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

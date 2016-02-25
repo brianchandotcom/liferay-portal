@@ -25,17 +25,21 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.LongWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, service = PortletDataHandlerStatusMessageSender.class
+)
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
@@ -61,7 +65,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("portletId", portletId);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet != null) {
 			PortletDataHandler portletDataHandler =
@@ -124,6 +128,13 @@ public class PortletDataHandlerStatusMessageSenderImpl
 			message);
 	}
 
+	@Reference(unbind = "-")
+	public void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	protected void init(
 		Message message, String messageType, ManifestSummary manifestSummary) {
 
@@ -152,7 +163,8 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		_backgroundTaskStatusMessageSender = backgroundTaskStatusMessageSender;
 	}
 
-	private volatile BackgroundTaskStatusMessageSender
+	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
+	private PortletLocalService _portletLocalService;
 
 }

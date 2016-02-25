@@ -41,9 +41,11 @@ public class RouterImplTest {
 
 		_routerImpl = new RouterImpl();
 
-		Route route = _routerImpl.addRoute("instance/{instanceId}/{topLink}");
+		Route route = _routerImpl.addRoute(
+			"instance/{userIdAndInstanceId}/{topLink}");
 
-		route.addGeneratedParameter("p_p_id", "15_INSTANCE_{instanceId}");
+		route.addGeneratedParameter(
+			"p_p_id", "15_INSTANCE_{userIdAndInstanceId}");
 
 		route = _routerImpl.addRoute("GET/{controller}");
 

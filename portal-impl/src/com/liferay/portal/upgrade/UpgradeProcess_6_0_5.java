@@ -36,6 +36,8 @@ public class UpgradeProcess_6_0_5 extends UpgradeProcess {
 
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeLayout.class);
+
+		clearIndexesCache();
 	}
 
 }

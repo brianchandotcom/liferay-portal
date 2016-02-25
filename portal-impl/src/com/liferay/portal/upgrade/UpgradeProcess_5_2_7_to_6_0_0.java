@@ -52,6 +52,8 @@ public class UpgradeProcess_5_2_7_to_6_0_0 extends UpgradeProcess {
 		upgrade(UpgradePortletId.class);
 		upgrade(UpgradeResourceAction.class);
 		upgrade(UpgradeShopping.class);
+
+		clearIndexesCache();
 	}
 
 }

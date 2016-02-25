@@ -89,6 +89,8 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradeUser.class);
 		upgrade(UpgradeWiki.class);
 		upgrade(UpgradeWikiAttachments.class);
+
+		clearIndexesCache();
 	}
 
 }

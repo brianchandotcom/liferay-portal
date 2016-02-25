@@ -97,6 +97,8 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeSharding.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
+
+		clearIndexesCache();
 	}
 
 }

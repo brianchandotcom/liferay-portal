@@ -18,14 +18,39 @@ import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import java.lang.reflect.Field;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,6 +58,10 @@ import java.sql.Connection;
  */
 public abstract class UpgradeProcess
 	extends BaseDBProcess implements UpgradeStep {
+
+	public void clearIndexesCache() {
+		_portalIndexesSQL.clear();
+	}
 
 	public int getThreshold() {
 
@@ -94,6 +123,84 @@ public abstract class UpgradeProcess
 		upgradeProcess.upgrade();
 	}
 
+	protected void alterColumnType(
+			Class<?> tableClass, String columnName, String columnType)
+		throws Exception {
+
+		Field tableNameField = tableClass.getField("TABLE_NAME");
+
+		String tableName = (String)tableNameField.get(null);
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			ResultSet rs = databaseMetaData.getIndexInfo(
+				null, null, normalizeName(tableName, databaseMetaData), false,
+				false);
+
+			Map<String, Set<String>> map = new HashMap<>();
+
+			while (rs.next()) {
+				String indexName = StringUtil.toUpperCase(
+					rs.getString("INDEX_NAME"));
+
+				Set<String> columnNames = map.get(indexName);
+
+				if (columnNames == null) {
+					columnNames = new HashSet<>();
+
+					map.put(indexName, columnNames);
+				}
+
+				columnNames.add(rs.getString("COLUMN_NAME"));
+			}
+
+			for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
+				Set<String> columnNames = entry.getValue();
+
+				if (columnNames.contains(columnName)) {
+					runSQL("drop index " + entry.getKey() + " on " + tableName);
+				}
+			}
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("alter_column_type ");
+			sb.append(tableName);
+			sb.append(" ");
+			sb.append(columnName);
+			sb.append(" ");
+			sb.append(columnType);
+
+			runSQL(sb.toString());
+
+			for (ObjectValuePair<String, IndexMetadata> objectValuePair :
+					_getIndexesSQL(tableClass.getClassLoader(), tableName)) {
+
+				IndexMetadata indexMetadata = objectValuePair.getValue();
+
+				if (ArrayUtil.contains(
+						indexMetadata.getColumnNames(), columnName)) {
+
+					runSQL(objectValuePair.getKey());
+				}
+			}
+		}
+		catch (SQLException sqle) {
+			Field tableColumnsField = tableClass.getField("TABLE_COLUMNS");
+
+			Field tableSQLCreateField = tableClass.getField("TABLE_SQL_CREATE");
+
+			Field tableSQLAddIndexesField = tableClass.getField(
+				"TABLE_SQL_ADD_INDEXES");
+
+			upgradeTable(
+				tableName, (Object[][])tableColumnsField.get(null),
+				(String)tableSQLCreateField.get(null),
+				(String[])tableSQLAddIndexesField.get(null));
+		}
+	}
+
 	protected abstract void doUpgrade() throws Exception;
 
 	protected long increment() {
@@ -132,6 +239,21 @@ public abstract class UpgradeProcess
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
+	protected String normalizeName(
+			String name, DatabaseMetaData databaseMetaData)
+		throws SQLException {
+
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return StringUtil.toLowerCase(name);
+		}
+
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return StringUtil.toUpperCase(name);
+		}
+
+		return name;
+	}
+
 	protected void upgradeTable(String tableName, Object[][] tableColumns)
 		throws Exception {
 
@@ -155,6 +277,84 @@ public abstract class UpgradeProcess
 		upgradeTable.updateTable();
 	}
 
+	private List<ObjectValuePair<String, IndexMetadata>> _getIndexesSQL(
+			ClassLoader classLoader, String tableName)
+		throws IOException {
+
+		if (!PortalClassLoaderUtil.isPortalClassLoader(classLoader)) {
+			List<ObjectValuePair<String, IndexMetadata>> objectValuePairs =
+				new ArrayList<>();
+
+			try (InputStream is = classLoader.getResourceAsStream(
+					"META-INF/sql/indexes.sql");
+				Reader reader = new InputStreamReader(is);
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(reader)) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					line = line.trim();
+
+					if (line.isEmpty()) {
+						continue;
+					}
+
+					objectValuePairs.add(
+						new ObjectValuePair<>(
+							line,
+							IndexMetadataFactoryUtil.createIndexMetadata(
+								line)));
+				}
+			}
+
+			return objectValuePairs;
+		}
+
+		if (!_portalIndexesSQL.isEmpty()) {
+			return _portalIndexesSQL.get(tableName);
+		}
+
+		try (InputStream is = classLoader.getResourceAsStream(
+				"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+			Reader reader = new InputStreamReader(is);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(reader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.isEmpty()) {
+					continue;
+				}
+
+				IndexMetadata indexMetadata =
+					IndexMetadataFactoryUtil.createIndexMetadata(line);
+
+				List<ObjectValuePair<String, IndexMetadata>> objectValuePairs =
+					_portalIndexesSQL.get(indexMetadata.getTableName());
+
+				if (objectValuePairs == null) {
+					objectValuePairs = new ArrayList<>();
+
+					_portalIndexesSQL.put(
+						indexMetadata.getTableName(), objectValuePairs);
+				}
+
+				objectValuePairs.add(
+					new ObjectValuePair<>(line, indexMetadata));
+			}
+		}
+
+		return _portalIndexesSQL.get(tableName);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);
+
+	private static final Map
+		<String, List<ObjectValuePair<String, IndexMetadata>>>
+			_portalIndexesSQL = new HashMap<>();
 
 }

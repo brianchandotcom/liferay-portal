@@ -40,6 +40,8 @@ public class UpgradeProcess_6_1_1 extends UpgradeProcess {
 		upgrade(UpgradeLayout.class);
 		upgrade(UpgradeLayoutSet.class);
 		upgrade(UpgradeLayoutSetBranch.class);
+
+		clearIndexesCache();
 	}
 
 }

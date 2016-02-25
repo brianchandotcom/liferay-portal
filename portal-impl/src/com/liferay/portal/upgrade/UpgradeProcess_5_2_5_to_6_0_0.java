@@ -56,6 +56,8 @@ public class UpgradeProcess_5_2_5_to_6_0_0 extends UpgradeProcess {
 		upgrade(UpgradeResourceAction.class);
 		upgrade(UpgradeShopping.class);
 		upgrade(UpgradeWiki.class);
+
+		clearIndexesCache();
 	}
 
 }

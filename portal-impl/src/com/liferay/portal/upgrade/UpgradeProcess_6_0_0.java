@@ -60,6 +60,8 @@ public class UpgradeProcess_6_0_0 extends UpgradeProcess {
 		upgrade(UpgradeShopping.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeWiki.class);
+
+		clearIndexesCache();
 	}
 
 }

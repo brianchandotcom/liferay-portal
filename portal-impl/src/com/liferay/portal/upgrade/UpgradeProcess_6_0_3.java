@@ -48,6 +48,8 @@ public class UpgradeProcess_6_0_3 extends UpgradeProcess {
 		upgrade(UpgradePermission.class);
 		upgrade(UpgradeScopes.class);
 		upgrade(UpgradeSitemap.class);
+
+		clearIndexesCache();
 	}
 
 }

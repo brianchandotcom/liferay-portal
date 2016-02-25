@@ -36,6 +36,8 @@ public class UpgradeProcess_6_0_2 extends UpgradeProcess {
 
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeNestedPortlets.class);
+
+		clearIndexesCache();
 	}
 
 }

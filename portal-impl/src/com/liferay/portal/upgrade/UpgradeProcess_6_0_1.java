@@ -34,6 +34,8 @@ public class UpgradeProcess_6_0_1 extends UpgradeProcess {
 		upgrade(UpgradeSchema.class);
 
 		upgrade(UpgradeDocumentLibrary.class);
+
+		clearIndexesCache();
 	}
 
 }

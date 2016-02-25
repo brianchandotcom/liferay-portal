@@ -70,6 +70,8 @@ public class UpgradeProcess_6_0_12_to_6_1_0 extends UpgradeProcess {
 
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeAssetPublisher.class);
+
+		clearIndexesCache();
 	}
 
 }

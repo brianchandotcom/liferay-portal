@@ -193,7 +193,8 @@ public abstract class UpgradeProcess
 					if (ArrayUtil.contains(
 							indexMetadata.getColumnNames(), columnName)) {
 
-						runSQL(objectValuePair.getKey());
+						runSQLTemplateString(
+							objectValuePair.getKey(), false, true);
 					}
 				}
 			}

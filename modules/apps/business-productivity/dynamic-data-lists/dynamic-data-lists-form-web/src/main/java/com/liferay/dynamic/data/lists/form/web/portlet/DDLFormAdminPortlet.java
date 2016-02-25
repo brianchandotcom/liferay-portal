@@ -37,7 +37,7 @@ import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServ
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
@@ -199,20 +199,22 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		ddmFormFieldOptions.setDefaultLocale(locale);
 
 		StorageAdapter storageAdapter =
-			StorageAdapterRegistryUtil.getDefaultStorageAdapter();
+			_storageAdapterRegistry.getDefaultStorageAdapter();
 
 		String storageTypeDefault = storageAdapter.getStorageType();
 
 		ddmFormFieldOptions.addOptionLabel(
 			storageTypeDefault, locale, storageTypeDefault);
 
-		Set<String> storageTypes = StorageAdapterRegistryUtil.getStorageTypes();
+		Set<String> storageTypes = _storageAdapterRegistry.getStorageTypes();
 
 		for (String storageType : storageTypes) {
-			if (!storageType.equals(storageTypeDefault)) {
-				ddmFormFieldOptions.addOptionLabel(
-					storageType, locale, storageType);
+			if (storageType.equals(storageTypeDefault)) {
+				continue;
 			}
+
+			ddmFormFieldOptions.addOptionLabel(
+				storageType, locale, storageType);
 		}
 
 		return ddmFormFieldOptions;
@@ -395,6 +397,13 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setStorageAdapterRegistry(
+		StorageAdapterRegistry storageAdapterRegistry) {
+
+		_storageAdapterRegistry = storageAdapterRegistry;
+	}
+
+	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}
@@ -422,6 +431,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDMFormRenderer _ddmFormRenderer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JSONFactory _jsonFactory;
+	private StorageAdapterRegistry _storageAdapterRegistry;
 	private StorageEngine _storageEngine;
 	private WorkflowEngineManager _workflowEngineManager;
 

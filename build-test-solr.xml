@@ -10,7 +10,7 @@
 					<exclude name="solrconfig.xml" />
 				</fileset>
 
-				<fileset dir="modules/portal/portal-search-solr/src/main/resources/META-INF/resources">
+				<fileset dir="modules/apps/platform/portal-search/portal-search-solr/src/main/resources/META-INF/resources">
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>
@@ -58,7 +58,7 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 		<antcall target="delete-elasticseach-osgi-bundle" />
 
-		<gradle-execute dir="modules/portal/portal-search-solr" task="deploy">
+		<gradle-execute dir="modules/apps/platform/portal-search/portal-search-solr" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
 

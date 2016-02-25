@@ -67,10 +67,12 @@ public interface ScreensDDLRecordService extends BaseService {
 		Locale locale, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDLRecordsCount(long ddlRecordSetId);
+	public int getDDLRecordsCount(long ddlRecordSetId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDLRecordsCount(long ddlRecordSetId, long userId);
+	public int getDDLRecordsCount(long ddlRecordSetId, long userId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

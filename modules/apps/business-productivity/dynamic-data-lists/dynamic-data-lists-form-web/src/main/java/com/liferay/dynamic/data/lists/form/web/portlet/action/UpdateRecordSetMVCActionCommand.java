@@ -53,13 +53,13 @@ public class UpdateRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			actionRequest);
-
 		DDMStructure ddmStructure = updateDDMStructure(actionRequest);
 
 		DDLRecordSet recordSet = updateRecordSet(
 			actionRequest, ddmStructure.getStructureId());
+
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			actionRequest);
 
 		updateRecordSetSettings(
 			actionRequest, recordSet, settingsDDMFormValues);

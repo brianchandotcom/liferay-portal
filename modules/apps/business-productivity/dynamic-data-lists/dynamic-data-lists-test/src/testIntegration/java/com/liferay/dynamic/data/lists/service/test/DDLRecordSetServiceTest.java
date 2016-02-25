@@ -84,11 +84,11 @@ public class DDLRecordSetServiceTest {
 
 	@Test
 	public void testAddRecordSetWithFailStorage() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm(
 			_availableLocales, _defaultLocale);
 
 		DDLRecordSet ddlRecordSet = addRecordSet(
-			ddmForm, FailStorageAdapter.STORAGE_TYPE);
+			ddmStructureDDMForm, FailStorageAdapter.STORAGE_TYPE);
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
@@ -98,40 +98,41 @@ public class DDLRecordSetServiceTest {
 
 	@Test
 	public void testUpdateRecordSetWithFailStorage() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+		DDMForm ddmStructureDDMForm = DDMFormTestUtil.createDDMForm(
 			_availableLocales, _defaultLocale);
 
 		DDLRecordSet ddlRecordSet = addRecordSet(
-			ddmForm, FailStorageAdapter.STORAGE_TYPE);
+			ddmStructureDDMForm, FailStorageAdapter.STORAGE_TYPE);
 
 		String storageAdpater = ddlRecordSet.getDDMStructure().getStorageType();
 
-		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "Name");
+		DDMFormTestUtil.addTextDDMFormFields(ddmStructureDDMForm, "Name");
 
-		ddlRecordSet = updateRecordSet(ddlRecordSet, ddmForm);
+		ddlRecordSet = updateRecordSet(ddlRecordSet, ddmStructureDDMForm);
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		Assert.assertEquals(storageAdpater, ddmStructure.getStorageType());
 	}
 
-	protected DDLRecordSet addRecordSet(DDMForm ddmForm, String storageType)
+	protected DDLRecordSet addRecordSet(
+			DDMForm ddmStructureDDMForm, String storageType)
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, storageType);
+			ddmStructureDDMForm, storageType);
 
 		return _ddlRecordSetTestHelper.addRecordSet(ddmStructure);
 	}
 
 	protected DDLRecordSet updateRecordSet(
-			DDLRecordSet ddlRecordSet, DDMForm ddmForm)
+			DDLRecordSet ddlRecordSet, DDMForm ddmStructureDDMForm)
 		throws Exception {
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		ddmStructure = _ddmStructureTestHelper.updateStructure(
-			ddmStructure.getStructureId(), ddmForm);
+			ddmStructure.getStructureId(), ddmStructureDDMForm);
 
 		return _ddlRecordSetTestHelper.updateRecordSet(
 			ddlRecordSet.getRecordSetId(), ddmStructure);

@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -42,39 +41,28 @@ public class UpgradeCalendar extends UpgradeProcess {
 	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Calendar set timeZoneId = ? where calendarId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Calendar set timeZoneId = ? where calendarId = ?")) {
 
 			ps.setString(1, timeZoneId);
 			ps.setLong(2, calendarId);
 
 			ps.execute();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateCalendarTimeZoneIds() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(6);
 
-		try {
-			StringBundler sb = new StringBundler(6);
+		sb.append("select Calendar.calendarId, CalendarResource.");
+		sb.append("classNameId, User_.timeZoneId from Calendar ");
+		sb.append("inner join CalendarResource on Calendar.");
+		sb.append("calendarResourceId = CalendarResource.");
+		sb.append("calendarResourceId inner join User_ on ");
+		sb.append("CalendarResource.userId = User_.userId");
 
-			sb.append("select Calendar.calendarId, CalendarResource.");
-			sb.append("classNameId, User_.timeZoneId from Calendar ");
-			sb.append("inner join CalendarResource on Calendar.");
-			sb.append("calendarResourceId = CalendarResource.");
-			sb.append("calendarResourceId inner join User_ on ");
-			sb.append("CalendarResource.userId = User_.userId");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			long userClassNameId = PortalUtil.getClassNameId(User.class);
 
@@ -94,9 +82,6 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 				updateCalendarTimeZoneId(calendarId, timeZoneId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

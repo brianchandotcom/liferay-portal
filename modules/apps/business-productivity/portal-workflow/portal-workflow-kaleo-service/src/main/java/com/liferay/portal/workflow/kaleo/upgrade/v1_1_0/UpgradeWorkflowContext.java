@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
@@ -43,16 +42,12 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 	protected void updateTable(String tableName, String fieldName)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select " + fieldName + ", workflowContext from " + tableName +
 					" where workflowContext is not null and workflowContext " +
 						"not like '%serializable%'");
 
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			JSONSerializer jsonSerializer = new JSONSerializer();
 
@@ -74,9 +69,6 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 					tableName, fieldName, fieldValue, workflowContext);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateWorkflowContext(
@@ -84,20 +76,14 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 			String workflowContext)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update " + tableName + " set workflowContext = ? where " +
-					fieldName + " = ?");
+					fieldName + " = ?")) {
 
 			ps.setString(1, workflowContext);
 			ps.setLong(2, fieldValue);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

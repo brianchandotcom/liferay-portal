@@ -137,12 +137,11 @@ public abstract class UpgradeProcess
 
 		String tableName = (String)tableNameField.get(null);
 
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			ResultSet rs = databaseMetaData.getIndexInfo(
+		try (ResultSet rs = databaseMetaData.getIndexInfo(
 				null, null, normalizeName(tableName, databaseMetaData), false,
-				false);
+				false)) {
 
 			Map<String, Set<String>> map = new HashMap<>();
 

@@ -1,4 +1,18 @@
 .taglib-empty-result-message {
+	&.taglib-empty-result-message-compact {
+		min-height: auto !important;
+
+		.taglib-empty-result-message-header {
+			background: none;
+			padding-top: 0;
+		}
+
+		.taglib-empty-search-result-message-header {
+			background: none;
+			padding-top: 0;
+		}
+	}
+
 	.taglib-empty-result-message-header {
 		background: url(@theme_image_path@/emoticons/happy_new_content_right.gif) no-repeat 50% 50%;
 		background-size: 200px;

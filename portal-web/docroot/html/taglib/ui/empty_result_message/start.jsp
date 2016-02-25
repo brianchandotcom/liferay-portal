@@ -22,7 +22,7 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 %>
 
-<div class="card-horizontal main-content-card taglib-empty-result-message">
+<div class='card-horizontal main-content-card taglib-empty-result-message <%= compact ? "taglib-empty-result-message-compact" : StringPool.BLANK %>'>
 	<div class="card-row card-row-padded">
 		<c:choose>
 			<c:when test="<%= search %>">

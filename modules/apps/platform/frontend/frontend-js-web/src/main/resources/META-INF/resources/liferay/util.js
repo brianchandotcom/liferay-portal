@@ -835,17 +835,22 @@
 					if (!target.attr('data-prevent-selection')) {
 						var currentTarget = $(event.currentTarget);
 
-						if (disableButton !== false) {
-							selectorButtons.prop('disabled', false);
+						var confirmSelection = currentTarget.attr('data-confirm-selection');
+						var confirmSelectionMessage = currentTarget.attr('data-confirm-selection-message');
 
-							currentTarget.prop('disabled', true);
+						if (!confirmSelection || confirm(confirmSelectionMessage)) {
+							if (disableButton !== false) {
+								selectorButtons.prop('disabled', false);
+
+								currentTarget.prop('disabled', true);
+							}
+
+							var result = Util.getAttributes(currentTarget, 'data-');
+
+							openingLiferay.fire(selectEventName, result);
+
+							Util.getWindow().hide();
 						}
-
-						var result = Util.getAttributes(currentTarget, 'data-');
-
-						openingLiferay.fire(selectEventName, result);
-
-						Util.getWindow().hide();
 					}
 				}
 			);

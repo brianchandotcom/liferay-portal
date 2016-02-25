@@ -103,11 +103,15 @@ AUI.add(
 				var options = instance.array[i];
 
 				var select = A.one('#' + options.select);
-				var selectId = options.selectId;
 				var selectDesc = options.selectDesc;
+				var selectId = options.selectId;
+				var selectNullable = options.selectNullable || true;
 				var selectSort = options.selectSort;
 				var selectVal = options.selectVal;
-				var selectNullable = options.selectNullable || true;
+
+				if (!A.Lang.isArray(selectVal)) {
+					selectVal = [selectVal];
+				}
 
 				var selectOptions = [];
 
@@ -120,7 +124,13 @@ AUI.add(
 						var key = item[selectId];
 						var value = item[selectDesc];
 
-						selectOptions.push('<option value="' + key + '">' + value + '</option>');
+						var selected = '';
+
+						if (selectVal.indexOf(value) > -1) {
+							selected = 'selected="selected"';
+						}
+
+						selectOptions.push('<option ' + selected + ' value="' + key + '">' + value + '</option>');
 					}
 				);
 
@@ -132,19 +142,6 @@ AUI.add(
 
 				if (select) {
 					select.empty().append(selectOptions);
-
-					if (A.Lang.isArray(selectVal)) {
-						A.Array.each(selectVal, function(value) {
-							var option = select.one('option[value="' + value + '"]');
-
-							if (option) {
-								option.attr('selected', 'selected');
-							}
-						});
-					}
-					else {
-						select.val(selectVal);
-					}
 
 					if (Liferay.Browser.isIe()) {
 						select.setStyle('width', 'auto');

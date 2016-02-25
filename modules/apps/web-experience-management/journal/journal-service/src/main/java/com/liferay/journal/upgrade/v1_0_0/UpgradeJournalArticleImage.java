@@ -14,9 +14,9 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,51 +31,35 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 		updateJournalArticleImages();
 	}
 
-	protected void updateJournalArticle(long articleImageId, String elName)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update JournalArticleImage set elName = ? where " +
-					"articleImageId = ?");
-
-			ps.setString(1, elName);
-			ps.setLong(2, articleImageId);
-
-			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
 	protected void updateJournalArticleImages() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select articleImageId, elName from JournalArticleImage");
+			ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update JournalArticleImage set elName = ? where " +
+								"articleImageId = ?"))) {
 
-			while (rs.next()) {
-				long articleImageId = rs.getLong(1);
-				String elName = rs.getString(2);
+				while (rs.next()) {
+					long articleImageId = rs.getLong(1);
+					String elName = rs.getString(2);
 
-				int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
+					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
 
-				if (lastIndexOf > 0) {
-					elName = elName.substring(0, lastIndexOf);
+					if (lastIndexOf > 0) {
+						elName = elName.substring(0, lastIndexOf);
+					}
+
+					ps2.setString(1, elName);
+					ps2.setLong(2, articleImageId);
+
+					ps2.addBatch();
 				}
 
-				updateJournalArticle(articleImageId, elName);
+				ps2.executeBatch();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

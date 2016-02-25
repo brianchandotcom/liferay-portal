@@ -22,8 +22,6 @@ String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 
 portletURL.setParameter("displayStyle", displayStyle);
-
-RecordSetSearch recordSetSearch = ddlFormAdminDisplayContext.getRecordSetSearch();
 %>
 
 <liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
@@ -38,19 +36,8 @@ RecordSetSearch recordSetSearch = ddlFormAdminDisplayContext.getRecordSetSearch(
 		<liferay-ui:search-container
 			id="ddlRecordSet"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= recordSetSearch %>"
+			searchContainer="<%= ddlFormAdminDisplayContext.getRecordSetSearch() %>"
 		>
-
-			<%
-			searchContainer.setTotal(ddlFormAdminDisplayContext.getSearchContainerTotal(searchContainer));
-
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-ui:search-container-results
-				results="<%= ddlFormAdminDisplayContext.getSearchContainerResults(searchContainer) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
 				cssClass="entry-display-style"

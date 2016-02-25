@@ -599,8 +599,8 @@ minor benefit.
 #### What changed?
 
 The classes from package `com.liferay.util.bridges.mvc` in `util-bridges.jar`
-were moved to a new package `com.liferay.portal.kernel.portlet.bridges.mvc`
-in `portal-kernel.jar`.
+were moved to a new package `com.liferay.portal.kernel.portlet.bridges.mvc` in
+`portal-kernel.jar`.
 
 Old classes:
 
@@ -985,8 +985,8 @@ IDs.
 
 #### What changed?
 
-The class `AssetPublisherUtil` from the `portal-kernel` module has been moved
-to the module `AssetPublisher` and it is no longer a part of the public API.
+The class `AssetPublisherUtil` from the `portal-kernel` module has been moved to
+the module `AssetPublisher` and it is no longer a part of the public API.
 
 #### Who is affected?
 
@@ -3867,7 +3867,7 @@ in the OSGi container.
 
 ---------------------------------------
 
-### User Operation and Importer/Exporter Classes and Utilities Have Been Moved or Removed From portal-kernel  
+### User Operation and Importer/Exporter Classes and Utilities Have Been Moved or Removed From portal-kernel
 - **Date:** 2016-Feb-17
 - **JIRA Ticket:** LPS-63205
 

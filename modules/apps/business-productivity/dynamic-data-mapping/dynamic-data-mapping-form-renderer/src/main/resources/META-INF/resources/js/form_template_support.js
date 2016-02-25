@@ -31,6 +31,10 @@ AUI.add(
 				value: false
 			},
 
+			showSubmitButton: {
+				value: true
+			},
+
 			requiredFieldsWarningMessageHTML: {
 				valueFn: '_getRequiredFieldsWarningMessageHTML'
 			},
@@ -62,8 +66,8 @@ AUI.add(
 
 				return {
 					pages: normalizedLayout.pages,
-					readOnly: instance.get('readOnly'),
 					requiredFieldsWarningMessageHTML: instance.get('requiredFieldsWarningMessageHTML'),
+					showSubmitButton: instance.get('showSubmitButton'),
 					strings: instance.get('strings'),
 					submitLabel: instance.get('submitLabel')
 				};

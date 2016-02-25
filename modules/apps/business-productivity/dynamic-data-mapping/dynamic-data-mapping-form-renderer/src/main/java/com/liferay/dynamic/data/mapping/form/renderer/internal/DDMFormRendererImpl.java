@@ -311,6 +311,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"showRequiredFieldsWarning",
 			ddmFormRenderingContext.isShowRequiredFieldsWarning());
+
+		boolean showSubmitButton = ddmFormRenderingContext.isShowSubmitButton();
+
+		if (ddmFormRenderingContext.isReadOnly()) {
+			showSubmitButton = false;
+		}
+
+		template.put("showSubmitButton", showSubmitButton);
 		template.put("strings", getLanguageStringsMap(resourceBundle));
 
 		String submitLabel = GetterUtil.getString(

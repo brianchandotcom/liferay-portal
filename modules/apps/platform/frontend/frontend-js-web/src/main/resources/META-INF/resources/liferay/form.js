@@ -158,7 +158,7 @@ AUI.add(
 								if (errorFields.size() > 0 && !panel.hasClass('in')) {
 									var panelId = panel.get('id');
 
-									$('#' + panelId).collapse('show');
+									AUI.$('#' + panelId).collapse('show');
 								}
 							}
 						);

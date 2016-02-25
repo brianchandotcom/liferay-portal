@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo;
+package com.liferay.portal.workflow.kaleo.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;

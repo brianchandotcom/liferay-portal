@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo;
+package com.liferay.portal.workflow.kaleo.internal;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;

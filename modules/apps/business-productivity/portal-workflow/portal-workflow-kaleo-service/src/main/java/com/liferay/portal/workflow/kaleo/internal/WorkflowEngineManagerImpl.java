@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo;
+package com.liferay.portal.workflow.kaleo.internal;
 
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 

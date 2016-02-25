@@ -25,7 +25,18 @@ import com.liferay.registry.ServiceTracker;
 public class FullNameGeneratorFactory {
 
 	public static FullNameGenerator getInstance() {
-		return _instance._serviceTracker.getService();
+		FullNameGenerator fullNameGenerator =
+			_instance._serviceTracker.getService();
+
+		if (fullNameGenerator != null) {
+			return fullNameGenerator;
+		}
+
+		return _fullNameGenerator;
+	}
+
+	public void setFullNameGenerator(FullNameGenerator fullNameGenerator) {
+		_fullNameGenerator = fullNameGenerator;
 	}
 
 	private FullNameGeneratorFactory() {
@@ -38,6 +49,8 @@ public class FullNameGeneratorFactory {
 
 	private static final FullNameGeneratorFactory _instance =
 		new FullNameGeneratorFactory();
+
+	private static FullNameGenerator _fullNameGenerator;
 
 	private final ServiceTracker<FullNameGenerator, FullNameGenerator>
 		_serviceTracker;

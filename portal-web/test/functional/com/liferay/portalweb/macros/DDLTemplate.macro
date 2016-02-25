@@ -128,7 +128,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${dataDefinitionTemplateCopyName}" />
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
 
 		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />

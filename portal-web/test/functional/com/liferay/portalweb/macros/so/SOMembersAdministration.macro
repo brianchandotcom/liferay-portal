@@ -159,7 +159,7 @@
 		<if>
 			<equals arg1="${singleApproverWorkflow}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for creating an account. You will be notified via email at ${userEmailAddress} when your account has been approved." />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 				<execute function="Close#closeWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
 			</then>
 			<else>

@@ -124,7 +124,7 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -286,7 +286,7 @@
 
 		<var name="key_assetType" value="Bookmarks Folder" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${subfolderName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
@@ -306,7 +306,7 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="subscribePG">
@@ -337,7 +337,7 @@
 
 				<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 		</if>

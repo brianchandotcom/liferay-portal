@@ -174,7 +174,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="addFrontPagePG">
@@ -604,7 +604,7 @@
 		<execute function="AssertTextEquals" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_VERTICAL_ELLIPSIS" />
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="deleteFrontPagePGViaWD">
@@ -612,7 +612,7 @@
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_VERTICAL_ELLIPSIS" />
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#ALL_PAGES_TABLE_REVISION" value1="1.0" />
 
 		<execute macro="Navigator#openURL" />
@@ -629,7 +629,7 @@
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_VERTICAL_ELLIPSIS" />
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<if>
 			<equals arg1="${wikiPageTitle}" arg2="FrontPage" />
@@ -837,7 +837,7 @@
 
 	<command name="markAsSpamCP">
 		<execute function="AssertClick" locator1="Wiki#LINK_MARK_AS_SPAM" value1="Mark as Spam" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Version ${wikiPageRevision} was marked as spam." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="This version has been flagged as spam. An administrator will review your version as soon as possible." />
 	</command>
 
@@ -846,7 +846,7 @@
 
 		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveWikiPagePG">
@@ -929,7 +929,7 @@
 
 		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request has been completed successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="renameWikiPagePG">
@@ -1009,7 +1009,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals" locator1="Wiki#WORKFLOW_STATUS" value1="Draft" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
@@ -1071,7 +1071,7 @@
 			<then>
 				<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN_GENERIC" />
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</while>
 
@@ -1080,7 +1080,7 @@
 			<then>
 				<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN_GENERIC_2" />
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</while>
 

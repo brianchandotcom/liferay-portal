@@ -141,7 +141,7 @@
 
 				<execute function="Click" locator1="Button#RECYCLE_BIN" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</if>
 	</command>
@@ -152,7 +152,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" />
 	</command>
 
@@ -251,7 +251,7 @@
 
 		<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>

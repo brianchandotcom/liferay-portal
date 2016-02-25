@@ -2,19 +2,19 @@
 	<command name="viewLocalizedPageAddedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localized}" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="viewPageAddedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The page has been created successfully" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="viewRequestCompletedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="viewRequestFailedToComplete">
@@ -28,6 +28,6 @@
 	<command name="viewSetupUpdatedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 </definition>

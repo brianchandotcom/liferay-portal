@@ -812,9 +812,9 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<get-testray-logs-dir-name />
 
-			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt" />
-			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html" />
-			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html" />
+			<property name="testray.logs.jenkins.console" value="${testray.logs.dir.name}/jenkins-console.txt.gz" />
+			<property name="testray.logs.poshi.report" value="${testray.logs.dir.name}/index.html.gz" />
+			<property name="testray.logs.poshi.summary" value="${testray.logs.dir.name}/summary.html.gz" />
 		</sequential>
 	</macrodef>
 
@@ -6774,6 +6774,16 @@ if (ppstate.equals("normal")) {
 		<antcall target="record-testray-logs-jenkins-console" />
 
 		<antcall target="record-testray-logs-poshi-report" />
+
+		<execute>
+			gzip -r testray-logs/
+		</execute>
+
+		<for list="production,uat" param="testray.base.dir.name">
+			<sequential>
+				<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="record-testray-logs-jenkins-console">
@@ -6800,12 +6810,6 @@ if (ppstate.equals("normal")) {
 				/>
 
 				<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
-
-				<for list="production,uat" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-					</sequential>
-				</for>
 			</then>
 		</if>
 	</target>
@@ -6825,11 +6829,12 @@ if (ppstate.equals("normal")) {
 					<fileset dir="portal-web/test-results/${poshi.dir.name}" erroronmissingdir="false" />
 				</copy>
 
-				<for list="production,uat" param="testray.base.dir.name">
-					<sequential>
-						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-					</sequential>
-				</for>
+				<replaceregexp
+					file="testray-logs/${testray.logs.dir.name}/index.html"
+					flags="g"
+					match="\.jpg"
+					replace=".jpg.gz"
+				/>
 			</then>
 		</if>
 	</target>

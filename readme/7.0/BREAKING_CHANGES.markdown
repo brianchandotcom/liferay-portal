@@ -412,13 +412,13 @@ properly even when JavaScript is disabled.
 
 ---------------------------------------
 
-### Using util-taglib No Longer Binds You to Using portal-service's javax.servlet.jsp Implementation
+### Using util-taglib No Longer Binds You to Using portal-kernel's javax.servlet.jsp Implementation
 - **Date:** 2014-Jun-19
 - **JIRA Ticket:** LPS-47682
 
 #### What changed?
 
-Several APIs in `portal-service.jar` contained references to the
+Several APIs in `portal-kernel.jar` contained references to the
 `javax.servlet.jsp` package. This forced `util-taglib`, which depended on many
 of the package's features, to be bound to the same JSP implementation.
 
@@ -447,7 +447,7 @@ parameter.
 
 #### Why was this change made?
 
-As stated previously, the use of the `javax.servlet.jsp` API in `portal-service`
+As stated previously, the use of the `javax.servlet.jsp` API in `portal-kernel`
 prevented the use of any other JSP impl within plugins (OSGi or otherwise). This
 limited what Liferay could change with respect to providing its own JSP
 implementation within OSGi.
@@ -592,7 +592,7 @@ minor benefit.
 
 ---------------------------------------
 
-### Moved MVCPortlet, ActionCommand and ActionCommandCache from util-bridges.jar to portal-service.jar
+### Moved MVCPortlet, ActionCommand and ActionCommandCache from util-bridges.jar to portal-kernel.jar
 - **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50156
 
@@ -600,7 +600,7 @@ minor benefit.
 
 The classes from package `com.liferay.util.bridges.mvc` in `util-bridges.jar`
 were moved to a new package `com.liferay.portal.kernel.portlet.bridges.mvc`
-in `portal-service.jar`.
+in `portal-kernel.jar`.
 
 Old classes:
 
@@ -985,7 +985,7 @@ IDs.
 
 #### What changed?
 
-The class `AssetPublisherUtil` from the `portal-service` module has been moved
+The class `AssetPublisherUtil` from the `portal-kernel` module has been moved
 to the module `AssetPublisher` and it is no longer a part of the public API.
 
 #### Who is affected?
@@ -3453,7 +3453,7 @@ importer only sees a subset of the package.
 
 #### Who is affected?
 
-The `portal-service` and `portal-impl` folders have many packages with the same
+The `portal-kernel` and `portal-impl` folders have many packages with the same
 name. Therefore, all of these packages are affected by the split package
 problem.
 

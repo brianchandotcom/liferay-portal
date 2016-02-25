@@ -38,7 +38,7 @@
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 
@@ -58,7 +58,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

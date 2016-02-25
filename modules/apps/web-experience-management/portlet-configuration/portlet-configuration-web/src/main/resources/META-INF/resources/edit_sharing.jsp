@@ -86,7 +86,7 @@ Liferay.Widget({ url: '<%= widgetURL %>'});
 			%>
 
 			<div class="alert alert-info">
-				<aui:a href="http://www.facebook.com/developers/editapp.php?new" target="_blank"><liferay-ui:message key="get-the-api-key-and-canvas-page-url-from-facebook" /></aui:a>
+				<aui:a href="http://developers.facebook.com/" target="_blank"><liferay-ui:message key="get-the-api-key-and-canvas-page-url-from-facebook" /></aui:a>
 			</div>
 
 			<aui:input cssClass="lfr-input-text-container" label="api-key" name="facebookAPIKey" value="<%= HtmlUtil.toInputSafe(facebookAPIKey) %>" />

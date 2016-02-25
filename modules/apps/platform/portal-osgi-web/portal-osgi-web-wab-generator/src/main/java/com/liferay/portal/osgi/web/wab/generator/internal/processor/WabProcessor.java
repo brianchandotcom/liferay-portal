@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
 import aQute.bnd.osgi.Analyzer;
+import aQute.bnd.version.Version;
 
 import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -484,6 +485,34 @@ public class WabProcessor {
 			}
 			else {
 				_bundleVersion = "1.0.0";
+			}
+		}
+
+		if (!Version.isVersion(_bundleVersion)) {
+
+			// Check if it's in Maven format and convert it to OSGi.
+
+			Matcher matcher = _versionPatternMaven.matcher(_bundleVersion);
+
+			if (matcher.matches()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(matcher.group(1));
+				sb.append(".");
+				sb.append(matcher.group(3));
+				sb.append(".");
+				sb.append(matcher.group(5));
+				sb.append(".");
+				sb.append(matcher.group(7));
+
+				_bundleVersion = sb.toString();
+			}
+			else {
+
+				// Use the entire spring as only the qualifier since we can't
+				// decipher it.
+
+				_bundleVersion = "0.0.0." + _bundleVersion;
 			}
 		}
 
@@ -1264,5 +1293,7 @@ public class WabProcessor {
 	private String _servicePackageName;
 	private final Pattern _tldPackagesPattern = Pattern.compile(
 		"<[^>]+?-class>\\p{Space}*?(.*?)\\p{Space}*?</[^>]+?-class>");
+	private final Pattern _versionPatternMaven = Pattern.compile(
+		"(\\d{1,9})(\\.(\\d{1,9})(\\.(\\d{1,9})(-([-_\\da-zA-Z]+))?)?)?");
 
 }

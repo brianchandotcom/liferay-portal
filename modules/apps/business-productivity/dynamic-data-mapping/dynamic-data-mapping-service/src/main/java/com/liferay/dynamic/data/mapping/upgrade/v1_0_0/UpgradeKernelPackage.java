@@ -32,28 +32,8 @@ public class UpgradeKernelPackage
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
-			"com.liferay.dynamic.data.mapping.model.DDMStructure"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMContent",
-			"com.liferay.dynamic.data.mapping.model.DDMContent"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink",
-			"com.liferay.dynamic.data.mapping.model.DDMStructureLink"
-		},
-		{
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-			"com.liferay.dynamic.data.mapping.model.DDMTemplate"
+			"com.liferay.portlet.dynamicdatamapping.model.",
+			"com.liferay.dynamic.data.mapping.model."
 		}
 	};
 

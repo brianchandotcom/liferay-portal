@@ -33,28 +33,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.journal.model.JournalArticle"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalArticleImage",
-			"com.liferay.journal.model.JournalArticleImage"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalArticleResource",
-			"com.liferay.journal.model.JournalArticleResource"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalContentSearch",
-			"com.liferay.journal.model.JournalContentSearch"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalFeed",
-			"com.liferay.journal.model.JournalFeed"
-		},
-		{
-			"com.liferay.portlet.journal.model.JournalFolder",
-			"com.liferay.journal.model.JournalFolder"
+			"com.liferay.portlet.journal.model.", "com.liferay.journal.model."
 		}
 	};
 

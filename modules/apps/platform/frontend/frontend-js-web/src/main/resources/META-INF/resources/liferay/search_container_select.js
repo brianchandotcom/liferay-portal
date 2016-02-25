@@ -4,6 +4,10 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
+		var REGEX_MATCH_EVERYTHING = /.*/;
+
+		var REGEX_MATCH_NOTHING = /^[]/;
+
 		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]';
 
 		var STR_CHECKED = 'checked';
@@ -25,6 +29,20 @@ AUI.add(
 		var SearchContainerSelect = A.Component.create(
 			{
 				ATTRS: {
+					keepSelection: {
+						setter: function(keepSelection) {
+							if (Lang.isString(keepSelection)) {
+								keepSelection = new RegExp(keepSelection);
+							}
+							else if (!Lang.isRegExp(keepSelection)) {
+								keepSelection = keepSelection ? REGEX_MATCH_EVERYTHING : REGEX_MATCH_NOTHING;
+							}
+
+							return keepSelection;
+						},
+						value: REGEX_MATCH_EVERYTHING
+					},
+
 					rowCheckerSelector: {
 						validator: Lang.isString,
 						value: '.click-selector'
@@ -66,7 +84,7 @@ AUI.add(
 						instance._eventHandles = [
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowCSSFn, instance.get(STR_ROW_SELECTOR) + ' ' + STR_CHECKBOX_SELECTOR, instance),
 							host.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowFn, instance.get(STR_ROW_SELECTOR) + ' ' + instance.get('rowCheckerSelector'), instance),
-							Liferay.on('startNavigate', instance._onSurfaceStartNavigate, instance)
+							Liferay.on('startNavigate', instance._onStartNavigate, instance)
 						];
 					},
 
@@ -211,16 +229,18 @@ AUI.add(
 						instance.toggleRow(config, row);
 					},
 
-					_onSurfaceStartNavigate: function(event) {
+					_onStartNavigate: function(event) {
 						var instance = this;
 
-						instance._addRestoreTask();
-						instance._addRestoreTaskState();
+						if (instance.get('keepSelection').test(unescape(event.path))) {
+							instance._addRestoreTask();
+							instance._addRestoreTaskState();
+						}
 					}
 				},
 
 				restoreTask: function(state, params, node) {
-					var container = node.one('#' + params.containerId);
+					var container = A.one(node).one('#' + params.containerId);
 
 					var offScreenElementsHtml = '';
 
@@ -243,7 +263,7 @@ AUI.add(
 				},
 
 				testRestoreTask: function(state, params, node) {
-					return state.owner === params.searchContainerId && node.one('#' + params.containerId);
+					return state.owner === params.searchContainerId && A.one(node).one('#' + params.containerId);
 				}
 			}
 		);

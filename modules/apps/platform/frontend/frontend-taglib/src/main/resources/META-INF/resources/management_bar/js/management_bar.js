@@ -190,6 +190,8 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var totalSelectedItems = state.data.elements.length;
 
+					node = A.one(node);
+
 					var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
 
 					itemsCountContainer.html(totalSelectedItems);
@@ -225,7 +227,7 @@ AUI.add(
 				},
 
 				testRestoreTask: function(state, params, node) {
-					return node.one(STR_HASH + params.searchContainerNodeId);
+					return A.one(node).one(STR_HASH + params.searchContainerNodeId);
 				}
 			}
 		);

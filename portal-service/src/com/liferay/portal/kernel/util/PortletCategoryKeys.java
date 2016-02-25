@@ -114,7 +114,7 @@ public class PortletCategoryKeys {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #SITE_ADMINISTRATION_MEMBERS}
 	 */
-	@Deprecated	
+	@Deprecated
 	public static final String SITE_ADMINISTRATION_USERS =
 		"site_administration.users";
 

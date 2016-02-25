@@ -29,6 +29,10 @@ class LiferayApp extends App {
 	}
 
 	onBeforeNavigate(event) {
+		if (event.form) {
+			this.clearScreensCache();
+		}
+
 		Liferay.fire(
 			'beforeNavigate',
 			{
@@ -76,10 +80,6 @@ class LiferayApp extends App {
 
 		if (!event.error && Liferay.Layout && Liferay.Data.layoutConfig) {
 			Liferay.Layout.init();
-		}
-
-		if (event.form) {
-			this.clearScreensCache();
 		}
 
 		AUI().Get._insertCache = {};

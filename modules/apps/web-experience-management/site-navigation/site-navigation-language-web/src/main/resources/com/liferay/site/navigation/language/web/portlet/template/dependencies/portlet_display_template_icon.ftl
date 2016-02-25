@@ -5,10 +5,10 @@
 		</#if>
 
 		<#if !entry.isDisabled()>
-			<@liferay_ui["icon"]
+			<@liferay_aui["icon"]
 				cssClass=cssClass
-				image="../language/" + entry.getLanguageId()
-				lang=entry.getW3cLanguageId()
+				image=entry.getW3cLanguageId()?lower_case
+				markupView="lexicon"
 				message=entry.getLongDisplayName()
 				url=entry.getURL()
 			/>

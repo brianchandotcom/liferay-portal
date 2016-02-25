@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.cluster;
+package com.liferay.portal.configuration.cluster.messaging;
 
 /**
  * @author Michael C. Han

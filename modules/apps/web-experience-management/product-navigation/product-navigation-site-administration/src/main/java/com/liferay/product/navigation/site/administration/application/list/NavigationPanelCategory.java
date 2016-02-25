@@ -43,7 +43,8 @@ public class NavigationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.site_administration.pages");
+		return LanguageUtil.get(
+			locale, "category.site_administration.navigation");
 	}
 
 	@Override

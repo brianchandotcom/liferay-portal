@@ -139,31 +139,50 @@ public abstract class UpgradeProcess
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		try (ResultSet rs = databaseMetaData.getIndexInfo(
+		try (ResultSet rs1 = databaseMetaData.getPrimaryKeys(
+				null, null, tableName);
+			ResultSet rs2 = databaseMetaData.getIndexInfo(
 				null, null, normalizeName(tableName, databaseMetaData), false,
 				false)) {
 
-			Map<String, Set<String>> map = new HashMap<>();
+			Set<String> primaryKeyNames = new HashSet<>();
 
-			while (rs.next()) {
-				String indexName = StringUtil.toUpperCase(
-					rs.getString("INDEX_NAME"));
+			while (rs1.next()) {
+				String primaryKeyName = rs1.getString("PK_NAME");
 
-				Set<String> columnNames = map.get(indexName);
+				if (primaryKeyName != null) {
+					primaryKeyNames.add(primaryKeyName);
+				}
+			}
+
+			Map<String, Set<String>> indexMap = new HashMap<>();
+
+			while (rs2.next()) {
+				String indexName = rs2.getString("INDEX_NAME");
+
+				if ((indexName == null) ||
+					primaryKeyNames.contains(indexName)) {
+
+					continue;
+				}
+
+				Set<String> columnNames = indexMap.get(indexName);
 
 				if (columnNames == null) {
 					columnNames = new HashSet<>();
 
-					map.put(indexName, columnNames);
+					indexMap.put(indexName, columnNames);
 				}
 
-				columnNames.add(rs.getString("COLUMN_NAME"));
+				columnNames.add(rs2.getString("COLUMN_NAME"));
 			}
 
 			for (String[] columnInfo : columnInfos) {
 				String columnName = columnInfo[0];
 
-				for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
+				for (Map.Entry<String, Set<String>> entry :
+						indexMap.entrySet()) {
+
 					Set<String> columnNames = entry.getValue();
 
 					if (columnNames.contains(columnName)) {

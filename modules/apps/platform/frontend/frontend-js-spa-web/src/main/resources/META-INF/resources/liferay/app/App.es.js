@@ -2,8 +2,6 @@
 
 import App from 'senna/src/app/App';
 import dom from 'metal-dom/src/dom';
-import globals from 'senna/src/globals/globals';
-import Uri from 'metal-uri/src/Uri';
 import Utils from '../util/Utils.es';
 
 class LiferayApp extends App {
@@ -16,6 +14,7 @@ class LiferayApp extends App {
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);
+		this.setLoadingCssClass('lfr-surface-loading');
 
 		this.on('beforeNavigate', this.onBeforeNavigate);
 		this.on('endNavigate', this.onEndNavigate);
@@ -29,6 +28,10 @@ class LiferayApp extends App {
 	}
 
 	onBeforeNavigate(event) {
+		if (event.form) {
+			this.clearScreensCache();
+		}
+
 		Liferay.fire(
 			'beforeNavigate',
 			{
@@ -78,13 +81,7 @@ class LiferayApp extends App {
 			Liferay.Layout.init();
 		}
 
-		if (event.form) {
-			this.clearScreensCache();
-		}
-
 		AUI().Get._insertCache = {};
-
-		dom.removeClasses(document.body, 'lfr-surface-loading');
 	}
 
 	onLiferayIOComplete() {
@@ -99,8 +96,6 @@ class LiferayApp extends App {
 				path: event.path
 			}
 		);
-
-		dom.addClasses(document.body, 'lfr-surface-loading');
 	}
 
 	setBlacklist(blacklist) {

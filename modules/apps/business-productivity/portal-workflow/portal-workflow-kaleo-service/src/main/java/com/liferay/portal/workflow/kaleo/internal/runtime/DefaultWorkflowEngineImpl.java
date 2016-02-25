@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
+import com.liferay.portal.workflow.kaleo.internal.BaseKaleoBean;
+import com.liferay.portal.workflow.kaleo.internal.runtime.node.NodeExecutorFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -45,8 +47,6 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutorFactory;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 import com.liferay.portal.workflow.kaleo.util.comparators.KaleoInstanceOrderByComparator;
 
 import java.io.InputStream;
@@ -207,7 +207,7 @@ public class DefaultWorkflowEngineImpl
 			KaleoInstanceToken rootKaleoInstanceToken =
 				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
 
-			return WorkflowModelUtil.toWorkflowInstance(
+			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, rootKaleoInstanceToken);
 		}
 		catch (Exception e) {
@@ -275,7 +275,8 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassName, assetClassPK, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -297,7 +298,8 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassNames, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -321,7 +323,8 @@ public class DefaultWorkflowEngineImpl
 					workflowDefinitionName, workflowDefinitionVersion,
 					completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -345,7 +348,8 @@ public class DefaultWorkflowEngineImpl
 					userId, assetType, nodeName, kaleoDefinitionName, completed,
 					start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, serviceContext),
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
 					serviceContext);
 
 			return toWorkflowInstances(kaleoInstances, serviceContext);
@@ -426,7 +430,7 @@ public class DefaultWorkflowEngineImpl
 				}
 			);
 
-			return WorkflowModelUtil.toWorkflowInstance(
+			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, kaleoInstanceToken, workflowContext);
 		}
 		catch (Exception e) {
@@ -516,7 +520,7 @@ public class DefaultWorkflowEngineImpl
 				}
 			);
 
-			return WorkflowModelUtil.toWorkflowInstance(
+			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, rootKaleoInstanceToken, workflowContext);
 		}
 		catch (Exception e) {
@@ -537,7 +541,7 @@ public class DefaultWorkflowEngineImpl
 			KaleoInstanceToken rootKaleoInstanceToken =
 				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
 
-			return WorkflowModelUtil.toWorkflowInstance(
+			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, rootKaleoInstanceToken);
 		}
 		catch (Exception e) {
@@ -609,7 +613,7 @@ public class DefaultWorkflowEngineImpl
 				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
 
 			workflowInstances.add(
-				WorkflowModelUtil.toWorkflowInstance(
+				_kaleoWorkflowModelConverter.toWorkflowInstance(
 					kaleoInstance, rootKaleoInstanceToken));
 		}
 
@@ -617,6 +621,9 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	private KaleoSignaler _kaleoSignaler;
+
+	@ServiceReference(type = KaleoWorkflowModelConverter.class)
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 	@ServiceReference(type = NodeExecutorFactory.class)
 	private NodeExecutorFactory _nodeExecutorFactory;

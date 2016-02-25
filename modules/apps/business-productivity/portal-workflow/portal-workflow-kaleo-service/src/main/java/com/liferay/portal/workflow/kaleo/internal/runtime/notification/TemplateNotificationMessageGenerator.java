@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -31,7 +32,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerationException;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
-import com.liferay.portal.workflow.kaleo.util.KaleoTaskAssignmentInstanceUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -152,7 +152,7 @@ public class TemplateNotificationMessageGenerator
 			template.put("userName", user.getFullName());
 
 			List<WorkflowTaskAssignee> workflowTaskAssignees =
-				KaleoTaskAssignmentInstanceUtil.getWorkflowTaskAssignees(
+				_kaleoWorkflowModelConverter.getWorkflowTaskAssignees(
 					kaleoTaskInstanceToken);
 
 			template.put("workflowTaskAssignees", workflowTaskAssignees);
@@ -172,6 +172,9 @@ public class TemplateNotificationMessageGenerator
 			template.put("kaleoTimerInstanceToken", kaleoTimerInstanceToken);
 		}
 	}
+
+	@Reference
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 	private final Map<String, String> _templateManagerNames = new HashMap<>();
 

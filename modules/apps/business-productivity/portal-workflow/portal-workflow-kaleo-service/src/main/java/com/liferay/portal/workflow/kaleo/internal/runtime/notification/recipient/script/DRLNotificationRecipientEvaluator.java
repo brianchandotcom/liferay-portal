@@ -51,12 +51,15 @@ public class DRLNotificationRecipientEvaluator
 			new RulesResourceRetriever(
 				new StringResourceRetriever(
 					kaleoNotificationRecipient.getRecipientScript()));
-		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
+		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
 			executionContext);
 		Query query = Query.createStandardQuery();
 
 		return _rulesEngine.execute(rulesResourceRetriever, facts, query);
 	}
+
+	@Reference
+	private RulesContextBuilder _rulesContextBuilder;
 
 	@Reference
 	private RulesEngine _rulesEngine;

@@ -16,13 +16,13 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
-import com.liferay.portal.workflow.kaleo.util.KaleoTaskAssignmentInstanceUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -83,7 +84,7 @@ public class ScriptingContextBuilderImpl implements ScriptingContextBuilder {
 			}
 
 			List<WorkflowTaskAssignee> workflowTaskAssignees =
-				KaleoTaskAssignmentInstanceUtil.getWorkflowTaskAssignees(
+				_kaleoWorkflowModelConverter.getWorkflowTaskAssignees(
 					kaleoTaskInstanceToken);
 
 			inputObjects.put("workflowTaskAssignees", workflowTaskAssignees);
@@ -103,5 +104,8 @@ public class ScriptingContextBuilderImpl implements ScriptingContextBuilder {
 
 		return inputObjects;
 	}
+
+	@Reference
+	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 }

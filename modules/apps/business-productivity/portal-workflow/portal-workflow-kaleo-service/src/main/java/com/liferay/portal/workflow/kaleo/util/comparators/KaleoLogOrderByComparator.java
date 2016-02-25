@@ -17,8 +17,8 @@ package com.liferay.portal.workflow.kaleo.util.comparators;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
+import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
-import com.liferay.portal.workflow.kaleo.util.WorkflowModelUtil;
 
 /**
  * @author William Newbury
@@ -27,24 +27,31 @@ public class KaleoLogOrderByComparator
 	extends OrderByComparatorAdapter<KaleoLog, WorkflowLog> {
 
 	public static OrderByComparator<KaleoLog> getOrderByComparator(
-		OrderByComparator<WorkflowLog> orderByComparator) {
+		OrderByComparator<WorkflowLog> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		if (orderByComparator == null) {
 			return null;
 		}
 
-		return new KaleoLogOrderByComparator(orderByComparator);
+		return new KaleoLogOrderByComparator(
+			orderByComparator, kaleoWorkflowModelConverter);
 	}
 
 	@Override
 	public WorkflowLog adapt(KaleoLog kaleoLog) {
-		return WorkflowModelUtil.toWorkflowLog(kaleoLog);
+		return _kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog);
 	}
 
 	private KaleoLogOrderByComparator(
-		OrderByComparator<WorkflowLog> orderByComparator) {
+		OrderByComparator<WorkflowLog> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		super(orderByComparator);
+
+		_kaleoWorkflowModelConverter = kaleoWorkflowModelConverter;
 	}
+
+	private final KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 }

@@ -52,7 +52,7 @@ public class DRLScriptingTaskAssignmentSelector
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
+		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
 			executionContext);
 
 		String assigneeScript = kaleoTaskAssignment.getAssigneeScript();
@@ -75,6 +75,9 @@ public class DRLScriptingTaskAssignmentSelector
 
 		return getKaleoTaskAssignments(results);
 	}
+
+	@Reference
+	private RulesContextBuilder _rulesContextBuilder;
 
 	@Reference
 	private RulesEngine _rulesEngine;

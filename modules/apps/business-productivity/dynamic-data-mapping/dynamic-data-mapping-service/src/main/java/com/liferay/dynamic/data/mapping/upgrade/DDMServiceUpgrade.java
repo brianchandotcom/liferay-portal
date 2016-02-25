@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
@@ -62,7 +63,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.dynamic.data.mapping.service", "0.0.3", "1.0.0",
 			new UpgradeCompanyId(),
 			new UpgradeDynamicDataMapping(
-				_assetEntryLocalService, _ddmFormJSONDeserializer,
+				_assetEntryLocalService, _ddm, _ddmFormJSONDeserializer,
 				_ddmFormJSONSerializer, _ddmFormLayoutJSONSerializer,
 				_ddmFormValuesJSONDeserializer,
 				_ddmFormValuesJSONSerializer, _ddmFormXSDDeserializer,
@@ -100,6 +101,11 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
 	}
 
 	@Reference(unbind = "-")
@@ -180,6 +186,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;
+	private DDM _ddm;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;

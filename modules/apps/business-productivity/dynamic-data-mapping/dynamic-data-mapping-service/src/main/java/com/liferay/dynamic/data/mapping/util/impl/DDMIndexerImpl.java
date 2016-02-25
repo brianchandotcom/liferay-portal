@@ -20,9 +20,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -227,7 +227,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			StringPool.BLANK);
 
 		if (structure.hasField(fieldName)) {
-			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
+			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
 				ddmStructureFieldValue, structure.getFieldType(fieldName));
 		}
 
@@ -378,6 +378,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -400,6 +405,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
+	private DDM _ddm;
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

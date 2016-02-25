@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
 }
 
 liferay {

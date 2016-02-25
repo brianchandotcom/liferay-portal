@@ -153,9 +153,6 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 		throws PortalException;
 
 	@Reference
-	protected NotificationUtilities notificationUtilities;
-
-	@Reference
 	protected ExecutionContextUtilities executionContextUtilities;
 
 	@Reference
@@ -167,5 +164,8 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 
 	@Reference
 	protected KaleoTimerLocalService kaleoTimerLocalService;
+
+	@Reference
+	protected NotificationUtilities notificationUtilities;
 
 }

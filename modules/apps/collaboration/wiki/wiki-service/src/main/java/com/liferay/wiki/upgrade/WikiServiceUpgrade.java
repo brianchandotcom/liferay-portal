@@ -42,12 +42,12 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.wiki.service", "0.0.2", "0.0.3",
-			new UpgradeKernelPackage(), new UpgradePortletId(),
-			new UpgradePortletPreferences());
+			new UpgradeKernelPackage(), new UpgradePortletId());
 
 		registry.register(
 			"com.liferay.wiki.service", "0.0.3", "1.0.0",
 			new UpgradeCompanyId(), new UpgradeLastPublishDate(),
+			new UpgradePortletPreferences(),
 			new UpgradePortletSettings(_settingsFactory),
 			new UpgradeWikiPageResource());
 	}

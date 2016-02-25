@@ -22,6 +22,11 @@ AUI.add(
 		var LiferayAlloyEditor = A.Component.create(
 			{
 				ATTRS: {
+					contents: {
+						validator: Lang.isString,
+						value: ''
+					},
+
 					editorConfig: {
 						validator: Lang.isObject,
 						value: {}
@@ -209,6 +214,12 @@ AUI.add(
 
 					_onInstanceReady: function() {
 						var instance = this;
+
+						var contents = instance.get('contents');
+
+						if (contents) {
+							instance.getNativeEditor().setData(contents);
+						}
 
 						var onInitFn = instance.get('onInitMethod');
 

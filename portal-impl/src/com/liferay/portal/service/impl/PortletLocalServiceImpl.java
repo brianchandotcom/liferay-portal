@@ -1126,14 +1126,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	protected void initPortletDefaultPermissions(Portlet portlet)
 		throws PortalException {
 
-		int count = resourcePermissionLocalService.getResourcePermissionsCount(
-			portlet.getCompanyId(), portlet.getRootPortletId(),
-			ResourceConstants.SCOPE_INDIVIDUAL, portlet.getRootPortletId());
-
-		if (count > 0) {
-			return;
-		}
-
 		Role guestRole = roleLocalService.getRole(
 			portlet.getCompanyId(), RoleConstants.GUEST);
 		List<String> guestActions =
@@ -1186,15 +1178,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 
 			if (resourceBlockLocalService.isSupported(modelResource)) {
-				continue;
-			}
-
-			int count =
-				resourcePermissionLocalService.getResourcePermissionsCount(
-					portlet.getCompanyId(), modelResource,
-					ResourceConstants.SCOPE_INDIVIDUAL, modelResource);
-
-			if (count > 0) {
 				continue;
 			}
 

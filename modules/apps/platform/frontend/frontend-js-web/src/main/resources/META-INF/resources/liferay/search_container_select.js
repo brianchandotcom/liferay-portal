@@ -4,9 +4,9 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var DEFAULT_MATCH_EVERYTHING = /.*/;
+		var REGEX_MATCH_EVERYTHING = /.*/;
 
-		var DEFAULT_MATCH_NOTHING = /^[]/;
+		var REGEX_MATCH_NOTHING = /^[]/;
 
 		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]';
 
@@ -35,12 +35,12 @@ AUI.add(
 								keepSelection = new RegExp(keepSelection);
 							}
 							else if (!Lang.isRegExp(keepSelection)) {
-								keepSelection = keepSelection ? DEFAULT_MATCH_EVERYTHING : DEFAULT_MATCH_NOTHING;
+								keepSelection = keepSelection ? REGEX_MATCH_EVERYTHING : REGEX_MATCH_NOTHING;
 							}
 
 							return keepSelection;
 						},
-						value: DEFAULT_MATCH_EVERYTHING
+						value: REGEX_MATCH_EVERYTHING
 					},
 
 					rowCheckerSelector: {

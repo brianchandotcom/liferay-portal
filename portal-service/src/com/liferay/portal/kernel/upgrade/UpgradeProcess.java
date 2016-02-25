@@ -199,6 +199,10 @@ public abstract class UpgradeProcess
 			}
 		}
 		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Fallback to table backup", sqle);
+			}
+
 			Field tableColumnsField = tableClass.getField("TABLE_COLUMNS");
 			Field tableSQLCreateField = tableClass.getField("TABLE_SQL_CREATE");
 			Field tableSQLAddIndexesField = tableClass.getField(

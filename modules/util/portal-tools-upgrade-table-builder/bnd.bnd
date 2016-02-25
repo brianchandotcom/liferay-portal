@@ -9,8 +9,8 @@ Include-Resource:\
 	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReleaseInfo.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/CharPool.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/ReleaseInfo.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder

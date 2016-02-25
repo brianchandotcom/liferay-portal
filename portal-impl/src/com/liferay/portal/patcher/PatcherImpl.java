@@ -198,11 +198,11 @@ public class PatcherImpl implements Patcher {
 
 				if (ArrayUtil.isEmpty(serviceJARPatches)) {
 					_log.warn(
-						"There are no patches installed on portal-service.jar");
+						"There are no patches installed on portal-kernel.jar");
 				}
 				else {
 					_log.warn(
-						"Patch level on portal-service.jar: " +
+						"Patch level on portal-kernel.jar: " +
 							Arrays.toString(serviceJARPatches));
 				}
 			}

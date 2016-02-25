@@ -232,7 +232,7 @@ public class ServiceBuilder {
 			String message =
 				"Please set these arguments. Sample values are:\n" +
 				"\n" +
-				"\tservice.api.dir=${basedir}/../portal-service/src\n" +
+				"\tservice.api.dir=${basedir}/../portal-kernel/src\n" +
 				"\tservice.auto.import.default.references=true\n" +
 				"\tservice.auto.namespace.tables=false\n" +
 				"\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n" +

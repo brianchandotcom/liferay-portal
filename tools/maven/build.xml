@@ -52,7 +52,7 @@
 		</antcall>
 
 		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-service" />
+			<param name="artifact.id" value="portal-kernel" />
 			<param name="packaging" value="jar" />
 		</antcall>
 
@@ -239,7 +239,7 @@
 		</antcall>
 
 		<antcall target="install-artifact">
-			<param name="artifact.id" value="portal-service" />
+			<param name="artifact.id" value="portal-kernel" />
 			<param name="packaging" value="jar" />
 		</antcall>
 

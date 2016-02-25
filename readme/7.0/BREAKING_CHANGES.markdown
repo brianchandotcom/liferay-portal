@@ -3937,7 +3937,7 @@ favor of Site Administration &rarr; Members.
 #### Who is affected?
 
 All developers who specified a `control-panel-entry-category` to be visible in
-Site Administration &rarr; Users.
+Site Administration &rarr; Users are affected.
 
 #### How should I update my code?
 
@@ -3946,7 +3946,7 @@ You should change the entry from `site_administration.users` to
 
 #### Why was this change made?
 
-To standardize naming conventions and separate concepts between Users in the
-Control Panel and Site Members.
+This change standardizes naming conventions and separates concepts between Users
+in the Control Panel and Site Members.
 
 ---------------------------------------

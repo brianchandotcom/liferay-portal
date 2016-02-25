@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.messaging;
+package com.liferay.portal.workflow.kaleo.runtime.messaging;
 
 /**
  * @author Michael C. Han

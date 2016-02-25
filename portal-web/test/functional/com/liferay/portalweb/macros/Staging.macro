@@ -89,7 +89,6 @@
 		</if>
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="Refresh" />
 	</command>
 
 	<command name="addEventRepeatDaily">

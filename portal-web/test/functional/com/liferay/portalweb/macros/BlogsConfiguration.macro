@@ -28,7 +28,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="enableSocialBookmarkSites">
@@ -78,7 +78,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="BlogsConfiguration#viewScopeSelection">
 			<var name="scopeSelection" value="${scopeSelection}" />

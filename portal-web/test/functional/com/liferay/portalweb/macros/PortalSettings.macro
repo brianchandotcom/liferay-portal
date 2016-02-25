@@ -2,7 +2,7 @@
 	<command name="_saveDisplaySettings">
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureContentSharingAcrossSitesCP">
@@ -17,7 +17,7 @@
 
 				<execute macro="Button#clickSave" />
 
-				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Content Sharing" />
@@ -32,7 +32,7 @@
 
 					<execute macro="Button#clickSave" />
 
-					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+					<execute macro="Alert#viewSuccessMessage" />
 
 					<execute macro="Panel#expandPanel">
 						<var name="panelHeading" value="Content Sharing" />
@@ -56,7 +56,7 @@
 
 				<execute macro="Button#clickSave" />
 
-				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Content Sharing" />
@@ -71,7 +71,7 @@
 
 					<execute macro="Button#clickSave" />
 
-					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+					<execute macro="Alert#viewSuccessMessage" />
 
 					<execute macro="Panel#expandPanel">
 						<var name="panelHeading" value="Content Sharing" />
@@ -87,7 +87,7 @@
 
 					<execute macro="Button#clickSave" />
 
-					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+					<execute macro="Alert#viewSuccessMessage" />
 
 					<execute macro="Panel#expandPanel">
 						<var name="panelHeading" value="Content Sharing" />
@@ -147,7 +147,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureTimeZone">
@@ -202,7 +202,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editConfigurationAuthenticationGeneral">
@@ -244,7 +244,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />
@@ -268,7 +268,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />
@@ -292,7 +292,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />
@@ -315,7 +315,7 @@
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />
@@ -378,7 +378,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Authentication" />
@@ -402,7 +402,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />
@@ -426,7 +426,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Users" />

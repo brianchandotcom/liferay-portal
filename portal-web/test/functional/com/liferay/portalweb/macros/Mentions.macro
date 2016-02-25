@@ -24,7 +24,7 @@
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addMentionViaMessageBoardsReply">
@@ -45,7 +45,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addMentionViaMessageBoardThread">
@@ -77,7 +77,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="disableMentionsViaPortalSettings">
@@ -89,7 +89,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -103,7 +103,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -116,7 +116,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -130,7 +130,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 

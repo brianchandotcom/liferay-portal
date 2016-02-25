@@ -1,7 +1,7 @@
 <definition>
 	<command name="addSampleBooking">
 		<execute function="AssertClick" locator1="Samplelarportlet#ADD_SAMPLE_BOOKING_BUTTON" value1="Add Sample Booking" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertElementPresent" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_ID" />
 		<execute function="AssertElementPresent" locator1="Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" />
 	</command>

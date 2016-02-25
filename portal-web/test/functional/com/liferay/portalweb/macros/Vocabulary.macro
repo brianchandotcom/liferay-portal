@@ -71,7 +71,7 @@
 		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -135,7 +135,7 @@
 		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextNotPresent" value1="${vocabularyName}" />
 	</command>
 
@@ -151,7 +151,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextNotPresent" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 

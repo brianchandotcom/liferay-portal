@@ -33,7 +33,7 @@
 				<execute function="Check" locator1="KnowledgeBaseTemplate#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected templates?" />
-				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
 	</command>

@@ -12,7 +12,7 @@
 				<execute macro="Button#clickSave" />
 				<execute function="Click" locator1="Button#SAVE" />
 
-				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -26,7 +26,7 @@
 					<execute macro="Button#clickSave" />
 					<execute function="Click" locator1="Button#SAVE" />
 
-					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+					<execute macro="Alert#viewSuccessMessage" />
 				</then>
 			</elseif>
 			<elseif>

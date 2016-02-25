@@ -121,7 +121,7 @@
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveAndPublish">
@@ -129,7 +129,7 @@
 
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DROPDOWN_SAVE_AND_PUBLISH_LIVE_PAGE" value1="Save and Publish Live Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveWithoutFormName">

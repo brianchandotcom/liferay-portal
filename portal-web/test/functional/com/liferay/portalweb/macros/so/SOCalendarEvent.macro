@@ -34,7 +34,7 @@
 		<execute macro="CalendarEvent#selectCalendar" />
 
 		<execute function="Click" locator1="Button#SAVE" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

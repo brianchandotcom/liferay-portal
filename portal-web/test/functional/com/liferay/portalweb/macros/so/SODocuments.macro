@@ -8,7 +8,7 @@
 
 		<execute function="AssertClick" locator1="SODocuments#VERSION_HISTORY_DELETE_VERSION" value1="Delete Version" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="revertPGDocumentVersion">
@@ -20,7 +20,7 @@
 
 		<execute function="AssertClick" locator1="SODocuments#VERSION_HISTORY_REVERT" value1="Revert" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${dmDocumentRevertTitle}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentRevertDescription}" />

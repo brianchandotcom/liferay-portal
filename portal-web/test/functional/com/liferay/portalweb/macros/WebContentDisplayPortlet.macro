@@ -51,7 +51,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureSetupPG">
@@ -205,7 +205,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -249,7 +249,7 @@
 
 				<execute function="AssertTextEquals" locator1="Message#INFO_ARTICLE" value1="${webContentTitle} (Modified)" />
 				<execute macro="Button#clickSave" />
-				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
 
@@ -295,7 +295,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

@@ -37,7 +37,7 @@
 
 				<execute macro="Button#clickSave" />
 
-				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 
 				<execute function="Select" locator1="UserSegmentContentList#ASSET_TYPE_MENULIST" value1="Select More Than One..." />
 
@@ -51,7 +51,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="viewContent">

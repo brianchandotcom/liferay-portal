@@ -22,7 +22,7 @@
 	<command name="submit">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="submitWithValidationError">

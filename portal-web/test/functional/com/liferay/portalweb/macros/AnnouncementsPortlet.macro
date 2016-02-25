@@ -9,7 +9,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Select" locator1="Configuration#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
 		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="SelectFrameTop" />
 	</command>
 

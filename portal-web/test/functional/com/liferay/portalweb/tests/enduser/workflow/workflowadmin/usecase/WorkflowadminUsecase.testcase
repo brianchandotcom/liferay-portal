@@ -875,7 +875,7 @@
 
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="legal category" />
@@ -908,7 +908,7 @@
 
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="legal category" />
@@ -936,7 +936,7 @@
 
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="other category" />

@@ -6,7 +6,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Type" locator1="TextInput#URL" value1="${opensocialGadgetURL}" />
 		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

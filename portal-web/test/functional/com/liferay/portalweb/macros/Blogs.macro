@@ -196,7 +196,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addWithCustomAbstractImage">
@@ -340,7 +340,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editEntryPG">
@@ -403,7 +403,7 @@
 	<command name="subscribePG">
 		<execute function="AssertClick" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="tearDownConfigurationDisplaySettingsPG">
@@ -473,13 +473,13 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="unsubscribePG">
 		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="viewControlsPG">

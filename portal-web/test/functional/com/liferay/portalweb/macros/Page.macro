@@ -135,12 +135,12 @@
 		<if>
 			<isset var="localized" />
 			<then>
-				<execute macro="Alert#viewLocalizedPageAddedSuccessMessage">
+				<execute macro="Alert#viewSuccessMessage">
 					<var name="localized" value="${localized}" />
 				</execute>
 			</then>
 			<else>
-				<execute macro="Alert#viewPageAddedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -186,7 +186,7 @@
 				<condition function="IsVisible" locator1="Message#SUCCESS" />
 			</and>
 			<then>
-				<execute macro="Alert#viewPageAddedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
 	</command>
@@ -343,7 +343,7 @@
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">
@@ -360,7 +360,7 @@
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editPageLayoutColumn">
@@ -369,7 +369,7 @@
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editPageTypeLayout">
@@ -643,7 +643,7 @@
 	<command name="saveAddPage">
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="selectSitePagesVariationName">

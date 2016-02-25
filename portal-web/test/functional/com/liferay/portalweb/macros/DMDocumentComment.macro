@@ -12,7 +12,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="viewPG">

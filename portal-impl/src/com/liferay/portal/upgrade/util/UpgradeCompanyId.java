@@ -27,6 +27,10 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,6 +39,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		List<Callable<Void>> callableTableUpdaters = new ArrayList<>();
+
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
 			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
 				if (_log.isInfoEnabled()) {
@@ -44,23 +50,28 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 				continue;
 			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Adding column companyId to table " +
-						tableUpdater.getTableName());
+			callableTableUpdaters.add(tableUpdater);
+		}
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			callableTableUpdaters.size());
+
+		try {
+			List<Future<Void>> futures = executorService.invokeAll(
+				callableTableUpdaters);
+
+			for (Future<Void> future : futures) {
+				future.get();
 			}
-
-			runSQL(
-				"alter table " + tableUpdater.getTableName() +
-					" add companyId LONG");
-
-			tableUpdater.update();
+		}
+		finally {
+			executorService.shutdown();
 		}
 	}
 
 	protected abstract TableUpdater[] getTableUpdaters();
 
-	protected class TableUpdater {
+	protected class TableUpdater implements Callable<Void> {
 
 		public TableUpdater(
 			String tableName, String foreignTableName,
@@ -81,6 +92,19 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			_tableName = tableName;
 			_columnName = columnName;
 			_foreignNamesArray = foreignNamesArray;
+		}
+
+		@Override
+		public final Void call() throws Exception {
+			if (_log.isInfoEnabled()) {
+				_log.info("Adding column companyId to table " + getTableName());
+			}
+
+			runSQL("alter table " + getTableName() + " add companyId LONG");
+
+			update();
+
+			return null;
 		}
 
 		public String getTableName() {

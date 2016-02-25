@@ -80,12 +80,6 @@
 					prototype: {
 						CONTENT_TEMPLATE: '<ul></ul>',
 
-						initializer: function() {
-							var instance = this;
-
-							instance._outsideHandler = null;
-						},
-
 						renderUI: function() {
 							var instance = this;
 
@@ -101,14 +95,20 @@
 
 							var contentBox = instance.get('contentBox');
 
-							contentBox.delegate('click', instance._onClickItems, STR_DOT + CSS_SIMPLE_MENU_ITEM, instance);
+							instance._eventHandlers = [
+								A.getWin().on(
+									'resize',
+									A.debounce(instance._positionMenu, 200, instance)
+								),
+								contentBox.delegate('click', instance._onClickItems, STR_DOT + CSS_SIMPLE_MENU_ITEM, instance),
+								instance.after('visibleChange', instance._onVisibleChange, instance)
+							];
+						},
 
-							A.getWin().on(
-								'resize',
-								A.debounce(instance._positionMenu, 200, instance)
-							);
+						destructor: function() {
+							var instance = this;
 
-							instance.after('visibleChange', instance._onVisibleChange, instance);
+							(new A.EventHandle(instance._eventHandlers)).detach();
 						},
 
 						_closeMenu: function() {

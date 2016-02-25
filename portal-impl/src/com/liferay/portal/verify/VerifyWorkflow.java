@@ -14,7 +14,6 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,9 +28,6 @@ import java.sql.ResultSet;
 public class VerifyWorkflow extends VerifyProcess {
 
 	protected void deleteOrphaned() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
 			String tableName = orphanedAttachedModel[0];
 
@@ -39,11 +35,9 @@ public class VerifyWorkflow extends VerifyProcess {
 				continue;
 			}
 
-			try {
-				ps = connection.prepareStatement(
+			try (PreparedStatement ps = connection.prepareStatement(
 					"select distinct classNameId from " + tableName);
-
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
 					long classNameId = rs.getLong("classNameId");
@@ -73,9 +67,6 @@ public class VerifyWorkflow extends VerifyProcess {
 					deleteOrphaned(
 						tableName, orphanedTableName, orphanedColumnName);
 				}
-			}
-			finally {
-				DataAccess.cleanUp(null, ps, rs);
 			}
 		}
 	}

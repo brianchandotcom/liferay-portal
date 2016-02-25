@@ -14,7 +14,6 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -93,18 +92,12 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void updateName(long groupId, String name) throws Exception {
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Group_ set name = ? where groupId= " + groupId);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Group_ set name = ? where groupId= " + groupId)) {
 
 			ps.setString(1, name);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -167,21 +160,16 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			StringBundler sb = new StringBundler(5);
+		sb.append("select groupId, name from Group_ where name like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("%' and name not like '%");
+		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+		sb.append("'");
 
-			sb.append("select groupId, name from Group_ where name like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '%");
-			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("'");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -206,9 +194,6 @@ public class VerifyGroup extends VerifyProcess {
 
 				updateName(groupId, newName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

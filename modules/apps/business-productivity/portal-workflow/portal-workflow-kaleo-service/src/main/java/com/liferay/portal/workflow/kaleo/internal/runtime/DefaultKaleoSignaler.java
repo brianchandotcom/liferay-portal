@@ -29,7 +29,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionUtil;
+import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,7 @@ public class DefaultKaleoSignaler
 		nodeExecutor.execute(
 			currentKaleoNode, executionContext, remainingPathElements);
 
-		ExecutionUtil.checkKaleoInstanceComplete(executionContext);
+		_executionContextUtilities.checkKaleoInstanceComplete(executionContext);
 
 		for (PathElement remainingPathElement : remainingPathElements) {
 			_singleDestinationMessageSender.send(remainingPathElement);
@@ -113,6 +113,9 @@ public class DefaultKaleoSignaler
 	}
 
 	private String _destinationName;
+
+	@ServiceReference(type = ExecutionContextUtilities.class)
+	private ExecutionContextUtilities _executionContextUtilities;
 
 	@ServiceReference(type = NodeExecutorFactory.class)
 	private NodeExecutorFactory _nodeExecutorFactory;

@@ -25,7 +25,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
-import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionUtil;
+import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 
@@ -76,7 +76,9 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		if (ExecutionUtil.isKaleoInstanceBlocked(executionContext)) {
+		if (executionContextUtilities.isKaleoInstanceBlocked(
+				executionContext)) {
+
 			return;
 		}
 
@@ -118,7 +120,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		ExecutionUtil.completeKaleoTimerInstances(executionContext);
+		executionContextUtilities.completeKaleoTimerInstances(executionContext);
 
 		doExit(currentKaleoNode, executionContext, remainingPathElements);
 
@@ -149,6 +151,9 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode currentKaleoNode, ExecutionContext executionContext,
 			List<PathElement> remainingPathElements)
 		throws PortalException;
+
+	@Reference
+	protected ExecutionContextUtilities executionContextUtilities;
 
 	@Reference
 	protected KaleoActionExecutor kaleoActionExecutor;

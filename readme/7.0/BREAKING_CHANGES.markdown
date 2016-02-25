@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `b6b7772`.*
+*This document has been reviewed through commit `09adf28`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3925,28 +3925,28 @@ the product.
 
 ---------------------------------------
 
-### Deprecate category entry for Users
+### Deprecated Category Entry for Users
 - **Date:** 2016-Feb-22
-- **JIRA Ticket:** LPS-63498
+- **JIRA Ticket:** LPS-63466
 
 #### What changed?
 
-The category entry for Site Administration > Users was deprecated in favour of
-Site Administration > Members
+The category entry for Site Administration &rarr; Users has been deprecated in
+favor of Site Administration &rarr; Members.
 
 #### Who is affected?
 
-All developers who specified a control-panel-entry-category to be visible in
-site administration > users
+All developers who specified a `control-panel-entry-category` to be visible in
+Site Administration &rarr; Users.
 
 #### How should I update my code?
 
-You should change the entry from site_administration.users to
-site_administration.members to make it visible in the category
+You should change the entry from `site_administration.users` to
+`site_administration.members` to make it visible in the category.
 
 #### Why was this change made?
 
-To standardize naming conventions and separate concepts between Users in Control
-Panel and Site Members
+To standardize naming conventions and separate concepts between Users in the
+Control Panel and Site Members.
 
 ---------------------------------------

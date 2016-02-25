@@ -1270,7 +1270,7 @@ public class JavadocFormatter {
 			pos = absolutePath.indexOf("/portal-kernel/src/");
 
 			if (pos == -1) {
-				pos = absolutePath.indexOf("/portal-service/src/");
+				pos = absolutePath.indexOf("/portal-kernel/src/");
 			}
 
 			if (pos == -1) {

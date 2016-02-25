@@ -108,13 +108,13 @@ public class SPIClassPathContextListenerTest {
 
 		extNotJarFile.createNewFile();
 
-		// Global lib 1 directory for portal-service.jar
+		// Global lib 1 directory for portal-kernel.jar
 
 		File globalLib1Dir = new File(_CONTEXT_PATH, _GLOBAL_LIB_1_DIR_NAME);
 
 		globalLib1Dir.mkdir();
 
-		_portalServiceJarFile = new File(globalLib1Dir, "portal-service.jar");
+		_portalServiceJarFile = new File(globalLib1Dir, "portal-kernel.jar");
 
 		_portalServiceJarFile.createNewFile();
 

@@ -331,7 +331,7 @@
 
 			display: inline-block;
 			max-width: 100%;
-			overflow: hidden;
+			overflow: visible;
 			padding-right: 20px;
 			width: 100%;
 		}
@@ -413,9 +413,11 @@
 		background-color: $product-menu-tree-active-hitarea-bg;
 	}
 
-	.tree-pages .tree-node-selected .tree-label a {
-		color: $product-menu-tree-active-color;
-		cursor: pointer;
+	.tree-pages .tree-node-selected .tree-label {
+		.layout-tree, .icon-monospaced {
+			color: $product-menu-tree-active-color;
+			cursor: pointer;
+		}
 	}
 
 	.tree-root-container {

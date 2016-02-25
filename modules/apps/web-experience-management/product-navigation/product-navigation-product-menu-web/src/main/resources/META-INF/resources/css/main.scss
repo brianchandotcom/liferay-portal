@@ -256,7 +256,7 @@ body {
 		width: 100%;
 
 		.layout-set-tab {
-			a {
+			.layout-set-link {
 				&:hover {
 					text-decoration: none;
 				}
@@ -287,7 +287,7 @@ body {
 		.selected-layout-set {
 			border-bottom: 1px solid;
 
-			a {
+			.layout-set-link {
 				max-width: 108px;
 			}
 		}

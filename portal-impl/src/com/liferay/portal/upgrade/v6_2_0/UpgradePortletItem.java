@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_2_0.util.PortletItemTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Alberto Montero
  */
@@ -26,15 +24,8 @@ public class UpgradePortletItem extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type PortletItem portletId VARCHAR(200) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				PortletItemTable.TABLE_NAME, PortletItemTable.TABLE_COLUMNS,
-				PortletItemTable.TABLE_SQL_CREATE,
-				PortletItemTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(
+			PortletItemTable.class, "portletId", "VARCHAR(200) null");
 	}
 
 }

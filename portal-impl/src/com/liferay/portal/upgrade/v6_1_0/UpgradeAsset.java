@@ -26,7 +26,6 @@ import com.liferay.portal.util.PropsValues;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Juan Fernández
@@ -37,15 +36,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type AssetEntry title STRING null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
-				AssetEntryTable.TABLE_SQL_CREATE,
-				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(AssetEntryTable.class, "title", "STRING null");
 
 		updateAssetClassTypeId();
 		updateIGImageClassName();

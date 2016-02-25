@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_2_0.util.LayoutTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Harrison Schueler
  */
@@ -26,15 +24,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type Layout css TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				LayoutTable.TABLE_NAME, LayoutTable.TABLE_COLUMNS,
-				LayoutTable.TABLE_SQL_CREATE,
-				LayoutTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(LayoutTable.class, "css", "TEXT null");
 	}
 
 }

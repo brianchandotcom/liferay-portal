@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_2_0.util.AnnouncementsEntryTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Hai Yu
  */
@@ -26,16 +24,7 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type AnnouncementsEntry content TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				AnnouncementsEntryTable.TABLE_NAME,
-				AnnouncementsEntryTable.TABLE_COLUMNS,
-				AnnouncementsEntryTable.TABLE_SQL_CREATE,
-				AnnouncementsEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(AnnouncementsEntryTable.class, "content", "TEXT null");
 	}
 
 }

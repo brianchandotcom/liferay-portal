@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.MembershipRequestTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,16 +24,7 @@ public class UpgradeMembershipRequest extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type MembershipRequest statusId LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				MembershipRequestTable.TABLE_NAME,
-				MembershipRequestTable.TABLE_COLUMNS,
-				MembershipRequestTable.TABLE_SQL_CREATE,
-				MembershipRequestTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(MembershipRequestTable.class, "statusId", "LONG");
 	}
 
 }

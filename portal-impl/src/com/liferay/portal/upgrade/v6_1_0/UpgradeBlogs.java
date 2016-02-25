@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Minhchau Dang
  * @author Brian Wing Shun Chan
@@ -37,15 +35,7 @@ public class UpgradeBlogs extends UpgradeProcess {
 		catch (Exception e) {
 		}
 
-		try {
-			runSQL("alter_column_type BlogsEntry smallImageURL STRING null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS,
-				BlogsEntryTable.TABLE_SQL_CREATE,
-				BlogsEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(BlogsEntryTable.class, "smallImageURL", "STRING null");
 	}
 
 }

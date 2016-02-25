@@ -19,8 +19,6 @@ import com.liferay.portal.upgrade.v6_0_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_0_0.util.JournalFeedTable;
 import com.liferay.portal.upgrade.v6_0_0.util.JournalTemplateTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Zsigmond Rab
  */
@@ -28,35 +26,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_type JournalArticle smallImageURL STRING null");
+		alterColumnType(
+			JournalArticleTable.class, "smallImageURL", "STRING null");
 
-			runSQL(
-				"alter_column_type JournalFeed targetLayoutFriendlyUrl " +
-					"VARCHAR(255) null");
+		alterColumnType(
+			JournalFeedTable.class, "targetLayoutFriendlyUrl",
+			"VARCHAR(255) null");
 
-			runSQL(
-				"alter_column_type JournalTemplate smallImageURL STRING null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS,
-				JournalArticleTable.TABLE_SQL_CREATE,
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable(
-				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS,
-				JournalFeedTable.TABLE_SQL_CREATE,
-				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable(
-				JournalTemplateTable.TABLE_NAME,
-				JournalTemplateTable.TABLE_COLUMNS,
-				JournalTemplateTable.TABLE_SQL_CREATE,
-				JournalTemplateTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(
+			JournalTemplateTable.class, "smallImageURL", "STRING null");
 	}
 
 }

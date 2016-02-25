@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v5_2_5_to_6_0_0.util.WikiPageResourceTable;
 import com.liferay.portal.upgrade.v5_2_5_to_6_0_0.util.WikiPageTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -27,31 +25,13 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type WikiPage parentTitle VARCHAR(255) null");
-			runSQL(
-				"alter_column_type WikiPage redirectTitle VARCHAR(255) null");
+		alterColumnType(
+			WikiPageTable.class,
+			new String[] {"parentTitle", "VARCHAR(255) null"},
+			new String[] {"redirectTitle", "VARCHAR(255) null"});
 
-			runSQL(
-				"alter_column_type WikiPageResource title VARCHAR(255) null");
-		}
-		catch (SQLException sqle) {
-
-			// WikiPage
-
-			upgradeTable(
-				WikiPageTable.TABLE_NAME, WikiPageTable.TABLE_COLUMNS,
-				WikiPageTable.TABLE_SQL_CREATE,
-				WikiPageTable.TABLE_SQL_ADD_INDEXES);
-
-			// WikiPageResource
-
-			upgradeTable(
-				WikiPageResourceTable.TABLE_NAME,
-				WikiPageResourceTable.TABLE_COLUMNS,
-				WikiPageResourceTable.TABLE_SQL_CREATE,
-				WikiPageResourceTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(
+			WikiPageResourceTable.class, "title", "VARCHAR(255) null");
 	}
 
 }

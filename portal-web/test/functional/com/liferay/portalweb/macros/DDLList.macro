@@ -122,7 +122,7 @@
 	</command>
 
 	<command name="saveCmd">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="DDL#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="saveCP">

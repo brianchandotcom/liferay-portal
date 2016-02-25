@@ -1492,8 +1492,6 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute macro="DDLDataDefinition#selectFrame" />
-
 		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
 			<execute macro="DDLDataDefinition#viewName">
 				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -2367,7 +2365,7 @@
 
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute function="Click" locator1="DDMEditStructure#BACK_TAB" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 

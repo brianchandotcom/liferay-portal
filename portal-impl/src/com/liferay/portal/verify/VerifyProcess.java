@@ -99,8 +99,9 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				throwableAwareRunnables)
 		throws Exception {
 
-		if (throwableAwareRunnables.size() <
-				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) {
+		if ((throwableAwareRunnables.size() <
+				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) &&
+			!isForceConcurrent(throwableAwareRunnables)) {
 
 			for (ThrowableAwareRunnable throwableAwareRunnable :
 					throwableAwareRunnables) {
@@ -199,6 +200,12 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		_portalTableNames = tableNames;
 
 		return tableNames;
+	}
+
+	protected boolean isForceConcurrent(
+		Collection<? extends ThrowableAwareRunnable> throwableAwareRunnables) {
+
+		return false;
 	}
 
 	protected boolean isPortalTableName(String tableName) throws Exception {

@@ -670,7 +670,10 @@ public class GroupImpl extends GroupBaseImpl {
 			return _stagingGroup;
 		}
 		catch (Exception e) {
-			_log.error("Error getting staging group for " + getGroupId(), e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error getting staging group for " + getGroupId(), e);
+			}
 
 			return null;
 		}

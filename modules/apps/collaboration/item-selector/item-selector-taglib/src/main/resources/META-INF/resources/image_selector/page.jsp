@@ -91,7 +91,7 @@ if (fileEntryId != 0) {
 	<div class="progress-wrapper">
 		<p class="file-name"></p>
 
-		<div class="progressbar"></div>
+		<div class="progressbar progress-xs"></div>
 
 		<p class="progress-data size"></p>
 

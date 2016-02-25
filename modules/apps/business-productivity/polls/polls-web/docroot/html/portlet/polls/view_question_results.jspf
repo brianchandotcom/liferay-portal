@@ -66,7 +66,7 @@ for (int i = 0; i < choices.size(); i++) {
 	</td>
 
 	<td class="table-cell">
-		<div class="progress" style="width: <%= votesPixelWidth %>px;">
+		<div class="progress progress-xs" style="width: <%= votesPixelWidth %>px;">
 			<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= votesPercentWidth %>" class="progress-bar" role="progressbar" style="width: <%= votesPercentWidth %>%;"></div>
 		</div>
 	</td>

@@ -36,7 +36,7 @@ if (vocabularyId > 0) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-new-vocabulary") : vocabulary.getTitle(locale)));
+renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-vocabulary") : vocabulary.getTitle(locale)));
 %>
 
 <portlet:actionURL name="editVocabulary" var="editVocabularyURL">
@@ -54,7 +54,7 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-n
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="title" />
+			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 

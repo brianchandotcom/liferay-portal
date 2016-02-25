@@ -25,20 +25,6 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeTagIds"), 0L);
-
-List<String> mergeTagNames = new ArrayList();
-
-for (long mergeTagId : mergeTagIds) {
-	AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(mergeTagId);
-
-	if (tag == null) {
-		continue;
-	}
-
-	mergeTagNames.add(tag.getName());
-}
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -63,7 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 				<liferay-ui:asset-tags-selector
 					addCallback="onAddTag"
 					allowAddEntry="<%= false %>"
-					curTags="<%= StringUtil.merge(mergeTagNames) %>"
+					curTags="<%= StringUtil.merge(assetTagsDisplayContext.getMergeTagNames()) %>"
 					hiddenInput="mergeTagNames"
 					id="assetTagsSelector"
 					removeCallback="onRemoveTag"
@@ -73,7 +59,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 			<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 
 				<%
-				for (String tagName : mergeTagNames) {
+				for (String tagName : assetTagsDisplayContext.getMergeTagNames()) {
 				%>
 
 					<aui:option label="<%= tagName %>" />

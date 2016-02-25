@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -297,6 +298,16 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public String getFolderTitle() throws PortalException {
+		JournalFolder folder = getFolder();
+
+		if (folder != null) {
+			return folder.getName();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public JournalConverter getJournalConverter() {

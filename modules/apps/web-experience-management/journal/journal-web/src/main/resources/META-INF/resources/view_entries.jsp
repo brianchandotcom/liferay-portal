@@ -177,10 +177,16 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							href="<%= rowURL %>"
+							cssClass="text-strong"
 							name="title"
 							path="/article_title.jsp"
 							truncate="<%= true %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="description"
+							truncate="<%= true %>"
+							value="<%= HtmlUtil.escape(curArticle.getDescription(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
@@ -270,7 +276,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h5>
 
 							<h6 class="text-default">
-								<span><%= HtmlUtil.escape(curFolder.getDescription()) %></span>
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curFolder.getStatus() %>" />
 							</h6>
 						</liferay-ui:search-container-column-text>
 
@@ -311,10 +317,17 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="text-strong"
 							href="<%= rowURL.toString() %>"
 							name="title"
 							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="description"
+							truncate="<%= true %>"
+							value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

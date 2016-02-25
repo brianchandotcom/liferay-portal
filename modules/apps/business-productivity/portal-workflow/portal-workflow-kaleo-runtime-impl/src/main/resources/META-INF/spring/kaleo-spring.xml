@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+>
+
+	<!-- Advice -->
+
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*GraphWalker" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*KaleoSignaler" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*TaskManager" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*WorkflowEngine" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+
+	<!-- Manager -->
+
+	<bean id="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager" class="com.liferay.portal.workflow.kaleo.runtime.internal.manager.DefaultPortalKaleoManager">
+		<property name="defaultDefinitionName" value="Single Approver" />
+		<property name="definitionFiles">
+			<util:map>
+				<entry key="Single Approver" value="META-INF/definitions/single-approver-definition.xml" />
+			</util:map>
+		</property>
+	</bean>
+
+	<!-- Runtime -->
+
+	<bean id="com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultKaleoSignaler">
+		<property name="destinationName" value="liferay/kaleo_graph_walker" />
+	</bean>
+	<bean id="com.liferay.portal.workflow.kaleo.runtime.TaskManager" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultTaskManagerImpl" />
+	<bean id="com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultWorkflowEngineImpl">
+		<property name="kaleoSignaler" ref="com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler" />
+	</bean>
+	<bean id="com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker" class="com.liferay.portal.workflow.kaleo.runtime.internal.graph.DefaultGraphWalker" />
+</beans>

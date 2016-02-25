@@ -42,21 +42,21 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>portal-service\src</label>
+					<label>portal-kernel\src</label>
 					<type>java</type>
-					<location>portal-service/src</location>
+					<location>portal-kernel/src</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<!--<source-folder>
-					<label>portal-service\test\integration</label>
+					<label>portal-kernel\test\integration</label>
 					<type>java</type>
-					<location>portal-service/test/integration</location>
+					<location>portal-kernel/test/integration</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>-->
 				<source-folder>
-					<label>portal-service\test\unit</label>
+					<label>portal-kernel\test\unit</label>
 					<type>java</type>
-					<location>portal-service/test/unit</location>
+					<location>portal-kernel/test/unit</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -166,16 +166,16 @@
 						<location>portal-impl/test/unit</location>
 					</source-folder>
 					<source-folder style="packages">
-						<label>portal-service\src</label>
-						<location>portal-service/src</location>
+						<label>portal-kernel\src</label>
+						<location>portal-kernel/src</location>
 					</source-folder>
 					<!--<source-folder style="packages">
-						<label>portal-service\test\integration</label>
-						<location>portal-service/test/integration</location>
+						<label>portal-kernel\test\integration</label>
+						<location>portal-kernel/test/integration</location>
 					</source-folder>-->
 					<source-folder style="packages">
-						<label>portal-service\test\unit</label>
-						<location>portal-service/test/unit</location>
+						<label>portal-kernel\test\unit</label>
+						<location>portal-kernel/test/unit</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>portal-test\src</label>
@@ -235,9 +235,9 @@
 				<package-root>portal-impl/src</package-root>
 				<package-root>portal-impl/test/integration</package-root>
 				<package-root>portal-impl/test/unit</package-root>
-				<package-root>portal-service/src</package-root>
-				<!--<package-root>portal-service/test/integration</package-root>-->
-				<package-root>portal-service/test/unit</package-root>
+				<package-root>portal-kernel/src</package-root>
+				<!--<package-root>portal-kernel/test/integration</package-root>-->
+				<package-root>portal-kernel/test/unit</package-root>
 				<package-root>portal-web/test/functional</package-root>
 				<package-root>support-tomcat/src</package-root>
 				<package-root>util-bridges/src</package-root>

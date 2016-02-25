@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.activator;
 
-import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
+import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

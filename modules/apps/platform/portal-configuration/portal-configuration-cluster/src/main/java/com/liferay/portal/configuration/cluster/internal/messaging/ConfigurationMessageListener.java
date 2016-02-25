@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.cluster.internal.messaging;
 
-import com.liferay.portal.configuration.cluster.ConfigurationThreadLocal;
+import com.liferay.portal.configuration.cluster.internal.ConfigurationThreadLocal;
 import com.liferay.portal.configuration.cluster.messaging.DestinationNames;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

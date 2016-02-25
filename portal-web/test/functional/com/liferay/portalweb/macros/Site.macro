@@ -319,7 +319,7 @@
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="You may join the Restricted Site." />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your reply will be sent to the user by email." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
@@ -536,7 +536,7 @@
 			<then>
 				<var name="localizedSuccessMessage" value="${localizedSuccessMessage}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localizedSuccessMessage}" />
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 			<else>
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />

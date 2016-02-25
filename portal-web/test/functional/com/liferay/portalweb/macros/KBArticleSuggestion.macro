@@ -3,7 +3,7 @@
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion saved successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="cancelSuggestionPG">
@@ -31,7 +31,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion deleted successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="gotoArticleCP">
@@ -63,7 +63,7 @@
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_IN_PROGRESS_BUTTON" value1="Move to in Progress" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveToNewStatus">
@@ -71,7 +71,7 @@
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_NEW_BUTTON" value1="Move to New" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveToResolvedStatus">
@@ -79,7 +79,7 @@
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#RESOLVE_BUTTON" value1="Resolve" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="viewDefaultInProgress">

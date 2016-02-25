@@ -259,11 +259,13 @@ public abstract class UpgradeProcess
 						continue;
 					}
 
-					objectValuePairs.add(
-						new ObjectValuePair<>(
-							line,
-							IndexMetadataFactoryUtil.createIndexMetadata(
-								line)));
+					IndexMetadata indexMetadata =
+						IndexMetadataFactoryUtil.createIndexMetadata(line);
+
+					if (tableName.equals(indexMetadata.getTableName())) {
+						objectValuePairs.add(
+							new ObjectValuePair<>(line, indexMetadata));
+					}
 				}
 			}
 

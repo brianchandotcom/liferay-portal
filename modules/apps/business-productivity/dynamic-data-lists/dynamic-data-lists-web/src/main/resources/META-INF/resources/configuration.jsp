@@ -25,6 +25,7 @@ long displayDDMTemplateId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil
 boolean editable = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "editable", true);
 long formDDMTemplateId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "formDDMTemplateId");
 long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "recordSetId");
+boolean showEditFormFirst = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "showEditFormFirst", false);
 boolean spreadsheet = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "spreadsheet");
 
 DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
@@ -165,6 +166,8 @@ DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 			</aui:select>
 
 			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
+
+			<aui:input helpMessage="check-to-view-edit-form-first" label="show-edit-form-first" name="preferences--showEditFormFirst--" type="checkbox" value="<%= showEditFormFirst %>" />
 
 			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
 		</aui:fieldset>

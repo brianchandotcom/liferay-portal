@@ -135,12 +135,12 @@
 		<if>
 			<isset var="localized" />
 			<then>
-				<execute macro="Alert#viewLocalizedPageAddedSuccessMessage">
+				<execute macro="Alert#viewSuccessMessage">
 					<var name="localized" value="${localized}" />
 				</execute>
 			</then>
 			<else>
-				<execute macro="Alert#viewPageAddedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -186,7 +186,7 @@
 				<condition function="IsVisible" locator1="Message#SUCCESS" />
 			</and>
 			<then>
-				<execute macro="Alert#viewPageAddedSuccessMessage" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
 	</command>
@@ -214,7 +214,7 @@
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of the page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addPageTitle">
@@ -245,7 +245,7 @@
 		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addPageTypePanelPG">
@@ -304,7 +304,7 @@
 
 		<execute function="SelectFrameTop" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
@@ -363,7 +363,7 @@
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editPageLayoutColumn">
@@ -372,7 +372,7 @@
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editPageTypeLayout">
@@ -408,7 +408,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
@@ -647,7 +647,7 @@
 	<command name="saveAddPage">
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="selectSitePagesVariationName">

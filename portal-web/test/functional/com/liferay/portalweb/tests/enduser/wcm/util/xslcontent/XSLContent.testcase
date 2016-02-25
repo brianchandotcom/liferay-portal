@@ -174,7 +174,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -315,7 +315,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -444,7 +444,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -571,7 +571,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 

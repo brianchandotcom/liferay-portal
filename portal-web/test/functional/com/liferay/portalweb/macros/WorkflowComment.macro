@@ -23,7 +23,7 @@
 
 		<execute macro="WorkflowComment#_openComments" />
 
-		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="WorkflowComment#_viewBody">
 			<var name="workflowComment" value="${workflowComment}" />

@@ -1707,14 +1707,14 @@ tell application "Safari" to quit
 
 							<antcall target="deploy-additional-jars" />
 
-							<ant dir="portal-service" target="deploy" inheritAll="false" />
+							<ant dir="portal-kernel" target="deploy" inheritAll="false" />
 
 							<ant dir="util-java" target="deploy" inheritAll="false" />
 
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
 							<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
-							<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
+							<install-portal-snapshot artifact.dir="portal-kernel" artifact.name="portal-kernel" />
 							<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />
 
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">
@@ -2015,7 +2015,7 @@ ${tomcat-gc-log}
 						directoryScanner.setBasedir(project.getBaseDir());
 						directoryScanner.setExcludes(
 							new String[] {
-								"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
+								"portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
 								"*/pacl/test/[\\w]+Test.class",
 								"**/*ServiceHttpTest.java",
 								"**/*ServiceJsonTest.java",
@@ -3246,7 +3246,7 @@ go]]></replacevalue>
 				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
 					<include name="**/TEST-*.xml" />
 				</fileset>
-				<fileset dir="portal-service/test-results" erroronmissingdir="false">
+				<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
 					<include name="**/TEST-*.xml" />
 				</fileset>
 				<fileset dir="portal-web/test-results" erroronmissingdir="false">
@@ -3987,7 +3987,7 @@ go]]></replacevalue>
 					<fileset dir="portal-impl/test-results" erroronmissingdir="false">
 						<include name="**/TEST-*.xml" />
 					</fileset>
-					<fileset dir="portal-service/test-results" erroronmissingdir="false">
+					<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
 						<include name="**/TEST-*.xml" />
 					</fileset>
 					<fileset dir="portal-web/test-results" erroronmissingdir="false">
@@ -4357,7 +4357,7 @@ go]]></replacevalue>
 			<fileset dir="portal-impl/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>
-			<fileset dir="portal-service/test-results" erroronmissingdir="false">
+			<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>
 			<fileset dir="portal-web/test-results" erroronmissingdir="false">
@@ -7622,7 +7622,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 	</target>
 
 	<target name="test-integration">
-		<ant dir="portal-service" target="test-integration" inheritAll="false" />
+		<ant dir="portal-kernel" target="test-integration" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
 
@@ -7630,7 +7630,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 	</target>
 
 	<target name="test-package">
-		<ant dir="portal-service" target="test-package" inheritAll="false" />
+		<ant dir="portal-kernel" target="test-package" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />
 
@@ -7638,7 +7638,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 	</target>
 
 	<target name="test-unit">
-		<ant dir="portal-service" target="test-unit" inheritAll="false" />
+		<ant dir="portal-kernel" target="test-unit" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-unit" inheritAll="false" />
 

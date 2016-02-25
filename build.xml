@@ -13,7 +13,7 @@
 	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
 >
 	<classpath>
-		<dir name="${basedir}/portal-service/classes" />
+		<dir name="${basedir}/portal-kernel/classes" />
 	</classpath>
 </application>]]></echo>
 
@@ -75,7 +75,7 @@
 
 			<ant dir="classes" target="clean" inheritAll="false" />
 
-			<ant dir="portal-service" target="clean" inheritAll="false" />
+			<ant dir="portal-kernel" target="clean" inheritAll="false" />
 
 			<ant dir="util-bridges" target="clean" inheritAll="false" />
 			<ant dir="util-java" target="clean" inheritAll="false" />
@@ -211,7 +211,7 @@
 			<arg value="--parallel" />
 		</gradle-execute>
 
-		<ant dir="portal-service" target="compile" inheritAll="false" />
+		<ant dir="portal-kernel" target="compile" inheritAll="false" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test" target="compile" inheritAll="false" />
@@ -249,7 +249,7 @@
 
 	<target name="compile-test">
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
-		<ant dir="portal-service" target="compile-test" inheritAll="false" />
+		<ant dir="portal-kernel" target="compile-test" inheritAll="false" />
 		<ant dir="portal-web" target="compile-test" inheritAll="false" />
 		<ant dir="util-java" target="compile-test" inheritAll="false" />
 	</target>
@@ -279,7 +279,7 @@
 			</then>
 		</if>
 
-		<ant dir="portal-service" target="deploy" inheritAll="false" />
+		<ant dir="portal-kernel" target="deploy" inheritAll="false" />
 
 		<ant dir="util-bridges" target="deploy" inheritAll="false" />
 		<ant dir="util-java" target="deploy" inheritAll="false" />
@@ -570,7 +570,7 @@
 
 	<target name="install-portal-snapshots">
 		<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
-		<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
+		<install-portal-snapshot artifact.dir="portal-kernel" artifact.name="portal-kernel" />
 		<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
 		<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />
 		<install-portal-snapshot artifact.dir="portal-web" artifact.name="portal-web" />
@@ -581,7 +581,7 @@
 	</target>
 
 	<target name="jar">
-		<ant dir="portal-service" target="jar" inheritAll="false" />
+		<ant dir="portal-kernel" target="jar" inheritAll="false" />
 
 		<ant dir="util-bridges" target="jar" inheritAll="false" />
 		<ant dir="util-java" target="jar" inheritAll="false" />
@@ -607,7 +607,7 @@
 
 		<antcall target="javadoc-portal-cmd">
 			<param name="generated.description" value="ServiceBuilder generated this class. Modifications in this class will be overwritten the next time it is generated." />
-			<param name="module.dir" value="portal-service" />
+			<param name="module.dir" value="portal-kernel" />
 		</antcall>
 
 		<antcall target="javadoc-portal-cmd">

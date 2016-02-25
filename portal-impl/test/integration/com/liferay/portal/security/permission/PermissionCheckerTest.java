@@ -127,6 +127,64 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testHasPermissionOnDefaultPortletResourcesWithNonSitePortlet()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.setGroupUsers(
+			_group.getGroupId(), new long[] {_user.getUserId()});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		deployRemotePortlet(
+			_user.getCompanyId(), _NONSITE_PORTLET_RESOURCE_NAME);
+
+		try {
+			boolean hasPermission = permissionChecker.hasPermission(
+				0, _NONSITE_PORTLET_RESOURCE_NAME,
+				_NONSITE_PORTLET_RESOURCE_NAME, _ADD_TEST_RESULT_ACTION);
+
+			Assert.assertTrue(hasPermission);
+
+			hasPermission = permissionChecker.hasPermission(
+				0, _NONSITE_ROOT_MODEL_RESOURCE_NAME,
+				_NONSITE_ROOT_MODEL_RESOURCE_NAME, _ADD_TEST_ACTION);
+
+			Assert.assertFalse(hasPermission);
+
+			_role = RoleTestUtil.addRole(
+				"PermissionTestRole", RoleConstants.TYPE_REGULAR);
+
+			UserLocalServiceUtil.setRoleUsers(
+				_role.getRoleId(), new long[] {_user.getUserId()});
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_user.getCompanyId(), _NONSITE_ROOT_MODEL_RESOURCE_NAME,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_user.getCompanyId()), _role.getRoleId(),
+				new String[] {_ADD_TEST_ACTION});
+
+			try {
+				hasPermission = permissionChecker.hasPermission(
+					0, _NONSITE_ROOT_MODEL_RESOURCE_NAME,
+					_NONSITE_ROOT_MODEL_RESOURCE_NAME, _ADD_TEST_ACTION);
+
+				Assert.assertTrue(hasPermission);
+			}
+			finally {
+				ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+					_user.getCompanyId(), _NONSITE_ROOT_MODEL_RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY, _user.getCompanyId());
+			}
+		}
+		finally {
+			destroyRemotePortlet(
+				_user.getCompanyId(), _NONSITE_PORTLET_RESOURCE_NAME);
+		}
+	}
+
+	@Test
 	public void testHasPermissionOnRootModelResource() throws Exception {
 		_user = UserTestUtil.addUser();
 
@@ -757,8 +815,18 @@ public class PermissionCheckerTest {
 
 	private static final String _ADD_SITE_TEST_ACTION = "ADD_SITE_TEST";
 
+	private static final String _ADD_TEST_ACTION = "ADD_TEST";
+
+	private static final String _ADD_TEST_RESULT_ACTION = "ADD_TEST_RESULT";
+
 	private static final String _MODEL_RESOURCE_NAME =
 		"test.com.liferay.portal.security.permission.SiteTest";
+
+	private static final String _NONSITE_PORTLET_RESOURCE_NAME =
+		"com_liferay_portal_security_PermissionCheckerTestNonSitePortlet";
+
+	private static final String _NONSITE_ROOT_MODEL_RESOURCE_NAME =
+		"com.liferay.portal.security.permission.nonsite";
 
 	private static final String _PORTLET_RESOURCE_NAME =
 		"com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet";

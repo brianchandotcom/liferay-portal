@@ -33,10 +33,21 @@ long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
 DDMTemplate displayDDMTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(displayDDMTemplateId);
 
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
+
+boolean showEditFormFirst = ParamUtil.getBoolean(request, "showEditFormFirst");
+
 boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 %>
 
 <c:choose>
+	<c:when test="<%= showEditFormFirst %>">
+		<liferay-util:include page="/edit_record.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="redirect" value="<%= currentURL %>" />
+			<liferay-util:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+			<liferay-util:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
+		</liferay-util:include>
+	</c:when>
 	<c:when test="<%= displayDDMTemplate != null %>">
 		<liferay-util:include page="/view_template_records.jsp" servletContext="<%= application %>" />
 	</c:when>

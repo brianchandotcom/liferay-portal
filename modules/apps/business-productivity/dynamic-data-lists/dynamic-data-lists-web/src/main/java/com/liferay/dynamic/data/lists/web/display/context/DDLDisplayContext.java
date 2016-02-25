@@ -417,6 +417,12 @@ public class DDLDisplayContext {
 			_ddlRequestHelper.getRenderRequest(), "spreadsheet");
 	}
 
+	public boolean showEditFormFirst() {
+		return PrefsParamUtil.getBoolean(
+			_ddlRequestHelper.getPortletPreferences(),
+			_ddlRequestHelper.getRenderRequest(), "showEditFormFirst");
+	}
+
 	protected DDMTemplate fetchDisplayDDMTemplate() {
 		if (_displayDDMTemplate != null) {
 			return _displayDDMTemplate;

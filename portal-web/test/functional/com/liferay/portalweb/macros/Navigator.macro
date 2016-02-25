@@ -98,7 +98,7 @@
 					<execute macro="ProductMenuHelper#expandPanelSites" />
 
 					<execute macro="ProductMenuHelper#expandCategory">
-						<var name="category" value="Pages" />
+						<var name="category" value="Navigation" />
 					</execute>
 
 					<execute macro="ProductMenuHelper#expandPagePagination" />

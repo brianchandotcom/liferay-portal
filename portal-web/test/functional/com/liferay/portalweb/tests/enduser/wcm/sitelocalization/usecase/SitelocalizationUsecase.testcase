@@ -700,7 +700,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoLocalizedEditPage">
-			<var name="category" value="Páginas" />
+			<var name="category" value="Navegación" />
 			<var name="page" value="Site Page Name" />
 		</execute>
 

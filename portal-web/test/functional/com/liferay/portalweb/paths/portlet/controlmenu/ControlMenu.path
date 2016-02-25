@@ -85,8 +85,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
-	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Pages')]</td>
+	<td>ADMIN_SITE_ADMINISTRATION_NAVIGATION</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Navigation')]</td>
 	<td>Pages Navigation</td>
 </tr>
 <tr>

@@ -167,7 +167,7 @@
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<var name="key_page" value="${sitePageName}" />
@@ -679,7 +679,7 @@
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}">
@@ -819,7 +819,7 @@
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplate">
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<if>
@@ -942,7 +942,7 @@
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoEditPage">

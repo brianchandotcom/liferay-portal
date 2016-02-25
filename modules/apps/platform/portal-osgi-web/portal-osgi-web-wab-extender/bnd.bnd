@@ -19,9 +19,9 @@ Import-Package:\
 Include-Resource:\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
-	@../../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/HashMapDictionary.class,\
-	@../../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class
+	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/HashMapDictionary.class,\
+	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
 -include: ../../../../../marketplace/platform/bnd.bnd

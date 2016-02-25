@@ -218,10 +218,23 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return selGroup.getDisplayURL(themeDisplay, false);
 	}
 
+	@Override
+	public String getRootNodeName(boolean privateLayout) {
+		if (isShowEmptyLayoutsTree()) {
+			return "pages";
+		}
+
+		return super.getRootNodeName(privateLayout);
+	}
+
 	public boolean isShowAddBothRootLayoutButtons() {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.hasPublicLayouts() && selGroup.hasPrivateLayouts()) {
+			return false;
+		}
+
+		if (!selGroup.hasPublicLayouts() && !selGroup.hasPrivateLayouts()) {
 			return false;
 		}
 
@@ -247,6 +260,16 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return GroupPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), getSelGroup(),
 			ActionKeys.MANAGE_LAYOUTS);
+	}
+
+	public boolean isShowEmptyLayoutsTree() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.hasPrivateLayouts() || selGroup.hasPublicLayouts()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isShowExpandLayoutSetButton(boolean privateLayout) {
@@ -292,7 +315,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			liferayPortletRequest, "showLayoutTabs", true);
 	}
 
-	public boolean isShowPrivateLayoutsTree() throws PortalException {
+	public boolean isShowPrivateLayoutsTree() {
 		Group selGroup = getSelGroup();
 
 		if (!selGroup.hasPrivateLayouts()) {
@@ -302,7 +325,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return true;
 	}
 
-	public boolean isShowPublicLayoutsTree() throws PortalException {
+	public boolean isShowPublicLayoutsTree() {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {

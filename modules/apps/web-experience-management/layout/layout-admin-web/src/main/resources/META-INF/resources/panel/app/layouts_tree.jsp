@@ -28,6 +28,39 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		%>
 
 		<div class="layout-set-tabs">
+			<c:if test="<%= layoutsTreeDisplayContext.isShowEmptyLayoutsTree() %>">
+				<span class="layout-set-tab selected-layout-set">
+					<aui:a cssClass="layout-set-link" href="<%= null %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
+
+					<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+							<aui:icon image="ellipsis-v" markupView="lexicon" />
+						</a>
+
+						<ul class="dropdown-menu dropdown-menu-left-side">
+							<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
+
+								<%
+								PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+								%>
+
+								<li>
+									<a data-navigation="true" data-qa-id="addPublicPage" href="<%= addLayoutURL.toString() %>"><liferay-ui:message key="add-public-page" /></a>
+								</li>
+
+								<%
+								addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+								%>
+
+								<li>
+									<a data-navigation="true" data-qa-id="addPrivatePage" href="<%= addLayoutURL.toString() %>"><liferay-ui:message key="add-private-page" /></a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
+				</span>
+			</c:if>
+
 			<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutsTree() %>">
 				<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
 

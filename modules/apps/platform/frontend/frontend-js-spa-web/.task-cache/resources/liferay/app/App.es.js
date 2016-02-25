@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', 'senna/src/globals/globals', 'metal-uri/src/Uri', '../util/Utils.es'], function (exports, _App2, _dom, _globals, _Uri, _Utils) {
+define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', '../util/Utils.es'], function (exports, _App2, _dom, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -8,10 +8,6 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 	var _App3 = _interopRequireDefault(_App2);
 
 	var _dom2 = _interopRequireDefault(_dom);
-
-	var _globals2 = _interopRequireDefault(_globals);
-
-	var _Uri2 = _interopRequireDefault(_Uri);
 
 	var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -65,6 +61,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 			_this.setFormSelector('form' + exceptionsSelector);
 			_this.setLinkSelector('a' + exceptionsSelector);
+			_this.setLoadingCssClass('lfr-surface-loading');
 
 			_this.on('beforeNavigate', _this.onBeforeNavigate);
 			_this.on('endNavigate', _this.onEndNavigate);
@@ -79,6 +76,10 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 		}
 
 		LiferayApp.prototype.onBeforeNavigate = function onBeforeNavigate(event) {
+			if (event.form) {
+				this.clearScreensCache();
+			}
+
 			Liferay.fire('beforeNavigate', {
 				app: this,
 				path: event.path
@@ -118,13 +119,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 				Liferay.Layout.init();
 			}
 
-			if (event.form) {
-				this.clearScreensCache();
-			}
-
 			AUI().Get._insertCache = {};
-
-			_dom2.default.removeClasses(document.body, 'lfr-surface-loading');
 		};
 
 		LiferayApp.prototype.onLiferayIOComplete = function onLiferayIOComplete() {
@@ -136,8 +131,6 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 				app: this,
 				path: event.path
 			});
-
-			_dom2.default.addClasses(document.body, 'lfr-surface-loading');
 		};
 
 		LiferayApp.prototype.setBlacklist = function setBlacklist(blacklist) {

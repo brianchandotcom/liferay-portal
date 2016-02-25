@@ -54,7 +54,7 @@ public interface PanelCategoryKeys {
 		PortletCategoryKeys.SITE_ADMINISTRATION_MEMBERS;
 
 	public static final String SITE_ADMINISTRATION_PAGES =
-		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES;
+		PortletCategoryKeys.SITE_ADMINISTRATION_NAVIGATION;
 
 	public static final String SITE_ADMINISTRATION_PUBLISHING =
 		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING;

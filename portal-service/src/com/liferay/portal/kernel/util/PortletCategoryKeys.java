@@ -91,6 +91,7 @@ public class PortletCategoryKeys {
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION,
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
 		PortletCategoryKeys.SITE_ADMINISTRATION_MEMBERS,
+		PortletCategoryKeys.SITE_ADMINISTRATION_NAVIGATION,
 		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES,
 		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
 		PortletCategoryKeys.SITE_ADMINISTRATION_USERS
@@ -105,6 +106,13 @@ public class PortletCategoryKeys {
 	public static final String SITE_ADMINISTRATION_MEMBERS =
 		"site_administration.members";
 
+	public static final String SITE_ADMINISTRATION_NAVIGATION =
+		"site_administration.navigation";
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #SITE_ADMINISTRATION_NAVIGATION}
+	 */
+	@Deprecated
 	public static final String SITE_ADMINISTRATION_PAGES =
 		"site_administration.pages";
 

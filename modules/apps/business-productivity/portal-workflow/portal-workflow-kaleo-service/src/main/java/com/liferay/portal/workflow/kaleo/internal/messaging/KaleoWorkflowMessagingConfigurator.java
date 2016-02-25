@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.workflow.kaleo.internal.runtime.timer.messaging.TimerMessageListener;
-import com.liferay.portal.workflow.kaleo.messaging.DestinationNames;
+import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 
 import java.util.Dictionary;
 import java.util.HashMap;

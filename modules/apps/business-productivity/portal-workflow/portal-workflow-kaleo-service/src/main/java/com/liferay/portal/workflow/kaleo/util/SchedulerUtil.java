@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.util;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.workflow.kaleo.messaging.DestinationNames;
+import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 
 /**
  * @author Michael C. Han

@@ -171,7 +171,7 @@
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal-component/src/Component": {
-        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-html/src/html", "metal-attribute/src/Attribute", "./ComponentCollector", "./ComponentRegistry", "./ComponentRenderer", "./EventsCollector", "metal-events/src/events", "./SurfaceCollector"]
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-attribute/src/Attribute", "./ComponentCollector", "./ComponentRegistry", "./ComponentRenderer", "metal-events/src/events"]
     },
     "frontend-js-metal-web@1.0.0/metal-component/src/ComponentCollector": {
         "dependencies": ["exports", "./ComponentRegistry", "metal/src/metal"]
@@ -180,10 +180,10 @@
         "dependencies": ["exports", "metal/src/metal"]
     },
     "frontend-js-metal-web@1.0.0/metal-component/src/ComponentRenderer": {
-        "dependencies": ["exports"]
+        "dependencies": ["exports", "metal-events/src/events"]
     },
     "frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector": {
-        "dependencies": ["exports", "metal/src/metal", "./ComponentCollector", "metal-events/src/events"]
+        "dependencies": ["exports", "metal/src/metal", "metal-events/src/events"]
     },
     "frontend-js-metal-web@1.0.0/metal-component/src/SurfaceCollector": {
         "dependencies": ["exports", "metal/src/metal"]
@@ -191,8 +191,14 @@
     "frontend-js-metal-web@1.0.0/metal-component/src/index": {
         "dependencies": ["exports", "./Component", "./ComponentCollector", "./ComponentRegistry", "./ComponentRenderer", "./EventsCollector", "./SurfaceCollector"]
     },
+    "frontend-js-metal-web@1.0.0/metal-component/src/surfaces/SurfaceCollector": {
+        "dependencies": ["exports", "metal/src/metal"]
+    },
+    "frontend-js-metal-web@1.0.0/metal-component/src/surfaces/SurfaceRenderer": {
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-html/src/html", "../Component", "../ComponentCollector", "../ComponentRenderer", "../EventsCollector", "./SurfaceCollector"]
+    },
     "frontend-js-metal-web@1.0.0/metal-component/src/all/component": {
-        "dependencies": ["exports", "../Component", "../ComponentCollector", "../ComponentRegistry", "../ComponentRenderer", "../EventsCollector", "../SurfaceCollector"]
+        "dependencies": ["exports", "../Component", "../ComponentCollector", "../ComponentRegistry", "../ComponentRenderer", "../EventsCollector", "../surfaces/SurfaceCollector", "../surfaces/SurfaceRenderer"]
     },
     "frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard": {
         "dependencies": ["exports", "metal-attribute/src/Attribute", "metal/src/metal", "metal-dom/src/all/dom", "metal-jquery-adapter/src/JQueryAdapter"]

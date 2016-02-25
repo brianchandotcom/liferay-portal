@@ -99,20 +99,25 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 					}
 				}
 				else {
-					var urlLoadedState = sidenavToggle.data('url-loaded') ? sidenavToggle.data('url-loaded').state() : '';
-
 					sidenavToggle.sideNavigation('show');
 
-					if (urlLoadedState === 'resolved') {
+					if (!sidenavToggle.attr('data-url')) {
 						showUserCollapse();
 					}
 					else {
-						sidenavSlider.on(
-							'urlLoaded.lexicon.sidenav',
-							function(event) {
-								showUserCollapse();
-							}
-						);
+						var urlLoadedState = sidenavSlider.data('url-loaded') ? sidenavSlider.data('url-loaded').state() : '';
+
+						if (urlLoadedState === 'resolved') {
+							showUserCollapse();
+						}
+						else {
+							sidenavSlider.on(
+								'urlLoaded.lexicon.sidenav',
+								function(event) {
+									showUserCollapse();
+								}
+							);
+						}
 					}
 				}
 			}

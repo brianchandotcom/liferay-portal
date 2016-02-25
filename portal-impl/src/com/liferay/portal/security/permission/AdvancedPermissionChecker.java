@@ -15,9 +15,11 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -32,7 +34,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -48,7 +49,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -693,6 +694,36 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	protected String fixLegacyPrimaryKey(
+		long companyId, String name, String primKey) {
+
+		if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||
+			(primKey.equals(String.valueOf(companyId)) &&
+			 !name.equals(Company.class.getName()))) {
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Using ");
+				sb.append(name);
+				sb.append(" as the primary key instead of the legacy primary ");
+				sb.append("key ");
+				sb.append(primKey);
+				sb.append(" that was used for permission checking of ");
+				sb.append(name);
+				sb.append(" in company ");
+				sb.append(companyId);
+
+				_log.warn(
+					sb.toString(), new IllegalArgumentException(sb.toString()));
+			}
+
+			return name;
+		}
+
+		return primKey;
+	}
+
 	/**
 	 * Returns representations of the resource at each scope level.
 	 *
@@ -799,8 +830,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		long companyId = user.getCompanyId();
 
-		List<Resource> resources = getResources(
-			companyId, groupId, name, primKey, actionId);
+		if (groupId > 0) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			companyId = group.getCompanyId();
+		}
 
 		try {
 			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
@@ -812,9 +846,20 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					resourceBlockIdsBag);
 			}
 
+			primKey = fixLegacyPrimaryKey(companyId, name, primKey);
+
+			List<Resource> resources = getResources(
+				companyId, groupId, name, primKey, actionId);
+
 			return ResourceLocalServiceUtil.hasUserPermissions(
 				defaultUserId, groupId, resources, actionId,
 				getGuestUserRoleIds());
+		}
+		catch (NoSuchResourcePermissionException nsrpe) {
+			throw new IllegalArgumentException(
+				"Someone may be trying to circumvent the permission checker: " +
+					nsrpe.getMessage(),
+				nsrpe);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -840,6 +885,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return hasUserPermissionImpl(
 				groupId, name, primKey, roleIds, actionId);
 		}
+		catch (IllegalArgumentException iae) {
+			throw iae;
+		}
 		catch (Exception e) {
 			_log.error(e, e);
 
@@ -863,29 +911,26 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			companyId = group.getCompanyId();
 		}
-		else if (name.equals(User.class.getName())) {
-			User user = UserLocalServiceUtil.fetchUser(
-				GetterUtil.getLong(primKey));
 
-			if (user != null) {
-				companyId = user.getCompanyId();
+		primKey = fixLegacyPrimaryKey(companyId, name, primKey);
+
+		try {
+			boolean hasPermission = doCheckPermission(
+				companyId, groupId, name, primKey, roleIds, actionId,
+				stopWatch);
+
+			if (hasPermission) {
+				return true;
 			}
 		}
-
-		boolean hasLayoutManagerPermission = true;
-
-		// Check if the layout manager has permission to do this action for the
-		// current portlet
-
-		if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
-			primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
-
-			hasLayoutManagerPermission =
-				PortletPermissionUtil.hasLayoutManagerPermission(
-					name, actionId);
+		catch (NoSuchResourcePermissionException nsrpe) {
+			throw new IllegalArgumentException(
+				"Someone may be trying to circumvent the permission checker: " +
+					nsrpe.getMessage(),
+				nsrpe);
 		}
 
-		if (isCompanyAdminImpl(companyId)) {
+		if (isOmniadmin()) {
 			return true;
 		}
 
@@ -894,12 +939,31 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				return true;
 			}
 		}
-		else if (isGroupAdminImpl(groupId) && hasLayoutManagerPermission) {
+
+		if (isCompanyAdminImpl(companyId)) {
 			return true;
 		}
 
-		return doCheckPermission(
-			companyId, groupId, name, primKey, roleIds, actionId, stopWatch);
+		if (isGroupAdminImpl(groupId)) {
+			boolean hasLayoutManagerPermission = true;
+
+			// Check if the layout manager has permission to do this action for
+			// the current portlet
+
+			if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
+				primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+
+				hasLayoutManagerPermission =
+					PortletPermissionUtil.hasLayoutManagerPermission(
+						name, actionId);
+			}
+
+			if (hasLayoutManagerPermission) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {

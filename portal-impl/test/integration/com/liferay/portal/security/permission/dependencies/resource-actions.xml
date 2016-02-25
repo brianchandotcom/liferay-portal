@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
+
+<resource-action-mapping>
+	<portlet-resource>
+		<portlet-name>com_liferay_portal_security_PermissionCheckerTestNonSitePortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_TEST_RESULT</action-key>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults>
+				<action-key>ADD_TEST_RESULT</action-key>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported />
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>CONFIGURATION</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported />
+		</permissions>
+	</portlet-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.security.permission.nonsite</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestNonSitePortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_TEST</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.security.permission.site</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_SITE_TEST</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>ADD_SITE_TEST</action-key>
+			</site-member-defaults>
+			<guest-defaults />
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>test.com.liferay.portal.security.permission.SiteTest</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_portal_security_PermissionCheckerTestSiteRelatedPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>UPDATE</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

@@ -16,11 +16,8 @@ package com.liferay.privatemessaging.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -39,6 +36,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
 import com.liferay.privatemessaging.model.UserThread;
@@ -3268,10 +3266,12 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_USERTHREAD = "SELECT userThread FROM UserThread userThread";
 	private static final String _SQL_SELECT_USERTHREAD_WHERE_PKS_IN = "SELECT userThread FROM UserThread userThread WHERE userThreadId IN (";
 	private static final String _SQL_SELECT_USERTHREAD_WHERE = "SELECT userThread FROM UserThread userThread WHERE ";

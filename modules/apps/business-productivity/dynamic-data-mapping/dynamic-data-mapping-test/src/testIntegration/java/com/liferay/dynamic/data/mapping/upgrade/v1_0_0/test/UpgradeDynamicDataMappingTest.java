@@ -42,6 +42,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceU
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
@@ -1380,6 +1381,8 @@ public class UpgradeDynamicDataMappingTest {
 		DLFileVersionLocalService dlFileVersionLocalService =
 			registry.getService(DLFileVersionLocalService.class);
 
+		DDM ddm = registry.getService(DDM.class);
+
 		DDMFormJSONDeserializer ddmFormJSONDeserializer = registry.getService(
 			DDMFormJSONDeserializer.class);
 
@@ -1417,7 +1420,7 @@ public class UpgradeDynamicDataMappingTest {
 			registry.getService(ResourcePermissionLocalService.class);
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			assetEntryLocalService, ddmFormJSONDeserializer,
+			assetEntryLocalService, ddm, ddmFormJSONDeserializer,
 			ddmFormJSONSerializer, ddmFormLayoutJSONSerializer,
 			ddmFormValuesJSONDeserializer, ddmFormValuesJSONSerializer,
 			ddmFormXSDDeserializer, dlFileEntryLocalService,

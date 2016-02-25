@@ -36,7 +36,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
@@ -225,7 +225,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return addStructure(
 			userId, groupId, parentStructureId, classNameId, structureKey,
@@ -348,7 +348,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
@@ -1346,7 +1346,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		structureKey = getStructureKey(structureKey);
 
@@ -1389,7 +1389,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return doUpdateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
@@ -1424,7 +1424,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return doUpdateStructure(
 			userId, structure.getParentStructureId(), structure.getNameMap(),
@@ -1773,6 +1773,9 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = BackgroundTaskManager.class)
 	protected BackgroundTaskManager backgroundTaskmanager;
+
+	@ServiceReference(type = DDM.class)
+	protected DDM ddm;
 
 	@ServiceReference(type = DDMFormJSONDeserializer.class)
 	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;

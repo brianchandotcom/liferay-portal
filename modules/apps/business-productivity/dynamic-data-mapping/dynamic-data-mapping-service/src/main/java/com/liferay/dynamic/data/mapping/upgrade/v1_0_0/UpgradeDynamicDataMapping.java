@@ -45,9 +45,9 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -122,7 +122,7 @@ import java.util.regex.Pattern;
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
-		AssetEntryLocalService assetEntryLocalService,
+		AssetEntryLocalService assetEntryLocalService, DDM ddm,
 		DDMFormJSONDeserializer ddmFormJSONDeserializer,
 		DDMFormJSONSerializer ddmFormJSONSerializer,
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
@@ -139,6 +139,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_ddm = ddm;
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
@@ -532,7 +533,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout);
 	}
@@ -1465,6 +1466,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private final DDM _ddm;
 	private long _ddmContentClassNameId;
 	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer;

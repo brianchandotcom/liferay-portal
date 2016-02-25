@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,7 +44,7 @@ import java.util.Map;
 public class GoogleDocsDLFileEntryTypeHelper {
 
 	public GoogleDocsDLFileEntryTypeHelper(
-		Company company, ClassNameLocalService classNameLocalService,
+		Company company, ClassNameLocalService classNameLocalService, DDM ddm,
 		DDMFormXSDDeserializer ddmFormXSDDeserializer,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
@@ -52,6 +52,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		_company = company;
 		_classNameLocalService = classNameLocalService;
+		_ddm = ddm;
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
@@ -80,7 +81,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -149,6 +150,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final Company _company;
+	private final DDM _ddm;
 	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final long _dlFileEntryMetadataClassNameId;

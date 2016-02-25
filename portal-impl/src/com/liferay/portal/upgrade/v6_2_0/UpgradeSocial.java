@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -45,19 +44,16 @@ public class UpgradeSocial extends UpgradeProcess {
 			long classPK, int type, String extraData, long receiverUserId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			StringBundler sb = new StringBundler(5);
+		sb.append("insert into SocialActivity (activityId, groupId, ");
+		sb.append("companyId, userId, createDate, mirrorActivityId, ");
+		sb.append("classNameId, classPK, type_, extraData, ");
+		sb.append("receiverUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?)");
 
-			sb.append("insert into SocialActivity (activityId, groupId, ");
-			sb.append("companyId, userId, createDate, mirrorActivityId, ");
-			sb.append("classNameId, classPK, type_, extraData, ");
-			sb.append("receiverUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?)");
-
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setLong(1, activityId);
 			ps.setLong(2, groupId);
@@ -77,9 +73,6 @@ public class UpgradeSocial extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to add activity " + activityId, e);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -128,53 +121,47 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		Set<String> keys = new HashSet<>();
 
-		try {
-			Set<String> keys = new HashSet<>();
-
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId, companyId, userId, modifiedDate, " +
 					"fileEntryId, title, version from DLFileVersion " +
-						"where status = ?");
+						"where status = ?")) {
 
 			ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long fileEntryId = rs.getLong("fileEntryId");
-				String title = rs.getString("title");
-				double version = rs.getDouble("version");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					long fileEntryId = rs.getLong("fileEntryId");
+					String title = rs.getString("title");
+					double version = rs.getDouble("version");
 
-				int type = DLActivityKeys.ADD_FILE_ENTRY;
+					int type = DLActivityKeys.ADD_FILE_ENTRY;
 
-				if (version > 1.0) {
-					type = DLActivityKeys.UPDATE_FILE_ENTRY;
+					if (version > 1.0) {
+						type = DLActivityKeys.UPDATE_FILE_ENTRY;
+					}
+
+					modifiedDate = getUniqueModifiedDate(
+						keys, groupId, userId, modifiedDate, classNameId,
+						fileEntryId, type);
+
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					extraDataJSONObject.put("title", title);
+
+					addActivity(
+						increment(), groupId, companyId, userId, modifiedDate,
+						0, classNameId, fileEntryId, type,
+						extraDataJSONObject.toString(), 0);
 				}
-
-				modifiedDate = getUniqueModifiedDate(
-					keys, groupId, userId, modifiedDate, classNameId,
-					fileEntryId, type);
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", title);
-
-				addActivity(
-					increment(), groupId, companyId, userId, modifiedDate, 0,
-					classNameId, fileEntryId, type,
-					extraDataJSONObject.toString(), 0);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -204,14 +191,9 @@ public class UpgradeSocial extends UpgradeProcess {
 			return;
 		}
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select activityId, activitySetId from SO_SocialActivity");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long activityId = rs.getLong("activityId");
@@ -227,9 +209,6 @@ public class UpgradeSocial extends UpgradeProcess {
 				runSQL(sb.toString());
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
 		runSQL("drop table SO_SocialActivity");
 	}
@@ -240,17 +219,12 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			Set<String> keys = new HashSet<>();
-
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId, companyId, userId, modifiedDate, " +
 					"resourcePrimKey, version from WikiPage");
+			ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+			Set<String> keys = new HashSet<>();
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -280,9 +254,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					classNameId, resourcePrimKey, type,
 					extraDataJSONObject.toString(), 0);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

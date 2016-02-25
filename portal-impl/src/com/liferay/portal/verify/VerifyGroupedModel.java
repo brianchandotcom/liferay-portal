@@ -186,8 +186,8 @@ public class VerifyGroupedModel extends VerifyProcess {
 						continue;
 					}
 
-					ps2.setLong(0, groupId);
-					ps2.setLong(1, primKey);
+					ps2.setLong(1, groupId);
+					ps2.setLong(2, primKey);
 
 					ps2.addBatch();
 				}

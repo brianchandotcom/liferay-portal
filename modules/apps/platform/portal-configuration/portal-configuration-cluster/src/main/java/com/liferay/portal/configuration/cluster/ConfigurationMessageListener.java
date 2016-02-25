@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.cluster;
 
+import com.liferay.portal.configuration.cluster.messaging.DestinationNames;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;

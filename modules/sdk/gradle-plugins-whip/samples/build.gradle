@@ -19,7 +19,7 @@ apply plugin: "java"
 group = "com.example"
 
 dependencies {
-	testCompile files("../../../../portal-service/portal-service.jar", "../../../../portal-test/portal-test.jar")
+	testCompile files("../../../../portal-kernel/portal-kernel.jar", "../../../../portal-test/portal-test.jar")
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
 

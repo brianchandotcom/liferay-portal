@@ -1,6 +1,6 @@
 dependencies {
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	provided group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.7"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"

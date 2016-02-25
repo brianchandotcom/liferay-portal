@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
+import com.liferay.portal.workflow.kaleo.messaging.DestinationNames;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
@@ -38,7 +39,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DefaultDueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTimerInstanceTokenLocalServiceBaseImpl;
-import com.liferay.portal.workflow.kaleo.util.DestinationNames;
 import com.liferay.portal.workflow.kaleo.util.SchedulerUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 

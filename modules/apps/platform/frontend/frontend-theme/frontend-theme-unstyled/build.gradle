@@ -14,7 +14,7 @@ task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyUIVersion = "3.0.3-deprecated.18"
-String lexiconVersion = "0.2.6"
+String lexiconVersion = "0.2.7"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 

@@ -18,6 +18,8 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-api")
 	provided project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-definition-api")
+	provided project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-runtime-api")
+	provided project(":apps:platform:osgi-service-tracker-collections")
 	provided project(":apps:platform:portal-rules-engine:portal-rules-engine-api")
 	provided project(":apps:platform:portal:portal-instance-lifecycle")
 	provided project(":apps:platform:portal:portal-upgrade")

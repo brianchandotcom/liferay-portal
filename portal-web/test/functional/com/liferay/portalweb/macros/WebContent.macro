@@ -1017,7 +1017,7 @@
 
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${webContentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinViaDeleteIconCP">
@@ -1029,7 +1029,7 @@
 
 		<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="paginateRelatedAssets">
@@ -1162,7 +1162,7 @@
 
 		<execute function="Click" locator1="Icon#SUBSCRIBE" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -1181,7 +1181,7 @@
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 

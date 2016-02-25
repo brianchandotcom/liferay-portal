@@ -11,7 +11,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -60,7 +60,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -86,7 +86,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${subfolderDescription}" />
@@ -106,7 +106,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -124,7 +124,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -147,7 +147,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -167,7 +167,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -196,7 +196,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${editSubfolderDescription}" />
@@ -268,7 +268,7 @@
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
@@ -286,7 +286,7 @@
 
 		<var name="key_assetType" value="Bookmarks Folder" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${subfolderName} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
@@ -306,7 +306,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="subscribePG">
@@ -320,7 +320,7 @@
 
 		<execute function="Click" locator1="Icon#SUBSCRIBE" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -337,7 +337,7 @@
 
 				<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 		</if>

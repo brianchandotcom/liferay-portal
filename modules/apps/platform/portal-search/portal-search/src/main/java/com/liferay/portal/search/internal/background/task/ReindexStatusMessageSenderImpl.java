@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrew Betts
  */
+@Component(immediate = true, service = ReindexStatusMessageSender.class)
 public class ReindexStatusMessageSenderImpl
 	implements ReindexStatusMessageSender {
 
@@ -61,14 +63,8 @@ public class ReindexStatusMessageSenderImpl
 			message);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskStatusMessageSender(
-		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender) {
-
-		_backgroundTaskStatusMessageSender = backgroundTaskStatusMessageSender;
-	}
-
-	private volatile BackgroundTaskStatusMessageSender
+	@Reference
+	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
 
 }

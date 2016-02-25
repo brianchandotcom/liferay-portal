@@ -128,13 +128,6 @@ public class PortletDataHandlerStatusMessageSenderImpl
 			message);
 	}
 
-	@Reference(unbind = "-")
-	public void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	protected void init(
 		Message message, String messageType, ManifestSummary manifestSummary) {
 
@@ -156,15 +149,11 @@ public class PortletDataHandlerStatusMessageSenderImpl
 			"modelDeletionCounters", new HashMap<>(modelDeletionCounters));
 	}
 
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskStatusMessageSender(
-		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender) {
-
-		_backgroundTaskStatusMessageSender = backgroundTaskStatusMessageSender;
-	}
-
+	@Reference
 	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

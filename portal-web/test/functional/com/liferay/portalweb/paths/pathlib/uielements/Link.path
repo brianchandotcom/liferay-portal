@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_BOARDS_ATTACHMENT</td>
+	<td>//li[@class='message-attachment']//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE</td>
 	<td>//span[contains(.,'Move')]</td>
 	<td></td>

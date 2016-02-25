@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//*[@data-qa-id='searchButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE_LINK</td>
 	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'Subscribe')]</td>
 	<td></td>

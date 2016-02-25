@@ -15,36 +15,36 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Field.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringPool.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Tuple.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/log/*,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/search/Document.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/search/Field.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/CharPool.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/StringPool.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/Tuple.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/Validator.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jDocUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\

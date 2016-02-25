@@ -56,7 +56,7 @@ Export-Package:\
 	!org.jcp.xml.*,\
 	!overview.html,\
 	!portal-impl-overview.html,\
-	!portal-service-overview.html,\
+	!portal-kernel-overview.html,\
 	!resource-actions,\
 	!trax,\
 	!unicode-license.txt,\
@@ -260,4 +260,4 @@ Include-Resource:\
 	@../../../lib/portal/xmlsec.jar,\
 	@../../../lib/portal/xstream.jar,\
 	@../../../portal-impl/portal-impl.jar,\
-	@../../../portal-service/portal-service.jar
+	@../../../portal-kernel/portal-kernel.jar

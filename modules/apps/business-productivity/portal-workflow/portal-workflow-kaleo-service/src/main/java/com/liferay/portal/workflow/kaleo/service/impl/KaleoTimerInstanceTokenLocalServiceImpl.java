@@ -31,16 +31,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
-import com.liferay.portal.workflow.kaleo.internal.runtime.calendar.DefaultDueDateCalculator;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
+import com.liferay.portal.workflow.kaleo.runtime.util.SchedulerUtil;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTimerInstanceTokenLocalServiceBaseImpl;
-import com.liferay.portal.workflow.kaleo.util.SchedulerUtil;
-import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
@@ -295,9 +294,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			DurationScale.valueOf(
 				StringUtil.toUpperCase(kaleoTimer.getScale())));
 
-		DueDateCalculator dueDateCalculator = new DefaultDueDateCalculator();
-
-		Date dueDate = dueDateCalculator.getDueDate(new Date(), delayDuration);
+		Date dueDate = _dueDateCalculator.getDueDate(new Date(), delayDuration);
 
 		int interval = 0;
 		TimeUnit timeUnit = TimeUnit.SECOND;
@@ -333,6 +330,9 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTimerInstanceTokenLocalServiceImpl.class);
+
+	@ServiceReference(type = DueDateCalculator.class)
+	private DueDateCalculator _dueDateCalculator;
 
 	@ServiceReference(type = SchedulerEngineHelper.class)
 	private SchedulerEngineHelper _schedulerEngineHelper;

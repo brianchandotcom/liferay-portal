@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 import com.liferay.portal.workflow.kaleo.runtime.internal.BaseKaleoBean;
+import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
 import java.io.InputStream;
 

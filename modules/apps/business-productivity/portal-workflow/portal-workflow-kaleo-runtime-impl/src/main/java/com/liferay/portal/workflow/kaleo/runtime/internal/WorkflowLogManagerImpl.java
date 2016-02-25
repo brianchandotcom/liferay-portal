@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
+import com.liferay.portal.workflow.kaleo.runtime.internal.util.comparators.KaleoLogOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
-import com.liferay.portal.workflow.kaleo.util.comparators.KaleoLogOrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;

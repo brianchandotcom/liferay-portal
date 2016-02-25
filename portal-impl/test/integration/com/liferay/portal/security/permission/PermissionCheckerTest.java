@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -74,11 +75,13 @@ public class PermissionCheckerTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		registerResourceActions();
+
+		checkResourceActions(_PORTLET_RESOURCE_NAME);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		removeResourceActions();
+		removeResourceActions(_PORTLET_RESOURCE_NAME);
 	}
 
 	@Before
@@ -97,10 +100,7 @@ public class PermissionCheckerTest {
 
 		PermissionChecker permissionChecker = _getPermissionChecker(_user);
 
-		Portlet portlet = new PortletImpl(
-			_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
-
-		PortletLocalServiceUtil.deployRemotePortlet(portlet, "category.hidden");
+		deployRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
 
 		try {
 			boolean hasPermission = permissionChecker.hasPermission(
@@ -122,19 +122,7 @@ public class PermissionCheckerTest {
 			Assert.assertFalse(hasPermission);
 		}
 		finally {
-			ResourceLocalServiceUtil.deleteResource(
-				_user.getCompanyId(), _PORTLET_RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL, _PORTLET_RESOURCE_NAME);
-
-			ResourceLocalServiceUtil.deleteResource(
-				_user.getCompanyId(), _MODEL_RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL, _MODEL_RESOURCE_NAME);
-
-			ResourceLocalServiceUtil.deleteResource(
-				_user.getCompanyId(), _ROOT_MODEL_RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL, _ROOT_MODEL_RESOURCE_NAME);
-
-			PortletLocalServiceUtil.destroyRemotePortlet(portlet);
+			destroyRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
 		}
 	}
 
@@ -678,23 +666,15 @@ public class PermissionCheckerTest {
 				_organization.getOrganizationId()));
 	}
 
-	protected static void registerResourceActions() throws Exception {
-		String packageName = PermissionCheckerTest.class.getPackage().getName();
-		String packagePath = packageName.replace('.', '/');
-
-		ResourceActionsUtil.read(
-			null, PermissionCheckerTest.class.getClassLoader(),
-			packagePath + "/dependencies/resource-actions.xml");
-
+	protected static void checkResourceActions(String portletName) {
 		List<String> portletActions =
-			ResourceActionsUtil.getPortletResourceActions(
-				_PORTLET_RESOURCE_NAME);
+			ResourceActionsUtil.getPortletResourceActions(portletName);
 
 		ResourceActionLocalServiceUtil.checkResourceActions(
-			_PORTLET_RESOURCE_NAME, portletActions);
+			portletName, portletActions);
 
 		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
-			_PORTLET_RESOURCE_NAME);
+			portletName);
 
 		for (String modelName : modelNames) {
 			List<String> modelActions =
@@ -705,10 +685,18 @@ public class PermissionCheckerTest {
 		}
 	}
 
-	protected static void removeResourceActions() {
+	protected static void registerResourceActions() throws Exception {
+		String packageName = PermissionCheckerTest.class.getPackage().getName();
+		String packagePath = packageName.replace('.', '/');
+
+		ResourceActionsUtil.read(
+			null, PermissionCheckerTest.class.getClassLoader(),
+			packagePath + "/dependencies/resource-actions.xml");
+	}
+
+	protected static void removeResourceActions(String portletName) {
 		List<ResourceAction> portletResourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(
-				_PORTLET_RESOURCE_NAME);
+			ResourceActionLocalServiceUtil.getResourceActions(portletName);
 
 		for (ResourceAction portletResourceAction : portletResourceActions) {
 			ResourceActionLocalServiceUtil.deleteResourceAction(
@@ -716,7 +704,7 @@ public class PermissionCheckerTest {
 		}
 
 		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
-			_PORTLET_RESOURCE_NAME);
+			portletName);
 
 		for (String modelName : modelNames) {
 			List<ResourceAction> modelResourceActions =
@@ -729,12 +717,42 @@ public class PermissionCheckerTest {
 		}
 	}
 
+	protected void deployRemotePortlet(long companyId, String portletName)
+		throws PortalException {
+
+		Portlet portlet = new PortletImpl(companyId, portletName);
+
+		PortletLocalServiceUtil.deployRemotePortlet(portlet, "category.hidden");
+	}
+
 	private PermissionChecker _getPermissionChecker(User user)
 		throws Exception {
 
 		PermissionCacheUtil.clearCache(user.getUserId());
 
 		return PermissionCheckerFactoryUtil.create(user);
+	}
+
+	private void destroyRemotePortlet(long companyId, String portletName)
+		throws PortalException {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletName);
+
+		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
+			portletName);
+
+		for (String modelName : modelNames) {
+			ResourceLocalServiceUtil.deleteResource(
+				_user.getCompanyId(), modelName,
+				ResourceConstants.SCOPE_INDIVIDUAL, modelName);
+		}
+
+		ResourceLocalServiceUtil.deleteResource(
+			_user.getCompanyId(), portletName,
+			ResourceConstants.SCOPE_INDIVIDUAL, portletName);
+
+		PortletLocalServiceUtil.destroyRemotePortlet(portlet);
 	}
 
 	private static final String _ADD_SITE_TEST_ACTION = "ADD_SITE_TEST";

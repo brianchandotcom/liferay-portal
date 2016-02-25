@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigura
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch;
-import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -46,7 +45,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -261,7 +259,7 @@ public class DDLFormAdminDisplayContext {
 		return _recordSet;
 	}
 
-	public RecordSetSearch getRecordSetSearch() {
+	public RecordSetSearch getRecordSetSearch() throws PortalException {
 		String displayStyle = getDisplayStyle();
 
 		PortletURL portletURL = getPortletURL();
@@ -288,55 +286,10 @@ public class DDLFormAdminDisplayContext {
 			recordSetSearch.setEmptyResultsMessage("there-are-no-forms");
 		}
 
+		setRecordSetSearchResults(recordSetSearch);
+		setRecordSetSearchTotal(recordSetSearch);
+
 		return recordSetSearch;
-	}
-
-	public List<DDLRecordSet> getSearchContainerResults(
-			SearchContainer<DDLRecordSet> searchContainer)
-		throws PortalException {
-
-		RecordSetSearchTerms searchTerms =
-			(RecordSetSearchTerms)searchContainer.getSearchTerms();
-
-		if (searchTerms.isAdvancedSearch()) {
-			return _ddlRecordSetService.search(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getName(), searchTerms.getDescription(),
-				DDLRecordSetConstants.SCOPE_FORMS, searchTerms.isAndOperator(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-		else {
-			return _ddlRecordSetService.search(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_FORMS,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-	}
-
-	public int getSearchContainerTotal(
-			SearchContainer<DDLRecordSet> searchContainer)
-		throws PortalException {
-
-		RecordSetSearchTerms searchTerms =
-			(RecordSetSearchTerms)searchContainer.getSearchTerms();
-
-		if (searchTerms.isAdvancedSearch()) {
-			return _ddlRecordSetService.searchCount(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getName(), searchTerms.getDescription(),
-				DDLRecordSetConstants.SCOPE_FORMS, searchTerms.isAndOperator());
-		}
-		else {
-			return _ddlRecordSetService.searchCount(
-				_ddlFormAdminRequestHelper.getCompanyId(),
-				_ddlFormAdminRequestHelper.getScopeGroupId(),
-				searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_FORMS);
-		}
 	}
 
 	public String getSerializedDDMDataProviders() throws PortalException {
@@ -446,6 +399,18 @@ public class DDLFormAdminDisplayContext {
 			ActionKeys.PERMISSIONS);
 	}
 
+	public boolean isShowSearch() throws PortalException {
+		if (hasResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowViewEntriesRecordSetIcon(DDLRecordSet recordSet) {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
@@ -507,6 +472,10 @@ public class DDLFormAdminDisplayContext {
 		return displayStyle;
 	}
 
+	protected String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
+	}
+
 	protected DDLRecord getRecord() throws PortalException {
 		long recordId = ParamUtil.getLong(_renderRequest, "recordId");
 
@@ -530,6 +499,28 @@ public class DDLFormAdminDisplayContext {
 		}
 	}
 
+	protected int getTotal() throws PortalException {
+		RecordSetSearch recordSetSearch = getRecordSetSearch();
+
+		return recordSetSearch.getTotal();
+	}
+
+	protected boolean hasResults() throws PortalException {
+		if (getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected String serialize(
 		List<DDMDataProviderInstance> ddmDataProviderInstances, Locale locale) {
 
@@ -545,6 +536,25 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return jsonArray.toString();
+	}
+
+	protected void setRecordSetSearchResults(RecordSetSearch recordSetSearch) {
+		List<DDLRecordSet> results = _ddlRecordSetService.search(
+			_ddlFormAdminRequestHelper.getCompanyId(),
+			_ddlFormAdminRequestHelper.getScopeGroupId(), getKeywords(),
+			DDLRecordSetConstants.SCOPE_FORMS, recordSetSearch.getStart(),
+			recordSetSearch.getEnd(), recordSetSearch.getOrderByComparator());
+
+		recordSetSearch.setResults(results);
+	}
+
+	protected void setRecordSetSearchTotal(RecordSetSearch recordSetSearch) {
+		int total = _ddlRecordSetService.searchCount(
+			_ddlFormAdminRequestHelper.getCompanyId(),
+			_ddlFormAdminRequestHelper.getScopeGroupId(), getKeywords(),
+			DDLRecordSetConstants.SCOPE_FORMS);
+
+		recordSetSearch.setTotal(total);
 	}
 
 	protected JSONObject toJSONObject(

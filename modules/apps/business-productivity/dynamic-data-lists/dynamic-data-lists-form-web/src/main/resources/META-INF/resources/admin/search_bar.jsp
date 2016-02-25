@@ -25,9 +25,11 @@ PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 		<aui:nav-item label="forms" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>

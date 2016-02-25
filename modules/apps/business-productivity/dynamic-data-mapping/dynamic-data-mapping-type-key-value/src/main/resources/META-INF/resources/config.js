@@ -8,8 +8,8 @@
 			groups: {
 				'field-key-value': {
 					base: PATH_DDM_TYPE_KEYVALUE + '/',
-					filter: LiferayAUI.getFilterConfig(),
 					combine: Liferay.AUI.getCombine(),
+					filter: LiferayAUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-key-value': {
 							condition: {

@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddm-form-field-key-value',
 	function(A) {
+		var Lang = A.Lang;
+
 		var KeyValueField = A.Component.create(
 			{
 				ATTRS: {
@@ -67,12 +69,12 @@ AUI.add(
 						for (var i = 0; i < key.length; i++) {
 							var item = key[i];
 
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N')) {
 								key = key.replace(item, ' ');
 							}
 						}
 
-						key = Liferay.Util.camelize(key, ' ');
+						key = Lang.String.camelize(key, ' ');
 
 						return key.replace(/\s+/ig, '');
 					},

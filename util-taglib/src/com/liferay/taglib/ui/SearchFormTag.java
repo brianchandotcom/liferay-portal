@@ -46,6 +46,11 @@ public class SearchFormTag<R> extends IncludeTag {
 
 		if (searchContainerTag != null) {
 			_searchContainer = searchContainerTag.getSearchContainer();
+
+			request.setAttribute(
+				"liferay-ui:search:compactEmptyResultsMessage",
+				String.valueOf(
+					searchContainerTag.getCompactEmptyResultsMessage()));
 		}
 
 		request.setAttribute(

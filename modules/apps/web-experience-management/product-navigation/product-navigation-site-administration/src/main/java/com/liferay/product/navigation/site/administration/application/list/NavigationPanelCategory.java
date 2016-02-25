@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class PagesPanelCategory extends BasePanelCategory {
+public class NavigationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {

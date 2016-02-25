@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -130,11 +132,15 @@ public class EditPublishConfigurationMVCActionCommand
 				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				StagingUtil.publishLayouts(
-					themeDisplay.getUserId(), exportImportConfigurationId);
+				setRedirect(
+					actionRequest, actionResponse,
+					StagingUtil.publishLayouts(
+						themeDisplay.getUserId(), exportImportConfigurationId));
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-				StagingUtil.copyRemoteLayouts(exportImportConfigurationId);
+				setRedirect(
+					actionRequest, actionResponse,
+					StagingUtil.copyRemoteLayouts(exportImportConfigurationId));
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
 				relaunchPublishLayoutConfiguration(
@@ -190,6 +196,22 @@ public class EditPublishConfigurationMVCActionCommand
 
 		_exportImportConfigurationLocalService =
 			exportImportConfigurationLocalService;
+	}
+
+	protected void setRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		long backgroundTaskId) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
+
+		PortletURL renderURL = liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
+		renderURL.setParameter(
+			"backgroundTaskId", String.valueOf(backgroundTaskId));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 	}
 
 	protected ExportImportConfiguration updatePublishConfiguration(

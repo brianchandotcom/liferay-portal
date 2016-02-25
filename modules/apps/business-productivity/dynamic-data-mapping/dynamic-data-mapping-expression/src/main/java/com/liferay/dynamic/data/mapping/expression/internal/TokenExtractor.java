@@ -138,15 +138,15 @@ public class TokenExtractor {
 	}
 
 	private static final String[] _ALLOWED_FUNCTIONS = {
-		"not", "if", "min", "max", "between", "concat", "contains", "equals",
-		"isemailaddress", "isurl", "sum"
+		"between", "concat", "contains", "equals", "if", "isemailaddress",
+		"isurl", "max", "min", "not", "sum"
 	};
 
 	private static final String[] _AVAILABLE_FUNCTIONS = {
-		"not", "if", "random", "min", "max", "abs", "round", "floor", "ceiling",
-		"log", "log10", "sqrt", "sin", "cos", "tan", "asin", "acos", "atan",
-		"sinh", "cosh", "tanh", "rad", "deg", "between", "concat", "contains",
-		"equals", "isemailaddress", "isurl", "sum"
+		"abs", "acos", "asin", "atan", "between", "ceiling", "concat",
+		"contains", "cos", "cosh", "deg", "equals", "floor", "if",
+		"isemailaddress", "isurl", "log", "log10", "max", "min", "not", "rad",
+		"random", "round", "sin", "sinh", "sqrt", "sum", "tan", "tanh"
 	};
 
 	private static final String[] _BOOLEAN_CONSTANTS = {"false", "true"};

@@ -163,13 +163,13 @@
 	<command name="saveCP">
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

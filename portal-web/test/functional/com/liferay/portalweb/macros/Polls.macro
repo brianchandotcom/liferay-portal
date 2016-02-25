@@ -63,7 +63,7 @@
 		<execute function="Select" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 
 		<execute function="AssertSelectedLabel" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 

@@ -92,7 +92,7 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewPageAddedSuccessMessage" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

@@ -307,7 +307,7 @@
 
 					<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-					<execute macro="Alert#viewSuccessMessage" />
+					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 				</for>
 			</then>
 			<else>
@@ -315,7 +315,7 @@
 
 				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 
@@ -1029,7 +1029,7 @@
 			</then>
 		</if>
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1193,7 +1193,7 @@
 	<command name="publish">
 		<execute macro="CalendarEvent#clickPublish" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="publishRepeating">
@@ -1207,7 +1207,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="publishWithUserNotification">
@@ -1218,7 +1218,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="rate4Stars">

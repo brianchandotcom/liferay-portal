@@ -1288,7 +1288,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
 

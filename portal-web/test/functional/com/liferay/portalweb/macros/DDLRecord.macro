@@ -344,7 +344,7 @@
 	<command name="publish">
 		<execute macro="Button#clickPublish" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="publishViaDDLDisplayPG">
@@ -372,7 +372,7 @@
 	<command name="save">
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveAsDraftCP">
@@ -384,7 +384,7 @@
 	<command name="submitForPublication">
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="viewDefaultLanguage">

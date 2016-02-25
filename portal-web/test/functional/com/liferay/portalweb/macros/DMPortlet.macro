@@ -83,7 +83,7 @@
 				<execute function="AssertClick#assertPartialTextClickAt" locator1="Message#ERROR_2" value1="Display style views cannot be empty." />
 			</then>
 			<else>
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</else>
 		</if>
 	</command>

@@ -346,7 +346,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editEntryPG">
@@ -479,7 +479,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="unsubscribePG">

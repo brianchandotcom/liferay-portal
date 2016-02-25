@@ -1,4 +1,22 @@
 <definition>
+	<command name="viewLocalizedPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="viewPageAddedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="viewRequestCompletedSuccessMessage">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
 	<command name="viewRequestFailedToComplete">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
 	</command>
@@ -7,7 +25,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
-	<command name="viewSuccessMessage">
+	<command name="viewSetupUpdatedSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

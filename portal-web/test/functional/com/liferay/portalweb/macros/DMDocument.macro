@@ -1487,7 +1487,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#REVERT" value1="Revert" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveAndCheckinEditedDocumentPG">

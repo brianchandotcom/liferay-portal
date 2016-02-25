@@ -117,7 +117,7 @@
 		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<execute function="ClickNoError" locator1="Button#SAVE" />
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

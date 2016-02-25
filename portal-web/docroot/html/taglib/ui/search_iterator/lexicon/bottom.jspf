@@ -51,22 +51,16 @@
 		var rowSelector = '<%= rowHtmlTag %><%= rowCheckerRowSelector %>';
 
 		<c:if test="<%= rowChecker != null %>">
+			var rememberCheckBoxState = <%= rowChecker.isRememberCheckBoxState() %>;
 
-		<%
-		boolean rowCheckerKeepSelection = rowChecker.getKeepSelection();
-		String rowCheckerKeepSelectionURLRegex = rowChecker.getKeepSelectionURLRegex();
-		%>
-
-			var keepSelection = <%= rowCheckerKeepSelection %>;
-
-			<c:if test="<%= rowCheckerKeepSelection && Validator.isNotNull(rowCheckerKeepSelectionURLRegex) %>">
-				keepSelection = '<%= rowCheckerKeepSelectionURLRegex %>';
+			<c:if test="<%= rowChecker.isRememberCheckBoxState() && Validator.isNotNull(rowChecker.getRememberCheckBoxStateURLRegexPattern()) %>">
+				rememberCheckBoxState = '<%= rowChecker.getRememberCheckBoxStateURLRegexPattern() %>';
 			</c:if>
 
 			plugins.push(
 				{
 					cfg: {
-						keepSelection: keepSelection,
+						keepSelection: rememberCheckBoxState,
 						rowSelector: rowSelector
 					},
 					fn: A.Plugin.SearchContainerSelect

@@ -16,6 +16,7 @@ class LiferayApp extends App {
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);
+		this.setLoadingCssClass('lfr-surface-loading');
 
 		this.on('beforeNavigate', this.onBeforeNavigate);
 		this.on('endNavigate', this.onEndNavigate);
@@ -83,8 +84,6 @@ class LiferayApp extends App {
 		}
 
 		AUI().Get._insertCache = {};
-
-		dom.removeClasses(document.body, 'lfr-surface-loading');
 	}
 
 	onLiferayIOComplete() {
@@ -99,8 +98,6 @@ class LiferayApp extends App {
 				path: event.path
 			}
 		);
-
-		dom.addClasses(document.body, 'lfr-surface-loading');
 	}
 
 	setBlacklist(blacklist) {

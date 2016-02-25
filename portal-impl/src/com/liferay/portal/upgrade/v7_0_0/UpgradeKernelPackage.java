@@ -19,13 +19,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Preston Crary
@@ -59,8 +52,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
 		}
-		catch (SQLException sqle) {
-			throw new UpgradeException(sqle);
+		catch (Exception e) {
+			throw new UpgradeException(e);
 		}
 	}
 
@@ -73,82 +66,56 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	}
 
 	protected void upgradeTable(
-			String columnName, String selectSQL, String updateSQL,
-			String[] name)
-		throws SQLException {
-
-		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(updateSQL))) {
-
-			while (rs.next()) {
-				String oldValue = rs.getString(columnName);
-
-				String newValue = StringUtil.replace(
-					oldValue, name[0], name[1]);
-
-				ps2.setString(1, newValue);
-				ps2.setString(2, oldValue);
-
-				ps2.addBatch();
-			}
-
-			ps2.executeBatch();
-		}
-	}
-
-	protected void upgradeTable(
 			String tableName, String columnName, String[][] names,
 			WildcardMode wildcardMode)
-		throws SQLException {
+		throws Exception {
+
+		StringBundler tableSQLSB = new StringBundler(7);
+
+		tableSQLSB.append("update ");
+		tableSQLSB.append(tableName);
+		tableSQLSB.append(" set ");
+		tableSQLSB.append(columnName);
+		tableSQLSB.append(" = replace(");
+		tableSQLSB.append(columnName);
+		tableSQLSB.append(", '");
+
+		String tableSQL = tableSQLSB.toString();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler updateSB = new StringBundler(7);
-
-			updateSB.append("update ");
-			updateSB.append(tableName);
-			updateSB.append(" set ");
-			updateSB.append(columnName);
-			updateSB.append(" = ? where ");
-			updateSB.append(columnName);
-			updateSB.append(" = ?");
-
-			String updateSQL = updateSB.toString();
-
-			StringBundler selectPrefixSB = new StringBundler(7);
-
-			selectPrefixSB.append("select distinct ");
-			selectPrefixSB.append(columnName);
-			selectPrefixSB.append(" from ");
-			selectPrefixSB.append(tableName);
-			selectPrefixSB.append(" where ");
-			selectPrefixSB.append(columnName);
-
-			if (wildcardMode.equals(WildcardMode.LEADING) ||
-				wildcardMode.equals(WildcardMode.SURROUND)) {
-
-				selectPrefixSB.append(" like '%");
-			}
-			else {
-				selectPrefixSB.append(" like '");
-			}
-
-			String selectPrefix = selectPrefixSB.toString();
-
-			String selectPostfix = StringPool.APOSTROPHE;
-
-			if (wildcardMode.equals(WildcardMode.SURROUND) ||
-				wildcardMode.equals(WildcardMode.TRAILING)) {
-
-				selectPostfix = "%'";
-			}
+			StringBundler sb = new StringBundler(9);
 
 			for (String[] name : names) {
-				String selectSQL = selectPrefix.concat(name[0]).concat(
-					selectPostfix);
+				sb.append(tableSQL);
+				sb.append(name[0]);
+				sb.append("', '");
+				sb.append(name[1]);
+				sb.append("') where ");
+				sb.append(columnName);
 
-				upgradeTable(columnName, selectSQL, updateSQL, name);
+				if (wildcardMode.equals(WildcardMode.LEADING) ||
+					wildcardMode.equals(WildcardMode.SURROUND)) {
+
+					sb.append(" like '%");
+				}
+				else {
+					sb.append(" like '");
+				}
+
+				sb.append(name[0]);
+
+				if (wildcardMode.equals(WildcardMode.SURROUND) ||
+					wildcardMode.equals(WildcardMode.TRAILING)) {
+
+					sb.append("%'");
+				}
+				else {
+					sb.append("'");
+				}
+
+				runSQL(sb.toString());
+
+				sb.setIndex(0);
 			}
 		}
 	}

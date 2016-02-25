@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -48,17 +49,50 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		updateOrphanedLargeObjects(oidColumnNames);
 	}
 
+	protected String getCurrentSchema() throws Exception {
+		String schema = null;
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		StringBundler sb = new StringBundler(1);
+
+		sb.append("select current_schema();");
+
+		try {
+			ps = connection.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				schema = (String)rs.getObject("current_schema");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return schema;
+	}
+
 	protected HashMap<String, String> getOidColumnNames() throws Exception {
 		HashMap<String, String> columnsWithOids = new HashMap<>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		StringBundler sb = new StringBundler(3);
+		String schema = getCurrentSchema();
+
+		if (schema == null) {
+			throw new UpgradeException("Could not find current schema");
+		}
+
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("select table_name, column_name from ");
-		sb.append("information_schema.columns where table_schema='public' ");
-		sb.append("and data_type='oid';");
+		sb.append("information_schema.columns where table_schema='");
+		sb.append(schema);
+		sb.append("' and data_type='oid';");
 
 		try {
 			ps = connection.prepareStatement(sb.toString());

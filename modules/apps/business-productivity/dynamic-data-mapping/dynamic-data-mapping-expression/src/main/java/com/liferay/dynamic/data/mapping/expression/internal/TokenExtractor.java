@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,6 +24,7 @@ import com.udojava.evalex.Expression.ExpressionException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,58 +34,24 @@ import java.util.regex.Pattern;
  */
 public class TokenExtractor {
 
-	public TokenExtractor(String expressionString) {
+	public TokenExtractor(String expressionString)
+		throws DDMExpressionException {
+
 		if (Validator.isNull(expressionString)) {
 			throw new IllegalArgumentException("Expression is null");
 		}
 
 		_expression = expressionString;
+
+		_extract();
 	}
 
 	public String getExpression() {
 		return _expression;
 	}
 
-	public Map<String, String> getVariableMap() throws DDMExpressionException {
-		try {
-			_variableMap = new HashMap<>();
-
-			Matcher matcher = _stringPattern.matcher(_expression);
-
-			while (matcher.find()) {
-				createStringVariable(matcher.group(1));
-			}
-
-			Iterator<String> tokenIterator = getExpressionTokens();
-
-			while (tokenIterator.hasNext()) {
-				String token = tokenIterator.next();
-
-				if (isFunction(token) && !isFunctionAllowed(token)) {
-					throw new DDMExpressionException.FunctionNotAllowed(token);
-				}
-
-				if (!isOperator(token) && !isFunctionAllowed(token) &&
-					!isBooleanConstant(token)) {
-
-					Matcher variableMatcher = _variablePattern.matcher(token);
-
-					if (variableMatcher.matches()) {
-						if (!_variableMap.containsKey(token)) {
-							_variableMap.put(token, token);
-						}
-					}
-					else {
-						createVariable(token);
-					}
-				}
-			}
-
-			return _variableMap;
-		}
-		catch (ExpressionException ee) {
-			throw new DDMExpressionException(ee);
-		}
+	public Map<String, String> getVariableMap() {
+		return _variableMap;
 	}
 
 	protected String createRandomVariableName() {
@@ -117,18 +84,15 @@ public class TokenExtractor {
 	}
 
 	protected boolean isBooleanConstant(String token) {
-		return ArrayUtil.contains(
-			_BOOLEAN_CONSTANTS, StringUtil.toLowerCase(token));
+		return _BOOLEAN_CONSTANTS.contains(StringUtil.toLowerCase(token));
 	}
 
 	protected boolean isFunction(String token) {
-		return ArrayUtil.contains(
-			_AVAILABLE_FUNCTIONS, StringUtil.toLowerCase(token));
+		return _AVAILABLE_FUNCTIONS.contains(StringUtil.toLowerCase(token));
 	}
 
 	protected boolean isFunctionAllowed(String token) {
-		return ArrayUtil.contains(
-			_ALLOWED_FUNCTIONS, StringUtil.toLowerCase(token));
+		return _ALLOWED_FUNCTIONS.contains(StringUtil.toLowerCase(token));
 	}
 
 	protected boolean isOperator(String token) {
@@ -137,19 +101,64 @@ public class TokenExtractor {
 		return tokenMatcher.matches();
 	}
 
-	private static final String[] _ALLOWED_FUNCTIONS = {
-		"not", "if", "min", "max", "between", "concat", "contains", "equals",
-		"isemailaddress", "isurl", "sum"
-	};
+	private void _extract() throws DDMExpressionException {
+		try {
+			Matcher matcher = _stringPattern.matcher(_expression);
 
-	private static final String[] _AVAILABLE_FUNCTIONS = {
-		"not", "if", "random", "min", "max", "abs", "round", "floor", "ceiling",
-		"log", "log10", "sqrt", "sin", "cos", "tan", "asin", "acos", "atan",
-		"sinh", "cosh", "tanh", "rad", "deg", "between", "concat", "contains",
-		"equals", "isemailaddress", "isurl", "sum"
-	};
+			while (matcher.find()) {
+				createStringVariable(matcher.group(1));
+			}
 
-	private static final String[] _BOOLEAN_CONSTANTS = {"false", "true"};
+			Iterator<String> tokenIterator = getExpressionTokens();
+
+			while (tokenIterator.hasNext()) {
+				String token = tokenIterator.next();
+
+				if (isFunction(token) && !isFunctionAllowed(token)) {
+					throw new DDMExpressionException.FunctionNotAllowed(token);
+				}
+
+				if (!isOperator(token) && !isFunctionAllowed(token) &&
+					!isBooleanConstant(token)) {
+
+					Matcher variableMatcher = _variablePattern.matcher(token);
+
+					if (variableMatcher.matches()) {
+						if (!_variableMap.containsKey(token)) {
+							_variableMap.put(token, token);
+						}
+					}
+					else {
+						createVariable(token);
+					}
+				}
+			}
+		}
+		catch (ExpressionException ee) {
+			throw new DDMExpressionException(ee);
+		}
+	}
+
+	private static final Set<String> _ALLOWED_FUNCTIONS = SetUtil.fromArray(
+		new String[] {
+			"between", "concat", "contains", "equals", "if", "isemailaddress",
+			"isurl", "max", "min", "not", "sum"
+		}
+	);
+
+	private static final Set<String> _AVAILABLE_FUNCTIONS = SetUtil.fromArray(
+		new String[] {
+			"abs", "acos", "asin", "atan", "between", "ceiling", "concat",
+			"contains", "cos", "cosh", "deg", "equals", "floor", "if",
+			"isemailaddress", "isurl", "log", "log10", "max", "min", "not",
+			"rad", "random", "round", "sin", "sinh", "sqrt", "sum", "tan",
+			"tanh"
+		}
+	);
+
+	private static final Set<String> _BOOLEAN_CONSTANTS = SetUtil.fromArray(
+		new String[] {"false", "true"}
+	);
 
 	private static final Pattern _operatorsPattern = Pattern.compile(
 		"[+-/\\*%\\^\\(\\)]|[<>=!]=?|&&|\\|\\|");
@@ -159,6 +168,6 @@ public class TokenExtractor {
 		"\\b([a-zA-Z]+[\\w_]*)(?!\\()\\b");
 
 	private String _expression;
-	private Map<String, String> _variableMap;
+	private Map<String, String> _variableMap = new HashMap<>();
 
 }

@@ -134,17 +134,15 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 				</aui:select>
 			</c:if>
-
-			<c:if test="<%= recordSet == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<aui:field-wrapper label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= DDLRecordSet.class.getName() %>"
-						/>
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</c:if>
 		</aui:fieldset>
+
+		<c:if test="<%= recordSet == null %>">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= DDLRecordSet.class.getName() %>"
+				/>
+			</aui:fieldset>
+		</c:if>
 	</aui:fieldset-group>
 
 	<aui:button-row>

@@ -44,7 +44,7 @@
 		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
 		<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -52,7 +52,7 @@
 	<command name="setPasswordReminder" summary="Enter '${userPasswordReminderAnswer}' as password reminder">
 		<execute function="Type" locator1="TextInput#ANSWER" value1="${userPasswordReminderAnswer}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="signIn" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'">

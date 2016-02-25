@@ -1074,9 +1074,7 @@
 	</command>
 
 	<command name="publish">
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="saveAsDraft">
@@ -1162,7 +1160,7 @@
 
 		<execute function="Click" locator1="Icon#SUBSCRIBE" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="tearDownCP">

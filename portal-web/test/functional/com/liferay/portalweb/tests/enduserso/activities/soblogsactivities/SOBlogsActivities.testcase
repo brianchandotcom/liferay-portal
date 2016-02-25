@@ -944,7 +944,7 @@
 
 		<execute macro="BlogsEntry#scheduleBlogEntry" />
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />

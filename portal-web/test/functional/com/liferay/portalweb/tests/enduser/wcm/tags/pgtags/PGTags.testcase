@@ -245,7 +245,7 @@
 			<var name="tagNameList" value="tag1,tag3" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<for list="tag1,tag3" param="tagName">
 			<execute macro="Page#gotoPG">
@@ -663,7 +663,7 @@
 			</execute>
 		</for>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
@@ -752,7 +752,7 @@
 			<var name="tagName" value="tag name 1" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />

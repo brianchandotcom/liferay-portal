@@ -701,7 +701,7 @@
 		</execute>
 
 		<execute function="Type" locator1="PortalSettings#HOME_URL_FIELD" value1="/user" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="Open" locator1="http://localhost:8080/" />
 		<execute function="AssertLocation" value1="http://localhost:8080/user/test/so/dashboard" />

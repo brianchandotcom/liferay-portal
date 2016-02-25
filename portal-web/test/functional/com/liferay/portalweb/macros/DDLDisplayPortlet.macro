@@ -21,8 +21,8 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Button#clickSave" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="viewDDLTemplateRecordFieldData">

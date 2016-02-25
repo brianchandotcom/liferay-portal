@@ -42,12 +42,12 @@ public class SplitPackagesTest {
 			Paths.get("portal-impl/src"));
 
 		Set<String> portalServicePackageNames = _getPackageNames(
-			Paths.get("portal-service/src"));
+			Paths.get("portal-kernel/src"));
 
 		portalImplPackageNames.retainAll(portalServicePackageNames);
 
 		Assert.assertTrue(
-			"Detected split packages in portal-service and portal-impl: " +
+			"Detected split packages in portal-kernel and portal-impl: " +
 				portalImplPackageNames,
 			portalImplPackageNames.isEmpty());
 	}

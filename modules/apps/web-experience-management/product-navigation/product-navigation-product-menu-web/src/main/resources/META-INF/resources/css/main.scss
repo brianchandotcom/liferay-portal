@@ -230,6 +230,10 @@ body {
 			&:focus {
 				opacity: 1;
 			}
+
+			&[data-deleteable="false"][data-parentable="false"][data-updateable="false"] {
+				display: none;
+			}
 		}
 
 		&.tree-node-selected, &:active, &.active, &:hover {

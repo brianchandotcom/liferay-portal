@@ -242,7 +242,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<liferay-util:buffer var="linkTemplate">
 		<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-		<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+		<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right" data-deleteable="{deleteable}" data-parentable="{parentable}" data-updateable="{updateable}">
 			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
 				<aui:icon image="ellipsis-v" markupView="lexicon" />
 			</a>

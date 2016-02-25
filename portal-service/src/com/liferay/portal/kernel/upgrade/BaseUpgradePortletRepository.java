@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+
+import java.sql.PreparedStatement;
+
 /**
  * @author Adolfo Pérez
  */
@@ -31,10 +35,22 @@ public abstract class BaseUpgradePortletRepository extends UpgradeProcess {
 			String oldPortletName = renamePortletNames[0];
 			String newPortletName = renamePortletNames[1];
 
-			runSQL(
-				"update Repository set portletId = '" + newPortletName +
-					"', name = '" + newPortletName + "' where portletId = " +
-						oldPortletName);
+			PreparedStatement ps = null;
+
+			try {
+				ps = connection.prepareStatement(
+					"update Repository set portletId = ?, name = ? where " +
+						"portletId = ?");
+
+				ps.setString(1, newPortletName);
+				ps.setString(2, newPortletName);
+				ps.setString(3, oldPortletName);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(ps);
+			}
 		}
 	}
 

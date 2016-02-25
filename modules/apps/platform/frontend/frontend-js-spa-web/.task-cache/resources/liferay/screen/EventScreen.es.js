@@ -94,8 +94,6 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es", ['exports', 'm
 
 			document.body.className = this.virtualDocument.querySelector('body').className;
 
-			_dom2.default.addClasses(document.body, 'lfr-surface-loading');
-
 			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,

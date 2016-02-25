@@ -9,7 +9,7 @@
         "dependencies": ["exports", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface", "../app/dataAttributes"]
     },
     "frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen": {
-        "dependencies": ["exports", "metal/src/metal", "metal-ajax/src/Ajax", "metal-multimap/src/MultiMap", "metal-promise/src/promise/Promise", "../utils/utils", "../globals/globals", "./Screen", "metal-uri/src/Uri", "metal-useragent/src/UA"]
+        "dependencies": ["exports", "metal/src/metal", "metal-ajax/src/Ajax", "metal-multimap/src/MultiMap", "metal-promise/src/promise/Promise", "../errors/errors", "../utils/utils", "../globals/globals", "./Screen", "metal-uri/src/Uri", "metal-useragent/src/UA"]
     },
     "frontend-js-spa-web@1.0.0/senna/src/screen/Screen": {
         "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "../cacheable/Cacheable", "metal-promise/src/promise/Promise"]
@@ -18,6 +18,9 @@
         "dependencies": ["exports", "metal/src/metal"]
     },
     "frontend-js-spa-web@1.0.0/senna/src/globals/globals": {
+        "dependencies": ["exports"]
+    },
+    "frontend-js-spa-web@1.0.0/senna/src/errors/errors": {
         "dependencies": ["exports"]
     },
     "frontend-js-spa-web@1.0.0/senna/src/cacheable/Cacheable": {
@@ -132,6 +135,6 @@
         "dependencies": ["exports", "./EventScreen.es"]
     },
     "frontend-js-spa-web@1.0.0/liferay/app/App.es": {
-        "dependencies": ["exports", "senna/src/app/App", "metal-dom/src/dom", "senna/src/globals/globals", "metal-uri/src/Uri", "../util/Utils.es"]
+        "dependencies": ["exports", "senna/src/app/App", "metal-dom/src/dom", "../util/Utils.es"]
     }
 }

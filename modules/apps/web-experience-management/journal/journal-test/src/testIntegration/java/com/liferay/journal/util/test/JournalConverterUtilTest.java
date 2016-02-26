@@ -29,8 +29,8 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
-import com.liferay.dynamic.data.mapping.util.impl.DDMXMLImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.xml.XMLSchemaImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -126,6 +125,7 @@ public class JournalConverterUtilTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
+		_ddmXML = registry.getService(DDMXML.class);
 		_journalConverter = registry.getService(JournalConverter.class);
 	}
 
@@ -979,17 +979,7 @@ public class JournalConverterUtilTest {
 	}
 
 	protected void validateDDMXSD(String xsd) throws Exception {
-		DDMXMLImpl ddmXMLImpl = new DDMXMLImpl();
-
-		XMLSchemaImpl xmlSchema = new XMLSchemaImpl();
-
-		xmlSchema.setSchemaLanguage("http://www.w3.org/2001/XMLSchema");
-		xmlSchema.setSystemId(
-			"http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd");
-
-		ddmXMLImpl.setXMLSchema(xmlSchema);
-
-		ddmXMLImpl.validateXML(xsd);
+		_ddmXML.validateXML(xsd);
 	}
 
 	private static final String _PRIVATE_LAYOUT = "privateLayout";
@@ -1005,6 +995,7 @@ public class JournalConverterUtilTest {
 
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
+	private DDMXML _ddmXML;
 
 	@DeleteAfterTestRun
 	private Group _group;

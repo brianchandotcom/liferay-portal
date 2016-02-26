@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
@@ -500,36 +501,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void updateURLTitle(
-			long groupId, String articleId, String urlTitle)
-		throws Exception {
-
-		String normalizedURLTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle, _friendlyURLPattern);
-
-		if (urlTitle.equals(normalizedURLTitle)) {
-			return;
-		}
-
-		normalizedURLTitle = _journalArticleLocalService.getUniqueUrlTitle(
-			groupId, articleId, normalizedURLTitle);
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update JournalArticle set urlTitle = ? where urlTitle = ?");
-
-			ps.setString(1, normalizedURLTitle);
-			ps.setString(2, urlTitle);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
 	protected void verifyArticleAssets() throws Exception {
 		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.getNoAssetArticles();
@@ -937,27 +908,43 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void verifyURLTitle() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct groupId, articleId, urlTitle from " +
 					"JournalArticle");
+			ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update JournalArticle set urlTitle = ? where " +
+								"urlTitle = ?"))) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				String articleId = rs.getString("articleId");
-				String urlTitle = GetterUtil.getString(
-					rs.getString("urlTitle"));
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					String articleId = rs.getString("articleId");
+					String urlTitle = GetterUtil.getString(
+						rs.getString("urlTitle"));
 
-				updateURLTitle(groupId, articleId, urlTitle);
+					String normalizedURLTitle =
+						FriendlyURLNormalizerUtil.normalize(
+							urlTitle, _friendlyURLPattern);
+
+					if (urlTitle.equals(normalizedURLTitle)) {
+						return;
+					}
+
+					normalizedURLTitle =
+						_journalArticleLocalService.getUniqueUrlTitle(
+							groupId, articleId, normalizedURLTitle);
+
+					ps2.setString(1, normalizedURLTitle);
+					ps2.setString(2, urlTitle);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

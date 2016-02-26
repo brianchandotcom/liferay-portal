@@ -837,6 +837,9 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getRolePrimaryKeys(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getStagedSites();
+
 	/**
 	* Returns the staging group.
 	*

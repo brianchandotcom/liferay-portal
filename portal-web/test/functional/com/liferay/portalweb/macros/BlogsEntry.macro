@@ -469,7 +469,7 @@
 		<var locator="TextInput#DISPLAY_DATE_DAY" name="displayDateDay" />
 		<var locator="TextInput#DISPLAY_DATE_MONTH" name="displayDateMonth" />
 
-		<var method="MathUtil#sum('${displayDateMonth}', '1')" name="displayDateMonth" />
+		<var method="MathUtil#sum('${displayDateMonth}','1')" name="displayDateMonth" />
 
 		<var locator="TextInput#DISPLAY_DATE_YEAR" name="displayDateYear" />
 
@@ -490,7 +490,7 @@
 
 		<var locator="TextInput#DISPLAY_DATE_MINUTE" name="displayDateMinute" />
 
-		<var method="MathUtil#sum('${displayDateMinute}', '2')" name="displayDateMinuteFuture" />
+		<var method="MathUtil#sum('${displayDateMinute}','2')" name="displayDateMinuteFuture" />
 
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 

@@ -716,6 +716,11 @@
 	<td>//table[contains(@class,'view-table-data')]//div[@title='${key_eventTitle}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW</td>
+	<td>//td[contains(@class,'scheduler-view-day') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

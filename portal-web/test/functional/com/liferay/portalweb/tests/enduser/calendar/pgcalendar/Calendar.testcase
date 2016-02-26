@@ -1369,7 +1369,7 @@
 			<var name="dateNumber" value="2" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewYearly">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 

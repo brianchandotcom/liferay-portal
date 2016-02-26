@@ -9,9 +9,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -58,9 +56,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -84,9 +80,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${subfolderDescription}" />
@@ -104,9 +98,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -145,9 +137,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -165,9 +155,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescriptionEdit}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -194,9 +182,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${editSubfolderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${editSubfolderDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${editSubfolderDescription}" />

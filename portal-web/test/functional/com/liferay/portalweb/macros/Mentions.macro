@@ -87,9 +87,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -101,9 +99,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -114,9 +110,7 @@
 
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -128,9 +122,7 @@
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 

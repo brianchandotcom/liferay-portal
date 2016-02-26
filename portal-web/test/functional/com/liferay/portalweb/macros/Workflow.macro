@@ -246,9 +246,7 @@
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
@@ -262,9 +260,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureWorkflowViaPortlet">
@@ -272,9 +268,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaActions">
@@ -648,9 +642,7 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="viewAssignedToMyRolesTasksCP">

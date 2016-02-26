@@ -52,9 +52,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureMessageAddedEmailCP">
@@ -154,9 +152,7 @@
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${scopeName}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="gotoInlinePermissionsPG">

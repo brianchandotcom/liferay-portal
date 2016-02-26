@@ -69,12 +69,6 @@
 		<execute function="SelectWindow" locator1="title=Site Page Name 2 - Site Name - Liferay" />
 	</command>
 
-	<command name="save">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="viewCorruptScript">
 		<execute function="AssertTextPresent" value1="An error occurred while processing the template." />
 		<execute function="AssertTextPresent" value1="Unexpected end of file reached." />

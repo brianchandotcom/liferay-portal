@@ -213,7 +213,7 @@
 
 		<execute macro="FormPortletConfiguration#selectForm" />
 
-		<execute macro="FormPortletConfiguration#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Form Page" />

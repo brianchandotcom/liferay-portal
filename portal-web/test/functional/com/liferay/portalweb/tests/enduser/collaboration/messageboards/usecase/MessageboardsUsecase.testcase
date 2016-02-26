@@ -67,7 +67,7 @@
 
 		<execute function="Paste#ckEditorPaste" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
-		<execute macro="MessageboardsThread#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Message Boards Page" />

@@ -9,9 +9,7 @@
 
 		<execute function="Select" locator1="Configuration#SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

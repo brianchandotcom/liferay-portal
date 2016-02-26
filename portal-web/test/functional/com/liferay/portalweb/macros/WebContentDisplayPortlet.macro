@@ -49,9 +49,7 @@
 
 		<execute function="Select" locator1="Select#SCOPE" value1="regexp:.*${scopeSelection}.*" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureSetupPG">
@@ -203,9 +201,7 @@
 	<command name="saveConfiguration">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

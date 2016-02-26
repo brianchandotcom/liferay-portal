@@ -254,7 +254,7 @@
 			<var name="googleDocName" value="${googleDocName}" />
 		</execute>
 
-		<execute macro="GoogleDoc#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addMultiplePG">
@@ -531,9 +531,7 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
 		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE" value1="Choose" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addWithWorkflowCP">
@@ -793,9 +791,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" locator1="relative=top" />
 	</command>
@@ -1104,9 +1100,7 @@
 
 		<execute function="Check" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" locator1="relative=top" />
 	</command>
@@ -1479,9 +1473,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="saveAsDraftPG">

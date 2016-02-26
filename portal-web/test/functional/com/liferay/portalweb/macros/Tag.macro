@@ -90,9 +90,7 @@
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addWithNullTitleCP">
@@ -166,9 +164,7 @@
 
 		<execute function="Type" locator1="Tags#NAME_FIELD" value1="${tagNameEdit}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="mergeMultipleTags">
@@ -215,9 +211,7 @@
 			<var name="tagName" value="${tagName}" />
 		</execute>
 
-		<execute macro="Button#clickPublish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="searchTagCP">

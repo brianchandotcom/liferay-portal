@@ -36,9 +36,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteCP">
@@ -92,9 +90,7 @@
 
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description edit" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="gotoPageTemplateViaEdit">

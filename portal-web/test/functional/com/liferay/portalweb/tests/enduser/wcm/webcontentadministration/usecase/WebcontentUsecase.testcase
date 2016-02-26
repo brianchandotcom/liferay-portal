@@ -133,7 +133,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="WC Template Name" />
@@ -337,7 +337,7 @@
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
@@ -427,7 +427,7 @@
 
 		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrameTop" />
 
@@ -505,7 +505,7 @@
 
 		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrameTop" />
 
@@ -577,7 +577,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
@@ -629,7 +629,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -735,7 +735,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -810,7 +810,7 @@
 			<var name="structureName" value="Global Structure" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="WebContentTemplates#addRoleViewPermissions">
 			<var name="roles" value="Power User" />
@@ -895,7 +895,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
@@ -942,7 +942,7 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -961,7 +961,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1049,7 +1049,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1137,7 +1137,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1155,7 +1155,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1223,7 +1223,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1321,7 +1321,7 @@
 			<var name="templateFieldNames" value="Text" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1339,7 +1339,7 @@
 			<var name="templateFieldNames" value="Text" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1356,7 +1356,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1580,7 +1580,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="MockMock#viewMail">
 			<var name="asset" value="Web Content" />
@@ -1759,7 +1759,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1884,7 +1884,7 @@
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="WebContentTemplates#localizeTemplateName">
 			<var name="localization1Name" value="nom de la template de wc" />
@@ -1900,7 +1900,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentTemplates#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1919,7 +1919,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1936,7 +1936,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -2024,7 +2024,7 @@
 			<var name="webContentTitle" value="WC WebContent 1 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 1 Title" />
@@ -2037,7 +2037,7 @@
 			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 2 Title" />
@@ -2050,7 +2050,7 @@
 			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 3 Title" />
@@ -2063,7 +2063,7 @@
 			<var name="webContentTitle" value="WC WebContent 4 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 4 Title" />
@@ -2076,7 +2076,7 @@
 			<var name="webContentTitle" value="WC WebContent 5 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 5 Title" />
@@ -2089,7 +2089,7 @@
 			<var name="webContentTitle" value="WC WebContent 6 Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent 6 Title" />

@@ -83,7 +83,7 @@
 					<var name="calendarName" value="${calendarName}" />
 				</execute>
 
-				<execute macro="Calendar#save" />
+				<execute macro="PortletEntry#save" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -94,7 +94,7 @@
 						<var name="calendarName" value="${calendarName}" />
 					</execute>
 
-					<execute macro="Calendar#save" />
+					<execute macro="PortletEntry#save" />
 				</then>
 			</elseif>
 			<elseif>
@@ -669,12 +669,6 @@
 		<execute macro="Button#clickSave" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="save">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="searchOtherCalendars">

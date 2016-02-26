@@ -153,7 +153,7 @@
 
 		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -398,7 +398,7 @@
 			</var>
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -462,7 +462,7 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -599,7 +599,7 @@
 
 		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -643,7 +643,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -745,7 +745,7 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -845,7 +845,7 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -865,7 +865,7 @@
 			<var name="wikiPageContent" value="Copied Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WikiTable#viewEntry">
 			<var name="draftStatus" value="Approved" />
@@ -981,7 +981,7 @@
 			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -1401,7 +1401,7 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

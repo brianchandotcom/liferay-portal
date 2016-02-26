@@ -1048,7 +1048,7 @@
 			<var name="fieldName" value="Description" />
 		</execute>
 
-		<execute macro="DDLRecord#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="User#logoutPG" />
 

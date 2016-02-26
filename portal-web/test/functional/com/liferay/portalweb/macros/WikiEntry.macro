@@ -41,10 +41,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#PAGE_HEADER" value1="${wikiPageTitle}" />
 	</command>
 
-	<command name="publish">
-		<execute macro="PortletEntry#publish" />
-	</command>
-
 	<command name="saveAsDraft">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save as Draft" />
 

@@ -416,9 +416,7 @@
 	</command>
 
 	<command name="saveFieldSetAfterEdit">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="saveForm">
@@ -437,9 +435,7 @@
 	</command>
 
 	<command name="saveProcessRecord">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="searchProcessRecords">

@@ -1239,7 +1239,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
@@ -1261,7 +1261,7 @@
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

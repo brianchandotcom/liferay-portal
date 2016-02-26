@@ -69,9 +69,7 @@
 		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

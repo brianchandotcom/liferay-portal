@@ -131,9 +131,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="assignAllMembersCP">
@@ -263,9 +261,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${userGroupNameEdit}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="expandRootCP">

@@ -61,9 +61,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addDisplayTemplateTemplateViaDDLDisplayPG">
@@ -277,9 +275,7 @@
 
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 
 		<execute function="SelectFrameTop" />

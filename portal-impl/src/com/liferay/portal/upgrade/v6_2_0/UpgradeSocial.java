@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -116,143 +117,155 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateDLFileVersionActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.documentlibrary.model.DLFolder");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.documentlibrary.model.DLFolder");
 
-		runSQL("delete from SocialActivity where classNameId = " + classNameId);
+			runSQL(
+				"delete from SocialActivity where classNameId = " +
+					classNameId);
 
-		Set<String> keys = new HashSet<>();
+			Set<String> keys = new HashSet<>();
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, companyId, userId, modifiedDate, " +
-					"fileEntryId, title, version from DLFileVersion " +
-						"where status = ?")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select groupId, companyId, userId, modifiedDate, " +
+						"fileEntryId, title, version from DLFileVersion " +
+							"where status = ?")) {
 
-			ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
+				ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
 
-			try (ResultSet rs = ps.executeQuery()) {
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long groupId = rs.getLong("groupId");
+						long companyId = rs.getLong("companyId");
+						long userId = rs.getLong("userId");
+						Timestamp modifiedDate = rs.getTimestamp(
+							"modifiedDate");
+						long fileEntryId = rs.getLong("fileEntryId");
+						String title = rs.getString("title");
+						double version = rs.getDouble("version");
 
-				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
-					long companyId = rs.getLong("companyId");
-					long userId = rs.getLong("userId");
-					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-					long fileEntryId = rs.getLong("fileEntryId");
-					String title = rs.getString("title");
-					double version = rs.getDouble("version");
+						int type = DLActivityKeys.ADD_FILE_ENTRY;
 
-					int type = DLActivityKeys.ADD_FILE_ENTRY;
+						if (version > 1.0) {
+							type = DLActivityKeys.UPDATE_FILE_ENTRY;
+						}
 
-					if (version > 1.0) {
-						type = DLActivityKeys.UPDATE_FILE_ENTRY;
+						modifiedDate = getUniqueModifiedDate(
+							keys, groupId, userId, modifiedDate, classNameId,
+							fileEntryId, type);
+
+						JSONObject extraDataJSONObject =
+							JSONFactoryUtil.createJSONObject();
+
+						extraDataJSONObject.put("title", title);
+
+						addActivity(
+							increment(), groupId, companyId, userId,
+							modifiedDate, 0, classNameId, fileEntryId, type,
+							extraDataJSONObject.toString(), 0);
 					}
-
-					modifiedDate = getUniqueModifiedDate(
-						keys, groupId, userId, modifiedDate, classNameId,
-						fileEntryId, type);
-
-					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					extraDataJSONObject.put("title", title);
-
-					addActivity(
-						increment(), groupId, companyId, userId, modifiedDate,
-						0, classNameId, fileEntryId, type,
-						extraDataJSONObject.toString(), 0);
 				}
 			}
 		}
 	}
 
 	protected void updateJournalActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.journal.model.JournalArticle");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.journal.model.JournalArticle");
 
-		String[] tableNames = {"SocialActivity", "SocialActivityCounter"};
+			String[] tableNames = {"SocialActivity", "SocialActivityCounter"};
 
-		for (String tableName : tableNames) {
-			StringBundler sb = new StringBundler(7);
+			for (String tableName : tableNames) {
+				StringBundler sb = new StringBundler(7);
 
-			sb.append("update ");
-			sb.append(tableName);
-			sb.append(" set classPK = (select resourcePrimKey ");
-			sb.append("from JournalArticle where id_ = ");
-			sb.append(tableName);
-			sb.append(".classPK) where classNameId = ");
-			sb.append(classNameId);
-
-			runSQL(sb.toString());
-		}
-	}
-
-	protected void updateSOSocialActivities() throws Exception {
-		if (!hasTable("SO_SocialActivity")) {
-			return;
-		}
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select activityId, activitySetId from SO_SocialActivity");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long activityId = rs.getLong("activityId");
-				long activitySetId = rs.getLong("activitySetId");
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("update SocialActivity set activitySetId = ");
-				sb.append(activitySetId);
-				sb.append(" where activityId = ");
-				sb.append(activityId);
+				sb.append("update ");
+				sb.append(tableName);
+				sb.append(" set classPK = (select resourcePrimKey ");
+				sb.append("from JournalArticle where id_ = ");
+				sb.append(tableName);
+				sb.append(".classPK) where classNameId = ");
+				sb.append(classNameId);
 
 				runSQL(sb.toString());
 			}
 		}
+	}
 
-		runSQL("drop table SO_SocialActivity");
+	protected void updateSOSocialActivities() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasTable("SO_SocialActivity")) {
+				return;
+			}
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select activityId, activitySetId from SO_SocialActivity");
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					long activityId = rs.getLong("activityId");
+					long activitySetId = rs.getLong("activitySetId");
+
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("update SocialActivity set activitySetId = ");
+					sb.append(activitySetId);
+					sb.append(" where activityId = ");
+					sb.append(activityId);
+
+					runSQL(sb.toString());
+				}
+			}
+
+			runSQL("drop table SO_SocialActivity");
+		}
 	}
 
 	protected void updateWikiPageActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.wiki.model.WikiPage");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.wiki.model.WikiPage");
 
-		runSQL("delete from SocialActivity where classNameId = " + classNameId);
+			runSQL(
+				"delete from SocialActivity where classNameId = " +
+					classNameId);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, companyId, userId, modifiedDate, " +
-					"resourcePrimKey, version from WikiPage");
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select groupId, companyId, userId, modifiedDate, " +
+						"resourcePrimKey, version from WikiPage");
+				ResultSet rs = ps.executeQuery()) {
 
-			Set<String> keys = new HashSet<>();
+				Set<String> keys = new HashSet<>();
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				double version = rs.getDouble("version");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					double version = rs.getDouble("version");
 
-				int type = 1;
+					int type = 1;
 
-				if (version > 1.0) {
-					type = 2;
+					if (version > 1.0) {
+						type = 2;
+					}
+
+					modifiedDate = getUniqueModifiedDate(
+						keys, groupId, userId, modifiedDate, classNameId,
+						resourcePrimKey, type);
+
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					extraDataJSONObject.put("version", version);
+
+					addActivity(
+						increment(), groupId, companyId, userId, modifiedDate,
+						0, classNameId, resourcePrimKey, type,
+						extraDataJSONObject.toString(), 0);
 				}
-
-				modifiedDate = getUniqueModifiedDate(
-					keys, groupId, userId, modifiedDate, classNameId,
-					resourcePrimKey, type);
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("version", version);
-
-				addActivity(
-					increment(), groupId, companyId, userId, modifiedDate, 0,
-					classNameId, resourcePrimKey, type,
-					extraDataJSONObject.toString(), 0);
 			}
 		}
 	}

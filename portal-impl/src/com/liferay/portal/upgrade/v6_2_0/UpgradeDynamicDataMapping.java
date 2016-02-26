@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,29 +75,32 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateSchema() throws Exception {
-		try {
-			runSQL("alter table DDMTemplate add classNameId LONG");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try {
+				runSQL("alter table DDMTemplate add classNameId LONG");
 
-			runSQL("alter table DDMTemplate add templateKey STRING");
+				runSQL("alter table DDMTemplate add templateKey STRING");
 
-			runSQL("alter_column_name DDMTemplate structureId classPK LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
-				DDMTemplateTable.TABLE_SQL_CREATE,
-				DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
-		}
+				runSQL(
+					"alter_column_name DDMTemplate structureId classPK LONG");
+			}
+			catch (SQLException sqle) {
+				upgradeTable(
+					DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
+					DDMTemplateTable.TABLE_SQL_CREATE,
+					DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
+			}
 
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.dynamicdatamapping.DDMStructure");
 
-		try {
-			runSQL("update DDMTemplate set classNameId = " + classNameId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			try {
+				runSQL("update DDMTemplate set classNameId = " + classNameId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
 			}
 		}
 	}
@@ -123,7 +127,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateStructures() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select structureId, structureKey, xsd from DDMStructure");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -146,7 +151,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateStructuresClassNameId() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"update DDMStructure set classNameId = ? where " +
 					"classNameId = ?")) {
 
@@ -186,7 +192,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateTemplates() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select templateId, templateKey, script from DDMTemplate " +
 					"where language = 'xsd'");
 			ResultSet rs = ps.executeQuery()) {

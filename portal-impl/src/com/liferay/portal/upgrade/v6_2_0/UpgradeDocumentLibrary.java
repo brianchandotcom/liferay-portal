@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
@@ -44,7 +45,8 @@ import java.util.Map;
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void deleteChecksumDirectory() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select distinct companyId from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -57,7 +59,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void deleteTempDirectory() {
-		DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
+		}
 	}
 
 	@Override
@@ -65,7 +69,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileEntryType
 
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"DLFileEntryTypeTable")) {
+
 			runSQL("alter table DLFileEntryType add fileEntryTypeKey STRING");
 
 			runSQL("alter_column_type DLFileEntryType name STRING null");
@@ -97,7 +103,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			ps.setLong(1, userId);
 
 			try (ResultSet rs = ps.executeQuery()) {
-
 				if (rs.next()) {
 					String firstName = rs.getString("firstName");
 					String middleName = rs.getString("middleName");
@@ -149,7 +154,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileEntryTypes() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryTypeId, companyId, name, description from " +
 					"DLFileEntryType");
 			ResultSet rs = ps.executeQuery()) {

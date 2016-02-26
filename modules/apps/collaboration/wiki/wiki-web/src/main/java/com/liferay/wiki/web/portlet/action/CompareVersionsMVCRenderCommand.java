@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -27,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -58,7 +60,8 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
-			ActionUtil.compareVersions(renderRequest, renderResponse);
+			ActionUtil.compareVersions(
+				renderRequest, renderResponse, _wikiEngineRenderer);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchPageException) {
@@ -73,5 +76,14 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 		return "/wiki/compare_versions.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

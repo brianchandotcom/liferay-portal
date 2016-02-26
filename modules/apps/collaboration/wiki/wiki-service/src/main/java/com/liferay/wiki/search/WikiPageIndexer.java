@@ -43,13 +43,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
+import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Locale;
 
@@ -194,10 +195,18 @@ public class WikiPageIndexer
 
 		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
 
-		String content = HtmlUtil.extractText(
-			WikiUtil.convert(wikiPage, null, null, null));
+		try {
+			String content = HtmlUtil.extractText(
+				_wikiEngineRenderer.convert(wikiPage, null, null, null));
 
-		document.addText(Field.CONTENT, content);
+			document.addText(Field.CONTENT, content);
+		}
+		catch (WikiFormatException wfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get wiki engine for " + wikiPage.getFormat());
+			}
+		}
 
 		document.addKeyword(Field.NODE_ID, wikiPage.getNodeId());
 		document.addText(Field.TITLE, wikiPage.getTitle());
@@ -325,6 +334,13 @@ public class WikiPageIndexer
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
@@ -348,6 +364,7 @@ public class WikiPageIndexer
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiNodeService _wikiNodeService;
 	private WikiPageLocalService _wikiPageLocalService;

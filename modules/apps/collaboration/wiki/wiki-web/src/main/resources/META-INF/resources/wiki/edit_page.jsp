@@ -108,6 +108,8 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(headerTitle);
 }
+
+WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 %>
 
 <c:if test="<%= portletTitleBasedNavigation && !newPage %>">
@@ -231,7 +233,7 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							WikiUtil.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
 							%>
 
 						</div>
@@ -292,7 +294,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input label="Summary" name="summary" />
 
 						<%
-						Collection<String> formats = WikiUtil.getFormats();
+						Collection<String> formats = wikiEngineRenderer.getFormats();
 						%>
 
 						<c:choose>
@@ -303,7 +305,7 @@ if (portletTitleBasedNavigation) {
 									for (String format : formats) {
 									%>
 
-										<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+										<aui:option label="<%= wikiEngineRenderer.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 									<%
 									}

@@ -59,7 +59,7 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 
 entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegexPattern(
-	"^(?!.*" + liferayPortletResponse.getNamespace() + 
+	"^(?!.*" + liferayPortletResponse.getNamespace() +
 	"redirect).*(folderId=" + String.valueOf(folderId) + ")");
 
 EntriesMover entriesMover = new EntriesMover(scopeGroupId);

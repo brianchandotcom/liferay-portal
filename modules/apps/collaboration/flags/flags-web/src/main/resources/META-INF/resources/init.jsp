@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.flags.configuration.FlagsGroupServiceConfiguration" %><%@
 page import="com.liferay.flags.web.constants.PageFlagsPortletKeys" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@

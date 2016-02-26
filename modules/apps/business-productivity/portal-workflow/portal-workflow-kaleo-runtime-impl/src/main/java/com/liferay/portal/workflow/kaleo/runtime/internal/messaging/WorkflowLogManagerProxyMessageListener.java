@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
-import com.liferay.portal.workflow.kaleo.runtime.internal.WorkflowLogManagerImpl;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,7 +46,7 @@ public class WorkflowLogManagerProxyMessageListener
 	@Reference
 	private MessageBus _messageBus;
 
-	@Reference
-	private WorkflowLogManagerImpl _workflowLogManagerk;
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowLogManager _workflowLogManagerk;
 
 }

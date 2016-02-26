@@ -14,13 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.activator;
 
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Marcellus Tavares
@@ -34,21 +33,10 @@ public class KaleoActivator {
 		_portalKaleoManager.deployKaleoDefaults();
 	}
 
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.portal.workflow.kaleo.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalKaleoManager(
-		PortalKaleoManager portalKaleoManager) {
-
-		_portalKaleoManager = portalKaleoManager;
-	}
-
+	@Reference
 	private PortalKaleoManager _portalKaleoManager;
+
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

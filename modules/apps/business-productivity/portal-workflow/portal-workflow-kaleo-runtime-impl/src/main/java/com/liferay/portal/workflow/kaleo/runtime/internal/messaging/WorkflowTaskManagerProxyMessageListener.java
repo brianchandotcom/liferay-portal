@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
-import com.liferay.portal.workflow.kaleo.runtime.internal.WorkflowTaskManagerImpl;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -39,14 +39,14 @@ public class WorkflowTaskManagerProxyMessageListener
 
 	@Activate
 	protected void activate() {
-		setManager(_workflowTaskManagerImpl);
+		setManager(_workflowTaskManager);
 		setMessageBus(_messageBus);
 	}
 
 	@Reference
 	private MessageBus _messageBus;
 
-	@Reference
-	private WorkflowTaskManagerImpl _workflowTaskManagerImpl;
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

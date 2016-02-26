@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
-import com.liferay.portal.workflow.kaleo.runtime.internal.WorkflowComparatorFactoryImpl;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,14 +40,14 @@ public class WorkflowComparatorFactoryProxyMessageListener
 
 	@Activate
 	protected void activate() {
-		setManager(_workflowComparatorFactoryImpl);
+		setManager(_workflowComparatorFactory);
 		setMessageBus(_messageBus);
 	}
 
 	@Reference
 	private MessageBus _messageBus;
 
-	@Reference
-	private WorkflowComparatorFactoryImpl _workflowComparatorFactoryImpl;
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 }

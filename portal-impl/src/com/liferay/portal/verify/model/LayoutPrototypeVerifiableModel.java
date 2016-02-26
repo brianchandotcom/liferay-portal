@@ -14,18 +14,26 @@
 
 package com.liferay.portal.verify.model;
 
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
+import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
 public class LayoutPrototypeVerifiableModel
-	implements VerifiableAuditedModel, VerifiableUUIDModel {
+	implements VerifiableAuditedModel, VerifiableResourcedModel,
+			   VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {
 		return null;
+	}
+
+	@Override
+	public String getModelName() {
+		return LayoutPrototype.class.getName();
 	}
 
 	@Override
@@ -46,6 +54,11 @@ public class LayoutPrototypeVerifiableModel
 	@Override
 	public String getTableName() {
 		return "LayoutPrototype";
+	}
+
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
 	}
 
 	@Override

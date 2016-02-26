@@ -12,29 +12,26 @@
  * details.
  */
 
-package com.liferay.shopping.verify;
+package com.liferay.mobile.device.rules.verify;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalService;
+import com.liferay.mobile.device.rules.verify.model.MDRRuleGroupInstanceVerifiableModel;
+import com.liferay.mobile.device.rules.verify.model.MDRRuleGroupVerifiableModel;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
-import com.liferay.shopping.service.ShoppingCartLocalService;
-import com.liferay.shopping.verify.model.ShoppingCategoryVerifiableModel;
-import com.liferay.shopping.verify.model.ShoppingItemVerifiableResourcedModel;
-import com.liferay.shopping.verify.model.ShoppingOrderVerifiableModel;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Peter Fellwock
+ * @author Tomas Polesovsky
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.shopping.service"},
+	property = {"verify.process.name=com.liferay.mobile.device.rules.service"},
 	service = VerifyProcess.class
 )
-public class ShoppingServiceVerifyProcess extends VerifyProcess {
+public class MDRServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -42,20 +39,15 @@ public class ShoppingServiceVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
-	protected void setShoppingCartLocalService(
-		ShoppingCartLocalService shoppingCartLocalService) {
+	protected void setMDRActionLocalService(
+		MDRActionLocalService mdrActionLocalService) {
 	}
 
 	protected void verifyResourcedModels() throws Exception {
 		_verifyResourcePermissions.verify(
-			new ShoppingCategoryVerifiableModel());
-		_verifyResourcePermissions.verify(
-			new ShoppingItemVerifiableResourcedModel());
-		_verifyResourcePermissions.verify(new ShoppingOrderVerifiableModel());
+			new MDRRuleGroupInstanceVerifiableModel());
+		_verifyResourcePermissions.verify(new MDRRuleGroupVerifiableModel());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ShoppingServiceVerifyProcess.class);
 
 	private final VerifyResourcePermissions _verifyResourcePermissions =
 		new VerifyResourcePermissions();

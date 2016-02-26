@@ -516,6 +516,7 @@
 	<bean class="com.liferay.portal.verify.model.EmailAddressVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.GroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.GroupVerifiableResourcedModel" />
+	<bean class="com.liferay.portal.verify.model.LayoutBranchVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutFriendlyURLAuditedModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel" />

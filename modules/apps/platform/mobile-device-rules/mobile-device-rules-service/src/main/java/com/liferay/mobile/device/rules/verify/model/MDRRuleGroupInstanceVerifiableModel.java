@@ -12,63 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.mobile.device.rules.verify.model;
 
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
+import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceModelImpl;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
- * @author Miguel Pastor
+ * @author Tomas Polesovsky
  */
-public class LayoutSetPrototypeVerifiableModel
-	implements VerifiableAuditedModel, VerifiableResourcedModel,
-			   VerifiableUUIDModel {
-
-	@Override
-	public String getJoinByTableName() {
-		return null;
-	}
+public class MDRRuleGroupInstanceVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return LayoutSetPrototype.class.getName();
+		return MDRRuleGroupInstance.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutSetPrototypeId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "ruleGroupInstanceId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutSetPrototype";
+		return MDRRuleGroupInstanceModelImpl.TABLE_NAME;
 	}
 
 	@Override
 	public String getUserIdColumnName() {
 		return "userId";
-	}
-
-	@Override
-	public boolean isAnonymousUserAllowed() {
-		return false;
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return false;
 	}
 
 }

@@ -107,10 +107,11 @@ public class ComboServlet extends HttpServlet {
 		int index = modulePath.indexOf(CharPool.COLON);
 
 		if (index > 0) {
-			return modulePath.substring(index + 1);
+			return HttpUtil.removePathParameters(
+				modulePath.substring(index + 1));
 		}
 
-		return modulePath;
+		return HttpUtil.removePathParameters(modulePath);
 	}
 
 	protected void doService(
@@ -155,7 +156,9 @@ public class ComboServlet extends HttpServlet {
 
 		String firstModulePath = modulePaths[0];
 
-		String extension = FileUtil.getExtension(firstModulePath);
+		String resourcePath = getResourcePath(firstModulePath);
+
+		String extension = FileUtil.getExtension(resourcePath);
 
 		String minifierType = ParamUtil.getString(request, "minifierType");
 
@@ -393,6 +396,8 @@ public class ComboServlet extends HttpServlet {
 
 	protected boolean validateModuleExtension(String moduleName)
 		throws Exception {
+
+		moduleName = getResourcePath(moduleName);
 
 		int index = moduleName.indexOf(CharPool.QUESTION);
 

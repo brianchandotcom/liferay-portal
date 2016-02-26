@@ -97,6 +97,14 @@ public class GroupFinderUtil {
 		return getFinder().findByC_GK(companyId, groupKey);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> findByL_TS_S_RSGC(
+		long liveGroupId, java.lang.String typeSettings, boolean site,
+		int remoteStagingGroupCount) {
+		return getFinder()
+				   .findByL_TS_S_RSGC(liveGroupId, typeSettings, site,
+			remoteStagingGroupCount);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId,
 		java.lang.String[] names, java.lang.String[] descriptions,

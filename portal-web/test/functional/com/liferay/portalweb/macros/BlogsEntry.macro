@@ -880,7 +880,7 @@
 	</command>
 
 	<command name="viewNoEntryViaBlogsAggregatorPG">
-		<execute function="AssertElementPresent" locator1="BlogsAggregator#NO_ENTRY_MESSAGE" value1="There are no blogs." />
+		<execute function="AssertElementPresent" locator1="BlogsAggregator#NO_ENTRY_MESSAGE" />
 	</command>
 
 	<command name="viewNoPG">

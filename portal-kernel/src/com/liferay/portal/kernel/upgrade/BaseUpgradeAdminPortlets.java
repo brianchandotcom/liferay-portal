@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -87,43 +88,45 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			String portletFrom, String portletTo)
 		throws Exception {
 
-		long bitwiseValue = getBitwiseValue(
-			portletFrom, ActionKeys.ACCESS_IN_CONTROL_PANEL);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long bitwiseValue = getBitwiseValue(
+				portletFrom, ActionKeys.ACCESS_IN_CONTROL_PANEL);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from ResourcePermission where name = ?")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select * from ResourcePermission where name = ?")) {
 
-			ps.setString(1, portletFrom);
+				ps.setString(1, portletFrom);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long resourcePermissionId = rs.getLong(
-						"resourcePermissionId");
-					long actionIds = rs.getLong("actionIds");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long resourcePermissionId = rs.getLong(
+							"resourcePermissionId");
+						long actionIds = rs.getLong("actionIds");
 
-					if ((actionIds & bitwiseValue) != 0) {
-						actionIds = actionIds & (~bitwiseValue);
+						if ((actionIds & bitwiseValue) != 0) {
+							actionIds = actionIds & (~bitwiseValue);
 
-						runSQL(
-							"update ResourcePermission set actionIds = " +
-								actionIds + " where resourcePermissionId = " +
-									resourcePermissionId);
+							runSQL(
+								"update ResourcePermission set actionIds = " +
+									actionIds + " where resourcePermissionId " +
+										"= " + resourcePermissionId);
 
-						resourcePermissionId = increment(
-							ResourcePermission.class.getName());
+							resourcePermissionId = increment(
+								ResourcePermission.class.getName());
 
-						long companyId = rs.getLong("companyId");
-						int scope = rs.getInt("scope");
-						String primKey = rs.getString("primKey");
-						long roleId = rs.getLong("roleId");
+							long companyId = rs.getLong("companyId");
+							int scope = rs.getInt("scope");
+							String primKey = rs.getString("primKey");
+							long roleId = rs.getLong("roleId");
 
-						actionIds = rs.getLong("actionIds");
+							actionIds = rs.getLong("actionIds");
 
-						actionIds |= bitwiseValue;
+							actionIds |= bitwiseValue;
 
-						addResourcePermission(
-							resourcePermissionId, companyId, portletTo, scope,
-							primKey, roleId, actionIds);
+							addResourcePermission(
+								resourcePermissionId, companyId, portletTo,
+								scope, primKey, roleId, actionIds);
+						}
 					}
 				}
 			}

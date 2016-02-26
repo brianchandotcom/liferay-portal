@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,22 +123,25 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 	protected void updateLastPublishDates(String portletId, String tableName)
 		throws Exception {
 
-		List<Long> stagedGroupIds = getStagedGroupIds();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Long> stagedGroupIds = getStagedGroupIds();
 
-		for (long stagedGroupId : stagedGroupIds) {
-			Date lastPublishDate = getPortletLastPublishDate(
-				stagedGroupId, portletId);
+			for (long stagedGroupId : stagedGroupIds) {
+				Date lastPublishDate = getPortletLastPublishDate(
+					stagedGroupId, portletId);
 
-			if (lastPublishDate == null) {
-				lastPublishDate = getLayoutSetLastPublishDate(stagedGroupId);
+				if (lastPublishDate == null) {
+					lastPublishDate = getLayoutSetLastPublishDate(
+						stagedGroupId);
+				}
+
+				if (lastPublishDate == null) {
+					continue;
+				}
+
+				updateStagedModelLastPublishDates(
+					stagedGroupId, tableName, lastPublishDate);
 			}
-
-			if (lastPublishDate == null) {
-				continue;
-			}
-
-			updateStagedModelLastPublishDates(
-				stagedGroupId, tableName, lastPublishDate);
 		}
 	}
 

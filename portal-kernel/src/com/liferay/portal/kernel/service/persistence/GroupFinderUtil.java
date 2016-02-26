@@ -108,6 +108,10 @@ public class GroupFinderUtil {
 			names, descriptions, params, andOperator, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> findByS_L_RSGC_S() {
+		return getFinder().findByS_L_RSGC_S();
+	}
+
 	public static GroupFinder getFinder() {
 		if (_finder == null) {
 			_finder = (GroupFinder)PortalBeanLocatorUtil.locate(GroupFinder.class.getName());

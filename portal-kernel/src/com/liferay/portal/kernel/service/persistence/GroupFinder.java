@@ -68,4 +68,6 @@ public interface GroupFinder {
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.Group> findByS_L_RSGC_S();
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -37,29 +36,24 @@ public class UpgradeUserName extends UpgradeProcess {
 	protected void updateTable(String tableName, boolean setCompanyId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(11);
 
-		try {
-			StringBundler sb = new StringBundler(11);
+		sb.append("select distinct User_.companyId, User_.userId, ");
+		sb.append("User_.firstName, User_.middleName, User_.lastName ");
+		sb.append("from User_ inner join ");
+		sb.append(tableName);
+		sb.append(" on ");
+		sb.append(tableName);
+		sb.append(".userId = User_.userId where ");
+		sb.append(tableName);
+		sb.append(".userName is null or ");
+		sb.append(tableName);
+		sb.append(".userName = ''");
 
-			sb.append("select distinct User_.companyId, User_.userId, ");
-			sb.append("User_.firstName, User_.middleName, User_.lastName ");
-			sb.append("from User_ inner join ");
-			sb.append(tableName);
-			sb.append(" on ");
-			sb.append(tableName);
-			sb.append(".userId = User_.userId where ");
-			sb.append(tableName);
-			sb.append(".userName is null or ");
-			sb.append(tableName);
-			sb.append(".userName = ''");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
@@ -102,9 +96,6 @@ public class UpgradeUserName extends UpgradeProcess {
 
 				runSQL(sb.toString());
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

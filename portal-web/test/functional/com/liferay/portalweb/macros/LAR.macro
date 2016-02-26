@@ -316,6 +316,8 @@
 			</then>
 		</if>
 
+		<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
+
 		<execute function="AssertVisible" locator1="Button#BACK" />
 
 		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />

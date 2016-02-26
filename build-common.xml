@@ -892,10 +892,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<sequential>
 			<artifact:pom
-				artifactId="@{artifact.name}"
-				groupId="com.liferay.portal"
+				artifactId="com.liferay.@{artifact.name}"
+				groupId="com.liferay"
 				id="prepare-@{artifact.name}"
-				name="@{artifact.name}"
 				version="${lp.version}-SNAPSHOT"
 			/>
 

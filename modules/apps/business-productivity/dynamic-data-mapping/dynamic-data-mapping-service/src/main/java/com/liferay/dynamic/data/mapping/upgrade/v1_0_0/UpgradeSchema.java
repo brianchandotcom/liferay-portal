@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.DDMContentTable;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.DDMStructureTable;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.DDMTemplateTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -54,6 +55,9 @@ public class UpgradeSchema extends UpgradeProcess {
 				DDMStructureTable.TABLE_SQL_CREATE,
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
+
+		alterColumnType(DDMStructureTable.class, "description", "TEXT null");
+		alterColumnType(DDMTemplateTable.class, "description", "TEXT null");
 	}
 
 }

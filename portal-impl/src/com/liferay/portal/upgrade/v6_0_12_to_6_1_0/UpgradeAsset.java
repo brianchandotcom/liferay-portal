@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
@@ -54,43 +55,51 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.journal.model.JournalArticle");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.journal.model.JournalArticle");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select resourcePrimKey, structureId from JournalArticle " +
-					"where structureId != ''");
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select resourcePrimKey, structureId from JournalArticle " +
+						"where structureId != ''");
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				String structureId = rs.getString("structureId");
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String structureId = rs.getString("structureId");
 
-				long journalStructureId = getJournalStructureId(structureId);
+					long journalStructureId = getJournalStructureId(
+						structureId);
 
-				runSQL(
-					"update AssetEntry set classTypeId = " +
-						journalStructureId + " where classNameId = " +
-							classNameId + " and classPK = " + resourcePrimKey);
+					runSQL(
+						"update AssetEntry set classTypeId = " +
+							journalStructureId + " where classNameId = " +
+								classNameId + " and classPK = " +
+									resourcePrimKey);
+				}
 			}
 		}
 	}
 
 	protected void updateIGImageClassName() throws Exception {
-		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-			"com.liferay.document.library.kernel.model.DLFileEntry");
-		long igImageClassNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.imagegallery.model.IGImage");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+				"com.liferay.document.library.kernel.model.DLFileEntry");
+			long igImageClassNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.imagegallery.model.IGImage");
 
-		if (PropsValues.DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE) {
-			UpgradeProcessUtil.setCreateIGImageDocumentType(true);
+			if (PropsValues.
+					DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE) {
 
-			updateIGImageClassNameWithClassTypeId(
-				dlFileEntryClassNameId, igImageClassNameId);
-		}
-		else {
-			updateIGImageClassNameWithoutClassTypeId(
-				dlFileEntryClassNameId, igImageClassNameId);
+				UpgradeProcessUtil.setCreateIGImageDocumentType(true);
+
+				updateIGImageClassNameWithClassTypeId(
+					dlFileEntryClassNameId, igImageClassNameId);
+			}
+			else {
+				updateIGImageClassNameWithoutClassTypeId(
+					dlFileEntryClassNameId, igImageClassNameId);
+			}
 		}
 	}
 

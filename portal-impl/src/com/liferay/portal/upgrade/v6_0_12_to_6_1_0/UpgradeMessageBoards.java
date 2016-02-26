@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -52,22 +53,24 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 	}
 
 	protected void updateMessage() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select messageFlag.messageId as messageId from ");
-		sb.append("MBMessageFlag messageFlag inner join MBMessage ");
-		sb.append("message on messageFlag.messageId = message.messageId ");
-		sb.append("where message.parentMessageId != 0 and flag = 3");
+			sb.append("select messageFlag.messageId as messageId from ");
+			sb.append("MBMessageFlag messageFlag inner join MBMessage ");
+			sb.append("message on messageFlag.messageId = message.messageId ");
+			sb.append("where message.parentMessageId != 0 and flag = 3");
 
-		String sql = sb.toString();
+			String sql = sb.toString();
 
-		try (PreparedStatement ps = connection.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long messageId = rs.getLong("messageId");
+				while (rs.next()) {
+					long messageId = rs.getLong("messageId");
 
-				updateMessageAnswer(messageId, true);
+					updateMessageAnswer(messageId, true);
+				}
 			}
 		}
 	}
@@ -86,37 +89,41 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 	}
 
 	protected void updateThread() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select threadId from MBMessageFlag where flag = 2");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select threadId from MBMessageFlag where flag = 2");
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long threadId = rs.getLong("threadId");
+				while (rs.next()) {
+					long threadId = rs.getLong("threadId");
 
-				updateThreadQuestion(threadId, true);
+					updateThreadQuestion(threadId, true);
+				}
 			}
-		}
 
-		StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select messageFlag.threadId as threadId from ");
-		sb.append("MBMessageFlag messageFlag inner join MBMessage ");
-		sb.append("message on messageFlag.messageId = message.messageId ");
-		sb.append("where message.parentMessageId = 0 and flag = 3");
+			sb.append("select messageFlag.threadId as threadId from ");
+			sb.append("MBMessageFlag messageFlag inner join MBMessage ");
+			sb.append("message on messageFlag.messageId = message.messageId ");
+			sb.append("where message.parentMessageId = 0 and flag = 3");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long threadId = rs.getLong("threadId");
+				while (rs.next()) {
+					long threadId = rs.getLong("threadId");
 
-				updateThreadQuestion(threadId, true);
+					updateThreadQuestion(threadId, true);
+				}
 			}
 		}
 	}
 
 	protected void updateThreadFlag() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select userId, threadId, modifiedDate from MBMessageFlag " +
 					"where flag = 1");
 			ResultSet rs = ps.executeQuery()) {

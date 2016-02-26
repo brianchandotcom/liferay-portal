@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -77,7 +78,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileVersions() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryId, folderId from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -132,7 +134,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateThumbnails() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryId from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 

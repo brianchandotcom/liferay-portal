@@ -477,6 +477,22 @@ AUI.add(
 						return value;
 					},
 
+					_getReadOnly: function(readOnly) {
+						var instance = this;
+
+						var form = instance.getRoot();
+
+						if (form && !readOnly) {
+							var readOnlyFields = form.get('readOnlyFields');
+
+							var name = instance.get('name');
+
+							readOnly = readOnlyFields.indexOf(name) > -1;
+						}
+
+						return readOnly;
+					},
+
 					_setParent: function(val) {
 						var instance = this;
 
@@ -489,26 +505,6 @@ AUI.add(
 						}
 
 						instance.addTarget(val);
-					},
-
-					_getReadOnly : function(value) {
-						var instance = this;
-
-						if (value) {
-							return value;
-						}
-						else {
-							var form = instance.getRoot();
-
-							var name = instance.get('name');
-
-							return AArray.some(
-								form.get('readOnlyFields'),
-								function(item) {
-									return item === name;
-								}
-							);
-						}
 					},
 
 					_valueContainer: function() {

@@ -14,16 +14,16 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
-					readOnlyFields : {
-						value : []
-					},
-
 					evaluation: {
 						value: null
 					},
 
 					portletNamespace: {
 						value: ''
+					},
+
+					readOnlyFields: {
+						value: []
 					},
 
 					strings: {

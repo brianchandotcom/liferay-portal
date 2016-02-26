@@ -26,7 +26,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		String tabs1Names = "portlet-configuration,text-styles,background-styles,border-styles,margin-and-padding,advanced-styling";
+		String tabs1Names = "general,text-styles,background-styles,border-styles,margin-and-padding,advanced-styling";
 
 		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.rtl.css</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -26,8 +26,14 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
+      <artifactId>ph-commons</artifactId>
+      <version>6.2.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
       <artifactId>ph-css</artifactId>
-      <version>4.0.0</version>
+      <version>4.1.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

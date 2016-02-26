@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
@@ -42,7 +43,8 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 	protected void updateTable(String tableName, String fieldName)
 		throws Exception {
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
+			PreparedStatement ps = connection.prepareStatement(
 				"select " + fieldName + ", workflowContext from " + tableName +
 					" where workflowContext is not null and workflowContext " +
 						"not like '%serializable%'");

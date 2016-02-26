@@ -18,6 +18,7 @@ import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.polls.verify.model.PollsChoiceVerifiableModel;
 import com.liferay.polls.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.verify.model.PollsVoteVerifiableModel;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
@@ -47,12 +48,17 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyAuditedModels() throws Exception {
-		_verifyAuditedModel.verify(new PollsChoiceVerifiableModel());
-		_verifyAuditedModel.verify(new PollsVoteVerifiableModel());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyAuditedModel.verify(new PollsChoiceVerifiableModel());
+			_verifyAuditedModel.verify(new PollsVoteVerifiableModel());
+		}
 	}
 
 	protected void verifyResourcedModels() throws Exception {
-		_verifyResourcePermissions.verify(new PollsQuestionVerifiableModel());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyResourcePermissions.verify(
+				new PollsQuestionVerifiableModel());
+		}
 	}
 
 	private final VerifyAuditedModel _verifyAuditedModel =

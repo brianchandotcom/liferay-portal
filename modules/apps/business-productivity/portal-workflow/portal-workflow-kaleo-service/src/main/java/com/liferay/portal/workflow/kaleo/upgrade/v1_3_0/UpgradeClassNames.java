@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.upgrade.v1_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
@@ -45,11 +46,13 @@ public class UpgradeClassNames extends UpgradeProcess {
 	}
 
 	protected void updateClassName(String tableName) {
-		Table table = new Table(tableName);
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			Table table = new Table(tableName);
 
-		for (Map.Entry<String, String> entry : _classNamesMap.entrySet()) {
-			table.updateColumnValue(
-				"className", entry.getKey(), entry.getValue());
+			for (Map.Entry<String, String> entry : _classNamesMap.entrySet()) {
+				table.updateColumnValue(
+					"className", entry.getKey(), entry.getValue());
+			}
 		}
 	}
 
@@ -73,7 +76,8 @@ public class UpgradeClassNames extends UpgradeProcess {
 			String tableName, String primaryKeyName)
 		throws Exception {
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
+			PreparedStatement ps = connection.prepareStatement(
 				"select " + primaryKeyName + ", workflowContext from " +
 					tableName + " where workflowContext is not null");
 			ResultSet rs = ps.executeQuery()) {

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -31,32 +32,36 @@ import java.util.Set;
 public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 	protected void deleteKaleoInstanceTokens() throws Exception {
-		if (_kaleoInstanceTokenIds.isEmpty()) {
-			return;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (_kaleoInstanceTokenIds.isEmpty()) {
+				return;
+			}
+
+			StringBundler sb = new StringBundler(
+				_kaleoInstanceTokenIds.size() * 4 + 1);
+
+			sb.append("delete from KaleoInstanceToken where ");
+
+			for (long kaleoInstanceTokenId : _kaleoInstanceTokenIds) {
+				sb.append("(kaleoInstanceTokenId = ");
+				sb.append(kaleoInstanceTokenId);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(" OR ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			String sql = sb.toString();
+
+			runSQL(sql);
 		}
-
-		StringBundler sb = new StringBundler(
-			_kaleoInstanceTokenIds.size() * 4 + 1);
-
-		sb.append("delete from KaleoInstanceToken where ");
-
-		for (long kaleoInstanceTokenId : _kaleoInstanceTokenIds) {
-			sb.append("(kaleoInstanceTokenId = ");
-			sb.append(kaleoInstanceTokenId);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(" OR ");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		String sql = sb.toString();
-
-		runSQL(sql);
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"updateKaleoTaskInstanceToken");
+			PreparedStatement ps = connection.prepareStatement(
 				"select kaleoTaskInstanceTokenId, kaleoInstanceTokenId from " +
 					"KaleoTaskInstanceToken");
 			ResultSet rs = ps.executeQuery()) {

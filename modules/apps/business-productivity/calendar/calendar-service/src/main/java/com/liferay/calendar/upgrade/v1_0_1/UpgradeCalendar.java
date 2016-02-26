@@ -16,6 +16,7 @@ package com.liferay.calendar.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -52,35 +53,38 @@ public class UpgradeCalendar extends UpgradeProcess {
 	}
 
 	protected void updateCalendarTimeZoneIds() throws Exception {
-		StringBundler sb = new StringBundler(6);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(6);
 
-		sb.append("select Calendar.calendarId, CalendarResource.");
-		sb.append("classNameId, User_.timeZoneId from Calendar ");
-		sb.append("inner join CalendarResource on Calendar.");
-		sb.append("calendarResourceId = CalendarResource.");
-		sb.append("calendarResourceId inner join User_ on ");
-		sb.append("CalendarResource.userId = User_.userId");
+			sb.append("select Calendar.calendarId, CalendarResource.");
+			sb.append("classNameId, User_.timeZoneId from Calendar ");
+			sb.append("inner join CalendarResource on Calendar.");
+			sb.append("calendarResourceId = CalendarResource.");
+			sb.append("calendarResourceId inner join User_ on ");
+			sb.append("CalendarResource.userId = User_.userId");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			long userClassNameId = PortalUtil.getClassNameId(User.class);
+				long userClassNameId = PortalUtil.getClassNameId(User.class);
 
-			while (rs.next()) {
-				long calendarId = rs.getLong(1);
-				long classNameId = rs.getLong(2);
+				while (rs.next()) {
+					long calendarId = rs.getLong(1);
+					long classNameId = rs.getLong(2);
 
-				String timeZoneId = null;
+					String timeZoneId = null;
 
-				if (classNameId == userClassNameId) {
-					timeZoneId = rs.getString(3);
+					if (classNameId == userClassNameId) {
+						timeZoneId = rs.getString(3);
+					}
+					else {
+						timeZoneId = PropsUtil.get(
+							PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
+					}
+
+					updateCalendarTimeZoneId(calendarId, timeZoneId);
 				}
-				else {
-					timeZoneId = PropsUtil.get(
-						PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
-				}
-
-				updateCalendarTimeZoneId(calendarId, timeZoneId);
 			}
 		}
 	}

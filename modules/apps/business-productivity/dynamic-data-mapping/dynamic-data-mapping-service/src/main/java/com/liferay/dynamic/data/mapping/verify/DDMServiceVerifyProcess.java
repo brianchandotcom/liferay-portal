@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 
 import org.osgi.service.component.annotations.Component;
@@ -171,24 +172,26 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyContents() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_ddmContentLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddmContentLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
+					@Override
+					public void performAction(Object object)
+						throws PortalException {
 
-					DDMContent content = (DDMContent)object;
+						DDMContent content = (DDMContent)object;
 
-					verifyContent(content);
-				}
+						verifyContent(content);
+					}
 
-			});
+				});
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
+		}
 	}
 
 	protected void verifyDDMForm(DDMForm ddmForm) throws PortalException {
@@ -221,43 +224,48 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyStructureLinks() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_ddmStructureLinkLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddmStructureLinkLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
+					@Override
+					public void performAction(Object object)
+						throws PortalException {
 
-					DDMStructureLink structureLink = (DDMStructureLink)object;
+						DDMStructureLink structureLink =
+							(DDMStructureLink)object;
 
-					verifyStructureLink(structureLink);
-				}
+						verifyStructureLink(structureLink);
+					}
 
-			});
+				});
+		}
 	}
 
 	protected void verifyStructures() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_ddmStructureLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddmStructureLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
+					@Override
+					public void performAction(Object object)
+						throws PortalException {
 
-					DDMStructure structure = (DDMStructure)object;
+						DDMStructure structure = (DDMStructure)object;
 
-					verifyStructure(structure);
-				}
+						verifyStructure(structure);
+					}
 
-			});
+				});
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
+		}
 	}
 
 	protected void verifyTemplateLink(DDMTemplateLink templateLink)
@@ -273,22 +281,24 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyTemplateLinks() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_ddmTemplateLinkLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddmTemplateLinkLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod() {
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
+					@Override
+					public void performAction(Object object)
+						throws PortalException {
 
-					DDMTemplateLink templateLink = (DDMTemplateLink)object;
+						DDMTemplateLink templateLink = (DDMTemplateLink)object;
 
-					verifyTemplateLink(templateLink);
-				}
+						verifyTemplateLink(templateLink);
+					}
 
-			});
+				});
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

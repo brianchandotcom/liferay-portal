@@ -107,10 +107,11 @@ public class ComboServlet extends HttpServlet {
 		int index = modulePath.indexOf(CharPool.COLON);
 
 		if (index > 0) {
-			return modulePath.substring(index + 1);
+			return HttpUtil.removePathParameters(
+				modulePath.substring(index + 1));
 		}
 
-		return modulePath;
+		return HttpUtil.removePathParameters(modulePath);
 	}
 
 	protected void doService(

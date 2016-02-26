@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 
@@ -69,6 +72,10 @@ public class ComboServletTest extends PowerMockito {
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
 
+		_http = HttpUtil.getHttp();
+
+		_httpUtil.setHttp(new HttpImpl());
+
 		_portal = PortalUtil.getPortal();
 
 		_portalUtil.setPortal(new PortalImpl());
@@ -76,6 +83,7 @@ public class ComboServletTest extends PowerMockito {
 
 	@AfterClass
 	public static void tearDownClass() {
+		_httpUtil.setHttp(_http);
 		_portalUtil.setPortal(_portal);
 	}
 
@@ -200,6 +208,17 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
+	public void testValidateModuleExtensionWithParameterPath()
+		throws Exception {
+
+		boolean valid = _comboServlet.validateModuleExtension(
+			_TEST_PORTLET_ID +
+				"_INSTANCE_.js:/api/jsonws;.js?discover=true&callback=aaa");
+
+		Assert.assertFalse(valid);
+	}
+
+	@Test
 	public void testValidateValidModuleExtension() throws Exception {
 		boolean valid = _comboServlet.validateModuleExtension(
 			_TEST_PORTLET_ID + "_INSTANCE_.js:/js/javascript.js");
@@ -274,6 +293,8 @@ public class ComboServletTest extends PowerMockito {
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
+	private static Http _http;
+	private static final HttpUtil _httpUtil = new HttpUtil();
 	private static Portal _portal;
 	private static final PortalUtil _portalUtil = new PortalUtil();
 

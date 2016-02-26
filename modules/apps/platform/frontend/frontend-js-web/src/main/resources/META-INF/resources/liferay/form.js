@@ -156,9 +156,9 @@ AUI.add(
 								var errorFields = panel.get('children').all('.has-error');
 
 								if (errorFields.size() > 0 && !panel.hasClass('in')) {
-									var panelId = panel.get('id');
+									var panelNode = panel.getDOM();
 
-									AUI.$('#' + panelId).collapse('show');
+									AUI.$(panelNode).collapse('show');
 								}
 							}
 						);

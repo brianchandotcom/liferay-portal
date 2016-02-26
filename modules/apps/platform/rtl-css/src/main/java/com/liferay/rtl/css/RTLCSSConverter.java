@@ -64,12 +64,12 @@ public class RTLCSSConverter {
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
 			new DoNothingCSSParseErrorHandler());
 
-		processRules(cascadingStyleSheet.getAllRules());
+		_processRules(cascadingStyleSheet.getAllRules());
 
 		return _cssWriter.getCSSAsString(cascadingStyleSheet);
 	}
 
-	private void convertBackgroundProperties(CSSDeclaration cssDeclaration) {
+	private void _convertBackgroundProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<ICSSExpressionMember> icssExpressionMembers =
@@ -82,7 +82,7 @@ public class RTLCSSConverter {
 				CSSExpressionMemberFunction cssExpressionMemberFunction =
 					(CSSExpressionMemberFunction)icssExpressionMember;
 
-				reverseValue(cssExpressionMemberFunction.getExpression());
+				_reverseValue(cssExpressionMemberFunction.getExpression());
 			}
 			else if (icssExpressionMember instanceof
 						CSSExpressionMemberTermSimple) {
@@ -91,7 +91,7 @@ public class RTLCSSConverter {
 					(CSSExpressionMemberTermSimple)icssExpressionMember;
 
 				cssExpressionMemberTermSimple.setValue(
-					reverse(cssExpressionMemberTermSimple.getValue()));
+					_reverse(cssExpressionMemberTermSimple.getValue()));
 			}
 			else if (icssExpressionMember instanceof
 						CSSExpressionMemberTermURI) {
@@ -103,7 +103,7 @@ public class RTLCSSConverter {
 
 				int index = uri.lastIndexOf("/") + 1;
 
-				String fileName = reverse(uri.substring(index));
+				String fileName = _reverse(uri.substring(index));
 
 				cssExpressionMemberTermURI.setURIString(
 					uri.substring(0, index) + fileName);
@@ -145,7 +145,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void convertShorthandProperties(CSSDeclaration cssDeclaration) {
+	private void _convertShorthandProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
@@ -167,7 +167,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void convertShorthandRadiusProperties(
+	private void _convertShorthandRadiusProperties(
 		CSSDeclaration cssDeclaration) {
 
 		CSSExpression cssExpression = cssDeclaration.getExpression();
@@ -228,54 +228,54 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void processRule(CSSStyleRule cssStyleRule) {
+	private void _processRule(CSSStyleRule cssStyleRule) {
 		for (
 			CSSDeclaration cssDeclaration : cssStyleRule.getAllDeclarations()) {
 
-			String property = stripAsterisk(cssDeclaration.getProperty());
+			String property = _stripAsterisk(cssDeclaration.getProperty());
 
 			if (_backgroundProperties.contains(property)) {
-				resizeYui3BackgroundPosition(cssStyleRule, cssDeclaration);
+				_resizeYui3BackgroundPosition(cssStyleRule, cssDeclaration);
 
-				convertBackgroundProperties(cssDeclaration);
+				_convertBackgroundProperties(cssDeclaration);
 			}
 			else if (_cursorProperties.contains(property)) {
-				replaceYui3Cursors(cssStyleRule, cssDeclaration);
+				_replaceYui3Cursors(cssStyleRule, cssDeclaration);
 			}
 			else if (_iconProperties.contains(property)) {
-				replaceIcons(cssDeclaration);
+				_replaceIcons(cssDeclaration);
 			}
 			else if (_reverseProperties.contains(property)) {
-				resizeYui3Offset(cssStyleRule, cssDeclaration);
+				_resizeYui3Offset(cssStyleRule, cssDeclaration);
 
-				reverseProperty(cssDeclaration);
+				_reverseProperty(cssDeclaration);
 			}
 			else if (_reverseValueProperties.contains(property)) {
-				reverseValue(cssDeclaration);
+				_reverseValue(cssDeclaration);
 			}
 			else if (_shorthandRadiusProperties.contains(property)) {
-				convertShorthandRadiusProperties(cssDeclaration);
+				_convertShorthandRadiusProperties(cssDeclaration);
 			}
 			else if (_shorthandProperties.contains(property)) {
-				convertShorthandProperties(cssDeclaration);
+				_convertShorthandProperties(cssDeclaration);
 			}
 		}
 	}
 
-	private void processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
+	private void _processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
 		for (ICSSTopLevelRule icssTopLevelRule : icssTopLevelRules) {
 			if (icssTopLevelRule instanceof CSSMediaRule) {
 				CSSMediaRule cssMediaRule = (CSSMediaRule)icssTopLevelRule;
 
-				processRules(cssMediaRule.getAllRules());
+				_processRules(cssMediaRule.getAllRules());
 			}
 			else if (icssTopLevelRule instanceof CSSStyleRule) {
-				processRule((CSSStyleRule)icssTopLevelRule);
+				_processRule((CSSStyleRule)icssTopLevelRule);
 			}
 		}
 	}
 
-	private void replace(
+	private void _replace(
 		CSSDeclaration cssDeclaration, Map<String, String> replacementValues) {
 
 		CSSExpression cssExpression = cssDeclaration.getExpression();
@@ -295,22 +295,22 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void replaceIcons(CSSDeclaration cssDeclaration) {
-		replace(cssDeclaration, _replacementIcons);
+	private void _replaceIcons(CSSDeclaration cssDeclaration) {
+		_replace(cssDeclaration, _replacementIcons);
 	}
 
-	private void replaceYui3Cursors(
+	private void _replaceYui3Cursors(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
 			_cssWriterSettings, 0);
 
 		if (selector.contains(_YUI3_RESIZE_HANDLE)) {
-			replace(cssDeclaration, _yui3ReplacementCursors);
+			_replace(cssDeclaration, _yui3ReplacementCursors);
 		}
 	}
 
-	private void resizeYui3BackgroundPosition(
+	private void _resizeYui3BackgroundPosition(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
@@ -364,7 +364,7 @@ public class RTLCSSConverter {
 		cssExpressionMemberTermSimple2.setValue("0");
 	}
 
-	private void resizeYui3Offset(
+	private void _resizeYui3Offset(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
@@ -388,7 +388,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String reverse(String s) {
+	private String _reverse(String s) {
 		if (s.contains("right")) {
 			return s.replace("right", "left");
 		}
@@ -399,7 +399,7 @@ public class RTLCSSConverter {
 		return s;
 	}
 
-	private void reverseProperty(CSSDeclaration cssDeclaration) {
+	private void _reverseProperty(CSSDeclaration cssDeclaration) {
 		String property = cssDeclaration.getProperty();
 
 		String asterisk = "";
@@ -407,19 +407,19 @@ public class RTLCSSConverter {
 		if (property.startsWith("*")) {
 			asterisk = "*";
 
-			property = stripAsterisk(property);
+			property = _stripAsterisk(property);
 		}
 
-		property = reverse(property);
+		property = _reverse(property);
 
 		cssDeclaration.setProperty(asterisk + property);
 	}
 
-	private void reverseValue(CSSDeclaration cssDeclaration) {
-		reverseValue(cssDeclaration.getExpression());
+	private void _reverseValue(CSSDeclaration cssDeclaration) {
+		_reverseValue(cssDeclaration.getExpression());
 	}
 
-	private void reverseValue(CSSExpression cssExpression) {
+	private void _reverseValue(CSSExpression cssExpression) {
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
 			cssExpression.getAllSimpleMembers();
 
@@ -428,7 +428,7 @@ public class RTLCSSConverter {
 
 			String value = cssExpressionMemberTermSimple.getValue();
 
-			value = reverse(value);
+			value = _reverse(value);
 
 			if (value.contains("rtl")) {
 				value = value.replace("rtl", "ltr");
@@ -441,7 +441,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String stripAsterisk(String property) {
+	private String _stripAsterisk(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 

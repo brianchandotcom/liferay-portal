@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MY_PENDING_ENTRIES_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'panel') and contains(@role,'tab')]//a[contains(@data-toggle,'collapse') and contains(.,'My Pending Entries')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSIONS</td>
 	<td>//a[contains(.,'Permissions')]</td>
 	<td></td>

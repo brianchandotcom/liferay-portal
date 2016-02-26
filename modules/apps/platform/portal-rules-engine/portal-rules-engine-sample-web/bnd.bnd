@@ -15,8 +15,8 @@ Import-Package:\
 	*
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rules Engine
 Web-ContextPath: /portal-rules-engine-sample-web

@@ -1,8 +1,8 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.8"
-	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
-	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+	provided group: "com.liferay", name: "com.liferay.portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay", name: "com.liferay.portal-kernel", version: liferay.portalVersion
+	provided group: "com.liferay", name: "com.liferay.util-taglib", version: liferay.portalVersion
 	provided group: "commons-collections", name: "commons-collections", version: "3.2.1"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.apache.velocity", name: "velocity", version: "1.6.4"

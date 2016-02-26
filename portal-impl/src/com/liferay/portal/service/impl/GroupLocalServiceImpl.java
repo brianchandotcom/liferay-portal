@@ -1574,7 +1574,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public List<Group> getStagedSites() {
-		return groupFinder.findByL_TS_S_RSGC(0, "%staged=true%", true, 0);
+		return groupFinder.findByL_TS_S_RSGC(0, "staged=true", true, 0);
 	}
 
 	/**

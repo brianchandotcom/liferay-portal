@@ -239,10 +239,10 @@
 			FROM
 				Group_
 			WHERE
-				(Group_.liveGroupId != 0) AND
-				(CAST_CLOB_TEXT(Group_.typeSettings) like '%staged=true%') AND
+				(Group_.liveGroupId != ?) AND
+				(CAST_CLOB_TEXT(Group_.typeSettings) like ?) AND
 				(Group_.site = ?) AND
-				(Group_.remoteStagingGroupCount > 0)
+				(Group_.remoteStagingGroupCount > ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_C_PG_N_D">

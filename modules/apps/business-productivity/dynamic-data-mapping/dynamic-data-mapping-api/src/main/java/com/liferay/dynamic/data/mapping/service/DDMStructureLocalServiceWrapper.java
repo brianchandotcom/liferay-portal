@@ -405,13 +405,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMForm deserialize(
-		java.lang.String serializedDDMForm)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLocalService.deserialize(serializedDDMForm);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmStructureLocalService.dynamicQuery();
 	}
@@ -842,6 +835,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.getStructure(structureId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMForm getStructureDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLocalService.getStructureDDMForm(structure);
+	}
+
 	/**
 	* Returns all the structures present in the system.
 	*
@@ -1194,12 +1194,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
 			classNameId, name, description, storageType, type, status,
 			andOperator);
-	}
-
-	@Override
-	public java.lang.String serialize(
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm) {
-		return _ddmStructureLocalService.serialize(ddmForm);
 	}
 
 	/**

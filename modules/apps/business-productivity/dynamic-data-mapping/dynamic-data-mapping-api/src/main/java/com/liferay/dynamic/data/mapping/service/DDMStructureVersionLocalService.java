@@ -109,9 +109,6 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DDMForm deserialize(java.lang.String serializedDDMForm)
-		throws PortalException;
-
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -236,6 +233,10 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureVersion getStructureVersion(long structureVersionId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMForm getStructureVersionDDMForm(
+		DDMStructureVersion structureVersion) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureVersion> getStructureVersions(long structureId);

@@ -97,12 +97,6 @@ public class DDMStructureVersionLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMForm deserialize(
-		java.lang.String serializedDDMForm)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deserialize(serializedDDMForm);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -263,6 +257,12 @@ public class DDMStructureVersionLocalServiceUtil {
 		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureVersion(structureVersionId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMForm getStructureVersionDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion structureVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureVersionDDMForm(structureVersion);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(

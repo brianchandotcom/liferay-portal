@@ -124,9 +124,6 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	public void deleteStructureLayout(long structureLayoutId)
 		throws PortalException;
 
-	public DDMFormLayout deserialize(java.lang.String serializedDDMFormLayout)
-		throws PortalException;
-
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -300,6 +297,10 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureLayout getStructureLayoutByStructureVersionId(
 		long structureVersionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormLayout getStructureLayoutDDMFormLayout(
+		DDMStructureLayout structureLayout) throws PortalException;
 
 	/**
 	* Updates the d d m structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

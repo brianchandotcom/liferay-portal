@@ -151,15 +151,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues deserialize(
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-		java.lang.String serializedDDMFormValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.deserialize(ddmForm,
-			serializedDDMFormValues);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddlRecordSetLocalService.dynamicQuery();
 	}
@@ -410,6 +401,20 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getRecordSet(recordSetId);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getRecordSetSettingsDDMFormValues(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSetSettingsDDMFormValues(recordSet);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSetSettingsModel(recordSet);
 	}
 
 	@Override

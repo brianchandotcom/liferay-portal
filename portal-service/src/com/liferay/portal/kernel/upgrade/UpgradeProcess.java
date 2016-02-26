@@ -178,9 +178,7 @@ public abstract class UpgradeProcess
 				columnNames.add(rs2.getString("COLUMN_NAME"));
 			}
 
-			for (String[] columnNameAndColumnType :
-					columnNamesAndColumnTypes) {
-
+			for (String[] columnNameAndColumnType : columnNamesAndColumnTypes) {
 				String columnName = columnNameAndColumnType[0];
 
 				for (Map.Entry<String, Set<String>> entry :

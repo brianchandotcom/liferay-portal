@@ -97,7 +97,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -191,7 +192,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -213,7 +215,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -293,7 +296,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Folder Document Type Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -359,7 +363,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Folder Document Type Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -444,7 +449,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -471,7 +477,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -542,7 +549,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -560,7 +568,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -593,7 +602,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -605,7 +615,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -691,7 +702,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -721,7 +733,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="WorkflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
 		</execute>
 	</command>
 
@@ -778,7 +791,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
+			<var name="WorkflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -800,7 +814,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
+			<var name="WorkflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -831,7 +846,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 	</command>
 
@@ -901,7 +917,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Folder Type Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
+			<var name="WorkflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -945,7 +962,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Folder Type Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -980,7 +998,8 @@
 
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentTitle" value="DM Folder Type Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 	</command>
 
@@ -1039,7 +1058,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1066,7 +1086,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1102,7 +1123,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 	</command>
 
@@ -1148,6 +1170,7 @@
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1165,7 +1188,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1198,7 +1222,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1210,7 +1235,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Review)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1265,7 +1291,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Folder Document Description" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="workflowStatus" value="Pending" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1277,7 +1304,8 @@
 		<execute macro="DMDocument#viewWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="workflowStatus" value="Pending (Update)" />
+			<var name="infoWorkflowStatus" value="Pending (Update)" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 	</command>
 

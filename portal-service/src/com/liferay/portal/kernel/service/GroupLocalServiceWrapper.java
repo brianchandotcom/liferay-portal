@@ -1146,6 +1146,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getRolePrimaryKeys(groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group> getStagedSites() {
+		return _groupLocalService.getStagedSites();
+	}
+
 	/**
 	* Returns the staging group.
 	*

@@ -15,36 +15,24 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.contacts.hook.upgrade.v2_0_0;
+package com.liferay.contacts.upgrade;
 
-import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.contacts.upgrade.v2_0_0.UpgradeEntry;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jonathan Lee
  */
-public class UpgradeEntry extends UpgradeProcess {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		List<Entry> entries = EntryLocalServiceUtil.getEntries(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Entry entry : entries) {
-			try {
-				UserLocalServiceUtil.getUserByEmailAddress(
-					entry.getCompanyId(), entry.getEmailAddress());
-
-				EntryLocalServiceUtil.deleteEntry(entry);
-			}
-			catch (Exception e) {
-			}
-		}
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.contacts.service", "0.0.1", "1.0.0",
+			new UpgradeEntry());
 	}
 
 }

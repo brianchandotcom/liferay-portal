@@ -15,24 +15,36 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.contacts.hook.upgrade;
+package com.liferay.contacts.upgrade.v2_0_0;
 
-import com.liferay.contacts.hook.upgrade.v2_0_0.UpgradeEntry;
+import com.liferay.contacts.model.Entry;
+import com.liferay.contacts.service.EntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+
+import java.util.List;
 
 /**
  * @author Jonathan Lee
  */
-public class UpgradeProcess_2_0_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return 200;
-	}
+public class UpgradeEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeEntry.class);
+		List<Entry> entries = EntryLocalServiceUtil.getEntries(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Entry entry : entries) {
+			try {
+				UserLocalServiceUtil.getUserByEmailAddress(
+					entry.getCompanyId(), entry.getEmailAddress());
+
+				EntryLocalServiceUtil.deleteEntry(entry);
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 }

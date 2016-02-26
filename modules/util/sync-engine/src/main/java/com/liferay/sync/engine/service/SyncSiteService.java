@@ -348,13 +348,11 @@ public class SyncSiteService {
 	protected static void deleteSyncFiles(SyncSite syncSite)
 		throws IOException {
 
-		List<SyncFile> syncFiles = SyncFileService.findSyncFilesByRepositoryId(
-			syncSite.getGroupId(), syncSite.getSyncAccountId());
+		SyncFile syncFile = SyncFileService.fetchSyncFile(
+			syncSite.getFilePathName());
 
-		for (SyncFile syncFile : syncFiles) {
-			if (!syncFile.isSystem()) {
-				SyncFileService.deleteSyncFile(syncFile);
-			}
+		if (syncFile != null) {
+			SyncFileService.deleteSyncFiles(syncFile, true);
 		}
 
 		Path filePath = Paths.get(syncSite.getFilePathName());

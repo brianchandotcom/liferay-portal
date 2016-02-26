@@ -232,7 +232,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByS_L_RSGC_S">
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByL_TS_S_RSGC">
 		<![CDATA[
 			SELECT
 				DISTINCT {Group_.*}

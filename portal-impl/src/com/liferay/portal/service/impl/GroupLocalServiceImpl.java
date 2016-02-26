@@ -1573,7 +1573,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	public List<Group> getStagedSites() {
-		return groupFinder.findByS_L_RSGC_S();
+		return groupFinder.findByL_TS_S_RSGC();
 	}
 
 	/**

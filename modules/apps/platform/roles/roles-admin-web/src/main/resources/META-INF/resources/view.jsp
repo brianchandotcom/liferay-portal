@@ -60,27 +60,26 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 	<liferay-portlet:renderURL varImpl="addRoleURL">
 		<portlet:param name="mvcPath" value="/edit_role.jsp" />
 		<portlet:param name="redirect" value="<%= portletURLString %>" />
+		<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
 
 		<%
-		addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
+		String title = null;
+
+		if (type == RoleConstants.TYPE_SITE) {
+			title = "site-role";
+		}
+		else if (type == RoleConstants.TYPE_ORGANIZATION) {
+			title = "organization-role";
+		}
+		else {
+			title = "regular-role";
+		}
 		%>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "regular-role") %>' url="<%= addRoleURL.toString() %>" />
-
-		<%
-		addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-		%>
-
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "site-role") %>' url="<%= addRoleURL.toString() %>" />
-
-		<%
-		addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-		%>
-
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "organization-role") %>' url="<%= addRoleURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, title) %>" url="<%= addRoleURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

@@ -155,12 +155,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		Map<Long, String> extraDataMap = getExtraDataMap(extraDataGenerator);
 
 		try {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("update SocialActivity set extraData = ? ");
-			sb.append("where activityId = ?");
-
-			String updateActivityQuery = sb.toString();
+			String updateActivityQuery =
+				"update SocialActivity set extraData = ? where activityId = ?";
 
 			for (Map.Entry<Long, String> entry : extraDataMap.entrySet()) {
 				long activityId = entry.getKey();

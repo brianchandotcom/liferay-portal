@@ -14,13 +14,13 @@
 
 package com.liferay.portal.scripting.executor.groovy;
 
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Michael C. Han
@@ -75,11 +75,15 @@ class GroovyOrganization {
 				parentOrganizationId = parentOrganization.getOrganizationId();
 			}
 		}
+		if (type == null) {
+			type = OrganizationConstants.TYPE_ORGANIZATION;
+		}
 
 		organization = OrganizationLocalServiceUtil.addOrganization(
 			groovyScriptingContext.defaultUserId, parentOrganizationId,
-			name, type, regionId, countryId, WorkflowConstants.STATUS_APPROVED,
-			comments, site, groovyScriptingContext.getServiceContext());
+			name, type, regionId, countryId,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, comments, site,
+			groovyScriptingContext.getServiceContext());
 	}
 
 	String comments;

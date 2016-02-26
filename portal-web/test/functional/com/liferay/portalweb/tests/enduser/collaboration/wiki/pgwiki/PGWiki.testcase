@@ -887,6 +887,8 @@
 	</command>
 
 	<command name="DeleteWikiFrontPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 

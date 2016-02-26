@@ -270,7 +270,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(new AddMessageExtraDataGenerator());
 		_extraDataGenerators.add(new BlogsEntryExtraDataGenerator());
 		_extraDataGenerators.add(new BookmarksEntryExtraDataGenerator());
-		_extraDataGenerators.add(new DlFileEntryExtraDataGenerator());
+		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 		_extraDataGenerators.add(new KBArticleExtraDataGenerator());
 		_extraDataGenerators.add(new KBCommentExtraDataGenerator());
 		_extraDataGenerators.add(new KBTemplateExtraDataGenerator());
@@ -519,7 +519,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	};
 
-	private class DlFileEntryExtraDataGenerator implements ExtraDataGenerator {
+	private class DLFileEntryExtraDataGenerator implements ExtraDataGenerator {
 
 		@Override
 		public String getActivityClassName() {

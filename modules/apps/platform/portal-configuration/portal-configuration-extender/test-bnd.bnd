@@ -8,5 +8,5 @@ Include-Resource:\
 	test-classes/integration,\
 	@lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\
 	@lib/org.apache.felix.utils.jar,\
-	@lib/com.liferay.portal-kernel.jar,\
+	@lib/com.liferay.portal.kernel.jar,\
 	@test-lib/com.liferay.registry.api.jar

@@ -1676,6 +1676,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute function="AssertVisible" locator1="Button#COG" />
+
 		<execute macro="BlogsNavigator#gotoAbstractField" />
 
 		<execute macro="BlogsEntry#addCustomAbstract">

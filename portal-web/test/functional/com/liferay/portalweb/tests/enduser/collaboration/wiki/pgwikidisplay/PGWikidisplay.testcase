@@ -152,7 +152,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#LINK_ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute function="AssertClick" locator1="Link#ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />

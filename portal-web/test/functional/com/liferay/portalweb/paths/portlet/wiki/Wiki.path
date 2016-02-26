@@ -9,38 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_PAGE</td>
-	<td>//a[contains(.,'Add Page')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_PAGE_FORMAT_DROPDOWN</td>
 	<td>//select[contains(@id,'format')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY</td>
-	<td>//div[@class='wiki-body']//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_FIELD_MEDIAWIKI</td>
-	<td>//textarea[contains(@id,'wikiweb_content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_GENERIC</td>
-	<td>//div[@class='wiki-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_ASSET</td>
-	<td>//div[@class='portlet-body']/p[contains(.,'${key_wikiPageContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_HEADER</td>
-	<td>//div[@class='wiki-body']/h1</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,28 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOM_FIELD_TEXT_FIELD</td>
-	<td>//span[contains(.,'Wiki Custom Field Here')]/../..//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION_OF_THE_CHANGES_FIELD</td>
-	<td>//label[contains(.,'Description of the Changes')]/../..//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_LINK</td>
-	<td>//div[@class='wiki-body']//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRONTPAGE_DEFAULT_MESSAGE</td>
 	<td>//div[@class='wiki-body']/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HTML_BODY</td>
-	<td>//div[@class='wiki-body']/${key_htmlTags}</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,16 +36,6 @@
 <tr>
 	<td>PAGE_HEADER</td>
 	<td>//div//h2[contains(.,'${key_wikiPageTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RICH_TEXT_EDITOR</td>
-	<td>//div[contains(@class,'alloy-editor') and contains(@aria-label,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_BODY_FIELD</td>
-	<td>//html/body[contains(@class,'portlet-wiki') and contains(.,'${key_wikiPageContent}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,67 +57,6 @@
 <tr>
 	<td>ADT_SOCIAL_LAST_MODIFIED_MESSAGE</td>
 	<td>//div[@class='wiki-info']/span[contains(.,'Last Modified')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ALL_PAGES_TABLE-->
-<tr>
-	<td>ALL_PAGES_TABLE_PAGE_NAME</td>
-	<td>//a[contains(.,'${key_wikiPageTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_PAGE_1</td>
-	<td>xpath=(//tr/td[1]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_PAGE_2</td>
-	<td>xpath=(//tr/td[1]/a)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_WIKI_PAGE_TITLE</td>
-	<td>//a[contains(.,'${key_wikiPageTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span//strong | //tr[contains(.,'${key_wikiPageTitle}')]/td[3]/span//strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_REVISION</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_USER</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_DATE</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/.//td/div/a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_ACTIONS_DROPDOWN_GENERIC</td>
-	<td>//tr[1]/td[6]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PAGES_TABLE_ACTIONS_DROPDOWN_GENERIC_2</td>
-	<td>//tr[2]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -305,42 +184,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DRAFT_PAGES_TABLE-->
-<tr>
-	<td>DRAFT_PAGES_TABLE_PAGE_NAME</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_STATUS</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[2]//span/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_REVISION</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_USER</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_DATE</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILES_READY_TO_BE_SAVED-->
 <tr>
 	<td>FILES_READY_TO_BE_SAVED_TITLE</td>
@@ -399,37 +242,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_AKISMET</td>
-	<td>//tbody[@class='table-data']/tr/td/span/span/a[contains(.,'Akismet this')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SELECT_VERSION_TABLE-->
-<tr>
-	<td>SELECT_VERSION_VERSION_NEW_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]/td[1]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_VERSION_DATE_NEW</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_VERSION_VERSION_OLD_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[1]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_VERSION_DATE_OLD</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -478,149 +290,6 @@
 <tr>
 	<td>COMPARE_VERSIONS_VERSION_LINK</td>
 	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr/td/a[contains(@class,'selector-button') and contains(.,'${key_wikiPageVersion}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DRAFT_PAGES_TABLE-->
-<tr>
-	<td>DRAFT_PAGES_TABLE_PAGE_NAME</td>
-	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_STATUS</td>
-	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_REVISION</td>
-	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_USER</td>
-	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_DATE</td>
-	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_PAGES_TABLE_ACTIONS_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--LINK-->
-<tr>
-	<td>LINK_ADD_CHILD_PAGE</td>
-	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_ATTACHMENTS</td>
-	<td>//div[@class='article-actions']/span[contains(.,'Attachment')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_COPY</td>
-	<td>//tr[contains(.,'Advanced Actions')]//a[contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_DETAILS</td>
-	<td>//div[@class='page-actions top-actions']//a[contains(.,'Details')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_EDIT</td>
-	<td>//div[@class='page-actions top-actions']//a[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_EDIT_ICON_LOCALIZED</td>
-	<td>//div[@class='page-actions top-actions']//a/i[contains(@class,'edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_MARK_AS_SPAM</td>
-	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Mark as Spam')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_MOVE</td>
-	<td>//tr[contains(.,'Advanced Actions')]//a[contains(.,'Move')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//tr[contains(.,'Advanced Actions')]//a[contains(.,'Move to the Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_PERMISSIONS</td>
-	<td>//tr[contains(.,'Advanced Actions')]//a[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_PRINT</td>
-	<td>//div[@class='page-actions top-actions']//a[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_REDIRECT</td>
-	<td>//div[@class='page-redirect']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_SUBSCRIBE_TO_PAGE</td>
-	<td>//tr[contains(.,'You are not subscribed to this page.')]/td/span/a[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_SUBSCRIBE_TO_WIKI</td>
-	<td>//tr[contains(.,'You are not subscribed to this wiki.')]/td/span/a[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'FrontPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Recent Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'All Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Orphan Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DRAFT_PAGES</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Draft Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -718,53 +387,6 @@
 <tr>
 	<td>PAGE_TABS_CHANGE_NODE</td>
 	<td>//ul[contains(@class,'nav nav-tabs')]//li/a[contains(.,'Change Node')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PENDING_APPROVAL_TABLE-->
-<tr>
-	<td>PENDING_APPROVAL_TABLE_PAGE</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PENDING_APPROVAL_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PENDING_APPROVAL_TABLE_REVISION</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PENDING_APPROVAL_TABLE_USER</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PENDING_APPROVAL_TABLE_DATE</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--LABEL-->
-<tr>
-	<td>LABEL_CURRENT</td>
-	<td>//label[@class='control-label' and contains(.,'Current')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LABEL_NEW</td>
-	<td>//label[@class='control-label' and contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>

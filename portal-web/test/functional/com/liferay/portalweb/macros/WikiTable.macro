@@ -4,7 +4,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_VERTICAL_ELLIPSIS" value1="${wikiPageTitle}" />
+		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" value1="${wikiPageTitle}" />
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 	</command>
@@ -12,7 +12,7 @@
 	<command name="restoreEntry">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_VERTICAL_ELLIPSIS" value1="${wikiPageTitle}" />
+		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" value1="${wikiPageTitle}" />
 
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 	</command>
@@ -20,8 +20,8 @@
 	<command name="viewEntry">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-		<execute function="AssertTextEquals" locator1="Wiki#ALL_PAGES_TABLE_STATUS" value1="${draftStatus}" />
+		<execute function="AssertTextEquals" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="WikiTable#ALL_PAGES_STATUS" value1="${draftStatus}" />
 	</command>
 
 	<command name="viewNode">
@@ -34,6 +34,6 @@
 	<command name="viewNoEntry">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 	</command>
 </definition>

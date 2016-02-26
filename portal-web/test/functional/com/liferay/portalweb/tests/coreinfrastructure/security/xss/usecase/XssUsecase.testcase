@@ -360,9 +360,9 @@
 
 		<var name="key_wikiPageTitle" value="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="Wiki Page Title" />
+		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
+		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
 
 		<execute function="AssertAlertNotPresent" />
 	</command>

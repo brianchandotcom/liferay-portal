@@ -32,7 +32,7 @@
 	</command>
 
 	<command name="previewPageContent">
-		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="previewPageTitle">
@@ -69,6 +69,6 @@
 	</command>
 
 	<command name="viewPageContentBody">
-		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
 	</command>
 </definition>

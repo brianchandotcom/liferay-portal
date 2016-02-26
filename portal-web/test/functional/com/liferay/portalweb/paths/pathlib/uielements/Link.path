@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CHILD_PAGE</td>
+	<td>//a/span[contains(.,'Add Child Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS</td>
+	<td>//h5[contains(.,'Attachments')]/../div//span/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK</td>
 	<td>//a[contains(.,'Back')]</td>
 	<td></td>
@@ -64,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_SPAM</td>
+	<td>//a[contains(.,'Mark as Spam')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE</td>
 	<td>//span[contains(.,'Move')]</td>
 	<td></td>
@@ -79,8 +94,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRINT</td>
+	<td>//a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>READ_MORE</td>
 	<td>//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REDIRECT</td>
+	<td>//div[@class='page-redirect']</td>
 	<td></td>
 </tr>
 <tr>

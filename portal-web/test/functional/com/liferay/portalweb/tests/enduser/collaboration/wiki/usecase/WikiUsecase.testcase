@@ -311,7 +311,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
 
@@ -375,7 +375,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
 
@@ -393,7 +393,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
 
@@ -549,7 +549,7 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -561,7 +561,7 @@
 			<var name="pathLocator" value="PAGE" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -573,7 +573,7 @@
 			<var name="pathLocator" value="CURRENT_LOCATION" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />

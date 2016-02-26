@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.upgrade.v1_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.util.KaleoLogTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Kenneth Chang
  */
@@ -26,15 +24,7 @@ public class UpgradeKaleoLog extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type KaleoLog comment_ TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				KaleoLogTable.TABLE_NAME, KaleoLogTable.TABLE_COLUMNS,
-				KaleoLogTable.TABLE_SQL_CREATE,
-				KaleoLogTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(KaleoLogTable.class, "comment_", "TEXT null");
 	}
 
 }

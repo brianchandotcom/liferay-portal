@@ -37,7 +37,6 @@ import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -119,15 +118,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFolder
 
-		try {
-			runSQL("alter_column_type DLFolder name VARCHAR(255) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFolderTable.TABLE_NAME, DLFolderTable.TABLE_COLUMNS,
-				DLFolderTable.TABLE_SQL_CREATE,
-				DLFolderTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(DLFolderTable.class, "name", "VARCHAR(255) null");
 
 		updateRepositoryClassNameIds();
 	}

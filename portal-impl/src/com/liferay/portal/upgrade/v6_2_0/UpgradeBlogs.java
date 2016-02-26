@@ -16,8 +16,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,18 +42,7 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateEntries() throws Exception {
-		try {
-			runSQL("alter_column_type BlogsEntry description STRING null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(BlogsEntryTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(BlogsEntryTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
-		}
+		alterColumnType(BlogsEntryTable.class, "description", "STRING null");
 	}
 
 	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)

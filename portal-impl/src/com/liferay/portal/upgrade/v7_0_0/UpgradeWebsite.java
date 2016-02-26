@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.WebsiteTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,15 +24,7 @@ public class UpgradeWebsite extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type Website typeId LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				WebsiteTable.TABLE_NAME, WebsiteTable.TABLE_COLUMNS,
-				WebsiteTable.TABLE_SQL_CREATE,
-				WebsiteTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(WebsiteTable.class, "typeId", "LONG");
 	}
 
 }

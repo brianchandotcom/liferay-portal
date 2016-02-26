@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_2_0.util.RepositoryTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Alberto Montero
  */
@@ -26,15 +24,8 @@ public class UpgradeRepository extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type Repository portletId VARCHAR(200) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				RepositoryTable.TABLE_NAME, RepositoryTable.TABLE_COLUMNS,
-				RepositoryTable.TABLE_SQL_CREATE,
-				RepositoryTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(
+			RepositoryTable.class, "portletId", "VARCHAR(200) null");
 	}
 
 }

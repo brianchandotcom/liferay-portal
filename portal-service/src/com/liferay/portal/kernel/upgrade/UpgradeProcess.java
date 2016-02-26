@@ -127,66 +127,101 @@ public abstract class UpgradeProcess
 			Class<?> tableClass, String columnName, String columnType)
 		throws Exception {
 
+		alterColumnType(tableClass, new String[] {columnName, columnType});
+	}
+
+	protected void alterColumnType(Class<?> tableClass, String[]... columnInfos)
+		throws Exception {
+
 		Field tableNameField = tableClass.getField("TABLE_NAME");
 
 		String tableName = (String)tableNameField.get(null);
 
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			ResultSet rs = databaseMetaData.getIndexInfo(
+		try (ResultSet rs1 = databaseMetaData.getPrimaryKeys(
+				null, null, tableName);
+			ResultSet rs2 = databaseMetaData.getIndexInfo(
 				null, null, normalizeName(tableName, databaseMetaData), false,
-				false);
+				false)) {
 
-			Map<String, Set<String>> map = new HashMap<>();
+			Set<String> primaryKeyNames = new HashSet<>();
 
-			while (rs.next()) {
-				String indexName = StringUtil.toUpperCase(
-					rs.getString("INDEX_NAME"));
+			while (rs1.next()) {
+				String primaryKeyName = rs1.getString("PK_NAME");
 
-				Set<String> columnNames = map.get(indexName);
+				if (primaryKeyName != null) {
+					primaryKeyNames.add(primaryKeyName);
+				}
+			}
+
+			Map<String, Set<String>> indexMap = new HashMap<>();
+
+			while (rs2.next()) {
+				String indexName = rs2.getString("INDEX_NAME");
+
+				if ((indexName == null) ||
+					primaryKeyNames.contains(indexName)) {
+
+					continue;
+				}
+
+				Set<String> columnNames = indexMap.get(indexName);
 
 				if (columnNames == null) {
 					columnNames = new HashSet<>();
 
-					map.put(indexName, columnNames);
+					indexMap.put(indexName, columnNames);
 				}
 
-				columnNames.add(rs.getString("COLUMN_NAME"));
+				columnNames.add(rs2.getString("COLUMN_NAME"));
 			}
 
-			for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
-				Set<String> columnNames = entry.getValue();
+			for (String[] columnInfo : columnInfos) {
+				String columnName = columnInfo[0];
 
-				if (columnNames.contains(columnName)) {
-					runSQL("drop index " + entry.getKey() + " on " + tableName);
+				for (Map.Entry<String, Set<String>> entry :
+						indexMap.entrySet()) {
+
+					Set<String> columnNames = entry.getValue();
+
+					if (columnNames.contains(columnName)) {
+						runSQL(
+							"drop index " + entry.getKey() + " on " +
+								tableName);
+					}
 				}
-			}
 
-			StringBundler sb = new StringBundler(6);
+				StringBundler sb = new StringBundler(6);
 
-			sb.append("alter_column_type ");
-			sb.append(tableName);
-			sb.append(" ");
-			sb.append(columnName);
-			sb.append(" ");
-			sb.append(columnType);
+				sb.append("alter_column_type ");
+				sb.append(tableName);
+				sb.append(" ");
+				sb.append(columnName);
+				sb.append(" ");
+				sb.append(columnInfo[1]);
 
-			runSQL(sb.toString());
+				runSQL(sb.toString());
 
-			for (ObjectValuePair<String, IndexMetadata> objectValuePair :
-					getIndexesSQL(tableClass.getClassLoader(), tableName)) {
+				for (ObjectValuePair<String, IndexMetadata> objectValuePair :
+						getIndexesSQL(tableClass.getClassLoader(), tableName)) {
 
-				IndexMetadata indexMetadata = objectValuePair.getValue();
+					IndexMetadata indexMetadata = objectValuePair.getValue();
 
-				if (ArrayUtil.contains(
-						indexMetadata.getColumnNames(), columnName)) {
+					if (ArrayUtil.contains(
+							indexMetadata.getColumnNames(), columnName)) {
 
-					runSQL(objectValuePair.getKey());
+						runSQLTemplateString(
+							objectValuePair.getKey(), false, true);
+					}
 				}
 			}
 		}
 		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Fallback to table backup", sqle);
+			}
+
 			Field tableColumnsField = tableClass.getField("TABLE_COLUMNS");
 			Field tableSQLCreateField = tableClass.getField("TABLE_SQL_CREATE");
 			Field tableSQLAddIndexesField = tableClass.getField(
@@ -224,11 +259,13 @@ public abstract class UpgradeProcess
 						continue;
 					}
 
-					objectValuePairs.add(
-						new ObjectValuePair<>(
-							line,
-							IndexMetadataFactoryUtil.createIndexMetadata(
-								line)));
+					IndexMetadata indexMetadata =
+						IndexMetadataFactoryUtil.createIndexMetadata(line);
+
+					if (tableName.equals(indexMetadata.getTableName())) {
+						objectValuePairs.add(
+							new ObjectValuePair<>(line, indexMetadata));
+					}
 				}
 			}
 

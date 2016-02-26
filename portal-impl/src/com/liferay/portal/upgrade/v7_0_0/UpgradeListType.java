@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.ListTypeTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,15 +24,7 @@ public class UpgradeListType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type ListType listTypeId LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				ListTypeTable.TABLE_NAME, ListTypeTable.TABLE_COLUMNS,
-				ListTypeTable.TABLE_SQL_CREATE,
-				ListTypeTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(ListTypeTable.class, "listTypeId", "LONG");
 	}
 
 }

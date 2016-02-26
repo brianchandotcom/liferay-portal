@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.PhoneTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,14 +24,7 @@ public class UpgradePhone extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type Phone typeId LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				PhoneTable.TABLE_NAME, PhoneTable.TABLE_COLUMNS,
-				PhoneTable.TABLE_SQL_CREATE, PhoneTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(PhoneTable.class, "typeId", "LONG");
 	}
 
 }

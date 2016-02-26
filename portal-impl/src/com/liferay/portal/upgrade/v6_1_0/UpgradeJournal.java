@@ -23,7 +23,6 @@ import com.liferay.portal.upgrade.v6_1_0.util.JournalTemplateTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Juan Fernández
@@ -33,35 +32,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type JournalArticle title STRING null");
+		alterColumnType(JournalArticleTable.class, "title", "STRING null");
 
-			runSQL("alter_column_type JournalStructure name STRING null");
-			runSQL(
-				"alter_column_type JournalStructure description STRING null");
+		alterColumnType(
+			JournalStructureTable.class, new String[] {"name", "STRING null"},
+			new String[] {"description", "STRING null"});
 
-			runSQL("alter_column_type JournalTemplate name STRING null");
-			runSQL("alter_column_type JournalTemplate description STRING null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS,
-				JournalArticleTable.TABLE_SQL_CREATE,
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable(
-				JournalStructureTable.TABLE_NAME,
-				JournalStructureTable.TABLE_COLUMNS,
-				JournalStructureTable.TABLE_SQL_CREATE,
-				JournalStructureTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable(
-				JournalTemplateTable.TABLE_NAME,
-				JournalTemplateTable.TABLE_COLUMNS,
-				JournalTemplateTable.TABLE_SQL_CREATE,
-				JournalTemplateTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(
+			JournalTemplateTable.class, new String[] {"name", "STRING null"},
+			new String[] {"description", "STRING null"});
 
 		updateStructureXsd();
 	}

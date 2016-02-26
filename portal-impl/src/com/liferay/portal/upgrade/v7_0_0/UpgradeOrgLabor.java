@@ -17,8 +17,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.OrgLaborTable;
 
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,15 +24,7 @@ public class UpgradeOrgLabor extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type OrgLabor typeId LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				OrgLaborTable.TABLE_NAME, OrgLaborTable.TABLE_COLUMNS,
-				OrgLaborTable.TABLE_SQL_CREATE,
-				OrgLaborTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alterColumnType(OrgLaborTable.class, "typeId", "LONG");
 	}
 
 }

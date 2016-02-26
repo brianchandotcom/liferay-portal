@@ -348,6 +348,14 @@ if (showSource) {
 		}
 	};
 
+	Liferay.fire(
+		'editorAPIReady',
+		{
+			editor: window['<%= name %>'],
+			editorName: '<%= name %>'
+		}
+	);
+
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
 	</c:if>

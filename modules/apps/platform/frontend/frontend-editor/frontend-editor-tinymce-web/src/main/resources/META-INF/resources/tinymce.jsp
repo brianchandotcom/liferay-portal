@@ -244,6 +244,14 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		}
 	};
 
+	Liferay.fire(
+		'editorAPIReady',
+		{
+			editor: window['<%= name %>'],
+			editorName: '<%= name %>'
+		}
+	);
+
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
 	</c:if>

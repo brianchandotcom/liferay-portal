@@ -479,6 +479,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOT_PUBLISHED</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Not Published')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW</td>
 	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Show')]</td>
 	<td></td>

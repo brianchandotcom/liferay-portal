@@ -83,7 +83,8 @@ public class HTMLTag extends BaseHTMLTag {
 			DDMForm ddmForm = getDDMForm();
 
 			try {
-				return DDMUtil.deserialize(ddmForm, serializedDDMFormValues);
+				return DDMUtil.getDDMFormValues(
+					ddmForm, serializedDDMFormValues);
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {

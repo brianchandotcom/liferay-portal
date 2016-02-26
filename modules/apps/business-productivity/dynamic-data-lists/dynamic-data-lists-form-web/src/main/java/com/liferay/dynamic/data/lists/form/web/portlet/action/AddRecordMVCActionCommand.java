@@ -112,7 +112,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		return ddmStructure.getDDMForm();
 	}
 
-	protected boolean isEmailNotificationEnabled(DDLRecordSet recordSet) {
+	protected boolean isEmailNotificationEnabled(DDLRecordSet recordSet)
+		throws PortalException {
+
 		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		return recordSettings.sendEmailNotification();

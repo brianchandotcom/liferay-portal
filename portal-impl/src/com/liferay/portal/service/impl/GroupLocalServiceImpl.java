@@ -1572,6 +1572,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return group.getAncestors();
 	}
 
+	public List<Group> getStagedSites() {
+		return groupFinder.findByS_L_RSGC_S();
+	}
+
 	/**
 	 * Returns the staging group.
 	 *

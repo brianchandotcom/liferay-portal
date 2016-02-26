@@ -62,12 +62,14 @@ public interface GroupFinder {
 		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.NoSuchGroupException;
 
+	public java.util.List<com.liferay.portal.kernel.model.Group> findByL_TS_S_RSGC(
+		long liveGroupId, java.lang.String typeSettings, boolean site,
+		int remoteStagingGroupCount);
+
 	public java.util.List<com.liferay.portal.kernel.model.Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc);
-
-	public java.util.List<com.liferay.portal.kernel.model.Group> findByS_L_RSGC_S();
 }

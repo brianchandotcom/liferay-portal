@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -102,182 +103,200 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyCompanyGroups() throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
-		for (Company company : companies) {
-			GroupLocalServiceUtil.checkCompanyGroup(company.getCompanyId());
+			for (Company company : companies) {
+				GroupLocalServiceUtil.checkCompanyGroup(company.getCompanyId());
 
-			GroupLocalServiceUtil.checkSystemGroups(company.getCompanyId());
+				GroupLocalServiceUtil.checkSystemGroups(company.getCompanyId());
+			}
 		}
 	}
 
 	protected void verifyNullFriendlyURLGroups() throws Exception {
-		List<Group> groups = GroupLocalServiceUtil.getNullFriendlyURLGroups();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Group> groups =
+				GroupLocalServiceUtil.getNullFriendlyURLGroups();
 
-		for (Group group : groups) {
-			String friendlyURL = StringPool.SLASH + group.getGroupId();
+			for (Group group : groups) {
+				String friendlyURL = StringPool.SLASH + group.getGroupId();
 
-			User user = null;
+				User user = null;
 
-			if (group.isCompany() && !group.isCompanyStagingGroup()) {
-				friendlyURL = GroupConstants.GLOBAL_FRIENDLY_URL;
-			}
-			else if (group.isUser()) {
-				user = UserLocalServiceUtil.getUserById(group.getClassPK());
-
-				friendlyURL = StringPool.SLASH + user.getScreenName();
-			}
-			else if (group.getClassPK() > 0) {
-				friendlyURL = StringPool.SLASH + group.getClassPK();
-			}
-
-			try {
-				GroupLocalServiceUtil.updateFriendlyURL(
-					group.getGroupId(), friendlyURL);
-			}
-			catch (GroupFriendlyURLException gfurle) {
-				if (user != null) {
-					long userId = user.getUserId();
-					String screenName = user.getScreenName();
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Updating user screen name " + screenName + " to " +
-								userId + " because it is generating an " +
-									"invalid friendly URL " + friendlyURL);
-					}
-
-					UserLocalServiceUtil.updateScreenName(
-						userId, String.valueOf(userId));
+				if (group.isCompany() && !group.isCompanyStagingGroup()) {
+					friendlyURL = GroupConstants.GLOBAL_FRIENDLY_URL;
 				}
-				else {
-					_log.error("Invalid Friendly URL " + friendlyURL);
+				else if (group.isUser()) {
+					user = UserLocalServiceUtil.getUserById(group.getClassPK());
 
-					throw gfurle;
+					friendlyURL = StringPool.SLASH + user.getScreenName();
+				}
+				else if (group.getClassPK() > 0) {
+					friendlyURL = StringPool.SLASH + group.getClassPK();
+				}
+
+				try {
+					GroupLocalServiceUtil.updateFriendlyURL(
+						group.getGroupId(), friendlyURL);
+				}
+				catch (GroupFriendlyURLException gfurle) {
+					if (user != null) {
+						long userId = user.getUserId();
+						String screenName = user.getScreenName();
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Updating user screen name " + screenName +
+									" to " + userId + " because it is " +
+									"generating an invalid friendly URL " +
+									friendlyURL);
+						}
+
+						UserLocalServiceUtil.updateScreenName(
+							userId, String.valueOf(userId));
+					}
+					else {
+						_log.error("Invalid Friendly URL " + friendlyURL);
+
+						throw gfurle;
+					}
 				}
 			}
 		}
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
-		StringBundler sb = new StringBundler(5);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
 
-		sb.append("select groupId, name from Group_ where name like '%");
-		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-		sb.append("%' and name not like '%");
-		sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-		sb.append("'");
+			sb.append("select groupId, name from Group_ where name like '%");
+			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+			sb.append("%' and name not like '%");
+			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+			sb.append("'");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				String name = rs.getString("name");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					String name = rs.getString("name");
 
-				if (name.endsWith(
-						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
-					name.endsWith(
-						GroupLocalServiceImpl.ORGANIZATION_STAGING_SUFFIX)) {
+					if (name.endsWith(
+							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
+						name.endsWith(
+							GroupLocalServiceImpl.
+								ORGANIZATION_STAGING_SUFFIX)) {
 
-					continue;
+						continue;
+					}
+
+					int pos = name.indexOf(
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+
+					pos = name.indexOf(" ", pos + 1);
+
+					String newName =
+						name.substring(pos + 1) +
+							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+
+					updateName(groupId, newName);
 				}
-
-				int pos = name.indexOf(
-					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-
-				pos = name.indexOf(" ", pos + 1);
-
-				String newName =
-					name.substring(pos + 1) +
-						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
-
-				updateName(groupId, newName);
 			}
 		}
 	}
 
 	protected void verifyRobots() throws Exception {
-		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 
-		for (Group group : groups) {
-			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+			for (Group group : groups) {
+				LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+				LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-			String privateLayoutSetRobots = getRobots(privateLayoutSet);
-			String publicLayoutSetRobots = getRobots(publicLayoutSet);
+				String privateLayoutSetRobots = getRobots(privateLayoutSet);
+				String publicLayoutSetRobots = getRobots(publicLayoutSet);
 
-			UnicodeProperties typeSettingsProperties =
-				group.getTypeSettingsProperties();
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
 
-			typeSettingsProperties.setProperty(
-				"true-robots.txt", privateLayoutSetRobots);
-			typeSettingsProperties.setProperty(
-				"false-robots.txt", publicLayoutSetRobots);
+				typeSettingsProperties.setProperty(
+					"true-robots.txt", privateLayoutSetRobots);
+				typeSettingsProperties.setProperty(
+					"false-robots.txt", publicLayoutSetRobots);
 
-			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), typeSettingsProperties.toString());
+				GroupLocalServiceUtil.updateGroup(
+					group.getGroupId(), typeSettingsProperties.toString());
+			}
 		}
 	}
 
 	protected void verifySites() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Group.class);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+				Group.class);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"classNameId", PortalUtil.getClassNameId(Organization.class)));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("site", false));
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"classNameId",
+					PortalUtil.getClassNameId(Organization.class)));
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("site", false));
 
-		List<Group> groups = GroupLocalServiceUtil.dynamicQuery(dynamicQuery);
+			List<Group> groups = GroupLocalServiceUtil.dynamicQuery(
+				dynamicQuery);
 
-		for (Group group : groups) {
-			if ((group.getPrivateLayoutsPageCount() > 0) ||
-				(group.getPublicLayoutsPageCount() > 0)) {
+			for (Group group : groups) {
+				if ((group.getPrivateLayoutsPageCount() > 0) ||
+					(group.getPublicLayoutsPageCount() > 0)) {
 
-				group.setSite(true);
+					group.setSite(true);
 
-				GroupLocalServiceUtil.updateGroup(group);
+					GroupLocalServiceUtil.updateGroup(group);
+				}
 			}
 		}
 	}
 
 	protected void verifyStagedGroups() throws Exception {
-		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 
-		for (Group group : groups) {
-			if (!group.hasStagingGroup()) {
-				continue;
-			}
+			for (Group group : groups) {
+				if (!group.hasStagingGroup()) {
+					continue;
+				}
 
-			UnicodeProperties typeSettingsProperties =
-				group.getTypeSettingsProperties();
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
 
-			typeSettingsProperties.setProperty(
-				"staged", Boolean.TRUE.toString());
-			typeSettingsProperties.setProperty(
-				"stagedRemotely", Boolean.FALSE.toString());
+				typeSettingsProperties.setProperty(
+					"staged", Boolean.TRUE.toString());
+				typeSettingsProperties.setProperty(
+					"stagedRemotely", Boolean.FALSE.toString());
 
-			verifyStagingTypeSettingsProperties(typeSettingsProperties);
+				verifyStagingTypeSettingsProperties(typeSettingsProperties);
 
-			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), typeSettingsProperties.toString());
+				GroupLocalServiceUtil.updateGroup(
+					group.getGroupId(), typeSettingsProperties.toString());
 
-			Group stagingGroup = group.getStagingGroup();
+				Group stagingGroup = group.getStagingGroup();
 
-			if (group.getClassNameId() != stagingGroup.getClassNameId()) {
-				stagingGroup.setClassNameId(group.getClassNameId());
+				if (group.getClassNameId() != stagingGroup.getClassNameId()) {
+					stagingGroup.setClassNameId(group.getClassNameId());
 
-				GroupLocalServiceUtil.updateGroup(stagingGroup);
-			}
+					GroupLocalServiceUtil.updateGroup(stagingGroup);
+				}
 
-			if (!stagingGroup.isStagedRemotely()) {
-				verifyStagingGroupOrganizationMembership(stagingGroup);
-				verifyStagingGroupRoleMembership(stagingGroup);
-				verifyStagingGroupUserGroupMembership(stagingGroup);
-				verifyStagingGroupUserMembership(stagingGroup);
-				verifyStagingUserGroupRolesAssignments(stagingGroup);
-				verifyStagingUserGroupGroupRolesAssignments(stagingGroup);
+				if (!stagingGroup.isStagedRemotely()) {
+					verifyStagingGroupOrganizationMembership(stagingGroup);
+					verifyStagingGroupRoleMembership(stagingGroup);
+					verifyStagingGroupUserGroupMembership(stagingGroup);
+					verifyStagingGroupUserMembership(stagingGroup);
+					verifyStagingUserGroupRolesAssignments(stagingGroup);
+					verifyStagingUserGroupGroupRolesAssignments(stagingGroup);
+				}
 			}
 		}
 	}
@@ -464,10 +483,12 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyTree() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			GroupLocalServiceUtil.rebuildTree(companyId);
+			for (long companyId : companyIds) {
+				GroupLocalServiceUtil.rebuildTree(companyId);
+			}
 		}
 	}
 

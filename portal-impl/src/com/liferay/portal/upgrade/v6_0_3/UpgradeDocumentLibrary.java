@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_3;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -39,49 +38,37 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	protected List<Long> getFileVersionIds(long folderId, String name)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select fileVersionId from DLFileVersion where folderId = ? " +
-					"and name = ? order by version desc");
+					"and name = ? order by version desc")) {
 
 			ps.setLong(1, folderId);
 			ps.setString(2, name);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				List<Long> fileVersionIds = new ArrayList<>();
 
-			List<Long> fileVersionIds = new ArrayList<>();
+				while (rs.next()) {
+					long fileVersionId = rs.getLong("fileVersionId");
 
-			while (rs.next()) {
-				long fileVersionId = rs.getLong("fileVersionId");
+					fileVersionIds.add(fileVersionId);
+				}
 
-				fileVersionIds.add(fileVersionId);
+				return fileVersionIds;
 			}
-
-			return fileVersionIds;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateFileEntries() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		List<Long> tableIds = new ArrayList<>();
 
-		try {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select tableId from ExpandoTable where classNameId = " +
 					classNameId);
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long tableId = rs.getLong("tableId");
@@ -89,16 +76,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				tableIds.add(tableId);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select uuid_, fileEntryId, groupId, folderId, name, title " +
 					"from DLFileEntry");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String uuid_ = rs.getString("uuid_");
@@ -136,9 +118,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				}
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateFileVersion(
@@ -146,13 +125,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			String description, String extraSettings)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update DLFileVersion set extension = ?, title = ?, " +
 					"description = ?, extraSettings = ? where fileVersionId " +
-						"= ?");
+						"= ?")) {
 
 			ps.setString(1, extension);
 			ps.setString(2, title);
@@ -162,21 +138,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateFileVersions() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select folderId, name, extension, title, description, " +
 					"extraSettings from DLFileEntry");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long folderId = rs.getLong("folderId");
@@ -194,9 +162,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						extraSettings);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

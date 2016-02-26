@@ -476,6 +476,12 @@
 			<finder-column name="site" />
 			<finder-column name="inheritContent" />
 		</finder>
+		<finder name="C_G_C_P" return-type="Collection" db-index="false">
+			<finder-column name="classNameId" arrayable-operator="OR" />
+			<finder-column name="groupId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
+		</finder>
 
 		<!-- References -->
 

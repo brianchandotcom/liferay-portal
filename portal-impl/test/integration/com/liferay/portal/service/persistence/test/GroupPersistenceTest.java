@@ -353,6 +353,22 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_G_C_P() throws Exception {
+		_persistence.countByC_G_C_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_G_C_P(0L, 0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_G_C_PArrayable() throws Exception {
+		_persistence.countByC_G_C_P(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+	}
+
+	@Test
 	public void testCountByC_P_S_I() throws Exception {
 		_persistence.countByC_P_S_I(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),

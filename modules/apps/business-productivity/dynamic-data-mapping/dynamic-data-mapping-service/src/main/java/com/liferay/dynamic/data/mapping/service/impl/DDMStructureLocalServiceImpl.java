@@ -38,6 +38,7 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermissio
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
@@ -1391,6 +1392,16 @@ public class DDMStructureLocalServiceImpl
 			ddmFormLayout, serviceContext, structure);
 	}
 
+	@Override
+	public String updateXMLDefaultLocale(
+		DDMStructure structure, Locale contentDefaultLocale,
+		Locale contentNewDefaultLocale) {
+
+		return ddmXML.updateXMLDefaultLocale(
+			structure.getDefinition(), contentDefaultLocale,
+			contentNewDefaultLocale);
+	}
+
 	/**
 	 * Updates the structure matching the structure ID, replacing its XSD with a
 	 * new one.
@@ -1783,5 +1794,8 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMFormXSDDeserializer.class)
 	protected DDMFormXSDDeserializer ddmFormXSDDeserializer;
+
+	@ServiceReference(type = DDMXML.class)
+	protected DDMXML ddmXML;
 
 }

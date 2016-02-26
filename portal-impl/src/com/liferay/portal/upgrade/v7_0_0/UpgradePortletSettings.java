@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -49,13 +48,11 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			PortletPreferencesRow portletPreferencesRow)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"insert into PortletPreferences (mvccVersion, " +
 					"portletPreferencesId, ownerId, ownerType, plid, " +
-						"portletId, preferences) values (?, ?, ?, ?, ?, ?, ?)");
+						"portletId, preferences) values " +
+							"(?, ?, ?, ?, ?, ?, ?)")) {
 
 			ps.setLong(1, portletPreferencesRow.getMvccVersion());
 			ps.setLong(2, portletPreferencesRow.getPortletPreferencesId());
@@ -67,9 +64,6 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void copyPortletSettingsAsServiceSettings(
@@ -80,10 +74,9 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			_log.debug("Copy portlet settings as service settings");
 		}
 
-		ResultSet rs = null;
-
-		try {
-			rs = getPortletPreferencesResultSet(portletId, ownerType);
+		try (PreparedStatement ps = getPortletPreferencesPreparedStatement(
+				portletId, ownerType);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				PortletPreferencesRow portletPreferencesRow =
@@ -121,37 +114,27 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				addPortletPreferences(portletPreferencesRow);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(rs.getStatement(), rs);
-		}
 	}
 
 	protected long getGroupId(long plid) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		long groupId = 0;
 
-		try {
-			ps = connection.prepareStatement(
-				"select groupId from Layout where plid = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId from Layout where plid = ?")) {
 
 			ps.setLong(1, plid);
 
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				groupId = rs.getLong("groupId");
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					groupId = rs.getLong("groupId");
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return groupId;
 	}
 
-	protected ResultSet getPortletPreferencesResultSet(
+	protected PreparedStatement getPortletPreferencesPreparedStatement(
 			String portletId, int ownerType)
 		throws Exception {
 
@@ -163,7 +146,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		ps.setInt(1, ownerType);
 		ps.setString(2, portletId);
 
-		return ps.executeQuery();
+		return ps;
 	}
 
 	protected void resetPortletPreferencesValues(
@@ -171,10 +154,9 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			SettingsDescriptor settingsDescriptor)
 		throws Exception {
 
-		ResultSet rs = null;
-
-		try {
-			rs = getPortletPreferencesResultSet(portletId, ownerType);
+		try (PreparedStatement ps = getPortletPreferencesPreparedStatement(
+				portletId, ownerType);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				PortletPreferencesRow portletPreferencesRow =
@@ -204,22 +186,16 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				updatePortletPreferences(portletPreferencesRow);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(rs.getStatement(), rs);
-		}
 	}
 
 	protected void updatePortletPreferences(
 			PortletPreferencesRow portletPreferencesRow)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update PortletPreferences set mvccVersion = ?, ownerId = ?, " +
 					"ownerType = ?, plid = ?, portletId = ?, preferences = ? " +
-						"where portletPreferencesId = ?");
+						"where portletPreferencesId = ?")) {
 
 			ps.setLong(1, portletPreferencesRow.getMvccVersion());
 			ps.setLong(2, portletPreferencesRow.getOwnerId());
@@ -230,9 +206,6 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			ps.setLong(7, portletPreferencesRow.getPortletPreferencesId());
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

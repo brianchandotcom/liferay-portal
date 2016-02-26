@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
 
@@ -28,15 +27,10 @@ public class UpgradeRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct buildNumber from Release_ " +
 					"where schemaVersion is null");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String buildNumber = rs.getString("buildNumber");
@@ -48,9 +42,6 @@ public class UpgradeRelease extends UpgradeProcess {
 						"' where buildNumber = " + buildNumber +
 							" and schemaVersion is null");
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

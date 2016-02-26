@@ -89,9 +89,6 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	protected void copyControlTables(String shardName) throws Exception {
-		Connection sourceConnection =
-			DataAccess.getUpgradeOptimizedConnection();
-
 		DataSourceFactoryBean dataSourceFactoryBean =
 			new DataSourceFactoryBean();
 
@@ -99,9 +96,10 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		DataSource dataSource = dataSourceFactoryBean.createInstance();
 
-		Connection targetConnection = dataSource.getConnection();
+		try (Connection sourceConnection =
+				DataAccess.getUpgradeOptimizedConnection();
+			Connection targetConnection = dataSource.getConnection()) {
 
-		try {
 			copyControlTable(
 				sourceConnection, targetConnection, ClassNameTable.TABLE_NAME,
 				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
@@ -144,11 +142,6 @@ public class UpgradeSharding extends UpgradeProcess {
 		catch (Exception e) {
 			_log.error("Unable to copy control tables", e);
 		}
-		finally {
-			DataAccess.cleanUp(sourceConnection);
-
-			DataAccess.cleanUp(targetConnection);
-		}
 	}
 
 	@Override
@@ -163,22 +156,15 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	protected List<String> getShardNames() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		List<String> shardNames = new ArrayList<>();
 
-		try {
-			ps = connection.prepareStatement("select name from Shard");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select name from Shard");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				shardNames.add(rs.getString("name"));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return shardNames;

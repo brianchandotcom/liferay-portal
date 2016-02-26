@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,21 +40,13 @@ public class UpgradeRatings extends UpgradeProcess {
 	}
 
 	protected void upgradeRatingsEntry() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct classNameId from RatingsEntry");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				upgradeRatingsEntry(rs.getLong("classNameId"));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -89,41 +80,29 @@ public class UpgradeRatings extends UpgradeProcess {
 			long classNameId, int normalizationFactor)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update RatingsEntry set score = score / ? where classNameId " +
-					"= ?");
+					"= ?")) {
 
 			ps.setInt(1, normalizationFactor);
 			ps.setLong(2, classNameId);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void upgradeRatingsEntryThumbs(long classNameId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update RatingsEntry set score = ? where score = ? and " +
-					"classNameId = ?");
+					"classNameId = ?")) {
 
 			ps.setDouble(1, 0);
 			ps.setDouble(2, -1);
 			ps.setLong(3, classNameId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

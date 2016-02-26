@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StringPool;
@@ -281,58 +282,64 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyLDAPProperties() throws Exception {
-		List<Company> companies =_companyLocalService.getCompanies(false);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Company> companies =_companyLocalService.getCompanies(false);
 
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
+			for (Company company : companies) {
+				long companyId = company.getCompanyId();
 
-			verifyLDAPAuthProperties(companyId);
-			verifyLDAPExportProperties(companyId);
-			verifyLDAPImportProperties(companyId);
-			verifySystemLDAPConfiguration(companyId);
+				verifyLDAPAuthProperties(companyId);
+				verifyLDAPExportProperties(companyId);
+				verifyLDAPImportProperties(companyId);
+				verifySystemLDAPConfiguration(companyId);
 
-			long[] ldapServerIds = StringUtil.split(
-				_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
+				long[] ldapServerIds = StringUtil.split(
+					_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
 
-			Set<String> keys = new HashSet<>();
+				Set<String> keys = new HashSet<>();
 
-			keys.addAll(
-				Arrays.asList(LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS));
+				keys.addAll(
+					Arrays.asList(LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS));
 
-			for (long ldapServerId : ldapServerIds) {
-				String postfix = _ldapSettings.getPropertyPostfix(ldapServerId);
+				for (long ldapServerId : ldapServerIds) {
+					String postfix = _ldapSettings.getPropertyPostfix(
+						ldapServerId);
 
-				verifyLDAPServerConfiguration(companyId, ldapServerId, postfix);
+					verifyLDAPServerConfiguration(
+						companyId, ldapServerId, postfix);
 
-				for (int i = 0;
-					i < LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS.length; i++) {
+					for (int i = 0;
+						i < LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS.length;
+						i++) {
 
-					keys.add(
-						LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS[i] + postfix);
+						keys.add(
+							LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS[i] +
+								postfix);
+					}
 				}
-			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Removing preference keys " + keys + " for company " +
-						companyId);
-			}
-
-			_companyLocalService.removePreferences(
-				companyId, keys.toArray(new String[keys.size()]));
-
-			UnicodeProperties properties = new UnicodeProperties();
-
-			properties.put("ldap.server.ids", StringPool.BLANK);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Removing LDAP server IDs " +
-						ListUtil.toList(ldapServerIds) + " for company " +
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Removing preference keys " + keys + " for company " +
 							companyId);
-			}
+				}
 
-			_companyLocalService.updatePreferences(companyId, properties);
+				_companyLocalService.removePreferences(
+					companyId, keys.toArray(new String[keys.size()]));
+
+				UnicodeProperties properties = new UnicodeProperties();
+
+				properties.put("ldap.server.ids", StringPool.BLANK);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Removing LDAP server IDs " +
+							ListUtil.toList(ldapServerIds) + " for company " +
+								companyId);
+				}
+
+				_companyLocalService.updatePreferences(companyId, properties);
+			}
 		}
 	}
 

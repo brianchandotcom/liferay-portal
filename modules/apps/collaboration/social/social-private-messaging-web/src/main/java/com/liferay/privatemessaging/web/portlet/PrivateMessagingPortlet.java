@@ -17,6 +17,8 @@
 
 package com.liferay.privatemessaging.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -52,8 +54,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.util.PortletPropsValues;
+import com.liferay.privatemessaging.util.PortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingUtil;
 
 import java.io.File;
@@ -62,6 +65,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -72,7 +76,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Scott Lee
@@ -80,7 +87,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=private-messaging-portlet",
@@ -102,6 +110,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.title=Private Messaging",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + PortletKeys.PRIVATE_MESSAGING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
@@ -307,6 +316,13 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_privateMessagingConfiguration = Configurable.createConfigurable(
+			PrivateMessagingConfiguration.class, properties);
+	}
+
 	protected String getMessage(PortletRequest portletRequest, Exception key)
 		throws Exception {
 
@@ -371,8 +387,9 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = PrivateMessagingUtil.getJSONRecipients(
 			themeDisplay.getUserId(),
-			PortletPropsValues.AUTOCOMPLETE_RECIPIENT_TYPE, keywords, 0,
-			PortletPropsValues.AUTOCOMPLETE_RECIPIENT_MAX);
+			_privateMessagingConfiguration.autocompleteRecipientType(),
+			keywords, 0,
+			_privateMessagingConfiguration .autocompleteRecipientMax());
 
 		resultsJSONObject.put("results", jsonObject);
 
@@ -491,5 +508,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PrivateMessagingPortlet.class);
+
+	private PrivateMessagingConfiguration _privateMessagingConfiguration;
 
 }

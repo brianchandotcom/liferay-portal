@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
@@ -88,7 +92,7 @@ public class PrivateMessagingUtil {
 				"usersGroups",
 				SitesUtil.filterGroups(
 					groups,
-					PortletPropsValues.AUTOCOMPLETE_RECIPIENT_SITE_EXCLUDES));
+					getAutocompleteRecipientSiteExcludes(user.getCompanyId())));
 		}
 		else if (!type.equals("all")) {
 			params.put(
@@ -269,6 +273,32 @@ public class PrivateMessagingUtil {
 		}
 		catch (NoSuchUserThreadException nsute) {
 			return false;
+		}
+	}
+
+	protected static String[] getAutocompleteRecipientSiteExcludes(
+		long companyId) {
+
+		PrivateMessagingConfiguration privateMessagingConfiguration =
+			getPortletConfiguration(companyId);
+
+		return privateMessagingConfiguration.
+			autocompleteRecipientSiteExcludes();
+	}
+
+	protected static PrivateMessagingConfiguration getPortletConfiguration(
+		long companyId) {
+
+		try {
+			return ConfigurationProviderUtil.getConfiguration(
+				PrivateMessagingConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId,
+					"com.liferay.privatemessaging.configuration." +
+						"PrivateMessagingConfiguration"));
+		}
+		catch (ConfigurationException ce) {
+			return null;
 		}
 	}
 

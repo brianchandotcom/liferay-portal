@@ -93,6 +93,9 @@ AUI.add(
 						instance.one('.portlet-forms').removeClass('hide');
 
 						instance.get('formBuilder').render(instance.one('#formBuilder'));
+
+						instance.createEditor(instance.ns('descriptionEditor'));
+						instance.createEditor(instance.ns('nameEditor'));
 					},
 
 					bindUI: function() {
@@ -115,6 +118,26 @@ AUI.add(
 						instance.get('formBuilder').destroy();
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
+					},
+
+					createEditor: function(editorName) {
+						var instance = this;
+
+						var editor = window[editorName];
+
+						if (editor) {
+							editor.create();
+						}
+						else {
+							Liferay.once(
+								'editorAPIReady',
+								function(event) {
+									if (event.editorName === editorName) {
+										event.editor.create();
+									}
+								}
+							);
+						}
 					},
 
 					getState: function() {

@@ -93,7 +93,9 @@
 			<var name="databaseType" value="${databaseType}" />
 		</execute>
 
-		<execute macro="User#firstLoginPG" />
+		<execute macro="User#firstLoginPG">
+			<var name="setupWizardEnabled" value="true" />
+		</execute>
 	</command>
 
 	<command name="configureSampleDataPG">

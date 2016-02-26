@@ -1439,6 +1439,7 @@
 			</then>
 			<else>
 				<execute macro="User#loginPG">
+					<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
 					<var name="userEmailAddress" value="${userEmailAddress}" />
 					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
@@ -1548,8 +1549,20 @@
 						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
 					</then>
 					<else>
-						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
-						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+						<if>
+							<and>
+								<isset var="setupWizardEnabled" />
+								<equals arg1="${setupWizardEnabled}" arg2="true" />
+							</and>
+							<then>
+								<execute function="Type" locator1="TextInput#PASSWORD" value1="test2" />
+								<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test2" />
+							</then>
+							<else>
+								<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
+								<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+							</else>
+						</if>
 					</else>
 				</if>
 

@@ -40,14 +40,14 @@ public class IFrameUtil {
 			PortletRequest portletRequest, String password)
 		throws PortalException {
 
-		if (Validator.isNull(password) || password.equals("@password@")) {
+		if (Validator.isNotNull(password) && password.equals("@password@")) {
 			if (isPasswordTokenResolutionEnabled(portletRequest)) {
 				password = PortalUtil.getUserPassword(portletRequest);
 			}
+		}
 
-			if (password == null) {
-				password = StringPool.BLANK;
-			}
+		if (password == null) {
+			password = StringPool.BLANK;
 		}
 
 		return password;

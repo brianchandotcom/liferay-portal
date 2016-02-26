@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -34,46 +33,39 @@ public class UpgradeExpando extends UpgradeProcess {
 			long scTableId, long snTableId, long wolTableId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select * from ExpandoColumn where tableId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from ExpandoColumn where tableId = ?")) {
 
 			ps.setLong(1, wolTableId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				long scColumnId = 0;
+				long snColumnId = 0;
 
-			long scColumnId = 0;
-			long snColumnId = 0;
+				while (rs.next()) {
+					long wolColumnId = rs.getLong("columnId");
+					String name = rs.getString("name");
 
-			while (rs.next()) {
-				long wolColumnId = rs.getLong("columnId");
-				String name = rs.getString("name");
+					long newTableId = 0;
 
-				long newTableId = 0;
+					if (name.equals("aboutMe")) {
+						newTableId = snTableId;
+						snColumnId = wolColumnId;
+					}
+					else if (name.equals("jiraUserId")) {
+						newTableId = scTableId;
+						scColumnId = wolColumnId;
+					}
 
-				if (name.equals("aboutMe")) {
-					newTableId = snTableId;
-					snColumnId = wolColumnId;
+					runSQL(
+						"update ExpandoColumn set tableId = " + newTableId +
+							" where tableId = " + wolTableId + " and name = '" +
+								name + "'");
 				}
-				else if (name.equals("jiraUserId")) {
-					newTableId = scTableId;
-					scColumnId = wolColumnId;
-				}
 
-				runSQL(
-					"update ExpandoColumn set tableId = " + newTableId +
-						" where tableId = " + wolTableId + " and name = '" +
-							name + "'");
+				updateRows(
+					scColumnId, scTableId, snColumnId, snTableId, wolTableId);
 			}
-
-			updateRows(
-				scColumnId, scTableId, snColumnId, snTableId, wolTableId);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -82,87 +74,75 @@ public class UpgradeExpando extends UpgradeProcess {
 			long wolTableId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select * from ExpandoRow where tableId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from ExpandoRow where tableId = ?")) {
 
 			ps.setLong(1, wolTableId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long wolRowId = rs.getLong("rowId_");
+					long companyId = rs.getLong("companyId");
+					long classPK = rs.getLong("classPK");
 
-			while (rs.next()) {
-				long wolRowId = rs.getLong("rowId_");
-				long companyId = rs.getLong("companyId");
-				long classPK = rs.getLong("classPK");
+					long scRowId = increment();
 
-				long scRowId = increment();
+					runSQL(
+						"insert into ExpandoRow (rowId_, companyId, tableId, " +
+							"classPK) values (" + scRowId + ", " + companyId +
+								", " + scTableId + ", " + classPK + ")");
 
-				runSQL(
-					"insert into ExpandoRow (rowId_, companyId, tableId, " +
-						"classPK) values (" + scRowId + ", " + companyId +
-							", " + scTableId + ", " + classPK + ")");
+					long snRowId = increment();
 
-				long snRowId = increment();
+					runSQL(
+						"insert into ExpandoRow (rowId_, companyId, tableId, " +
+							"classPK) values (" + snRowId + ", " + companyId +
+								", " + snTableId + ", " + classPK + ")");
 
-				runSQL(
-					"insert into ExpandoRow (rowId_, companyId, tableId, " +
-						"classPK) values (" + snRowId + ", " + companyId +
-							", " + snTableId + ", " + classPK + ")");
+					runSQL(
+						"delete from ExpandoRow where tableId = " + wolTableId);
 
-				runSQL("delete from ExpandoRow where tableId = " + wolTableId);
-
-				updateValues(
-					scColumnId, scRowId, scTableId, snColumnId, snRowId,
-					snTableId, wolRowId, wolTableId);
+					updateValues(
+						scColumnId, scRowId, scTableId, snColumnId, snRowId,
+						snTableId, wolRowId, wolTableId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateTables() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select * from ExpandoTable where name = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from ExpandoTable where name = ?")) {
 
 			ps.setString(1, "WOL");
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long wolTableId = rs.getLong("tableId");
+					long companyId = rs.getLong("companyId");
+					long classNameId = rs.getLong("classNameId");
 
-			while (rs.next()) {
-				long wolTableId = rs.getLong("tableId");
-				long companyId = rs.getLong("companyId");
-				long classNameId = rs.getLong("classNameId");
+					long scTableId = increment();
 
-				long scTableId = increment();
+					runSQL(
+						"insert into ExpandoTable (tableId, companyId, " +
+							"classNameId, name) values (" + scTableId + ", " +
+								companyId + ", " + classNameId + ", 'SC')");
 
-				runSQL(
-					"insert into ExpandoTable (tableId, companyId, " +
-						"classNameId, name) values (" + scTableId + ", " +
-							companyId + ", " + classNameId + ", 'SC')");
+					long snTableId = increment();
 
-				long snTableId = increment();
+					runSQL(
+						"insert into ExpandoTable (tableId, companyId, " +
+							"classNameId, name) values (" + snTableId + ", " +
+								companyId + ", " + classNameId + ", 'SN')");
 
-				runSQL(
-					"insert into ExpandoTable (tableId, companyId, " +
-						"classNameId, name) values (" + snTableId + ", " +
-							companyId + ", " + classNameId + ", 'SN')");
+					runSQL(
+						"delete from ExpandoTable where tableId = " +
+							wolTableId);
 
-				runSQL(
-					"delete from ExpandoTable where tableId = " + wolTableId);
-
-				updateColumns(scTableId, snTableId, wolTableId);
+					updateColumns(scTableId, snTableId, wolTableId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -171,42 +151,36 @@ public class UpgradeExpando extends UpgradeProcess {
 			long snRowId, long snTableId, long wolRowId, long wolTableId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select * from ExpandoValue where tableId = ? and rowId_ = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from ExpandoValue where tableId = ? and rowId_ =" +
+					" ?")) {
 
 			ps.setLong(1, wolTableId);
 			ps.setLong(2, wolRowId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long valueId = rs.getLong("valueId");
+					long columnId = rs.getLong("columnId");
 
-			while (rs.next()) {
-				long valueId = rs.getLong("valueId");
-				long columnId = rs.getLong("columnId");
+					long newTableId = 0;
+					long newRowId = 0;
 
-				long newTableId = 0;
-				long newRowId = 0;
+					if (columnId == scColumnId) {
+						newRowId = scRowId;
+						newTableId = scTableId;
+					}
+					else if (columnId == snColumnId) {
+						newRowId = snRowId;
+						newTableId = snTableId;
+					}
 
-				if (columnId == scColumnId) {
-					newRowId = scRowId;
-					newTableId = scTableId;
+					runSQL(
+						"update ExpandoValue set tableId = " + newTableId +
+							", rowId_ = " + newRowId + " where valueId = " +
+								valueId);
 				}
-				else if (columnId == snColumnId) {
-					newRowId = snRowId;
-					newTableId = snTableId;
-				}
-
-				runSQL(
-					"update ExpandoValue set tableId = " + newTableId +
-						", rowId_ = " + newRowId + " where " + "valueId = " +
-							valueId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

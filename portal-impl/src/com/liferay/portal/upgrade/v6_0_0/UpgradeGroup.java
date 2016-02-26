@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -32,42 +31,29 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected Object[] getLayout(long plid) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(_GET_LAYOUT);
-
+		try (PreparedStatement ps = connection.prepareStatement(_GET_LAYOUT)) {
 			ps.setLong(1, plid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long groupId = rs.getLong("groupId");
 
-			if (rs.next()) {
-				long groupId = rs.getLong("groupId");
+					return new Object[] {groupId};
+				}
 
-				return new Object[] {groupId};
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateParentGroupId() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portal.model.Layout");
 
-		try {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.portal.model.Layout");
-
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId, classPK from Group_ where classNameId = " +
 					classNameId);
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -83,9 +69,6 @@ public class UpgradeGroup extends UpgradeProcess {
 							" where groupId = " + groupId);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

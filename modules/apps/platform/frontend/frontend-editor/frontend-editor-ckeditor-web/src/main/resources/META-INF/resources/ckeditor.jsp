@@ -336,6 +336,14 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		}
 	};
 
+	Liferay.fire(
+		'editorAPIReady',
+		{
+			editor: window['<%= name %>'],
+			editorName: '<%= name %>'
+		}
+	);
+
 	<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
 		var inlineEditor;
 

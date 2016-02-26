@@ -38,6 +38,14 @@ String name = namespace + GetterUtil.getString((String)request.getAttribute("lif
 
 	window['<%= name %>'] = bbCodeEditor;
 
+	Liferay.fire(
+		'editorAPIReady',
+		{
+			editor: window['<%= name %>'],
+			editorName: '<%= name %>'
+		}
+	);
+
 	<c:if test="<%= Validator.isNotNull(initMethod) %>">
 		bbCodeEditor.setHTML(<%= HtmlUtil.escape(namespace + initMethod) %>());
 	</c:if>

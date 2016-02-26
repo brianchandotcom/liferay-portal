@@ -150,7 +150,4 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public void setDDMForm(
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm);
-
-	public void updateDDMForm(
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm);
 }

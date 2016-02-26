@@ -117,12 +117,6 @@ public class DDMStructureLayoutLocalServiceUtil {
 		getService().deleteStructureLayout(structureLayoutId);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormLayout deserialize(
-		java.lang.String serializedDDMFormLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deserialize(serializedDDMFormLayout);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -341,6 +335,12 @@ public class DDMStructureLayoutLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getStructureLayoutByStructureVersionId(structureVersionId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMFormLayout getStructureLayoutDDMFormLayout(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout structureLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureLayoutDDMFormLayout(structureLayout);
 	}
 
 	/**

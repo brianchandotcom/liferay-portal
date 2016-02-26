@@ -149,13 +149,6 @@ public class DDLRecordSetLocalServiceUtil {
 		getService().deleteRecordSets(groupId);
 	}
 
-	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues deserialize(
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-		java.lang.String serializedDDMFormValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deserialize(ddmForm, serializedDDMFormValues);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -381,6 +374,18 @@ public class DDLRecordSetLocalServiceUtil {
 		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordSet(recordSetId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getRecordSetSettingsDDMFormValues(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetSettingsDDMFormValues(recordSet);
+	}
+
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetSettingsModel(recordSet);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(

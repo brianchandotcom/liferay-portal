@@ -61,6 +61,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -280,7 +282,7 @@ public class CalendarPortlet extends MVCPortlet {
 				serveUpdateCalendarBooking(resourceRequest, resourceResponse);
 			}
 			else {
-				super.serveResource(resourceRequest, resourceResponse);
+				serveUnknownResource(resourceRequest, resourceResponse);
 			}
 		}
 		catch (Exception e) {
@@ -1260,6 +1262,29 @@ public class CalendarPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
+	protected void serveUnknownResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String message = themeDisplay.translate(
+			"calendar-does-not-serve-resource-x",
+			resourceRequest.getResourceID());
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(message);
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("success", false);
+		jsonObject.put("error", message);
+
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
 	protected void serveUpdateCalendarBooking(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
@@ -1468,6 +1493,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 		return calendarBooking;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalendarPortlet.class);
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarBookingService _calendarBookingService;

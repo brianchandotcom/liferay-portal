@@ -218,11 +218,6 @@ define("frontend-js-metal-web@1.0.0/metal-attribute/src/Attribute", ['exports', 
 			return this.attrsInfo_[name].value;
 		};
 
-		Attribute.prototype.hasBeenSet = function hasBeenSet(name) {
-			var info = this.attrsInfo_[name];
-			return info.state === Attribute.States.INITIALIZED || info.initialValue;
-		};
-
 		Attribute.prototype.informChange_ = function informChange_(name, prevVal) {
 			if (this.shouldInformChange_(name, prevVal)) {
 				var data = {

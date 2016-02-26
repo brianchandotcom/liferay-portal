@@ -1,9 +1,17 @@
-define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['exports', 'metal/src/metal', 'metal-events/src/events'], function (exports, _metal, _events) {
+define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['exports', 'metal/src/metal', './ComponentCollector', 'metal-events/src/events'], function (exports, _metal, _ComponentCollector, _events) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _ComponentCollector2 = _interopRequireDefault(_ComponentCollector);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
 	function _classCallCheck(instance, Constructor) {
 		if (!(instance instanceof Constructor)) {
@@ -75,13 +83,12 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['expo
    * been attached.
    * @param {string} eventType
    * @param {string} fnNamesString
-   * @param {string=} groupName
+   * @param {boolean} permanent
+   * @protected
    */
 
 
-		EventsCollector.prototype.attachListener = function attachListener(eventType, fnNamesString) {
-			var groupName = arguments.length <= 2 || arguments[2] === undefined ? 'element' : arguments[2];
-
+		EventsCollector.prototype.attachListener_ = function attachListener_(eventType, fnNamesString, groupName) {
 			var selector = '[data-on' + eventType + '="' + fnNamesString + '"]';
 
 			this.groupHasListener_[groupName][selector] = true;
@@ -90,7 +97,7 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['expo
 				this.eventHandles_[selector] = new _events.EventHandler();
 				var fnNames = fnNamesString.split(',');
 				for (var i = 0; i < fnNames.length; i++) {
-					var fn = this.component_.getListenerFn(fnNames[i]);
+					var fn = this.getListenerFn(fnNames[i]);
 					if (fn) {
 						this.eventHandles_[selector].add(this.component_.delegate(eventType, selector, this.onEvent_.bind(this, fn)));
 					}
@@ -98,17 +105,19 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['expo
 			}
 		};
 
-		EventsCollector.prototype.attachListenersFromHtml = function attachListenersFromHtml(content) {
-			var groupName = arguments.length <= 1 || arguments[1] === undefined ? 'element' : arguments[1];
+		EventsCollector.prototype.attachListeners = function attachListeners(content, groupName) {
+			this.groupHasListener_[groupName] = {};
+			this.attachListenersFromHtml_(content, groupName);
+		};
 
-			this.startCollecting(groupName);
+		EventsCollector.prototype.attachListenersFromHtml_ = function attachListenersFromHtml_(content, groupName) {
 			if (content.indexOf('data-on') === -1) {
 				return;
 			}
 			var regex = /data-on([a-z]+)=['"]([^'"]+)['"]/g;
 			var match = regex.exec(content);
 			while (match) {
-				this.attachListener(match[1], match[2], groupName);
+				this.attachListener_(match[1], match[2], groupName);
 				match = regex.exec(content);
 			}
 		};
@@ -146,6 +155,24 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['expo
 			this.component_ = null;
 		};
 
+		EventsCollector.prototype.getListenerFn = function getListenerFn(fnName) {
+			var fnComponent;
+			var split = fnName.split(':');
+			if (split.length === 2) {
+				fnName = split[1];
+				fnComponent = _ComponentCollector2.default.components[split[0]];
+				if (!fnComponent) {
+					console.error('No component with the id "' + split[0] + '" has been collected' + 'yet. Make sure that you specify an id for an existing component when ' + 'adding inline listeners.');
+				}
+			}
+			fnComponent = fnComponent || this.component_;
+			if (_metal.core.isFunction(fnComponent[fnName])) {
+				return fnComponent[fnName].bind(fnComponent);
+			} else {
+				console.error('No function named "' + fnName + '" was found in the component with id "' + fnComponent.id + '". Make sure that you specify valid function names when adding ' + 'inline listeners.');
+			}
+		};
+
 		EventsCollector.prototype.hasAttachedForGroup = function hasAttachedForGroup(group) {
 			return !!this.groupHasListener_.hasOwnProperty(group);
 		};
@@ -157,12 +184,6 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/EventsCollector", ['expo
 				event.handledByComponent = this.component_;
 				return fn(event);
 			}
-		};
-
-		EventsCollector.prototype.startCollecting = function startCollecting() {
-			var groupName = arguments.length <= 0 || arguments[0] === undefined ? 'element' : arguments[0];
-
-			this.groupHasListener_[groupName] = {};
 		};
 
 		return EventsCollector;

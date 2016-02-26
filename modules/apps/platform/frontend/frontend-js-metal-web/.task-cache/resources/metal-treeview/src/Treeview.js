@@ -58,7 +58,7 @@ define("frontend-js-metal-web@1.0.0/metal-treeview/src/Treeview", ['exports', 'm
 
 		Treeview.prototype.attached = function attached() {
 			this.on('nodesChanged', this.onNodesChanged_);
-			this.getRenderer().on('renderSurface', this.handleRenderSurface_.bind(this));
+			this.on('renderSurface', this.handleRenderSurface_);
 		};
 
 		Treeview.prototype.getNodeObj = function getNodeObj(path) {

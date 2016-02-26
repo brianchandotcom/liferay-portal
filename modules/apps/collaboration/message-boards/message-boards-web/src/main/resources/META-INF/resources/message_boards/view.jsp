@@ -117,7 +117,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 					%>
 
 					<c:if test="<%= showAddCategoryButton || showAddMessageButton || showPermissionsButton %>">
-						<div class="category-buttons">
+						<aui:button-row>
 							<c:if test="<%= showAddCategoryButton %>">
 								<portlet:renderURL var="editCategoryURL">
 									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
@@ -162,7 +162,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 
 								<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
 							</c:if>
-						</div>
+						</aui:button-row>
 
 						<%@ include file="/message_boards/category_subscriptions.jspf" %>
 					</c:if>

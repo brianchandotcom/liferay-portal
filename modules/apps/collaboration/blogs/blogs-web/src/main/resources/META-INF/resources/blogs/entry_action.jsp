@@ -31,7 +31,6 @@ if (row != null) {
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
@@ -62,13 +61,9 @@ if (row != null) {
 	</c:if>
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
-		</portlet:renderURL>
-
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= viewURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 

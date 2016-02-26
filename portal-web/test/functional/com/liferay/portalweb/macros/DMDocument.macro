@@ -2376,6 +2376,6 @@
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="${workflowStatus}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_VIEW_WORKFLOW_STATUS" value1="${workflowStatus}" />
 	</command>
 </definition>

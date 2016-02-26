@@ -1010,14 +1010,6 @@
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command name="viewScheduledPost">
-		<execute function="AssertTextEquals" locator1="Blogs#SCHEDULED_ENTRY_STATUS" value1="Scheduled" />
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#SCHEDULED_ENTRY_TITLE" value1="${entryTitle}" />
-	</command>
-
 	<command name="viewSubtitle">
 		<execute function="AssertTextEquals" locator1="BlogsEntry#SUBTITLE" value1="${entrySubtitle}" />
 	</command>

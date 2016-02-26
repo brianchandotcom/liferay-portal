@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
-	service = {WorkflowLogManager.class, WorkflowLogManagerImpl.class}
+	immediate = true, property = {"proxy.bean=false"},
+	service = WorkflowLogManager.class
 )
 public class WorkflowLogManagerImpl implements WorkflowLogManager {
 

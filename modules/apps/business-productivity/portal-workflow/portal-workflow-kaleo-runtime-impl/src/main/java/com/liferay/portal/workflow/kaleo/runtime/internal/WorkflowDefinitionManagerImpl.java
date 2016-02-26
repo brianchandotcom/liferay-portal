@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.internal.util.comparators.KaleoDefinitionOrderByComparator;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Lundgren
  */
 @Component(
-	immediate = true,
-	service = {
-		WorkflowDefinitionManager.class, WorkflowDefinitionManagerImpl.class
-	}
+	immediate = true, property = {"proxy.bean=false"},
+	service = WorkflowDefinitionManager.class
 )
 public class WorkflowDefinitionManagerImpl
 	implements WorkflowDefinitionManager {
@@ -69,7 +67,7 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			return KaleoDefinitionLocalServiceUtil.getKaleoDefinitionsCount(
+			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				true, serviceContext);
 		}
 		catch (Exception e) {
@@ -86,7 +84,7 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			return KaleoDefinitionLocalServiceUtil.getKaleoDefinitionsCount(
+			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				name, true, serviceContext);
 		}
 		catch (Exception e) {
@@ -103,7 +101,7 @@ public class WorkflowDefinitionManagerImpl
 		try {
 			if (orderByComparator == null) {
 				orderByComparator =
-					WorkflowComparatorFactoryUtil.getDefinitionNameComparator(
+					_workflowComparatorFactory.getDefinitionNameComparator(
 						true);
 			}
 
@@ -112,7 +110,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				KaleoDefinitionLocalServiceUtil.getKaleoDefinitions(
+				_kaleoDefinitionLocalService.getKaleoDefinitions(
 					true, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -137,7 +135,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				KaleoDefinitionLocalServiceUtil.getKaleoDefinitions(
+				_kaleoDefinitionLocalService.getKaleoDefinitions(
 					name, true, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -161,7 +159,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			KaleoDefinition kaleoDefinition =
-				KaleoDefinitionLocalServiceUtil.getLatestKaleoDefinition(
+				_kaleoDefinitionLocalService.getLatestKaleoDefinition(
 					name, serviceContext);
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
@@ -183,7 +181,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			KaleoDefinition kaleoDefinition =
-				KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
+				_kaleoDefinitionLocalService.getKaleoDefinition(
 					name, version, serviceContext);
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
@@ -203,7 +201,7 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			return KaleoDefinitionLocalServiceUtil.getKaleoDefinitionsCount(
+			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				serviceContext);
 		}
 		catch (Exception e) {
@@ -220,7 +218,7 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			return KaleoDefinitionLocalServiceUtil.getKaleoDefinitionsCount(
+			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				name, serviceContext);
 		}
 		catch (Exception e) {
@@ -240,7 +238,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				KaleoDefinitionLocalServiceUtil.getKaleoDefinitions(
+				_kaleoDefinitionLocalService.getKaleoDefinitions(
 					start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -265,7 +263,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				KaleoDefinitionLocalServiceUtil.getKaleoDefinitions(
+				_kaleoDefinitionLocalService.getKaleoDefinitions(
 					name, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -310,11 +308,11 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setUserId(userId);
 
 			if (active) {
-				KaleoDefinitionLocalServiceUtil.activateKaleoDefinition(
+				_kaleoDefinitionLocalService.activateKaleoDefinition(
 					name, version, serviceContext);
 			}
 			else {
-				KaleoDefinitionLocalServiceUtil.deactivateKaleoDefinition(
+				_kaleoDefinitionLocalService.deactivateKaleoDefinition(
 					name, version, serviceContext);
 			}
 
@@ -337,7 +335,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setUserId(userId);
 
 			KaleoDefinition kaleoDefinition =
-				KaleoDefinitionLocalServiceUtil.updateTitle(
+				_kaleoDefinitionLocalService.updateTitle(
 					name, version, title, serviceContext);
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
@@ -374,7 +372,13 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Reference
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
+
+	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Reference
 	private WorkflowEngine _workflowEngine;

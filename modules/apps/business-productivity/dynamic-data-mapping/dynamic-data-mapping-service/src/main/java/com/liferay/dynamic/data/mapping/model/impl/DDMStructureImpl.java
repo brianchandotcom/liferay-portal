@@ -100,11 +100,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMForm getDDMForm() {
 		if (_ddmForm == null) {
 			try {
-				_ddmForm = DDMStructureLocalServiceUtil.deserialize(
-					getDefinition());
+				_ddmForm = DDMStructureLocalServiceUtil.getStructureDDMForm(
+					this);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+
 				return new DDMForm();
 			}
 		}
@@ -431,11 +432,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.setDefinition(definition);
 
 		_ddmForm = null;
-	}
-
-	@Override
-	public void updateDDMForm(DDMForm ddmForm) {
-		setDefinition(DDMStructureLocalServiceUtil.serialize(ddmForm));
 	}
 
 	protected List<DDMFormField> filterTransientDDMFormFields(

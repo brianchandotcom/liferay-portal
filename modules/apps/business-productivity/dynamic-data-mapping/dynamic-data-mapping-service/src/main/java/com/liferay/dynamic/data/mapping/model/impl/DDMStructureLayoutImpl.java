@@ -32,11 +32,14 @@ public class DDMStructureLayoutImpl extends DDMStructureLayoutBaseImpl {
 	public DDMFormLayout getDDMFormLayout() {
 		if (_ddmFormLayout == null) {
 			try {
-				_ddmFormLayout = DDMStructureLayoutLocalServiceUtil.deserialize(
-					getDefinition());
+				_ddmFormLayout =
+					DDMStructureLayoutLocalServiceUtil.
+						getStructureLayoutDDMFormLayout(this);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+
+				return new DDMFormLayout();
 			}
 		}
 

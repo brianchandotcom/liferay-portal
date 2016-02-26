@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException
 import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
@@ -27,6 +28,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -202,14 +205,6 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	public DDMFormValues deserialize(
-			DDMForm ddmForm, String serializedDDMFormValues)
-		throws PortalException {
-
-		return ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, serializedDDMFormValues);
-	}
-
 	@Override
 	public DDLRecordSet fetchRecordSet(long recordSetId) {
 		return ddlRecordSetPersistence.fetchByPrimaryKey(recordSetId);
@@ -240,6 +235,29 @@ public class DDLRecordSetLocalServiceImpl
 	@Override
 	public int getRecordSetsCount(long groupId) {
 		return ddlRecordSetPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public DDMFormValues getRecordSetSettingsDDMFormValues(
+			DDLRecordSet recordSet)
+		throws PortalException {
+
+		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
+
+		return ddmFormValuesJSONDeserializer.deserialize(
+			ddmForm, recordSet.getSettings());
+	}
+
+	@Override
+	public DDLRecordSetSettings getRecordSetSettingsModel(
+			DDLRecordSet recordSet)
+		throws PortalException {
+
+		DDMFormValues ddmFormValues = getRecordSetSettingsDDMFormValues(
+			recordSet);
+
+		return DDMFormInstanceFactory.create(
+			DDLRecordSetSettings.class, ddmFormValues);
 	}
 
 	@Override

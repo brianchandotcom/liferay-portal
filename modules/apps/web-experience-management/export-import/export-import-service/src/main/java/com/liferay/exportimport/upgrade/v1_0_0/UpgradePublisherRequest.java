@@ -62,7 +62,9 @@ public class UpgradePublisherRequest extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (Group group : getGroups()) {
+		List<Group> groups = _groupLocalService.getStagedSites();
+
+		for (Group group : groups) {
 			updateScheduledPublications(group);
 		}
 	}

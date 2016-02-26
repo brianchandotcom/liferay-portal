@@ -27,11 +27,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
@@ -49,6 +54,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
 import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
@@ -333,6 +339,28 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		return mbMessage;
 	}
 
+	protected PrivateMessagingConfiguration getPortletConfiguration(
+		long companyId) {
+
+		if (_privateMessagingConfiguration == null) {
+			try {
+				_privateMessagingConfiguration =
+					ConfigurationProviderUtil.getConfiguration(
+						PrivateMessagingConfiguration.class,
+						new CompanyServiceSettingsLocator(
+							companyId,
+							"com.liferay.privatemessaging.configuration." +
+								"PrivateMessagingConfiguration"));
+			}
+			catch (ConfigurationException ce) {
+				_log.error(
+					"Unable to retrieve Private Message Configuration:", ce);
+			}
+		}
+
+		return _privateMessagingConfiguration;
+	}
+
 	protected String getThreadURL(
 			User user, long threadId, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -396,11 +424,13 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			sender.getCompanyId());
 
 		InternetAddress from = new InternetAddress(company.getEmailAddress());
-		
+
+		PrivateMessagingConfiguration privateMessagingConfiguration =
+			getPortletConfiguration(themeDisplay.getCompanyId());
+
 		String subject = ContentUtil.get(
 			UserThreadLocalServiceImpl.class.getClassLoader(),
-			"com/liferay/privatemessaging/dependencies/" +
-			"notification_message_subject.tmpl");
+			privateMessagingConfiguration.emailSubject());
 
 		subject = StringUtil.replace(
 			subject, new String[] {"[$COMPANY_NAME$]", "[$FROM_NAME$]"},
@@ -408,8 +438,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 		String body = ContentUtil.get(
 			UserThreadLocalServiceImpl.class.getClassLoader(),
-			"com/liferay/privatemessaging/dependencies/" +
-			"notification_message_body.tmpl");
+			privateMessagingConfiguration.emailBody());
 
 		long portraitId = sender.getPortraitId();
 		String tokenId = WebServerServletTokenUtil.getToken(
@@ -507,5 +536,10 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				notificationEventJSONObject);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UserThreadLocalServiceImpl.class);
+
+	private PrivateMessagingConfiguration _privateMessagingConfiguration;
 
 }

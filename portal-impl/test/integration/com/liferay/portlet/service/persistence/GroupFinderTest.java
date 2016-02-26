@@ -106,13 +106,6 @@ public class GroupFinderTest {
 	}
 
 	@Test
-	public void testFindByBySiteLiveRemoteStagingCountAndStagedTypeSettings() {
-		List<Group> groups = GroupFinderUtil.findByL_TS_S_RSGC();
-
-		Assert.assertTrue(groups.isEmpty());
-	}
-
-	@Test
 	public void testFindByC_C_N_DJoinByRoleResourcePermissions()
 		throws Exception {
 

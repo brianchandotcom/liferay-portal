@@ -1709,12 +1709,18 @@ tell application "Safari" to quit
 
 							<ant dir="portal-kernel" target="deploy" inheritAll="false" />
 
+							<ant dir="portal-test" target="deploy" inheritAll="false" />
+
+							<ant dir="portal-test-internal" target="deploy" inheritAll="false" />
+
 							<ant dir="util-java" target="deploy" inheritAll="false" />
 
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
 							<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
 							<install-portal-snapshot artifact.dir="portal-kernel" artifact.name="portal-kernel" />
+							<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
+							<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />
 							<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />
 
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">

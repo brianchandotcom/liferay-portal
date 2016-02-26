@@ -92,8 +92,8 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_GK =
 		GroupFinder.class.getName() + ".findByC_GK";
 
-	public static final String FIND_BY_S_L_RSGC_S =
-		GroupFinder.class.getName() + ".findByS_L_RSGC_S";
+	public static final String FIND_BY_L_TS_S_RSGC =
+		GroupFinder.class.getName() + ".findByL_TS_S_RSGC";
 
 	public static final String FIND_BY_C_C_PG_N_D =
 		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
@@ -689,8 +689,8 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public List<Group> findByS_L_RSGC_S() {
-		String sql = CustomSQLUtil.get(FIND_BY_S_L_RSGC_S);
+	public List<Group> findByL_TS_S_RSGC() {
+		String sql = CustomSQLUtil.get(FIND_BY_L_TS_S_RSGC);
 
 		Session session = null;
 

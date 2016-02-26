@@ -38,10 +38,12 @@
 
 		<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<if>
 			<isset var="ddlDisplayTemplateTextFieldScript" />
 			<then>
-				<execute function="AssertClick#assertTextClick" locator1="DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
+				<execute function="AssertClick" locator1="DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
 			</then>
 		</if>
 

@@ -18,16 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-
 import com.liferay.privatemessaging.service.ClpSerializer;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.service.UserThreadServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class ClpMessageListener extends BaseMessageListener {
+
 	public static String getServletContextName() {
 		return ClpSerializer.getServletContextName();
 	}
@@ -36,6 +34,6 @@ public class ClpMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		String command = message.getString("command");
 		String servletContextName = message.getString("servletContextName");
-
 	}
+
 }

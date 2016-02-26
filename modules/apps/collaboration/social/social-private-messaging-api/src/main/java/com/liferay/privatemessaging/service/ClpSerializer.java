@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-
+import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
 import com.liferay.privatemessaging.model.UserThreadClp;
 
 import java.io.ObjectInputStream;
@@ -40,6 +40,7 @@ import java.util.List;
  */
 @ProviderType
 public class ClpSerializer {
+
 	public static String getServletContextName() {
 		if (Validator.isNotNull(_servletContextName)) {
 			return _servletContextName;
@@ -54,13 +55,14 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Class<?> portletPropsClass = classLoader.loadClass(
-						"com.liferay.util.portlet.PortletProps");
+					"com.liferay.util.portlet.PortletProps");
 
-				Method getMethod = portletPropsClass.getMethod("get",
-						new Class<?>[] { String.class });
+				Method getMethod = portletPropsClass.getMethod(
+					"get", new Class<?>[] {String.class});
 
-				String portletPropsServletContextName = (String)getMethod.invoke(null,
-						"private-messaging-portlet-deployment-context");
+				String portletPropsServletContextName =
+					(String)getMethod.invoke(
+						null, "private-messaging-portlet-deployment-context");
 
 				if (Validator.isNotNull(portletPropsServletContextName)) {
 					_servletContextName = portletPropsServletContextName;
@@ -69,14 +71,15 @@ public class ClpSerializer {
 			catch (Throwable t) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Unable to locate deployment context from portlet properties");
+						"Unable to locate deployment context from portlet" +
+							"properties");
 				}
 			}
 
 			if (Validator.isNull(_servletContextName)) {
 				try {
 					String propsUtilServletContextName = PropsUtil.get(
-							"private-messaging-portlet-deployment-context");
+						"private-messaging-portlet-deployment-context");
 
 					if (Validator.isNotNull(propsUtilServletContextName)) {
 						_servletContextName = propsUtilServletContextName;
@@ -85,7 +88,8 @@ public class ClpSerializer {
 				catch (Throwable t) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Unable to locate deployment context from portal properties");
+							"Unable to locate deployment context from portal" +
+								"properties");
 					}
 				}
 			}
@@ -111,7 +115,7 @@ public class ClpSerializer {
 	}
 
 	public static Object translateInput(List<Object> oldList) {
-		List<Object> newList = new ArrayList<Object>(oldList.size());
+		List<Object> newList = new ArrayList<>(oldList.size());
 
 		for (int i = 0; i < oldList.size(); i++) {
 			Object curObj = oldList.get(i);
@@ -120,16 +124,6 @@ public class ClpSerializer {
 		}
 
 		return newList;
-	}
-
-	public static Object translateInputUserThread(BaseModel<?> oldModel) {
-		UserThreadClp oldClpModel = (UserThreadClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getUserThreadRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
 	}
 
 	public static Object translateInput(Object obj) {
@@ -144,13 +138,24 @@ public class ClpSerializer {
 		}
 	}
 
+	public static Object translateInputUserThread(BaseModel<?> oldModel) {
+		UserThreadClp oldClpModel = (UserThreadClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getUserThreadRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateOutput(BaseModel<?> oldModel) {
 		Class<?> oldModelClass = oldModel.getClass();
 
 		String oldModelClassName = oldModelClass.getName();
 
 		if (oldModelClassName.equals(
-					"com.liferay.privatemessaging.model.impl.UserThreadImpl")) {
+				"com.liferay.privatemessaging.model.impl.UserThreadImpl")) {
+
 			return translateOutputUserThread(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
@@ -158,24 +163,27 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
+					"getClpSerializerClass");
 
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+				Class<?> oldClpSerializerClass =
+					(Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+				Class<?> newClpSerializerClass = classLoader.loadClass(
+					oldClpSerializerClass.getName());
 
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
+				Method translateOutputMethod = newClpSerializerClass.getMethod(
+					"translateOutput", BaseModel.class);
 
 				Class<?> oldModelModelClass = oldModel.getModelClass();
 
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
+				Method getRemoteModelMethod = oldModelClass.getMethod(
+					"get" + oldModelModelClass.getSimpleName() + "RemoteModel");
 
 				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
+				BaseModel<?> newModel =
+					(BaseModel<?>)translateOutputMethod.invoke(
+						null, oldRemoteModel);
 
 				return newModel;
 			}
@@ -190,7 +198,7 @@ public class ClpSerializer {
 	}
 
 	public static Object translateOutput(List<Object> oldList) {
-		List<Object> newList = new ArrayList<Object>(oldList.size());
+		List<Object> newList = new ArrayList<>(oldList.size());
 
 		for (int i = 0; i < oldList.size(); i++) {
 			Object curObj = oldList.get(i);
@@ -213,26 +221,42 @@ public class ClpSerializer {
 		}
 	}
 
+	public static Object translateOutputUserThread(BaseModel<?> oldModel) {
+		UserThreadClp newModel = new UserThreadClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setUserThreadRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Throwable translateThrowable(Throwable throwable) {
 		if (_useReflectionToTranslateThrowable) {
 			try {
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					unsyncByteArrayOutputStream);
 
 				objectOutputStream.writeObject(throwable);
 
 				objectOutputStream.flush();
 				objectOutputStream.close();
 
-				UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
-						0, unsyncByteArrayOutputStream.size());
+				UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+					new UnsyncByteArrayInputStream(
+						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+						unsyncByteArrayOutputStream.size());
 
 				Thread currentThread = Thread.currentThread();
 
-				ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+				ClassLoader contextClassLoader =
+					currentThread.getContextClassLoader();
 
-				ObjectInputStream objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
-						contextClassLoader);
+				ObjectInputStream objectInputStream =
+					new ClassLoaderObjectInputStream(
+						unsyncByteArrayInputStream, contextClassLoader);
 
 				throwable = (Throwable)objectInputStream.readObject();
 
@@ -266,25 +290,19 @@ public class ClpSerializer {
 		String className = clazz.getName();
 
 		if (className.equals(
-					"com.liferay.privatemessaging.exception.NoSuchUserThreadException")) {
-			return new com.liferay.privatemessaging.exception.NoSuchUserThreadException(throwable.getMessage(),
-				throwable.getCause());
+				"com.liferay.privatemessaging.exception" +
+					"NoSuchUserThreadException")) {
+
+			return new NoSuchUserThreadException(
+				throwable.getMessage(), throwable.getCause());
 		}
 
 		return throwable;
 	}
 
-	public static Object translateOutputUserThread(BaseModel<?> oldModel) {
-		UserThreadClp newModel = new UserThreadClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setUserThreadRemoteModel(oldModel);
-
-		return newModel;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
+
 	private static String _servletContextName;
 	private static boolean _useReflectionToTranslateThrowable = true;
+
 }

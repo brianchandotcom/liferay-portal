@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,7 +31,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer("createIndex")) {
 			runSQL(
 				"create unique index IX_1E9D371D on AssetEntry (classNameId, " +
 					"classPK)");
@@ -112,23 +113,26 @@ public class UpgradeAsset extends UpgradeProcess {
 			String className, String tableName, String columnName)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
+			long classNameId = PortalUtil.getClassNameId(className);
 
-		StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(11);
 
-		sb.append("update AssetEntry set classUuid = (select ");
-		sb.append(tableName);
-		sb.append(".uuid_ from ");
-		sb.append(tableName);
-		sb.append(" where ");
-		sb.append(tableName);
-		sb.append(".");
-		sb.append(columnName);
-		sb.append(" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
-		sb.append(classNameId);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append("update AssetEntry set classUuid = (select ");
+			sb.append(tableName);
+			sb.append(".uuid_ from ");
+			sb.append(tableName);
+			sb.append(" where ");
+			sb.append(tableName);
+			sb.append(".");
+			sb.append(columnName);
+			sb.append(
+				" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
+			sb.append(classNameId);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		runSQL(sb.toString());
+			runSQL(sb.toString());
+		}
 	}
 
 	protected void updateAssetEntry(
@@ -136,21 +140,23 @@ public class UpgradeAsset extends UpgradeProcess {
 			String columnName2)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
+			long classNameId = PortalUtil.getClassNameId(className);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select classPK from AssetEntry where classNameId = ?")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select classPK from AssetEntry where classNameId = ?")) {
 
-			ps.setLong(1, classNameId);
+				ps.setLong(1, classNameId);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long classPK = rs.getLong("classPK");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long classPK = rs.getLong("classPK");
 
-					String uuid = getUuid(
-						tableName, columnName1, columnName2, classPK);
+						String uuid = getUuid(
+							tableName, columnName1, columnName2, classPK);
 
-					updateAssetEntry(classNameId, classPK, uuid);
+						updateAssetEntry(classNameId, classPK, uuid);
+					}
 				}
 			}
 		}

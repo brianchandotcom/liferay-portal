@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_0_3;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
@@ -50,10 +51,12 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void addSingleApproverWorkflowRoles() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			addSingleApproverWorkflowRoles(companyId);
+			for (long companyId : companyIds) {
+				addSingleApproverWorkflowRoles(companyId);
+			}
 		}
 	}
 
@@ -269,29 +272,33 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void updatePermissions() throws Exception {
-		StringBundler sb = new StringBundler(11);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(11);
 
-		sb.append("select ResourcePermission.companyId, ");
-		sb.append("ResourcePermission.roleId, ResourcePermission.primKey ");
-		sb.append("from ResourcePermission, ResourceAction where ");
-		sb.append("ResourceAction.name = 'com.liferay.portlet.journal' ");
-		sb.append("and ResourceAction.name = ResourcePermission.name and ");
-		sb.append("ResourceAction.actionId = 'APPROVE_ARTICLE' and ");
-		sb.append("ResourcePermission.scope = 4 and ");
-		sb.append("ResourcePermission.actionIds >= ");
-		sb.append("ResourceAction.bitwiseValue and ");
-		sb.append("mod((ResourcePermission.actionIds / ");
-		sb.append("ResourceAction.bitwiseValue), 2) = 1");
+			sb.append("select ResourcePermission.companyId, ");
+			sb.append("ResourcePermission.roleId, ResourcePermission.primKey ");
+			sb.append("from ResourcePermission, ResourceAction where ");
+			sb.append("ResourceAction.name = 'com.liferay.portlet.journal' ");
+			sb.append("and ResourceAction.name = ResourcePermission.name and ");
+			sb.append("ResourceAction.actionId = 'APPROVE_ARTICLE' and ");
+			sb.append("ResourcePermission.scope = 4 and ");
+			sb.append("ResourcePermission.actionIds >= ");
+			sb.append("ResourceAction.bitwiseValue and ");
+			sb.append("mod((ResourcePermission.actionIds / ");
+			sb.append("ResourceAction.bitwiseValue), 2) = 1");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long roleId = rs.getLong("roleId");
-				long groupId = GetterUtil.getLong(rs.getString("primKey"));
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long roleId = rs.getLong("roleId");
+					long groupId = GetterUtil.getLong(rs.getString("primKey"));
 
-				assignSingleApproverWorkflowRoles(companyId, roleId, groupId);
+					assignSingleApproverWorkflowRoles(
+						companyId, roleId, groupId);
+				}
 			}
 		}
 	}

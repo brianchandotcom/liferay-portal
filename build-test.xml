@@ -6848,12 +6848,9 @@ if (ppstate.equals("normal")) {
 					<fileset dir="portal-web/test-results/${poshi.dir.name}" erroronmissingdir="false" />
 				</copy>
 
-				<replaceregexp
-					file="testray-logs/${testray.logs.dir.name}/index.html"
-					flags="g"
-					match="\.jpg"
-					replace=".jpg.gz"
-				/>
+				<replaceregexp flags="g" match="\.jpg" replace=".jpg.gz">
+					<fileset dir="testray-logs/${testray.logs.dir.name}" includes="*.html" />
+				</replaceregexp>
 			</then>
 		</if>
 	</target>

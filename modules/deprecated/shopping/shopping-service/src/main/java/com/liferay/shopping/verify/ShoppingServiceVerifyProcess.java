@@ -21,6 +21,7 @@ import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.shopping.service.ShoppingCartLocalService;
 import com.liferay.shopping.verify.model.ShoppingCategoryVerifiableModel;
 import com.liferay.shopping.verify.model.ShoppingItemVerifiableResourcedModel;
+import com.liferay.shopping.verify.model.ShoppingOrderVerifiableModel;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +51,7 @@ public class ShoppingServiceVerifyProcess extends VerifyProcess {
 			new ShoppingCategoryVerifiableModel());
 		_verifyResourcePermissions.verify(
 			new ShoppingItemVerifiableResourcedModel());
+		_verifyResourcePermissions.verify(new ShoppingOrderVerifiableModel());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

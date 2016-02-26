@@ -74,7 +74,7 @@ public class SPIClassPathContextListener implements ServletContextListener {
 
 		addJarFiles(jarFiles, spiEmbeddedLibDir);
 
-		// Load portal-service.jar from MPI
+		// Load portal-kernel.jar from MPI
 
 		addJarFiles(
 			jarFiles, PortalClassLoaderUtil.getClassLoader(),

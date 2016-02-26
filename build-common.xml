@@ -663,7 +663,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				test.type="integration"
 			/>
 
-			<ant dir="${project.dir}/portal-service" target="jar" inheritAll="false" />
+			<ant dir="${project.dir}/portal-kernel" target="jar" inheritAll="false" />
 
 			<if>
 				<uptodate targetfile="${project.dir}/portal-impl/portal-impl.jar">
@@ -1018,7 +1018,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					/>
 				</try>
 				<catch>
-					<ant dir="../portal-service" target="compile" inheritAll="false" />
+					<ant dir="../portal-kernel" target="compile" inheritAll="false" />
 					<ant dir="../util-java" target="compile" inheritAll="false" />
 
 					<taskdef
@@ -1079,7 +1079,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 								<fileset dir="${project.dir}/portal-impl/src">
 									<include name="**/*.java" />
 								</fileset>
-								<fileset dir="${project.dir}/portal-service/src">
+								<fileset dir="${project.dir}/portal-kernel/src">
 									<include name="**/*.java" />
 								</fileset>
 								<fileset dir="${project.dir}/util-java/src">
@@ -1191,11 +1191,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<if>
 				<and>
-					<equals arg1="${basedir}" arg2="${project.dir}/portal-service" />
+					<equals arg1="${basedir}" arg2="${project.dir}/portal-kernel" />
 					<equals arg1="@{test.type}" arg2="unit" />
 				</and>
 				<then>
-					<var name="junit.classpath" value="${classpath.portal-service-unit}" />
+					<var name="junit.classpath" value="${classpath.portal-kernel-unit}" />
 				</then>
 			</if>
 

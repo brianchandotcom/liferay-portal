@@ -815,12 +815,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, false, fileName);
 
-		if (portalSource && fileName.contains("/portal-service/") &&
+		if (portalSource && fileName.contains("/portal-kernel/") &&
 			content.contains("import javax.servlet.jsp.")) {
 
 			processErrorMessage(
 				fileName,
-				"Never import javax.servlet.jsp.* from portal-service " +
+				"Never import javax.servlet.jsp.* from portal-kernel " +
 					fileName);
 		}
 

@@ -94,7 +94,7 @@ for GPG setup instructions.
 	<target name="jar-javadoc">
 		<ant dir="portal-client" target="jar-javadoc" inheritAll="false" />
 		<ant dir="portal-impl" target="jar-javadoc" inheritAll="false" />
-		<ant dir="portal-service" target="jar-javadoc" inheritAll="false" />
+		<ant dir="portal-kernel" target="jar-javadoc" inheritAll="false" />
 		<ant dir="support-tomcat" target="jar-javadoc" inheritAll="false" />
 		<ant dir="util-bridges" target="jar-javadoc" inheritAll="false" />
 		<ant dir="util-java" target="jar-javadoc" inheritAll="false" />
@@ -105,7 +105,7 @@ for GPG setup instructions.
 	<target name="jar-sources">
 		<ant dir="portal-client" target="jar-sources" inheritAll="false" />
 		<ant dir="portal-impl" target="jar-sources" inheritAll="false" />
-		<ant dir="portal-service" target="jar-sources" inheritAll="false" />
+		<ant dir="portal-kernel" target="jar-sources" inheritAll="false" />
 		<ant dir="support-tomcat" target="jar-sources" inheritAll="false" />
 		<ant dir="util-bridges" target="jar-sources" inheritAll="false" />
 		<ant dir="util-java" target="jar-sources" inheritAll="false" />
@@ -169,8 +169,8 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 				includes="portal-impl.jar,portal-impl-javadoc.jar,portal-impl-sources.jar"
 			/>
 			<fileset
-				dir="portal-service"
-				includes="portal-service.jar,portal-service-javadoc.jar,portal-service-sources.jar"
+				dir="portal-kernel"
+				includes="portal-kernel.jar,portal-kernel-javadoc.jar,portal-kernel-sources.jar"
 			/>
 			<fileset
 				dir="support-tomcat"

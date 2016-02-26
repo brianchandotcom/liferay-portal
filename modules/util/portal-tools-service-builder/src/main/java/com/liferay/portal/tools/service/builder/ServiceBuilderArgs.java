@@ -336,7 +336,7 @@ public class ServiceBuilderArgs {
 		return s.split(",");
 	}
 
-	private String _apiDirName = "../portal-service/src";
+	private String _apiDirName = "../portal-kernel/src";
 	private boolean _autoImportDefaultReferences = true;
 	private boolean _autoNamespaceTables;
 	private String _beanLocatorUtil =

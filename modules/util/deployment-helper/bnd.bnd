@@ -12,6 +12,6 @@ Include-Resource:\
 	@lib/zt-zip.jar,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.deployment.helper.DeploymentHelper

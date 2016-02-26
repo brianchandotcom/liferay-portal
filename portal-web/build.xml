@@ -10,7 +10,7 @@
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />
 		<pathelement location="${project.dir}/portal-pacl/portal-pacl.jar" />
-		<pathelement location="${project.dir}/portal-service/portal-service.jar" />
+		<pathelement location="${project.dir}/portal-kernel/portal-kernel.jar" />
 		<pathelement location="${project.dir}/util-bridges/util-bridges.jar" />
 		<pathelement location="${project.dir}/util-java/util-java.jar" />
 		<pathelement location="${project.dir}/util-taglib/util-taglib.jar" />

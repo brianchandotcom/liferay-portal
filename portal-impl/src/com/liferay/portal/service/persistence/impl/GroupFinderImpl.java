@@ -92,11 +92,11 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_GK =
 		GroupFinder.class.getName() + ".findByC_GK";
 
-	public static final String FIND_BY_C_C_PG_N_D =
-		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
-
 	public static final String FIND_BY_S_L_RSGC_S =
 		GroupFinder.class.getName() + ".findByS_L_RSGC_S";
+
+	public static final String FIND_BY_C_C_PG_N_D =
+		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
 
 	public static final String JOIN_BY_ACTIVE =
 		GroupFinder.class.getName() + ".joinByActive";
@@ -689,6 +689,36 @@ public class GroupFinderImpl
 	}
 
 	@Override
+	public List<Group> findByS_L_RSGC_S() {
+		String sql = CustomSQLUtil.get(FIND_BY_S_L_RSGC_S);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(true);
+
+			List<Group> groups = (List<Group>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			return groups;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
 	public List<Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId, String[] names,
 		String[] descriptions, LinkedHashMap<String, Object> params,
@@ -861,36 +891,6 @@ public class GroupFinderImpl
 
 				groups.add(group);
 			}
-
-			return groups;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<Group> findByS_L_RSGC_S() {
-		String sql = CustomSQLUtil.get(FIND_BY_S_L_RSGC_S);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("Group_", GroupImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(true);
-
-			List<Group> groups = (List<Group>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			return groups;
 		}

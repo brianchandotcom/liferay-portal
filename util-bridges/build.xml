@@ -6,7 +6,7 @@
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util Bridges" />
-	<property name="manifest.bundle.symbolic.name" value="util-bridges" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.bridges" />
 
 	<path id="web-lib.classpath">
 		<pathelement path="${project.dir}/portal-kernel/classes" />

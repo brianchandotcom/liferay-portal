@@ -16,7 +16,7 @@
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
-	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
 	<macrodef name="clean">

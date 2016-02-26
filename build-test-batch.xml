@@ -210,6 +210,18 @@ mysql.executable=${mysql.executable}]]></echo>
 				</then>
 			</if>
 
+			<if>
+				<equals arg1="@{database.type}" arg2="mariadb" />
+				<then>
+					<var name="mariadb.executable" unset="true" />
+
+					<property name="mariadb.executable" value="mariadb" />
+
+					<echo append="true" file="sql/sql.${env.HOSTNAME}.properties"><![CDATA[
+mariadb.executable=${mariadb.executable}]]></echo>
+				</then>
+			</if>
+
 			<database-test-action database.type="@{database.type}">
 				<action>
 					<exec executable="${database.service.executable}">
@@ -466,7 +478,12 @@ echo "Sent notification."]]>
 
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
 
-							<prepare-tomcat-setenv />
+							<if>
+								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<then>
+									<prepare-tomcat-setenv />
+								</then>
+							</if>
 						</else>
 					</if>
 
@@ -616,6 +633,10 @@ echo "Sent notification."]]>
 
 	<target name="functional-tomcat8-mysql56-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-wildfly10-mariadb100-jdk8">
+		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
 	<target name="integration-db2105-jdk7">

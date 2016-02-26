@@ -112,10 +112,6 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 			<aui:select label="region" name="regionId" />
 		</div>
-
-		<c:if test="<%= organization != null %>">
-			<aui:input name="siteId" type="resource" value="<%= String.valueOf(groupId) %>" />
-		</c:if>
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="col-md-6">

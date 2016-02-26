@@ -140,7 +140,7 @@ AUI.add(
 
 						setTimeout(
 							function() {
-								instance._defaultSubmitFn.call(instance, event);
+								instance._defaultSubmitFn(event);
 							},
 							0
 						);

@@ -5,7 +5,8 @@ Export-Package:\
 	com.liferay.portal.workflow.kaleo.definition,\
 	com.liferay.portal.workflow.kaleo.definition.deployment,\
 	com.liferay.portal.workflow.kaleo.definition.export,\
-	com.liferay.portal.workflow.kaleo.definition.parser
+	com.liferay.portal.workflow.kaleo.definition.parser,\
+	com.liferay.portal.workflow.kaleo.definition.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
 -include: ../../../../../marketplace/business-productivity/bnd.bnd

@@ -3950,3 +3950,29 @@ This change standardizes naming conventions and separates concepts between Users
 in the Control Panel and Site Members.
 
 ---------------------------------------
+
+### Deprecated Category Entry for Pages
+- **Date:** 2016-Feb-25
+- **JIRA Ticket:** LPS-63667
+
+#### What changed?
+
+The category entry for Site Administration &rarr; Pages has been deprecated in
+favor of Site Administration &rarr; Navigation.
+
+#### Who is affected?
+
+All developers who specified a `control-panel-entry-category` to be visible in
+Site Administration &rarr; Pages are affected.
+
+#### How should I update my code?
+
+You should change the entry from `site_administration.pages` to
+`site_administration.navigation` to make it visible in the category.
+
+#### Why was this change made?
+
+This change standardizes naming conventions and separates concepts in Product
+Menu
+
+---------------------------------------

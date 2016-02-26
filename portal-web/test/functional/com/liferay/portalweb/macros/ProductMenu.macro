@@ -47,12 +47,12 @@
 		</execute>
 	</command>
 
-	<command name="gotoEditPage" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
+	<command name="gotoEditPage" summary="Navigate to Product Menu > Sites > Navigation > Public Pages > ${page}">
 
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#expandPageTree" />
@@ -125,11 +125,11 @@
 		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
 	</command>
 
-	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Pages > Private Pages > ${page}">
+	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Navigation > Private Pages > ${page}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<if>
@@ -144,7 +144,7 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 	</command>
 
@@ -158,11 +158,11 @@
 		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="${site}" />
 	</command>
 
-	<command name="gotoPublicPages" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
+	<command name="gotoPublicPages" summary="Navigate to Product Menu > Sites > Navigation > Public Pages > ${page}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<if>
@@ -175,7 +175,7 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 	</command>
 
@@ -249,11 +249,11 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${page}">
+	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Navigation > ${page}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+			<var name="category" value="Navigation" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoAddPage">

@@ -124,12 +124,13 @@
 	</command>
 
 	<command name="deleteCP">
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${structureName}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
 			<equals arg1="${webContentHasReference}" arg2="true" />
@@ -277,7 +278,8 @@
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+				<execute function="Confirm#assertConfirmationNoWait" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>

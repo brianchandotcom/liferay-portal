@@ -1353,9 +1353,21 @@
 
 		<execute macro="WebContent#tearDownCP" />
 
-		<execute macro="WebContentTemplates#tearDownCP" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
-		<execute macro="WebContentStructures#tearDownCP" />
+		<execute macro="WebContentTemplates#deleteCP">
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#deleteCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 
@@ -1389,6 +1401,10 @@
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
 			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
@@ -1467,7 +1483,6 @@
 			<var name="linkedPageName" value="Test Page" />
 			<var name="structureName" value="Test Structure" />
 			<var name="templateName" value="Test Template" />
-			<var name="webContentLinkToPage" value="LinkToPage" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 

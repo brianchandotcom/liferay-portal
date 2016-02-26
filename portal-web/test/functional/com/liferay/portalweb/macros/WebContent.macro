@@ -564,11 +564,15 @@
 		</if>
 
 		<if>
-			<isset var="webContentLinkToPage" />
+			<isset var="linkedPageName" />
 			<then>
-				<var name="key_fieldName" value="${webContentLinkToPage}" />
+				<var name="key_pageName" value="${linkedPageName}" />
 
-				<execute function="Select" locator1="DDMField#LINK_TO_PAGE" value1="regexp:–\s+${linkedPageName}" />
+				<execute function="Click" locator1="WC#LINK_TO_PAGE_SELECT_PAGE_BUTTON" />
+
+				<execute function="Click" locator1="WC#LINK_TO_PAGE_SELECT_PAGE_RADIO" />
+
+				<execute function="Click" locator1="Button#SELECT" />
 			</then>
 		</if>
 
@@ -1148,7 +1152,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
+		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute macro="WebContent#publish" />
 	</command>

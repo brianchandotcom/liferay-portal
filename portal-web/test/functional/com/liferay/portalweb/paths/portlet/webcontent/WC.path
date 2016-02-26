@@ -8,6 +8,16 @@
 <tr><td rowspan="1" colspan="3">WC</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
+	<td>//button[contains(@id,'SelectButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_SELECT_PAGE_RADIO</td>
+	<td>//label[contains(.,'${key_pageName}')]//input[@type='radio']</td>
+	<td></td>
+</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_NONE</td>

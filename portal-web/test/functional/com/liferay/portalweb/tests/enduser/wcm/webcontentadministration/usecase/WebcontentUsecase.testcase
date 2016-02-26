@@ -973,8 +973,6 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
 		<execute macro="WebContentStructures#deleteCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentHasReference" value="true" />

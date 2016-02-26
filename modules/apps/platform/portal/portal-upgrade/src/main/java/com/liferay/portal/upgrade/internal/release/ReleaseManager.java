@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
@@ -66,7 +67,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=execute", "osgi.command.function=list",
-		"osgi.command.scope=upgrade"
+		"osgi.command.function=queue", "osgi.command.scope=upgrade"
 	},
 	service = Object.class
 )
@@ -104,6 +105,14 @@ public class ReleaseManager {
 
 		for (UpgradeInfo upgradeProcess : upgradeProcesses) {
 			System.out.println("\t" + upgradeProcess);
+		}
+	}
+
+	public void queue() {
+		System.out.println("Pending Jobs: " + _queue.size());
+
+		for (Callable<Void> callable : _queue) {
+			System.out.println(callable);
 		}
 	}
 
@@ -418,7 +427,7 @@ public class ReleaseManager {
 					_releaseLocalService.updateRelease(
 						_bundleSymbolicName,
 						upgradeInfo.getToSchemaVersionString(),
-						upgradeInfo.getFromSchemaVersionString());
+						fromSchemaVersionString);
 				}
 				catch (Exception e) {
 					throw new RuntimeException(e);

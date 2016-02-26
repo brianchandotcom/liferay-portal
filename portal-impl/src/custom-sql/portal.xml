@@ -240,7 +240,7 @@
 				Group_
 			WHERE
 				(Group_.liveGroupId != 0) AND
-				(CAST_CLOB_TEXT(Group_.typeSettings)) like '%staged=true%' AND
+				(CAST_CLOB_TEXT(Group_.typeSettings) like '%staged=true%') AND
 				(Group_.site = ?) AND
 				(Group_.remoteStagingGroupCount > 0)
 		]]>

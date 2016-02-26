@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -192,24 +193,26 @@ public class UpgradeExpando extends UpgradeProcess {
 			String className, String tableName, String columnName)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Upgrading " + tableName);
-		}
+		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrading " + tableName);
+			}
 
-		long classNameId = PortalUtil.getClassNameId(className);
+			long classNameId = PortalUtil.getClassNameId(className);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from ExpandoTable where classNameId = ? and " +
-					"name = ?")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select * from ExpandoTable where classNameId = ? and " +
+						"name = ?")) {
 
-			ps.setLong(1, classNameId);
-			ps.setString(2, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+				ps.setLong(1, classNameId);
+				ps.setString(2, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long tableId = rs.getLong("tableId");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long tableId = rs.getLong("tableId");
 
-					updateRows(tableName, tableId, columnName);
+						updateRows(tableName, tableId, columnName);
+					}
 				}
 			}
 		}

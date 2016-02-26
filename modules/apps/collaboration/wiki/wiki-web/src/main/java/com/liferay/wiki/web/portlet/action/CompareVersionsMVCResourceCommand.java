@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -52,7 +54,8 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, "filterTargetVersion");
 
 		String htmlDiffResult = ActionUtil.getHtmlDiffResult(
-			sourceVersion, targetVersion, resourceRequest, resourceResponse);
+			sourceVersion, targetVersion, resourceRequest, resourceResponse,
+			_wikiEngineRenderer);
 
 		resourceRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 
@@ -60,5 +63,14 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, resourceResponse,
 			"/wiki/compare_versions_diff_html.jsp");
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

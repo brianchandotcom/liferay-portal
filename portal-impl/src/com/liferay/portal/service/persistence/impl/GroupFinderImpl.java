@@ -689,7 +689,10 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public List<Group> findByL_TS_S_RSGC() {
+	public List<Group> findByL_TS_S_RSGC(
+		long liveGroupId, String typeSettings, boolean site,
+		int remoteStagingGroupCount) {
+
 		String sql = CustomSQLUtil.get(FIND_BY_L_TS_S_RSGC);
 
 		Session session = null;
@@ -703,7 +706,10 @@ public class GroupFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(true);
+			qPos.add(liveGroupId);
+			qPos.add(typeSettings);
+			qPos.add(site);
+			qPos.add(remoteStagingGroupCount);
 
 			List<Group> groups = (List<Group>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

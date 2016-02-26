@@ -32,7 +32,7 @@ if (folderId == 0) {
 }
 else {
 	entriesChecker.setRememberCheckBoxStateURLRegexPattern(
-		"^(?!.*" + liferayPortletResponse.getNamespace() + 
+		"^(?!.*" + liferayPortletResponse.getNamespace() +
 		"redirect).*(folderId=" + folderId + ")");
 }
 

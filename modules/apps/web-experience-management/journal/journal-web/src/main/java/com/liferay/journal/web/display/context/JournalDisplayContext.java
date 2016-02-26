@@ -492,8 +492,8 @@ public class JournalDisplayContext {
 
 		entriesChecker.setCssClass("entry-selector");
 		entriesChecker.setRememberCheckBoxStateURLRegexPattern(
-			"^(?!.*" + _liferayPortletResponse.getNamespace() + 
-			"redirect).*(folderId=" + getFolderId() + ")");
+			"^(?!.*" + _liferayPortletResponse.getNamespace() +
+				"redirect).*(folderId=" + getFolderId() + ")");
 
 		articleSearchContainer.setRowChecker(entriesChecker);
 

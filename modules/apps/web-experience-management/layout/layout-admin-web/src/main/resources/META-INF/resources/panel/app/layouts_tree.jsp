@@ -33,7 +33,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<aui:a cssClass="layout-set-link" href="<%= null %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
 					<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
-						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pagesOptions" data-toggle="dropdown" href="javascript:;">
 							<aui:icon image="ellipsis-v" markupView="lexicon" />
 						</a>
 
@@ -72,7 +72,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<c:if test="<%= !layoutsTreeDisplayContext.isPrivateLayout() %>">
 						<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
-							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="publicPagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />
 							</a>
 
@@ -145,7 +145,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<c:if test="<%= layoutsTreeDisplayContext.isPrivateLayout() %>">
 						<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
-							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="privatePagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />
 							</a>
 
@@ -243,27 +243,27 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
 		<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right" data-deleteable="{deleteable}" data-parentable="{parentable}" data-updateable="{updateable}">
-			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">
+			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pageOptions" data-toggle="dropdown" href="javascript:;">
 				<aui:icon image="ellipsis-v" markupView="lexicon" />
 			</a>
 
 			<ul class="dropdown-menu dropdown-menu-left-side">
 				<li>
-					<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add">
+					<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-qa-id="addChildPage" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add">
 						<span aria-hidden="true"><liferay-ui:message key="add-child-page" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="add-child-page-of-x" /></span>
 					</a>
 				</li>
 
 				<li>
-					<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
+					<a class="layout-tree-edit" data-plid="{plid}" data-qa-id="editPage" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
 						<span aria-hidden="true"><liferay-ui:message key="edit" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="edit-x" /></span>
 					</a>
 				</li>
 
 				<li>
-					<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete">
+					<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-qa-id="deletePage" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete">
 						<span aria-hidden="true"><liferay-ui:message key="delete" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="delete-x" /></span>
 					</a>

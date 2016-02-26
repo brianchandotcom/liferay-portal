@@ -55,12 +55,8 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		StringBundler sb = new StringBundler(1);
-
-		sb.append("select current_schema();");
-
 		try {
-			ps = connection.prepareStatement(sb.toString());
+			ps = connection.prepareStatement("select current_schema();");
 
 			rs = ps.executeQuery();
 

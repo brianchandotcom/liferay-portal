@@ -189,6 +189,57 @@ public class CalendarPortlet extends MVCPortlet {
 		_calendarResourceService.deleteCalendarResource(calendarResourceId);
 	}
 
+	public void importCalendar(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long calendarId = ParamUtil.getLong(uploadPortletRequest, "calendarId");
+
+		File file = uploadPortletRequest.getFile("file");
+
+		String data = FileUtil.read(file);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(data)) {
+			try {
+				CalendarDataHandler calendarDataHandler =
+					CalendarDataHandlerFactory.getCalendarDataHandler(
+						CalendarDataFormat.ICAL);
+
+				calendarDataHandler.importCalendar(calendarId, data);
+
+				jsonObject.put("success", true);
+			}
+			catch (Exception e) {
+				String message = themeDisplay.translate(
+					"an-unexpected-error-occurred-while-importing-your-" +
+						"file");
+
+				jsonObject.put("success", false);
+				jsonObject.put("error", message);
+			}
+		}
+		else {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass());
+
+			String message = ResourceBundleUtil.getString(
+				resourceBundle, "failed-to-import-empty-file");
+
+			jsonObject.put("success", false);
+			jsonObject.put("error", message);
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
 	@Override
 	public void init() throws PortletException {
 		super.init();
@@ -1191,57 +1242,6 @@ public class CalendarPortlet extends MVCPortlet {
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName, data.getBytes(),
 			contentType);
-	}
-
-	public void importCalendar(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long calendarId = ParamUtil.getLong(uploadPortletRequest, "calendarId");
-
-		File file = uploadPortletRequest.getFile("file");
-
-		String data = FileUtil.read(file);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (Validator.isNotNull(data)) {
-			try {
-				CalendarDataHandler calendarDataHandler =
-					CalendarDataHandlerFactory.getCalendarDataHandler(
-						CalendarDataFormat.ICAL);
-
-				calendarDataHandler.importCalendar(calendarId, data);
-
-				jsonObject.put("success", true);
-			}
-			catch (Exception e) {
-				String message = themeDisplay.translate(
-					"an-unexpected-error-occurred-while-importing-your-" +
-						"file");
-
-				jsonObject.put("success", false);
-				jsonObject.put("error", message);
-			}
-		}
-		else {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
-			String message = ResourceBundleUtil.getString(
-				resourceBundle, "failed-to-import-empty-file");
-
-			jsonObject.put("success", false);
-			jsonObject.put("error", message);
-		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected void serveResourceCalendars(

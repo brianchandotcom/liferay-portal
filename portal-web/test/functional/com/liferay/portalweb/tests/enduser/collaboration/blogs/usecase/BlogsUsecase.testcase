@@ -1672,7 +1672,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#NOT_PUBLISHED" value1="Not Published (1)" />
 
-		<execute macro="BlogsEntry#gotoScheduledEditPG">
+		<execute macro="BlogsNavigator#gotoEditPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 

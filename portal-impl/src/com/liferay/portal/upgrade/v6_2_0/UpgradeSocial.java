@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -280,8 +279,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
-	private class AddAssetCommentExtraDataGenerator implements
-		ExtraDataGenerator {
+	private static final List<ExtraDataGenerator> _extraDataGenerators =
+		new ArrayList<>();
+
+	private class AddAssetCommentExtraDataGenerator
+		implements ExtraDataGenerator {
 
 		@Override
 		public String getActivityClassName() {
@@ -307,7 +309,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			try {
 				JSONObject extraDataJsonObject =
-						JSONFactoryUtil.createJSONObject(extraData);
+					JSONFactoryUtil.createJSONObject(extraData);
 
 				messageId = extraDataJsonObject.getLong("messageId");
 			}
@@ -317,7 +319,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put(
-					"title", entityResultSet.getString("subject"));
+				"title", entityResultSet.getString("subject"));
 
 			extraDataJSONObject.put("messageId", messageId);
 
@@ -333,16 +335,15 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			long messageId = 0;
 
 			try {
 				JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject(extraData);
+					JSONFactoryUtil.createJSONObject(extraData);
 
 				messageId = extraDataJSONObject.getLong("messageId");
 			}
@@ -374,6 +375,19 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("subject"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
 		public void setActivityQueryParameters(PreparedStatement ps)
 			throws SQLException {
 
@@ -384,25 +398,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
-				throws SQLException {
-
-			ps.setLong(1, classPK);
-		}
-
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("subject"));
-
-			return extraDataJSONObject;
+			ps.setLong(1, classPK);
 		}
 
 		private static final int _ADD_MESSAGE = 1;
@@ -429,13 +429,16 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		@Override
-		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
 			throws SQLException {
 
-			ps.setLong(1, classPK);
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
 		}
 
 		@Override
@@ -448,16 +451,12 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
-
-			return extraDataJSONObject;
+			ps.setLong(1, classPK);
 		}
 
 		private static final int _ADD_ENTRY = 2;
@@ -466,8 +465,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	};
 
-	private class BookmarksEntryExtraDataGenerator implements
-		ExtraDataGenerator {
+	private class BookmarksEntryExtraDataGenerator
+		implements ExtraDataGenerator {
 
 		@Override
 		public String getActivityClassName() {
@@ -485,37 +484,33 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		@Override
-		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
-				throws SQLException {
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-			ps.setLong(1, classPK);
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put("title", entityResultSet.getString("name"));
+
+			return extraDataJSONObject;
 		}
 
 		@Override
 		public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+			throws SQLException {
 
-			ps.setLong(
-					1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
 			ps.setInt(2, _ADD_ENTRY);
 			ps.setInt(3, _UPDATE_ENTRY);
 		}
 
 		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
 
-			JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("name"));
-
-			return extraDataJSONObject;
+			ps.setLong(1, classPK);
 		}
 
 		private static final int _ADD_ENTRY = 1;
@@ -539,7 +534,20 @@ public class UpgradeSocial extends UpgradeProcess {
 		@Override
 		public String getEntityQuery() {
 			return "select title from DLFileEntry where companyId = ? " +
-				   "and groupId = ? and fileEntryId = ?";
+				"and groupId = ? and fileEntryId = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
 		}
 
 		@Override
@@ -551,9 +559,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			ps.setLong(1, companyId);
@@ -561,23 +568,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			ps.setLong(3, classPK);
 		}
 
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
-
-			return extraDataJSONObject;
-		}
-
 	};
-
-	private static final List<ExtraDataGenerator> _extraDataGenerators =
-		new ArrayList<>();
 
 	private class KBArticleExtraDataGenerator implements ExtraDataGenerator {
 
@@ -588,13 +579,25 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public String getActivityQueryWhereClause() {
-			return
-					"classNameId = ? and (type_ = ? or type_ = ? or type_ = ?)";
+			return "classNameId = ? and (type_ = ? or type_ = ? or type_ = ?)";
 		}
 
 		@Override
 		public String getEntityQuery() {
 			return "select title from KBArticle where resourcePrimKey = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
 		}
 
 		@Override
@@ -609,25 +612,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			ps.setLong(1, classPK);
-		}
-
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
-
-			return extraDataJSONObject;
 		}
 
 		private static final int _ADD_KB_ARTICLE = 1;
@@ -653,7 +642,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		@Override
 		public String getEntityQuery() {
 			return "select classNameId, classPK from KBComment where " +
-				   "kbCommentId = ?";
+				"kbCommentId = ?";
 		}
 
 		@Override
@@ -678,14 +667,15 @@ public class UpgradeSocial extends UpgradeProcess {
 					extraDataGenerator = _kbArticleExtraDataGenerator;
 				}
 				else if (classnameId == PortalUtil.getClassNameId(
-						_kbTemplateExtraDataGenerator.getActivityClassName())) {
+							_kbTemplateExtraDataGenerator.getActivityClassName(
+								))) {
 
 					extraDataGenerator = _kbTemplateExtraDataGenerator;
 				}
 
 				if (extraDataGenerator != null) {
 					ps = connection.prepareStatement(
-							extraDataGenerator.getEntityQuery());
+						extraDataGenerator.getEntityQuery());
 
 					ps.setLong(1, classpk);
 
@@ -693,8 +683,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 					while (rs.next()) {
 						extraDataJSONObject =
-								extraDataGenerator.getExtraDataJSONObject(
-										rs, StringPool.BLANK);
+							extraDataGenerator.getExtraDataJSONObject(
+								rs, StringPool.BLANK);
 					}
 				}
 			}
@@ -707,7 +697,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+			throws SQLException {
 
 			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
 			ps.setInt(2, _ADD_KB_COMMENT);
@@ -716,9 +706,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			ps.setLong(1, classPK);
@@ -730,9 +719,9 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private final KBArticleExtraDataGenerator
 			_kbArticleExtraDataGenerator = new KBArticleExtraDataGenerator();
-
 		private final KBTemplateExtraDataGenerator
 			_kbTemplateExtraDataGenerator = new KBTemplateExtraDataGenerator();
+
 	};
 
 	private class KBTemplateExtraDataGenerator implements ExtraDataGenerator {
@@ -753,6 +742,19 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
 		public void setActivityQueryParameters(PreparedStatement ps)
 			throws SQLException {
 
@@ -763,25 +765,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			ps.setLong(1, classPK);
-		}
-
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
-
-			return extraDataJSONObject;
 		}
 
 		private static final int _ADD_KB_TEMPLATE = 2;
@@ -805,8 +793,23 @@ public class UpgradeSocial extends UpgradeProcess {
 		@Override
 		public String getEntityQuery() {
 			return "select title, version from WikiPage where " +
-				   "companyId = ? and groupId = ? and resourcePrimKey = ? " +
-				   "and head = ?";
+				"companyId = ? and groupId = ? and resourcePrimKey = ? " +
+					"and head = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+			extraDataJSONObject.put(
+				"version", entityResultSet.getDouble("version"));
+
+			return extraDataJSONObject;
 		}
 
 		@Override
@@ -820,30 +823,14 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		@Override
 		public void setEntityQueryParameters(
-				PreparedStatement ps, long companyId, long groupId,
-				long userId, long classNameId, long classPK, int type,
-				String extraData)
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
 			throws SQLException {
 
 			ps.setLong(1, companyId);
 			ps.setLong(2, groupId);
 			ps.setLong(3, classPK);
 			ps.setBoolean(4, true);
-		}
-
-		@Override
-		public JSONObject getExtraDataJSONObject(
-				ResultSet entityResultSet, String extraData)
-			throws SQLException {
-
-			JSONObject extraDataJSONObject =JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
-			extraDataJSONObject.put(
-					"version", entityResultSet.getDouble("version"));
-
-			return extraDataJSONObject;
 		}
 
 		private static final int _ADD_PAGE = 1;

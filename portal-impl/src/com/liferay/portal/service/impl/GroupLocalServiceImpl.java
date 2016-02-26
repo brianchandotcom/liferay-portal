@@ -373,9 +373,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addResources(
-			group.getCompanyId(), 0, 0, Group.class.getName(),
-			group.getGroupId(), false, false, false);
+		addResources(group);
 
 		if ((classNameId == groupClassNameId) && !user.isDefaultUser()) {
 
@@ -3495,6 +3493,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					throw new SystemException(e);
 				}
 			}
+		}
+	}
+
+	protected void addResources(Group group) throws PortalException {
+		resourceLocalService.addResources(
+			group.getCompanyId(), 0, 0, Group.class.getName(),
+			group.getGroupId(), false, false, false);
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			String rootModel = ResourceActionsUtil.getPortletRootModelResource(
+				portlet.getRootPortletId());
+
+			if (Validator.isBlank(rootModel)) {
+				continue;
+			}
+
+			resourceLocalService.addResources(
+				portlet.getCompanyId(), group.getGroupId(), 0, rootModel,
+				group.getGroupId(), false, true, true);
 		}
 	}
 

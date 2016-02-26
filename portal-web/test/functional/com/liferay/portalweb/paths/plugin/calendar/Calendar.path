@@ -711,6 +711,11 @@
 	<td>//div[@class='scheduler-view-table-row' and contains(.,'${key_eventTitle}')]/following-sibling::div//div[@title='${key_eventTitle}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW</td>
+	<td>//table[contains(@class,'view-table-data')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

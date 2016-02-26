@@ -1496,6 +1496,22 @@
 		<execute macro="CalendarEvent#delete" />
 	</command>
 
+	<command name="viewAllDay">
+		<for list="${viewType}" param="Day,Week,Month">		
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="${viewType}" />
+			</execute>
+
+			<var name="key_eventTitle" value="${eventTitle}" />
+
+			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW" value1="${eventTitle}" />
+		</for>
+
+		<execute macro="CalendarScheduler#viewAgenda">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
 	<command name="view">
 		<var name="eventTitle" value="${eventTitle}" />
 

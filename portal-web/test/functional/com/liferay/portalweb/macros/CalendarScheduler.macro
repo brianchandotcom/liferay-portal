@@ -239,7 +239,7 @@
 		</execute>
 
 		<var name="key_eventTitle" value="${eventTitle}" />
-		
+
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_FIRST_EVENT_AGENDA_VIEW" value1="${eventTitle}" />
 
 		<if>

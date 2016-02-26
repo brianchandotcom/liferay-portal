@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -471,10 +471,10 @@ public class DefaultWorkflowEngineImpl
 			long scopeGroupId = serviceContext.getScopeGroupId();
 
 			if (scopeGroupId != WorkflowConstants.DEFAULT_GROUP_ID) {
-				Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+				Group group = _groupLocalService.getGroup(scopeGroupId);
 
 				if (group.isLayout()) {
-					group = GroupLocalServiceUtil.getGroup(
+					group = _groupLocalService.getGroup(
 						group.getParentGroupId());
 
 					serviceContext.setScopeGroupId(group.getGroupId());
@@ -618,6 +618,9 @@ public class DefaultWorkflowEngineImpl
 
 		return workflowInstances;
 	}
+
+	@ServiceReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 	private KaleoSignaler _kaleoSignaler;
 

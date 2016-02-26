@@ -19,7 +19,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,14 +54,18 @@ public class TaskAssignerUtil {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();
 
-		KaleoTaskAssignmentInstanceLocalServiceUtil.
+		_kaleoTaskAssignmentInstanceLocalService.
 			deleteKaleoTaskAssignmentInstances(kaleoTaskInstanceToken);
 
-		KaleoTaskAssignmentInstanceLocalServiceUtil.addTaskAssignmentInstances(
+		_kaleoTaskAssignmentInstanceLocalService.addTaskAssignmentInstances(
 			kaleoTaskInstanceToken, reassignedKaleoTaskAssignments,
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());
 	}
+
+	@Reference
+	private KaleoTaskAssignmentInstanceLocalService
+		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
 	private TaskAssignmentSelector _taskAssignmentSelector;

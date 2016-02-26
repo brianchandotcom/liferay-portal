@@ -24,6 +24,14 @@
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 	</command>
 
+	<command name="selectPermissionsFrame">
+		<var name="key_iframeTitle" value="Permissions" />
+
+		<execute function="AssertElementPresent" locator1="IFrame#IFRAME_TITLE" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="selectTopFrame">
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

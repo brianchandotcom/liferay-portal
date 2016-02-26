@@ -73,14 +73,6 @@
 		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#NOTIFICATION_TEMPLATES_HEADER_TITLE" value1="${header}" />
 	</command>
 
-	<command name="_viewPermissionsIframe">
-		<var name="key_assetTitle" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
 	<command name="add">
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />
@@ -576,11 +568,7 @@
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-
-		<var name="key_assetTitle" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<execute function="Check" locator1="Permissions#EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX" value1="${roleName}" />
 
@@ -674,11 +662,7 @@
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-
-		<var name="key_assetTitle" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<execute function="Uncheck" locator1="Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 
@@ -960,10 +944,6 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#_selectPermissionsIframe" />
-
-		<execute macro="Calendar#_viewPermissionsIframe">
-			<var name="calendarName" value="${calendarName}" />
-		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />

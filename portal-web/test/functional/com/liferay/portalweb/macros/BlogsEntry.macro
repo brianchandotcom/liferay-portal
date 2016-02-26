@@ -438,7 +438,6 @@
 
 	<command name="removeViewPermissionsPG">
 		<var name="key_assetHeader" value="${entryTitle}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
@@ -446,11 +445,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-
-		<var name="key_assetTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 
@@ -904,11 +899,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-
-		<var name="key_assetTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1144,11 +1135,7 @@
 
 		<execute function="AssertClick" locator1="Link#PERMISSIONS" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-
-		<var name="key_assetTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />

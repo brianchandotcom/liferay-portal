@@ -95,6 +95,10 @@ public class RowChecker {
 		return _formName;
 	}
 
+	public String getRememberCheckBoxStateURLRegexPattern() {
+		return _rememberCheckBoxStateURLRegexPattern;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by  {@link
 	 *             #getRowCheckBox(HttpServletRequest, boolean, boolean,
@@ -141,6 +145,10 @@ public class RowChecker {
 		return false;
 	}
 
+	public boolean isRememberCheckBoxState() {
+		return _rememberCheckBoxState;
+	}
+
 	public void setAlign(String align) {
 		_align = align;
 	}
@@ -163,6 +171,17 @@ public class RowChecker {
 
 	public void setFormName(String formName) {
 		_formName = getNamespacedValue(formName);
+	}
+
+	public void setRememberCheckBoxState(boolean rememberCheckBoxState) {
+		_rememberCheckBoxState = rememberCheckBoxState;
+	}
+
+	public void setRememberCheckBoxStateURLRegexPattern(
+		String rememberCheckBoxStateURLRegexPattern) {
+
+		_rememberCheckBoxStateURLRegexPattern =
+			rememberCheckBoxStateURLRegexPattern;
 	}
 
 	public void setRowIds(String rowIds) {
@@ -300,6 +319,8 @@ public class RowChecker {
 	private Map<String, Object> _data;
 	private String _formName;
 	private final PortletResponse _portletResponse;
+	private boolean _rememberCheckBoxState = true;
+	private String _rememberCheckBoxStateURLRegexPattern;
 	private String _rowIds;
 	private String _rowSelector;
 	private String _valign = VALIGN;

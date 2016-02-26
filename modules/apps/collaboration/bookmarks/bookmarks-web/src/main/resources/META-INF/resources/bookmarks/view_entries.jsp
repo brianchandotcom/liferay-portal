@@ -27,6 +27,15 @@ bookmarksSearchContainer.setRowChecker(entriesChecker);
 
 entriesChecker.setCssClass("entry-selector");
 
+if (folderId == 0) {
+	entriesChecker.setRememberCheckBoxStateURLRegexPattern("mvcRenderCommandName=/bookmarks/view(&.|$)");
+}
+else {
+	entriesChecker.setRememberCheckBoxStateURLRegexPattern(
+		"^(?!.*" + liferayPortletResponse.getNamespace() + 
+		"redirect).*(folderId=" + folderId + ")");
+}
+
 EntriesMover entriesMover = new EntriesMover(scopeGroupId);
 
 bookmarksSearchContainer.setRowMover(entriesMover);

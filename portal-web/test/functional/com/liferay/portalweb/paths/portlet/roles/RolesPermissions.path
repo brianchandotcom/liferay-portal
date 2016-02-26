@@ -125,7 +125,7 @@
 <!--CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS_USER_GROUP_VIEW_CHECKBOX</td>
-	<td>//input[contains(@value,'UserGroupVIEW')]</td>
+	<td>//tbody//input[contains(@value,'UserGroupVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 <!--CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX</td>
-	<td>//input[contains(@value,'RoleVIEW')]</td>
+	<td>//tbody//input[contains(@value,'RoleVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -711,7 +711,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'WikiAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//tbody//input[contains(@value,'WikiAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>

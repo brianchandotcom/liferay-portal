@@ -197,7 +197,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="All" />
+			<var name="navItem" value="All Sites" />
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">

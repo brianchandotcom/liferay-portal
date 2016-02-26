@@ -8,3 +8,7 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
+
+updateFileVersions {
+	match(/"com\.liferay\.rtl\.css", version: "(.+)"/, "../frontend/frontend-rtl-servlet/build.gradle", "../../../util/css-builder/build.gradle")
+}

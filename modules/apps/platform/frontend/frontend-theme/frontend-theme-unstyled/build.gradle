@@ -158,10 +158,6 @@ dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
 	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
-
-	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
-	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 }
 
 liferay {

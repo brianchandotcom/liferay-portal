@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -82,37 +83,44 @@ public class UpgradeLayout extends UpgradeProcess {
 	}
 
 	protected void updateSourcePrototypeLayoutUuid() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select plid, layoutPrototypeUuid, ");
-		sb.append("sourcePrototypeLayoutUuid from Layout where ");
-		sb.append("layoutPrototypeUuid != '' and ");
-		sb.append("sourcePrototypeLayoutUuid != ''");
+			sb.append("select plid, layoutPrototypeUuid, ");
+			sb.append("sourcePrototypeLayoutUuid from Layout where ");
+			sb.append("layoutPrototypeUuid != '' and ");
+			sb.append("sourcePrototypeLayoutUuid != ''");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			// Get pages with a sourcePrototypeLayoutUuid that have a page
-			// template. If the layoutUuid points to a page template, remove it.
-			// Otherwise, it points to a site template page, so leave it.
+				// Get pages with a sourcePrototypeLayoutUuid that have a page
+				// template. If the layoutUuid points to a page template, remove
+				// it. Otherwise, it points to a site template page, so leave
+				// it.
 
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-				String layoutPrototypeUuid = rs.getString(
-					"layoutPrototypeUuid");
-				String sourcePrototypeLayoutUuid = rs.getString(
-					"sourcePrototypeLayoutUuid");
+				while (rs.next()) {
+					long plid = rs.getLong("plid");
+					String layoutPrototypeUuid = rs.getString(
+						"layoutPrototypeUuid");
+					String sourcePrototypeLayoutUuid = rs.getString(
+						"sourcePrototypeLayoutUuid");
 
-				long groupId = getLayoutPrototypeGroupId(layoutPrototypeUuid);
+					long groupId = getLayoutPrototypeGroupId(
+						layoutPrototypeUuid);
 
-				if (groupId == 0) {
-					continue;
-				}
+					if (groupId == 0) {
+						continue;
+					}
 
-				if (isGroupPrivateLayout(groupId, sourcePrototypeLayoutUuid)) {
-					runSQL(
-						"update Layout set sourcePrototypeLayoutUuid = null " +
-							"where plid = " + plid);
+					if (isGroupPrivateLayout(
+							groupId, sourcePrototypeLayoutUuid)) {
+
+						runSQL(
+							"update Layout set sourcePrototypeLayoutUuid = " +
+								"null where plid = " + plid);
+					}
 				}
 			}
 		}

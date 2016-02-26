@@ -660,7 +660,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content Media Wiki" />
 		</execute>
 	</command>
@@ -767,7 +767,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 	</command>
@@ -881,7 +881,7 @@
 			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Copied Wiki Page Content" />
 		</execute>
 	</command>
@@ -996,7 +996,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPageContentBody">
+		<execute macro="WikiEntry#viewPageContentBody">
 			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 	</command>

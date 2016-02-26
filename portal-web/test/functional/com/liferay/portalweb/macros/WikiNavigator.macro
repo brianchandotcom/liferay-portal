@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="gotoBodyLinkPG">
-		<execute function="AssertClick" locator1="Wiki#BODY_LINK" value1="${wikiPageContent}" />
+		<execute function="AssertClick" locator1="WikiEntry#BODY_LINK" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="gotoChangeNode">

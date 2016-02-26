@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Runtime Impl
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.runtime.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/business-productivity/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -1,12 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Service
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.service
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.portal.workflow.kaleo.messaging,\
-	com.liferay.portal.workflow.kaleo.runtime,\
-	com.liferay.portal.workflow.kaleo.runtime.action,\
-	com.liferay.portal.workflow.kaleo.runtime.util,\
-	com.liferay.portal.workflow.kaleo.util
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\

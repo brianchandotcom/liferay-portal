@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Definition Impl
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.definition.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
+-dsannotations-options: inherit
+-include: ../../../../../marketplace/business-productivity/bnd.bnd

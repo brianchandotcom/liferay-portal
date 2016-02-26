@@ -1505,14 +1505,19 @@
 
 		<execute macro="CalendarScheduler#viewWeek">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewMonth">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewAgenda">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">

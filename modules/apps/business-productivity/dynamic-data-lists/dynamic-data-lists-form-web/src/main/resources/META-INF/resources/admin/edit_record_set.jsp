@@ -174,9 +174,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishRecordSet" var="publishRecordSetURL" />
 
-		<aui:script require="metal-clipboard/src/Clipboard">
-			new metalClipboardSrcClipboard.default();
-
+		<aui:script>
 			var initHandler = Liferay.after(
 				'form:registered',
 				function(event) {
@@ -299,5 +297,9 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				}
 			);
 		};
+	</aui:script>
+
+	<aui:script require="metal-clipboard/src/Clipboard">
+		new metalClipboardSrcClipboard.default();
 	</aui:script>
 </div>

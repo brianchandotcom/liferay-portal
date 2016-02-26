@@ -1,0 +1,45 @@
+.portlet-image-uploader {
+	.button-holder {
+		margin-bottom: 5px;
+
+		> .form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.lfr-portrait-editor .dialog-footer {
+		z-index: 11;
+	}
+
+	.lfr-portrait-preview {
+		overflow: auto;
+		padding: 5px;
+	}
+
+	.main-content-card {
+		margin-bottom: 80px;
+		margin-top: 2px;
+	}
+}
+
+.taglib-logo-selector .avatar {
+	max-width: 100%;
+}
+
+// LPS-59687
+
+.gecko {
+	.fieldset {
+		.avatar {
+			max-height: 100%;
+			position: absolute;
+		}
+
+		.lfr-change-logo {
+			display: block;
+			overflow: hidden;
+			padding-bottom: 56.25%;
+			position: relative;
+		}
+	}
+}

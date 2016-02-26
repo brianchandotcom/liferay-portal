@@ -28,4 +28,9 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 			ShoppingPortletKeys.SHOPPING, ShoppingPortletKeys.SHOPPING_ADMIN);
 	}
 
+	@Override
+	protected String getResourcePermissionClassName() {
+		return "com.liferay.portal.kernel.model.ResourcePermission";
+	}
+
 }

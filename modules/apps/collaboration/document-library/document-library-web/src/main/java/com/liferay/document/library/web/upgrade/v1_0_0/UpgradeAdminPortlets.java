@@ -29,4 +29,9 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 	}
 
+	@Override
+	protected String getResourcePermissionClassName() {
+		return "com.liferay.portal.kernel.model.ResourcePermission";
+	}
+
 }

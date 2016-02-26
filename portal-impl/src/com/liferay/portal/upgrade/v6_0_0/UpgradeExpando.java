@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -111,7 +112,8 @@ public class UpgradeExpando extends UpgradeProcess {
 	}
 
 	protected void updateTables() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from ExpandoTable where name = ?")) {
 
 			ps.setString(1, "WOL");

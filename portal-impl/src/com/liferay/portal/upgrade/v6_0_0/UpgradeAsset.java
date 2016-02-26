@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -308,7 +309,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetCategories() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from TagsVocabulary where folksonomy = ?")) {
 
 			ps.setBoolean(1, false);
@@ -336,7 +338,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetEntries() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from TagsAsset");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -376,7 +379,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetTags() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select TE.* from TagsEntry TE inner join TagsVocabulary TV " +
 					"on TE.vocabularyId = TV.vocabularyId where " +
 						"TV.folksonomy = ?")) {
@@ -436,23 +440,26 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateResources() throws Exception {
-		updateResources(
-			"com.liferay.portlet.tags", "com.liferay.portlet.asset"
-		);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			updateResources(
+				"com.liferay.portlet.tags", "com.liferay.portlet.asset"
+			);
 
-		updateResources(
-			"com.liferay.portlet.tags.model.TagsEntry", AssetTag.class.getName()
-		);
+			updateResources(
+				"com.liferay.portlet.tags.model.TagsEntry",
+				AssetTag.class.getName()
+			);
 
-		updateResources(
-			"com.liferay.portlet.tags.model.TagsAsset",
-			AssetEntry.class.getName()
-		);
+			updateResources(
+				"com.liferay.portlet.tags.model.TagsAsset",
+				AssetEntry.class.getName()
+			);
 
-		updateResources(
-			"com.liferay.portlet.tags.model.TagsVocabulary",
-			AssetVocabulary.class.getName()
-		);
+			updateResources(
+				"com.liferay.portlet.tags.model.TagsVocabulary",
+				AssetVocabulary.class.getName()
+			);
+		}
 	}
 
 	protected void updateResources(String oldCodeName, String newCodeName)

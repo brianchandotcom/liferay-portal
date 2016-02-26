@@ -119,6 +119,14 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 		return false;
 	}
 
+	public boolean isMasterRecurringBooking() {
+		if (getRecurringCalendarBookingId() == getCalendarBookingId()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean isRecurring() {
 		if (Validator.isNotNull(getRecurrence())) {

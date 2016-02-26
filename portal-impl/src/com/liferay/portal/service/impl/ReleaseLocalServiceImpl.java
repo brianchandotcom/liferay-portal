@@ -360,8 +360,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 			sb.append("Unable to update release of ");
 			sb.append(servletContextName);
-			sb.append(" because the previous schema ");
-			sb.append("version ");
+			sb.append(" because the previous schema version ");
 			sb.append(previousSchemaVersion);
 			sb.append(" does not match the expected schema version ");
 			sb.append(currentSchemaVersion);

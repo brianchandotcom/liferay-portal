@@ -276,7 +276,10 @@ public class DefaultPortalKaleoManager
 	@ServiceReference(type = UserLocalService.class)
 	protected UserLocalService userLocalService;
 
-	@ServiceReference(type = WorkflowComparatorFactory.class)
+	@ServiceReference(
+		filterString = "(proxy.bean=false)",
+		type = WorkflowComparatorFactory.class
+	)
 	protected WorkflowComparatorFactory workflowComparatorFactory;
 
 	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
@@ -291,7 +294,10 @@ public class DefaultPortalKaleoManager
 	private final Map<String, String> _definitionAssets = new HashMap<>();
 	private final Map<String, String> _definitionFiles = new HashMap<>();
 
-	@ServiceReference(type = WorkflowDefinitionManager.class)
+	@ServiceReference(
+		filterString = "(proxy.bean=false)",
+		type = WorkflowDefinitionManager.class
+	)
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

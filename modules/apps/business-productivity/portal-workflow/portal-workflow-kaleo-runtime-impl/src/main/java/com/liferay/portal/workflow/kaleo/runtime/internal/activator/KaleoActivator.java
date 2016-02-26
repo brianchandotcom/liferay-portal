@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.activator;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Activate;
@@ -38,5 +39,8 @@ public class KaleoActivator {
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Reference
+	private WorkflowEngine _workflowEngine;
 
 }

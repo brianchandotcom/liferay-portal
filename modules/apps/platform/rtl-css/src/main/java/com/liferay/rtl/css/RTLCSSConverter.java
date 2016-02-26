@@ -69,7 +69,7 @@ public class RTLCSSConverter {
 		return _cssWriter.getCSSAsString(cascadingStyleSheet);
 	}
 
-	protected void convertBackgroundProperties(CSSDeclaration cssDeclaration) {
+	private void convertBackgroundProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<ICSSExpressionMember> icssExpressionMembers =
@@ -145,7 +145,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthandProperties(CSSDeclaration cssDeclaration) {
+	private void convertShorthandProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
@@ -167,7 +167,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthandRadiusProperties(
+	private void convertShorthandRadiusProperties(
 		CSSDeclaration cssDeclaration) {
 
 		CSSExpression cssExpression = cssDeclaration.getExpression();
@@ -228,7 +228,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void processRule(CSSStyleRule cssStyleRule) {
+	private void processRule(CSSStyleRule cssStyleRule) {
 		for (
 			CSSDeclaration cssDeclaration : cssStyleRule.getAllDeclarations()) {
 
@@ -262,7 +262,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
+	private void processRules(List<ICSSTopLevelRule> icssTopLevelRules) {
 		for (ICSSTopLevelRule icssTopLevelRule : icssTopLevelRules) {
 			if (icssTopLevelRule instanceof CSSMediaRule) {
 				CSSMediaRule cssMediaRule = (CSSMediaRule)icssTopLevelRule;
@@ -275,7 +275,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void replace(
+	private void replace(
 		CSSDeclaration cssDeclaration, Map<String, String> replacementValues) {
 
 		CSSExpression cssExpression = cssDeclaration.getExpression();
@@ -295,11 +295,11 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void replaceIcons(CSSDeclaration cssDeclaration) {
+	private void replaceIcons(CSSDeclaration cssDeclaration) {
 		replace(cssDeclaration, _replacementIcons);
 	}
 
-	protected void replaceYui3Cursors(
+	private void replaceYui3Cursors(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
@@ -310,7 +310,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void resizeYui3BackgroundPosition(
+	private void resizeYui3BackgroundPosition(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
@@ -364,7 +364,7 @@ public class RTLCSSConverter {
 		cssExpressionMemberTermSimple2.setValue("0");
 	}
 
-	protected void resizeYui3Offset(
+	private void resizeYui3Offset(
 		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
 
 		String selector = cssStyleRule.getSelectorsAsCSSString(
@@ -388,7 +388,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String reverse(String s) {
+	private String reverse(String s) {
 		if (s.contains("right")) {
 			return s.replace("right", "left");
 		}
@@ -399,7 +399,7 @@ public class RTLCSSConverter {
 		return s;
 	}
 
-	protected void reverseProperty(CSSDeclaration cssDeclaration) {
+	private void reverseProperty(CSSDeclaration cssDeclaration) {
 		String property = cssDeclaration.getProperty();
 
 		String asterisk = "";
@@ -415,11 +415,11 @@ public class RTLCSSConverter {
 		cssDeclaration.setProperty(asterisk + property);
 	}
 
-	protected void reverseValue(CSSDeclaration cssDeclaration) {
+	private void reverseValue(CSSDeclaration cssDeclaration) {
 		reverseValue(cssDeclaration.getExpression());
 	}
 
-	protected void reverseValue(CSSExpression cssExpression) {
+	private void reverseValue(CSSExpression cssExpression) {
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
 			cssExpression.getAllSimpleMembers();
 
@@ -441,7 +441,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String stripAsterisk(String property) {
+	private String stripAsterisk(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 

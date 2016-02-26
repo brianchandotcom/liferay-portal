@@ -170,7 +170,9 @@ public class DDLFormEmailNotificationSender {
 		return render(template);
 	}
 
-	protected String getEmailFromAddress(DDLRecordSet recordSet) {
+	protected String getEmailFromAddress(DDLRecordSet recordSet)
+		throws PortalException {
+
 		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		String defaultEmailFromAddress = PrefsPropsUtil.getString(
@@ -180,7 +182,9 @@ public class DDLFormEmailNotificationSender {
 			recordSettings.emailFromAddress(), defaultEmailFromAddress);
 	}
 
-	protected String getEmailFromName(DDLRecordSet recordSet) {
+	protected String getEmailFromName(DDLRecordSet recordSet)
+		throws PortalException {
+
 		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		String defaultEmailFromName = PrefsPropsUtil.getString(
@@ -212,7 +216,9 @@ public class DDLFormEmailNotificationSender {
 			recordSettings.emailSubject(), defaultEmailSubject);
 	}
 
-	protected String getEmailToAddress(DDLRecordSet recordSet) {
+	protected String getEmailToAddress(DDLRecordSet recordSet)
+		throws PortalException {
+
 		String defaultEmailToAddress = StringPool.BLANK;
 
 		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();

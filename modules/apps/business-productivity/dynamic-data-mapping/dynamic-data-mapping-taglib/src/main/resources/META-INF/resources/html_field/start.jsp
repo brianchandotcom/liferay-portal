@@ -51,7 +51,7 @@
 						{
 							container: '#<%= randomNamespace %>',
 							ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
-							definition: <%= DDMStructureLocalServiceUtil.serialize(ddmForm) %>,
+							definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
 							doAsGroupId: <%= scopeGroupId %>,
 							fieldsNamespace: '<%= fieldsNamespace %>',
 							mode: '<%= mode %>',

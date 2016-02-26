@@ -20,7 +20,6 @@
 <%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer" %>
 <%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" %>
 <%@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext" %>
-<%@ page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %>
 <%@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>

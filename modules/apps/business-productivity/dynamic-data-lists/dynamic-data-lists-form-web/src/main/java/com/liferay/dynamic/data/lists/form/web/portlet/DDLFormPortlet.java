@@ -340,7 +340,9 @@ public class DDLFormPortlet extends MVCPortlet {
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId());
 	}
 
-	protected boolean isCaptchaRequired(DDLRecordSet recordSet) {
+	protected boolean isCaptchaRequired(DDLRecordSet recordSet)
+		throws PortalException {
+
 		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		return recordSetSettings.requireCaptcha();

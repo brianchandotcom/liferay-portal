@@ -117,6 +117,7 @@
 							instance.hide();
 
 							instance._outsideHandler.detach();
+
 							instance._outsideHandler = null;
 						},
 

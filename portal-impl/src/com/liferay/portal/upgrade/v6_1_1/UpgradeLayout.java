@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -34,26 +33,20 @@ public class UpgradeLayout extends UpgradeProcess {
 	protected long getLayoutPrototypeGroupId(String layoutPrototypeUuid)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId from Group_ where classPK = (select " +
-					"layoutPrototypeId from LayoutPrototype where uuid_ = ?)");
+					"layoutPrototypeId from LayoutPrototype where uuid_ = " +
+						"?)")) {
 
 			ps.setString(1, layoutPrototypeUuid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-
-				return groupId;
+					return groupId;
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
@@ -63,58 +56,45 @@ public class UpgradeLayout extends UpgradeProcess {
 			long groupId, String sourcePrototypeLayoutUuid)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from Layout where uuid_ = ? and groupId = ? " +
-					"and privateLayout = ?");
+					"and privateLayout = ?")) {
 
 			ps.setString(1, sourcePrototypeLayoutUuid);
 			ps.setLong(2, groupId);
 			ps.setBoolean(3, true);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int count = rs.getInt(1);
 
-			while (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
-				}
-				else {
-					return false;
+					if (count > 0) {
+						return true;
+					}
+					else {
+						return false;
+					}
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;
 	}
 
 	protected void updateSourcePrototypeLayoutUuid() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
+		sb.append("select plid, layoutPrototypeUuid, ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where ");
+		sb.append("layoutPrototypeUuid != '' and ");
+		sb.append("sourcePrototypeLayoutUuid != ''");
+
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			// Get pages with a sourcePrototypeLayoutUuid that have a page
 			// template. If the layoutUuid points to a page template, remove it.
 			// Otherwise, it points to a site template page, so leave it.
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("select plid, layoutPrototypeUuid, ");
-			sb.append("sourcePrototypeLayoutUuid from Layout where ");
-			sb.append("layoutPrototypeUuid != '' and ");
-			sb.append("sourcePrototypeLayoutUuid != ''");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long plid = rs.getLong("plid");
@@ -135,9 +115,6 @@ public class UpgradeLayout extends UpgradeProcess {
 							"where plid = " + plid);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

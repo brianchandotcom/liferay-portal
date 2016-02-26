@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,45 +36,33 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	protected boolean hasFileEntry(long groupId, long folderId, String title)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from DLFileEntry where groupId = ? and " +
-					"folderId = ? and title = ?");
+					"folderId = ? and title = ?")) {
 
 			ps.setLong(1, groupId);
 			ps.setLong(2, folderId);
 			ps.setString(3, title);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int count = rs.getInt(1);
 
-			while (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
+					if (count > 0) {
+						return true;
+					}
 				}
-			}
 
-			return false;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+				return false;
+			}
 		}
 	}
 
 	protected void updateFileEntries() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryId, groupId, folderId, title, extension, " +
 					"version from DLFileEntry");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long fileEntryId = rs.getLong("fileEntryId");
@@ -118,40 +105,30 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				updateFileEntry(fileEntryId, version, uniqueTitle);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateFileEntry(
 			long fileEntryId, String version, String newTitle)
 		throws SQLException {
 
-		PreparedStatement ps = null;
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"update DLFileEntry set title = ? where fileEntryId = ?")) {
 
-		try {
-			ps = connection.prepareStatement(
-				"update DLFileEntry set title = ? where fileEntryId = ?");
+			ps1.setString(1, newTitle);
+			ps1.setLong(2, fileEntryId);
 
-			ps.setString(1, newTitle);
-			ps.setLong(2, fileEntryId);
+			ps1.executeUpdate();
 
-			ps.executeUpdate();
+			try (PreparedStatement ps2 = connection.prepareStatement(
+					"update DLFileVersion set title = ? where fileEntryId = " +
+						"? and version = ?")) {
 
-			DataAccess.cleanUp(ps);
+				ps2.setString(1, newTitle);
+				ps2.setLong(2, fileEntryId);
+				ps2.setString(3, version);
 
-			ps = connection.prepareStatement(
-				"update DLFileVersion set title = ? where fileEntryId = " +
-					"? and version = ?");
-
-			ps.setString(1, newTitle);
-			ps.setLong(2, fileEntryId);
-			ps.setString(3, version);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
+				ps2.executeUpdate();
+			}
 		}
 	}
 

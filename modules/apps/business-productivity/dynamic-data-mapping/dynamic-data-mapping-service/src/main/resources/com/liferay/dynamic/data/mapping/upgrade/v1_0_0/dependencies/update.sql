@@ -16,6 +16,7 @@ create table DDMDataProviderInstance (
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
+alter table DDMStructure alter column description TEXT null;
 
 update DDMStructure set versionUserId = userId;
 update DDMStructure set versionUserName = userName;
@@ -59,6 +60,7 @@ alter table DDMTemplate add versionUserId LONG;
 alter table DDMTemplate add versionUserName VARCHAR(75) null;
 alter table DDMTemplate add resourceClassNameId LONG;
 alter table DDMTemplate add version VARCHAR(75) null;
+alter table DDMTemplate alter column description TEXT null;
 
 update DDMTemplate set versionUserId = userId;
 update DDMTemplate set versionUserName = userName;

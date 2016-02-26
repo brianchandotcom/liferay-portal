@@ -101,12 +101,12 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_31817A62 on DDMStructure (classNameId)",
 		"create index IX_4FBAC092 on DDMStructure (companyId, classNameId)",
-		"create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey)",
+		"create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey[$COLUMN_LENGTH:75$])",
 		"create index IX_43395316 on DDMStructure (groupId, parentStructureId)",
 		"create index IX_657899A8 on DDMStructure (parentStructureId)",
-		"create index IX_20FDE04C on DDMStructure (structureKey)",
-		"create index IX_F9FB8D60 on DDMStructure (uuid_, companyId)",
-		"create unique index IX_85C7EBE2 on DDMStructure (uuid_, groupId)"
+		"create index IX_20FDE04C on DDMStructure (structureKey[$COLUMN_LENGTH:75$])",
+		"create index IX_F9FB8D60 on DDMStructure (uuid_[$COLUMN_LENGTH:75$], companyId)",
+		"create unique index IX_85C7EBE2 on DDMStructure (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};
 
 }

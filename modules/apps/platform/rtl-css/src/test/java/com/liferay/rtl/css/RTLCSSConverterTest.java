@@ -225,7 +225,8 @@ public class RTLCSSConverterTest {
 	public void testCalc() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 
-		rtlCssConverter.process(".foo { margin-top: calc(((1em * 1.428571) - 1em) / 2); }");
+		rtlCssConverter.process(
+			".foo { margin-top: calc(((1em * 1.428571) - 1em) / 2); }");
 	}
 
 	@Test

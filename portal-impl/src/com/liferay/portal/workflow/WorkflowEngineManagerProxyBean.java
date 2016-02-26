@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
 import java.util.Map;
@@ -22,6 +23,9 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties(
+	property = "proxy.bean=true", service = WorkflowEngineManager.class
+)
 public class WorkflowEngineManagerProxyBean
 	extends BaseProxyBean implements WorkflowEngineManager {
 

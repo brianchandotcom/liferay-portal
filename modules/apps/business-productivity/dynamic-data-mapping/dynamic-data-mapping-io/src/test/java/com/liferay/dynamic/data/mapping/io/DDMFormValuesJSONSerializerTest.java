@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -36,6 +38,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormValuesJSONSerializer();
+	}
 
 	@Test
 	public void testFormValuesSerialization() throws Exception {
@@ -230,6 +240,14 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		value.addString(LocaleUtil.BRAZIL, "Texto");
 
 		return value;
+	}
+
+	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
+		field(
+			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONSerializer, new JSONFactoryImpl()
+		);
 	}
 
 	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.test;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -60,6 +62,8 @@ public class BaseDDMServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormXSDDeserializer();
+
 		group = GroupTestUtil.addGroup();
 
 		ddmStructureTestHelper = new DDMStructureTestHelper(
@@ -268,10 +272,17 @@ public class BaseDDMServiceTestCase {
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
 	protected DDMForm toDDMForm(String definition) throws Exception {
 		DDMXMLUtil.validateXML(definition);
 
-		return DDMFormXSDDeserializerUtil.deserialize(definition);
+		return _ddmFormXSDDeserializer.deserialize(definition);
 	}
 
 	protected static final String DDL_RECORD_CLASS_NAME =
@@ -285,5 +296,7 @@ public class BaseDDMServiceTestCase {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
 }

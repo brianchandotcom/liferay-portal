@@ -67,6 +67,17 @@ public class DDMUtil {
 		return getDDM().getDDMFormFieldsJSONArray(ddmStructureVersion, script);
 	}
 
+	public static String getDDMFormJSONString(DDMForm ddmForm) {
+		return getDDM().getDDMFormJSONString(ddmForm);
+	}
+
+	public static DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, String serializedDDMFormValues)
+		throws PortalException {
+
+		return getDDM().getDDMFormValues(ddmForm, serializedDDMFormValues);
+	}
+
 	public static DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
@@ -74,6 +85,12 @@ public class DDMUtil {
 
 		return getDDM().getDDMFormValues(
 			ddmStructureId, fieldNamespace, serviceContext);
+	}
+
+	public static String getDDMFormValuesJSONString(
+		DDMFormValues ddmFormValues) {
+
+		return getDDM().getDDMFormValuesJSONString(ddmFormValues);
 	}
 
 	public static DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {

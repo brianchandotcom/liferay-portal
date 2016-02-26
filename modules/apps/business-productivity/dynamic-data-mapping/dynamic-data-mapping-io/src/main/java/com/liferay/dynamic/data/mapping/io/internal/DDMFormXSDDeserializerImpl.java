@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Carvalho
@@ -50,7 +51,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		throws PortalException {
 
 		try {
-			Document document = SAXReaderUtil.read(serializedDDMForm);
+			Document document = _saxReader.read(serializedDDMForm);
 
 			DDMForm ddmForm = new DDMForm();
 
@@ -88,7 +89,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 	protected Element fetchMetadataEntry(
 		Element parentElement, String entryName) {
 
-		XPath xPathSelector = SAXReaderUtil.createXPath(
+		XPath xPathSelector = _saxReader.createXPath(
 			"entry[@name=" + HtmlUtil.escapeXPathAttribute(entryName) +
 				StringPool.CLOSE_BRACKET);
 
@@ -387,5 +388,12 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 
 		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
 	}
+
+	@Reference(unbind = "-")
+	protected void setSAXReader(SAXReader saxReader) {
+		_saxReader = saxReader;
+	}
+
+	private SAXReader _saxReader;
 
 }

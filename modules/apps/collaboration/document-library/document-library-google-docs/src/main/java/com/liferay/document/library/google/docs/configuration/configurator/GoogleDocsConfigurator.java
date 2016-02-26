@@ -19,9 +19,12 @@ import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHe
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -55,7 +58,8 @@ public class GoogleDocsConfigurator {
 					GoogleDocsDLFileEntryTypeHelper
 						googleDocsDLFileEntryTypeHelper =
 							new GoogleDocsDLFileEntryTypeHelper(
-								company, _classNameLocalService,
+								company, _classNameLocalService, _ddm,
+								_ddmFormXSDDeserializer,
 								_ddmStructureLocalService,
 								_dlFileEntryTypeLocalService,
 								_userLocalService);
@@ -98,6 +102,18 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormXSDDeserializer(
+		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
+
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLinkManager(
 		DDMStructureLinkManager ddmStructureLinkManager) {
 	}
@@ -107,6 +123,13 @@ public class GoogleDocsConfigurator {
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -147,7 +170,10 @@ public class GoogleDocsConfigurator {
 
 	private ClassNameLocalService _classNameLocalService;
 	private CompanyLocalService _companyLocalService;
+	private DDM _ddm;
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

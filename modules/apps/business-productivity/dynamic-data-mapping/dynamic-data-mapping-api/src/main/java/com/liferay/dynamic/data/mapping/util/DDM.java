@@ -51,10 +51,18 @@ public interface DDM {
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructureVersion ddmStructureVersion, String script);
 
+	public String getDDMFormJSONString(DDMForm ddmForm);
+
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
+		throws PortalException;
+
 	public DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	public String getDDMFormValuesJSONString(DDMFormValues ddmFormValues);
 
 	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm);
 

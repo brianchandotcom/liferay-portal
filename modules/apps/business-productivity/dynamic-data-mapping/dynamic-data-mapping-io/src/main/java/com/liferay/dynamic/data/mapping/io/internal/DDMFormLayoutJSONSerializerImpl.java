@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -40,7 +41,7 @@ public class DDMFormLayoutJSONSerializerImpl
 
 	@Override
 	public String serialize(DDMFormLayout ddmFormLayout) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
 		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
@@ -52,7 +53,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	protected void addColumns(
 		JSONObject jsonObject, List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
 			jsonArray.put(toJSONObject(ddmFormLayoutColumn));
@@ -77,7 +78,7 @@ public class DDMFormLayoutJSONSerializerImpl
 			return;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Locale availableLocale : description.getAvailableLocales()) {
 			jsonObject.put(
@@ -91,7 +92,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	protected void addFieldNames(
 		JSONObject jsonObject, List<String> ddmFormFieldNames) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
 			jsonArray.put(ddmFormFieldName);
@@ -103,7 +104,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	protected void addPages(
 		JSONObject jsonObject, List<DDMFormLayoutPage> ddmFormLayoutPages) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
 			jsonArray.put(toJSONObject(ddmFormLayoutPage));
@@ -115,7 +116,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	protected void addRows(
 		JSONObject jsonObject, List<DDMFormLayoutRow> ddmFormLayoutRows) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
 			jsonArray.put(toJSONObject(ddmFormLayoutRow));
@@ -131,7 +132,7 @@ public class DDMFormLayoutJSONSerializerImpl
 			return;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Locale availableLocale : title.getAvailableLocales()) {
 			jsonObject.put(
@@ -142,8 +143,13 @@ public class DDMFormLayoutJSONSerializerImpl
 		pageJSONObject.put("title", jsonObject);
 	}
 
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	protected JSONObject toJSONObject(DDMFormLayoutColumn ddmFormLayoutColumn) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("size", ddmFormLayoutColumn.getSize());
 
@@ -153,7 +159,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	}
 
 	protected JSONObject toJSONObject(DDMFormLayoutPage ddmFormLayoutPage) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addDescription(jsonObject, ddmFormLayoutPage.getDescription());
 		addRows(jsonObject, ddmFormLayoutPage.getDDMFormLayoutRows());
@@ -163,7 +169,7 @@ public class DDMFormLayoutJSONSerializerImpl
 	}
 
 	protected JSONObject toJSONObject(DDMFormLayoutRow ddmFormLayoutRow) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addColumns(jsonObject, ddmFormLayoutRow.getDDMFormLayoutColumns());
 
@@ -175,5 +181,7 @@ public class DDMFormLayoutJSONSerializerImpl
 
 		jsonObject.put("paginationMode", paginationMode);
 	}
+
+	private JSONFactory _jsonFactory;
 
 }

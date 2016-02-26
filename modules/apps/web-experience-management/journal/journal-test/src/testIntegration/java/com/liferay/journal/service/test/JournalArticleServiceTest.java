@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -57,6 +57,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
@@ -91,6 +93,8 @@ public class JournalArticleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormXSDDeserializer();
+
 		_group = GroupTestUtil.addGroup();
 
 		_article = JournalTestUtil.addArticle(
@@ -648,6 +652,13 @@ public class JournalArticleServiceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
 	protected void testAddArticleRequiredFields(
 			String ddmStructureDefinition, String journalArticleContent,
 			Map<String, String> requiredFields)
@@ -655,7 +666,7 @@ public class JournalArticleServiceTest {
 
 		String definition = readText(ddmStructureDefinition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
@@ -718,6 +729,7 @@ public class JournalArticleServiceTest {
 	}
 
 	private JournalArticle _article;
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
 	@DeleteAfterTestRun
 	private Group _group;

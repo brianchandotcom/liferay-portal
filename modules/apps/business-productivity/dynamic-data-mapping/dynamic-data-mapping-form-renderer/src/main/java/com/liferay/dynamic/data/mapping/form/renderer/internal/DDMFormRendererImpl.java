@@ -21,10 +21,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -261,8 +261,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		template.put("containerId", containerId);
 
-		template.put(
-			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
+		template.put("definition", _ddmFormJSONSerializer.serialize(ddmForm));
 
 		DDMFormValues ddmFormValues =
 			ddmFormRenderingContext.getDDMFormValues();
@@ -290,9 +289,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		template.put(
 			"fieldTypes",
-			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes));
+			_ddmFormFieldTypesJSONSerializer.serialize(ddmFormFieldTypes));
 		template.put(
-			"layout", DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
+			"layout", _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
 		List<Object> pages = getPages(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -333,7 +332,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		if (ddmFormValues != null) {
 			template.put(
 				"values",
-				DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues));
+				_ddmFormValuesJSONSerializer.serialize(ddmFormValues));
 		}
 		else {
 			template.put("values", JSONFactoryUtil.getNullJSON());
@@ -389,6 +388,34 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypesJSONSerializer(
+		DDMFormFieldTypesJSONSerializer ddmFormFieldTypesJSONSerializer) {
+
+		_ddmFormFieldTypesJSONSerializer = ddmFormFieldTypesJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormJSONSerializer(
+		DDMFormJSONSerializer ddmFormJSONSerializer) {
+
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormLayoutJSONSerializer(
+		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
+
+		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONSerializer(
+		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
+
+		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -396,6 +423,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	private DDM _ddm;
 	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
+	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
 	private JSONFactory _jsonFactory;
 	private TemplateResource _templateResource;
 

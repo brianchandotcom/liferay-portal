@@ -376,6 +376,18 @@ public class DDLRecordSetLocalServiceUtil {
 		return getService().getRecordSet(recordSetId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getRecordSetSettingsDDMFormValues(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetSettingsDDMFormValues(recordSet);
+	}
+
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSetSettingsModel(recordSet);
+	}
+
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
 		long groupId) {
 		return getService().getRecordSets(groupId);

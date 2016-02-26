@@ -153,14 +153,37 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			_ddmFormFieldTypesJSONSerializer,
 			getMockedDDMFormFieldTypeServicesTracker());
 
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class,
+			"_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
+
 		// DDM form JSON serializer
 
 		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class,
 			"_ddmFormJSONSerializer");
 
-		field.set(
-			_ddmFormFieldTypesJSONSerializer, new DDMFormJSONSerializerImpl());
+		field.set(_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer);
 
 		// DDM form layout JSON serializer
 
@@ -169,15 +192,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			"_ddmFormLayoutJSONSerializer");
 
 		field.set(
-			_ddmFormFieldTypesJSONSerializer,
-			new DDMFormLayoutJSONSerializerImpl());
-
-		// JSON factory
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
+			_ddmFormFieldTypesJSONSerializer, _ddmFormLayoutJSONSerializer);
 	}
 
 	protected void whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(
@@ -215,5 +230,9 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	private final DDMFormFieldTypesJSONSerializer
 		_ddmFormFieldTypesJSONSerializer =
 			new DDMFormFieldTypesJSONSerializerImpl();
+	private final DDMFormJSONSerializer _ddmFormJSONSerializer =
+		new DDMFormJSONSerializerImpl();
+	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer =
+		new DDMFormLayoutJSONSerializerImpl();
 
 }

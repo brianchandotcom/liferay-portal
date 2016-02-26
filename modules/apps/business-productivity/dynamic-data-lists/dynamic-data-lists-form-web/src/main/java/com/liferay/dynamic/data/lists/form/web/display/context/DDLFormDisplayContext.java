@@ -84,7 +84,7 @@ public class DDLFormDisplayContext {
 		return _recordSetId;
 	}
 
-	public String getRedirectURL() {
+	public String getRedirectURL() throws PortalException {
 		DDLRecordSet recordSet = getRecordSet();
 
 		if (recordSet == null) {
@@ -96,7 +96,7 @@ public class DDLFormDisplayContext {
 		return recordSetSettings.redirectURL();
 	}
 
-	public boolean isFormAvailable() {
+	public boolean isFormAvailable() throws PortalException {
 		if (isPreview()) {
 			return true;
 		}
@@ -171,7 +171,7 @@ public class DDLFormDisplayContext {
 		return _hasViewPermission;
 	}
 
-	protected boolean isFormPublished() {
+	protected boolean isFormPublished() throws PortalException {
 		DDLRecordSet recordSet = getRecordSet();
 
 		if (recordSet == null) {

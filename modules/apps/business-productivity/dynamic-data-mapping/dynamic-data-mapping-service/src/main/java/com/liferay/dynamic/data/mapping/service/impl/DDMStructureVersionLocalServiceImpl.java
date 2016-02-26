@@ -17,12 +17,15 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureVersionVersionComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +74,15 @@ public class DDMStructureVersionLocalServiceImpl
 	}
 
 	@Override
+	public DDMForm getStructureVersionDDMForm(
+			DDMStructureVersion structureVersion)
+		throws PortalException {
+
+		return ddmFormJSONDeserializer.deserialize(
+			structureVersion.getDefinition());
+	}
+
+	@Override
 	public List<DDMStructureVersion> getStructureVersions(long structureId) {
 		return ddmStructureVersionPersistence.findByStructureId(structureId);
 	}
@@ -88,5 +100,8 @@ public class DDMStructureVersionLocalServiceImpl
 	public int getStructureVersionsCount(long structureId) {
 		return ddmStructureVersionPersistence.countByStructureId(structureId);
 	}
+
+	@ServiceReference(type = DDMFormJSONDeserializer.class)
+	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
 
 }

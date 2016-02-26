@@ -22,8 +22,9 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -35,7 +36,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
@@ -148,7 +149,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
+		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
@@ -222,9 +223,9 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return addStructure(
 			userId, groupId, parentStructureId, classNameId, structureKey,
@@ -345,9 +346,9 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
@@ -866,6 +867,13 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
 	}
 
+	@Override
+	public DDMForm getStructureDDMForm(DDMStructure structure)
+		throws PortalException {
+
+		return ddmFormJSONDeserializer.deserialize(structure.getDefinition());
+	}
+
 	/**
 	 * Returns all the structures present in the system.
 	 *
@@ -1331,9 +1339,9 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		structureKey = getStructureKey(structureKey);
 
@@ -1374,9 +1382,9 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return doUpdateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
@@ -1409,9 +1417,9 @@ public class DDMStructureLocalServiceImpl
 
 		DDMXMLUtil.validateXML(definition);
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = ddm.getDefaultDDMFormLayout(ddmForm);
 
 		return doUpdateStructure(
 			userId, structure.getParentStructureId(), structure.getNameMap(),
@@ -1516,7 +1524,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
+		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 
 		// Structure version
 
@@ -1638,7 +1646,9 @@ public class DDMStructureLocalServiceImpl
 				@Override
 				public Void call() throws Exception {
 					DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
-						new DDMFormTemplateSynchonizer(structure.getDDMForm());
+						new DDMFormTemplateSynchonizer(
+							structure.getDDMForm(), ddmFormJSONDeserializer,
+							ddmFormJSONSerializer, ddmTemplateLocalService);
 
 					List<DDMTemplate> templates = getStructureTemplates(
 						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
@@ -1759,7 +1769,19 @@ public class DDMStructureLocalServiceImpl
 	@ServiceReference(type = BackgroundTaskManager.class)
 	protected BackgroundTaskManager backgroundTaskmanager;
 
+	@ServiceReference(type = DDM.class)
+	protected DDM ddm;
+
+	@ServiceReference(type = DDMFormJSONDeserializer.class)
+	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
+
+	@ServiceReference(type = DDMFormJSONSerializer.class)
+	protected DDMFormJSONSerializer ddmFormJSONSerializer;
+
 	@ServiceReference(type = DDMFormValidator.class)
 	protected DDMFormValidator ddmFormValidator;
+
+	@ServiceReference(type = DDMFormXSDDeserializer.class)
+	protected DDMFormXSDDeserializer ddmFormXSDDeserializer;
 
 }

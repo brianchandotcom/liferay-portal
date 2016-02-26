@@ -95,9 +95,9 @@ else {
 					defaultLogoURL: '<%= defaultLogoURL %>',
 					editLogoFn: '<%= editLogoFn %>',
 					editLogoURL: '<%= uploadImageURL %>',
-					randomNamespace: '<%= randomNamespace %>',
 					logoDisplaySelector: '<%= logoDisplaySelector %>',
-					portletNamespace: '<portlet:namespace />'
+					portletNamespace: '<portlet:namespace />',
+					randomNamespace: '<%= randomNamespace %>'
 				}
 			).render();
 		</aui:script>

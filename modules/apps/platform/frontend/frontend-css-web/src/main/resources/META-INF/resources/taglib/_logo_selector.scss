@@ -26,9 +26,7 @@
 	max-width: 100%;
 }
 
-// Probably can remove after https://developer.mozilla.org/en-US/Firefox/Releases/46, will ship in April 2016.
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1230478
-// https://drafts.csswg.org/css-align/?c=M%3BO%3DD#overflow-values
+// LPS-59687
 
 .gecko {
 	.fieldset {

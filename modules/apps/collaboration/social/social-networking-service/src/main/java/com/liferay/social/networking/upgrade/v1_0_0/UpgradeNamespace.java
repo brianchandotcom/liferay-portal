@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.networking.upgrade.v1_0_0.util.MeetupsEntryTable;
 import com.liferay.social.networking.upgrade.v1_0_0.util.MeetupsRegistrationTable;
@@ -58,34 +59,36 @@ public class UpgradeNamespace extends UpgradeProcess {
 			String tableSqlCreate, String tableSqlDrop)
 		throws Exception {
 
-		if (hasRows(newTableName)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Not renaming " + oldTableName + " to " + newTableName +
-						" because " + newTableName + " has data");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (hasRows(newTableName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Not renaming " + oldTableName + " to " + newTableName +
+							" because " + newTableName + " has data");
+				}
+
+				return;
 			}
 
-			return;
-		}
+			if (!hasRows(oldTableName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Not renaming " + oldTableName + " to " + newTableName +
+							" because " + oldTableName + " has no data");
+				}
 
-		if (!hasRows(oldTableName)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Not renaming " + oldTableName + " to " + newTableName +
-						" because " + oldTableName + " has no data");
+				return;
 			}
 
-			return;
+			runSQL(tableSqlDrop);
+
+			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				oldTableName, tableColumns);
+
+			upgradeTable.setCreateSQL(tableSqlCreate);
+
+			upgradeTable.updateTable();
 		}
-
-		runSQL(tableSqlDrop);
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			oldTableName, tableColumns);
-
-		upgradeTable.setCreateSQL(tableSqlCreate);
-
-		upgradeTable.updateTable();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -19,6 +19,7 @@ import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +50,8 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 	}
 
 	protected void upgradeNotifications() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select userNotificationEventId, payload from " +
 					"UserNotificationEvent where type_ = ?")) {
 

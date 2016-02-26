@@ -20,6 +20,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -61,66 +62,72 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void updateEntryAssets() throws Exception {
-		List<BookmarksEntry> entries =
-			_bookmarksEntryLocalService.getNoAssetEntries();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<BookmarksEntry> entries =
+				_bookmarksEntryLocalService.getNoAssetEntries();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + entries.size() + " entries with no asset");
-		}
-
-		for (BookmarksEntry entry : entries) {
-			try {
-				_bookmarksEntryLocalService.updateAsset(
-					entry.getUserId(), entry, null, null, null, null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + entries.size() + " entries with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for entry " +
-							entry.getEntryId() + ": " + e.getMessage());
+
+			for (BookmarksEntry entry : entries) {
+				try {
+					_bookmarksEntryLocalService.updateAsset(
+						entry.getUserId(), entry, null, null, null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for entry " +
+								entry.getEntryId() + ": " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for entries");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for entries");
+			}
 		}
 	}
 
 	protected void updateFolderAssets() throws Exception {
-		List<BookmarksFolder> folders =
-			_bookmarksFolderLocalService.getNoAssetFolders();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<BookmarksFolder> folders =
+				_bookmarksFolderLocalService.getNoAssetFolders();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + folders.size() + " folders with no asset");
-		}
-
-		for (BookmarksFolder folder : folders) {
-			try {
-				_bookmarksFolderLocalService.updateAsset(
-					folder.getUserId(), folder, null, null, null, null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + folders.size() + " folders with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for folder " +
-							folder.getFolderId() + ": " + e.getMessage());
+
+			for (BookmarksFolder folder : folders) {
+				try {
+					_bookmarksFolderLocalService.updateAsset(
+						folder.getUserId(), folder, null, null, null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for folder " +
+								folder.getFolderId() + ": " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for folders");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for folders");
+			}
 		}
 	}
 
 	protected void verifyTree() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			_bookmarksFolderLocalService.rebuildTree(companyId);
+			for (long companyId : companyIds) {
+				_bookmarksFolderLocalService.rebuildTree(companyId);
+			}
 		}
 	}
 

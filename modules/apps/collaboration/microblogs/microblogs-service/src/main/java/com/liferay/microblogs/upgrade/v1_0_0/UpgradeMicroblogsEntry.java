@@ -16,6 +16,7 @@ package com.liferay.microblogs.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
@@ -29,25 +30,27 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 	}
 
 	protected void updateMicroBlogsEntry() throws Exception {
-		if (hasColumn("MicroblogsEntry", "creatorClassNameId") ||
-			hasColumn("MicroblogsEntry", "creatorClassPK")) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (hasColumn("MicroblogsEntry", "creatorClassNameId") ||
+				hasColumn("MicroblogsEntry", "creatorClassPK")) {
 
-			return;
+				return;
+			}
+
+			runSQL("alter table MicroblogsEntry add creatorClassNameId LONG");
+			runSQL("alter table MicroblogsEntry add creatorClassPK LONG");
+			runSQL(
+				"create index IX_6AA6B164 on MicroblogsEntry (" +
+					"creatorClassNameId, type_)");
+			runSQL(
+				"create index IX_14ACFA9 on MicroblogsEntry (" +
+					"creatorClassNameId, creatorClassPK, type_)");
+
+			runSQL(
+				"update MicroblogsEntry set creatorClassNameId = " +
+					PortalUtil.getClassNameId(User.class) +
+						", creatorClassPK = MicroblogsEntry.userId");
 		}
-
-		runSQL("alter table MicroblogsEntry add creatorClassNameId LONG");
-		runSQL("alter table MicroblogsEntry add creatorClassPK LONG");
-		runSQL(
-			"create index IX_6AA6B164 on MicroblogsEntry (creatorClassNameId," +
-				" type_)");
-		runSQL(
-			"create index IX_14ACFA9 on MicroblogsEntry (creatorClassNameId, " +
-				"creatorClassPK, type_)");
-
-		runSQL(
-			"update MicroblogsEntry set creatorClassNameId = " +
-				PortalUtil.getClassNameId(User.class) +
-					", creatorClassPK = MicroblogsEntry.userId");
 	}
 
 }

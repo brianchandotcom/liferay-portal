@@ -18,6 +18,7 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -48,7 +49,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void upgradeMicroblogActivities() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select activityId, extraData from SocialActivity where " +
 					"classNameId = ?")) {
 

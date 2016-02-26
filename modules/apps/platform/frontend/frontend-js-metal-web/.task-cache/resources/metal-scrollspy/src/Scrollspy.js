@@ -64,6 +64,14 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
 
 			/**
+    * Holds the active index.
+    * @type {number}
+    * @private
+    * @default -1
+    */
+			_this.activeIndex = -1;
+
+			/**
     * Holds the regions cache.
     * @type {!Array}
     * @private
@@ -78,7 +86,11 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
     */
 			_this.scrollHandle_ = _dom2.default.on(_this.scrollElement, 'scroll', _this.checkPosition.bind(_this));
 
-			_this.init();
+			_this.refresh();
+			_this.on('elementChanged', _this.refresh);
+			_this.on('offsetChanged', _this.checkPosition);
+			_this.on('scrollElementChanged', _this.onScrollElementChanged_);
+			_this.on('selectorChanged', _this.refresh);
 			return _this;
 		}
 
@@ -98,7 +110,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 				this.deactivate(this.activeIndex);
 			}
 			this.activeIndex = index;
-			_dom2.default.addClasses(this.getElementForIndex(index), this.activeClass);
+			_dom2.default.addClasses(this.resolveElement(this.regions[index].link), this.activeClass);
 		};
 
 		Scrollspy.prototype.checkPosition = function checkPosition() {
@@ -110,7 +122,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 				return;
 			}
 
-			var index = this.findBestRegionAt_();
+			var index = this.findBestRegionAt_(scrollTop);
 			if (index !== this.activeIndex) {
 				if (index === -1) {
 					this.deactivateAll();
@@ -121,7 +133,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		};
 
 		Scrollspy.prototype.deactivate = function deactivate(index) {
-			_dom2.default.removeClasses(this.getElementForIndex(index), this.activeClass);
+			_dom2.default.removeClasses(this.resolveElement(this.regions[index].link), this.activeClass);
 		};
 
 		Scrollspy.prototype.deactivateAll = function deactivateAll() {
@@ -131,9 +143,9 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 			this.activeIndex = -1;
 		};
 
-		Scrollspy.prototype.findBestRegionAt_ = function findBestRegionAt_() {
+		Scrollspy.prototype.findBestRegionAt_ = function findBestRegionAt_(scrollTop) {
 			var index = -1;
-			var origin = this.getCurrentPosition();
+			var origin = scrollTop + this.offset + this.scrollElementRegion_.top;
 			if (this.regions.length > 0 && origin >= this.regions[0].top) {
 				for (var i = 0; i < this.regions.length; i++) {
 					var region = this.regions[i];
@@ -147,28 +159,11 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 			return index;
 		};
 
-		Scrollspy.prototype.getCurrentPosition = function getCurrentPosition() {
-			var scrollTop = _position2.default.getScrollTop(this.scrollElement);
-			return scrollTop + this.offset + this.scrollElementRegion_.top;
-		};
-
-		Scrollspy.prototype.getElementForIndex = function getElementForIndex(index) {
-			return this.resolveElement(this.regions[index].link);
-		};
-
 		Scrollspy.prototype.getScrollHeight_ = function getScrollHeight_() {
 			var scrollHeight = _position2.default.getHeight(this.scrollElement);
 			scrollHeight += this.scrollElementRegion_.top;
 			scrollHeight -= _position2.default.getClientHeight(this.scrollElement);
 			return scrollHeight;
-		};
-
-		Scrollspy.prototype.init = function init() {
-			this.refresh();
-			this.on('elementChanged', this.refresh);
-			this.on('offsetChanged', this.checkPosition);
-			this.on('scrollElementChanged', this.onScrollElementChanged_);
-			this.on('selectorChanged', this.refresh);
 		};
 
 		Scrollspy.prototype.onScrollElementChanged_ = function onScrollElementChanged_(event) {
@@ -234,15 +229,6 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		},
 
 		/**
-   * The index of the currently active link.
-   * @type {number}
-   */
-		activeIndex: {
-			validator: _metal2.default.isNumber,
-			value: -1
-		},
-
-		/**
    * Function that receives the matching element as argument and return
    * itself. Relevant when the `activeClass` must be applied to a different
    * element, e.g. a parentNode.
@@ -255,8 +241,8 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		},
 
 		/**
-   * The scrollElement element to be used as scrollElement area for scrollspy.
-   * The scrollElement is where the scroll event is listened from.
+   * The scrollElement element to be used as scrollElement area for affix. The scrollElement is
+   * where the scroll event is listened from.
    * @type {Element|Window}
    */
 		scrollElement: {
@@ -275,7 +261,7 @@ define("frontend-js-metal-web@1.0.0/metal-scrollspy/src/Scrollspy", ['exports', 
 		},
 
 		/**
-   * Element to be used as alignment reference of scrollspy.
+   * Element to be used as alignment reference of affix.
    * @type {Element}
    */
 		element: {

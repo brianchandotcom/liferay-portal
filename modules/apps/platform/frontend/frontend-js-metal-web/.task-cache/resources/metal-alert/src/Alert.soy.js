@@ -63,13 +63,43 @@ define("frontend-js-metal-web@1.0.0/metal-alert/src/Alert.soy", ['exports', 'met
    * @suppress {checkTypes}
    */
   Templates.Alert.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="alert alert-dismissible component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="alert"><span class="alert-body">' + (opt_data.body ? soy.$$escapeHtml(opt_data.body) : '') + '</span>' + (opt_data.dismissible ? '<button type="button" class="close" aria-label="Close" data-onclick="toggle"><span aria-hidden="true">×</span></button>' : '') + '</div>');
+    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="alert alert-dismissible component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="alert">' + Templates.Alert.dismiss(opt_data, null, opt_ijData) + Templates.Alert.body(opt_data, null, opt_ijData) + '</div>');
   };
   if (goog.DEBUG) {
     Templates.Alert.render.soyTemplateName = 'Templates.Alert.render';
   }
 
-  Templates.Alert.render.params = ["body", "dismissible", "id"];
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
+  Templates.Alert.body = function (opt_data, opt_ignored, opt_ijData) {
+    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-body">' + (opt_data.body ? soy.$$escapeHtml(opt_data.body) : '') + '</div>');
+  };
+  if (goog.DEBUG) {
+    Templates.Alert.body.soyTemplateName = 'Templates.Alert.body';
+  }
+
+  /**
+   * @param {Object.<string, *>=} opt_data
+   * @param {(null|undefined)=} opt_ignored
+   * @param {Object.<string, *>=} opt_ijData
+   * @return {!soydata.SanitizedHtml}
+   * @suppress {checkTypes}
+   */
+  Templates.Alert.dismiss = function (opt_data, opt_ignored, opt_ijData) {
+    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-dismiss">' + (opt_data.dismissible ? '<button type="button" class="close" aria-label="Close" data-onclick="toggle"><span aria-hidden="true">×</span></button>' : '') + '</div>');
+  };
+  if (goog.DEBUG) {
+    Templates.Alert.dismiss.soyTemplateName = 'Templates.Alert.dismiss';
+  }
+
+  Templates.Alert.render.params = ["id"];
+  Templates.Alert.body.params = ["body", "id"];
+  Templates.Alert.dismiss.params = ["dismissible", "id"];
 
   var Alert = function (_Component) {
     _inherits(Alert, _Component);

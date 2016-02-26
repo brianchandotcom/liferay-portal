@@ -546,6 +546,7 @@
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#add">
@@ -559,8 +560,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Sample LAR" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="SampleLARPortlet#addSampleBooking" />
 
@@ -604,8 +603,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Sample LAR" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="SampleLARPortlet.lar" />

@@ -39,10 +39,6 @@ import javax.portlet.PortletRequest;
  */
 public interface DDM {
 
-	public DDMFormValues deserialize(
-			DDMForm ddmForm, String serializedDDMFormValues)
-		throws PortalException;
-
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException;
 
@@ -55,10 +51,18 @@ public interface DDM {
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructureVersion ddmStructureVersion, String script);
 
+	public String getDDMFormJSONString(DDMForm ddmForm);
+
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
+		throws PortalException;
+
 	public DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	public String getDDMFormValuesJSONString(DDMFormValues ddmFormValues);
 
 	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm);
 
@@ -98,7 +102,5 @@ public interface DDM {
 		String orderByCol, String orderByType);
 
 	public Fields mergeFields(Fields newFields, Fields existingFields);
-
-	public String serialize(DDMFormValues ddmFormValues);
 
 }

@@ -80,14 +80,6 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Override
-	public DDMFormLayout deserialize(String serializedDDMFormLayout)
-		throws PortalException {
-
-		return ddmFormLayoutJSONDeserializer.deserialize(
-			serializedDDMFormLayout);
-	}
-
-	@Override
 	public DDMStructureLayout getStructureLayout(long structureLayoutId)
 		throws PortalException {
 
@@ -102,6 +94,15 @@ public class DDMStructureLayoutLocalServiceImpl
 
 		return ddmStructureLayoutPersistence.findByStructureVersionId(
 			structureVersionId);
+	}
+
+	@Override
+	public DDMFormLayout getStructureLayoutDDMFormLayout(
+			DDMStructureLayout structureLayout)
+		throws PortalException {
+
+		return ddmFormLayoutJSONDeserializer.deserialize(
+			structureLayout.getDefinition());
 	}
 
 	@Override

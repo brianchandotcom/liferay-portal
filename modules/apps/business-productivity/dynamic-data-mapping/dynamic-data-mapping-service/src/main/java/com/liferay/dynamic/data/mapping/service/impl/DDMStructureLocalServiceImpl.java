@@ -149,7 +149,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(serialize(ddmForm));
+		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
@@ -606,13 +606,6 @@ public class DDMStructureLocalServiceImpl
 		deleteStructures(structures);
 	}
 
-	@Override
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return ddmFormJSONDeserializer.deserialize(serializedDDMForm);
-	}
-
 	/**
 	 * Returns the structure with the ID.
 	 *
@@ -872,6 +865,13 @@ public class DDMStructureLocalServiceImpl
 		long groupId, String name, String description) {
 
 		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
+	}
+
+	@Override
+	public DDMForm getStructureDDMForm(DDMStructure structure)
+		throws PortalException {
+
+		return ddmFormJSONDeserializer.deserialize(structure.getDefinition());
 	}
 
 	/**
@@ -1253,11 +1253,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Override
-	public String serialize(DDMForm ddmForm) {
-		return ddmFormJSONSerializer.serialize(ddmForm);
-	}
-
-	@Override
 	public DDMStructure updateStructure(
 			long userId, long structureId, DDMForm ddmForm,
 			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
@@ -1529,7 +1524,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap);
-		structure.setDefinition(serialize(ddmForm));
+		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 
 		// Structure version
 

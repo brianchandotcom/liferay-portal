@@ -18,17 +18,12 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CacheField;
 
 import java.util.List;
@@ -72,28 +67,21 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	}
 
 	@Override
-	public DDMFormValues getSettingsDDMFormValues() {
+	public DDMFormValues getSettingsDDMFormValues() throws PortalException {
 		if (_ddmFormValues == null) {
-			try {
-				DDMForm ddmForm = DDMFormFactory.create(
-					DDLRecordSetSettings.class);
-
-				_ddmFormValues = DDLRecordSetLocalServiceUtil.deserialize(
-					ddmForm, getSettings());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			_ddmFormValues =
+				DDLRecordSetLocalServiceUtil.getRecordSetSettingsDDMFormValues(
+					this);
 		}
 
 		return _ddmFormValues;
 	}
 
 	@Override
-	public DDLRecordSetSettings getSettingsModel() {
+	public DDLRecordSetSettings getSettingsModel() throws PortalException {
 		if (_recordSetSettings == null) {
-			_recordSetSettings = DDMFormInstanceFactory.create(
-				DDLRecordSetSettings.class, getSettingsDDMFormValues());
+			_recordSetSettings =
+				DDLRecordSetLocalServiceUtil.getRecordSetSettingsModel(this);
 		}
 
 		return _recordSetSettings;
@@ -103,12 +91,8 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	public void setSettings(String settings) {
 		super.setSettings(settings);
 
-		_ddmFormValues = null;
 		_recordSetSettings = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLRecordSetImpl.class);
 
 	@CacheField(methodName = "DDMFormValues")
 	private DDMFormValues _ddmFormValues;

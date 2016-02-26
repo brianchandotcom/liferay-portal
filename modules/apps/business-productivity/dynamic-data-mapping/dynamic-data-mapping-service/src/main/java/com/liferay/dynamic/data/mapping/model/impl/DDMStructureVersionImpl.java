@@ -39,11 +39,13 @@ public class DDMStructureVersionImpl extends DDMStructureVersionBaseImpl {
 	public DDMForm getDDMForm() {
 		if (_ddmForm == null) {
 			try {
-				_ddmForm = DDMStructureVersionLocalServiceUtil.deserialize(
-					getDefinition());
+				_ddmForm =
+					DDMStructureVersionLocalServiceUtil.
+						getStructureVersionDDMForm(this);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+
 				return new DDMForm();
 			}
 		}

@@ -38,13 +38,6 @@ public class DDMStructureVersionLocalServiceImpl
 	extends DDMStructureVersionLocalServiceBaseImpl {
 
 	@Override
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return ddmFormJSONDeserializer.deserialize(serializedDDMForm);
-	}
-
-	@Override
 	public DDMStructureVersion getLatestStructureVersion(long structureId)
 		throws PortalException {
 
@@ -78,6 +71,15 @@ public class DDMStructureVersionLocalServiceImpl
 		throws PortalException {
 
 		return ddmStructureVersionPersistence.findByS_V(structureId, version);
+	}
+
+	@Override
+	public DDMForm getStructureVersionDDMForm(
+			DDMStructureVersion structureVersion)
+		throws PortalException {
+
+		return ddmFormJSONDeserializer.deserialize(
+			structureVersion.getDefinition());
 	}
 
 	@Override

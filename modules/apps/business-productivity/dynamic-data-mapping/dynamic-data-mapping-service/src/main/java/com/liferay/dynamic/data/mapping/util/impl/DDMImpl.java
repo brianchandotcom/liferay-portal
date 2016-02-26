@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -128,14 +129,6 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_SELECT = "select";
 
-	public DDMFormValues deserialize(
-			DDMForm ddmForm, String serializedDDMFormValues)
-		throws PortalException {
-
-		return _ddmFormValuesJSONDeserializer.deserialize(
-			ddmForm, serializedDDMFormValues);
-	}
-
 	@Override
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
@@ -209,6 +202,19 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
+	public String getDDMFormJSONString(DDMForm ddmForm) {
+		return _ddmFormJSONSerializer.serialize(ddmForm);
+	}
+
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
+		throws PortalException {
+
+		return _ddmFormValuesJSONDeserializer.deserialize(
+			ddmForm, serializedJSONDDMFormValues);
+	}
+
+	@Override
 	public DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
@@ -221,6 +227,11 @@ public class DDMImpl implements DDM {
 			ddmStructure.getStructureId(), fieldNamespace, serviceContext);
 
 		return FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+	}
+
+	@Override
+	public String getDDMFormValuesJSONString(DDMFormValues ddmFormValues) {
+		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
 	}
 
 	@Override
@@ -553,11 +564,6 @@ public class DDMImpl implements DDM {
 		}
 
 		return existingFields;
-	}
-
-	@Override
-	public String serialize(DDMFormValues ddmFormValues) {
-		return _ddmFormValuesJSONSerializer.serialize(ddmFormValues);
 	}
 
 	protected void addDDMFormFieldLocalizedProperties(
@@ -909,7 +915,7 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		DDMFormValues ddmFormValues = deserialize(
+		DDMFormValues ddmFormValues = getDDMFormValues(
 			ddmStructure.getFullHierarchyDDMForm(), serializedDDMFormValues);
 
 		return DDMFormValuesToFieldsConverterUtil.convert(
@@ -1191,6 +1197,13 @@ public class DDMImpl implements DDM {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormJSONSerializer(
+		DDMFormJSONSerializer ddmFormJSONSerializer) {
+
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
@@ -1230,6 +1243,7 @@ public class DDMImpl implements DDM {
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);
 
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
 	private DLAppLocalService _dlAppLocalService;

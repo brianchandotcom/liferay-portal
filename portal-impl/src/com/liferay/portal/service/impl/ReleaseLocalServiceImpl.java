@@ -356,9 +356,11 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 
 		if (!previousSchemaVersion.equals(currentSchemaVersion)) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(7);
 
-			sb.append("Unable to update release because the previous schema ");
+			sb.append("Unable to update release of ");
+			sb.append(servletContextName);
+			sb.append(" because the previous schema ");
 			sb.append("version ");
 			sb.append(previousSchemaVersion);
 			sb.append(" does not match the expected schema version ");

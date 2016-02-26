@@ -31,9 +31,6 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -93,25 +90,13 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoActionExecutorImpl.class);
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoActionLocalService _kaleoActionLocalService;
+	@Reference
+	private KaleoActionLocalService _kaleoActionLocalService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoInstanceLocalService _kaleoInstanceLocalService;
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoLogLocalService _kaleoLogLocalService;
+	@Reference
+	private KaleoLogLocalService _kaleoLogLocalService;
 
 }

@@ -34,9 +34,6 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -106,20 +103,11 @@ public class NotificationUtilitiesImpl implements NotificationUtilities {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoNotificationLocalService
-		_kaleoNotificationLocalService;
+	@Reference
+	private KaleoNotificationLocalService _kaleoNotificationLocalService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoNotificationRecipientLocalService
+	@Reference
+	private KaleoNotificationRecipientLocalService
 		_kaleoNotificationRecipientLocalService;
 
 	@Reference

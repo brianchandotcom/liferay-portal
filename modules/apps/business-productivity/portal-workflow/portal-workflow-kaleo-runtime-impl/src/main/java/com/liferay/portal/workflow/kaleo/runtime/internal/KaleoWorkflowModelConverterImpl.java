@@ -48,9 +48,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -265,11 +262,7 @@ public class KaleoWorkflowModelConverterImpl
 	@Reference
 	private DefinitionExporter _definitionExporter;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+	@Reference
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 }

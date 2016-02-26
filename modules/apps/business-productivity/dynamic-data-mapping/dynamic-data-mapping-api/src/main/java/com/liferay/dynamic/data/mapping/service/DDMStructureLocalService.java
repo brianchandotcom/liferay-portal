@@ -1048,6 +1048,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
 
+	public java.lang.String updateXMLDefaultLocale(DDMStructure structure,
+		Locale contentDefaultLocale, Locale contentNewDefaultLocale);
+
 	/**
 	* Updates the structure matching the structure ID, replacing its XSD with a
 	* new one.

@@ -1314,6 +1314,15 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			serviceContext);
 	}
 
+	@Override
+	public java.lang.String updateXMLDefaultLocale(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure,
+		java.util.Locale contentDefaultLocale,
+		java.util.Locale contentNewDefaultLocale) {
+		return _ddmStructureLocalService.updateXMLDefaultLocale(structure,
+			contentDefaultLocale, contentNewDefaultLocale);
+	}
+
 	/**
 	* Updates the structure matching the structure ID, replacing its XSD with a
 	* new one.

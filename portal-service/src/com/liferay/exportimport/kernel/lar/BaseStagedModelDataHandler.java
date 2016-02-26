@@ -614,6 +614,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext.getReferenceElements(
 				stagedModel, AssetCategory.class);
 
+		if (referenceElements.isEmpty()) {
+			return;
+		}
+
 		List<Long> assetCategoryIds = new ArrayList<>(referenceElements.size());
 
 		for (Element referenceElement : referenceElements) {
@@ -681,6 +685,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			if (assetTag != null) {
 				assetTagNames.add(assetTag.getName());
 			}
+		}
+
+		if (assetTagNames.isEmpty()) {
+			return;
 		}
 
 		portletDataContext.addAssetTags(

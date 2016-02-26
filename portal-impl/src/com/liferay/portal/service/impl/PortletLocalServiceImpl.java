@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.EventDefinition;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -149,6 +151,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
 		initPortletDefaultPermissions(portlet);
+
+		initPortletRootModelDefaultPermissions(portlet);
 
 		initPortletModelDefaultPermissions(portlet);
 
@@ -1184,6 +1188,26 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			resourceLocalService.addResources(
 				portlet.getCompanyId(), 0, 0, modelResource, modelResource,
 				false, false, true);
+		}
+	}
+
+	protected void initPortletRootModelDefaultPermissions(Portlet portlet)
+		throws PortalException {
+
+		String rootModel = ResourceActionsUtil.getPortletRootModelResource(
+			portlet.getRootPortletId());
+
+		if (Validator.isBlank(rootModel)) {
+			return;
+		}
+
+		List<Group> groups = groupLocalService.getCompanyGroups(
+			portlet.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Group group : groups) {
+			resourceLocalService.addResources(
+				portlet.getCompanyId(), group.getGroupId(), 0, rootModel,
+				group.getGroupId(), false, true, true);
 		}
 	}
 

@@ -2839,8 +2839,8 @@ plugins.includes=</echo>
 				includes="portal-impl.jar"
 			/>
 			<fileset
-				dir="portal-service"
-				includes="portal-service.jar"
+				dir="portal-kernel"
+				includes="portal-kernel.jar"
 			/>
 			<fileset
 				dir="lib/development"
@@ -3136,8 +3136,8 @@ plugins.includes=</echo>
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
 			<zipfileset
-				dir="portal-service"
-				includes="portal-service.jar"
+				dir="portal-kernel"
+				includes="portal-kernel.jar"
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
 		</zip>
@@ -3193,7 +3193,7 @@ plugins.includes=</echo>
 		<copy todir="${tstamp.value}/WEB-INF/lib">
 			<fileset
 				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar,portal-service.jar,portlet.jar"
+				includes="annotations.jar,portal-kernel.jar,portlet.jar"
 			/>
 		</copy>
 
@@ -3254,7 +3254,7 @@ plugins.includes=</echo>
 		<copy todir="${tstamp.value}/WEB-INF/lib">
 			<fileset
 				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar,portal-service.jar,portlet.jar"
+				includes="annotations.jar,portal-kernel.jar,portlet.jar"
 			/>
 		</copy>
 

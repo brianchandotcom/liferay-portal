@@ -2,47 +2,47 @@
 
 <instance-wrappers>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/PortletModeFactory.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/WindowStateFactory.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/ArrayUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/DateUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/GetterUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/ParamUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/SessionClicks.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/StringUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/TimeZoneUtil.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/UnicodeFormatter.java"
 	/>
 	<instance-wrapper
-		parent-dir="../portal-service/src"
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/Validator.java"
 	/>
 </instance-wrappers>

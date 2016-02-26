@@ -5,7 +5,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.osgi.web.servlet.jsp.compiler", version: "1.0.6"
 	provided group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5"
 	provided group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-1"
-	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
 	provided group: "commons-fileupload", name: "commons-fileupload", version: "1.2.1"
 	provided group: "commons-io", name: "commons-io", version: "1.4"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"

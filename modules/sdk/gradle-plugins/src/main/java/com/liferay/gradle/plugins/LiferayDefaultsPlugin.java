@@ -599,7 +599,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 							String group = moduleVersionSelector.getGroup();
 
-							if (group.equals("com.liferay.portal")) {
+							if (!group.equals("com.liferay.portal")) {
+								return;
+							}
+
+							String name = moduleVersionSelector.getName();
+
+							if (name.equals("portal-service")) {
+								dependencyResolveDetails.useTarget(
+									group + ":portal-kernel:" +
+										liferayExtension.getPortalVersion());
+							}
+							else {
 								dependencyResolveDetails.useVersion(
 									liferayExtension.getPortalVersion());
 							}

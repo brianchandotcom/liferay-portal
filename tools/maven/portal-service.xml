@@ -8,8 +8,8 @@
 		<version>@version@</version>
 	</parent>
 	<groupId>com.liferay.portal</groupId>
-	<artifactId>portal-service</artifactId>
-	<name>Liferay Portal Service</name>
+	<artifactId>portal-kernel</artifactId>
+	<name>Liferay Portal Kernel</name>
 	<version>@version@</version>
 	<description>Contains interfaces for the portal services. Interfaces are only loaded by the global class loader and are shared by all plugins.</description>
 </project>

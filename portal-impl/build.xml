@@ -93,7 +93,7 @@
 				src.dir="@{src.dir}"
 			>
 				<deploy-post>
-					<ant dir="../portal-service" target="deploy" inheritAll="false" />
+					<ant dir="../portal-kernel" target="deploy" inheritAll="false" />
 
 					<deploy-properties />
 
@@ -414,7 +414,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
-			<arg value="service.api.dir=${basedir}/../portal-service/src" />
+			<arg value="service.api.dir=${basedir}/../portal-kernel/src" />
 			<arg value="service.auto.import.default.references=true" />
 			<arg value="service.auto.namespace.tables=false" />
 			<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
@@ -449,7 +449,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			</then>
 		</if>
 
-		<ant dir="../portal-service" target="compile" inheritAll="false" />
+		<ant dir="../portal-kernel" target="compile" inheritAll="false" />
 	</target>
 
 	<target name="build-service-counter">
@@ -710,7 +710,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="compile-test">
-		<ant dir="${project.dir}/portal-service" target="compile-test" inheritAll="false" />
+		<ant dir="${project.dir}/portal-kernel" target="compile-test" inheritAll="false" />
 
 		<antcall target="build-common.compile-test" />
 	</target>

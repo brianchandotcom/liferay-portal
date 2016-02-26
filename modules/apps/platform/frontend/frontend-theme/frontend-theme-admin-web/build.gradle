@@ -27,6 +27,10 @@ buildTheme {
 }
 
 buildThumbnails {
+	if (System.getenv("JENKINS_HOME") && (gradle.startParameter.taskNames == ["buildCSS"])) {
+		enabled = false
+	}
+
 	imageDirs themeDestinationDir
 }
 

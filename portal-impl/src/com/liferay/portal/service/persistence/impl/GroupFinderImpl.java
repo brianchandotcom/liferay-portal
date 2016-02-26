@@ -92,6 +92,9 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_GK =
 		GroupFinder.class.getName() + ".findByC_GK";
 
+	public static final String FIND_BY_L_TS_S_RSGC =
+		GroupFinder.class.getName() + ".findByL_TS_S_RSGC";
+
 	public static final String FIND_BY_C_C_PG_N_D =
 		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
 
@@ -683,6 +686,42 @@ public class GroupFinderImpl
 		sb.append("}");
 
 		throw new NoSuchGroupException(sb.toString());
+	}
+
+	@Override
+	public List<Group> findByL_TS_S_RSGC(
+		long liveGroupId, String typeSettings, boolean site,
+		int remoteStagingGroupCount) {
+
+		String sql = CustomSQLUtil.get(FIND_BY_L_TS_S_RSGC);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(liveGroupId);
+			qPos.add("%" + typeSettings + "%");
+			qPos.add(site);
+			qPos.add(remoteStagingGroupCount);
+
+			List<Group> groups = (List<Group>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			return groups;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

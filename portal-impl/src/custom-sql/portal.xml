@@ -232,6 +232,19 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByL_TS_S_RSGC">
+		<![CDATA[
+			SELECT
+				DISTINCT {Group_.*}
+			FROM
+				Group_
+			WHERE
+				(Group_.liveGroupId != ?) AND
+				(CAST_CLOB_TEXT(Group_.typeSettings) like ?) AND
+				(Group_.site = ?) AND
+				(Group_.remoteStagingGroupCount > ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_C_PG_N_D">
 		<![CDATA[
 			SELECT

@@ -1055,6 +1055,10 @@ public class GroupLocalServiceUtil {
 		return getService().getRolePrimaryKeys(groupId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getStagedSites() {
+		return getService().getStagedSites();
+	}
+
 	/**
 	* Returns the staging group.
 	*

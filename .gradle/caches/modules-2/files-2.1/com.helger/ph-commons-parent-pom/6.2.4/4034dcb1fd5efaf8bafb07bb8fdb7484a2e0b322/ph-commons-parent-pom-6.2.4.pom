@@ -22,10 +22,10 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
   </parent>
   <artifactId>ph-commons-parent-pom</artifactId>
-  <version>6.1.0</version>
+  <version>6.2.4</version>
   <packaging>pom</packaging>
   <name>ph-commons-parent-pom</name>
   <description>Base POM to build the ph-commons projects</description>
@@ -44,7 +44,7 @@
     <connection>scm:git:git@github.com:phax/ph-commons.git</connection>
     <developerConnection>scm:git:git@github.com:phax/ph-commons.git</developerConnection>
     <url>http://github.com/phax/ph-commons</url>
-    <tag>ph-commons-parent-pom-6.1.0</tag>
+    <tag>ph-commons-parent-pom-6.2.4</tag>
   </scm>
 
   <organization>
@@ -63,24 +63,24 @@
   
   <dependencyManagement>
     <dependencies>
-    <!-- We need annotations and not jsr305 because SuppressFBWarnings annotation is required! -->
-    <!-- Version 3.0.0 is for Java 1.7+ -->
-    <dependency>
-      <groupId>com.google.code.findbugs</groupId>
-      <artifactId>annotations</artifactId>
-      <version>2.0.3</version>
-    </dependency>
-    <!-- Xerces is required when handling XML 1.1!!! -->
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.11.0</version>
-    </dependency>
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-      <version>1.4.01</version>
-    </dependency>
+      <!-- We need annotations and not jsr305 because SuppressFBWarnings annotation is required! -->
+      <!-- Version 3.0.0 is for Java 1.7+ -->
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>annotations</artifactId>
+        <version>2.0.3</version>
+      </dependency>
+      <!-- Xerces is required when handling XML 1.1!!! -->
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.11.0</version>
+      </dependency>
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis</artifactId>
+        <version>1.4.01</version>
+      </dependency>
 
       <dependency>
         <groupId>com.helger</groupId>

@@ -20,12 +20,18 @@ package com.liferay.privatemessaging.hook.listeners;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.privatemessaging.service.UserThreadLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
@@ -37,7 +43,7 @@ public class UserModelListener extends BaseModelListener<User> {
 						user.getUserId());
 			}
 
-			UserThreadLocalServiceUtil.updateUserName(user);
+			_userThreadLocalService.updateUserName(user);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -54,7 +60,7 @@ public class UserModelListener extends BaseModelListener<User> {
 					"Removing private messages for user " + user.getUserId());
 			}
 
-			UserThreadLocalServiceUtil.deleteUser(user.getUserId());
+			_userThreadLocalService.deleteUser(user.getUserId());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -64,5 +70,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserModelListener.class);
+
+	@Reference
+	private UserThreadLocalService _userThreadLocalService;
 
 }

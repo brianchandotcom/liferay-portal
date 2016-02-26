@@ -92,9 +92,6 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
-
-		// JSON factory
-
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
 

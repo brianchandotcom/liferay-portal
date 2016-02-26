@@ -115,9 +115,6 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 	}
 
 	protected void setUpDDMFormLayoutJSONDeserializer() throws Exception {
-
-		// JSON factory
-
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMFormLayoutJSONDeserializerImpl.class, "_jsonFactory");
 

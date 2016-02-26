@@ -56,6 +56,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormValuesJSONDeserializer();
 	}

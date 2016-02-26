@@ -454,15 +454,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return valuesMap;
 	}
 
-	protected DDMForm deserialize(String serializedDDMForm) {
-		try {
-			return DDMStructureLocalServiceUtil.deserialize(serializedDDMForm);
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-
 	protected DDMFormFieldTypeServicesTracker
 		getMockedDDMFormFieldTypeServicesTracker() {
 
@@ -508,6 +499,15 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected DDMStructure getStructure(long structureId) {
 		try {
 			return DDMStructureLocalServiceUtil.getStructure(structureId);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected DDMForm getStructureDDMForm(DDMStructure structure) {
+		try {
+			return DDMStructureLocalServiceUtil.getStructureDDMForm(structure);
 		}
 		catch (Exception e) {
 			return null;
@@ -599,7 +599,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 
 		when(
-			deserialize(Matchers.anyString())
+			getStructureDDMForm(Matchers.any(DDMStructure.class))
 		).then(
 			new Answer<DDMForm>() {
 
@@ -609,10 +609,10 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 					Object[] args = invocationOnMock.getArguments();
 
-					String serializedDDMForm = (String)args[0];
+					DDMStructure structure = (DDMStructure)args[0];
 
 					return ddmFormJSONDeserializer.deserialize(
-						serializedDDMForm);
+						structure.getDefinition());
 				}
 
 			}

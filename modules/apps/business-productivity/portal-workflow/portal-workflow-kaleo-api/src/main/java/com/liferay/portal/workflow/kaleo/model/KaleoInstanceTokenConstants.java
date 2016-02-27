@@ -12,20 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.notification;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
-import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+package com.liferay.portal.workflow.kaleo.model;
 
 /**
  * @author Michael C. Han
  */
-public interface NotificationUtilities {
+public class KaleoInstanceTokenConstants {
 
-	public void sendKaleoNotifications(
-			String kaleoClassName, long kaleoClassPK,
-			ExecutionType executionType, ExecutionContext executionContext)
-		throws PortalException;
+	public static final long PARENT_KALEO_INSTANCE_TOKEN_ID_DEFAULT = 0;
 
 }

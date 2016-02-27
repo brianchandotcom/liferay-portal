@@ -23,7 +23,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
+import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
@@ -41,9 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = ExecutionContextUtilities.class)
-public class ExecutionContextUtilitiesImpl
-	implements ExecutionContextUtilities {
+@Component(immediate = true, service = ExecutionContextHelper.class)
+public class ExecutionContextHelperImpl
+	implements ExecutionContextHelper {
 
 	public void checkKaleoInstanceComplete(ExecutionContext executionContext)
 		throws PortalException {

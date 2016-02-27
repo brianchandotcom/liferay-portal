@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.notification;
+package com.liferay.portal.workflow.kaleo.runtime.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 /**
  * @author Michael C. Han
  */
-public interface NotificationUtilities {
+public interface ExecutionContextHelper {
 
-	public void sendKaleoNotifications(
-			String kaleoClassName, long kaleoClassPK,
-			ExecutionType executionType, ExecutionContext executionContext)
+	public void checkKaleoInstanceComplete(ExecutionContext executionContext)
 		throws PortalException;
+
+	public void completeKaleoTimerInstances(ExecutionContext executionContext)
+		throws PortalException;
+
+	public String convert(ExecutionContext executionContext);
+
+	public ExecutionContext convert(String json) throws Exception;
+
+	public boolean isKaleoInstanceBlocked(ExecutionContext executionContext);
 
 }

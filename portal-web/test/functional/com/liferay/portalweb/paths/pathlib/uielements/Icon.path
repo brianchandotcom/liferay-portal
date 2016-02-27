@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_ACTIVE</td>
+	<td>//*[contains(@class,'active') and contains(@class,'open') and @data-qa-id='infoButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_ALL_ENTRIES</td>
 	<td>//div[contains(@class,'management-bar-no-collapse on')]//a[contains(@class,'infoPanelToggler')]</td>
 	<td></td>

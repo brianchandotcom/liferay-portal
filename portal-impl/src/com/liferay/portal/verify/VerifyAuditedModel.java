@@ -21,13 +21,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -227,11 +230,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 	}
 
 	protected void verifyAuditedModel(
-			Connection con, String tableName, String primaryKeyColumnName,
+			Connection con, PreparedStatement ps, String tableName,
 			long primKey, Object[] auditedModelArray, boolean updateDates)
 		throws Exception {
-
-		PreparedStatement ps = null;
 
 		try {
 			long companyId = (Long)auditedModelArray[0];
@@ -249,22 +250,6 @@ public class VerifyAuditedModel extends VerifyProcess {
 			Timestamp createDate = (Timestamp)auditedModelArray[3];
 			Timestamp modifiedDate = (Timestamp)auditedModelArray[4];
 
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("update ");
-			sb.append(tableName);
-			sb.append(" set companyId = ?, userId = ?, userName = ?");
-
-			if (updateDates) {
-				sb.append(", createDate = ?, modifiedDate = ?");
-			}
-
-			sb.append(" where ");
-			sb.append(primaryKeyColumnName);
-			sb.append(" = ?");
-
-			ps = con.prepareStatement(sb.toString());
-
 			ps.setLong(1, companyId);
 			ps.setLong(2, userId);
 			ps.setString(3, userName);
@@ -278,15 +263,12 @@ public class VerifyAuditedModel extends VerifyProcess {
 				ps.setLong(4, primKey);
 			}
 
-			ps.executeUpdate();
+			ps.addBatch();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to verify model " + tableName, e);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -321,42 +303,75 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			long previousCompanyId = 0;
 
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long primKey = rs.getLong(
-					verifiableAuditedModel.getPrimaryKeyColumnName());
-				long previousUserId = rs.getLong("userId");
+			try (PreparedStatement preparedStatement =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						createPreparedStatement(
+							con, verifiableAuditedModel.getTableName(),
+							verifiableAuditedModel.getPrimaryKeyColumnName(),
+							verifiableAuditedModel.isUpdateDates()))) {
 
-				if (verifiableAuditedModel.getJoinByTableName() != null) {
-					long relatedPrimKey = rs.getLong(
-						verifiableAuditedModel.getJoinByTableName());
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long primKey = rs.getLong(
+						verifiableAuditedModel.getPrimaryKeyColumnName());
+					long previousUserId = rs.getLong("userId");
 
-					auditedModelArray = getAuditedModelArray(
-						con, verifiableAuditedModel.getRelatedModelName(),
-						verifiableAuditedModel.getRelatedPKColumnName(),
-						relatedPrimKey,
-						verifiableAuditedModel.isAnonymousUserAllowed(),
-						previousUserId);
+					if (verifiableAuditedModel.getJoinByTableName() != null) {
+						long relatedPrimKey = rs.getLong(
+							verifiableAuditedModel.getJoinByTableName());
+
+						auditedModelArray = getAuditedModelArray(
+							con, verifiableAuditedModel.getRelatedModelName(),
+							verifiableAuditedModel.getRelatedPKColumnName(),
+							relatedPrimKey,
+							verifiableAuditedModel.isAnonymousUserAllowed(),
+							previousUserId);
+					}
+					else if (previousCompanyId != companyId) {
+						auditedModelArray = getDefaultUserArray(con, companyId);
+
+						previousCompanyId = companyId;
+					}
+
+					if (auditedModelArray == null) {
+						continue;
+					}
+
+					verifyAuditedModel(
+						con, preparedStatement,
+						verifiableAuditedModel.getTableName(), primKey,
+						auditedModelArray,
+						verifiableAuditedModel.isUpdateDates());
 				}
-				else if (previousCompanyId != companyId) {
-					auditedModelArray = getDefaultUserArray(con, companyId);
 
-					previousCompanyId = companyId;
-				}
-
-				if (auditedModelArray == null) {
-					continue;
-				}
-
-				verifyAuditedModel(
-					con, verifiableAuditedModel.getTableName(),
-					verifiableAuditedModel.getPrimaryKeyColumnName(), primKey,
-					auditedModelArray, verifiableAuditedModel.isUpdateDates());
+				preparedStatement.executeBatch();
 			}
 		}
 		finally {
 			DataAccess.cleanUp(ps, rs);
 		}
+	}
+
+	private PreparedStatement createPreparedStatement(
+			Connection con, String tableName, String primaryKeyColumnName,
+			boolean updateDates)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set companyId = ?, userId = ?, userName = ?");
+
+		if (updateDates) {
+			sb.append(", createDate = ?, modifiedDate = ?");
+		}
+
+		sb.append(" where ");
+		sb.append(primaryKeyColumnName);
+		sb.append(" = ?");
+
+		return con.prepareStatement(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -372,7 +387,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 		@Override
 		protected void doRun() throws Exception {
-			verifyAuditedModel(_verifiableAuditedModel);
+			try (LoggingTimer loggingTimer = new LoggingTimer()) {
+				verifyAuditedModel(_verifiableAuditedModel);
+			}
 		}
 
 		private final VerifiableAuditedModel _verifiableAuditedModel;

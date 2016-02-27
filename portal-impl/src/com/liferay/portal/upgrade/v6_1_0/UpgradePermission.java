@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,15 +70,10 @@ public class UpgradePermission extends UpgradeProcess {
 			String name, String tableName, String pkColumnName)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select " + pkColumnName + ", groupId, companyId from " +
 					tableName);
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long primKey = rs.getLong(pkColumnName);
@@ -95,9 +89,6 @@ public class UpgradePermission extends UpgradeProcess {
 					_log.info("Processed 100 resource blocks for " + name);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		List<ResourcePermission> resourcePermissions =

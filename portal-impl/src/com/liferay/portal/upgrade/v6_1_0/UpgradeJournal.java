@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
@@ -46,9 +45,6 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateStructureXsd() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		try {
 			runSQL(
 				"update JournalStructure set xsd = replace(xsd, " +
@@ -56,42 +52,32 @@ public class UpgradeJournal extends UpgradeProcess {
 						"'%image_gallery%'");
 		}
 		catch (Exception e) {
-			ps = connection.prepareStatement(
-				"select id_, xsd from JournalStructure where xsd like " +
-					"'%image_gallery%'");
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select id_, xsd from JournalStructure where xsd like " +
+						"'%image_gallery%'");
+				ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+				while (rs.next()) {
+					long id = rs.getLong("id_");
+					String xsd = rs.getString("xsd");
 
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-				String xsd = rs.getString("xsd");
+					xsd = StringUtil.replace(
+						xsd, "image_gallery", "document_library");
 
-				xsd = StringUtil.replace(
-					xsd, "image_gallery", "document_library");
-
-				updateStructureXsd(id, xsd);
+					updateStructureXsd(id, xsd);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateStructureXsd(long id, String xsd) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update JournalStructure set xsd = ? where id_ = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update JournalStructure set xsd = ? where id_ = ?")) {
 
 			ps.setString(1, xsd);
 			ps.setLong(2, id);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

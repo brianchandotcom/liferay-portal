@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -38,32 +37,22 @@ public class UpgradeExpando extends UpgradeProcess {
 	protected void updateColumnTypeSettings(long columnId, String typeSettings)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update ExpandoColumn set typeSettings = ? where columnId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update ExpandoColumn set typeSettings = ? where columnId = " +
+					"?")) {
 
 			ps.setString(1, typeSettings);
 			ps.setLong(2, columnId);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateColumnTypeSettingsIndexable() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select columnId, type_, typeSettings from ExpandoColumn " +
 					"where typeSettings like '%indexable%'");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long columnId = rs.getLong("columnId");
@@ -106,21 +95,13 @@ public class UpgradeExpando extends UpgradeProcess {
 					columnId, typeSettingsProperties.toString());
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateColumnTypeSettingsSelection() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select columnId, typeSettings from ExpandoColumn where " +
 					"typeSettings like '%selection%'");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long columnId = rs.getLong("columnId");
@@ -134,9 +115,6 @@ public class UpgradeExpando extends UpgradeProcess {
 
 				updateColumnTypeSettings(columnId, typeSettings);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

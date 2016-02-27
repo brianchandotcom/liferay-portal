@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -42,25 +41,18 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected long getJournalStructureId(String structureId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select id_ from JournalStructure where structureId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select id_ from JournalStructure where structureId = ?")) {
 
 			ps.setString(1, structureId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("id_");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("id_");
+				return 0;
 			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -68,15 +60,10 @@ public class UpgradeAsset extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.journal.model.JournalArticle");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +
 					"where structureId != ''");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
@@ -89,9 +76,6 @@ public class UpgradeAsset extends UpgradeProcess {
 						journalStructureId + " where classNameId = " +
 							classNameId + " and classPK = " + resourcePrimKey);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -117,38 +101,31 @@ public class UpgradeAsset extends UpgradeProcess {
 			long dlFileEntryClassNameId, long igImageClassNameId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryTypeId, companyId from DLFileEntryType " +
-					"where name = ?");
+					"where name = ?")) {
 
 			ps.setString(1, DLFileEntryTypeConstants.NAME_IG_IMAGE);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long fileEntryTypeId = rs.getLong("fileEntryTypeId");
+					long companyId = rs.getLong("companyId");
 
-			while (rs.next()) {
-				long fileEntryTypeId = rs.getLong("fileEntryTypeId");
-				long companyId = rs.getLong("companyId");
+					StringBundler sb = new StringBundler(8);
 
-				StringBundler sb = new StringBundler(8);
+					sb.append("update AssetEntry set classNameId = ");
+					sb.append(dlFileEntryClassNameId);
+					sb.append(", classTypeId = ");
+					sb.append(fileEntryTypeId);
+					sb.append(" where classNameId = ");
+					sb.append(igImageClassNameId);
+					sb.append(" AND companyId = ");
+					sb.append(companyId);
 
-				sb.append("update AssetEntry set classNameId = ");
-				sb.append(dlFileEntryClassNameId);
-				sb.append(", classTypeId = ");
-				sb.append(fileEntryTypeId);
-				sb.append(" where classNameId = ");
-				sb.append(igImageClassNameId);
-				sb.append(" AND companyId = ");
-				sb.append(companyId);
-
-				runSQL(sb.toString());
+					runSQL(sb.toString());
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

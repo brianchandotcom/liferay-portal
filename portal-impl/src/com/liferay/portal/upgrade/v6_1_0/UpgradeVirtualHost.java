@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -47,15 +46,10 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 	}
 
 	protected void updateCompany() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select companyId, virtualHost from Company where " +
 					"virtualHost != ''");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
@@ -66,23 +60,15 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 				addVirtualHost(virtualHostId, companyId, 0, hostname);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
 		runSQL("alter table Company drop column virtualHost");
 	}
 
 	protected void updateLayoutSet() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
 					"where virtualHost != ''");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long layoutSetId = rs.getLong("layoutSetId");
@@ -93,9 +79,6 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 				addVirtualHost(virtualHostId, companyId, layoutSetId, hostname);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("alter table LayoutSet drop column virtualHost");

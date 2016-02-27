@@ -91,7 +91,7 @@
 				<var name="webContentTitle" value="${webContentTitle}" />
 			</execute>
 
-			<execute macro="WebContent#publish" />
+			<execute macro="PortletEntry#publish" />
 
 			<execute macro="WebContent#viewTitle">
 				<var name="webContentTitle" value="${webContentTitle}" />

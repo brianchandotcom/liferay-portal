@@ -11,9 +11,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${consumerName}" />
 		<execute function="Paste" locator1="TextInput#URL" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addConsumerPortletCP">
@@ -26,9 +24,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${consumerPortletName}" />
 		<execute function="Select" locator1="Select#REMOTE_PORTLET" value1="${consumerPortletType}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addProducerCP">
@@ -40,9 +36,7 @@
 		<execute function="Select" locator1="Select#VERSION" value1="2.0" />
 		<execute function="Select" locator1="Select#AVAILABLE" value1="${portletsAvailableSelect}" />
 		<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<var name="key_producerName" value="${producerName}" />
 

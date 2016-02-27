@@ -29,9 +29,7 @@
 
 		<execute function="AssertClick" locator1="SearchConfiguration#SEARCH_PORTLET_CONFIGURATION_MOVE_TO_AVAILABLE_BUTTON" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

@@ -24,9 +24,7 @@
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Approved" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />
 		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
 
@@ -200,9 +198,7 @@
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Deny" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Denied" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />
 		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_DENIED" value1="Denied" />
 

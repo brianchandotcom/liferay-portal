@@ -8,9 +8,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryName}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addNullPG">
@@ -66,9 +64,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addSubcategoryNullCP">
@@ -110,9 +106,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addSubcategoryToSubcategoryPG">
@@ -128,9 +122,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategorySubCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteCP">

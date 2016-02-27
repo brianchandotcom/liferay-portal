@@ -58,9 +58,7 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
 		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>
 
@@ -243,9 +241,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Organization Site" />
 		</execute>

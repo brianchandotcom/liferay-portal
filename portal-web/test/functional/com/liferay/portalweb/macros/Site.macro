@@ -293,9 +293,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="approveJoinSiteRestrictedViaMySitesPG">
@@ -358,9 +356,7 @@
 		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ROW_1_BUTTON" value1="${teamName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="Click" locator1="SitesEditSite#MENU_ADVANCED_TAB" />
 
@@ -584,9 +580,7 @@
 	<command name="editCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteNameEdit}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteNameEdit}" />
 	</command>
 
@@ -625,9 +619,7 @@
 
 		<execute function="Type" locator1="TextInput#GOOGLE_ANALYTICS_ID" value1="${googleAnalyticsID}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="enableRecycleBinCP">
@@ -690,9 +682,7 @@
 
 		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="joinViaMySitesPG">

@@ -16,10 +16,6 @@
 		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 	</command>
 
-	<command name="publish">
-		<execute macro="PortletEntry#publish" />
-	</command>
-
 	<command name="selectDocument">
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 

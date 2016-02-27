@@ -111,7 +111,7 @@
 		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#RELATED_ASSETS_TABLE_SCOPE" value1="${siteName}" />
 		<execute function="AssertElementPresent" locator1="AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK" />
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addExpirationDateCP">
@@ -417,7 +417,7 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addWithGlobalStructurePGViaWCD">
@@ -483,7 +483,7 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
@@ -651,7 +651,7 @@
 
 		<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addWithThreeTranslations">
@@ -804,7 +804,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#WEB_CONTENT_STATUS" value1="Draft" />
 			</then>
 			<else>
-				<execute macro="WebContent#publish" />
+				<execute macro="PortletEntry#publish" />
 
 				<var name="key_webContentTitle" value="${webContentTitleEdit}" />
 
@@ -836,7 +836,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#DISPLAY_PAGE_SELECTION" value1="Public Pages > ${pageName}" />
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="editDisplayPagePGViaAP">
@@ -1077,10 +1077,6 @@
 		<execute function="AssertTextEquals" locator1="WCPreview#BODY_FIELD" value1="${webContentText}" />
 	</command>
 
-	<command name="publish">
-		<execute macro="PortletEntry#publish" />
-	</command>
-
 	<command name="saveAsDraft">
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 	</command>
@@ -1154,7 +1150,7 @@
 		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="subscribeCP">

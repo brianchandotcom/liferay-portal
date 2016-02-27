@@ -266,7 +266,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#save" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="DDLRecord#viewEditPreview">
 			<var name="ddlRecordFieldDataEdit" value="DDL Record Edit" />

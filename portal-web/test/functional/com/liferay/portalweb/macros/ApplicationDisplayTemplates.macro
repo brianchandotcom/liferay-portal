@@ -41,9 +41,7 @@
 
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="ApplicationDisplayTemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 	</command>
 
@@ -73,9 +71,7 @@
 
 		<execute function="Click" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addPG">
@@ -111,9 +107,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 		<execute function="AssertTextEquals" locator1="ApplicationDisplayTemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

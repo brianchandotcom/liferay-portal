@@ -56,9 +56,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
@@ -161,9 +159,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
@@ -206,9 +202,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURL}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${bookmarkDescription}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
@@ -257,9 +251,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${editBookmarkName}" />
@@ -280,9 +272,7 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkNameEdit}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLEdit}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkNameEdit}" />

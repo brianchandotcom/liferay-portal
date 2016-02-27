@@ -1,12 +1,6 @@
 <definition>
 	<var name="formName" value="Created Form Name" />
 
-	<command name="save">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="selectForm">
 		<var name="key_formName" value="${formName}" />
 

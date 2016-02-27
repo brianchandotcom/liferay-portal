@@ -77,7 +77,7 @@
 			<var name="webContentTitle" value="DHS Title" />
 		</execute>
 
-		<execute macro="WebContent#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

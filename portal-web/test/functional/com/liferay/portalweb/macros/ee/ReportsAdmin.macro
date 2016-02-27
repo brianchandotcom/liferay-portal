@@ -6,9 +6,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
 		<execute function="Select" locator1="ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
 		<execute function="UploadCommonFile" locator1="ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addReportEntry">
@@ -100,9 +98,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureDeliveryEmail">

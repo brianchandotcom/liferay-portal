@@ -113,7 +113,7 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

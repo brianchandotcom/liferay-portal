@@ -887,7 +887,7 @@
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent1}${wikiPageContent2}" />
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -944,7 +944,7 @@
 
 		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1000,7 +1000,7 @@
 			<var name="wikiPageContent" value="${wikiPageMediaWikiContent}" />
 		</execute>
 
-		<execute macro="WikiEntry#publish" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />

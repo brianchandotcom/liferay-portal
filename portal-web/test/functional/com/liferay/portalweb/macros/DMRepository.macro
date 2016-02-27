@@ -29,12 +29,6 @@
 		<execute function="AssertClick" locator1="DocumentsAndMedia#FILTER_REPOSITORY" value1="${dmRepositoryName}" />
 	</command>
 
-	<command name="save">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="select">
 		<execute function="Type" locator1="DocumentsAndMediaEditRepository#NAME_FIELD" value1="${dmRepositoryName}" />
 

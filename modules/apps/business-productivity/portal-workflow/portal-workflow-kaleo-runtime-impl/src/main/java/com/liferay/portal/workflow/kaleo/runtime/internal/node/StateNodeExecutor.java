@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.workflow.kaleo.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;

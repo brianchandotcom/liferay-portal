@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,13 +62,15 @@ public class UpgradeSubscription extends UpgradeProcess {
 	}
 
 	protected void deleteOrphanedSubscriptions() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			PortletPreferences.class.getName());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				PortletPreferences.class.getName());
 
-		runSQL(
-			"delete from Subscription where classNameId = " + classNameId +
-				" and classPK not in (select portletPreferencesId from " +
-					" PortletPreferences)");
+			runSQL(
+				"delete from Subscription where classNameId = " + classNameId +
+					" and classPK not in (select portletPreferencesId from " +
+						" PortletPreferences)");
+		}
 	}
 
 	@Override
@@ -154,14 +157,16 @@ public class UpgradeSubscription extends UpgradeProcess {
 			String oldClassName, String newClassName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer(oldClassName)) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("update Subscription set classNameId = ");
-		sb.append(getClassNameId(newClassName));
-		sb.append(" where classNameId = ");
-		sb.append(PortalUtil.getClassNameId(oldClassName));
+			sb.append("update Subscription set classNameId = ");
+			sb.append(getClassNameId(newClassName));
+			sb.append(" where classNameId = ");
+			sb.append(PortalUtil.getClassNameId(oldClassName));
 
-		runSQL(sb.toString());
+			runSQL(sb.toString());
+		}
 	}
 
 	protected void updateSubscriptionGroupId(
@@ -182,7 +187,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 	}
 
 	protected void updateSubscriptionGroupIds() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select subscriptionId, classNameId, classPK from " +
 					"Subscription");
 			ResultSet rs = ps.executeQuery()) {

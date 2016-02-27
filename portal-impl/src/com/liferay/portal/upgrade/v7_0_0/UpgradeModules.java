@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
@@ -95,26 +96,28 @@ public class UpgradeModules extends UpgradeProcess {
 	protected void updateConvertedLegacyModules()
 		throws IOException, SQLException {
 
-		for (String[] convertedLegacyModule : _convertedLegacyModules) {
-			String oldServletContextName = convertedLegacyModule[0];
-			String newServletContextName = convertedLegacyModule[1];
-			String buildNamespace = convertedLegacyModule[2];
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (String[] convertedLegacyModule : _convertedLegacyModules) {
+				String oldServletContextName = convertedLegacyModule[0];
+				String newServletContextName = convertedLegacyModule[1];
+				String buildNamespace = convertedLegacyModule[2];
 
-			try (PreparedStatement ps = connection.prepareStatement(
-					"select servletContextName, buildNumber from Release_ " +
-						"where servletContextName = ?")) {
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select servletContextName, buildNumber from Release_" +
+							" where servletContextName = ?")) {
 
-				ps.setString(1, oldServletContextName);
+					ps.setString(1, oldServletContextName);
 
-				try (ResultSet rs = ps.executeQuery()) {
-					if (!rs.next()) {
-						if (hasServiceComponent(buildNamespace)) {
-							addRelease(newServletContextName);
+					try (ResultSet rs = ps.executeQuery()) {
+						if (!rs.next()) {
+							if (hasServiceComponent(buildNamespace)) {
+								addRelease(newServletContextName);
+							}
 						}
-					}
-					else {
-						updateServletContextName(
-							oldServletContextName, newServletContextName);
+						else {
+							updateServletContextName(
+								oldServletContextName, newServletContextName);
+						}
 					}
 				}
 			}
@@ -122,7 +125,9 @@ public class UpgradeModules extends UpgradeProcess {
 	}
 
 	protected void updateExtractedModules() throws SQLException {
-		addRelease(_bundleSymbolicNames);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			addRelease(_bundleSymbolicNames);
+		}
 	}
 
 	protected void updateServletContextName(

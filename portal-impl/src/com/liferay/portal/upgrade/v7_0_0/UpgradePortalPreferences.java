@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -68,7 +69,8 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	protected void upgradeStagingPortalPreferences() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select portalPreferencesId, preferences from " +
 					"PortalPreferences");
 			ResultSet rs = ps1.executeQuery()) {

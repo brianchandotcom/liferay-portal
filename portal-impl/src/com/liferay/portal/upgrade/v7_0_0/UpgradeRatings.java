@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -40,7 +41,8 @@ public class UpgradeRatings extends UpgradeProcess {
 	}
 
 	protected void upgradeRatingsEntry() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select distinct classNameId from RatingsEntry");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -107,35 +109,38 @@ public class UpgradeRatings extends UpgradeProcess {
 	}
 
 	protected void upgradeRatingsStats() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select classNameId, classPK, count(1) as totalEntries, ");
-		sb.append("sum(RatingsEntry.score) as totalScore, ");
-		sb.append("sum(RatingsEntry.score) / count(1) as averageScore from ");
-		sb.append("RatingsEntry group by classNameId, classPK");
+			sb.append("select classNameId, classPK, count(1) as totalEntries,");
+			sb.append(" sum(RatingsEntry.score) as totalScore, ");
+			sb.append("sum(RatingsEntry.score) / count(1) as averageScore ");
+			sb.append("from RatingsEntry group by classNameId, classPK");
 
-		String selectSQL = sb.toString();
+			String selectSQL = sb.toString();
 
-		String updateSQL =
-			"update RatingsStats set totalEntries = ?, totalScore = ?, " +
-				"averageScore = ? where classNameId = ? and classPK = ?";
+			String updateSQL =
+				"update RatingsStats set totalEntries = ?, totalScore = ?, " +
+					"averageScore = ? where classNameId = ? and classPK = ?";
 
-		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(updateSQL))) {
+			try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
+				ResultSet rs = ps1.executeQuery();
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(updateSQL))) {
 
-			while (rs.next()) {
-				ps2.setInt(1, rs.getInt("totalEntries"));
-				ps2.setDouble(2, rs.getDouble("totalScore"));
-				ps2.setDouble(3, rs.getDouble("averageScore"));
-				ps2.setLong(4, rs.getLong("classNameId"));
-				ps2.setLong(5, rs.getLong("classPK"));
+				while (rs.next()) {
+					ps2.setInt(1, rs.getInt("totalEntries"));
+					ps2.setDouble(2, rs.getDouble("totalScore"));
+					ps2.setDouble(3, rs.getDouble("averageScore"));
+					ps2.setLong(4, rs.getLong("classNameId"));
+					ps2.setLong(5, rs.getLong("classPK"));
 
-				ps2.addBatch();
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
 			}
-
-			ps2.executeBatch();
 		}
 	}
 

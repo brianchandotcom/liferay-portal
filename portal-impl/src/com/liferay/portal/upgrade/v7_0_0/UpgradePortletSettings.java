@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
@@ -213,22 +214,26 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			String portletId, String serviceName, int ownerType)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Upgrading display portlet " + portletId + " settings");
+		try (LoggingTimer loggingTimer = new LoggingTimer(portletId)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Upgrading display portlet " + portletId + " settings");
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Delete service keys from portlet settings");
+			}
+
+			SettingsDescriptor settingsDescriptor =
+				_settingsFactory.getSettingsDescriptor(serviceName);
+
+			resetPortletPreferencesValues(
+				portletId, ownerType, settingsDescriptor);
+
+			resetPortletPreferencesValues(
+				portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+				settingsDescriptor);
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete service keys from portlet settings");
-		}
-
-		SettingsDescriptor settingsDescriptor =
-			_settingsFactory.getSettingsDescriptor(serviceName);
-
-		resetPortletPreferencesValues(portletId, ownerType, settingsDescriptor);
-
-		resetPortletPreferencesValues(
-			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
-			settingsDescriptor);
 	}
 
 	protected void upgradeMainPortlet(
@@ -236,39 +241,42 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			boolean resetPortletInstancePreferences)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Upgrading main portlet " + portletId + " settings");
-		}
-
-		copyPortletSettingsAsServiceSettings(portletId, ownerType, serviceName);
-
-		if (resetPortletInstancePreferences) {
-			SettingsDescriptor portletInstanceSettingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(portletId);
-
+		try (LoggingTimer loggingTimer = new LoggingTimer(portletId)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Delete portlet instance keys from service settings");
+				_log.debug("Upgrading main portlet " + portletId + " settings");
 			}
 
+			copyPortletSettingsAsServiceSettings(
+				portletId, ownerType, serviceName);
+
+			if (resetPortletInstancePreferences) {
+				SettingsDescriptor portletInstanceSettingsDescriptor =
+					_settingsFactory.getSettingsDescriptor(portletId);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Delete portlet instance keys from service settings");
+				}
+
+				resetPortletPreferencesValues(
+					serviceName, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+					portletInstanceSettingsDescriptor);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Delete service keys from portlet settings");
+			}
+
+			SettingsDescriptor serviceSettingsDescriptor =
+				_settingsFactory.getSettingsDescriptor(serviceName);
+
 			resetPortletPreferencesValues(
-				serviceName, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-				portletInstanceSettingsDescriptor);
+				portletId, ownerType, serviceSettingsDescriptor);
+
+			resetPortletPreferencesValues(
+				portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+				serviceSettingsDescriptor);
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete service keys from portlet settings");
-		}
-
-		SettingsDescriptor serviceSettingsDescriptor =
-			_settingsFactory.getSettingsDescriptor(serviceName);
-
-		resetPortletPreferencesValues(
-			portletId, ownerType, serviceSettingsDescriptor);
-
-		resetPortletPreferencesValues(
-			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
-			serviceSettingsDescriptor);
 	}
 
 	private PortletPreferencesRow getPortletPreferencesRow(ResultSet rs)

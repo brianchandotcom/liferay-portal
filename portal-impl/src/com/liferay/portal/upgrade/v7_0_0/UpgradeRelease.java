@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,8 @@ public class UpgradeRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select distinct buildNumber from Release_ " +
 					"where schemaVersion is null");
 			ResultSet rs = ps.executeQuery()) {

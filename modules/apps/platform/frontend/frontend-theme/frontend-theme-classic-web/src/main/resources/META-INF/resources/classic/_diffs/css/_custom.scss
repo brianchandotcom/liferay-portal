@@ -175,6 +175,14 @@ body {
 			}
 		}
 
+		.panel-notifications-count {
+			@include media-query(null, $breakpoint_tablet - 1) {
+				left: 2px;
+				position: relative;
+				top: 6px;
+			}
+		}
+
 		.icon-user, .user-full-name {
 			display: none;
 		}

@@ -26,7 +26,7 @@ import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.internal.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.runtime.internal.node.NodeExecutorFactory;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
+import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 
 import java.util.List;
 
@@ -71,11 +71,11 @@ public class DefaultGraphWalker extends BaseKaleoBean implements GraphWalker {
 			}
 		}
 
-		_executionContextUtilities.checkKaleoInstanceComplete(executionContext);
+		_executionContextHelper.checkKaleoInstanceComplete(executionContext);
 	}
 
-	@ServiceReference(type = ExecutionContextUtilities.class)
-	private ExecutionContextUtilities _executionContextUtilities;
+	@ServiceReference(type = ExecutionContextHelper.class)
+	private ExecutionContextHelper _executionContextHelper;
 
 	@ServiceReference(type = NodeExecutorFactory.class)
 	private NodeExecutorFactory _nodeExecutorFactory;

@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = ExecutionContextHelper.class)
-public class ExecutionContextHelperImpl
-	implements ExecutionContextHelper {
+public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 
 	public void checkKaleoInstanceComplete(ExecutionContext executionContext)
 		throws PortalException {

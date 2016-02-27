@@ -158,7 +158,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		notificationUtilities.sendKaleoNotifications(
+		_notificationHelper.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 

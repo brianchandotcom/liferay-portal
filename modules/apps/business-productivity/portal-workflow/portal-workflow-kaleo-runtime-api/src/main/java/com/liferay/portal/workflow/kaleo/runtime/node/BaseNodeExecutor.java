@@ -24,8 +24,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtilities;
-import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextUtilities;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
+import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 
@@ -54,7 +54,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
-		notificationUtilities.sendKaleoNotifications(
+		_notificationHelper.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -76,9 +76,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		if (executionContextUtilities.isKaleoInstanceBlocked(
-				executionContext)) {
-
+		if (_executionContextHelper.isKaleoInstanceBlocked(executionContext)) {
 			return;
 		}
 
@@ -101,7 +99,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
-		notificationUtilities.sendKaleoNotifications(
+		_notificationHelper.sendKaleoNotifications(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -120,7 +118,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		executionContextUtilities.completeKaleoTimerInstances(executionContext);
+		_executionContextHelper.completeKaleoTimerInstances(executionContext);
 
 		doExit(currentKaleoNode, executionContext, remainingPathElements);
 
@@ -128,7 +126,7 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 
-		notificationUtilities.sendKaleoNotifications(
+		_notificationHelper.sendKaleoNotifications(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 	}
@@ -153,7 +151,10 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 		throws PortalException;
 
 	@Reference
-	protected ExecutionContextUtilities executionContextUtilities;
+	protected ExecutionContextHelper _executionContextHelper;
+
+	@Reference
+	protected NotificationHelper _notificationHelper;
 
 	@Reference
 	protected KaleoActionExecutor kaleoActionExecutor;
@@ -164,8 +165,5 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 
 	@Reference
 	protected KaleoTimerLocalService kaleoTimerLocalService;
-
-	@Reference
-	protected NotificationUtilities notificationUtilities;
 
 }

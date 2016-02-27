@@ -24,9 +24,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.internal.notification.NotificationMessageGeneratorFactory;
 import com.liferay.portal.workflow.kaleo.runtime.internal.notification.NotificationSenderFactory;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
-import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
 

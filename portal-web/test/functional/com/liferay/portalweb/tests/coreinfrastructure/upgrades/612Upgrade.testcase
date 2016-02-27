@@ -5,6 +5,7 @@
 	<property name="testray.main.component.name" value="Upgrades" />
 
 	<command name="View612DataArchive" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewUpgrade" />

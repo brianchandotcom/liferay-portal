@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -111,8 +113,10 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		}
 
 		public void update() throws IOException, SQLException {
-			for (String[] foreignNames : _foreignNamesArray) {
-				runSQL(getUpdateSQL(foreignNames[0], foreignNames[1]));
+			try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+				for (String[] foreignNames : _foreignNamesArray) {
+					runSQL(con, getUpdateSQL(foreignNames[0], foreignNames[1]));
+				}
 			}
 		}
 

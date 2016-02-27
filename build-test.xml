@@ -40,6 +40,72 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
+	<macrodef name="apply-portal-ext">
+		<sequential>
+			<if>
+				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+				<then>
+					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
+				</then>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="glassfish" />
+					<then>
+						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.glassfish.portal.war.name}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${tcat.enabled}" arg2="true" />
+					<then>
+						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="test.build.liferay.portal.zip.file.name" />
+				<then>
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<mkdir dir="${tstamp.value}" />
+
+					<unzip
+						dest="${tstamp.value}"
+						src="${test.build.liferay.portal.zip.file.name}"
+					/>
+
+					<copy
+						file="portal-impl/src/portal-ext.properties"
+						tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
+					/>
+
+					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
+
+	module.framework.properties.osgi.console=11312</echo>
+
+					<zip
+						basedir="${tstamp.value}"
+						destfile="${test.build.liferay.portal.zip.file.name}"
+						update="yes"
+					/>
+
+					<delete dir="${tstamp.value}" />
+				</then>
+				<else>
+					<copy
+						file="portal-impl/src/portal-ext.properties"
+						tofile="${app.server.classes.portal.dir}/portal-ext.properties"
+					/>
+
+					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
+
+	module.framework.properties.osgi.console=11312</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="check-config">
 		<sequential>
 			<if>
@@ -4925,67 +4991,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
-		<if>
-			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
-			<then>
-				<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
-			</then>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.glassfish.portal.war.name}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${tcat.enabled}" arg2="true" />
-				<then>
-					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<isset property="test.build.liferay.portal.zip.file.name" />
-			<then>
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<mkdir dir="${tstamp.value}" />
-
-				<unzip
-					dest="${tstamp.value}"
-					src="${test.build.liferay.portal.zip.file.name}"
-				/>
-
-				<copy
-					file="portal-impl/src/portal-ext.properties"
-					tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
-				/>
-
-				<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
-
-module.framework.properties.osgi.console=11312</echo>
-
-				<zip
-					basedir="${tstamp.value}"
-					destfile="${test.build.liferay.portal.zip.file.name}"
-					update="yes"
-				/>
-
-				<delete dir="${tstamp.value}" />
-			</then>
-			<else>
-				<copy
-					file="portal-impl/src/portal-ext.properties"
-					tofile="${app.server.classes.portal.dir}/portal-ext.properties"
-				/>
-
-				<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-
-module.framework.properties.osgi.console=11312</echo>
-			</else>
-		</if>
+		<apply-portal-ext />
 	</target>
 
 	<target name="prepare-portal-properties">

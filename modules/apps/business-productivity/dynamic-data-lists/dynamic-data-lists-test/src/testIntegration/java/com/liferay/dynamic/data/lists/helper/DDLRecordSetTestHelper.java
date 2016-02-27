@@ -56,6 +56,22 @@ public class DDLRecordSetTestHelper {
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
 	}
 
+	public DDLRecordSet updateRecordSet(
+			long recordSetId, DDMStructure ddmStructure)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		return DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSetId, ddmStructure.getStructureId(), nameMap, null,
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+	}
+
 	private final Group _group;
 
 }

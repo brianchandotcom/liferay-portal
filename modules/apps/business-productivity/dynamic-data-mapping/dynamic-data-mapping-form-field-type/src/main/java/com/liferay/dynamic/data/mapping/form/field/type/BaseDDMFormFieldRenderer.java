@@ -99,7 +99,9 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
-		template.put("readOnly", ddmFormFieldRenderingContext.isReadOnly());
+		template.put(
+			"readOnly",
+			_isReadOnly(ddmFormField, ddmFormFieldRenderingContext));
 		template.put("required", ddmFormFieldRenderingContext.isRequired());
 		template.put("showLabel", ddmFormField.isShowLabel());
 		template.put("tip", ddmFormFieldRenderingContext.getTip());
@@ -113,6 +115,19 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.processTemplate(writer);
 
 		return writer.toString();
+	}
+
+	private boolean _isReadOnly(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		if (ddmFormFieldRenderingContext.isReadOnly() ||
+			ddmFormField.isReadOnly()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

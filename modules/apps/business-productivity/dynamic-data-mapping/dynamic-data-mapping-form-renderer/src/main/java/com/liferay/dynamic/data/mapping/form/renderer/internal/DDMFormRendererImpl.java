@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -180,6 +181,20 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return ddmFormLayoutTransformer.getPages();
 	}
 
+	protected JSONArray getReadOnlyFieldsJSONArray(DDMForm ddmForm) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (ddmFormField.isReadOnly()) {
+				jsonArray.put(ddmFormField.getName());
+			}
+		}
+
+		return jsonArray;
+	}
+
 	protected Map<String, String> getRenderedDDMFormFieldsMap(
 			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
 		throws DDMFormRenderingException {
@@ -302,6 +317,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
+
+		JSONArray readOnlyFieldsJSONArray = getReadOnlyFieldsJSONArray(ddmForm);
+
+		template.put("readOnlyFields", readOnlyFieldsJSONArray.toString());
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -30,9 +31,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.test.util.storage.FailStorageAdapter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,13 +52,18 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,13 +83,43 @@ public class DDLRecordServiceTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			StorageAdapter.class, new FailStorageAdapter());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
+
 	@Before
 	public void setUp() throws Exception {
+		_availableLocales = DDMFormTestUtil.createAvailableLocales(Locale.US);
+		_defaultLocale = Locale.US;
+
 		_group = GroupTestUtil.addGroup();
 
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
 			PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
+	}
+
+	@Test(expected = StorageException.class)
+	public void testAddRecordWithFailStorage() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			_availableLocales, _defaultLocale);
+
+		DDLRecordSet ddlRecordSet = addRecordSet(
+			ddmForm, FailStorageAdapter.STORAGE_TYPE);
+
+		DDLRecordTestHelper ddlRecordTestHelper = new DDLRecordTestHelper(
+			_group, ddlRecordSet);
+
+		ddlRecordTestHelper.addRecord();
 	}
 
 	@Test
@@ -239,8 +278,14 @@ public class DDLRecordServiceTest {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
+		return addRecordSet(ddmForm, StorageType.JSON.toString());
+	}
+
+	protected DDLRecordSet addRecordSet(DDMForm ddmForm, String storageType)
+		throws Exception {
+
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, storageType);
 
 		return _recordSetTestHelper.addRecordSet(ddmStructure);
 	}
@@ -356,7 +401,11 @@ public class DDLRecordServiceTest {
 			serviceContext);
 	}
 
+	private static ServiceRegistration<StorageAdapter> _serviceRegistration;
+
+	private Set<Locale> _availableLocales;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
+	private Locale _defaultLocale;
 
 	@DeleteAfterTestRun
 	private Group _group;

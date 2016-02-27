@@ -34,6 +34,7 @@
  * @param layout
  * @param portletNamespace
  * @param readOnly
+ * @param readOnlyFields
  * @param showRequiredFieldsWarning
  * @param showSubmitButton
  * @param submitLabel
@@ -64,6 +65,7 @@
 
 							portletNamespace: '{$portletNamespace}',
 							readOnly: {$readOnly},
+							readOnlyFields : {$readOnlyFields|noAutoescape},
 							showRequiredFieldsWarning: {$showRequiredFieldsWarning},
 							showSubmitButton: {$showSubmitButton},
 							submitLabel: '{$submitLabel}',

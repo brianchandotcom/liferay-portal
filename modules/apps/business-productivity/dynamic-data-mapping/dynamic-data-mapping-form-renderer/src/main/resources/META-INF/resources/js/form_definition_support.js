@@ -101,6 +101,7 @@ AUI.add(
 								parent: instance,
 								portletNamespace: portletNamespace,
 								readOnly: instance.get('readOnly'),
+								readOnlyFields: instance.get('readOnlyFields'),
 								repeatedIndex: siblings.indexOf(item)
 							}
 						);

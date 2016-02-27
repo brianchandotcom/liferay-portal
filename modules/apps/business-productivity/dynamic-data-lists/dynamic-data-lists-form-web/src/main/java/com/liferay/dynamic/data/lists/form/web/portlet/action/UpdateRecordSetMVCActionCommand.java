@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -57,7 +58,11 @@ public class UpdateRecordSetMVCActionCommand
 		DDLRecordSet recordSet = updateRecordSet(
 			actionRequest, ddmStructure.getStructureId());
 
-		updateRecordSetSettings(actionRequest, recordSet);
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			actionRequest);
+
+		updateRecordSetSettings(
+			actionRequest, recordSet, settingsDDMFormValues);
 	}
 
 	protected DDMStructure updateDDMStructure(ActionRequest actionRequest)

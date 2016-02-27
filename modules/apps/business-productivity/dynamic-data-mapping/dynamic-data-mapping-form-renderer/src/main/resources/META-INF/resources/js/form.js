@@ -22,6 +22,10 @@ AUI.add(
 						value: ''
 					},
 
+					readOnlyFields: {
+						value: []
+					},
+
 					strings: {
 						value: {
 							next: Liferay.Language.get('next'),

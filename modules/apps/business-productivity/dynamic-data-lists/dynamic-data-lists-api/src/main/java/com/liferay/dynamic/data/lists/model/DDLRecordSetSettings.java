@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"requireCaptcha", "redirectURL",
+								"requireCaptcha", "redirectURL", "storageType",
 								"workflowDefinition"
 							}
 						)
@@ -114,6 +114,12 @@ public interface DDLRecordSetSettings {
 		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	public boolean sendEmailNotification();
+
+	@DDMFormField(
+		label = "%select-a-storage-type", properties = {"dataSourceType=manual"},
+		type = "select"
+	)
+	public String storageType();
 
 	@DDMFormField(
 		label = "%select-a-workflow", properties = {"dataSourceType=manual"},

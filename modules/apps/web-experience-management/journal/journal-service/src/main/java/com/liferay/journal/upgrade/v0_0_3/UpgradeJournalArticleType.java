@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -193,59 +194,62 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	}
 
 	protected void updateArticleType() throws Exception {
-		if (!hasSelectedArticleTypes()) {
-			return;
-		}
-
-		List<String> types = getArticleTypes();
-
-		if (types.size() <= 0) {
-			return;
-		}
-
-		Locale localeThreadLocalDefaultLocale =
-			LocaleThreadLocal.getDefaultLocale();
-
-		try {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			for (Company company : companies) {
-				LocaleThreadLocal.setDefaultLocale(company.getLocale());
-
-				Set<Locale> locales = LanguageUtil.getAvailableLocales(
-					company.getGroupId());
-
-				Locale defaultLocale = LocaleUtil.fromLanguageId(
-					UpgradeProcessUtil.getDefaultLanguageId(
-						company.getCompanyId()));
-
-				Map<Locale, String> nameMap =
-					LocalizationUtil.getLocalizationMap(
-						locales, defaultLocale, "type");
-
-				AssetVocabulary assetVocabulary = addAssetVocabulary(
-					company.getGroupId(), company.getCompanyId(), "type",
-					nameMap, new HashMap<Locale, String>());
-
-				Map<String, Long> journalArticleTypesToAssetCategoryIds =
-					new HashMap<>();
-
-				for (String type : types) {
-					AssetCategory assetCategory = addAssetCategory(
-						company.getGroupId(), company.getCompanyId(), type,
-						assetVocabulary.getVocabularyId());
-
-					journalArticleTypesToAssetCategoryIds.put(
-						type, assetCategory.getCategoryId());
-				}
-
-				updateArticles(
-					company.getCompanyId(),
-					journalArticleTypesToAssetCategoryIds);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasSelectedArticleTypes()) {
+				return;
 			}
-		}
-		finally {
-			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);
+
+			List<String> types = getArticleTypes();
+
+			if (types.size() <= 0) {
+				return;
+			}
+
+			Locale localeThreadLocalDefaultLocale =
+				LocaleThreadLocal.getDefaultLocale();
+
+			try {
+				List<Company> companies = _companyLocalService.getCompanies();
+
+				for (Company company : companies) {
+					LocaleThreadLocal.setDefaultLocale(company.getLocale());
+
+					Set<Locale> locales = LanguageUtil.getAvailableLocales(
+						company.getGroupId());
+
+					Locale defaultLocale = LocaleUtil.fromLanguageId(
+						UpgradeProcessUtil.getDefaultLanguageId(
+							company.getCompanyId()));
+
+					Map<Locale, String> nameMap =
+						LocalizationUtil.getLocalizationMap(
+							locales, defaultLocale, "type");
+
+					AssetVocabulary assetVocabulary = addAssetVocabulary(
+						company.getGroupId(), company.getCompanyId(), "type",
+						nameMap, new HashMap<Locale, String>());
+
+					Map<String, Long> journalArticleTypesToAssetCategoryIds =
+						new HashMap<>();
+
+					for (String type : types) {
+						AssetCategory assetCategory = addAssetCategory(
+							company.getGroupId(), company.getCompanyId(), type,
+							assetVocabulary.getVocabularyId());
+
+						journalArticleTypesToAssetCategoryIds.put(
+							type, assetCategory.getCategoryId());
+					}
+
+					updateArticles(
+						company.getCompanyId(),
+						journalArticleTypesToAssetCategoryIds);
+				}
+			}
+			finally {
+				LocaleThreadLocal.setDefaultLocale(
+					localeThreadLocalDefaultLocale);
+			}
 		}
 	}
 

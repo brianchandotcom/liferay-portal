@@ -15,6 +15,7 @@
 package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
@@ -35,7 +36,8 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleImagesInstanceId() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select articleId, elName from JournalArticleImage where " +
 					"(elInstanceId = '' or elInstanceId is null) group by " +
 						"articleId, elName");
@@ -64,7 +66,8 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleImagesName() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select articleImageId, elName from JournalArticleImage");
 			ResultSet rs = ps1.executeQuery()) {
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -63,30 +64,32 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			DDMStructure.class.getName());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				DDMStructure.class.getName());
 
-		StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(6);
 
-		sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
-		sb.append("from JournalArticle inner join DDMTemplate on (");
-		sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
-		sb.append("DDMTemplate.templateKey = ");
-		sb.append("JournalArticle.ddmTemplateKey and ");
-		sb.append("JournalArticle.classNameId != ?)");
+			sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
+			sb.append("from JournalArticle inner join DDMTemplate on (");
+			sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
+			sb.append("DDMTemplate.templateKey = ");
+			sb.append("JournalArticle.ddmTemplateKey and ");
+			sb.append("JournalArticle.classNameId != ?)");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
-			ps.setLong(1, classNameId);
+				ps.setLong(1, classNameId);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long templateId = rs.getLong("templateId");
-					long id = rs.getLong("id_");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long templateId = rs.getLong("templateId");
+						long id = rs.getLong("id_");
 
-					_ddmTemplateLinkLocalService.addTemplateLink(
-						classNameId, id, templateId);
+						_ddmTemplateLinkLocalService.addTemplateLink(
+							classNameId, id, templateId);
+					}
 				}
 			}
 		}
@@ -320,10 +323,12 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticles() throws Exception {
-		List<Company> companies = _companyLocalService.getCompanies();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Company> companies = _companyLocalService.getCompanies();
 
-		for (Company company : companies) {
-			updateJournalArticles(company.getCompanyId());
+			for (Company company : companies) {
+				updateJournalArticles(company.getCompanyId());
+			}
 		}
 	}
 

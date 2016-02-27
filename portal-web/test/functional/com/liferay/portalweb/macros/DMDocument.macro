@@ -2380,6 +2380,6 @@
 
 		<execute function="Click" locator1="Icon#INFO" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="${infoWorkflowStatus}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 	</command>
 </definition>

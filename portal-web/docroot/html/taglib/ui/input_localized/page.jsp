@@ -158,11 +158,16 @@
 						if (languageIds.contains(curLanguageId)) {
 							itemCssClass += " lfr-input-localized";
 						}
+
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("languageid", curLanguageId);
 					%>
 
-						<li class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>" role="menuitem" style="display: inline-block;">
-							<a class="palette-item-inner" href="javascript:void(0);">
-								<img alt="<%= HtmlUtil.escapeAttribute(curLocale.getDisplayName(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)))) %> <liferay-ui:message key="translation" />" class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
+						<li class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>" role="menuitem" style="display: inline-block;" title="<%= HtmlUtil.escapeAttribute(curLocale.getDisplayName(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)))) %> <liferay-ui:message key="translation" />">
+							<a class="palette-item-inner" data-languageid="<%= curLanguageId %>" href="javascript:;">
+								<aui:icon cssClass="lfr-input-localized-flag" image='<%= StringUtil.toLowerCase(StringUtil.replace(curLanguageId, "_", "-")) %>' markupView="lexicon" />
+
 								<div class='<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>'></div>
 							</a>
 						</li>

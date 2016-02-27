@@ -113,14 +113,14 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		Liferay.Icon.register(
 			{
 				forcePost: <%= forcePost %>,
-				id: '<portlet:namespace /><%= id %>'
+				id: '<portlet:namespace /><%= id %>',
 
 				<c:if test="<%= Validator.isNotNull(srcHover) %>">
-					, src: '<%= src %>',
-					srcHover: '<%= srcHover %>'
+					src: '<%= src %>',
+					srcHover: '<%= srcHover %>',
 				</c:if>
 
-				, useDialog: <%= useDialog %>
+				useDialog: <%= useDialog %>
 			}
 		);
 	</aui:script>
@@ -142,7 +142,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 				function() {
 					tooltip.destroy();
 				}
-			)
+			);
 		</aui:script>
 	</liferay-util:html-bottom>
 </c:if>

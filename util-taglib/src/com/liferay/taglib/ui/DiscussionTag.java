@@ -58,13 +58,6 @@ public class DiscussionTag extends IncludeTag {
 		_redirect = redirect;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public void setSubject(String subject) {
-	}
-
 	public void setUserId(long userId) {
 		_userId = userId;
 	}

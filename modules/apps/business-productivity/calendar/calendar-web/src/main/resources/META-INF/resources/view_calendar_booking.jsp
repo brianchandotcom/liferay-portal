@@ -155,7 +155,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					formName="fm2"
 					ratingsEnabled="<%= true %>"
 					redirect="<%= currentURL %>"
-					subject="<%= calendarBooking.getTitle(locale) %>"
 					userId="<%= calendarBooking.getUserId() %>"
 				/>
 			</liferay-ui:panel>

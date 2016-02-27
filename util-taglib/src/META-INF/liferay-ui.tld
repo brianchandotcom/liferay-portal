@@ -1291,12 +1291,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 6.2.0, with no direct replacement.</description>
-			<name>subject</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>userId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

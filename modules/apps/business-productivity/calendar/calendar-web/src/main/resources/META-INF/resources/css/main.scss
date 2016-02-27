@@ -256,6 +256,10 @@
 	width: 350px;
 }
 
+.calendar-portlet-list {
+	position: relative;
+}
+
 .calendar-portlet-list-arrow {
 	background: url(@theme_image_path@/aui/icon_sprite.png) -34px -18px;
 	display: inline-block;

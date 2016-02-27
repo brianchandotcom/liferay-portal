@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -115,14 +114,9 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	}
 
 	protected List<String> getArticleTypes() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct type_ from JournalArticle");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			List<String> types = new ArrayList<>();
 
@@ -132,20 +126,13 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 
 			return types;
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected boolean hasSelectedArticleTypes() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select count(*) from JournalArticle where type_ != 'general'");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select count(*) from JournalArticle where type_ != " +
+					"'general'");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				int count = rs.getInt(1);
@@ -157,9 +144,6 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 
 			return false;
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateArticles(
@@ -167,50 +151,44 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			Map<String, Long> journalArticleTypesToAssetCategoryIds)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(10);
 
-		try {
-			StringBundler sb = new StringBundler(10);
+		sb.append("select JournalArticle.resourcePrimKey, ");
+		sb.append("JournalArticle.type_ from JournalArticle ");
+		sb.append("left join JournalArticle tempJournalArticle on ");
+		sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
+		sb.append("and (JournalArticle.articleId = ");
+		sb.append("tempJournalArticle.articleId) and ");
+		sb.append(" (JournalArticle.version < ");
+		sb.append("tempJournalArticle.version) where ");
+		sb.append("JournalArticle.companyId = ? and ");
+		sb.append("tempJournalArticle.id_ is null");
 
-			sb.append("select JournalArticle.resourcePrimKey, ");
-			sb.append("JournalArticle.type_ from JournalArticle ");
-			sb.append("left join JournalArticle tempJournalArticle on ");
-			sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) ");
-			sb.append("and (JournalArticle.articleId = ");
-			sb.append("tempJournalArticle.articleId) and ");
-			sb.append(" (JournalArticle.version < ");
-			sb.append("tempJournalArticle.version) where ");
-			sb.append("JournalArticle.companyId = ? and ");
-			sb.append("tempJournalArticle.id_ is null");
-
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setLong(1, companyId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
 
-			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
+					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+						JournalArticle.class.getName(), resourcePrimKey);
 
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					JournalArticle.class.getName(), resourcePrimKey);
+					if (assetEntry == null) {
+						continue;
+					}
 
-				if (assetEntry == null) {
-					continue;
+					String type = rs.getString("type_");
+
+					long assetCategoryId =
+						journalArticleTypesToAssetCategoryIds.get(type);
+
+					_assetEntryLocalService.addAssetCategoryAssetEntry(
+						assetCategoryId, assetEntry);
 				}
-
-				String type = rs.getString("type_");
-
-				long assetCategoryId =
-					journalArticleTypesToAssetCategoryIds.get(type);
-
-				_assetEntryLocalService.addAssetCategoryAssetEntry(
-					assetCategoryId, assetEntry);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -67,35 +66,29 @@ public class UpgradeJournal extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			DDMStructure.class.getName());
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(6);
 
-		try {
-			StringBundler sb = new StringBundler(6);
+		sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
+		sb.append("from JournalArticle inner join DDMTemplate on (");
+		sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
+		sb.append("DDMTemplate.templateKey = ");
+		sb.append("JournalArticle.ddmTemplateKey and ");
+		sb.append("JournalArticle.classNameId != ?)");
 
-			sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
-			sb.append("from JournalArticle inner join DDMTemplate on (");
-			sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
-			sb.append("DDMTemplate.templateKey = ");
-			sb.append("JournalArticle.ddmTemplateKey and ");
-			sb.append("JournalArticle.classNameId != ?)");
-
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setLong(1, classNameId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long templateId = rs.getLong("templateId");
+					long id = rs.getLong("id_");
 
-			while (rs.next()) {
-				long templateId = rs.getLong("templateId");
-				long id = rs.getLong("id_");
-
-				_ddmTemplateLinkLocalService.addTemplateLink(
-					classNameId, id, templateId);
+					_ddmTemplateLinkLocalService.addTemplateLink(
+						classNameId, id, templateId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -300,12 +293,9 @@ public class UpgradeJournal extends UpgradeProcess {
 			String content)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update JournalArticle set ddmStructureKey = ?, " +
-					"ddmTemplateKey = ?, content = ? where id_ = ?");
+					"ddmTemplateKey = ?, content = ? where id_ = ?")) {
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
@@ -314,27 +304,18 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateJournalArticleContent(long id, String content)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update JournalArticle set content = ? where id_ = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update JournalArticle set content = ? where id_ = ?")) {
 
 			ps.setString(1, content);
 			ps.setLong(2, id);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -347,17 +328,12 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticles(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select id_, content, ddmStructureKey from " +
 					"JournalArticle where companyId = " + companyId);
+			ResultSet rs = ps.executeQuery()) {
 
 			String name = getBasicWebContentStructureKey(companyId);
-
-			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");
@@ -380,9 +356,6 @@ public class UpgradeJournal extends UpgradeProcess {
 					updateJournalArticleContent(id, updatedContent);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

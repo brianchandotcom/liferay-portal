@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -123,61 +124,68 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void checkDLFileEntryMetadata() throws Exception {
-		List<DLFileEntryMetadata> mismatchedCompanyIdDLFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.
-				getMismatchedCompanyIdFileEntryMetadatas();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DLFileEntryMetadata> mismatchedCompanyIdDLFileEntryMetadatas =
+				_dlFileEntryMetadataLocalService.
+					getMismatchedCompanyIdFileEntryMetadatas();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Deleting " + mismatchedCompanyIdDLFileEntryMetadatas.size() +
-					" file entry metadatas with mismatched company IDs");
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Deleting " +
+						mismatchedCompanyIdDLFileEntryMetadatas.size() +
+							" file entry metadatas with mismatched company " +
+								"IDs");
+			}
 
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				mismatchedCompanyIdDLFileEntryMetadatas) {
+			for (DLFileEntryMetadata dlFileEntryMetadata :
+					mismatchedCompanyIdDLFileEntryMetadatas) {
 
-			deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
-		}
+				deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
+			}
 
-		List<DLFileEntryMetadata> noStructuresDLFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.
-				getNoStructuresFileEntryMetadatas();
+			List<DLFileEntryMetadata> noStructuresDLFileEntryMetadatas =
+				_dlFileEntryMetadataLocalService.
+					getNoStructuresFileEntryMetadatas();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Deleting " + noStructuresDLFileEntryMetadatas.size() +
-					" file entry metadatas with no structures");
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Deleting " + noStructuresDLFileEntryMetadatas.size() +
+						" file entry metadatas with no structures");
+			}
 
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				noStructuresDLFileEntryMetadatas) {
+			for (DLFileEntryMetadata dlFileEntryMetadata :
+					noStructuresDLFileEntryMetadatas) {
 
-			deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
+				deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
+			}
 		}
 	}
 
 	protected void checkDLFileEntryType() throws Exception {
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		if (dlFileEntryType != null) {
-			return;
+			if (dlFileEntryType != null) {
+				return;
+			}
+
+			dlFileEntryType =
+				_dlFileEntryTypeLocalService.createDLFileEntryType(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+			dlFileEntryType.setCompanyId(
+				DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
+			dlFileEntryType.setFileEntryTypeKey(
+				StringUtil.toUpperCase(
+					DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
+			dlFileEntryType.setName(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
+				LocaleUtil.getDefault());
+
+			_dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 		}
-
-		dlFileEntryType = _dlFileEntryTypeLocalService.createDLFileEntryType(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-		dlFileEntryType.setCompanyId(
-			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
-		dlFileEntryType.setFileEntryTypeKey(
-			StringUtil.toUpperCase(
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
-		dlFileEntryType.setName(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
-			LocaleUtil.getDefault());
-
-		_dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 	}
 
 	protected void checkFileVersionMimeTypes(final String[] originalMimeTypes)
@@ -296,117 +304,127 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void checkMimeTypes() throws Exception {
-		String[] mimeTypes = {
-			ContentTypes.APPLICATION_OCTET_STREAM, _MS_OFFICE_2010_TEXT_XML_UTF8
-		};
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String[] mimeTypes = {
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				_MS_OFFICE_2010_TEXT_XML_UTF8
+			};
 
-		checkFileVersionMimeTypes(mimeTypes);
+			checkFileVersionMimeTypes(mimeTypes);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Fixed file entries with invalid mime types");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Fixed file entries with invalid mime types");
+			}
 		}
 	}
 
 	protected void checkMisversionedDLFileEntries() throws Exception {
-		List<DLFileEntry> dlFileEntries =
-			_dlFileEntryLocalService.getMisversionedFileEntries();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DLFileEntry> dlFileEntries =
+				_dlFileEntryLocalService.getMisversionedFileEntries();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + dlFileEntries.size() +
-					" misversioned file entries");
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + dlFileEntries.size() +
+						" misversioned file entries");
+			}
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			copyDLFileEntry(dlFileEntry);
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				copyDLFileEntry(dlFileEntry);
 
-			addDLFileVersion(dlFileEntry);
-		}
+				addDLFileVersion(dlFileEntry);
+			}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Fixed misversioned file entries");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Fixed misversioned file entries");
+			}
 		}
 	}
 
 	protected void checkTitles() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_dlFileEntryLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_dlFileEntryLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
-				@Override
-				public void performAction(DLFileEntry dlFileEntry) {
-					if (dlFileEntry.isInTrash()) {
-						return;
-					}
-
-					String title = dlFileEntry.getTitle();
-
-					if (!DLValidatorUtil.isValidName(title)) {
-						try {
-							dlFileEntry = renameTitle(
-								dlFileEntry, DLValidatorUtil.fixName(title));
+					@Override
+					public void performAction(DLFileEntry dlFileEntry) {
+						if (dlFileEntry.isInTrash()) {
+							return;
 						}
-						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to rename invalid title for " +
-										"file entry " +
-											dlFileEntry.getFileEntryId(),
-									e);
+
+						String title = dlFileEntry.getTitle();
+
+						if (!DLValidatorUtil.isValidName(title)) {
+							try {
+								dlFileEntry = renameTitle(
+									dlFileEntry,
+									DLValidatorUtil.fixName(title));
+							}
+							catch (Exception e) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Unable to rename invalid title for " +
+											"file entry " +
+												dlFileEntry.getFileEntryId(),
+										e);
+								}
 							}
 						}
-					}
 
-					if (!DLWebDAVUtil.isRepresentableTitle(
-							dlFileEntry.getTitle())) {
+						if (!DLWebDAVUtil.isRepresentableTitle(
+								dlFileEntry.getTitle())) {
 
-						try {
-							dlFileEntry = renameWithRepresentableTitle(
-								dlFileEntry);
-						}
-						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to rename file entry " +
-										dlFileEntry.getFileEntryId() +
-											" with a WebDAV title",
-									e);
+							try {
+								dlFileEntry = renameWithRepresentableTitle(
+									dlFileEntry);
+							}
+							catch (Exception e) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Unable to rename file entry " +
+											dlFileEntry.getFileEntryId() +
+												" with a WebDAV title",
+										e);
+								}
 							}
 						}
-					}
-
-					try {
-						_dlFileEntryLocalService.validateFile(
-							dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-							dlFileEntry.getFileEntryId(),
-							dlFileEntry.getFileName(), dlFileEntry.getTitle());
-					}
-					catch (DuplicateFileEntryException |
-						   DuplicateFolderNameException pe) {
 
 						try {
-							renameDuplicateTitle(dlFileEntry);
+							_dlFileEntryLocalService.validateFile(
+								dlFileEntry.getGroupId(),
+								dlFileEntry.getFolderId(),
+								dlFileEntry.getFileEntryId(),
+								dlFileEntry.getFileName(),
+								dlFileEntry.getTitle());
 						}
-						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to rename duplicate title for " +
-										"file entry " +
-											dlFileEntry.getFileEntryId(),
-									e);
+						catch (DuplicateFileEntryException |
+							   DuplicateFolderNameException pe) {
+
+							try {
+								renameDuplicateTitle(dlFileEntry);
+							}
+							catch (Exception e) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Unable to rename duplicate title for" +
+											" file entry " +
+												dlFileEntry.getFileEntryId(),
+										e);
+								}
 							}
 						}
+						catch (PortalException pe) {
+							return;
+						}
 					}
-					catch (PortalException pe) {
-						return;
-					}
-				}
 
-			});
+				});
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
+		}
 	}
 
 	protected void copyDLFileEntry(DLFileEntry dlFileEntry)
@@ -447,32 +465,34 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void deleteOrphanedDLFileEntries() throws Exception {
-		List<DLFileEntry> dlFileEntries =
-			_dlFileEntryLocalService.getOrphanedFileEntries();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DLFileEntry> dlFileEntries =
+				_dlFileEntryLocalService.getOrphanedFileEntries();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + dlFileEntries.size() +
-					" file entries with no group");
-		}
-
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			try {
-				_dlFileEntryLocalService.deleteFileEntry(
-					dlFileEntry.getFileEntryId());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + dlFileEntries.size() +
+						" file entries with no group");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to remove file entry " +
-							dlFileEntry.getFileEntryId() + ": " +
-								e.getMessage());
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				try {
+					_dlFileEntryLocalService.deleteFileEntry(
+						dlFileEntry.getFileEntryId());
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to remove file entry " +
+								dlFileEntry.getFileEntryId() + ": " +
+									e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Removed orphaned file entries");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Removed orphaned file entries");
+			}
 		}
 	}
 
@@ -635,7 +655,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void updateClassNameId() {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"update DLFileEntry set classNameId = 0 where classNameId is " +
 					"null");
@@ -650,74 +670,82 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void updateFileEntryAssets() throws Exception {
-		List<DLFileEntry> dlFileEntries =
-			_dlFileEntryLocalService.getNoAssetFileEntries();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DLFileEntry> dlFileEntries =
+				_dlFileEntryLocalService.getNoAssetFileEntries();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + dlFileEntries.size() +
-					" file entries with no asset");
-		}
-
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-			FileVersion fileVersion = new LiferayFileVersion(
-				dlFileEntry.getFileVersion());
-
-			try {
-				_dlAppHelperLocalService.updateAsset(
-					dlFileEntry.getUserId(), fileEntry, fileVersion, null, null,
-					null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + dlFileEntries.size() +
+						" file entries with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for file entry " +
-							dlFileEntry.getFileEntryId() + ": " +
-								e.getMessage());
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+				FileVersion fileVersion = new LiferayFileVersion(
+					dlFileEntry.getFileVersion());
+
+				try {
+					_dlAppHelperLocalService.updateAsset(
+						dlFileEntry.getUserId(), fileEntry, fileVersion, null,
+						null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for file entry " +
+								dlFileEntry.getFileEntryId() + ": " +
+									e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for file entries");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for file entries");
+			}
 		}
 	}
 
 	protected void updateFolderAssets() throws Exception {
-		List<DLFolder> dlFolders = _dlFolderLocalService.getNoAssetFolders();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<DLFolder> dlFolders =
+				_dlFolderLocalService.getNoAssetFolders();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + dlFolders.size() + " folders with no asset");
-		}
-
-		for (DLFolder dlFolder : dlFolders) {
-			Folder folder = new LiferayFolder(dlFolder);
-
-			try {
-				_dlAppHelperLocalService.updateAsset(
-					dlFolder.getUserId(), folder, null, null, null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + dlFolders.size() +
+						" folders with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for folder " +
-							dlFolder.getFolderId() + ": " + e.getMessage());
+
+			for (DLFolder dlFolder : dlFolders) {
+				Folder folder = new LiferayFolder(dlFolder);
+
+				try {
+					_dlAppHelperLocalService.updateAsset(
+						dlFolder.getUserId(), folder, null, null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for folder " +
+								dlFolder.getFolderId() + ": " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for folders");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for folders");
+			}
 		}
 	}
 
 	protected void verifyTree() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		for (long companyId : companyIds) {
-			_dlFolderLocalService.rebuildTree(companyId);
+			for (long companyId : companyIds) {
+				_dlFolderLocalService.rebuildTree(companyId);
+			}
 		}
 	}
 

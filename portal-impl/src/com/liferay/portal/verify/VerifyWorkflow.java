@@ -14,9 +14,9 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -29,53 +29,50 @@ import java.sql.ResultSet;
 public class VerifyWorkflow extends VerifyProcess {
 
 	protected void deleteOrphaned() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
+				String tableName = orphanedAttachedModel[0];
 
-		for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
-			String tableName = orphanedAttachedModel[0];
+				if (!hasTable(tableName) ||
+					!hasColumn(tableName, "classNameId")) {
 
-			if (!hasTable(tableName) || !hasColumn(tableName, "classNameId")) {
-				continue;
-			}
-
-			try {
-				ps = connection.prepareStatement(
-					"select distinct classNameId from " + tableName);
-
-				rs = ps.executeQuery();
-
-				while (rs.next()) {
-					long classNameId = rs.getLong("classNameId");
-
-					ClassName className =
-						ClassNameLocalServiceUtil.fetchClassName(classNameId);
-
-					if (className == null) {
-						continue;
-					}
-
-					String classNameValue = className.getValue();
-
-					String orphanedClassName = orphanedAttachedModel[1];
-
-					if (!classNameValue.equals(orphanedClassName)) {
-						continue;
-					}
-
-					String orphanedTableName = orphanedAttachedModel[2];
-					String orphanedColumnName = orphanedAttachedModel[3];
-
-					if (!hasTable(orphanedTableName)) {
-						continue;
-					}
-
-					deleteOrphaned(
-						tableName, orphanedTableName, orphanedColumnName);
+					continue;
 				}
-			}
-			finally {
-				DataAccess.cleanUp(null, ps, rs);
+
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select distinct classNameId from " + tableName);
+					ResultSet rs = ps.executeQuery()) {
+
+					while (rs.next()) {
+						long classNameId = rs.getLong("classNameId");
+
+						ClassName className =
+							ClassNameLocalServiceUtil.fetchClassName(
+								classNameId);
+
+						if (className == null) {
+							continue;
+						}
+
+						String classNameValue = className.getValue();
+
+						String orphanedClassName = orphanedAttachedModel[1];
+
+						if (!classNameValue.equals(orphanedClassName)) {
+							continue;
+						}
+
+						String orphanedTableName = orphanedAttachedModel[2];
+						String orphanedColumnName = orphanedAttachedModel[3];
+
+						if (!hasTable(orphanedTableName)) {
+							continue;
+						}
+
+						deleteOrphaned(
+							tableName, orphanedTableName, orphanedColumnName);
+					}
+				}
 			}
 		}
 	}

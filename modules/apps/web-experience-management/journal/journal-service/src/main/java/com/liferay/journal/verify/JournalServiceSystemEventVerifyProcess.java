@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -74,62 +75,67 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
-		DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
 
-		Property classNameIdProperty = PropertyFactoryUtil.forName(
-			"classNameId");
+			Property classNameIdProperty = PropertyFactoryUtil.forName(
+				"classNameId");
 
-		dynamicQuery.add(
-			classNameIdProperty.eq(
-				PortalUtil.getClassNameId(JournalArticle.class)));
+			dynamicQuery.add(
+				classNameIdProperty.eq(
+					PortalUtil.getClassNameId(JournalArticle.class)));
 
-		Property typeProperty = PropertyFactoryUtil.forName("type");
+			Property typeProperty = PropertyFactoryUtil.forName("type");
 
-		dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
+			dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 
-		List<SystemEvent> systemEvents = _systemEventLocalService.dynamicQuery(
-			dynamicQuery);
+			List<SystemEvent> systemEvents =
+				_systemEventLocalService.dynamicQuery(dynamicQuery);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + systemEvents.size() + " delete system events " +
-					"for journal articles");
-		}
-
-		for (SystemEvent systemEvent : systemEvents) {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-				systemEvent.getExtraData());
-
-			if (extraDataJSONObject.has("uuid") ||
-				!extraDataJSONObject.has("version")) {
-
-				continue;
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + systemEvents.size() + " delete system " +
+						"events for journal articles");
 			}
 
-			JournalArticleResource journalArticleResource =
-				_journalArticleResourceLocalService.
-					fetchJournalArticleResourceByUuidAndGroupId(
-						systemEvent.getClassUuid(), systemEvent.getGroupId());
+			for (SystemEvent systemEvent : systemEvents) {
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						systemEvent.getExtraData());
 
-			if (journalArticleResource == null) {
-				continue;
+				if (extraDataJSONObject.has("uuid") ||
+					!extraDataJSONObject.has("version")) {
+
+					continue;
+				}
+
+				JournalArticleResource journalArticleResource =
+					_journalArticleResourceLocalService.
+						fetchJournalArticleResourceByUuidAndGroupId(
+							systemEvent.getClassUuid(),
+							systemEvent.getGroupId());
+
+				if (journalArticleResource == null) {
+					continue;
+				}
+
+				JournalArticle journalArticle =
+					_journalArticleLocalService.fetchArticle(
+						systemEvent.getGroupId(),
+						journalArticleResource.getArticleId(),
+						extraDataJSONObject.getDouble("version"));
+
+				if ((journalArticle == null) || journalArticle.isInTrash()) {
+					continue;
+				}
+
+				_systemEventLocalService.deleteSystemEvent(systemEvent);
 			}
 
-			JournalArticle journalArticle =
-				_journalArticleLocalService.fetchArticle(
-					systemEvent.getGroupId(),
-					journalArticleResource.getArticleId(),
-					extraDataJSONObject.getDouble("version"));
-
-			if ((journalArticle == null) || journalArticle.isInTrash()) {
-				continue;
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Delete system events verified for journal articles");
 			}
-
-			_systemEventLocalService.deleteSystemEvent(systemEvent);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete system events verified for journal articles");
 		}
 	}
 

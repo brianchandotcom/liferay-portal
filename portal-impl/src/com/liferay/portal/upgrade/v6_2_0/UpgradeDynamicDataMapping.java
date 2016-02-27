@@ -14,12 +14,12 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -75,29 +75,32 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateSchema() throws Exception {
-		try {
-			runSQL("alter table DDMTemplate add classNameId LONG");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try {
+				runSQL("alter table DDMTemplate add classNameId LONG");
 
-			runSQL("alter table DDMTemplate add templateKey STRING");
+				runSQL("alter table DDMTemplate add templateKey STRING");
 
-			runSQL("alter_column_name DDMTemplate structureId classPK LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
-				DDMTemplateTable.TABLE_SQL_CREATE,
-				DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
-		}
+				runSQL(
+					"alter_column_name DDMTemplate structureId classPK LONG");
+			}
+			catch (SQLException sqle) {
+				upgradeTable(
+					DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
+					DDMTemplateTable.TABLE_SQL_CREATE,
+					DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
+			}
 
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portlet.dynamicdatamapping.DDMStructure");
 
-		try {
-			runSQL("update DDMTemplate set classNameId = " + classNameId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			try {
+				runSQL("update DDMTemplate set classNameId = " + classNameId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
 			}
 		}
 	}
@@ -106,13 +109,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			long structureId, String structureKey, String xsd)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update DDMStructure set structureKey = ?, xsd = ? where " +
-					"structureId = ?");
+					"structureId = ?")) {
 
 			ps.setString(1, structureKey);
 			ps.setString(2, xsd);
@@ -125,20 +124,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				_log.warn(sqle, sqle);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateStructures() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select structureId, structureKey, xsd from DDMStructure");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long structureId = rs.getLong("structureId");
@@ -156,19 +148,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					structureId, structureKey, updateXSD(xsd, structureKey));
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateStructuresClassNameId() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"update DDMStructure set classNameId = ? where " +
-					"classNameId = ?");
+					"classNameId = ?")) {
 
 			ps.setLong(
 				1,
@@ -187,22 +173,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				_log.warn(sqle, sqle);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateTemplate(
 			long templateId, String templateKey, String script)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update DDMTemplate set templateKey = ?, script = ? where " +
-					"templateId = ?");
+					"templateId = ?")) {
 
 			ps.setString(1, templateKey);
 			ps.setString(2, script);
@@ -210,21 +189,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateTemplates() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select templateId, templateKey, script from DDMTemplate " +
 					"where language = 'xsd'");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long templateId = rs.getLong("templateId");
@@ -242,9 +214,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					templateId, templateKey,
 					updateXSD(script, StringPool.BLANK));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

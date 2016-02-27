@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,95 +34,78 @@ import java.util.List;
 public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select settings_ from LayoutSet where groupId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select settings_ from LayoutSet where groupId = ?")) {
 
 			ps.setLong(1, groupId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					UnicodeProperties settingsProperties =
+						new UnicodeProperties(true);
 
-			while (rs.next()) {
-				UnicodeProperties settingsProperties = new UnicodeProperties(
-					true);
+					settingsProperties.load(rs.getString("settings_"));
 
-				settingsProperties.load(rs.getString("settings_"));
-
-				String lastPublishDateString = settingsProperties.getProperty(
-					"last-publish-date");
-
-				if (Validator.isNotNull(lastPublishDateString)) {
-					return new Date(GetterUtil.getLong(lastPublishDateString));
-				}
-			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-	}
-
-	protected Date getPortletLastPublishDate(long groupId, String portletId)
-		throws Exception {
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select preferences from PortletPreferences where plid = ? " +
-					"and ownerType = ? and ownerId = ? and portletId = ?");
-
-			ps.setLong(1, LayoutConstants.DEFAULT_PLID);
-			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_GROUP);
-			ps.setLong(3, groupId);
-			ps.setString(4, portletId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				String preferences = rs.getString("preferences");
-
-				if (Validator.isNotNull(preferences)) {
-					int x = preferences.lastIndexOf(
-						"last-publish-date</name><value>");
-
-					if (x < 0) {
-						break;
-					}
-
-					int y = preferences.indexOf("</value>", x);
-
-					String lastPublishDateString = preferences.substring(x, y);
+					String lastPublishDateString =
+						settingsProperties.getProperty("last-publish-date");
 
 					if (Validator.isNotNull(lastPublishDateString)) {
 						return new Date(
 							GetterUtil.getLong(lastPublishDateString));
 					}
 				}
-			}
 
-			return null;
+				return null;
+			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+	}
+
+	protected Date getPortletLastPublishDate(long groupId, String portletId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select preferences from PortletPreferences where plid = ? " +
+					"and ownerType = ? and ownerId = ? and portletId = ?")) {
+
+			ps.setLong(1, LayoutConstants.DEFAULT_PLID);
+			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_GROUP);
+			ps.setLong(3, groupId);
+			ps.setString(4, portletId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					String preferences = rs.getString("preferences");
+
+					if (Validator.isNotNull(preferences)) {
+						int x = preferences.lastIndexOf(
+							"last-publish-date</name><value>");
+
+						if (x < 0) {
+							break;
+						}
+
+						int y = preferences.indexOf("</value>", x);
+
+						String lastPublishDateString = preferences.substring(
+							x, y);
+
+						if (Validator.isNotNull(lastPublishDateString)) {
+							return new Date(
+								GetterUtil.getLong(lastPublishDateString));
+						}
+					}
+				}
+
+				return null;
+			}
 		}
 	}
 
 	protected List<Long> getStagedGroupIds() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId from Group_ where typeSettings like " +
 					"'%staged=true%'");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			List<Long> stagedGroupIds = new ArrayList<>();
 
@@ -134,30 +117,30 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 			return stagedGroupIds;
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected void updateLastPublishDates(String portletId, String tableName)
 		throws Exception {
 
-		List<Long> stagedGroupIds = getStagedGroupIds();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Long> stagedGroupIds = getStagedGroupIds();
 
-		for (long stagedGroupId : stagedGroupIds) {
-			Date lastPublishDate = getPortletLastPublishDate(
-				stagedGroupId, portletId);
+			for (long stagedGroupId : stagedGroupIds) {
+				Date lastPublishDate = getPortletLastPublishDate(
+					stagedGroupId, portletId);
 
-			if (lastPublishDate == null) {
-				lastPublishDate = getLayoutSetLastPublishDate(stagedGroupId);
+				if (lastPublishDate == null) {
+					lastPublishDate = getLayoutSetLastPublishDate(
+						stagedGroupId);
+				}
+
+				if (lastPublishDate == null) {
+					continue;
+				}
+
+				updateStagedModelLastPublishDates(
+					stagedGroupId, tableName, lastPublishDate);
 			}
-
-			if (lastPublishDate == null) {
-				continue;
-			}
-
-			updateStagedModelLastPublishDates(
-				stagedGroupId, tableName, lastPublishDate);
 		}
 	}
 
@@ -165,20 +148,14 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			long groupId, String tableName, Date lastPublishDate)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update " + tableName + " set lastPublishDate = ? where " +
-					"groupId = ?");
+					"groupId = ?")) {
 
 			ps.setDate(1, new java.sql.Date(lastPublishDate.getTime()));
 			ps.setLong(2, groupId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

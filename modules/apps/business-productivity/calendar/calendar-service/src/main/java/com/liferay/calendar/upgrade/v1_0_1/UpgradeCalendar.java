@@ -14,9 +14,9 @@
 
 package com.liferay.calendar.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -42,27 +42,18 @@ public class UpgradeCalendar extends UpgradeProcess {
 	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Calendar set timeZoneId = ? where calendarId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Calendar set timeZoneId = ? where calendarId = ?")) {
 
 			ps.setString(1, timeZoneId);
 			ps.setLong(2, calendarId);
 
 			ps.execute();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateCalendarTimeZoneIds() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("select Calendar.calendarId, CalendarResource.");
@@ -72,31 +63,29 @@ public class UpgradeCalendar extends UpgradeProcess {
 			sb.append("calendarResourceId inner join User_ on ");
 			sb.append("CalendarResource.userId = User_.userId");
 
-			ps = connection.prepareStatement(sb.toString());
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+				long userClassNameId = PortalUtil.getClassNameId(User.class);
 
-			long userClassNameId = PortalUtil.getClassNameId(User.class);
+				while (rs.next()) {
+					long calendarId = rs.getLong(1);
+					long classNameId = rs.getLong(2);
 
-			while (rs.next()) {
-				long calendarId = rs.getLong(1);
-				long classNameId = rs.getLong(2);
+					String timeZoneId = null;
 
-				String timeZoneId = null;
+					if (classNameId == userClassNameId) {
+						timeZoneId = rs.getString(3);
+					}
+					else {
+						timeZoneId = PropsUtil.get(
+							PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
+					}
 
-				if (classNameId == userClassNameId) {
-					timeZoneId = rs.getString(3);
+					updateCalendarTimeZoneId(calendarId, timeZoneId);
 				}
-				else {
-					timeZoneId = PropsUtil.get(
-						PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
-				}
-
-				updateCalendarTimeZoneId(calendarId, timeZoneId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

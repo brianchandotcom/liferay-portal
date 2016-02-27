@@ -17,6 +17,7 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -150,24 +151,28 @@ public class VerifyProperties extends VerifyProcess {
 			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		if (portalProperties.containsKey(oldKey)) {
-			_log.error(
-				"Portal property \"" + oldKey +
-					"\" was migrated to the system property \"" + newKey +
-						"\"");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (portalProperties.containsKey(oldKey)) {
+				_log.error(
+					"Portal property \"" + oldKey +
+						"\" was migrated to the system property \"" + newKey +
+							"\"");
+			}
 		}
 	}
 
 	protected void verifyMigratedSystemProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = SystemProperties.get(oldKey);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String value = SystemProperties.get(oldKey);
 
-		if (value != null) {
-			_log.error(
-				"System property \"" + oldKey +
-					"\" was migrated to the portal property \"" + newKey +
-						"\"");
+			if (value != null) {
+				_log.error(
+					"System property \"" + oldKey +
+						"\" was migrated to the portal property \"" + newKey +
+							"\"");
+			}
 		}
 	}
 
@@ -176,10 +181,12 @@ public class VerifyProperties extends VerifyProcess {
 			String moduleName)
 		throws Exception {
 
-		if (portalProperties.containsKey(oldKey)) {
-			_log.error(
-				"Portal property \"" + oldKey + "\" was modularized to " +
-					moduleName + " as \"" + newKey + "\"");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (portalProperties.containsKey(oldKey)) {
+				_log.error(
+					"Portal property \"" + oldKey + "\" was modularized to " +
+						moduleName + " as \"" + newKey + "\"");
+			}
 		}
 	}
 
@@ -188,10 +195,12 @@ public class VerifyProperties extends VerifyProcess {
 			String moduleName)
 		throws Exception {
 
-		if (systemProperties.containsKey(oldKey)) {
-			_log.error(
-				"System property \"" + oldKey + "\" was modularized to " +
-					moduleName + " as \"" + newKey + "\"");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (systemProperties.containsKey(oldKey)) {
+				_log.error(
+					"System property \"" + oldKey + "\" was modularized to " +
+						moduleName + " as \"" + newKey + "\"");
+			}
 		}
 	}
 
@@ -199,16 +208,20 @@ public class VerifyProperties extends VerifyProcess {
 			Properties portalProperties, String key)
 		throws Exception {
 
-		if (portalProperties.containsKey(key)) {
-			_log.error("Portal property \"" + key + "\" is obsolete");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (portalProperties.containsKey(key)) {
+				_log.error("Portal property \"" + key + "\" is obsolete");
+			}
 		}
 	}
 
 	protected void verifyObsoleteSystemProperty(String key) throws Exception {
-		String value = SystemProperties.get(key);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String value = SystemProperties.get(key);
 
-		if (value != null) {
-			_log.error("System property \"" + key + "\" is obsolete");
+			if (value != null) {
+				_log.error("System property \"" + key + "\" is obsolete");
+			}
 		}
 	}
 
@@ -216,22 +229,26 @@ public class VerifyProperties extends VerifyProcess {
 			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		if (portalProperties.containsKey(oldKey)) {
-			_log.error(
-				"Portal property \"" + oldKey + "\" was renamed to \"" +
-					newKey + "\"");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (portalProperties.containsKey(oldKey)) {
+				_log.error(
+					"Portal property \"" + oldKey + "\" was renamed to \"" +
+						newKey + "\"");
+			}
 		}
 	}
 
 	protected void verifyRenamedSystemProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = SystemProperties.get(oldKey);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String value = SystemProperties.get(oldKey);
 
-		if (value != null) {
-			_log.error(
-				"System property \"" + oldKey + "\" was renamed to \"" +
-					newKey + "\"");
+			if (value != null) {
+				_log.error(
+					"System property \"" + oldKey + "\" was renamed to \"" +
+						newKey + "\"");
+			}
 		}
 	}
 

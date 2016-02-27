@@ -15,6 +15,7 @@
 package com.liferay.microblogs.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Matthew Kong
@@ -28,35 +29,40 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 	}
 
 	protected void removeReceiverUserId() throws Exception {
-		if (!hasColumn("MicroblogsEntry", "receiverUserId")) {
-			return;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasColumn("MicroblogsEntry", "receiverUserId")) {
+				return;
+			}
+
+			runSQL("alter table MicroblogsEntry drop column receiverUserId");
+
+			runSQL("drop index IX_7ABB0AB3 on MicroblogsEntry");
 		}
-
-		runSQL("alter table MicroblogsEntry drop column receiverUserId");
-
-		runSQL("drop index IX_7ABB0AB3 on MicroblogsEntry");
 	}
 
 	protected void renameReceiverMicroblogsEntryId() throws Exception {
-		if (!hasColumn("MicroblogsEntry", "receiverMicroblogsEntryId")) {
-			return;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasColumn("MicroblogsEntry", "receiverMicroblogsEntryId")) {
+				return;
+			}
+
+			runSQL(
+				"alter table MicroblogsEntry add parentMicroblogsEntryId LONG");
+
+			runSQL(
+				"update MicroblogsEntry set parentMicroblogsEntryId = " +
+					"receiverMicroblogsEntryId");
+
+			runSQL(
+				"alter table MicroblogsEntry drop column " +
+					"receiverMicroblogsEntryId");
+
+			runSQL(
+				"create index IX_6BD29B9C on MicroblogsEntry " +
+					"(type_, parentMicroblogsEntryId)");
+
+			runSQL("drop index IX_36CA3D37 on MicroblogsEntry");
 		}
-
-		runSQL("alter table MicroblogsEntry add parentMicroblogsEntryId LONG");
-
-		runSQL(
-			"update MicroblogsEntry set parentMicroblogsEntryId = " +
-				"receiverMicroblogsEntryId");
-
-		runSQL(
-			"alter table MicroblogsEntry drop column " +
-				"receiverMicroblogsEntryId");
-
-		runSQL(
-			"create index IX_6BD29B9C on MicroblogsEntry " +
-				"(type_, parentMicroblogsEntryId)");
-
-		runSQL("drop index IX_36CA3D37 on MicroblogsEntry");
 	}
 
 }

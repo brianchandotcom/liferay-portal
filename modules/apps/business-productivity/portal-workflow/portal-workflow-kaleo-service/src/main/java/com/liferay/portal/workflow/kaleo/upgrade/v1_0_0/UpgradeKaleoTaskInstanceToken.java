@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -32,40 +32,39 @@ import java.util.Set;
 public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 	protected void deleteKaleoInstanceTokens() throws Exception {
-		if (_kaleoInstanceTokenIds.isEmpty()) {
-			return;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (_kaleoInstanceTokenIds.isEmpty()) {
+				return;
+			}
+
+			StringBundler sb = new StringBundler(
+				_kaleoInstanceTokenIds.size() * 4 + 1);
+
+			sb.append("delete from KaleoInstanceToken where ");
+
+			for (long kaleoInstanceTokenId : _kaleoInstanceTokenIds) {
+				sb.append("(kaleoInstanceTokenId = ");
+				sb.append(kaleoInstanceTokenId);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(" OR ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			String sql = sb.toString();
+
+			runSQL(sql);
 		}
-
-		StringBundler sb = new StringBundler(
-			_kaleoInstanceTokenIds.size() * 4 + 1);
-
-		sb.append("delete from KaleoInstanceToken where ");
-
-		for (long kaleoInstanceTokenId : _kaleoInstanceTokenIds) {
-			sb.append("(kaleoInstanceTokenId = ");
-			sb.append(kaleoInstanceTokenId);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(" OR ");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		String sql = sb.toString();
-
-		runSQL(sql);
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"updateKaleoTaskInstanceToken");
+			PreparedStatement ps = connection.prepareStatement(
 				"select kaleoTaskInstanceTokenId, kaleoInstanceTokenId from " +
 					"KaleoTaskInstanceToken");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long kaleoTaskInstanceTokenId = rs.getLong(
@@ -93,9 +92,6 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 				runSQL(sql);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
 		deleteKaleoInstanceTokens();
 	}
@@ -103,49 +99,41 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 	protected long getKaleoInstanceTokenId(long kaleoInstanceTokenId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler();
 
-		try {
-			StringBundler sb = new StringBundler();
+		sb.append("select KaleoNode.type_, ");
+		sb.append("KaleoInstanceToken.kaleoInstanceTokenId ");
+		sb.append("from KaleoNode inner join KaleoInstanceToken on ");
+		sb.append("(KaleoNode.kaleoNodeId = ");
+		sb.append("KaleoInstanceToken.currentKaleoNodeId) ");
+		sb.append("where KaleoInstanceToken.kaleoInstanceTokenId = ");
+		sb.append("(select parentKaleoInstanceTokenId from ");
+		sb.append("KaleoInstanceToken where KaleoInstanceTokenId = ?)");
 
-			sb.append("select KaleoNode.type_, ");
-			sb.append("KaleoInstanceToken.kaleoInstanceTokenId ");
-			sb.append("from KaleoNode inner join KaleoInstanceToken on ");
-			sb.append("(KaleoNode.kaleoNodeId = ");
-			sb.append("KaleoInstanceToken.currentKaleoNodeId) ");
-			sb.append("where KaleoInstanceToken.kaleoInstanceTokenId = ");
-			sb.append("(select parentKaleoInstanceTokenId from ");
-			sb.append("KaleoInstanceToken where KaleoInstanceTokenId = ?)");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, kaleoInstanceTokenId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String type = rs.getString("type_");
 
-			if (rs.next()) {
-				String type = rs.getString("type_");
+					if (!type.equals(NodeType.TASK.toString())) {
+						return kaleoInstanceTokenId;
+					}
 
-				if (!type.equals(NodeType.TASK.toString())) {
+					long parentKaleoInstanceTokenId = rs.getLong(
+						"kaleoInstanceTokenId");
+
+					_kaleoInstanceTokenIds.add(kaleoInstanceTokenId);
+
+					return getKaleoInstanceTokenId(parentKaleoInstanceTokenId);
+				}
+				else {
 					return kaleoInstanceTokenId;
 				}
-
-				long parentKaleoInstanceTokenId = rs.getLong(
-					"kaleoInstanceTokenId");
-
-				_kaleoInstanceTokenIds.add(kaleoInstanceTokenId);
-
-				return getKaleoInstanceTokenId(parentKaleoInstanceTokenId);
 			}
-			else {
-				return kaleoInstanceTokenId;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

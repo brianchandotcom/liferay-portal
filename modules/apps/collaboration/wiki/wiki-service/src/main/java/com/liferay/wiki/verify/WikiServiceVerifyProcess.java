@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.VerifyUUID;
@@ -70,23 +71,26 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyCreateDate() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_wikiPageResourceLocalService.getActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_wikiPageResourceLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiPageResource>() {
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.
+					PerformActionMethod<WikiPageResource>() {
 
-				@Override
-				public void performAction(WikiPageResource pageResource) {
-					verifyCreateDate(pageResource);
-				}
+					@Override
+					public void performAction(WikiPageResource pageResource) {
+						verifyCreateDate(pageResource);
+					}
 
-			});
+				});
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Create dates verified for pages");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Create dates verified for pages");
+			}
 		}
 	}
 
@@ -114,38 +118,45 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyNoAssetPages() throws Exception {
-		List<WikiPage> pages = _wikiPageLocalService.getNoAssetPages();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<WikiPage> pages = _wikiPageLocalService.getNoAssetPages();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Processing " + pages.size() + " pages with no asset");
-		}
-
-		for (WikiPage page : pages) {
-			try {
-				_wikiPageLocalService.updateAsset(
-					page.getUserId(), page, null, null, null, null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + pages.size() + " pages with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for page " + page.getPageId() +
-							": " + e.getMessage());
+
+			for (WikiPage page : pages) {
+				try {
+					_wikiPageLocalService.updateAsset(
+						page.getUserId(), page, null, null, null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for page " +
+								page.getPageId() + ": " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for pages");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for pages");
+			}
 		}
 	}
 
 	protected void verifyResourcedModels() throws Exception {
-		_verifyResourcePermissions.verify(new WikiNodeVerifiableModel());
-		_verifyResourcePermissions.verify(new WikiPageVerifiableModel());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyResourcePermissions.verify(new WikiNodeVerifiableModel());
+			_verifyResourcePermissions.verify(new WikiPageVerifiableModel());
+		}
 	}
 
 	protected void verifyUUIDModels() throws Exception {
-		VerifyUUID.verify(new WikiPageResourceVerifiableModel());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyUUID.verify(new WikiPageResourceVerifiableModel());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

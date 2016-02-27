@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_3_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
@@ -46,11 +46,13 @@ public class UpgradeClassNames extends UpgradeProcess {
 	}
 
 	protected void updateClassName(String tableName) {
-		Table table = new Table(tableName);
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			Table table = new Table(tableName);
 
-		for (Map.Entry<String, String> entry : _classNamesMap.entrySet()) {
-			table.updateColumnValue(
-				"className", entry.getKey(), entry.getValue());
+			for (Map.Entry<String, String> entry : _classNamesMap.entrySet()) {
+				table.updateColumnValue(
+					"className", entry.getKey(), entry.getValue());
+			}
 		}
 	}
 
@@ -59,20 +61,14 @@ public class UpgradeClassNames extends UpgradeProcess {
 			String workflowContext)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update " + tableName + " set workflowContext = ? where " +
-					primaryKeyName + " = ?");
+					primaryKeyName + " = ?")) {
 
 			ps.setString(1, workflowContext);
 			ps.setLong(2, primaryKeyValue);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -80,15 +76,11 @@ public class UpgradeClassNames extends UpgradeProcess {
 			String tableName, String primaryKeyName)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
+			PreparedStatement ps = connection.prepareStatement(
 				"select " + primaryKeyName + ", workflowContext from " +
 					tableName + " where workflowContext is not null");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long primaryKeyValue = rs.getLong(primaryKeyName);
@@ -117,9 +109,6 @@ public class UpgradeClassNames extends UpgradeProcess {
 					tableName, primaryKeyName, primaryKeyValue,
 					WorkflowContextUtil.convert(workflowContext));
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

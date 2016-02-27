@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
 import com.liferay.portal.messaging.LayoutsRemotePublisherRequest;
 
@@ -137,23 +138,27 @@ public class UpgradePublisherRequest extends UpgradeProcess {
 	protected void updateScheduledPublications(Group group)
 		throws PortalException {
 
-		boolean localStaging = true;
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"groupId :" + group.getGroupId())) {
 
-		if (group.isStagedRemotely() || group.hasRemoteStagingGroup()) {
-			localStaging = false;
-		}
+			boolean localStaging = true;
 
-		List<SchedulerResponse> scheduledJobs =
-			_schedulerEngineHelper.getScheduledJobs(
-				getSchedulerGroupName(group.getGroupId(), localStaging),
-				StorageType.PERSISTED);
-
-		for (SchedulerResponse schedulerResponse : scheduledJobs) {
-			if (localStaging) {
-				updateScheduledLocalPublication(schedulerResponse);
+			if (group.isStagedRemotely() || group.hasRemoteStagingGroup()) {
+				localStaging = false;
 			}
-			else {
-				updateScheduleRemotePublication(schedulerResponse);
+
+			List<SchedulerResponse> scheduledJobs =
+				_schedulerEngineHelper.getScheduledJobs(
+					getSchedulerGroupName(group.getGroupId(), localStaging),
+					StorageType.PERSISTED);
+
+			for (SchedulerResponse schedulerResponse : scheduledJobs) {
+				if (localStaging) {
+					updateScheduledLocalPublication(schedulerResponse);
+				}
+				else {
+					updateScheduleRemotePublication(schedulerResponse);
+				}
 			}
 		}
 	}

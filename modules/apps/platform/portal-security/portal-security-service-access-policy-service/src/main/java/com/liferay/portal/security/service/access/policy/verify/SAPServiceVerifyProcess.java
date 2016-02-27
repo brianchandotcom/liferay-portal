@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -57,18 +58,20 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyDefaultSAPEntry() {
-		List<Company> companies = _companyLocalService.getCompanies();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Company> companies = _companyLocalService.getCompanies();
 
-		for (Company company : companies) {
-			try {
-				_sapEntryLocalService.checkSystemSAPEntries(
-					company.getCompanyId());
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to add default service access policy for company " +
-						company.getCompanyId(),
-					pe);
+			for (Company company : companies) {
+				try {
+					_sapEntryLocalService.checkSystemSAPEntries(
+						company.getCompanyId());
+				}
+				catch (PortalException pe) {
+					_log.error(
+						"Unable to add default service access policy for " +
+							"company " + company.getCompanyId(),
+						pe);
+				}
 			}
 		}
 	}

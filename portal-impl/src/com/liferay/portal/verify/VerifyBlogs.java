@@ -18,6 +18,7 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -34,37 +35,42 @@ public class VerifyBlogs extends VerifyProcess {
 	}
 
 	protected void updateEntryAssets() throws Exception {
-		List<BlogsEntry> entries =
-			BlogsEntryLocalServiceUtil.getNoAssetEntries();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<BlogsEntry> entries =
+				BlogsEntryLocalServiceUtil.getNoAssetEntries();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + entries.size() + " entries with no asset");
-		}
-
-		for (BlogsEntry entry : entries) {
-			try {
-				BlogsEntryLocalServiceUtil.updateAsset(
-					entry.getUserId(), entry, null, null, null, null);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + entries.size() + " entries with no asset");
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to update asset for entry " +
-							entry.getEntryId() + ": " + e.getMessage());
+
+			for (BlogsEntry entry : entries) {
+				try {
+					BlogsEntryLocalServiceUtil.updateAsset(
+						entry.getUserId(), entry, null, null, null, null);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update asset for entry " +
+								entry.getEntryId() + ": " + e.getMessage());
+					}
 				}
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Assets verified for entries");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Assets verified for entries");
+			}
 		}
 	}
 
 	protected void verifyStatus() throws Exception {
-		runSQL(
-			"update BlogsEntry set status = " +
-				WorkflowConstants.STATUS_APPROVED + " where status is null");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"update BlogsEntry set status = " +
+					WorkflowConstants.STATUS_APPROVED +
+						" where status is null");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(VerifyBlogs.class);

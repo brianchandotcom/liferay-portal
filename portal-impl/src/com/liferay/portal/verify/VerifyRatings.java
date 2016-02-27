@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -30,9 +30,7 @@ public class VerifyRatings extends VerifyProcess {
 	}
 
 	protected void normalizeRatingStats() throws Exception {
-		PreparedStatement ps = null;
-
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("update RatingsStats set ");
@@ -42,12 +40,11 @@ public class VerifyRatings extends VerifyProcess {
 			sb.append(", ");
 			sb.append(_SQL_UPDATE_TOTAL_SCORE);
 
-			ps = connection.prepareStatement(sb.toString());
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
+				ps.executeUpdate();
+			}
 		}
 	}
 

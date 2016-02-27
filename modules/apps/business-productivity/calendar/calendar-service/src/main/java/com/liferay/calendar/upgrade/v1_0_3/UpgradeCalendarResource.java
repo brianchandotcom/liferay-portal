@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.upgrade.v1_0_3;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,19 +65,13 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 	protected void updateCalendarUserId(long calendarId, long userId)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Calendar set userId = ? where calendarId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Calendar set userId = ? where calendarId = ?")) {
 
 			ps.setLong(1, userId);
 			ps.setLong(2, calendarId);
 
 			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -85,28 +79,21 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 			long groupClassNameId, long defaultUserId, long adminUserId)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select Calendar.calendarId from Calendar, CalendarResource " +
 					"where CalendarResource.classNameId = ? " +
-						"and CalendarResource.userId = ?");
+						"and CalendarResource.userId = ?")) {
 
 			ps.setLong(1, groupClassNameId);
 			ps.setLong(2, defaultUserId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long calendarId = rs.getLong(1);
 
-			while (rs.next()) {
-				long calendarId = rs.getLong(1);
-
-				updateCalendarUserId(calendarId, adminUserId);
+					updateCalendarUserId(calendarId, adminUserId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -114,12 +101,9 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 			long groupClassNameId, long defaultUserId, long companyAdminUserId)
 		throws SQLException {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update CalendarResource set userId = ? where userId = ? and " +
-					"classNameId = ?");
+					"classNameId = ?")) {
 
 			ps.setLong(1, companyAdminUserId);
 			ps.setLong(2, defaultUserId);
@@ -127,26 +111,25 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 			ps.execute();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void upgradeCalendarResourceUserIds()
 		throws PortalException, SQLException {
 
-		for (Company company : _companyLocaService.getCompanies()) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				Group.class);
-			long defaultUserId = _userLocalService.getDefaultUserId(
-				company.getCompanyId());
-			long companyAdminUserId = getCompanyAdminUserId(company);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (Company company : _companyLocaService.getCompanies()) {
+				long classNameId = _classNameLocalService.getClassNameId(
+					Group.class);
+				long defaultUserId = _userLocalService.getDefaultUserId(
+					company.getCompanyId());
+				long companyAdminUserId = getCompanyAdminUserId(company);
 
-			upgradeCalendarResourceUserId(
-				classNameId, defaultUserId, companyAdminUserId);
+				upgradeCalendarResourceUserId(
+					classNameId, defaultUserId, companyAdminUserId);
 
-			updateCalendarUserIds(
-				classNameId, defaultUserId, companyAdminUserId);
+				updateCalendarUserIds(
+					classNameId, defaultUserId, companyAdminUserId);
+			}
 		}
 	}
 

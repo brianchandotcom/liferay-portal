@@ -15,6 +15,7 @@
 package com.liferay.calendar.upgrade.v1_0_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 import java.sql.PreparedStatement;
@@ -35,7 +36,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 	}
 
 	protected void deleteCalEventClassName() throws UpgradeException {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"delete from Counter where name like '" +
 					_CAL_EVENT_CLASS_NAME + "%'");
@@ -62,24 +63,26 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 	}
 
 	protected void deleteDuplicateResources() throws UpgradeException {
-		String oldName = _RESOURCE_NAMES[0][0];
-		String newName = _RESOURCE_NAMES[0][1];
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String oldName = _RESOURCE_NAMES[0][0];
+			String newName = _RESOURCE_NAMES[0][1];
 
-		String selectSQL =
-			"select actionId from ResourceAction where name = '" + newName +
-				"'";
+			String selectSQL =
+				"select actionId from ResourceAction where name = '" + newName +
+					"'";
 
-		try (PreparedStatement ps = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(selectSQL);
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				runSQL(
-					"delete from ResourceAction where actionId = '" +
-						rs.getString(1) + "' and name= '" + oldName + "'");
+				while (rs.next()) {
+					runSQL(
+						"delete from ResourceAction where actionId = '" +
+							rs.getString(1) + "' and name= '" + oldName + "'");
+				}
 			}
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+			catch (Exception e) {
+				throw new UpgradeException(e);
+			}
 		}
 	}
 

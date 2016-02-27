@@ -49,6 +49,11 @@ public class URLCodecTest {
 	}
 
 	@Test
+	public void testDecodeURLWithPercentageInURLParameters() throws Exception {
+		testDecodeURL("http://localhost:8080/?id=%'");
+	}
+
+	@Test
 	public void testEncodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			String result = URLCodec.encodeURL(

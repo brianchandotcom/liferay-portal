@@ -14,11 +14,17 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,6 +89,25 @@ public class HttpImplTest extends PowerMockito {
 	public void testDecodeSingleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http://foo#anchor", _httpImpl.decodePath("http://foo%23anchor"));
+	}
+
+	@Test
+	public void testDecodeURLWithInvalidURLEncoding() {
+		testDecodeURLWithInvalidURLEncoding("%");
+		testDecodeURLWithInvalidURLEncoding("%0");
+		testDecodeURLWithInvalidURLEncoding("%00%");
+		testDecodeURLWithInvalidURLEncoding("%00%0");
+		testDecodeURLWithInvalidURLEncoding("http://localhost:8080/?id=%");
+	}
+
+	@Test
+	public void testDecodeURLWithNotHexChars() throws Exception {
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.NUMBER_0 - 1));
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.NUMBER_9 + 1));
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.UPPER_CASE_A - 1));
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.UPPER_CASE_F + 1));
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.LOWER_CASE_A - 1));
+		testDecodeURLWithNotHexChars("%0" + (char) (CharPool.LOWER_CASE_F + 1));
 	}
 
 	@Test
@@ -217,6 +242,16 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals("/", _httpImpl.removePathParameters("/;?"));
 	}
 
+	protected void testDecodeURLWithInvalidURLEncoding(String url) {
+		String expectedMessage = "Invalid URL encoding " + url;
+
+		_testDecodeURL(url, expectedMessage);
+	}
+
+	protected void testDecodeURLWithNotHexChars(String url) {
+		_testDecodeURL(url, "is not a hex char");
+	}
+
 	private void _addParameter(
 		String url, String parameterName, String parameterValue) {
 
@@ -242,6 +277,27 @@ public class HttpImplTest extends PowerMockito {
 		sb.append(parameterValue);
 
 		Assert.assertEquals(sb.toString(), newURL);
+	}
+
+	private void _testDecodeURL(String url, String expectedMessage) {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.SEVERE)) {
+
+			String decodeURL = _httpImpl.decodeURL(url);
+
+			Assert.assertEquals(StringPool.BLANK, decodeURL);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			String message = logRecord.getMessage();
+
+			Assert.assertTrue(message.contains(expectedMessage));
+		}
 	}
 
 	private final HttpImpl _httpImpl = new HttpImpl();

@@ -891,8 +891,17 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="artifact.name" />
 
 		<sequential>
+			<propertyregex
+				global="true"
+				input="@{artifact.name}"
+				override="true"
+				property="maven.artifact.name"
+				regexp="-"
+				replace="."
+			/>
+
 			<artifact:pom
-				artifactId="com.liferay.@{artifact.name}"
+				artifactId="com.liferay.${maven.artifact.name}"
 				groupId="com.liferay"
 				id="prepare-@{artifact.name}"
 				version="${lp.version}-SNAPSHOT"

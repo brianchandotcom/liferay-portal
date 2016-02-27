@@ -35,15 +35,15 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		String name = moduleVersionSelector.getName();
 
-		if (name.equals("com.liferay.portal-impl") ||
-			name.equals("com.liferay.portal-kernel") ||
-			name.equals("com.liferay.portal-test") ||
-			name.equals("com.liferay.portal-test-internal") ||
-			name.equals("com.liferay.portal-web") ||
-			name.equals("com.liferay.util-bridges") ||
-			name.equals("com.liferay.util-java") ||
-			name.equals("com.liferay.util-slf4j") ||
-			name.equals("com.liferay.util-taglib")) {
+		if (name.equals("com.liferay.portal.impl") ||
+			name.equals("com.liferay.portal.kernel") ||
+			name.equals("com.liferay.portal.test") ||
+			name.equals("com.liferay.portal.test.internal") ||
+			name.equals("com.liferay.portal.web") ||
+			name.equals("com.liferay.util.bridges") ||
+			name.equals("com.liferay.util.java") ||
+			name.equals("com.liferay.util.slf4j") ||
+			name.equals("com.liferay.util.taglib")) {
 
 			return true;
 		}

@@ -1,3 +1,5 @@
+Bundle-Name: ${manifest.bundle.name}
+Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 7.0.0
 Export-Package: com.liferay.util.*
 Import-Package:\

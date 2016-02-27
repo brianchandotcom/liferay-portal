@@ -88,6 +88,15 @@
 	</target>
 
 	<target name="deploy-artifact">
+		<propertyregex
+			global="true"
+			input="${artifact.id}"
+			override="true"
+			property="maven.artifact.id"
+			regexp="-"
+			replace="."
+		/>
+
 		<if>
 			<not>
 				<equals arg1="${gpg.keyname}" arg2="" />
@@ -103,7 +112,7 @@
 							<then>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
 									<arg value="${mvn.goal.sign-and-deploy}" />
-									<arg value="-DartifactId=com.liferay.${artifact.id}" />
+									<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 									<arg value="-Dgpg.executable=${gpg.executable}" />
 									<arg value="-Dgpg.keyname=${gpg.keyname}" />
@@ -121,7 +130,7 @@
 							<else>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
 									<arg value="${mvn.goal.sign-and-deploy}" />
-									<arg value="-DartifactId=com.liferay.${artifact.id}" />
+									<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 									<arg value="-Dclassifiers=tlddoc" />
 									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 									<arg value="-Dfiles=dist/${artifact.id}-tlddoc.${packaging}" />
@@ -144,7 +153,7 @@
 					<else>
 						<exec dir="." executable="${maven.executable}" failonerror="true">
 							<arg value="${mvn.goal.sign-and-deploy}" />
-							<arg value="-DartifactId=com.liferay.${artifact.id}" />
+							<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 							<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 							<arg value="-Dgpg.executable=${gpg.executable}" />
 							<arg value="-Dgpg.keyname=${gpg.keyname}" />
@@ -170,7 +179,7 @@
 							<then>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
 									<arg value="${mvn.goal.deploy-file}" />
-									<arg value="-DartifactId=com.liferay.${artifact.id}" />
+									<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 									<arg value="-DgroupId=com.liferay" />
 									<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
@@ -185,7 +194,7 @@
 							<else>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
 									<arg value="${mvn.goal.deploy-file}" />
-									<arg value="-DartifactId=com.liferay.${artifact.id}" />
+									<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 									<arg value="-Dclassifiers=tlddoc" />
 									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 									<arg value="-Dfiles=dist/${artifact.id}-tlddoc.${packaging}" />
@@ -205,7 +214,7 @@
 					<else>
 						<exec dir="." executable="${maven.executable}" failonerror="true">
 							<arg value="${mvn.goal.deploy-file}" />
-							<arg value="-DartifactId=com.liferay.${artifact.id}" />
+							<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 							<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 							<arg value="-DgroupId=com.liferay" />
 							<arg value="-Dpackaging=${packaging}" />
@@ -275,12 +284,21 @@
 	</target>
 
 	<target name="install-artifact">
+		<propertyregex
+			global="true"
+			input="${artifact.id}"
+			override="true"
+			property="maven.artifact.id"
+			regexp="-"
+			replace="."
+		/>
+
 		<if>
 			<equals arg1="${packaging}" arg2="jar" />
 			<then>
 				<exec dir="." executable="${maven.executable}" failonerror="true">
 					<arg value="${mvn.goal.install-file}" />
-					<arg value="-DartifactId=com.liferay.${artifact.id}" />
+					<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 					<arg value="-DgroupId=com.liferay" />
 					<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
@@ -309,7 +327,7 @@
 			<else>
 				<exec dir="." executable="${maven.executable}" failonerror="true">
 					<arg value="${mvn.goal.install-file}" />
-					<arg value="-DartifactId=com.liferay.${artifact.id}" />
+					<arg value="-DartifactId=com.liferay.${maven.artifact.id}" />
 					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 					<arg value="-DgroupId=com.liferay" />
 					<arg value="-Dpackaging=${packaging}" />

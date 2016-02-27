@@ -6,7 +6,7 @@
 	<property name="deploy.dir" value="${liferay.home}/osgi/test" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Portal Test" />
-	<property name="manifest.bundle.symbolic.name" value="portal-test" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.test" />
 
 	<path id="portal.test.classpath">
 		<path refid="lib.classpath" />

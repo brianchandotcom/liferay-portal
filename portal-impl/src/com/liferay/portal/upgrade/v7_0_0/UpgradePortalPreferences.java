@@ -73,29 +73,24 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			PreparedStatement ps1 = connection.prepareStatement(
 				"select portalPreferencesId, preferences from " +
 					"PortalPreferences");
-			ResultSet rs = ps1.executeQuery()) {
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update PortalPreferences set preferences = ? " +
+						"where portalPreferencesId = ?"))) {
 
-			try (PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update PortalPreferences set preferences = ? " +
-								"where portalPreferencesId = ?"))) {
+			while (rs.next()) {
+				long portalPreferencesId = rs.getLong("portalPreferencesId");
 
-				while (rs.next()) {
-					long portalPreferencesId = rs.getLong(
-						"portalPreferencesId");
+				String preferences = rs.getString("preferences");
 
-					String preferences = rs.getString("preferences");
+				ps2.setString(1, convertStagingPreferencesToJSON(preferences));
+				ps2.setLong(2, portalPreferencesId);
 
-					ps2.setString(
-						1, convertStagingPreferencesToJSON(preferences));
-					ps2.setLong(2, portalPreferencesId);
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

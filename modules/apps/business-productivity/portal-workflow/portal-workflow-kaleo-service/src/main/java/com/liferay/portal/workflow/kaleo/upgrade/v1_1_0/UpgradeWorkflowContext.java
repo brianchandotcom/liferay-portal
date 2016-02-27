@@ -48,7 +48,6 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 				"select " + fieldName + ", workflowContext from " + tableName +
 					" where workflowContext is not null and workflowContext " +
 						"not like '%serializable%'");
-
 			ResultSet rs = ps.executeQuery()) {
 
 			JSONSerializer jsonSerializer = new JSONSerializer();

@@ -74,29 +74,27 @@ public class UpgradeAsset extends UpgradeProcess {
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					"select resourcePrimKey, structureId from JournalArticle " +
 						"where structureId != ''");
-				ResultSet rs = ps1.executeQuery()) {
+				ResultSet rs = ps1.executeQuery();
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update AssetEntry set classTypeId = ? where " +
+								"classNameId = ? and classPK = ?"))) {
 
-				try (PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(
-								"update AssetEntry set classTypeId = ? where " +
-									"classNameId = ? and classPK = ?"))) {
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					String structureId = rs.getString("structureId");
 
-					while (rs.next()) {
-						long resourcePrimKey = rs.getLong("resourcePrimKey");
-						String structureId = rs.getString("structureId");
+					long ddmStructureId = getDDMStructureId(structureId);
 
-						long ddmStructureId = getDDMStructureId(structureId);
+					ps2.setLong(1, ddmStructureId);
+					ps2.setLong(2, classNameId);
+					ps2.setLong(3, resourcePrimKey);
 
-						ps2.setLong(1, ddmStructureId);
-						ps2.setLong(2, classNameId);
-						ps2.setLong(3, resourcePrimKey);
-
-						ps2.addBatch();
-					}
-
-					ps2.executeBatch();
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
 
 			StringBundler sb = new StringBundler(9);

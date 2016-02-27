@@ -228,20 +228,9 @@ public class IconTag extends IncludeTag {
 			sb.append(" alt=\"");
 			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
 			sb.append("\"");
-
-			if (_toolTip) {
-				sb.append(" onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
-				sb.append(
-					UnicodeLanguageUtil.get(
-						resourceBundle, getProcessedMessage()));
-				sb.append("')\"");
-			}
-			else {
-				sb.append(" title=\"");
-				sb.append(
-					LanguageUtil.get(resourceBundle, getProcessedMessage()));
-				sb.append("\"");
-			}
+			sb.append(" title=\"");
+			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
+			sb.append("\"");
 
 			details = sb.toString();
 		}

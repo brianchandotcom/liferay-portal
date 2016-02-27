@@ -16,7 +16,7 @@ package com.liferay.journal.trash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -69,6 +69,8 @@ import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsRestorableParentBaseModelFromTrash;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsVersionableBaseModel;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.HashMap;
@@ -234,6 +236,8 @@ public class JournalArticleTrashHandlerTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		setUpDDMFormXSDDeserializer();
+
 		_testMode = PortalRunMode.isTestMode();
 
 		PortalRunMode.setTestMode(true);
@@ -266,7 +270,7 @@ public class JournalArticleTrashHandlerTest
 			"com/liferay/journal/dependencies" +
 				"/test-ddm-structure-image-field.xml");
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
@@ -443,8 +447,16 @@ public class JournalArticleTrashHandlerTest
 			TestPropsValues.getUserId(), article);
 	}
 
+	protected void setUpDDMFormXSDDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormXSDDeserializer = registry.getService(
+			DDMFormXSDDeserializer.class);
+	}
+
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private boolean _testMode;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();

@@ -670,6 +670,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public DDMStructure getStructure(long structureId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMForm getStructureDDMForm(DDMStructure structure)
+		throws PortalException;
+
 	/**
 	* Returns all the structures present in the system.
 	*

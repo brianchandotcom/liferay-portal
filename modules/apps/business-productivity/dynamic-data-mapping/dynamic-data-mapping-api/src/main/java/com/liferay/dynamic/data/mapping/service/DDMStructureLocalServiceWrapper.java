@@ -835,6 +835,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.getStructure(structureId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMForm getStructureDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLocalService.getStructureDDMForm(structure);
+	}
+
 	/**
 	* Returns all the structures present in the system.
 	*

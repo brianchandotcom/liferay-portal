@@ -325,8 +325,9 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	protected void setDDMFormRenderingContextDDMFormValues(
-		DDMFormRenderingContext ddmFormRenderingContext, DDMForm ddmForm,
-		long recordSetId) {
+			DDMFormRenderingContext ddmFormRenderingContext, DDMForm ddmForm,
+			long recordSetId)
+		throws PortalException {
 
 		DDLRecordSet recordSet = _ddlRecordSetLocalService.fetchRecordSet(
 			recordSetId);

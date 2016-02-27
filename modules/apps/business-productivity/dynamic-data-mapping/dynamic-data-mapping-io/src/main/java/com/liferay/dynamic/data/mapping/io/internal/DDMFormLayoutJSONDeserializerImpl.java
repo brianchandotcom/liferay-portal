@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -44,7 +45,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 	public DDMFormLayout deserialize(String serializedDDMFormLayout)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedDDMFormLayout);
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
@@ -248,6 +249,11 @@ public class DDMFormLayoutJSONDeserializerImpl
 		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
 	}
 
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	private LocalizedValue getDescription(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return null;
@@ -273,5 +279,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 
 		ddmFormLayout.setPaginationMode(paginationMode);
 	}
+
+	private JSONFactory _jsonFactory;
 
 }

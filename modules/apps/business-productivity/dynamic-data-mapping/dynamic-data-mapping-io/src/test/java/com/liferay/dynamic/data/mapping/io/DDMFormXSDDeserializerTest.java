@@ -42,6 +42,7 @@ public class DDMFormXSDDeserializerTest
 		setUpHtmlUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
+		setUpDDMFormXSDDeserializer();
 	}
 
 	@Override
@@ -59,6 +60,14 @@ public class DDMFormXSDDeserializerTest
 	@Override
 	protected String getTestFileExtension() {
 		return ".xml";
+	}
+
+	protected void setUpDDMFormXSDDeserializer() throws Exception {
+		field(
+			DDMFormXSDDeserializerImpl.class, "_saxReader"
+		).set(
+			_ddmFormXSDDeserializer, new SAXReaderImpl()
+		);
 	}
 
 	protected void setUpHtmlUtil() {

@@ -18,8 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -33,6 +33,7 @@ import com.liferay.registry.RegistryUtil;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,19 +52,28 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormJSONDeserializer();
+		setUpDDMFormValuesJSONDeserializer();
+	}
+
 	@Test
 	public void testValidFields() throws Exception {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-valid-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-valid-fields-test-data.json");
 
 		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
+			_ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedDDMFormValues);
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -90,14 +100,14 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-1.json");
 
 		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
+			_ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedDDMFormValues);
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -123,14 +133,14 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		String serializedDDMForm = read(
 			"ddm-form-evaluator-form-visible-fields-test-data.json");
 
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
 			"ddm-form-evaluator-form-values-visible-fields-test-data-2.json");
 
 		DDMFormValues ddmFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
+			_ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedDDMFormValues);
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -150,5 +160,22 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 
 		Assert.assertTrue(checkboxDDMFormFieldEvaluationResult.isVisible());
 	}
+
+	protected void setUpDDMFormJSONDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormJSONDeserializer = registry.getService(
+			DDMFormJSONDeserializer.class);
+	}
+
+	protected void setUpDDMFormValuesJSONDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormValuesJSONDeserializer = registry.getService(
+			DDMFormValuesJSONDeserializer.class);
+	}
+
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 
 }

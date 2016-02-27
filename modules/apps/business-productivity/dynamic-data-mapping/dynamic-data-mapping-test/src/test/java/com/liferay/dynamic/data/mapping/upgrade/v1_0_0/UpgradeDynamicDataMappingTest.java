@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -68,14 +68,12 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -84,25 +82,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 @PowerMockIgnore("javax.xml.stream.*")
-@PrepareForTest(
-	{
-		DDMFormValuesJSONDeserializerUtil.class,
-		DDMFormValuesJSONSerializerUtil.class, LocaleUtil.class
-	}
-)
+@PrepareForTest({LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil",
-		"com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil"
-	}
-)
 public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
-		setUpDDMFormValuesJSONDeserializerUtil();
-		setUpDDMFormValuesJSONSerializerUtil();
+	public void setUp() throws Exception {
+		setUpDDMFormValuesJSONDeserializer();
+		setUpDDMFormValuesJSONSerializer();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
 		setUpLocalizationUtil();
@@ -112,7 +99,9 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			null, null, null, null, null, null, null, null, null);
+			null, null, null, null, null, _ddmFormValuesJSONDeserializer,
+			_ddmFormValuesJSONSerializer, null, null, null, null, null, null,
+			null, null, null);
 	}
 
 	@Test(expected = UpgradeException.class)
@@ -205,15 +194,15 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"name<!**>", "Joe Bloggs"));
 
-		String serializedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+		String serializedDDMFormValues = _ddmFormValuesJSONSerializer.serialize(
+			ddmFormValues);
 
 		String updatedSerializedDDMFormValues =
 			_upgradeDynamicDataMapping.renameInvalidDDMFormFieldNames(
 				structureId, serializedDDMFormValues);
 
 		DDMFormValues updatedDDMFormValues =
-			DDMFormValuesJSONDeserializerUtil.deserialize(
+			_ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, updatedSerializedDDMFormValues);
 
 		List<DDMFormFieldValue> updatedDDMFormFieldValues =
@@ -353,7 +342,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			}
 		);
 
-		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
+		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
@@ -476,7 +465,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			}
 		);
 
-		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
+		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
@@ -560,7 +549,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			}
 		);
 
-		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
+		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
 
 		DDMFormValues actualDDMFormValues =
@@ -805,30 +794,19 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		return localizedDataMap;
 	}
 
-	protected void setUpDDMFormValuesJSONDeserializerUtil() {
-		mockStatic(
-			DDMFormValuesJSONDeserializerUtil.class,
-			Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(
-				DDMFormValuesJSONDeserializerUtil.class,
-				"getDDMFormValuesJSONDeserializer")
-		).toReturn(
-			new DDMFormValuesJSONDeserializerImpl()
+	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+		field(
+			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONDeserializer, new JSONFactoryImpl()
 		);
 	}
 
-	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		mockStatic(
-			DDMFormValuesJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(
-				DDMFormValuesJSONSerializerUtil.class,
-				"getDDMFormValuesJSONSerializer")
-		).toReturn(
-			new DDMFormValuesJSONSerializerImpl()
+	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
+		field(
+			DDMFormValuesJSONSerializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONSerializer, new JSONFactoryImpl()
 		);
 	}
 
@@ -995,6 +973,11 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			true
 		);
 	}
+
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
+		new DDMFormValuesJSONDeserializerImpl();
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
+		new DDMFormValuesJSONSerializerImpl();
 
 	@Mock
 	private Language _language;

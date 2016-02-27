@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.journal.util.JournalConverter;
@@ -307,7 +307,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+		String[] fieldsDisplayValues = _ddm.getFieldsDisplayValues(
 			fieldsDisplayField);
 
 		int offset = -1;
@@ -610,6 +610,11 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		element.remove(attribute);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
 	}
 
 	@Reference(unbind = "-")
@@ -1065,6 +1070,7 @@ public class JournalConverterImpl implements JournalConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
 
+	private DDM _ddm;
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;

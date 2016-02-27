@@ -80,10 +80,12 @@ public class DDMFormLayoutFactoryHelper {
 	}
 
 	protected com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn
-		createDDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumnAnnotation) {
+		createDDMFormLayoutColumn(
+			DDMFormLayoutColumn ddmFormLayoutColumnAnnotation) {
 
 		com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn
-			ddmFormLayoutColumn = new com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn();
+			ddmFormLayoutColumn =
+				new com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn();
 
 		ddmFormLayoutColumn.setDDMFormFieldNames(
 			ListUtil.fromArray(ddmFormLayoutColumnAnnotation.value()));
@@ -96,7 +98,8 @@ public class DDMFormLayoutFactoryHelper {
 		createDDMFormLayoutPage(DDMFormLayoutPage ddmFormLayoutPageAnnotation) {
 
 		com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage
-			ddmFormLayoutPage = new com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage();
+			ddmFormLayoutPage =
+				new com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage();
 
 		LocalizedValue title = createDDMFormLayoutPageTitle(
 			ddmFormLayoutPageAnnotation.title());
@@ -137,7 +140,8 @@ public class DDMFormLayoutFactoryHelper {
 		createDDMFormLayoutRow(DDMFormLayoutRow ddmFormLayoutRowAnnotation) {
 
 		com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow
-			ddmFormLayoutRow = new com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow();
+			ddmFormLayoutRow =
+				new com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow();
 
 		for (DDMFormLayoutColumn ddmFormLayoutColumn :
 				ddmFormLayoutRowAnnotation.value()) {

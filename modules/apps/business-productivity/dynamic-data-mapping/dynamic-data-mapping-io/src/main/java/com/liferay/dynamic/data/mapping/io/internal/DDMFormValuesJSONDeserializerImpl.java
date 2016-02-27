@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -51,7 +52,7 @@ public class DDMFormValuesJSONDeserializerImpl
 		throws PortalException {
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				serializedDDMFormValues);
 
 			DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
@@ -232,6 +233,11 @@ public class DDMFormValuesJSONDeserializerImpl
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	protected void setNestedDDMFormFieldValues(
 		JSONArray jsonArray, DDMFormFieldValue ddmFormFieldValue) {
 
@@ -244,5 +250,7 @@ public class DDMFormValuesJSONDeserializerImpl
 
 		ddmFormFieldValue.setNestedDDMFormFields(nestedDDMFormFieldValues);
 	}
+
+	private JSONFactory _jsonFactory;
 
 }

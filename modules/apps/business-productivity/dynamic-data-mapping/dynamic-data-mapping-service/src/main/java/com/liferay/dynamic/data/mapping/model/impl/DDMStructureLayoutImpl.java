@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CacheField;
@@ -32,11 +32,14 @@ public class DDMStructureLayoutImpl extends DDMStructureLayoutBaseImpl {
 	public DDMFormLayout getDDMFormLayout() {
 		if (_ddmFormLayout == null) {
 			try {
-				_ddmFormLayout = DDMFormLayoutJSONDeserializerUtil.deserialize(
-					getDefinition());
+				_ddmFormLayout =
+					DDMStructureLayoutLocalServiceUtil.
+						getStructureLayoutDDMFormLayout(this);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+
+				return new DDMFormLayout();
 			}
 		}
 

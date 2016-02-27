@@ -14,18 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.webdav;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,16 +45,20 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  */
-public class DDMWebDavUtil {
+@Component(immediate = true, service = DDMWebDav.class)
+public class DDMWebDav {
 
 	public static final String TYPE_STRUCTURES = "Structures";
 
 	public static final String TYPE_TEMPLATES = "Templates";
 
-	public static int addResource(WebDAVRequest webDavRequest, long classNameId)
+	public int addResource(WebDAVRequest webDavRequest, long classNameId)
 		throws Exception {
 
 		String[] pathArray = webDavRequest.getPathArray();
@@ -73,8 +77,7 @@ public class DDMWebDavUtil {
 
 			DDMForm ddmForm = getDDMForm(definition);
 
-			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
-				ddmForm);
+			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 			Map<Locale, String> nameMap = new HashMap<>();
 
@@ -87,7 +90,7 @@ public class DDMWebDavUtil {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			DDMStructureLocalServiceUtil.addStructure(
+			_ddmStructureLocalService.addStructure(
 				webDavRequest.getUserId(), webDavRequest.getGroupId(),
 				classNameId, nameMap, null, ddmForm, ddmFormLayout,
 				StorageType.JSON.toString(), serviceContext);
@@ -105,7 +108,7 @@ public class DDMWebDavUtil {
 		return HttpServletResponse.SC_FORBIDDEN;
 	}
 
-	public static int deleteResource(
+	public int deleteResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
 		throws WebDAVException {
@@ -123,7 +126,7 @@ public class DDMWebDavUtil {
 			if (model instanceof DDMStructure) {
 				DDMStructure structure = (DDMStructure)model;
 
-				DDMStructureServiceUtil.deleteStructure(
+				_ddmStructureService.deleteStructure(
 					structure.getStructureId());
 
 				return HttpServletResponse.SC_NO_CONTENT;
@@ -131,7 +134,7 @@ public class DDMWebDavUtil {
 			else if (model instanceof DDMTemplate) {
 				DDMTemplate template = (DDMTemplate)model;
 
-				DDMTemplateServiceUtil.deleteTemplate(template.getTemplateId());
+				_ddmTemplateService.deleteTemplate(template.getTemplateId());
 
 				return HttpServletResponse.SC_NO_CONTENT;
 			}
@@ -151,7 +154,7 @@ public class DDMWebDavUtil {
 		}
 	}
 
-	public static Resource getResource(
+	public Resource getResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
 		throws WebDAVException {
@@ -175,11 +178,11 @@ public class DDMWebDavUtil {
 
 				if (type.equals(TYPE_STRUCTURES)) {
 					DDMStructure structure =
-						DDMStructureLocalServiceUtil.fetchStructure(
+						_ddmStructureLocalService.fetchStructure(
 							GetterUtil.getLong(typeId));
 
 					if (structure == null) {
-						structure = DDMStructureLocalServiceUtil.fetchStructure(
+						structure = _ddmStructureLocalService.fetchStructure(
 							webDAVRequest.getGroupId(), classNameId, typeId);
 					}
 
@@ -187,16 +190,16 @@ public class DDMWebDavUtil {
 						return null;
 					}
 
-					return DDMWebDavUtil.toResource(
+					return toResource(
 						webDAVRequest, structure, rootPath, false);
 				}
 				else if (type.equals(TYPE_TEMPLATES)) {
 					DDMTemplate template =
-						DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+						_ddmTemplateLocalService.fetchDDMTemplate(
 							GetterUtil.getLong(typeId));
 
 					if (template == null) {
-						template = DDMTemplateLocalServiceUtil.fetchTemplate(
+						template = _ddmTemplateLocalService.fetchTemplate(
 							webDAVRequest.getGroupId(), classNameId, typeId);
 					}
 
@@ -204,8 +207,7 @@ public class DDMWebDavUtil {
 						return null;
 					}
 
-					return DDMWebDavUtil.toResource(
-						webDAVRequest, template, rootPath, false);
+					return toResource(webDAVRequest, template, rootPath, false);
 				}
 			}
 
@@ -216,7 +218,7 @@ public class DDMWebDavUtil {
 		}
 	}
 
-	public static int putResource(
+	public int putResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
 		throws WebDAVException {
@@ -241,10 +243,10 @@ public class DDMWebDavUtil {
 
 				DDMForm ddmForm = getDDMForm(definition);
 
-				DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
+				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
 					ddmForm);
 
-				DDMStructureServiceUtil.updateStructure(
+				_ddmStructureService.updateStructure(
 					structure.getGroupId(), structure.getParentStructureId(),
 					structure.getClassNameId(), structure.getStructureKey(),
 					structure.getNameMap(), structure.getDescriptionMap(),
@@ -260,7 +262,7 @@ public class DDMWebDavUtil {
 
 				String script = StringUtil.read(request.getInputStream());
 
-				DDMTemplateServiceUtil.updateTemplate(
+				_ddmTemplateService.updateTemplate(
 					template.getTemplateId(), template.getClassPK(),
 					template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),
@@ -286,7 +288,7 @@ public class DDMWebDavUtil {
 		}
 	}
 
-	public static Resource toResource(
+	public Resource toResource(
 		WebDAVRequest webDAVRequest, DDMStructure structure, String rootPath,
 		boolean appendPath) {
 
@@ -301,7 +303,7 @@ public class DDMWebDavUtil {
 		return new DDMStructureResourceImpl(structure, parentPath, name);
 	}
 
-	public static Resource toResource(
+	public Resource toResource(
 		WebDAVRequest webDAVRequest, DDMTemplate template, String rootPath,
 		boolean appendPath) {
 
@@ -316,7 +318,7 @@ public class DDMWebDavUtil {
 		return new DDMTemplateResourceImpl(template, parentPath, name);
 	}
 
-	public static Resource toResource(
+	public Resource toResource(
 		WebDAVRequest webDAVRequest, String type, String rootPath,
 		boolean appendPath) {
 
@@ -335,14 +337,65 @@ public class DDMWebDavUtil {
 		return resource;
 	}
 
-	protected static DDMForm getDDMForm(String definition)
-		throws PortalException {
+	protected DDMForm getDDMForm(String definition) throws PortalException {
+		_ddmXML.validateXML(definition);
 
-		DDMXMLUtil.validateXML(definition);
-
-		return DDMFormXSDDeserializerUtil.deserialize(definition);
+		return _ddmFormXSDDeserializer.deserialize(definition);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDMWebDavUtil.class);
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormXSDDeserializer(
+		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
+
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMXML(DDMXML ddmXML) {
+		_ddmXML = ddmXML;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DDMWebDav.class);
+
+	private DDM _ddm;
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureService _ddmStructureService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMTemplateService _ddmTemplateService;
+	private DDMXML _ddmXML;
 
 }

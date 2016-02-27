@@ -337,6 +337,12 @@ public class DDMStructureLayoutLocalServiceUtil {
 				   .getStructureLayoutByStructureVersionId(structureVersionId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormLayout getStructureLayoutDDMFormLayout(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout structureLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureLayoutDDMFormLayout(structureLayout);
+	}
+
 	/**
 	* Updates the d d m structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -84,7 +83,7 @@ public class HTMLTag extends BaseHTMLTag {
 			DDMForm ddmForm = getDDMForm();
 
 			try {
-				return DDMFormValuesJSONDeserializerUtil.deserialize(
+				return DDMUtil.getDDMFormValues(
 					ddmForm, serializedDDMFormValues);
 			}
 			catch (PortalException pe) {

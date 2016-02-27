@@ -259,6 +259,12 @@ public class DDMStructureVersionLocalServiceUtil {
 		return getService().getStructureVersion(structureVersionId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMForm getStructureVersionDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion structureVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureVersionDDMForm(structureVersion);
+	}
+
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		long structureId) {
 		return getService().getStructureVersions(structureId);

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -319,6 +320,14 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSet getRecordSet(long recordSetId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormValues getRecordSetSettingsDDMFormValues(
+		DDLRecordSet recordSet) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSetSettings getRecordSetSettingsModel(
+		DDLRecordSet recordSet) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSet> getRecordSets(long groupId);

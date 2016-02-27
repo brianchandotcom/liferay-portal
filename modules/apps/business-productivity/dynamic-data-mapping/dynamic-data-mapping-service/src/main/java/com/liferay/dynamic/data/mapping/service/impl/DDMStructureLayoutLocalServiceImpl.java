@@ -16,7 +16,8 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
@@ -57,7 +58,7 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setUserName(user.getFullName());
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(
-			DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
+			ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
@@ -96,6 +97,15 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Override
+	public DDMFormLayout getStructureLayoutDDMFormLayout(
+			DDMStructureLayout structureLayout)
+		throws PortalException {
+
+		return ddmFormLayoutJSONDeserializer.deserialize(
+			structureLayout.getDefinition());
+	}
+
+	@Override
 	public DDMStructureLayout updateStructureLayout(
 			long structureLayoutId, DDMFormLayout ddmFormLayout,
 			ServiceContext serviceContext)
@@ -107,7 +117,7 @@ public class DDMStructureLayoutLocalServiceImpl
 		validate(ddmFormLayout);
 
 		structureLayout.setDefinition(
-			DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
+			ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
@@ -117,6 +127,12 @@ public class DDMStructureLayoutLocalServiceImpl
 
 		ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
+
+	@ServiceReference(type = DDMFormLayoutJSONDeserializer.class)
+	protected DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer;
+
+	@ServiceReference(type = DDMFormLayoutJSONSerializer.class)
+	protected DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer;
 
 	@ServiceReference(type = DDMFormLayoutValidator.class)
 	protected DDMFormLayoutValidator ddmFormLayoutValidator;

@@ -792,6 +792,12 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructure(structureId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMForm getStructureDDMForm(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureDDMForm(structure);
+	}
+
 	/**
 	* Returns all the structures present in the system.
 	*

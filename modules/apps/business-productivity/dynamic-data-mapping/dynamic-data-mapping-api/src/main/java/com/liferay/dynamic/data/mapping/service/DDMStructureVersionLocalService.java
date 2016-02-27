@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -232,6 +233,10 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureVersion getStructureVersion(long structureVersionId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMForm getStructureVersionDDMForm(
+		DDMStructureVersion structureVersion) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureVersion> getStructureVersions(long structureId);

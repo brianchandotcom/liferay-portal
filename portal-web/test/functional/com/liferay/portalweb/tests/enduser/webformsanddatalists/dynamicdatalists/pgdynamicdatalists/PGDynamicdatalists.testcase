@@ -400,7 +400,7 @@
 	</command>
 
 	<command name="AddVelocityDisplayTemplate" priority="3">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}restricted.variables=" />
 
 		<var name="ddlDisplayTemplateScript">
 			<![CDATA[
@@ -1913,7 +1913,7 @@
 	</command>
 
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}restricted.variables=" />
 		<property name="portal.acceptance" value="true" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -2035,7 +2035,7 @@
 	</command>
 
 	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="3">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />

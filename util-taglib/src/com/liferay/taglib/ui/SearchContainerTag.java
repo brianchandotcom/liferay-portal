@@ -180,6 +180,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
+	public boolean getCompactEmptyResultsMessage() {
+		return _compactEmptyResultsMessage;
+	}
+
 	public String getCssClass() {
 		return _cssClass;
 	}
@@ -254,6 +258,12 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 	public boolean isDeltaConfigurable() {
 		return _deltaConfigurable;
+	}
+
+	public void setCompactEmptyResultsMessage(
+		boolean compactEmptyResultsMessage) {
+
+		_compactEmptyResultsMessage = compactEmptyResultsMessage;
 	}
 
 	public void setCssClass(String cssClass) {
@@ -340,6 +350,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_var = var;
 	}
 
+	private boolean _compactEmptyResultsMessage = false;
 	private String _cssClass = StringPool.BLANK;
 	private String _curParam = SearchContainer.DEFAULT_CUR_PARAM;
 	private int _delta = SearchContainer.DEFAULT_DELTA;

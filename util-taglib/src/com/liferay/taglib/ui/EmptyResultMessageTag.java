@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EmptyResultMessageTag extends IncludeTag {
 
+	public void setCompact(boolean compact) {
+		_compact = compact;
+	}
+
 	public void setMessage(String message) {
 		_message = message;
 	}
@@ -50,6 +54,9 @@ public class EmptyResultMessageTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-ui:empty-result-message:compact",
+			String.valueOf(_compact));
+		request.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
 		request.setAttribute(
 			"liferay-ui:empty-result-message:search", String.valueOf(_search));
@@ -61,6 +68,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/ui/empty_result_message/start.jsp";
 
+	private boolean _compact;
 	private String _message;
 	private boolean _search;
 

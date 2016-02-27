@@ -96,7 +96,9 @@ if (organization != null) {
 				editOrganizationSiteURL.setParameter("viewOrganizationsRedirect", currentURL);
 				%>
 
-				<aui:field-wrapper>
+				<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
+
+				<aui:field-wrapper inlineField="<%= true %>">
 					<liferay-ui:icon
 						iconCssClass="icon-cog"
 						label="<%= true %>"

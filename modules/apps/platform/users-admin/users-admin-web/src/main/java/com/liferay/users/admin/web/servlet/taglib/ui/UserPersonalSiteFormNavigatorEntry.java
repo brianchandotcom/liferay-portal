@@ -44,7 +44,7 @@ public class UserPersonalSiteFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "personal-site";
+		return "personal-site-template";
 	}
 
 	@Override

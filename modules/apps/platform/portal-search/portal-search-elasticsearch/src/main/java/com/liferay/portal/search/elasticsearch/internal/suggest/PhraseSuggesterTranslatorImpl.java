@@ -111,18 +111,6 @@ public class PhraseSuggesterTranslatorImpl
 		return suggestBuilder;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
 	protected void translate(
 		PhraseSuggester.Collate collate,
 		PhraseSuggestionBuilder phraseSuggestionBuilder) {
@@ -226,12 +214,12 @@ public class PhraseSuggesterTranslatorImpl
 		}
 	}
 
-	protected void unsetQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = null;
-	}
-
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
 	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

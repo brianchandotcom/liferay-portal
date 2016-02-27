@@ -43,7 +43,7 @@ public class RemoteElasticsearchConnectionTest {
 
 		_remoteElasticsearchConnection = new RemoteElasticsearchConnection();
 
-		_remoteElasticsearchConnection.setProps(_props);
+		_remoteElasticsearchConnection.props = _props;
 	}
 
 	@Test

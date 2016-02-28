@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -70,52 +71,55 @@ public class UpgradePermission extends UpgradeProcess {
 			String name, String tableName, String pkColumnName)
 		throws Exception {
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select " + pkColumnName + ", groupId, companyId from " +
-					tableName);
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(name)) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select " + pkColumnName + ", groupId, companyId from " +
+						tableName);
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long primKey = rs.getLong(pkColumnName);
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
+				while (rs.next()) {
+					long primKey = rs.getLong(pkColumnName);
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
 
-				ResourceBlock resourceBlock = convertResourcePermissions(
-					tableName, pkColumnName, companyId, groupId, name, primKey);
+					ResourceBlock resourceBlock = convertResourcePermissions(
+						tableName, pkColumnName, companyId, groupId, name,
+						primKey);
 
-				if (_log.isInfoEnabled() &&
-					((resourceBlock.getResourceBlockId() % 100) == 0)) {
+					if (_log.isInfoEnabled() &&
+						((resourceBlock.getResourceBlockId() % 100) == 0)) {
 
-					_log.info("Processed 100 resource blocks for " + name);
+						_log.info("Processed 100 resource blocks for " + name);
+					}
 				}
 			}
-		}
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getScopeResourcePermissions(
-				_SCOPES);
+			List<ResourcePermission> resourcePermissions =
+				ResourcePermissionLocalServiceUtil.getScopeResourcePermissions(
+					_SCOPES);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			int scope = resourcePermission.getScope();
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				int scope = resourcePermission.getScope();
 
-			if (!name.equals(resourcePermission.getName())) {
-				continue;
-			}
+				if (!name.equals(resourcePermission.getName())) {
+					continue;
+				}
 
-			if ((scope == ResourceConstants.SCOPE_COMPANY) ||
-				(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
+				if ((scope == ResourceConstants.SCOPE_COMPANY) ||
+					(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
 
-				ResourceBlockLocalServiceUtil.setCompanyScopePermissions(
-					resourcePermission.getCompanyId(), name,
-					resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockLocalServiceUtil.setGroupScopePermissions(
-					resourcePermission.getCompanyId(),
-					GetterUtil.getLong(resourcePermission.getPrimKey()), name,
-					resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
+					ResourceBlockLocalServiceUtil.setCompanyScopePermissions(
+						resourcePermission.getCompanyId(), name,
+						resourcePermission.getRoleId(),
+						resourcePermission.getActionIds());
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP) {
+					ResourceBlockLocalServiceUtil.setGroupScopePermissions(
+						resourcePermission.getCompanyId(),
+						GetterUtil.getLong(resourcePermission.getPrimKey()),
+						name, resourcePermission.getRoleId(),
+						resourcePermission.getActionIds());
+				}
 			}
 		}
 	}
@@ -173,28 +177,32 @@ public class UpgradePermission extends UpgradeProcess {
 			String name, boolean community, boolean guest)
 		throws Exception {
 
-		List<String> modelActions = ResourceActionsUtil.getModelResourceActions(
-			name);
+		try (LoggingTimer loggingTimer = new LoggingTimer(name)) {
+			List<String> modelActions =
+				ResourceActionsUtil.getModelResourceActions(name);
 
-		ResourceActionLocalServiceUtil.checkResourceActions(name, modelActions);
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				name, modelActions);
 
-		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
-		long actionIdsLong = 1;
+			int scope = ResourceConstants.SCOPE_INDIVIDUAL;
+			long actionIdsLong = 1;
 
-		if (community) {
+			if (community) {
+				ResourcePermissionLocalServiceUtil.addResourcePermissions(
+					name, RoleConstants.ORGANIZATION_USER, scope,
+					actionIdsLong);
+				ResourcePermissionLocalServiceUtil.addResourcePermissions(
+					name, RoleConstants.SITE_MEMBER, scope, actionIdsLong);
+			}
+
+			if (guest) {
+				ResourcePermissionLocalServiceUtil.addResourcePermissions(
+					name, RoleConstants.GUEST, scope, actionIdsLong);
+			}
+
 			ResourcePermissionLocalServiceUtil.addResourcePermissions(
-				name, RoleConstants.ORGANIZATION_USER, scope, actionIdsLong);
-			ResourcePermissionLocalServiceUtil.addResourcePermissions(
-				name, RoleConstants.SITE_MEMBER, scope, actionIdsLong);
+				name, RoleConstants.OWNER, scope, actionIdsLong);
 		}
-
-		if (guest) {
-			ResourcePermissionLocalServiceUtil.addResourcePermissions(
-				name, RoleConstants.GUEST, scope, actionIdsLong);
-		}
-
-		ResourcePermissionLocalServiceUtil.addResourcePermissions(
-			name, RoleConstants.OWNER, scope, actionIdsLong);
 	}
 
 	private static final int[] _SCOPES = {

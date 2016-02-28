@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -40,63 +41,66 @@ public class UpgradeUserName extends UpgradeProcess {
 	protected void updateTable(String tableName, boolean setCompanyId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(11);
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			StringBundler sb = new StringBundler(11);
 
-		sb.append("select distinct User_.companyId, User_.userId, ");
-		sb.append("User_.firstName, User_.middleName, User_.lastName ");
-		sb.append("from User_ inner join ");
-		sb.append(tableName);
-		sb.append(" on ");
-		sb.append(tableName);
-		sb.append(".userId = User_.userId where ");
-		sb.append(tableName);
-		sb.append(".userName is null or ");
-		sb.append(tableName);
-		sb.append(".userName = ''");
+			sb.append("select distinct User_.companyId, User_.userId, ");
+			sb.append("User_.firstName, User_.middleName, User_.lastName ");
+			sb.append("from User_ inner join ");
+			sb.append(tableName);
+			sb.append(" on ");
+			sb.append(tableName);
+			sb.append(".userId = User_.userId where ");
+			sb.append(tableName);
+			sb.append(".userName is null or ");
+			sb.append(tableName);
+			sb.append(".userName = ''");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String firstName = rs.getString("firstName");
-				String middleName = rs.getString("middleName");
-				String lastName = rs.getString("lastName");
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					String firstName = rs.getString("firstName");
+					String middleName = rs.getString("middleName");
+					String lastName = rs.getString("lastName");
 
-				FullNameGenerator fullNameGenerator =
-					FullNameGeneratorFactory.getInstance();
+					FullNameGenerator fullNameGenerator =
+						FullNameGeneratorFactory.getInstance();
 
-				String fullName = fullNameGenerator.getFullName(
-					firstName, middleName, lastName);
+					String fullName = fullNameGenerator.getFullName(
+						firstName, middleName, lastName);
 
-				fullName = fullName.replace(
-					StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
+					fullName = fullName.replace(
+						StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 
-				if (setCompanyId) {
-					sb = new StringBundler(8);
+					if (setCompanyId) {
+						sb = new StringBundler(8);
 
-					sb.append("update ");
-					sb.append(tableName);
-					sb.append(" set companyId = ");
-					sb.append(companyId);
-					sb.append(", userName = '");
-					sb.append(fullName);
-					sb.append("' where userId = ");
-					sb.append(userId);
+						sb.append("update ");
+						sb.append(tableName);
+						sb.append(" set companyId = ");
+						sb.append(companyId);
+						sb.append(", userName = '");
+						sb.append(fullName);
+						sb.append("' where userId = ");
+						sb.append(userId);
+					}
+					else {
+						sb = new StringBundler(6);
+
+						sb.append("update ");
+						sb.append(tableName);
+						sb.append(" set userName = '");
+						sb.append(fullName);
+						sb.append("' where userId = ");
+						sb.append(userId);
+					}
+
+					runSQL(sb.toString());
 				}
-				else {
-					sb = new StringBundler(6);
-
-					sb.append("update ");
-					sb.append(tableName);
-					sb.append(" set userName = '");
-					sb.append(fullName);
-					sb.append("' where userId = ");
-					sb.append(userId);
-				}
-
-				runSQL(sb.toString());
 			}
 		}
 	}

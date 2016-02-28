@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.sql.PreparedStatement;
@@ -49,7 +50,8 @@ public class UpgradeExpando extends UpgradeProcess {
 	}
 
 	protected void updateColumnTypeSettingsIndexable() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select columnId, type_, typeSettings from ExpandoColumn " +
 					"where typeSettings like '%indexable%'");
 			ResultSet rs = ps.executeQuery()) {
@@ -98,7 +100,8 @@ public class UpgradeExpando extends UpgradeProcess {
 	}
 
 	protected void updateColumnTypeSettingsSelection() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select columnId, typeSettings from ExpandoColumn where " +
 					"typeSettings like '%selection%'");
 			ResultSet rs = ps.executeQuery()) {

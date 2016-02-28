@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -123,7 +124,8 @@ public class UpgradePortletPreferences
 	}
 
 	protected void updatePortalPreferences() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select ownerId, ownerType, preferences from " +
 					"PortletPreferences where portletId = ?")) {
 
@@ -146,40 +148,43 @@ public class UpgradePortletPreferences
 	}
 
 	protected void updatePortletPreferencesOwner() throws Exception {
-		StringBundler sb = new StringBundler(6);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(6);
 
-		sb.append("select portletPreferencesId, plid, portletId, ");
-		sb.append("preferences from PortletPreferences where ownerId = ");
-		sb.append(PortletKeys.PREFS_OWNER_ID_DEFAULT);
-		sb.append(" and ownerType = ");
-		sb.append(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		sb.append(" and portletId in ('8', '19', '33')");
+			sb.append("select portletPreferencesId, plid, portletId, ");
+			sb.append("preferences from PortletPreferences where ownerId = ");
+			sb.append(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+			sb.append(" and ownerType = ");
+			sb.append(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+			sb.append(" and portletId in ('8', '19', '33')");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-				String portletId = rs.getString("portletId");
-				String preferences = rs.getString("preferences");
+				while (rs.next()) {
+					long plid = rs.getLong("plid");
+					String portletId = rs.getString("portletId");
+					String preferences = rs.getString("preferences");
 
-				long ownerId = getOwnerId(plid);
+					long ownerId = getOwnerId(plid);
 
-				if (ownerId == 0) {
-					continue;
+					if (ownerId == 0) {
+						continue;
+					}
+
+					long portletPreferencesId = getPortletPreferencesId(
+						ownerId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+						PortletKeys.PREFS_PLID_SHARED, portletId);
+
+					if (portletPreferencesId != 0) {
+						continue;
+					}
+
+					addPortletPreferences(
+						ownerId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+						PortletKeys.PREFS_PLID_SHARED, portletId, preferences);
 				}
-
-				long portletPreferencesId = getPortletPreferencesId(
-					ownerId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-					PortletKeys.PREFS_PLID_SHARED, portletId);
-
-				if (portletPreferencesId != 0) {
-					continue;
-				}
-
-				addPortletPreferences(
-					ownerId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-					PortletKeys.PREFS_PLID_SHARED, portletId, preferences);
 			}
 		}
 	}

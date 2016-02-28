@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -99,38 +100,45 @@ public class UpgradeSubscription extends UpgradeProcess {
 	}
 
 	protected void updateMBMessages(long companyId) throws Exception {
-		StringBundler sb = new StringBundler(8);
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				String.valueOf(companyId))) {
 
-		sb.append("select userId, MIN(userName) as userName, ");
-		sb.append("classNameId, classPK, MIN(createDate) as createDate, ");
-		sb.append("MIN(modifiedDate) as modifiedDate from MBMessage ");
-		sb.append("where (companyId = ");
-		sb.append(companyId);
-		sb.append(") and ");
-		sb.append("(classNameId != 0) and (parentMessageId != 0) ");
-		sb.append("group by userId, classNameId, classPK");
+			StringBundler sb = new StringBundler(8);
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			sb.append("select userId, MIN(userName) as userName, ");
+			sb.append("classNameId, classPK, MIN(createDate) as createDate, ");
+			sb.append("MIN(modifiedDate) as modifiedDate from MBMessage ");
+			sb.append("where (companyId = ");
+			sb.append(companyId);
+			sb.append(") and ");
+			sb.append("(classNameId != 0) and (parentMessageId != 0) ");
+			sb.append("group by userId, classNameId, classPK");
 
-			while (rs.next()) {
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long classNameId = rs.getLong("classNameId");
-				long classPK = rs.getLong("classPK");
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-				if (hasSubscription(companyId, userId, classNameId, classPK)) {
-					continue;
+				while (rs.next()) {
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					long classNameId = rs.getLong("classNameId");
+					long classPK = rs.getLong("classPK");
+
+					if (hasSubscription(
+							companyId, userId, classNameId, classPK)) {
+
+						continue;
+					}
+
+					long subscriptionId = increment();
+					String frequency = "instant";
+
+					addSubscription(
+						subscriptionId, companyId, userId, userName, createDate,
+						modifiedDate, classNameId, classPK, frequency);
 				}
-
-				long subscriptionId = increment();
-				String frequency = "instant";
-
-				addSubscription(
-					subscriptionId, companyId, userId, userName, createDate,
-					modifiedDate, classNameId, classPK, frequency);
 			}
 		}
 	}

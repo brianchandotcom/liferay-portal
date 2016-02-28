@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_1_0.util.GroupTable;
 
@@ -52,28 +53,30 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateName() throws Exception {
-		long organizationClassNameId = getClassNameId(
-			"com.liferay.portal.model.Organization");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long organizationClassNameId = getClassNameId(
+				"com.liferay.portal.model.Organization");
 
-		StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select Group_.groupId, Group_.classPK, ");
-		sb.append("Organization_.name from Group_ inner join ");
-		sb.append("Organization_ on Organization_.organizationId = ");
-		sb.append("Group_.classPK where classNameId = ?");
+			sb.append("select Group_.groupId, Group_.classPK, ");
+			sb.append("Organization_.name from Group_ inner join ");
+			sb.append("Organization_ on Organization_.organizationId = ");
+			sb.append("Group_.classPK where classNameId = ?");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
-			ps.setLong(1, organizationClassNameId);
+				ps.setLong(1, organizationClassNameId);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
-					long classPK = rs.getLong("classPK");
-					String name = rs.getString("name");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long groupId = rs.getLong("groupId");
+						long classPK = rs.getLong("classPK");
+						String name = rs.getString("name");
 
-					updateName(groupId, classPK, name);
+						updateName(groupId, classPK, name);
+					}
 				}
 			}
 		}
@@ -99,30 +102,32 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateSite() throws Exception {
-		long groupClassNameId = getClassNameId(
-			"com.liferay.portal.model.Group");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long groupClassNameId = getClassNameId(
+				"com.liferay.portal.model.Group");
 
-		runSQL(
-			"update Group_ set site = TRUE where classNameId = " +
-				groupClassNameId);
+			runSQL(
+				"update Group_ set site = TRUE where classNameId = " +
+					groupClassNameId);
 
-		long organizationClassNameId = getClassNameId(
-			"com.liferay.portal.model.Organization");
+			long organizationClassNameId = getClassNameId(
+				"com.liferay.portal.model.Organization");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select distinct Group_.groupId from Group_ inner join " +
-					"Layout on Layout.groupId = Group_.groupId where " +
-						"classNameId = ?")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select distinct Group_.groupId from Group_ inner join " +
+						"Layout on Layout.groupId = Group_.groupId where " +
+							"classNameId = ?")) {
 
-			ps.setLong(1, organizationClassNameId);
+				ps.setLong(1, organizationClassNameId);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long groupId = rs.getLong("groupId");
 
-					runSQL(
-						"update Group_ set site = TRUE where groupId = " +
-							groupId);
+						runSQL(
+							"update Group_ set site = TRUE where groupId = " +
+								groupId);
+					}
 				}
 			}
 		}

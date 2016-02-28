@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -202,12 +203,14 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void dropEquityTables() throws Exception {
-		runSQL("drop table SocialEquityAssetEntry");
-		runSQL("drop table SocialEquityGroupSetting");
-		runSQL("drop table SocialEquityHistory");
-		runSQL("drop table SocialEquityLog");
-		runSQL("drop table SocialEquitySetting");
-		runSQL("drop table SocialEquityUser");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("drop table SocialEquityAssetEntry");
+			runSQL("drop table SocialEquityGroupSetting");
+			runSQL("drop table SocialEquityHistory");
+			runSQL("drop table SocialEquityLog");
+			runSQL("drop table SocialEquitySetting");
+			runSQL("drop table SocialEquityUser");
+		}
 	}
 
 	protected String encodeEquityToActivityKey(
@@ -357,60 +360,67 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void migrateEquityGroupSettings() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, companyId, classNameId, enabled from " +
-					"SocialEquityGroupSetting where type_ = 1");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select groupId, companyId, classNameId, enabled from " +
+						"SocialEquityGroupSetting where type_ = 1");
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long classNameId = rs.getLong("classNameId");
-				boolean enabled = rs.getBoolean("enabled");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long classNameId = rs.getLong("classNameId");
+					boolean enabled = rs.getBoolean("enabled");
 
-				addActivitySetting(
-					increment(), groupId, companyId, classNameId, 0, "enabled",
-					String.valueOf(enabled));
-			}
-		}
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("select groupId from SocialActivitySetting where ");
-		sb.append("activityType = 0 and name = 'enabled' and ");
-		sb.append("value = 'true' and classNameId in (");
-
-		long mbMessageClassNameId = PortalUtil.getClassNameId(MBMessage.class);
-
-		sb.append(mbMessageClassNameId);
-		sb.append(", ");
-
-		long mbThreadClassNameId = PortalUtil.getClassNameId(MBThread.class);
-
-		sb.append(mbThreadClassNameId);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-
-				sb = new StringBundler(6);
-
-				sb.append("update SocialActivitySetting set value = 'true' ");
-				sb.append("where groupId = ");
-				sb.append(groupId);
-				sb.append(" and activityType = 0 and value = 'enabled' and ");
-				sb.append("classNameId = ");
-				sb.append(mbThreadClassNameId);
-
-				runSQL(sb.toString());
+					addActivitySetting(
+						increment(), groupId, companyId, classNameId, 0,
+						"enabled", String.valueOf(enabled));
+				}
 			}
 
-			runSQL(
-				"delete from SocialActivitySetting where classNameId = " +
-					mbThreadClassNameId);
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("select groupId from SocialActivitySetting where ");
+			sb.append("activityType = 0 and name = 'enabled' and ");
+			sb.append("value = 'true' and classNameId in (");
+
+			long mbMessageClassNameId = PortalUtil.getClassNameId(
+				MBMessage.class);
+
+			sb.append(mbMessageClassNameId);
+			sb.append(", ");
+
+			long mbThreadClassNameId = PortalUtil.getClassNameId(
+				MBThread.class);
+
+			sb.append(mbThreadClassNameId);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+
+					sb = new StringBundler(6);
+
+					sb.append(
+						"update SocialActivitySetting set value = 'true' ");
+					sb.append("where groupId = ");
+					sb.append(groupId);
+					sb.append(
+						" and activityType = 0 and value = 'enabled' and ");
+					sb.append("classNameId = ");
+					sb.append(mbThreadClassNameId);
+
+					runSQL(sb.toString());
+				}
+
+				runSQL(
+					"delete from SocialActivitySetting where classNameId = " +
+						mbThreadClassNameId);
+			}
 		}
 	}
 
@@ -497,60 +507,66 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void migrateEquityLogs() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("select AssetEntry.classNameId, AssetEntry.classPK, ");
-		sb.append("SocialEquityLog.* from SocialEquityLog, AssetEntry ");
-		sb.append("where SocialEquityLog.assetEntryId = ");
-		sb.append("AssetEntry.entryId order by actionDate");
+			sb.append("select AssetEntry.classNameId, AssetEntry.classPK, ");
+			sb.append("SocialEquityLog.* from SocialEquityLog, AssetEntry ");
+			sb.append("where SocialEquityLog.assetEntryId = ");
+			sb.append("AssetEntry.entryId order by actionDate");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				migrateEquityLog(rs);
+				while (rs.next()) {
+					migrateEquityLog(rs);
+				}
 			}
-		}
 
-		sb = new StringBundler(4);
+			sb = new StringBundler(4);
 
-		sb.append("select groupId, classNameId, classPK, name, ");
-		sb.append("max(startPeriod) as startPeriod ");
-		sb.append("from SocialActivityCounter group by groupId, ");
-		sb.append("classNameId, classPK, name");
+			sb.append("select groupId, classNameId, classPK, name, ");
+			sb.append("max(startPeriod) as startPeriod ");
+			sb.append("from SocialActivityCounter group by groupId, ");
+			sb.append("classNameId, classPK, name");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long classNameId = rs.getLong("classNameId");
-				long classPK = rs.getLong("classPK");
-				String name = rs.getString("name");
-				int startPeriod = rs.getInt("startPeriod");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long classNameId = rs.getLong("classNameId");
+					long classPK = rs.getLong("classPK");
+					String name = rs.getString("name");
+					int startPeriod = rs.getInt("startPeriod");
 
-				sb = new StringBundler(12);
+					sb = new StringBundler(12);
 
-				sb.append("update SocialActivityCounter set endPeriod = ");
-				sb.append(SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
-				sb.append(" where groupId = ");
-				sb.append(groupId);
-				sb.append(" and classNameId = ");
-				sb.append(classNameId);
-				sb.append(" and classPK = ");
-				sb.append(classPK);
-				sb.append(" and name = '");
-				sb.append(name);
-				sb.append("' and startPeriod = ");
-				sb.append(startPeriod);
+					sb.append("update SocialActivityCounter set endPeriod = ");
+					sb.append(
+						SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
+					sb.append(" where groupId = ");
+					sb.append(groupId);
+					sb.append(" and classNameId = ");
+					sb.append(classNameId);
+					sb.append(" and classPK = ");
+					sb.append(classPK);
+					sb.append(" and name = '");
+					sb.append(name);
+					sb.append("' and startPeriod = ");
+					sb.append(startPeriod);
 
-				runSQL(sb.toString());
+					runSQL(sb.toString());
+				}
 			}
 		}
 	}
 
 	protected void migrateEquitySettings() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select groupId, companyId, classNameId, actionId, " +
 					"dailyLimit, type_, value from SocialEquitySetting");
 			ResultSet rs = ps.executeQuery()) {

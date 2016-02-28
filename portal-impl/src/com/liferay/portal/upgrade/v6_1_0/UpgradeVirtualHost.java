@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,8 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 	}
 
 	protected void updateCompany() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select companyId, virtualHost from Company where " +
 					"virtualHost != ''");
 			ResultSet rs = ps.executeQuery()) {
@@ -59,13 +61,14 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 				addVirtualHost(virtualHostId, companyId, 0, hostname);
 			}
-		}
 
-		runSQL("alter table Company drop column virtualHost");
+			runSQL("alter table Company drop column virtualHost");
+		}
 	}
 
 	protected void updateLayoutSet() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
 					"where virtualHost != ''");
 			ResultSet rs = ps.executeQuery()) {
@@ -79,9 +82,9 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 				addVirtualHost(virtualHostId, companyId, layoutSetId, hostname);
 			}
-		}
 
-		runSQL("alter table LayoutSet drop column virtualHost");
+			runSQL("alter table LayoutSet drop column virtualHost");
+		}
 	}
 
 }

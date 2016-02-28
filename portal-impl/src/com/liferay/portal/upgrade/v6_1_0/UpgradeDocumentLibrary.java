@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -126,7 +127,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileEntries() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryId, extension from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -145,7 +147,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileRanks() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select groupId, fileRankId, folderId, name from DLFileRank");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -161,14 +164,15 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"update DLFileRank set fileEntryId = " + fileEntryId +
 						" where fileRankId = " + fileRankId);
 			}
-		}
 
-		runSQL("alter table DLFileRank drop column folderId");
-		runSQL("alter table DLFileRank drop column name");
+			runSQL("alter table DLFileRank drop column folderId");
+			runSQL("alter table DLFileRank drop column name");
+		}
 	}
 
 	protected void updateFileShortcuts() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileShortcutId, toFolderId, toName from " +
 					"DLFileShortcut");
 			ResultSet rs = ps.executeQuery()) {
@@ -188,52 +192,58 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						toFileEntryId + " where fileShortcutId = " +
 							fileShortcutId);
 			}
-		}
 
-		runSQL("alter table DLFileShortcut drop column toFolderId");
-		runSQL("alter table DLFileShortcut drop column toName");
+			runSQL("alter table DLFileShortcut drop column toFolderId");
+			runSQL("alter table DLFileShortcut drop column toName");
+		}
 	}
 
 	protected void updateFileVersions() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, fileVersionId, folderId, name, extension " +
-					"from DLFileVersion");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select groupId, fileVersionId, folderId, name, extension" +
+						" from DLFileVersion");
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long fileVersionId = rs.getLong("fileVersionId");
-				long folderId = rs.getLong("folderId");
-				String name = rs.getString("name");
-				String extension = rs.getString("extension");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long fileVersionId = rs.getLong("fileVersionId");
+					long folderId = rs.getLong("folderId");
+					String name = rs.getString("name");
+					String extension = rs.getString("extension");
 
-				String mimeType = MimeTypesUtil.getExtensionContentType(
-					extension);
+					String mimeType = MimeTypesUtil.getExtensionContentType(
+						extension);
 
-				long fileEntryId = getFileEntryId(groupId, folderId, name);
+					long fileEntryId = getFileEntryId(groupId, folderId, name);
 
-				runSQL(
-					"update DLFileVersion set fileEntryId = " + fileEntryId +
-						", mimeType = '" + mimeType +
-							"' where fileVersionId = " + fileVersionId);
+					runSQL(
+						"update DLFileVersion set fileEntryId = " +
+							fileEntryId + ", mimeType = '" + mimeType +
+								"' where fileVersionId = " + fileVersionId);
+				}
 			}
-		}
 
-		try {
-			runSQL("alter_column_type DLFileVersion extraSettings TEXT null");
-			runSQL("alter_column_type DLFileVersion title VARCHAR(255) null");
-			runSQL("alter table DLFileVersion drop column name");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
-				DLFileVersionTable.TABLE_SQL_CREATE,
-				DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
+			try {
+				runSQL(
+					"alter_column_type DLFileVersion extraSettings TEXT null");
+				runSQL(
+					"alter_column_type DLFileVersion title VARCHAR(255) null");
+				runSQL("alter table DLFileVersion drop column name");
+			}
+			catch (SQLException sqle) {
+				upgradeTable(
+					DLFileVersionTable.TABLE_NAME,
+					DLFileVersionTable.TABLE_COLUMNS,
+					DLFileVersionTable.TABLE_SQL_CREATE,
+					DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
+			}
 		}
 	}
 
 	protected void updateLocks() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select lockId, key_ from Lock_ where className = ?")) {
 
 			ps.setString(
@@ -267,39 +277,43 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateSyncs() throws Exception {
-		StringBundler sb = new StringBundler(10);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(10);
 
-		sb.append("select DLFileEntry.fileEntryId as fileId, ");
-		sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId");
-		sb.append(" as companyId, DLFileEntry.createDate as createDate, ");
-		sb.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
-		sb.append("type from DLFileEntry union all select ");
-		sb.append("DLFolder.folderId as fileId, DLFolder.groupId as ");
-		sb.append("groupId, DLFolder.companyId as companyId, ");
-		sb.append("DLFolder.createDate as createDate, ");
-		sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' ");
-		sb.append("as type from DLFolder");
+			sb.append("select DLFileEntry.fileEntryId as fileId, ");
+			sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId");
+			sb.append(" as companyId, DLFileEntry.createDate as createDate, ");
+			sb.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
+			sb.append("type from DLFileEntry union all select ");
+			sb.append("DLFolder.folderId as fileId, DLFolder.groupId as ");
+			sb.append("groupId, DLFolder.companyId as companyId, ");
+			sb.append("DLFolder.createDate as createDate, ");
+			sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' ");
+			sb.append("as type from DLFolder");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long fileId = rs.getLong("fileId");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				long parentFolderId = rs.getLong("parentFolderId");
-				String type = rs.getString("type");
+				while (rs.next()) {
+					long fileId = rs.getLong("fileId");
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					long parentFolderId = rs.getLong("parentFolderId");
+					String type = rs.getString("type");
 
-				addSync(
-					increment(), companyId, createDate, createDate, fileId,
-					groupId, parentFolderId, "add", type);
+					addSync(
+						increment(), companyId, createDate, createDate, fileId,
+						groupId, parentFolderId, "add", type);
+				}
 			}
 		}
 	}
 
 	protected void updateThumbnails() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryId from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 

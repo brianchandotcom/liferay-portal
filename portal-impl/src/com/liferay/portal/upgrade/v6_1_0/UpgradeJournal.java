@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalStructureTable;
@@ -45,7 +46,7 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void updateStructureXsd() throws Exception {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"update JournalStructure set xsd = replace(xsd, " +
 					"'image_gallery', 'document_library') where xsd like " +

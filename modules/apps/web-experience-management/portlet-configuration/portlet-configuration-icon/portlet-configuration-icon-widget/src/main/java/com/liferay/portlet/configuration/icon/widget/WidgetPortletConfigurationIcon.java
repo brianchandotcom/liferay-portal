@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -105,9 +104,7 @@ public class WidgetPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				themeDisplay.getLayout(), portletDisplay.getId());
+		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
 		boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue("lfrWidgetShowAddAppLink", null),

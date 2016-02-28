@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -94,9 +93,7 @@ public class IGooglePortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				themeDisplay.getLayout(), portletDisplay.getId());
+		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
 		boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue(

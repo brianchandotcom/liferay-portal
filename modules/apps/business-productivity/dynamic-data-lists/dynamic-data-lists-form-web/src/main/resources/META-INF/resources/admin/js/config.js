@@ -44,7 +44,8 @@
 						'liferay-ddl-form-builder-field-types-modal': {
 							path: 'form_builder_field_types_modal.js',
 							requires: [
-								'aui-form-builder-field-types-modal'
+								'aui-form-builder-field-types-modal',
+								'liferay-ddl-form-builder-modal-support'
 							]
 						},
 						'liferay-ddl-form-builder-layout-deserializer': {

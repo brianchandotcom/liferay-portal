@@ -5,8 +5,6 @@ AUI.add(
 
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
-		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
-
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
 
 		var CSS_FIELD_CONTENT_TOOLBAR = A.getClassName('form', 'builder', 'field', 'content', 'toolbar');
@@ -160,7 +158,6 @@ AUI.add(
 				var instance = this;
 
 				instance._modalEventHandlers = [
-					settingsModal.on('xyChange', instance._onModalXYChange),
 					settingsModal.on('visibleChange', A.bind('_onModalVisibleChange', instance))
 				];
 			},
@@ -196,10 +193,6 @@ AUI.add(
 
 					(new A.EventHandle(instance._modalEventHandlers)).detach();
 				}
-			},
-
-			_onModalXYChange: function(event) {
-				event.newVal = FormBuilderUtil.normalizeModalXY(event.newVal);
 			},
 
 			_renderFormBuilderField: function() {

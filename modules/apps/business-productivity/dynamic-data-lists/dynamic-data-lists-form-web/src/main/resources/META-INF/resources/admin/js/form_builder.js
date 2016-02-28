@@ -147,6 +147,18 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
+					showFieldSettingsPanel: function(field, typeName) {
+						var instance = this;
+
+						if (!instance._fieldSettingsModal) {
+							instance._fieldSettingsModal = new Liferay.DDL.FormBuilderFieldSettingsModal();
+							instance._fieldSettingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance));
+							instance._fieldSettingsModal.after('save', A.bind(instance._afterFieldSettingsModalSave, instance));
+						}
+
+						instance._fieldSettingsModal.show(field, typeName);
+					},
+
 					_afterActivePageNumberChange: function() {
 						var instance = this;
 
@@ -358,6 +370,7 @@ AUI.add(
 
 						var fieldTypesModal = new Liferay.DDL.FormBuilderFieldTypesModal(
 							{
+								centered: true,
 								draggable: false,
 								fieldTypes: instance.get('fieldTypes'),
 								modal: true,
@@ -366,6 +379,7 @@ AUI.add(
 								strings: {
 									addField: Liferay.Language.get('choose-a-field-type')
 								},
+								topFixed: true,
 								visible: false
 							}
 						);
@@ -402,6 +416,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field-support', 'liferay-ddl-form-builder-field-types-modal', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-pages-manager', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
+		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field-settings-modal', 'liferay-ddl-form-builder-field-support', 'liferay-ddl-form-builder-field-types-modal', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-pages-manager', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
 	}
 );

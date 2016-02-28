@@ -258,8 +258,6 @@ $horizontal-spacing: 35px;
 
 	.modal-body {
 		background-color: #FFF;
-		height: 100%;
-		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
 		padding: 0;
@@ -301,8 +299,6 @@ $horizontal-spacing: 35px;
 	}
 
 	.modal-footer {
-		bottom: 2px;
-
 		.btn {
 			width: auto;
 		}
@@ -908,6 +904,11 @@ $horizontal-spacing: 35px;
 		height: 670px;
 		padding-top: 85px;
 		width: 390px;
+
+		.modal-body {
+			height: 100%;
+			max-height: 100%;
+		}
 	}
 
 	.lfr-ddl-form-builder-field-types-modal {
@@ -919,7 +920,20 @@ $horizontal-spacing: 35px;
 
 @include md {
 	.lfr-ddl-field-settings-modal.form-builder-field-settings {
-		height: 676px;
+		height: auto;
+		margin-bottom: 85px;
+		margin-top: 85px;
+		padding: 0;
 		width: 720px;
+
+		.modal-content.form-builder-field-settings-content {
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+
+		.modal-footer,
+		.modal-header {
+			position: relative;
+		}
 	}
 }

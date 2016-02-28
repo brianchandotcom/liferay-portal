@@ -62,6 +62,12 @@
 								'aui-layout'
 							]
 						},
+						'liferay-ddl-form-builder-modal-support': {
+							path: 'form_builder_modal_support.js',
+							requires: [
+								'aui-modal'
+							]
+						},
 						'liferay-ddl-form-builder-pages-manager': {
 							path: 'form_builder_pages_manager.js',
 							requires: [

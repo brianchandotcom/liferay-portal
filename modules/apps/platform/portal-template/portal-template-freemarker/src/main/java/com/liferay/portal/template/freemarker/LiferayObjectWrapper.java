@@ -17,6 +17,7 @@ package com.liferay.portal.template.freemarker;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.EnumerationModel;
@@ -30,7 +31,10 @@ import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
+import java.lang.reflect.Field;
+
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -43,6 +47,36 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	public LiferayObjectWrapper() {
 		super(Configuration.getVersion());
+
+		try {
+			_cacheClassNamesField.set(
+				_classIntrospectorField.get(this),
+				new HashSet<Object>() {
+
+					@Override
+					public boolean add(Object e) {
+						return false;
+					}
+
+					@Override
+					public void clear() {
+					}
+
+					@Override
+					public boolean contains(Object o) {
+						return false;
+					}
+
+					@Override
+					public boolean remove(Object o) {
+						return false;
+					}
+
+				});
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	@Override
@@ -125,8 +159,27 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 		};
 
+	private static final Field _cacheClassNamesField;
+	private static final Field _classIntrospectorField;
 	private static final Map<Class<?>, ModelFactory> _modelFactories =
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+	static {
+		try {
+			ClassLoader classLoader =
+				DefaultObjectWrapper.class.getClassLoader();
+
+			_cacheClassNamesField = ReflectionUtil.getDeclaredField(
+				classLoader.loadClass("freemarker.ext.beans.ClassIntrospector"),
+				"cacheClassNames");
+
+			_classIntrospectorField = ReflectionUtil.getDeclaredField(
+				BeansWrapper.class, "classIntrospector");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 }

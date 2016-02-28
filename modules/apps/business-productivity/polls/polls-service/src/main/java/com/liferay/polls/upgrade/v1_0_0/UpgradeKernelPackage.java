@@ -32,16 +32,7 @@ public class UpgradeKernelPackage
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.polls.model.PollsChoice",
-			"com.liferay.polls.model.PollsChoice"
-		},
-		{
-			"com.liferay.portlet.polls.model.PollsQuestion",
-			"com.liferay.polls.model.PollsQuestion"
-		},
-		{
-			"com.liferay.portlet.polls.model.PollsVote",
-			"com.liferay.polls.model.PollsVote"
+			"com.liferay.portlet.polls.model.", "com.liferay.polls.model."
 		}
 	};
 

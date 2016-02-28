@@ -32,12 +32,8 @@ public class UpgradeKernelPackage
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			"com.liferay.bookmarks.model.BookmarksEntry"
-		},
-		{
-			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
-			"com.liferay.bookmarks.model.BookmarksFolder"
+			"com.liferay.portlet.bookmarks.model.",
+			"com.liferay.bookmarks.model."
 		}
 	};
 

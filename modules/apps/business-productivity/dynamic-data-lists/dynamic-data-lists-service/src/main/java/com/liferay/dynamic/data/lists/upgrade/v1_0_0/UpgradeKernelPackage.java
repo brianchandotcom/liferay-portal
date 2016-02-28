@@ -32,16 +32,8 @@ public class UpgradeKernelPackage
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-			"com.liferay.dynamic.data.list.model.DDLRecordSet"
-		},
-		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion",
-			"com.liferay.dynamic.data.list.model.DDLRecordVersion"
-		},
-		{
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
-			"com.liferay.dynamic.data.list.model.DDLRecord"
+			"com.liferay.portlet.dynamicdatalists.model.",
+			"com.liferay.dynamic.data.list.model."
 		}
 	};
 

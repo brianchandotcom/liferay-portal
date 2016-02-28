@@ -32,16 +32,7 @@ public class UpgradeKernelPackage
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
-			"com.liferay.portlet.wiki.model.WikiNode",
-			"com.liferay.wiki.model.WikiNode"
-		},
-		{
-			"com.liferay.portlet.wiki.model.WikiPageResource",
-			"com.liferay.wiki.model.WikiPageResource"
-		},
-		{
-			"com.liferay.portlet.wiki.model.WikiPage",
-			"com.liferay.wiki.model.WikiPage"
+			"com.liferay.portlet.wiki.model.", "com.liferay.wiki.model."
 		}
 	};
 

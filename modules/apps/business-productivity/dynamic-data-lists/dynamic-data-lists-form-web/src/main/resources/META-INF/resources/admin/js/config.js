@@ -16,6 +16,7 @@
 							requires: [
 								'aui-form-builder',
 								'aui-form-builder-pages',
+								'liferay-ddl-form-builder-field-settings-modal',
 								'liferay-ddl-form-builder-field-support',
 								'liferay-ddl-form-builder-field-types-modal',
 								'liferay-ddl-form-builder-layout-deserializer',
@@ -31,6 +32,13 @@
 							requires: [
 								'json',
 								'liferay-ddl-form-builder-layout-visitor'
+							]
+						},
+						'liferay-ddl-form-builder-field-settings-modal': {
+							path: 'form_builder_field_settings_modal.js',
+							requires: [
+								'form-builder-settings-modal',
+								'liferay-ddl-form-builder-modal'
 							]
 						},
 						'liferay-ddl-form-builder-field-types-modal': {

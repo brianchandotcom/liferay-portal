@@ -77,36 +77,7 @@ public class ScopeFacet extends MultiValueFacet {
 	protected BooleanClause<Filter> doGetFacetFilterBooleanClause() {
 		SearchContext searchContext = getSearchContext();
 
-		FacetConfiguration facetConfiguration = getFacetConfiguration();
-
-		JSONObject dataJSONObject = facetConfiguration.getData();
-
-		long[] groupIds = null;
-
-		if (dataJSONObject.has("values")) {
-			JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
-
-			groupIds = new long[valuesJSONArray.length()];
-
-			for (int i = 0; i < valuesJSONArray.length(); i++) {
-				groupIds[i] = valuesJSONArray.getLong(i);
-			}
-		}
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			groupIds = searchContext.getGroupIds();
-		}
-
-		String groupIdParam = GetterUtil.getString(
-			searchContext.getAttribute("groupId"));
-
-		if (Validator.isNotNull(groupIdParam)) {
-			long groupId = GetterUtil.getLong(groupIdParam);
-
-			if (groupId != 0) {
-				groupIds = addScopeGroup(groupId);
-			}
-		}
+		long[] groupIds = getGroupIds(searchContext);
 
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
@@ -175,6 +146,64 @@ public class ScopeFacet extends MultiValueFacet {
 
 		return BooleanClauseFactoryUtil.createFilter(
 			searchContext, facetBooleanFilter, BooleanClauseOccur.MUST);
+	}
+
+	protected long[] getGroupIds(SearchContext searchContext) {
+		long[] groupIds = null;
+
+		long[] groupIdsFromFacetConfiguration =
+			getGroupIdsFromFacetConfiguration();
+
+		if (ArrayUtil.isNotEmpty(groupIdsFromFacetConfiguration)) {
+			groupIds = groupIdsFromFacetConfiguration;
+		}
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			groupIds = searchContext.getGroupIds();
+		}
+
+		long[] groupIdsFromParameter = getGroupIdsFromParameter(searchContext);
+
+		if (ArrayUtil.isNotEmpty(groupIdsFromParameter)) {
+			groupIds = groupIdsFromParameter;
+		}
+
+		return groupIds;
+	}
+
+	protected long[] getGroupIdsFromFacetConfiguration() {
+		FacetConfiguration facetConfiguration = getFacetConfiguration();
+
+		JSONObject dataJSONObject = facetConfiguration.getData();
+
+		if (!dataJSONObject.has("values")) {
+			return null;
+		}
+
+		JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
+
+		long[] groupIds = new long[valuesJSONArray.length()];
+
+		for (int i = 0; i < valuesJSONArray.length(); i++) {
+			groupIds[i] = valuesJSONArray.getLong(i);
+		}
+
+		return groupIds;
+	}
+
+	protected long[] getGroupIdsFromParameter(SearchContext searchContext) {
+		String groupIdParam = GetterUtil.getString(
+			searchContext.getAttribute("groupId"));
+
+		if (Validator.isNotNull(groupIdParam)) {
+			long groupId = GetterUtil.getLong(groupIdParam);
+
+			if (groupId != 0) {
+				return addScopeGroup(groupId);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ScopeFacet.class);

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v5_2_5_to_6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -47,26 +48,28 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateParentGroupId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portal.model.Layout");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portal.model.Layout");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, classPK from Group_ where classNameId = " +
-					classNameId);
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select groupId, classPK from Group_ where classNameId = " +
+						classNameId);
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long classPK = rs.getLong("classPK");
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					long classPK = rs.getLong("classPK");
 
-				Object[] layout = getLayout(classPK);
+					Object[] layout = getLayout(classPK);
 
-				if (layout != null) {
-					long layoutGroupId = (Long)layout[0];
+					if (layout != null) {
+						long layoutGroupId = (Long)layout[0];
 
-					runSQL(
-						"update Group_ set parentGroupId = " + layoutGroupId +
-							" where groupId = " + groupId);
+						runSQL(
+							"update Group_ set parentGroupId = " +
+								layoutGroupId + " where groupId = " + groupId);
+					}
 				}
 			}
 		}

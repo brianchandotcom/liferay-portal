@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -32,13 +32,9 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			Timestamp modifiedDate)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"insert into MBThreadFlag (threadFlagId, userId, " +
-					"modifiedDate, threadId) values (?, ?, ?, ?)");
+					"modifiedDate, threadId) values (?, ?, ?, ?)")) {
 
 			ps.setLong(1, threadFlagId);
 			ps.setLong(2, userId);
@@ -46,9 +42,6 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			ps.setLong(4, threadId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -60,10 +53,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 	}
 
 	protected void updateMessage() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select messageFlag.messageId as messageId from ");
@@ -73,61 +63,44 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = connection.prepareStatement(sql);
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+				while (rs.next()) {
+					long messageId = rs.getLong("messageId");
 
-			while (rs.next()) {
-				long messageId = rs.getLong("messageId");
-
-				updateMessageAnswer(messageId, true);
+					updateMessageAnswer(messageId, true);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateMessageAnswer(long messageId, boolean answer)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update MBMessage set answer = ? where messageId = " +
-					messageId);
+					messageId)) {
 
 			ps.setBoolean(1, answer);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateThread() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select threadId from MBMessageFlag where flag = 2");
+				ResultSet rs = ps.executeQuery()) {
 
-		try {
-			ps = connection.prepareStatement(
-				"select threadId from MBMessageFlag where flag = 2");
+				while (rs.next()) {
+					long threadId = rs.getLong("threadId");
 
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long threadId = rs.getLong("threadId");
-
-				updateThreadQuestion(threadId, true);
+					updateThreadQuestion(threadId, true);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
-		try {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select messageFlag.threadId as threadId from ");
@@ -135,31 +108,25 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			sb.append("message on messageFlag.messageId = message.messageId ");
 			sb.append("where message.parentMessageId = 0 and flag = 3");
 
-			ps = connection.prepareStatement(sb.toString());
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+				while (rs.next()) {
+					long threadId = rs.getLong("threadId");
 
-			while (rs.next()) {
-				long threadId = rs.getLong("threadId");
-
-				updateThreadQuestion(threadId, true);
+					updateThreadQuestion(threadId, true);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateThreadFlag() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select userId, threadId, modifiedDate from MBMessageFlag " +
 					"where flag = 1");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long userId = rs.getLong("userId");
@@ -169,9 +136,6 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 				addThreadFlag(increment(), userId, threadId, modifiedDate);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
 		runSQL("drop table MBMessageFlag");
 	}
@@ -179,18 +143,13 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 	protected void updateThreadQuestion(long threadId, boolean question)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update MBThread set question = ? where threadId =" + threadId);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update MBThread set question = ? where threadId =" +
+					threadId)) {
 
 			ps.setBoolean(1, question);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

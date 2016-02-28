@@ -14,10 +14,10 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -41,10 +41,7 @@ public class UpgradeUserName extends UpgradeProcess {
 	protected void updateTable(String tableName, boolean setCompanyId)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			StringBundler sb = new StringBundler(11);
 
 			sb.append("select distinct User_.companyId, User_.userId, ");
@@ -59,56 +56,52 @@ public class UpgradeUserName extends UpgradeProcess {
 			sb.append(tableName);
 			sb.append(".userName = ''");
 
-			String sql = sb.toString();
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			ps = connection.prepareStatement(sql);
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					String firstName = rs.getString("firstName");
+					String middleName = rs.getString("middleName");
+					String lastName = rs.getString("lastName");
 
-			rs = ps.executeQuery();
+					FullNameGenerator fullNameGenerator =
+						FullNameGeneratorFactory.getInstance();
 
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String firstName = rs.getString("firstName");
-				String middleName = rs.getString("middleName");
-				String lastName = rs.getString("lastName");
+					String fullName = fullNameGenerator.getFullName(
+						firstName, middleName, lastName);
 
-				FullNameGenerator fullNameGenerator =
-					FullNameGeneratorFactory.getInstance();
+					fullName = fullName.replace(
+						StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 
-				String fullName = fullNameGenerator.getFullName(
-					firstName, middleName, lastName);
+					if (setCompanyId) {
+						sb = new StringBundler(8);
 
-				fullName = fullName.replace(
-					StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
+						sb.append("update ");
+						sb.append(tableName);
+						sb.append(" set companyId = ");
+						sb.append(companyId);
+						sb.append(", userName = '");
+						sb.append(fullName);
+						sb.append("' where userId = ");
+						sb.append(userId);
+					}
+					else {
+						sb = new StringBundler(6);
 
-				if (setCompanyId) {
-					sb = new StringBundler(8);
+						sb.append("update ");
+						sb.append(tableName);
+						sb.append(" set userName = '");
+						sb.append(fullName);
+						sb.append("' where userId = ");
+						sb.append(userId);
+					}
 
-					sb.append("update ");
-					sb.append(tableName);
-					sb.append(" set companyId = ");
-					sb.append(companyId);
-					sb.append(", userName = '");
-					sb.append(fullName);
-					sb.append("' where userId = ");
-					sb.append(userId);
+					runSQL(sb.toString());
 				}
-				else {
-					sb = new StringBundler(6);
-
-					sb.append("update ");
-					sb.append(tableName);
-					sb.append(" set userName = '");
-					sb.append(fullName);
-					sb.append("' where userId = ");
-					sb.append(userId);
-				}
-
-				runSQL(sb.toString());
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -35,19 +35,15 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long classPK, String frequency)
 		throws Exception {
 
-		PreparedStatement ps = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("insert into Subscription (subscriptionId, companyId, ");
+		sb.append("userId, userName, createDate, modifiedDate, ");
+		sb.append("classNameId, classPK, frequency) values (?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?)");
 
-			sb.append("insert into Subscription (subscriptionId, companyId, ");
-			sb.append("userId, userName, createDate, modifiedDate, ");
-			sb.append("classNameId, classPK, frequency) values (?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setLong(1, subscriptionId);
 			ps.setLong(2, companyId);
@@ -60,9 +56,6 @@ public class UpgradeSubscription extends UpgradeProcess {
 			ps.setString(9, frequency);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -83,41 +76,33 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long companyId, long userId, long classNameId, long classPK)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from Subscription where companyId = ? and " +
-					"userId = ? and classNameId = ? and classPK = ?");
+					"userId = ? and classNameId = ? and classPK = ?")) {
 
 			ps.setLong(1, companyId);
 			ps.setLong(2, userId);
 			ps.setLong(3, classNameId);
 			ps.setLong(4, classPK);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int count = rs.getInt(1);
 
-			while (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
+					if (count > 0) {
+						return true;
+					}
 				}
-			}
 
-			return false;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+				return false;
+			}
 		}
 	}
 
 	protected void updateMBMessages(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				String.valueOf(companyId))) {
 
-		try {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select userId, MIN(userName) as userName, ");
@@ -129,34 +114,32 @@ public class UpgradeSubscription extends UpgradeProcess {
 			sb.append("(classNameId != 0) and (parentMessageId != 0) ");
 			sb.append("group by userId, classNameId, classPK");
 
-			String sql = sb.toString();
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery()) {
 
-			ps = connection.prepareStatement(sql);
+				while (rs.next()) {
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					long classNameId = rs.getLong("classNameId");
+					long classPK = rs.getLong("classPK");
 
-			rs = ps.executeQuery();
+					if (hasSubscription(
+							companyId, userId, classNameId, classPK)) {
 
-			while (rs.next()) {
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long classNameId = rs.getLong("classNameId");
-				long classPK = rs.getLong("classPK");
+						continue;
+					}
 
-				if (hasSubscription(companyId, userId, classNameId, classPK)) {
-					continue;
+					long subscriptionId = increment();
+					String frequency = "instant";
+
+					addSubscription(
+						subscriptionId, companyId, userId, userName, createDate,
+						modifiedDate, classNameId, classPK, frequency);
 				}
-
-				long subscriptionId = increment();
-				String frequency = "instant";
-
-				addSubscription(
-					subscriptionId, companyId, userId, userName, createDate,
-					modifiedDate, classNameId, classPK, frequency);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

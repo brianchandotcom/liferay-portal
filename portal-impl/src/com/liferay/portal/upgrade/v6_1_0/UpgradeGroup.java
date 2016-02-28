@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_1_0.util.GroupTable;
 
@@ -37,36 +37,26 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected long getClassNameId(String className) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select classNameId from ClassName_ where value = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select classNameId from ClassName_ where value = ?")) {
 
 			ps.setString(1, className);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("classNameId");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("classNameId");
+				return 0;
 			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateName() throws Exception {
-		long organizationClassNameId = getClassNameId(
-			"com.liferay.portal.model.Organization");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long organizationClassNameId = getClassNameId(
+				"com.liferay.portal.model.Organization");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select Group_.groupId, Group_.classPK, ");
@@ -74,35 +64,29 @@ public class UpgradeGroup extends UpgradeProcess {
 			sb.append("Organization_ on Organization_.organizationId = ");
 			sb.append("Group_.classPK where classNameId = ?");
 
-			String sql = sb.toString();
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
 
-			ps = connection.prepareStatement(sql);
+				ps.setLong(1, organizationClassNameId);
 
-			ps.setLong(1, organizationClassNameId);
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long groupId = rs.getLong("groupId");
+						long classPK = rs.getLong("classPK");
+						String name = rs.getString("name");
 
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long classPK = rs.getLong("classPK");
-				String name = rs.getString("name");
-
-				updateName(groupId, classPK, name);
+						updateName(groupId, classPK, name);
+					}
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateName(long groupId, long classPK, String name)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Group_ set name = ? where groupId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Group_ set name = ? where groupId = ?")) {
 
 			StringBundler sb = new StringBundler(3);
 
@@ -115,46 +99,37 @@ public class UpgradeGroup extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateSite() throws Exception {
-		long groupClassNameId = getClassNameId(
-			"com.liferay.portal.model.Group");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long groupClassNameId = getClassNameId(
+				"com.liferay.portal.model.Group");
 
-		runSQL(
-			"update Group_ set site = TRUE where classNameId = " +
-				groupClassNameId);
+			runSQL(
+				"update Group_ set site = TRUE where classNameId = " +
+					groupClassNameId);
 
-		long organizationClassNameId = getClassNameId(
-			"com.liferay.portal.model.Organization");
+			long organizationClassNameId = getClassNameId(
+				"com.liferay.portal.model.Organization");
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select distinct Group_.groupId from Group_ inner join " +
+						"Layout on Layout.groupId = Group_.groupId where " +
+							"classNameId = ?")) {
 
-		try {
-			String sql =
-				"select distinct Group_.groupId from Group_ inner join " +
-					"Layout on Layout.groupId = Group_.groupId where " +
-						"classNameId = ?";
+				ps.setLong(1, organizationClassNameId);
 
-			ps = connection.prepareStatement(sql);
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long groupId = rs.getLong("groupId");
 
-			ps.setLong(1, organizationClassNameId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-
-				runSQL(
-					"update Group_ set site = TRUE where groupId = " + groupId);
+						runSQL(
+							"update Group_ set site = TRUE where groupId = " +
+								groupId);
+					}
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_0_3;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,7 +31,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer("createIndex")) {
 			runSQL(
 				"create unique index IX_1E9D371D on AssetEntry (classNameId, " +
 					"classPK)");
@@ -77,25 +77,18 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		String uuid = StringPool.BLANK;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select uuid_ from " + tableName + " where " + columnName1 +
-					" = ? or " + columnName2 + " = ?");
+					" = ? or " + columnName2 + " = ?")) {
 
 			ps.setLong(1, classPK);
 			ps.setLong(2, classPK);
 
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				uuid = rs.getString("uuid_");
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					uuid = rs.getString("uuid_");
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return uuid;
@@ -104,12 +97,9 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateAssetEntry(long classNameId, long classPK, String uuid)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update AssetEntry set classUuid = ? where classNameId = ? " +
-					"and classPK = ?");
+					"and classPK = ?")) {
 
 			ps.setString(1, uuid);
 			ps.setLong(2, classNameId);
@@ -117,32 +107,32 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateAssetEntry(
 			String className, String tableName, String columnName)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
+			long classNameId = PortalUtil.getClassNameId(className);
 
-		StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(11);
 
-		sb.append("update AssetEntry set classUuid = (select ");
-		sb.append(tableName);
-		sb.append(".uuid_ from ");
-		sb.append(tableName);
-		sb.append(" where ");
-		sb.append(tableName);
-		sb.append(".");
-		sb.append(columnName);
-		sb.append(" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
-		sb.append(classNameId);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append("update AssetEntry set classUuid = (select ");
+			sb.append(tableName);
+			sb.append(".uuid_ from ");
+			sb.append(tableName);
+			sb.append(" where ");
+			sb.append(tableName);
+			sb.append(".");
+			sb.append(columnName);
+			sb.append(
+				" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
+			sb.append(classNameId);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		runSQL(sb.toString());
+			runSQL(sb.toString());
+		}
 	}
 
 	protected void updateAssetEntry(
@@ -150,30 +140,25 @@ public class UpgradeAsset extends UpgradeProcess {
 			String columnName2)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
+			long classNameId = PortalUtil.getClassNameId(className);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select classPK from AssetEntry where classNameId = ?")) {
 
-		try {
-			ps = connection.prepareStatement(
-				"select classPK from AssetEntry where classNameId = ?");
+				ps.setLong(1, classNameId);
 
-			ps.setLong(1, classNameId);
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long classPK = rs.getLong("classPK");
 
-			rs = ps.executeQuery();
+						String uuid = getUuid(
+							tableName, columnName1, columnName2, classPK);
 
-			while (rs.next()) {
-				long classPK = rs.getLong("classPK");
-
-				String uuid = getUuid(
-					tableName, columnName1, columnName2, classPK);
-
-				updateAssetEntry(classNameId, classPK, uuid);
+						updateAssetEntry(classNameId, classPK, uuid);
+					}
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

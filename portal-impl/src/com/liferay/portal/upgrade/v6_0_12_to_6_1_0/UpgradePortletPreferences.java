@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCommunityProperties;
 
 /**
@@ -26,7 +27,9 @@ public class UpgradePortletPreferences
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
+		try (LoggingTimer loggingTimer = new LoggingTimer("super.doUpgrade")) {
+			super.doUpgrade();
+		}
 
 		upgrade(UpgradeCommunityProperties.class);
 	}

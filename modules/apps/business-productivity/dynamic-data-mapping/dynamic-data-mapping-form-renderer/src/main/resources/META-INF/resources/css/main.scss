@@ -89,11 +89,15 @@
 	}
 }
 
-.liferay-ddm-form-field-tip {
+.liferay-ddm-form-field-paragraph, .liferay-ddm-form-field-tip {
 	color: #869CAD;
+	font-size: 14px;
+	line-height: 16px;
+}
+
+.liferay-ddm-form-field-tip {
 	font-size: 12px;
 	font-weight: 400;
-	line-height: 16px;
 }
 
 .multi-step-progress-bar {

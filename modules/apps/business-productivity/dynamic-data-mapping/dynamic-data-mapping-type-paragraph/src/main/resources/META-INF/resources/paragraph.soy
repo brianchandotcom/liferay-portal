@@ -10,6 +10,6 @@
  */
 {template .paragraph}
 	<div class="form-group form-inline{$visible ? '' : ' hide'} liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
-		<p dir="{$dir}">{$text}</p>
+		<p dir="{$dir}">{print $text|changeNewlineToBr}</p>
 	</div>
 {/template}

@@ -276,8 +276,17 @@ public class DDMFormFieldFactoryHelper {
 		}
 
 		if (Validator.isNotNull(_ddmFormField.validationErrorMessage())) {
-			ddmFormFieldValidation.setErrorMessage(
-				_ddmFormField.validationErrorMessage());
+			String validationErrorMessage =
+				_ddmFormField.validationErrorMessage();
+
+			if (isLocalizableValue(validationErrorMessage)) {
+				String languageKey = extractLanguageKey(validationErrorMessage);
+
+				validationErrorMessage = getLocalizedValue(
+					_defaultLocale, languageKey);
+			}
+
+			ddmFormFieldValidation.setErrorMessage(validationErrorMessage);
 		}
 
 		return ddmFormFieldValidation;

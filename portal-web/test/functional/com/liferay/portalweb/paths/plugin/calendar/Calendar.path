@@ -129,7 +129,7 @@
 </tr>
 <tr>
 	<td>MY_CALENDARS_MENULIST_ARROW</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'My Calendars')]/span[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,'My Calendars')]/span[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_MENULIST_ARROW</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,"${key_siteName}'s Calendars")]/span[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,"${key_siteName}'s Calendars")]/span[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>

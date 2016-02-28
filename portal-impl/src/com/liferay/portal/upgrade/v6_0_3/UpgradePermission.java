@@ -127,20 +127,16 @@ public class UpgradePermission extends UpgradeProcess {
 			long companyId, long roleId, long groupId)
 		throws Exception {
 
-		try (PreparedStatement selectClassNameIdStatement =
-				connection.prepareStatement(
-					"select classNameId from Group_ where groupId = ?")) {
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"select classNameId from Group_ where groupId = ?")) {
 
-			selectClassNameIdStatement.setLong(1, groupId);
+			ps1.setLong(1, groupId);
 
-			try (ResultSet selectClassNameIdResultSet =
-					selectClassNameIdStatement.executeQuery()) {
-
+			try (ResultSet rs1 = ps1.executeQuery()) {
 				long classNameId = 0;
 
-				if (selectClassNameIdResultSet.next()) {
-					classNameId = selectClassNameIdResultSet.getLong(
-						"classNameId");
+				if (rs1.next()) {
+					classNameId = rs1.getLong("classNameId");
 				}
 
 				String className = PortalUtil.getClassName(classNameId);
@@ -160,17 +156,15 @@ public class UpgradePermission extends UpgradeProcess {
 				sb.append("from User_, UserGroupRole where User_.userId = ");
 				sb.append("UserGroupRole.userId and UserGroupRole.roleId = ?)");
 
-				try (PreparedStatement selectUserStatement =
-						connection.prepareStatement(sb.toString())) {
+				try (PreparedStatement ps2 = connection.prepareStatement(
+						sb.toString())) {
 
-					selectUserStatement.setLong(1, roleId);
-					selectUserStatement.setLong(2, roleId);
+					ps2.setLong(1, roleId);
+					ps2.setLong(2, roleId);
 
-					try (ResultSet selectUserResultSet =
-							selectUserStatement.executeQuery()) {
-
-						while (selectUserResultSet.next()) {
-							long userId = selectUserResultSet.getLong("userId");
+					try (ResultSet rs2 = ps2.executeQuery()) {
+						while (rs2.next()) {
+							long userId = rs2.getLong("userId");
 
 							if (className.equals(
 									"com.liferay.portal.model.Company")) {

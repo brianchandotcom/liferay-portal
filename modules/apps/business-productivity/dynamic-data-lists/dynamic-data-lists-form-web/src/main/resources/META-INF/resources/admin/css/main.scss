@@ -37,18 +37,6 @@ $horizontal-spacing: 35px;
 	}
 }
 
-.form-builder-field {
-	border-radius: 0;
-	border-width: 0;
-	box-shadow: none;
-	margin: 0;
-
-	label {
-		float: none;
-		word-wrap: break-word;
-	}
-}
-
 .form-builder-page-manager-popover-header  {
 	.popover-content {
 		padding: 7px 21px;
@@ -491,6 +479,18 @@ $horizontal-spacing: 35px;
 			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
 			margin: 0 auto;
 			width: auto;
+		}
+
+		.form-builder-field {
+			border-radius: 0;
+			border-width: 0;
+			box-shadow: none;
+			margin: 0;
+
+			label {
+				float: none;
+				word-wrap: break-word;
+			}
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-add-button {

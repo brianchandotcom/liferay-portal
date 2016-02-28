@@ -55,6 +55,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:i
 String src = (String)request.getAttribute("liferay-ui:icon:src");
 String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
+boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
 boolean useDialog = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:useDialog"));
 
@@ -64,6 +65,10 @@ if (forcePost || useDialog) {
 	}
 
 	data.put("senna-off", "true");
+}
+
+if (toolTip) {
+	cssClass += " lfr-portal-tooltip";
 }
 
 linkCssClass += " lfr-icon-item";

@@ -277,6 +277,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			processErrorMessage(
 				fileName,
 				"redundant parentheses: " + fileName + " " + lineCount);
+
+			return;
 		}
 
 		ifClause = stripRedundantParentheses(ifClause);
@@ -302,6 +304,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							fileName,
 							"missing parentheses: " + fileName + " " +
 								lineCount);
+
+						return;
 					}
 				}
 
@@ -332,6 +336,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 									fileName,
 									"redundant parentheses: " + fileName + " " +
 										lineCount);
+
+								return;
 							}
 						}
 
@@ -342,6 +348,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								fileName,
 								"redundant parentheses: " + fileName + " " +
 									lineCount);
+
+							return;
 						}
 					}
 

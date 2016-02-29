@@ -44,6 +44,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = StringUtil.replace(content, " >\n", ">\n");
+
 		content = sortLiferayVariables(content);
 
 		Matcher matcher = _singleParameterTagPattern.matcher(content);

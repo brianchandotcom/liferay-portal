@@ -37,7 +37,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -245,7 +245,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		PortletFileRepositoryUtil.deletePortletRepository(
-			groupId, WikiPortletKeys.WIKI);
+			groupId, WikiConstants.SERVICE_NAME);
 	}
 
 	@Override

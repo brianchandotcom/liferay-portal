@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -59,7 +59,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			getGroupId(), WikiPortletKeys.WIKI, serviceContext);
+			getGroupId(), WikiConstants.SERVICE_NAME, serviceContext);
 
 		WikiNode node = getNode();
 
@@ -165,7 +165,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), WikiPortletKeys.WIKI);
+				getGroupId(), WikiConstants.SERVICE_NAME);
 
 		long nodeAttachmentsFolderId = getNodeAttachmentsFolderId();
 

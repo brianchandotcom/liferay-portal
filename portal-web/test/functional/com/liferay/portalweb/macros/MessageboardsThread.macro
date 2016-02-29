@@ -1368,6 +1368,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#THREAD_USERNAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_SUBJECT" value1="${threadSubject}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1" value1="Pending" />
+
+		<var name="key_threadBody" value="${threadBody}" />
+
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="${threadBody}" />
 	</command>
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.screens.service.base.ScreensDDLRecordServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -73,8 +72,6 @@ public class ScreensDDLRecordServiceImpl
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
 			ddlRecordSetId, start, end);
 
-		ddlRecords = filterDDLRecords(ddlRecords);
-
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}
 
@@ -88,8 +85,6 @@ public class ScreensDDLRecordServiceImpl
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
 			ddlRecordSetId, userId, start, end);
-
-		ddlRecords = filterDDLRecords(ddlRecords);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}
@@ -110,22 +105,6 @@ public class ScreensDDLRecordServiceImpl
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
 		return ddlRecordPersistence.countByR_U(ddlRecordSetId, userId);
-	}
-
-	protected List<DDLRecord> filterDDLRecords(List<DDLRecord> ddlRecords)
-		throws PortalException {
-
-		List<DDLRecord> filteredDDLRecords = new ArrayList<>(ddlRecords.size());
-
-		for (DDLRecord ddlRecord : ddlRecords) {
-			if (DDLRecordPermission.contains(
-					getPermissionChecker(), ddlRecord, ActionKeys.VIEW)) {
-
-				filteredDDLRecords.add(ddlRecord);
-			}
-		}
-
-		return filteredDDLRecords;
 	}
 
 	protected JSONObject getDDLRecordJSONObject(

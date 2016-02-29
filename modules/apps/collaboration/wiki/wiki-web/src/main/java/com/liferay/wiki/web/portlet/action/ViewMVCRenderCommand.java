@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -57,6 +58,9 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 			WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
 			_dlMimeTypeDisplayContext);
 
+		request.setAttribute(
+			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+
 		return super.render(renderRequest, renderResponse);
 	}
 
@@ -72,6 +76,14 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		return "/wiki/view.jsp";
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

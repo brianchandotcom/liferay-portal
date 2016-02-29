@@ -34,7 +34,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
@@ -53,6 +53,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -63,6 +65,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -90,6 +93,14 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		_jsonStorageAdapter = StorageAdapterRegistryUtil.getStorageAdapter(
 			StorageType.JSON.toString());
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormValuesToFieldsConverter();
 	}
 
 	@Test
@@ -681,6 +692,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		return sb.toString();
 	}
 
+	protected void setUpDDMFormValuesToFieldsConverter() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormValuesToFieldsConverter = registry.getService(
+			DDMFormValuesToFieldsConverter.class);
+	}
+
 	protected void validate(long ddmStructureId, Fields fields)
 		throws Exception {
 
@@ -696,7 +714,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormValues actualDDMFormValues =
 			_jsonStorageAdapter.getDDMFormValues(classPK);
 
-		Fields actualFields = DDMFormValuesToFieldsConverterUtil.convert(
+		Fields actualFields = _ddmFormValuesToFieldsConverter.convert(
 			ddmStructure, actualDDMFormValues);
 
 		Assert.assertEquals(
@@ -708,5 +726,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static Locale _enLocale;
 	private static StorageAdapter _jsonStorageAdapter;
 	private static Locale _ptLocale;
+
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 }

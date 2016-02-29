@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.SQLException;
-
 /**
  * @author Marcellus Tavares
  */
@@ -40,22 +38,18 @@ public class UpgradeSchema extends UpgradeProcess {
 			runSQLTemplateString(template, false, false);
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer("alterColumnName")) {
+		try (LoggingTimer loggingTimer = new LoggingTimer("alterColumn")) {
 			alter(
 				DDMContentTable.class,
 				new AlterColumnName("xml", "data_ TEXT null"));
 			alter(
 				DDMStructureTable.class,
-				new AlterColumnName("xsd", "definition TEXT null"));
+				new AlterColumnName("xsd", "definition TEXT null"),
+				new AlterColumnType("description", "TEXT null"));
+			alter(
+				DDMTemplateTable.class,
+				new AlterColumnType("description", "TEXT null"));
 		}
-
-		alter(
-			DDMStructureTable.class,
-			new AlterColumnType("description", "TEXT null"));
-
-		alter(
-			DDMTemplateTable.class,
-			new AlterColumnType("description", "TEXT null"));
 	}
 
 }

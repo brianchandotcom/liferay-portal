@@ -190,8 +190,6 @@
 		<execute function="Pause" locator1="5000" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="Refresh" />
-
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />

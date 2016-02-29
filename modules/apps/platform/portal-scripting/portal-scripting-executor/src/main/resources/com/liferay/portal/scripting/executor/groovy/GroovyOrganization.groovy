@@ -75,6 +75,7 @@ class GroovyOrganization {
 				parentOrganizationId = parentOrganization.getOrganizationId();
 			}
 		}
+
 		if (type == null) {
 			type = OrganizationConstants.TYPE_ORGANIZATION;
 		}

@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.util;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,11 @@ public class ParallelSchemaUpgraderExecutor {
 		public Void call() throws Exception {
 			DB db = DBManagerUtil.getDB();
 
-			db.runSQLTemplate(_sqlFile, false);
+			try(LoggingTimer loggingTimer = new LoggingTimer(
+				"runSQLTemplate(" + _sqlFile + ")")) {
+
+				db.runSQLTemplate(_sqlFile, false);
+			}
 
 			return null;
 		}

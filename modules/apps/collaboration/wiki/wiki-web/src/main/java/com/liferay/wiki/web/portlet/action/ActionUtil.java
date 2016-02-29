@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
@@ -69,7 +70,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static void compareVersions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			WikiEngineRenderer wikiEngineRenderer)
 		throws Exception {
 
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
@@ -80,7 +82,8 @@ public class ActionUtil {
 			renderRequest, "targetVersion");
 
 		String htmlDiffResult = getHtmlDiffResult(
-			sourceVersion, targetVersion, renderRequest, renderResponse);
+			sourceVersion, targetVersion, renderRequest, renderResponse,
+			wikiEngineRenderer);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
@@ -224,7 +227,8 @@ public class ActionUtil {
 
 	public static String getHtmlDiffResult(
 			double sourceVersion, double targetVersion,
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			WikiEngineRenderer wikiEngineRenderer)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -258,7 +262,7 @@ public class ActionUtil {
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
-		return WikiUtil.diffHtml(
+		return wikiEngineRenderer.diffHtml(
 			sourcePage, targetPage, viewPageURL, editPageURL,
 			attachmentURLPrefix);
 	}

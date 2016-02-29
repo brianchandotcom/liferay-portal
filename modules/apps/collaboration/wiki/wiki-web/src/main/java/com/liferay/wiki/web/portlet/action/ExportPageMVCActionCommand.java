@@ -34,6 +34,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.util.WikiUtil;
@@ -156,7 +157,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
 		try {
-			content = WikiUtil.convert(
+			content = _wikiEngineRenderer.convert(
 				page, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 		catch (Exception e) {
@@ -220,6 +221,13 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiPageService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}
@@ -231,6 +239,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportPageMVCActionCommand.class);
 
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageService _wikiPageService;
 
 }

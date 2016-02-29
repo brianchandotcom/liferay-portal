@@ -24,7 +24,7 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(GroupTable.class, "name", "STRING null");
+		alter(GroupTable.class, new AlterColumnType("name", "STRING null"));
 	}
 
 }

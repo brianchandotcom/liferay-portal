@@ -24,7 +24,9 @@ public class UpgradeAddress extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(AddressTable.class, "typeId", "LONG");
+		alter(
+			AddressTable.class,
+			new AlterColumnType("typeId", "LONG"));
 	}
 
 }

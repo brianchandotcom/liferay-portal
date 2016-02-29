@@ -24,7 +24,8 @@ public class UpgradeKaleoLog extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(KaleoLogTable.class, "comment_", "TEXT null");
+		alter(
+			KaleoLogTable.class, new AlterColumnType("comment_", "TEXT null"));
 	}
 
 }

@@ -35,7 +35,9 @@ public class UpgradeBlogs extends UpgradeProcess {
 		catch (Exception e) {
 		}
 
-		alterColumnType(BlogsEntryTable.class, "smallImageURL", "STRING null");
+		alter(
+			BlogsEntryTable.class,
+			new AlterColumnType("smallImageURL", "STRING null"));
 	}
 
 }

@@ -62,9 +62,13 @@ public class UpgradeSchema extends UpgradeProcess {
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		alterColumnType(DDMStructureTable.class, "description", "TEXT null");
+		alter(
+			DDMStructureTable.class,
+			new AlterColumnType("description", "TEXT null"));
 
-		alterColumnType(DDMTemplateTable.class, "description", "TEXT null");
+		alter(
+			DDMTemplateTable.class,
+			new AlterColumnType("description", "TEXT null"));
 	}
 
 }

@@ -30,7 +30,9 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(GroupTable.class, "name", "VARCHAR(150) null");
+		alter(
+			GroupTable.class,
+			new AlterColumnType("name", "VARCHAR(150) null"));
 
 		updateName();
 		updateSite();

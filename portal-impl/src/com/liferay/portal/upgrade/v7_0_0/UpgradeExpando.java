@@ -25,9 +25,12 @@ public class UpgradeExpando extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(ExpandoColumnTable.class, "defaultData", "TEXT null");
+		alter(
+			ExpandoColumnTable.class,
+			new AlterColumnType("defaultData", "TEXT null"));
 
-		alterColumnType(ExpandoValueTable.class, "data_", "TEXT null");
+		alter(
+			ExpandoValueTable.class, new AlterColumnType("data_", "TEXT null"));
 	}
 
 }

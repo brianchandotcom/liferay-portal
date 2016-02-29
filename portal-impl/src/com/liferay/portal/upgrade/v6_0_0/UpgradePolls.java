@@ -25,8 +25,12 @@ public class UpgradePolls extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(PollsChoiceTable.class, "description", "STRING null");
-		alterColumnType(PollsQuestionTable.class, "title", "STRING null");
+		alter(
+			PollsChoiceTable.class,
+			new AlterColumnType("description", "STRING null"));
+		alter(
+			PollsQuestionTable.class,
+			new AlterColumnType("title", "STRING null"));
 	}
 
 }

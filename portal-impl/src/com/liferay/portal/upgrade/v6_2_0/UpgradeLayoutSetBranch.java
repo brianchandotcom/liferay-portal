@@ -24,9 +24,9 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			LayoutSetBranchTable.class, new String[] {"css", "TEXT null"},
-			new String[] {"settings_", "TEXT null"});
+		alter(
+			LayoutSetBranchTable.class, new AlterColumnType("css", "TEXT null"),
+			new AlterColumnType("settings_", "TEXT null"));
 	}
 
 }

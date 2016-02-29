@@ -24,7 +24,9 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(LayoutTable.class, "friendlyURL", "VARCHAR(255) null");
+		alter(
+			LayoutTable.class,
+			new AlterColumnType("friendlyURL", "VARCHAR(255) null"));
 	}
 
 }

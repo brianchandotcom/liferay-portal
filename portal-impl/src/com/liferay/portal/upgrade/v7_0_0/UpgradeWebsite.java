@@ -24,7 +24,7 @@ public class UpgradeWebsite extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(WebsiteTable.class, "typeId", "LONG");
+		alter(WebsiteTable.class, new AlterColumnType("typeId", "LONG"));
 	}
 
 }

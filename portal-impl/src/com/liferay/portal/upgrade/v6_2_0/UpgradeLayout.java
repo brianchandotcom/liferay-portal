@@ -24,7 +24,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(LayoutTable.class, "css", "TEXT null");
+		alter(LayoutTable.class, new AlterColumnType("css", "TEXT null"));
 	}
 
 }

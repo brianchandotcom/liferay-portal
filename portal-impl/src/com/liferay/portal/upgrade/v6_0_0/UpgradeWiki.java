@@ -25,13 +25,14 @@ public class UpgradeWiki extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
+		alter(
 			WikiPageTable.class,
-			new String[] {"parentTitle", "VARCHAR(255) null"},
-			new String[] {"redirectTitle", "VARCHAR(255) null"});
+			new AlterColumnType("parentTitle", "VARCHAR(255) null"),
+			new AlterColumnType("redirectTitle", "VARCHAR(255) null"));
 
-		alterColumnType(
-			WikiPageResourceTable.class, "title", "VARCHAR(255) null");
+		alter(
+			WikiPageResourceTable.class,
+			new AlterColumnType("title", "VARCHAR(255) null"));
 	}
 
 }

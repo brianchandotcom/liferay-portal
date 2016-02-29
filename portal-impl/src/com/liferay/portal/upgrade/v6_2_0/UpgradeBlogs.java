@@ -44,8 +44,9 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 
 	protected void updateEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alterColumnType(
-				BlogsEntryTable.class, "description", "STRING null");
+			alter(
+				BlogsEntryTable.class,
+				new AlterColumnType("description", "STRING null"));
 		}
 	}
 

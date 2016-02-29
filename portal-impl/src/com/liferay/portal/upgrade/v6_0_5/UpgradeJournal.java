@@ -24,8 +24,9 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			JournalArticleTable.class, "title", "VARCHAR(300) null");
+		alter(
+			JournalArticleTable.class,
+			new AlterColumnType("title", "VARCHAR(300) null"));
 	}
 
 }

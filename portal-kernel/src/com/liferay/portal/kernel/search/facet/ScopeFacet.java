@@ -152,7 +152,7 @@ public class ScopeFacet extends MultiValueFacet {
 		long[] groupIds = getGroupIdsFromFacetConfiguration();
 
 		if (ArrayUtil.isEmpty(groupIds)) {
-			groupIds = getGroupIdsFromParameter(searchContext);
+			groupIds = getGroupIdsFromSearchContext(searchContext);
 		}
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -182,22 +182,25 @@ public class ScopeFacet extends MultiValueFacet {
 		return groupIds;
 	}
 
-	protected long[] getGroupIdsFromParameter(SearchContext searchContext) {
-		String groupIdParam = GetterUtil.getString(
+	protected long[] getGroupIdsFromSearchContext(SearchContext searchContext) {
+		String groupIdAttribute = GetterUtil.getString(
 			searchContext.getAttribute("groupId"));
 
-		if (Validator.isNull(groupIdParam)) {
+		if (Validator.isNull(groupIdAttribute)) {
 			return null;
 		}
 
-		long groupId = GetterUtil.getLong(groupIdParam);
+		long groupId = GetterUtil.getLong(groupIdAttribute);
 
 		if (groupId == 0) {
-			return new long[] {0};
+			return _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT;
 		}
 
 		return addScopeGroup(groupId);
 	}
+
+	private static final long[] _GROUP_IDS_FROM_SEARCH_CONTEXT_DEFAULT =
+		new long[] {0};
 
 	private static final Log _log = LogFactoryUtil.getLog(ScopeFacet.class);
 

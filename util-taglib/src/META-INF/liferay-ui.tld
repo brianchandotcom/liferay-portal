@@ -1311,6 +1311,7 @@
 		<tag-class>com.liferay.taglib.ui.EmptyResultMessageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether to use minimal styling for displaying the message. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>compact</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3760,6 +3761,7 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether to use minimal styling for displaying the empty results message. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>compactEmptyResultsMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

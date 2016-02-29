@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfigurati
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.RenderRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -38,11 +39,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMDisplayContext {
 
 	public DDMDisplayContext(
-			RenderRequest renderRequest, DDMTemplateHelper ddmTemplateHelper,
+			RenderRequest renderRequest, DDMDisplayRegistry ddmDisplayRegistry,
+			DDMTemplateHelper ddmTemplateHelper,
 			DDMWebConfiguration ddmWebConfiguration)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
+		_ddmDisplayRegistry = ddmDisplayRegistry;
 		_ddmTemplateHelper = ddmTemplateHelper;
 		_ddmWebConfiguration = ddmWebConfiguration;
 
@@ -62,6 +65,10 @@ public class DDMDisplayContext {
 
 	public boolean changeableDefaultLanguage() {
 		return _ddmWebConfiguration.changeableDefaultLanguage();
+	}
+
+	public DDMDisplay getDDMDisplay(String portletId) {
+		return _ddmDisplayRegistry.getDDMDisplay(portletId);
 	}
 
 	public DDMStructure fetchStructure(DDMTemplate template) {
@@ -137,6 +144,7 @@ public class DDMDisplayContext {
 		return ddmGroupServiceConfiguration.smallImageMaxSize();
 	}
 
+private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private final DDMWebConfiguration _ddmWebConfiguration;
 	private final DDMWebRequestHelper _ddmWebRequestHelper;

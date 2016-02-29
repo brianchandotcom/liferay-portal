@@ -63,7 +63,6 @@ page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePer
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.StorageType" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
-page import="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMNavigationHelper" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException" %><%@
@@ -146,12 +145,23 @@ boolean showAncestorScopes = ParamUtil.getBoolean(request, "showAncestorScopes")
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-String scopeAvailableFields = ddmDisplay.getAvailableFields();
-long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
-String scopeStorageType = ddmDisplay.getStorageType();
-String scopeTemplateType = ddmDisplay.getTemplateType();
+boolean changeableDefaultLanguage = false;
+DDMDisplay ddmDisplay = null;
+String scopeAvailableFields = StringPool.BLANK;
+long scopeClassNameId = 0;
+String scopeStorageType = StringPool.BLANK;
+String scopeTemplateType = StringPool.BLANK;
+
+if (ddmDisplayContext != null) {
+	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
+	ddmDisplay = ddmDisplayContext.getDDMDisplay(refererPortletName);
+	scopeAvailableFields = ddmDisplay.getAvailableFields();
+	scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+	scopeStorageType = ddmDisplay.getStorageType();
+	scopeTemplateType = ddmDisplay.getTemplateType();
+}
 
 String storageTypeValue = StringPool.BLANK;
 
@@ -166,14 +176,6 @@ if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 }
 else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
-}
-
-DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-boolean changeableDefaultLanguage = false;
-
-if (ddmDisplayContext != null) {
-	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
 }
 %>
 

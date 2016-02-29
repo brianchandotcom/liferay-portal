@@ -76,20 +76,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void updateSchema() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			try {
-				runSQL("alter table DDMTemplate add classNameId LONG");
-
-				runSQL("alter table DDMTemplate add templateKey STRING");
-
-				runSQL(
-					"alter_column_name DDMTemplate structureId classPK LONG");
-			}
-			catch (SQLException sqle) {
-				upgradeTable(
-					DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
-					DDMTemplateTable.TABLE_SQL_CREATE,
-					DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
-			}
+			alter(
+				DDMTemplateTable.class,
+				new AlterTableAddColumn("classNameId LONG"),
+				new AlterTableAddColumn("templateKey STRING"),
+				new AlterColumnName("structureId", "classPK LONG"));
 
 			long classNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.dynamicdatamapping.DDMStructure");

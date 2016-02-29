@@ -34,7 +34,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.Set;
@@ -224,20 +223,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				}
 			}
 
-			try {
-				runSQL(
-					"alter_column_type DLFileVersion extraSettings TEXT null");
-				runSQL(
-					"alter_column_type DLFileVersion title VARCHAR(255) null");
-				runSQL("alter table DLFileVersion drop column name");
-			}
-			catch (SQLException sqle) {
-				upgradeTable(
-					DLFileVersionTable.TABLE_NAME,
-					DLFileVersionTable.TABLE_COLUMNS,
-					DLFileVersionTable.TABLE_SQL_CREATE,
-					DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-			}
+			alter(
+				DLFileVersionTable.class,
+				new AlterColumnType("extraSettings", "TEXT null"),
+				new AlterColumnType("title", "VARCHAR(255) null"),
+				new AlterTableDropColumn("name"));
 		}
 	}
 

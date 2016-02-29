@@ -17,8 +17,6 @@ package com.liferay.portal.background.task.upgrade.v1_0_0;
 import com.liferay.portal.background.task.upgrade.v1_0_0.util.BackgroundTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.SQLException;
-
 /**
  * @author Cristina González
  */
@@ -26,19 +24,10 @@ public class UpgradeBackgroundTask extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type BackgroundTask name VARCHAR(255) null");
-			runSQL(
-				"alter_column_name BackgroundTask taskContext taskContextMap " +
-					"TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				BackgroundTaskTable.TABLE_NAME,
-				BackgroundTaskTable.TABLE_COLUMNS,
-				BackgroundTaskTable.TABLE_SQL_CREATE,
-				BackgroundTaskTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			BackgroundTaskTable.class,
+			new AlterColumnType("name", "VARCHAR(255) null"),
+			new AlterColumnName("taskContext", "taskContextMap TEXT null"));
 	}
 
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -72,16 +71,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				"DLFileEntryTypeTable")) {
 
-			runSQL("alter table DLFileEntryType add fileEntryTypeKey STRING");
-
-			runSQL("alter_column_type DLFileEntryType name STRING null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileEntryTypeTable.TABLE_NAME,
-				DLFileEntryTypeTable.TABLE_COLUMNS,
-				DLFileEntryTypeTable.TABLE_SQL_CREATE,
-				DLFileEntryTypeTable.TABLE_SQL_ADD_INDEXES);
+			alter(
+				DLFileEntryTypeTable.class,
+				new AlterTableAddColumn("fileEntryTypeKey STRING"),
+				new AlterColumnType("name", "STRING null"));
 		}
 
 		updateFileEntryTypes();

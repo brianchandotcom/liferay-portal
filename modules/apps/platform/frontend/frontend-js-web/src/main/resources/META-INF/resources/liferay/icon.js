@@ -18,6 +18,13 @@ AUI.add(
 				if (!instance._docHoverHandler) {
 					instance._docHoverHandler = doc.delegate('hover', instance._handleDocMouseOver, instance._handleDocMouseOut, '.lfr-icon-item', instance);
 				}
+
+				Liferay.once(
+					'screenLoad',
+					function() {
+						delete _ICON_REGISTRY[config.id];
+					}
+				);
 			},
 
 			_forcePost: function(event) {

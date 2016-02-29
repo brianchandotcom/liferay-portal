@@ -130,8 +130,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		request.setAttribute("liferay-ui:error:key", _key);
 		request.setAttribute("liferay-ui:error:message", _message);
 		request.setAttribute("liferay-ui:error:rowBreak", _rowBreak);
-		request.setAttribute(
-			"liferay-ui:error:targetNode", _targetNode);
+		request.setAttribute("liferay-ui:error:targetNode", _targetNode);
 		request.setAttribute(
 			"liferay-ui:error:translateMessage",
 			String.valueOf(_translateMessage));

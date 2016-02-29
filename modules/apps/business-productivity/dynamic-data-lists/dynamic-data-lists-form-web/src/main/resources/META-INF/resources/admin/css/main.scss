@@ -853,6 +853,55 @@ $horizontal-spacing: 35px;
 	}
 }
 
+.ddl-publish-modal {
+	.alert-info {
+		text-align: center;
+	}
+
+	.ddl-publish-checkbox {
+		margin-bottom: 0;
+		width: 100%;
+
+		small {
+			display: block;
+		}
+
+		> span {
+			margin-bottom: 0.4em;
+			margin-top: 0.4em;
+		}
+	}
+
+	.input-checkbox-wrapper {
+		float: right;
+		margin-bottom: 0;
+	}
+
+	.lfr-ddm-repeatable-delete-button {
+		position: absolute;
+		right: 15px;
+		top: 0;
+	}
+
+	.liferay-ddm-form-renderer-wizard-navigation-allowed {
+		> li {
+			cursor: pointer;
+		}
+	}
+
+	select.form-control[multiple] {
+		height: auto;
+	}
+
+	.text-to-copy {
+		background-color: transparent;
+	}
+
+	.toggle-switch {
+		display: none;
+	}
+}
+
 @include sm {
 	.lfr-ddl-field-settings-modal.form-builder-field-settings {
 		height: 670px;

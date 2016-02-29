@@ -14,6 +14,12 @@ body.open {
 	z-index: 500;
 }
 
+.control-menu-help-icon {
+	color: $control-menu-level-1-color;
+	position: relative;
+	top: -1px;
+}
+
 .control-menu-icon {
 	display: inline-block;
 	margin: 0 10px;
@@ -105,6 +111,30 @@ body.open {
 	display: inline-block;
 }
 
+.control-menu-nav-item-content {
+	@include display(flex);
+	@include flex(1);
+	@include justify-content(center);
+
+	min-width: 64px;
+	overflow: hidden;
+	position: relative;
+
+	.clamp-container {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		top: 50%;
+
+		@include transform(translateY(-50%));
+
+		white-space: nowrap;
+	}
+}
+
+.control-menu-nav-item-field {
+	@include flex(0 1 auto);
+}
+
 .live-link, .staging-link {
 	font-size: 14px;
 
@@ -137,5 +167,22 @@ body.open {
 	.control-menu,
 	.control-menu-level-2 {
 		@include transition($control-menu-css-transition);
+	}
+}
+
+.tools-controls-group {
+	@include flex(1);
+	@include flex-wrap(wrap);
+
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+
+	> .control-menu-nav {
+		@include justify-content(center);
+	}
+
+	.taglib-icon-help {
+		margin-top: 1px;
 	}
 }

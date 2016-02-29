@@ -918,7 +918,7 @@ public class JournalDisplayContext {
 		attributes.put(Field.CLASS_NAME_ID, classNameId);
 		attributes.put(Field.CONTENT, content);
 		attributes.put(Field.DESCRIPTION, description);
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		attributes.put(Field.STATUS, getStatus());
 		attributes.put(Field.TITLE, title);
 		attributes.put("ddmStructureKey", ddmStructureKey);
 		attributes.put("ddmTemplateKey", ddmTemplateKey);

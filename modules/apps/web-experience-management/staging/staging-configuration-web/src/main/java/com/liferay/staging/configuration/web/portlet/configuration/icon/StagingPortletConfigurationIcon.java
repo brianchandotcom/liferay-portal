@@ -16,6 +16,7 @@ package com.liferay.staging.configuration.web.portlet.configuration.icon;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -102,6 +103,12 @@ public class StagingPortletConfigurationIcon
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getSiteGroup();
+
+		if (group.isStagedRemotely() || group.hasLocalOrRemoteStagingGroup()) {
+			return false;
+		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

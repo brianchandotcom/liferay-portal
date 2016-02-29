@@ -61,7 +61,7 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 				_entry = journalArticleModel
 			/>
 
-			<#if (versionCount = dataFactory.maxJournalArticleVersionCount) >
+			<#if (versionCount = dataFactory.maxJournalArticleVersionCount)>
 				<@insertAssetEntry
 					_entry = journalArticleModel
 					_categoryAndTag = true

@@ -162,7 +162,9 @@ public class UpgradeDDLFormPortletId
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDDLFormPortletId.class);
 
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

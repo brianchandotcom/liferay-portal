@@ -32,13 +32,19 @@ if (recordSet != null) {
 			<liferay-ui:message key="select-an-existing-list-or-add-a-list-to-be-displayed-in-this-application" />
 		</div>
 	</c:when>
+	<c:when test="<%= ddlDisplayContext.isFormView() %>">
+		<liferay-util:include page="/edit_record.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="redirect" value="<%= currentURL %>" />
+			<liferay-util:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+			<liferay-util:param name="formDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
+		</liferay-util:include>
+	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/view_record_set.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="mvcPath" value="/view_selected_record_set.jsp" />
 			<liferay-util:param name="displayDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getDisplayDDMTemplateId()) %>" />
 			<liferay-util:param name="formDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
 			<liferay-util:param name="editable" value="<%= String.valueOf(ddlDisplayContext.isEditable()) %>" />
-			<liferay-util:param name="showEditFormFirst" value="<%= String.valueOf(ddlDisplayContext.showEditFormFirst()) %>" />
 			<liferay-util:param name="spreadsheet" value="<%= String.valueOf(ddlDisplayContext.isSpreadsheet()) %>" />
 		</liferay-util:include>
 	</c:otherwise>
@@ -52,7 +58,7 @@ if (recordSet != null) {
 				<portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 			</liferay-portlet:renderURL>
 
-			<c:if test="<%= ddlDisplayContext.isShowAddDDMTemplateIcon() %>">
+			<c:if test="<%= ddlDisplayContext.isShowAddDDMFormTemplateIcon() %>">
 				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="addFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
@@ -81,7 +87,9 @@ if (recordSet != null) {
 					message="add-form-template"
 					url="<%= taglibAddFormTemplateURL %>"
 				/>
+			</c:if>
 
+			<c:if test="<%= ddlDisplayContext.isShowAddDDMDisplayTemplateIcon() %>">
 				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="addDisplayTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />

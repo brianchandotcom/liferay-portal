@@ -44,14 +44,14 @@ public class DDLDisplayWebUpgrade implements UpgradeStepRegistrator {
 				_resourcePermissionLocalService));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletPreferencesLocalService(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setResourcePermissionLocalService(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 

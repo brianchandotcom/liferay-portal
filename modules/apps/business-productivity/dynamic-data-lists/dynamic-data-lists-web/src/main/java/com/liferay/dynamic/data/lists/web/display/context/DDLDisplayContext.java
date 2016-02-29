@@ -289,30 +289,31 @@ public class DDLDisplayContext {
 	}
 
 	public boolean isEditable() {
+		if (isAdminPortlet()) {
+			return true;
+		}
+
 		return PrefsParamUtil.getBoolean(
 			_ddlRequestHelper.getPortletPreferences(),
 			_ddlRequestHelper.getRenderRequest(), "editable", true);
 	}
 
-	public boolean isShowAddDDMTemplateIcon() throws PortalException {
-		if (_hasAddDDMTemplatePermission != null) {
-			return _hasAddDDMTemplatePermission;
+	public boolean isFormView() {
+		return PrefsParamUtil.getBoolean(
+			_ddlRequestHelper.getPortletPreferences(),
+			_ddlRequestHelper.getRenderRequest(), "formView");
+	}
+
+	public boolean isShowAddDDMDisplayTemplateIcon() throws PortalException {
+		if (isShowAddDDMTemplateIcon() && !isFormView()) {
+			return true;
 		}
 
-		_hasAddDDMTemplatePermission = Boolean.FALSE;
+		return false;
+	}
 
-		DDLRecordSet recordSet = getRecordSet();
-
-		if (recordSet == null) {
-			return _hasAddDDMTemplatePermission;
-		}
-
-		_hasAddDDMTemplatePermission =
-			DDMTemplatePermission.containsAddTemplatePermission(
-				getPermissionChecker(), getScopeGroupId(),
-				getStructureTypeClassNameId(), getStructureTypeClassNameId());
-
-		return _hasAddDDMTemplatePermission;
+	public boolean isShowAddDDMFormTemplateIcon() throws PortalException {
+		return isShowAddDDMTemplateIcon();
 	}
 
 	public boolean isShowAddRecordSetIcon() {
@@ -325,6 +326,14 @@ public class DDLDisplayContext {
 			DDLActionKeys.ADD_RECORD_SET);
 
 		return _hasAddRecordSetPermission;
+	}
+
+	public boolean isShowCancelButton() {
+		if (isFormView()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {
@@ -401,7 +410,8 @@ public class DDLDisplayContext {
 			return _hasShowIconsActionPermission;
 		}
 
-		if (isShowConfigurationIcon() || isShowAddDDMTemplateIcon() ||
+		if (isShowConfigurationIcon() || isShowAddDDMDisplayTemplateIcon() ||
+			isShowAddDDMFormTemplateIcon() ||
 			isShowEditDisplayDDMTemplateIcon() ||
 			isShowEditFormDDMTemplateIcon()) {
 
@@ -411,16 +421,30 @@ public class DDLDisplayContext {
 		return _hasShowIconsActionPermission;
 	}
 
+	public boolean isShowPublishRecordButton() {
+		if (isEditable() && hasAddRecordPermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowSaveRecordButton() {
+		if (isFormView()) {
+			return false;
+		}
+
+		if (isEditable() && hasAddRecordPermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSpreadsheet() {
 		return PrefsParamUtil.getBoolean(
 			_ddlRequestHelper.getPortletPreferences(),
 			_ddlRequestHelper.getRenderRequest(), "spreadsheet");
-	}
-
-	public boolean showEditFormFirst() {
-		return PrefsParamUtil.getBoolean(
-			_ddlRequestHelper.getPortletPreferences(),
-			_ddlRequestHelper.getRenderRequest(), "showEditFormFirst");
 	}
 
 	protected DDMTemplate fetchDisplayDDMTemplate() {
@@ -488,6 +512,21 @@ public class DDLDisplayContext {
 		return _ddlRequestHelper.getThemeDisplay();
 	}
 
+	protected boolean hasAddRecordPermission() {
+		if (_hasAddRecordPermission != null) {
+			return _hasAddRecordPermission;
+		}
+
+		_hasAddRecordPermission = false;
+
+		if (_recordSet != null) {
+			_hasAddRecordPermission = DDLRecordSetPermission.contains(
+				getPermissionChecker(), _recordSet, DDLActionKeys.ADD_RECORD);
+		}
+
+		return _hasAddRecordPermission;
+	}
+
 	protected boolean hasViewPermission() {
 		if (_hasViewPermission != null) {
 			return _hasViewPermission;
@@ -503,6 +542,27 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
+	protected boolean isShowAddDDMTemplateIcon() throws PortalException {
+		if (_hasAddDDMTemplatePermission != null) {
+			return _hasAddDDMTemplatePermission;
+		}
+
+		_hasAddDDMTemplatePermission = Boolean.FALSE;
+
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet == null) {
+			return _hasAddDDMTemplatePermission;
+		}
+
+		_hasAddDDMTemplatePermission =
+			DDMTemplatePermission.containsAddTemplatePermission(
+				getPermissionChecker(), getScopeGroupId(),
+				getStructureTypeClassNameId(), getStructureTypeClassNameId());
+
+		return _hasAddDDMTemplatePermission;
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private final DDL _ddl;
@@ -514,6 +574,7 @@ public class DDLDisplayContext {
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;
+	private Boolean _hasAddRecordPermission;
 	private Boolean _hasAddRecordSetPermission;
 	private Boolean _hasEditDisplayDDMTemplatePermission;
 	private Boolean _hasEditFormDDMTemplatePermission;

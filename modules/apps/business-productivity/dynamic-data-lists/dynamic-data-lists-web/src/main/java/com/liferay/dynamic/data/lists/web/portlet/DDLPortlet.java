@@ -216,6 +216,13 @@ public class DDLPortlet extends MVCPortlet {
 			recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 		}
 
+		DDLRecord record = (DDLRecord)renderRequest.getAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
+
+		if ((recordSet == null) && (record != null)) {
+			recordSet = record.getRecordSet();
+		}
+
 		renderRequest.setAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}

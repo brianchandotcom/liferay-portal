@@ -157,6 +157,10 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.document.library.kernel.model."
 		},
 		{
+			"com.liferay.portlet.documentlibrary.util.",
+			"com.liferay.document.library.kernel.util."
+		},
+		{
 			"com.liferay.portlet.expando.model.",
 			"com.liferay.expando.kernel.model."
 		},

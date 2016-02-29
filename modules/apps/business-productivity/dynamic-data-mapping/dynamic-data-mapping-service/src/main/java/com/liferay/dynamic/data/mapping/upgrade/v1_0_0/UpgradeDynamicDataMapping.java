@@ -1307,7 +1307,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	static {
 		_structureModelResourceNames.put(
 			"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
-			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
+			"com.liferay.document.library.kernel.model.DLFileEntryMetadata-" +
 				_CLASS_NAME_DDM_STRUCTURE);
 
 		_structureModelResourceNames.put(

@@ -25,7 +25,6 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

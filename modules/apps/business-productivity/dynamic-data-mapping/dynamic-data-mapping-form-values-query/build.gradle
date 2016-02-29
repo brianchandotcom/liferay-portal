@@ -14,7 +14,7 @@ compileJava {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
 	provided group: "org.antlr", name: "antlr4", version: "4.3"
 	provided group: "org.antlr", name: "antlr4-annotations", version: "4.3"
 	provided group: "org.antlr", name: "antlr4-runtime", version: "4.3"

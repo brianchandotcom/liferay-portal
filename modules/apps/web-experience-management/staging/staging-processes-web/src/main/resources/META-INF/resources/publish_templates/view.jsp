@@ -99,7 +99,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="name"
+					name="title"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 

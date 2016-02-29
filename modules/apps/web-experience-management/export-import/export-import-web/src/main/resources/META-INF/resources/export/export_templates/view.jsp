@@ -115,7 +115,7 @@ if (liveGroup == null) {
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="name"
+					name="title"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 

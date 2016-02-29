@@ -26,7 +26,7 @@
 			String description = (String)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "description");
 			%>
 
-			<aui:input label="name" name="name" showRequiredLabel="<%= false %>" value="<%= HtmlUtil.escape(name) %>">
+			<aui:input label="title" name="name" showRequiredLabel="<%= true %>" value="<%= HtmlUtil.escape(name) %>">
 				<aui:validator name="required" />
 			</aui:input>
 
@@ -35,7 +35,7 @@
 		<c:otherwise>
 			<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
 
-			<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
+			<aui:input label="title" name="name" showRequiredLabel="<%= true %>">
 				<aui:validator name="required" />
 			</aui:input>
 

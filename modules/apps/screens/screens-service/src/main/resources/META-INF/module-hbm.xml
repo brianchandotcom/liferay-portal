@@ -5,5 +5,4 @@
 	<import class="com.liferay.screens.model.ScreensAssetEntry" />
 	<import class="com.liferay.screens.model.ScreensDDLRecord" />
 	<import class="com.liferay.screens.model.ScreensJournalArticle" />
-	<import class="com.liferay.screens.model.ScreensUser" />
 </hibernate-mapping>

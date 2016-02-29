@@ -15,6 +15,8 @@
 package com.liferay.screens.service.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.screens.service.base.ScreensDDLRecordServiceBaseImpl;
 
@@ -44,6 +47,9 @@ public class ScreensDDLRecordServiceImpl
 
 		DDLRecord ddlRecord = ddlRecordLocalService.getRecord(ddlRecordId);
 
+		DDLRecordPermission.check(
+			getPermissionChecker(), ddlRecord, ActionKeys.VIEW);
+
 		DDMFormValues ddmFormValues = ddlRecord.getDDMFormValues();
 
 		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
@@ -60,6 +66,9 @@ public class ScreensDDLRecordServiceImpl
 			long ddlRecordSetId, Locale locale, int start, int end)
 		throws PortalException {
 
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
+
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
 			ddlRecordSetId, start, end);
 
@@ -71,6 +80,9 @@ public class ScreensDDLRecordServiceImpl
 			long ddlRecordSetId, long userId, Locale locale, int start, int end)
 		throws PortalException {
 
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
+
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
 			ddlRecordSetId, userId, start, end);
 
@@ -78,12 +90,20 @@ public class ScreensDDLRecordServiceImpl
 	}
 
 	@Override
-	public int getDDLRecordsCount(long ddlRecordSetId) {
+	public int getDDLRecordsCount(long ddlRecordSetId) throws PortalException {
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
+
 		return ddlRecordPersistence.countByRecordSetId(ddlRecordSetId);
 	}
 
 	@Override
-	public int getDDLRecordsCount(long ddlRecordSetId, long userId) {
+	public int getDDLRecordsCount(long ddlRecordSetId, long userId)
+		throws PortalException {
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
+
 		return ddlRecordPersistence.countByR_U(ddlRecordSetId, userId);
 	}
 

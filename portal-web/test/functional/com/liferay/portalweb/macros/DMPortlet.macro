@@ -180,7 +180,9 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#PORTLET_TITLE" value1="Documents and Media" />
+		<var name="key_portletTitle" value="Documents and Media" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Documents and Media" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 	</command>
 

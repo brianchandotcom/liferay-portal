@@ -294,7 +294,9 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="MessageBoardsAdmin#PORTLET_TITLE" value1="Message Boards" />
+		<var name="key_portletTitle" value="Message Boards" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Message Boards" />
 		<execute function="AssertElementPresent" locator1="NavBar#CONTAINER" />
 		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 	</command>

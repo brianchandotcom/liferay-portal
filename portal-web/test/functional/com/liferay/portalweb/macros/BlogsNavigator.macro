@@ -1,11 +1,8 @@
 <definition>
 	<command name="gotoAbstractField">
-		<if>
-			<condition function="IsVisible" locator1="Button#COG" />
-			<then>
-				<execute function="Click" locator1="Button#COG" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 	</command>
 
 	<command name="gotoAddEntry">

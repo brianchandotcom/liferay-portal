@@ -465,6 +465,32 @@ public class JournalConverterUtilTest {
 	}
 
 	@Test
+	public void testGetFieldsFromContentWithLocalizedElement()
+		throws Exception {
+
+		Fields expectedFields = new Fields();
+
+		Field textField = getTextField(_ddmStructure.getStructureId());
+
+		textField.setValue(_ptLocale, textField.getValue(_enLocale));
+
+		expectedFields.put(textField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "text_INSTANCE_Okhyj7Ni");
+
+		expectedFields.put(fieldsDisplayField);
+
+		String content = read(
+			"test-journal-content-text-no-localization-field.xml");
+
+		Fields actualFields = _journalConverter.getDDMFields(
+			_ddmStructure, content);
+
+		Assert.assertEquals(expectedFields, actualFields);
+	}
+
+	@Test
 	public void testGetFieldsFromContentWithMultiListElement()
 		throws Exception {
 

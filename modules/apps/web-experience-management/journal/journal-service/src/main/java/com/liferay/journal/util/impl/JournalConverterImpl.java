@@ -53,6 +53,8 @@ import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -424,6 +426,14 @@ public class JournalConverterImpl implements JournalConverter {
 		String dataType = ddmStructure.getFieldDataType(name);
 		String type = ddmStructure.getFieldType(name);
 
+		String availableLocales =
+			dynamicElementElement.getParent().attributeValue(
+				"available-locales", "");
+
+		List<String> missingLanguageList = new ArrayList<>(
+			Arrays.asList(availableLocales.split(",")));
+		missingLanguageList.remove(defaultLanguageId);
+
 		List<Element> dynamicContentElements = dynamicElementElement.elements(
 			"dynamic-content");
 
@@ -435,12 +445,24 @@ public class JournalConverterImpl implements JournalConverter {
 
 			if (Validator.isNotNull(languageId)) {
 				locale = LocaleUtil.fromLanguageId(languageId);
+				missingLanguageList.remove(languageId);
 			}
 
 			Serializable serializable = getFieldValue(
 				dataType, type, dynamicContentElement);
 
 			ddmField.addValue(locale, serializable);
+		}
+
+		if (!missingLanguageList.isEmpty()) {
+			for (String languageId : missingLanguageList) {
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
+				Serializable fieldValue = ddmField.getValue(locale);
+
+				if (Validator.isNotNull(fieldValue)) {
+					ddmField.setValue(locale, fieldValue);
+				}
+			}
 		}
 
 		return ddmField;

@@ -51,11 +51,19 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<c:if test="<%= portletTitleBasedNavigation && (entry != null) %>">
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+<liferay-util:buffer var="saveStatus">
+	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+		<c:if test="<%= entry != null %>">
+			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+		</c:if>
+	</small>
+</liferay-util:buffer>
+
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<liferay-frontend:info-bar>
+		<%= saveStatus %>
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -69,21 +77,11 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<c:if test="<%= !portletTitleBasedNavigation && (entry != null) %>">
+		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="entry-options">
-				<c:if test="<%= (entry != null) && entry.isApproved() %>">
-					<div class="status">
-						<small class="text-capitalize text-muted">
-							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-						</small>
-					</div>
-				</c:if>
-
-				<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-					<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-				</c:if>
+				<div class="status">
+					<%= saveStatus %>
+				</div>
 			</div>
 		</c:if>
 

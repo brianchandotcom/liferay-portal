@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -74,8 +75,9 @@ public class GoogleDocsDLDisplayContextFactory
 		if (model instanceof DLFileEntry) {
 			GoogleDocsMetadataHelper googleDocsMetadataHelper =
 				new GoogleDocsMetadataHelper(
-					_ddmStructureLocalService, (DLFileEntry)model,
-					_dlFileEntryMetadataLocalService, _storageEngine);
+					_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+					(DLFileEntry)model, _dlFileEntryMetadataLocalService,
+					_storageEngine);
 
 			if (googleDocsMetadataHelper.isGoogleDocs()) {
 				return new GoogleDocsDLEditFileEntryDisplayContext(
@@ -127,8 +129,9 @@ public class GoogleDocsDLDisplayContextFactory
 		if (model instanceof DLFileVersion) {
 			GoogleDocsMetadataHelper googleDocsMetadataHelper =
 				new GoogleDocsMetadataHelper(
-					_ddmStructureLocalService, (DLFileVersion)model,
-					_dlFileEntryMetadataLocalService, _storageEngine);
+					_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+					(DLFileVersion)model, _dlFileEntryMetadataLocalService,
+					_storageEngine);
 
 			if (googleDocsMetadataHelper.isGoogleDocs()) {
 				return new GoogleDocsDLViewFileVersionDisplayContext(
@@ -138,6 +141,13 @@ public class GoogleDocsDLDisplayContextFactory
 		}
 
 		return parentDLViewFileVersionDisplayContext;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
 	}
 
 	@Reference(unbind = "-")
@@ -164,6 +174,7 @@ public class GoogleDocsDLDisplayContextFactory
 		_storageEngine = storageEngine;
 	}
 
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLAppService _dlAppService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

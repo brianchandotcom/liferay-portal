@@ -11,7 +11,7 @@
 
 	<#assign messageListItemsJSONArray = statusMessageJSONObject.getJSONArray("messageListItems")!>
 
-	<#if (messageListItemsJSONArray.iterator())?has_content>
+	<#if messageListItemsJSONArray.iterator()?has_content>
 		<ul class="error-list-items">
 			<#list messageListItemsJSONArray.iterator() as messageListItemJSONObject>
 				<#assign info = messageListItemJSONObject.getString("info")>
@@ -35,10 +35,10 @@
 
 <#assign warningMessagesJSONArray = statusMessageJSONObject.getJSONArray("warningMessages")!>
 
-<#if (warningMessagesJSONArray.iterator())?has_content>
+<#if warningMessagesJSONArray.iterator()?has_content>
 	<div class="alert upload-error">
 		<span class="error-message">
-			<#if (messageListItemsJSONArray.iterator())?has_content>
+			<#if messageListItemsJSONArray.iterator()?has_content>
 				<@liferay.language key="consider-that-the-following-data-would-not-have-been-published-either"/>
 			<#else>
 				<@liferay.language key="the-following-data-has-not-been-published"/>

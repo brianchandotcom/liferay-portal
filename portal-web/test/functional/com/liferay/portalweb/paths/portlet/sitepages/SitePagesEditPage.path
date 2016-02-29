@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]/input[contains(@id,'layoutPrototypeLinkEnabled')]</td>
+	<td>//label[contains(.,'Inherit Changes')]/input</td>
 	<td></td>
 </tr>
 <tr>

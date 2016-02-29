@@ -1500,7 +1500,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="NavBar#CONTAINER" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found." />
 	</command>
 
 	<command name="viewNotPresentCP">

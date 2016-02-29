@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.icon=icon-calendar",
+		"ddm.form.field.type.icon=calendar",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Date",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-date",
 		"ddm.form.field.type.name=date"

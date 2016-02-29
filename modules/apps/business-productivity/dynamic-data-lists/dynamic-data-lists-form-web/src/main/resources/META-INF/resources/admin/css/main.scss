@@ -358,12 +358,21 @@ $horizontal-spacing: 35px;
 		display: none;
 	}
 
+	.form-builder-field-types-list {
+		margin-top: 10px;
+	}
+
 	.modal-body {
 		background-color: #FFF;
-		padding: 25px 35px;
+		padding: 15px 25px;
 
 		.field-type {
+			border-radius: 5px;
 			padding: 20px 0;
+
+			&:hover {
+				background-color: #E8F1F7;
+			}
 
 			@include md {
 				float: none;
@@ -376,7 +385,13 @@ $horizontal-spacing: 35px;
 			}
 
 			.field-type-icon {
-				font-size: 24px;
+				font-size: 0;
+				margin: 0 0 10px;
+
+				.lexicon-icon {
+					height: 18px;
+					width: 18px;
+				}
 			}
 
 			.field-type-label {

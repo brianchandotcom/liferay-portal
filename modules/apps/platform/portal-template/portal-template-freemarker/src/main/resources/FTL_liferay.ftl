@@ -24,7 +24,7 @@ LPS-30525.
 </#if>
 
 <#function max x y>
-	<#if (x < y)>
+	<#if x < y>
 		<#return y>
 	<#else>
 		<#return x>
@@ -32,7 +32,7 @@ LPS-30525.
 </#function>
 
 <#function min x y>
-	<#if (x > y)>
+	<#if x > y>
 		<#return y>
 	<#else>
 		<#return x>

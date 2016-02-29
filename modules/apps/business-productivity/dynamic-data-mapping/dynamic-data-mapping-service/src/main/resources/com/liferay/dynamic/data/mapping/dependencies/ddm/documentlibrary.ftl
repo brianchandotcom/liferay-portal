@@ -8,12 +8,12 @@
 
 <#assign fileEntryTitle = "">
 
-<#if (fieldRawValue != "")>
+<#if fieldRawValue != "">
 	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 
 	<#assign fileEntry = getFileEntry(fileJSONObject)>
 
-	<#if (fileEntry != "")>
+	<#if fileEntry != "">
 		<#assign fileEntryTitle = fileEntry.getTitle()>
 	</#if>
 </#if>

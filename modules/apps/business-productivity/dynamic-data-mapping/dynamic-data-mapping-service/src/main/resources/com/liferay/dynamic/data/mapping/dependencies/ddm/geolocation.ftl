@@ -5,7 +5,7 @@
 
 <#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
-<#if (fieldRawValue != "")>
+<#if fieldRawValue != "">
 	<#assign geolocationJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 
 	<#assign latitude = geolocationJSONObject.getDouble("latitude")>

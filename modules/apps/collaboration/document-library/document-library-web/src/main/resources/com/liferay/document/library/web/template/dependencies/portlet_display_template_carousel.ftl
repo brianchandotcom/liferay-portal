@@ -18,7 +18,7 @@
 		<#assign imageMimeTypes = propsUtil.getArray("dl.file.entry.preview.image.mime.types") />
 
 		<#list entries as entry>
-			<#if imageMimeTypes?seq_contains(entry.getMimeType()) >
+			<#if imageMimeTypes?seq_contains(entry.getMimeType())>
 				<div class="carousel-item image-viewer-base-image">
 					<img src="${dlUtil.getPreviewURL(entry, entry.getFileVersion(), themeDisplay, "")}" />
 				</div>

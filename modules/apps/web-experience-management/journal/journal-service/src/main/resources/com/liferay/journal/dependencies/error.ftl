@@ -12,7 +12,7 @@
 			<#list lines as curLine>
 				<#assign css = ''>
 
-				<#if line?exists && line == (curLine_index + 1)>
+				<#if line?exists && (line == (curLine_index + 1))>
 					<#assign css = ' class="error-line"' />
 				</#if>
 

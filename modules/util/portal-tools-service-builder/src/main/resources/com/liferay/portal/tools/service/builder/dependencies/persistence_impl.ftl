@@ -96,7 +96,7 @@ import java.util.Map;
 import java.util.Set;
 
 <#list referenceList as tempEntity>
-	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+	<#if tempEntity.hasColumns() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}Persistence;
 	</#if>
 </#list>
@@ -1943,7 +1943,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 <#function bindParameter finderColsList>
 	<#list finderColsList as finderCol>
-		<#if !finderCol.hasArrayableOperator() || finderCol.type == "String">
+		<#if !finderCol.hasArrayableOperator() || (finderCol.type == "String")>
 			<#return true>
 		</#if>
 	</#list>
@@ -1971,7 +1971,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				qPos.add(
 					<#if finderCol.type == "Date">
 						new Timestamp(${finderCol.name}.getTime())
-					<#elseif finderCol.type == "String" && !finderCol.isCaseSensitive()>
+					<#elseif (finderCol.type == "String") && !finderCol.isCaseSensitive()>
 						StringUtil.toLowerCase(${finderCol.name})
 					<#else>
 						${finderCol.name}

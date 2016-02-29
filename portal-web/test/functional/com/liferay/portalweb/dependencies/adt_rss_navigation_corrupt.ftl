@@ -23,7 +23,7 @@
 					<#if rssFeedEntries??>
 						<div id="tab-${curEntry_index}" class="tab-pane">
 							<#list rssFeedEntries as rssFeedEntry>
-								<#if (rssFeedEntry_index > entriesPerFeed?number)>
+								<#if rssFeedEntry_index > entriesPerFeed?number>
 									<#break>
 								</#if>
 

@@ -13,7 +13,7 @@
 
 	<#assign void = fieldValue.setTimeInMillis(dateValue?long)>
 
-<#elseif (validator.isNotNull(predefinedValue))>
+<#elseif validator.isNotNull(predefinedValue)>
 	<#assign predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)>
 
 	<#assign fieldValue = calendarFactory.getCalendar(predefinedDate?long)>

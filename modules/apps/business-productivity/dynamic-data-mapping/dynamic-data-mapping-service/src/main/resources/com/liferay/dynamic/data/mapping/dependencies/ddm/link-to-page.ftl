@@ -8,12 +8,12 @@
 
 	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
-	<#if (validator.isNotNull(fieldRawValue))>
+	<#if validator.isNotNull(fieldRawValue)>
 		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 
 		<#assign selectedLayoutGroupId = getterUtil.getLong(fieldLayoutJSONObject.get("groupId"))>
 
-		<#if (selectedLayoutGroupId <= 0)>
+		<#if selectedLayoutGroupId <= 0>
 			<#assign selectedLayoutGroupId = scopeGroupId>
 		</#if>
 
@@ -21,7 +21,7 @@
 
 		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), selectedLayoutLayoutId)!"">
 
-		<#if (validator.isNotNull(selectedLayout))>
+		<#if validator.isNotNull(selectedLayout)>
 			<#assign selectedLayoutName = selectedLayout.getName(requestedLocale)>
 		</#if>
 	</#if>

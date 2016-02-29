@@ -176,7 +176,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			</#if>
 		</#list>
 
-		<#if (cacheFields?size > 0)>
+		<#if cacheFields?size > 0>
 			<#assign throwsClassNotFoundException = true>
 		</#if>
 

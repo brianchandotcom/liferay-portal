@@ -132,6 +132,37 @@ public abstract class UpgradeProcess
 
 	}
 
+	public class AlterColumnName implements Alterable {
+
+		public AlterColumnName(String oldColumnName, String newColumn) {
+			_oldColumnName = oldColumnName;
+			_newColumn = newColumn;
+		}
+
+		@Override
+		public String getIndexedColumnName() {
+			return _oldColumnName;
+		}
+
+		@Override
+		public String getSQL(String tableName) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("alter_column_name ");
+			sb.append(tableName);
+			sb.append(StringPool.SPACE);
+			sb.append(_oldColumnName);
+			sb.append(StringPool.SPACE);
+			sb.append(_newColumn);
+
+			return sb.toString();
+		}
+
+		private final String _newColumn;
+		private final String _oldColumnName;
+
+	}
+
 	public class AlterColumnType implements Alterable {
 
 		public AlterColumnType(String columnName, String newType) {
@@ -160,6 +191,60 @@ public abstract class UpgradeProcess
 
 		private final String _columnName;
 		private final String _newType;
+
+	}
+
+	public class AlterTableAddColumn implements Alterable {
+
+		public AlterTableAddColumn(String column) {
+			_column = column;
+		}
+
+		@Override
+		public String getIndexedColumnName() {
+			return null;
+		}
+
+		@Override
+		public String getSQL(String tableName) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" add column ");
+			sb.append(_column);
+
+			return sb.toString();
+		}
+
+		private final String _column;
+
+	}
+
+	public class AlterTableDropColumn implements Alterable {
+
+		public AlterTableDropColumn(String columnName) {
+			_columnName = columnName;
+		}
+
+		@Override
+		public String getIndexedColumnName() {
+			return _columnName;
+		}
+
+		@Override
+		public String getSQL(String tableName) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" drop column ");
+			sb.append(_columnName);
+
+			return sb.toString();
+		}
+
+		private final String _columnName;
 
 	}
 

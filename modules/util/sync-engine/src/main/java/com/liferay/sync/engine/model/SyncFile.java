@@ -180,6 +180,10 @@ public class SyncFile extends StateAwareModel {
 	}
 
 	public String getLocalExtraSettingValue(String key) {
+		if (localExtraSettings == null) {
+			return null;
+		}
+
 		try {
 			JsonNode jsonNode = JSONUtil.readTree(localExtraSettings);
 

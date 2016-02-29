@@ -52,6 +52,8 @@ public class UpdateFileEntryHandler extends BaseSyncDLObjectHandler {
 			localSyncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
 		}
 
+		localSyncFile.setUserId(remoteSyncFile.getUserId());
+		localSyncFile.setUserName(remoteSyncFile.getUserName());
 		localSyncFile.setVersion(remoteSyncFile.getVersion());
 		localSyncFile.setVersionId(remoteSyncFile.getVersionId());
 

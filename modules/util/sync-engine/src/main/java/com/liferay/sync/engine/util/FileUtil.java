@@ -560,9 +560,16 @@ public class FileUtil {
 
 	public static void moveFile(Path sourceFilePath, Path targetFilePath) {
 		try {
+			if (Files.isDirectory(sourceFilePath)) {
+				moveFolder(sourceFilePath, targetFilePath);
+
+				return;
+			}
+
 			moveFile(sourceFilePath, targetFilePath, true);
 		}
 		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -603,6 +610,72 @@ public class FileUtil {
 			};
 
 			FileLockRetryUtil.registerPathCallable(pathCallable);
+		}
+	}
+
+	public static void moveFolder(
+			final Path sourceParentFilePath, final Path targetParentFilePath)
+		throws IOException {
+
+		try {
+			Files.move(
+				sourceParentFilePath, targetParentFilePath,
+				StandardCopyOption.ATOMIC_MOVE,
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch (Exception e) {
+			Files.walkFileTree(
+				sourceParentFilePath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
+
+						return moveFilePath(filePath);
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
+
+						return moveFilePath(filePath);
+					}
+
+					@Override
+					public FileVisitResult visitFileFailed(
+						Path filePath, IOException ioe) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					protected FileVisitResult moveFilePath(Path filePath) {
+						Path targetFilePath = targetParentFilePath.resolve(
+							sourceParentFilePath.relativize(filePath));
+
+						try {
+							Files.move(
+								filePath, targetFilePath,
+								StandardCopyOption.ATOMIC_MOVE,
+								StandardCopyOption.REPLACE_EXISTING);
+						}
+						catch (Exception e1) {
+							try {
+								Files.copy(
+									filePath, targetFilePath,
+									StandardCopyOption.COPY_ATTRIBUTES);
+							}
+							catch (Exception e2) {
+								_logger.error(e2.getMessage(), e2);
+							}
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
 		}
 	}
 

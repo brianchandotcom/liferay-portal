@@ -263,6 +263,8 @@ public class SyncFileService {
 							continue;
 						}
 
+						childSyncFile.setModifiedTime(
+							syncFile.getModifiedTime());
 						childSyncFile.setUiEvent(syncFile.getUiEvent());
 
 						doDeleteSyncFile(childSyncFile, notify);

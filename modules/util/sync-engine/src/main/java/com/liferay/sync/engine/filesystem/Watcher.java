@@ -58,19 +58,27 @@ public abstract class Watcher implements Runnable {
 		init();
 	}
 
+	public void addDeletedFilePathName(String filePathName) {
+		_deletedFilePathNames.add(filePathName);
+	}
+
+	public void addDownloadedFilePathName(String filePathName) {
+		_downloadedFilePathNames.add(filePathName);
+	}
+
 	public void close() {
 		WatcherManager.removeWatcher(_watchEventListener.getSyncAccountId());
 	}
 
-	public List<String> getDeletedFilePathNames() {
-		return _deletedFilePathNames;
-	}
-
-	public List<String> getDownloadedFilePathNames() {
-		return _downloadedFilePathNames;
-	}
-
 	public abstract void registerFilePath(Path filePath) throws IOException;
+
+	public void removeDeletedFilePathName(String filePathName) {
+		_deletedFilePathNames.remove(filePathName);
+	}
+
+	public void removeDownloadedFilePathName(String filePathName) {
+		_downloadedFilePathNames.remove(filePathName);
+	}
 
 	public abstract void unregisterFilePath(Path filePath);
 

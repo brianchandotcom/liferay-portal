@@ -186,6 +186,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			if (response.startsWith("\"")) {
 				response = StringEscapeUtils.unescapeJava(response);
 
+				response = response.replaceAll("\n", "\\n");
+
 				response = response.substring(1, response.length() - 1);
 			}
 
@@ -290,10 +292,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
-		List<String> downloadedFilePathNames =
-			watcher.getDownloadedFilePathNames();
-
-		downloadedFilePathNames.add(targetSyncFile.getFilePathName());
+		watcher.addDownloadedFilePathName(targetSyncFile.getFilePathName());
 
 		boolean exists = Files.exists(
 			Paths.get(targetSyncFile.getFilePathName()));
@@ -348,11 +347,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		final Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
-		final List<String> deletedFilePathNames =
-			watcher.getDeletedFilePathNames();
-
 		if (sourceSyncFile.isFile()) {
-			deletedFilePathNames.add(sourceSyncFile.getFilePathName());
+			watcher.addDeletedFilePathName(sourceSyncFile.getFilePathName());
 
 			FileUtil.deleteFile(sourceFilePath);
 
@@ -372,7 +368,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 						return super.postVisitDirectory(filePath, ioe);
 					}
 
-					deletedFilePathNames.add(filePath.toString());
+					watcher.addDeletedFilePathName(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 
@@ -395,7 +391,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					deletedFilePathNames.add(filePath.toString());
+					watcher.addDeletedFilePathName(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 
@@ -455,6 +451,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		try {
 			if (response.startsWith("\"")) {
 				response = StringEscapeUtils.unescapeJava(response);
+
+				response = response.replaceAll("\n", "\\n");
 
 				response = response.substring(1, response.length() - 1);
 			}
@@ -682,6 +680,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		sourceSyncFile.setLockUserName(targetSyncFile.getLockUserName());
 		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
 		sourceSyncFile.setSize(targetSyncFile.getSize());
+		sourceSyncFile.setUserId(targetSyncFile.getUserId());
+		sourceSyncFile.setUserName(targetSyncFile.getUserName());
 		sourceSyncFile.setVersion(targetSyncFile.getVersion());
 		sourceSyncFile.setVersionId(targetSyncFile.getVersionId());
 

@@ -364,9 +364,6 @@ public class SyncSiteService {
 		final Watcher watcher = WatcherManager.getWatcher(
 			syncSite.getSyncAccountId());
 
-		final List<String> deletedFilePathNames =
-			watcher.getDeletedFilePathNames();
-
 		Files.walkFileTree(
 			filePath,
 			new SimpleFileVisitor<Path>() {
@@ -380,7 +377,7 @@ public class SyncSiteService {
 						return super.postVisitDirectory(filePath, ioe);
 					}
 
-					deletedFilePathNames.add(filePath.toString());
+					watcher.addDeletedFilePathName(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 
@@ -392,7 +389,7 @@ public class SyncSiteService {
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					deletedFilePathNames.add(filePath.toString());
+					watcher.addDeletedFilePathName(filePath.toString());
 
 					FileUtil.deleteFile(filePath);
 

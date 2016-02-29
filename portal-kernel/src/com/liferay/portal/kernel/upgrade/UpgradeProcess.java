@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -123,15 +124,46 @@ public abstract class UpgradeProcess
 		upgradeProcess.upgrade();
 	}
 
-	protected void alterColumnType(
-			Class<?> tableClass, String columnName, String columnType)
-		throws Exception {
+	public interface Alterable {
 
-		alterColumnType(tableClass, new String[] {columnName, columnType});
+		public String getIndexedColumnName();
+
+		public String getSQL(String tableName);
+
 	}
 
-	protected void alterColumnType(
-			Class<?> tableClass, String[]... columnNamesAndColumnTypes)
+	public class AlterColumnType implements Alterable {
+
+		public AlterColumnType(String columnName, String newType) {
+			_columnName = columnName;
+			_newType = newType;
+		}
+
+		@Override
+		public String getIndexedColumnName() {
+			return _columnName;
+		}
+
+		@Override
+		public String getSQL(String tableName) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("alter_column_type ");
+			sb.append(tableName);
+			sb.append(StringPool.SPACE);
+			sb.append(_columnName);
+			sb.append(StringPool.SPACE);
+			sb.append(_newType);
+
+			return sb.toString();
+		}
+
+		private final String _columnName;
+		private final String _newType;
+
+	}
+
+	protected void alter(Class<?> tableClass, Alterable... alterables)
 		throws Exception {
 
 		Field tableNameField = tableClass.getField("TABLE_NAME");
@@ -178,8 +210,8 @@ public abstract class UpgradeProcess
 				columnNames.add(rs2.getString("COLUMN_NAME"));
 			}
 
-			for (String[] columnNameAndColumnType : columnNamesAndColumnTypes) {
-				String columnName = columnNameAndColumnType[0];
+			for (Alterable alterable : alterables) {
+				String columnName = alterable.getIndexedColumnName();
 
 				for (Map.Entry<String, Set<String>> entry :
 						columnNamesMap.entrySet()) {
@@ -193,16 +225,7 @@ public abstract class UpgradeProcess
 					}
 				}
 
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("alter_column_type ");
-				sb.append(tableName);
-				sb.append(" ");
-				sb.append(columnName);
-				sb.append(" ");
-				sb.append(columnNameAndColumnType[1]);
-
-				runSQL(sb.toString());
+				runSQL(alterable.getSQL(tableName));
 
 				for (ObjectValuePair<String, IndexMetadata> objectValuePair :
 						getIndexesSQL(tableClass.getClassLoader(), tableName)) {

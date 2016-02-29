@@ -14,10 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.sql.PreparedStatement;
 
@@ -33,8 +31,8 @@ public class UpgradeRepository extends UpgradeProcess {
 
 	protected String[][] getRenamePortletNamesArray() {
 		return new String[][] {
-			new String[] {"19", MBConstants.SERVICE_NAME},
-			new String[] {"33", BlogsConstants.SERVICE_NAME},
+			new String[] {"19", "com.liferay.message.boards"},
+			new String[] {"33", "com.liferay.blogs"},
 			new String[] {"36", "com.liferay.wiki"}
 		};
 	}

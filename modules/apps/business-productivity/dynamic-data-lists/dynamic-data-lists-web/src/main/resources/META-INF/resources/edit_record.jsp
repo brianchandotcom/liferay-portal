@@ -175,7 +175,7 @@ else {
 
 			<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
-			<c:if test="<%= !translating %>">
+			<c:if test="<%= !translating && !ddlDisplayContext.isFormView() %>">
 				<aui:translation-manager
 					availableLocales="<%= availableLocales %>"
 					changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
@@ -237,13 +237,23 @@ else {
 				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
 					publishButtonLabel = "submit-for-publication";
 				}
+
+				if (ddlDisplayContext.isFormView()) {
+					publishButtonLabel = "submit";
+				}
 				%>
 
-				<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				<c:if test="<%= ddlDisplayContext.isShowSaveRecordButton() %>">
+					<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				</c:if>
 
-				<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+				<c:if test="<%= ddlDisplayContext.isShowPublishRecordButton() %>">
+					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+				</c:if>
 
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<c:if test="<%= ddlDisplayContext.isShowCancelButton() %>">
+					<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+				</c:if>
 			</aui:button-row>
 		</aui:form>
 	</div>

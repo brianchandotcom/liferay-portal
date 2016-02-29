@@ -57,6 +57,8 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpDDMFormFieldTypesJSONSerializer();
+		setUpDDMFormJSONSerializer();
+		setUpDDMFormLayoutJSONSerializer();
 	}
 
 	@Test
@@ -114,6 +116,16 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
 			DDMFormFieldTypeServicesTracker.class);
 
+		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
+			DDMFormFieldRenderer.class);
+
+		when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+				Matchers.anyString())
+		).thenReturn(
+			ddmFormFieldRenderer
+		);
+
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("ddm.form.field.type.icon", "my-icon");
@@ -128,23 +140,10 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			properties
 		);
 
-		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
-			DDMFormFieldRenderer.class);
-
-		when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
-				Matchers.anyString())
-		).thenReturn(
-			ddmFormFieldRenderer
-		);
-
 		return ddmFormFieldTypeServicesTracker;
 	}
 
 	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
-
-		// DDM form field type services tracker
-
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class,
 			"_ddmFormFieldTypeServicesTracker");
@@ -154,38 +153,10 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			getMockedDDMFormFieldTypeServicesTracker());
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class,
-			"_ddmFormFieldTypeServicesTracker");
-
-		field.set(
-			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
-
-		// JSON factory
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
-
-		// DDM form JSON serializer
-
-		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class,
 			"_ddmFormJSONSerializer");
 
 		field.set(_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer);
-
-		// DDM form layout JSON serializer
 
 		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class,
@@ -193,6 +164,32 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 
 		field.set(
 			_ddmFormFieldTypesJSONSerializer, _ddmFormLayoutJSONSerializer);
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
+	}
+
+	protected void setUpDDMFormJSONSerializer() throws Exception {
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class,
+			"_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
+	}
+
+	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
 	}
 
 	protected void whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(

@@ -85,9 +85,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapGroup.setDescription(description);
 
-		String groupName = StringUtil.toLowerCase(
-			LDAPUtil.getAttributeString(
-				attributes, groupMappings, GroupConverterKeys.GROUP_NAME));
+		String groupName = LDAPUtil.getAttributeString(
+			attributes, groupMappings, GroupConverterKeys.GROUP_NAME);
 
 		ldapGroup.setGroupName(groupName);
 

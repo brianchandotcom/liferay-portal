@@ -147,21 +147,6 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 	</command>
 
-	<command name="gotoSettings">
-		<execute function="Pause" locator1="3000" />
-
-		<if>
-			<not>
-				<condition function="IsVisible" locator1="BlogsEditEntry#SETTINGS_SECTION" />
-			</not>
-			<then>
-				<execute function="Click" locator1="Button#COG" />
-
-				<execute function="AssertVisible" locator1="BlogsEditEntry#SETTINGS_SECTION" />
-			</then>
-		</if>
-	</command>
-
 	<command name="moveToRecycleBinCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

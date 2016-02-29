@@ -122,19 +122,6 @@
 		<execute function="AssertClick" locator1="MenuItem#MARK_AS_READ" value1="Mark as Read" />
 	</command>
 
-	<command name="showPG">
-		<var name="key_entryContent" value="${entryContent}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#SHOW" value1="Show" />
-
-		<execute function="AssertVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" />
-	</command>
-
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />

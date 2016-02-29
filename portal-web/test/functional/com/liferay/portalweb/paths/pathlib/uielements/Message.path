@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_ENTRIES</td>
+	<td>//div[contains(@id,'Empty') and contains(.,'No entries were found')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_TOP_POSTERS</td>
 	<td>//p[contains(.,'There are no top posters.')]</td>
 	<td></td>

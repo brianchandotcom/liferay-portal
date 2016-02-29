@@ -133,14 +133,12 @@
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+
 		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="Message#NO_ENTRIES" value1="No entries were found." />
 	</command>
 
 	<command name="AddAnnouncementsEntryPriorityImportant" priority="4">
@@ -313,50 +311,6 @@
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitleEdit}" />
-		</execute>
-	</command>
-
-	<command name="ShowAnnouncementsEntry" priority="4">
-		<var name="announcementType" value="General" />
-		<var name="distributionScope" value="General" />
-		<var name="entryContent" value="Announcements Entry Content" />
-		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AnnouncementsEntry#addPG">
-			<var name="distributionScope" value="${distributionScope}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryURL" value="${entryURL}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AnnouncementsEntry#markAsReadPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AnnouncementsEntry#showPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="AnnouncementsEntry#viewPG">
-			<var name="announcementType" value="${announcementType}" />
-			<var name="distributionScope" value="${distributionScope}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 

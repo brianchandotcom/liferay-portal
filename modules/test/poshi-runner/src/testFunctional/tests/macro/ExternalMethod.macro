@@ -1,0 +1,62 @@
+<definition>
+	<command name="executeMethodInMacro">
+		<var name="expected" value="test,string," />
+
+		<execute macro="ExternalMethod#stringUtilAdd">
+			<return from="macroReturn" name="actual" />
+		</execute>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
+
+		<var name="expected" value="TestString" />
+
+		<execute macro="ExternalMethod#stringUtilExtractChars">
+			<return from="macroReturn" name="actual" />
+		</execute>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
+	</command>
+
+	<command name="stringUtilAdd" returns="macroReturn">
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
+			<arg value="test" />
+			<arg value="string" />
+			<return name="stringUtilReturn" />
+		</execute>
+
+		<return name="macroReturn" value="${stringUtilReturn}" />
+	</command>
+
+	<command name="stringUtilExtractChars" returns="macroReturn">
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="extractChars">
+			<arg value="Test String" />
+			<return name="stringUtilReturn" />
+		</execute>
+
+		<return name="macroReturn" value="${stringUtilReturn}" />
+	</command>
+
+	<command name="validateMatch">
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+	</command>
+</definition>

@@ -5021,6 +5021,7 @@ module.framework.properties.osgi.console=11312</echo>
 			test.console.shut.down.file.name=${project.dir.unix}/console-shut-down
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${project.dir.unix}/poshi-warnings.xml
+			test.retry.command.wait.time=${test.retry.command.wait.time}
 		</echo>
 
 		<if>

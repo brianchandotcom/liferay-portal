@@ -258,6 +258,12 @@
 	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerDescription}')]</td>
 	<td></td>
 </tr>
+<!--DETAILS_PANEL-->
+<tr>
+	<td>DETAILS_URL</td>
+	<td>//a[@class='show-url-file']</td>
+	<td></td>
+</tr>
 <!--METADATA_PANEL-->
 <tr>
 	<td>METADATA_PANEL_BOOLEAN</td>

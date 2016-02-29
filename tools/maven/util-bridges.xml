@@ -3,24 +3,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.liferay</groupId>
+		<groupId>com.liferay.portal</groupId>
 		<artifactId>com.liferay.portal.parent</artifactId>
 		<version>@version@</version>
 	</parent>
-	<groupId>com.liferay</groupId>
+	<groupId>com.liferay.portal</groupId>
 	<artifactId>com.liferay.util.bridges</artifactId>
 	<name>Liferay Util Bridges</name>
 	<version>@version@</version>
 	<description>Contains utilities to bridge web frameworks as portlets. Classes are loaded separately for each plugin.</description>
 	<dependencies>
 		<dependency>
-			<groupId>com.liferay</groupId>
+			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
 			<version>@version@</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.liferay</groupId>
+			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.java</artifactId>
 			<version>@version@</version>
 			<scope>provided</scope>

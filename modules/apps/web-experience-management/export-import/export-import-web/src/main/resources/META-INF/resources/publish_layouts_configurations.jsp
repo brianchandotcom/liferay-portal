@@ -83,7 +83,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			modelVar="exportImportConfiguration"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="export-configuration-user-column"
+				cssClass="background-task-user-column"
 				name="user"
 			>
 				<liferay-ui:user-display

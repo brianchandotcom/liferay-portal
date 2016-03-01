@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.QueryPreProcessConfiguration",
 	localization = "content/Language",
-	name = "%query.pre.process.configuration.name"
+	name = "query.pre.process.configuration.name"
 )
 public interface QueryPreProcessConfiguration {
 

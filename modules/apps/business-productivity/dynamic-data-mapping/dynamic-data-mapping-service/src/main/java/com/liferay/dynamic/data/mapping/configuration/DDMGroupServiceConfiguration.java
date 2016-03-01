@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration",
-	localization = "content/Language", name = "%ddm.service.configuration.name"
+	localization = "content/Language", name = "ddm.service.configuration.name"
 )
 public interface DDMGroupServiceConfiguration {
 

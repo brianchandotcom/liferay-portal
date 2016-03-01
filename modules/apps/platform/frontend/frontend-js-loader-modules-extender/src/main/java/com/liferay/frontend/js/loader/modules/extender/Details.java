@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.frontend.js.loader.modules.extender.LoaderModulesServlet",
-	localization = "content/Language", name = "%details.configuration.name"
+	localization = "content/Language", name = "details.configuration.name"
 )
 public @interface Details {
 

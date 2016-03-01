@@ -100,6 +100,10 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
 				ddmFormRendererHelper.getDDMFormHTML());
 
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
+				_resourceBundleLoaderProvider);
+
 			return "/edit_configuration.jsp";
 		}
 

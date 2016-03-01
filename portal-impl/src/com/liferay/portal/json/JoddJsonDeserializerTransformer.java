@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.json;
+package com.liferay.portal.json;
+
+import com.liferay.portal.kernel.json.JSONDeserializerTransformer;
+
+import jodd.json.ValueConverter;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
-public interface JSONDeserializer<T> {
+public class JoddJsonDeserializerTransformer<K, V>
+	implements ValueConverter<K, V> {
 
-	public T deserialize(String input);
+	public JoddJsonDeserializerTransformer(
+		JSONDeserializerTransformer<K, V> jsonDeserializerTransformer) {
 
-	public T deserialize(String input, Class<T> targetType);
+		_jsonDeserializerTransformer = jsonDeserializerTransformer;
+	}
 
-	public <K, V> JSONDeserializer<T> transform(
-		JSONDeserializerTransformer<K, V> jsonDeserializerTransformer,
-		String field);
+	@Override
+	public V convert(K key) {
+		return _jsonDeserializerTransformer.transform(key);
+	}
 
-	public JSONDeserializer<T> use(String path, Class<?> clazz);
+	private final JSONDeserializerTransformer<K, V>
+		_jsonDeserializerTransformer;
 
 }

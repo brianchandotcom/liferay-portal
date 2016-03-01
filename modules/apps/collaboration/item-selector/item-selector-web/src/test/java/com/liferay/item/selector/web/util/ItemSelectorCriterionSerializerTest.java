@@ -23,9 +23,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -72,12 +70,8 @@ public class ItemSelectorCriterionSerializerTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		Map<String, String[]> properties =
-			_itemSelectorCriterionSerializer.getProperties(
-				_flickrItemSelectorCriterion, _PREFIX);
-
-		String json = properties.get(
-			_PREFIX + ItemSelectorCriterionSerializer.JSON)[0];
+		String json = _itemSelectorCriterionSerializer.serialize(
+			_flickrItemSelectorCriterion);
 
 		Class<? extends ItemSelectorReturnType>
 			testURLItemSelectorReturnTypeClass =
@@ -95,23 +89,19 @@ public class ItemSelectorCriterionSerializerTest {
 
 	@Test
 	public void testSetProperties() {
-		Map<String, String[]> properties = new HashMap<>();
-
 		Class<? extends ItemSelectorReturnType>
 			testURLItemSelectorReturnTypeClass =
 				_testURLItemSelectorReturnType.getClass();
 
-		properties.put(
-			_PREFIX + ItemSelectorCriterionSerializer.JSON,
-			new String[] {
-				"{\"desiredItemSelectorReturnTypes\":\"" +
-					testURLItemSelectorReturnTypeClass.getName() + "\",\"" +
-						"tags\":[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"" +
-							"Joe Bloggs\"}"
-			});
+		String json =
+			"{\"desiredItemSelectorReturnTypes\":\"" +
+				testURLItemSelectorReturnTypeClass.getName() + "\",\"" +
+					"tags\":[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"" +
+						"Joe Bloggs\"}";
 
-		_itemSelectorCriterionSerializer.setProperties(
-			_flickrItemSelectorCriterion, _PREFIX, properties);
+		_flickrItemSelectorCriterion =
+			_itemSelectorCriterionSerializer.deserialize(
+				_flickrItemSelectorCriterion.getClass(), json);
 
 		Assert.assertEquals(
 			"Joe Bloggs", _flickrItemSelectorCriterion.getUser());
@@ -136,10 +126,8 @@ public class ItemSelectorCriterionSerializerTest {
 		return json.replaceAll(Pattern.quote(expected), "");
 	}
 
-	private static final String _PREFIX = "prefix_";
-
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
+	private final ItemSelectorCriterionSerializer
 		_itemSelectorCriterionSerializer =
 			new ItemSelectorCriterionSerializer();
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =

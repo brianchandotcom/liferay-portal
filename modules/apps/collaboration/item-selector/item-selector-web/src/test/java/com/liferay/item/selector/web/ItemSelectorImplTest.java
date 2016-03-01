@@ -200,7 +200,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
+	private final ItemSelectorCriterionSerializer
 		_itemSelectorCriterionSerializer =
 			new ItemSelectorCriterionSerializer();
 	private ItemSelectorImpl _itemSelectorImpl;

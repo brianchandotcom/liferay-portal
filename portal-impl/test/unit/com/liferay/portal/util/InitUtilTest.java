@@ -44,6 +44,10 @@ public class InitUtilTest {
 			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, StringPool.FALSE);
 
 		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "MODULE_FRAMEWORK_INITIAL_BUNDLES",
+			new String[0]);
+
+		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "SPRING_INFRASTRUCTURE_CONFIGS", new String[0]);
 
 		_fileImpl.deltree(PropsValues.MODULE_FRAMEWORK_STATE_DIR);

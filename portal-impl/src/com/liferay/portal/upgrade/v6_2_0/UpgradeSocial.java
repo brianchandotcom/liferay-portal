@@ -242,6 +242,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(new BlogsEntryExtraDataGenerator());
 		_extraDataGenerators.add(new BookmarksEntryExtraDataGenerator());
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
+		_extraDataGenerators.add(new KBArticleExtraDataGenerator());
 		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
 
@@ -537,6 +538,63 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 		};
+
+	private class KBArticleExtraDataGenerator implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBArticle";
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ? or type_ = ?)";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select title from KBArticle where resourcePrimKey = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_ARTICLE);
+			ps.setInt(3, _UPDATE_KB_ARTICLE);
+			ps.setInt(4, _MOVE_KB_ARTICLE);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			ps.setLong(1, classPK);
+		}
+
+		private static final int _ADD_KB_ARTICLE = 1;
+
+		private static final int _MOVE_KB_ARTICLE = 7;
+
+		private static final int _UPDATE_KB_ARTICLE = 3;
+
+	};
 
 	private class WikiPageExtraDataGenerator implements ExtraDataGenerator {
 

@@ -1,0 +1,83 @@
+
+<div>
+  <h6>Job Results:</h6>
+  <p>22 Tests Passed.
+    <br/>1 Test Failed.
+    <br/>1 Test Unstable.
+    <br/>
+  </p>
+  <ol>
+    <li>
+      <strong>FAILURE
+        <a href="${dependencies.url}/GitHubJobMessageUtilTest/combo-fail-unstable-1-test-portal-acceptance-pullrequest-batch(master)/run-121/18061/">test-portal-acceptance-pullrequest-batch(master) &raquo; PGBookmarks#RemoveBookmarkPortlet,!master #18061</a>
+      </strong>
+      <pre>
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processBuildSteps(PostBuildScript.java:205)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processScripts(PostBuildScript.java:143)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript._perform(PostBuildScript.java:102)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.perform(PostBuildScript.java:79)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:756)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:720)
+	at hudson.model.Build$BuildExecution.post2(Build.java:182)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:669)
+	at hudson.model.Run.execute(Run.java:1731)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Caused by: java.io.IOException: remote file operation failed: /opt/dev/projects/github/liferay-jenkins-ee at hudson.remoting.Channel@470d7b82:cloud-10-0-14-214
+	at hudson.FilePath.act(FilePath.java:916)
+	at hudson.FilePath.act(FilePath.java:893)
+	at hudson.FilePath.createTextTempFile(FilePath.java:1245)
+	... 16 more
+Caused by: java.io.IOException: Failed to create a temporary directory in /tmp
+	at hudson.FilePath$15.invoke(FilePath.java:1257)
+	at hudson.FilePath$15.invoke(FilePath.java:1245)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.IOException: Read-only file system
+	at java.io.UnixFileSystem.createFileExclusively(Native Method)
+	at java.io.File.createTempFile(File.java:2001)
+	at hudson.FilePath$15.invoke(FilePath.java:1255)
+	... 11 more
+Build step 'Execute a set of scripts' marked build as failure
+Finished: FAILURE
+</pre>
+    </li>
+    <li>
+      <strong>UNSTABLE
+        <a href="${dependencies.url}/GitHubJobMessageUtilTest/combo-fail-unstable-1-test-portal-acceptance-pullrequest-batch(master)/run-126/18061/">test-portal-acceptance-pullrequest-batch(master) &raquo; PGCalendar#ViewCalendarTimeZoneDefaults,!master #18061</a>
+      </strong>
+      <p>0 Cases Passed.
+        <br/>1 Case Failed.
+        <br/>0 Cases Skipped.
+        <br/>
+      </p>
+      <ol>
+        <li>
+          <a href="${dependencies.url}/GitHubJobMessageUtilTest/combo-fail-unstable-1-test-portal-acceptance-pullrequest-batch(master)/run-126/18061//testReport/com.liferay.poshi.runner/PoshiRunner/test_PGCalendar_ViewCalendarTimeZoneDefaults_">PoshiRunner.test[PGCalendar#ViewCalendarTimeZoneDefaults]</a> -
+          <a href="https://test-1-19.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest%28master%29/builds/503/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23ViewCalendarTimeZoneDefaults,label_exp=!master/functional-tomcat-mysql/4/index.html">Poshi Report</a> -
+          <a href="https://test-1-19.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest%28master%29/builds/503/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23ViewCalendarTimeZoneDefaults,label_exp=!master/functional-tomcat-mysql/4/summary.html">Poshi Summary</a> -
+          <a href="${dependencies.url}/GitHubJobMessageUtilTest/combo-fail-unstable-1-test-portal-acceptance-pullrequest-batch(master)/run-126/18061//console">Console Output</a>
+          <pre>
+Caused by: java.lang.Exception: Element is not present at "//a[contains(@id,'displaySettingsLink')]"
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.runSeleniumElement(PoshiRunnerExecutor.java:724)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.parseElement(PoshiRunnerExecutor.java:175)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.runFunctionCommandElement(PoshiRunnerExecutor.java:268)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.runFunctionExecuteElement(PoshiRunnerExecutor.java:376)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.parseElement(PoshiRunnerExecutor.java:157)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.runFunctionCommandElement(PoshiRunnerExecutor.java:268)
+	at com.liferay.poshi.runner.PoshiRunnerExecutor.runFunctionExecuteElement(PoshiRunnerExecutor.java:376)</pre>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>

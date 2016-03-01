@@ -24,6 +24,10 @@ import java.util.Collection;
  */
 public class BulkException extends Exception {
 
+	public BulkException(Collection<Throwable> causes) {
+		_causes = causes;
+	}
+
 	public BulkException(String message, Collection<Throwable> causes) {
 		super(message);
 

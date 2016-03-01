@@ -51,7 +51,6 @@ AUI.add(
 						instance._eventHandles.push(
 							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
 							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
-							Liferay.on('showTab', instance._onShowTab, instance),
 							Liferay.on(
 								'AddContent:addPortlet',
 								function(event) {
@@ -59,16 +58,6 @@ AUI.add(
 								}
 							)
 						);
-					},
-
-					_onShowTab: function(event) {
-						var instance = this;
-
-						if (event.namespace.indexOf(instance.get('namespace')) === 0) {
-							var index = event.selectedIndex;
-
-							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelTab', event.names[index]);
-						}
 					},
 
 					_refreshContentList: function(event) {

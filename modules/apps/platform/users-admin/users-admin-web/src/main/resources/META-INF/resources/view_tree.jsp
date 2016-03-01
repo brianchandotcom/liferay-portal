@@ -95,7 +95,7 @@ if (organization != null) {
 				<portlet:renderURL var="headerBackURL">
 					<portlet:param name="toolbarItem" value="view-all-organizations" />
 					<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
-					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+					<portlet:param name="usersListView" value="<%= (parentOrganizationId == OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) ? UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS : UserConstants.LIST_VIEW_TREE %>" />
 				</portlet:renderURL>
 
 				<%

@@ -9,8 +9,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="fullName" type="String" />
-		<field name="emailAddress" type="String" />
-		<field name="comments" type="String" />
+		<field name="fullName" type="String">
+			<validator name="required" />
+		</field>
+		<field name="emailAddress" type="String">
+			<validator name="email" />
+			<validator name="required" />
+		</field>
+		<field name="comments" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 </model-hints>

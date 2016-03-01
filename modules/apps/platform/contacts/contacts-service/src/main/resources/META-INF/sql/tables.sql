@@ -8,5 +8,5 @@ create table Contacts_Entry (
 	modifiedDate DATE null,
 	fullName VARCHAR(75) null,
 	emailAddress VARCHAR(75) null,
-	comments VARCHAR(75) null
+	comments STRING null
 );

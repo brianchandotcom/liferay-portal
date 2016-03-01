@@ -17,12 +17,12 @@ package com.liferay.dynamic.data.mapping.util.impl;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -49,10 +49,14 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  * @author Jorge Ferrer
  */
+@Component(immediate = true)
 public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 	@Override
@@ -61,7 +65,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 			if (template.getClassNameId() == classNameId) {
-				return DDMStructureLocalServiceUtil.fetchDDMStructure(
+				return _ddmStructureLocalService.fetchDDMStructure(
 					template.getClassPK());
 			}
 		}
@@ -76,10 +80,10 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			HttpServletRequest request, String language)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONObject typesJSONObject = JSONFactoryUtil.createJSONObject();
-		JSONObject variablesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject typesJSONObject = _jsonFactory.createJSONObject();
+		JSONObject variablesJSONObject = _jsonFactory.createJSONObject();
 
 		for (TemplateVariableDefinition templateVariableDefinition :
 				getAutocompleteTemplateVariableDefinitions(request, language)) {
@@ -120,7 +124,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 	}
 
 	protected JSONObject getAutocompleteClassJSONObject(Class<?> clazz) {
-		JSONObject typeJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject typeJSONObject = _jsonFactory.createJSONObject();
 
 		for (Field field : clazz.getFields()) {
 			JSONObject fieldJSONObject = getAutocompleteVariableJSONObject(
@@ -130,9 +134,9 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		}
 
 		for (Method method : clazz.getMethods()) {
-			JSONObject methodJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject methodJSONObject = _jsonFactory.createJSONObject();
 
-			JSONArray parametersTypesArray = JSONFactoryUtil.createJSONArray();
+			JSONArray parametersTypesArray = _jsonFactory.createJSONArray();
 
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
@@ -179,7 +183,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			ddmTemplate, request, "classNameId");
 
 		if (classPK > 0) {
-			DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
+			DDMStructure ddmStructure = _ddmStructureService.getStructure(
 				classPK);
 
 			classNameId = ddmStructure.getClassNameId();
@@ -229,15 +233,38 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 	}
 
 	protected JSONObject getAutocompleteVariableJSONObject(Class<?> clazz) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("type", clazz.getName());
 
 		return jsonObject;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	private static final String _TEMPLATE_CONTENT = "# Placeholder";
 
 	private static final String _TEMPLATE_ID = "0";
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureService _ddmStructureService;
+	private JSONFactory _jsonFactory;
 
 }

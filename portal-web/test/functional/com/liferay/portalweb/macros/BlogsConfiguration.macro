@@ -172,11 +172,11 @@
 		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_PERMISSIONS" />
 			<then>
-				<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+				<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_PERMISSIONS" />
 
-				<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 			</then>
 		</if>
 

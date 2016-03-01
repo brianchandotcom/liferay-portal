@@ -320,15 +320,6 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long[] groupIds);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
-	LinkedHashMap, boolean, int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> search(long groupId, java.lang.String name,
-		boolean andOperator, int start, int end);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroup> search(long groupId, java.lang.String name,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,

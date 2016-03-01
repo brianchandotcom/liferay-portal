@@ -375,17 +375,6 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().getRuleGroupsCount(groupIds);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
-	LinkedHashMap, boolean, int, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name, boolean andOperator, int start,
-		int end) {
-		return getService().search(groupId, name, andOperator, start, end);
-	}
-
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
 		long groupId, java.lang.String name,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,

@@ -16,6 +16,8 @@ package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.proxy.BaseRepositoryProxyBean;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
@@ -34,7 +36,13 @@ public class ExternalRepositoryFactoryImpl
 		String className, ClassLoader classLoader) {
 
 		_className = className;
-		_classLoader = classLoader;
+
+		AggregateClassLoader aggregateClassLoader = new AggregateClassLoader(
+			ClassLoaderUtil.getPortalClassLoader());
+
+		aggregateClassLoader.addClassLoader(classLoader);
+
+		_classLoader = aggregateClassLoader;
 	}
 
 	@Override

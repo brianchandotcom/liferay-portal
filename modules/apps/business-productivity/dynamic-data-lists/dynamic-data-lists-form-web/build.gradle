@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.8"
@@ -29,4 +31,8 @@ dependencies {
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+mergeLang {
+    sourceDirs = ["../../dynamic-data-mapping/dynamic-data-mapping-lang/src/main/resources/content", "src/main/resources/content"]
 }

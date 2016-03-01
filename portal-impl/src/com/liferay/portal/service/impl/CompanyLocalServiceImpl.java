@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -303,7 +304,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		CompanyProvider currentCompanyProvider =
 			_companyProviderWrapper.getCompanyProvider();
 
+		Locale currentDefaultLocale = LocaleThreadLocal.getDefaultLocale();
+
 		try {
+			Locale companyDefaultLocale = LocaleUtil.fromLanguageId(
+				PropsValues.COMPANY_DEFAULT_LOCALE);
+
+			LocaleThreadLocal.setDefaultLocale(companyDefaultLocale);
+
 			final long companyId = company.getCompanyId();
 
 			_companyProviderWrapper.setCompanyProvider(
@@ -336,16 +344,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				defaultUser.setScreenName(
 					String.valueOf(defaultUser.getUserId()));
 				defaultUser.setEmailAddress("default@" + company.getMx());
-
-				if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_LOCALE)) {
-					defaultUser.setLanguageId(
-						PropsValues.COMPANY_DEFAULT_LOCALE);
-				}
-				else {
-					Locale locale = LocaleUtil.getDefault();
-
-					defaultUser.setLanguageId(locale.toString());
-				}
+				defaultUser.setLanguageId(
+					LocaleUtil.toLanguageId(companyDefaultLocale));
 
 				if (Validator.isNotNull(
 						PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
@@ -451,6 +451,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
+
+			LocaleThreadLocal.setDefaultLocale(currentDefaultLocale);
 		}
 
 		return company;

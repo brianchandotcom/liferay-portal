@@ -129,13 +129,9 @@ public abstract class BaseDBProcess implements DBProcess {
 	protected boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement("select * from " + tableName);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from " + tableName);
+			ResultSet rs = ps.executeQuery()) {
 
 			ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -150,22 +146,14 @@ public abstract class BaseDBProcess implements DBProcess {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 
 		return false;
 	}
 
 	protected boolean hasRows(String tableName) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from " + tableName);
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				int count = rs.getInt(1);
@@ -177,9 +165,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;

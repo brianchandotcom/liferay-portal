@@ -141,6 +141,11 @@
 	<command name="DeleteAndRestoreEvent" priority="3">
 		<description message="This is a use case for LPS-59572." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
@@ -163,7 +168,7 @@
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -215,7 +220,7 @@
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -273,7 +278,7 @@
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -304,12 +309,17 @@
 
 		<execute macro="CalendarEvent#viewInvitedUserRSVPWithApprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 			<var name="userCalendarName" value="Test Test" />
 		</execute>
 	</command>
 
 	<command name="RejectEventWithInvitedUser" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
@@ -332,7 +342,7 @@
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -341,7 +351,7 @@
 
 		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -370,12 +380,12 @@
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 			<var name="userCalendarName" value="Test Test" />
 		</execute>
 	</command>

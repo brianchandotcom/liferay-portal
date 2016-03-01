@@ -64,6 +64,11 @@
 	<command name="AddCalendarResource" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 
 		<execute macro="Navigator#gotoPage">
@@ -84,9 +89,14 @@
 	</command>
 
 	<command name="AddCalendarToCurrentSiteCalendars" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -165,12 +175,17 @@
 	</command>
 
 	<command name="AddEventAllDayCommentToCurrentSiteCalendars" priority="3">
-		<var name="calendarName" value="Liferay" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<var name="calendarName" value="${siteName}" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event All Day Comment" />
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Navigator#gotoPage">
@@ -281,6 +296,11 @@
 	</command>
 
 	<command name="AddEventAllDayWithTag" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -304,7 +324,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -315,10 +335,15 @@
 	</command>
 
 	<command name="AddEventAllDayWithUserInviteAccept" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="resourceNameList" value="userfn userln" />
-		<var name="siteScopeName" value="Liferay" />
+		<var name="siteScopeName" value="${siteName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -345,7 +370,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -401,6 +426,11 @@
 	<command name="AddEventAsPowerUserWhenSiteMemberNoViewPermissions" priority="4">
 		<description message="This is a use case for LPS-55163." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -438,10 +468,10 @@
 		</execute>
 
 		<execute macro="Calendar#removeViewPermissions">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -665,12 +695,17 @@
 	</command>
 
 	<command name="AddEventRegularCommentToCurrentSiteCalendars" priority="4">
-		<var name="calendarName" value="Liferay" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<var name="calendarName" value="${siteName}" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Navigator#gotoPage">
@@ -785,6 +820,11 @@
 	</command>
 
 	<command name="AddEventRegularWithTag" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -808,7 +848,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -847,10 +887,15 @@
 	</command>
 
 	<command name="AddEventRegularWithUserInviteAccept" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="resourceNameList" value="userfn userln" />
-		<var name="siteScopeName" value="Liferay" />
+		<var name="siteScopeName" value="${siteName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -877,7 +922,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -974,12 +1019,17 @@
 	</command>
 
 	<command name="AddEventRepeatingCommentToCurrentSiteCalendars" priority="3">
-		<var name="calendarName" value="Liferay" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<var name="calendarName" value="${siteName}" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Repeating Comment" />
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Navigator#gotoPage">
@@ -1190,6 +1240,11 @@
 	</command>
 
 	<command name="AddEventRepeatingWithTag" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1215,7 +1270,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -1226,10 +1281,15 @@
 	</command>
 
 	<command name="AddEventRepeatingWithUserInviteAccept" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="resourceNameList" value="userfn userln" />
-		<var name="siteScopeName" value="Liferay" />
+		<var name="siteScopeName" value="${siteName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1256,7 +1316,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -1440,6 +1500,11 @@
 	</command>
 
 	<command name="AddEventWithRelatedAssetViaAssetPublisher" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="AP Page" />
 		</execute>
@@ -1495,7 +1560,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewViaAssetPublisher">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
@@ -1518,7 +1583,7 @@
 		<execute macro="AssetPublisherPortlet#gotoViewInContext" />
 
 		<execute macro="CalendarEvent#viewDetailsInPortlet">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="relatedAssetTitle" value="Blogs Entry Title" />
 		</execute>
@@ -1755,6 +1820,11 @@
 	</command>
 
 	<command name="ChangeCalendarTypeForAllDayEvent" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -1775,7 +1845,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#changeCalendar">
-			<var name="calendarDefaultName" value="Liferay" />
+			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -1783,6 +1853,11 @@
 	</command>
 
 	<command name="ChangeCalendarTypeForRegularEvent" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -1803,7 +1878,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#changeCalendar">
-			<var name="calendarDefaultName" value="Liferay" />
+			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -1811,6 +1886,11 @@
 	</command>
 
 	<command name="ChangeCalendarTypeForRepeatingEvent" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1833,7 +1913,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#changeCalendar">
-			<var name="calendarDefaultName" value="Liferay" />
+			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -1841,12 +1921,17 @@
 	</command>
 
 	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
 		<var name="eventFontColorRGB" value="(104, 142, 217)" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 		<var name="siteCalendarColor" value="668CD9" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -2203,6 +2288,11 @@
 	</command>
 
 	<command name="DeleteEventAndViewRSSFeed" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2228,11 +2318,11 @@
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
@@ -2246,11 +2336,11 @@
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
@@ -2258,6 +2348,11 @@
 	</command>
 
 	<command name="DeleteEventRegular"  priority="5">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -2439,6 +2534,11 @@
 	</command>
 
 	<command name="DisableRSSFeedForSiteCalendar" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2464,11 +2564,11 @@
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
@@ -2488,7 +2588,7 @@
 
 		<execute macro="Calendar#viewSiteCalendarNoMenulistOption">
 			<var name="menuListOption" value="RSS" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewNoRSS">
@@ -2497,10 +2597,15 @@
 	</command>
 
 	<command name="EditCalendarCurrentSiteCalendars" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarNameEdit" value="Site Calendar Name Edit" />
 		<var name="calendarType" value="Current Site Calendars" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -3275,9 +3380,14 @@
 	</command>
 
 	<command name="EditInviteEmailTemplateForCurrentSiteCalendarsCalendar" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -3481,9 +3591,14 @@
 	</command>
 
 	<command name="EditReminderEmailTemplateForCurrentSiteCalendarsCalendar" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -3786,6 +3901,11 @@
 	<command name="ImportMicrosoftOutlookCalendarICS" priority="4">
 		<description message="This is a use case for LPS-53072." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -3794,7 +3914,7 @@
 
 		<execute macro="Calendar#importCalendarFile">
 			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 	</command>
 
@@ -3851,6 +3971,11 @@
 	</command>
 
 	<command name="InviteUsersAndViewResponse" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -3966,7 +4091,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewRSVPAccepted">
-			<var name="resourceName" value="Liferay" />
+			<var name="resourceName" value="${siteName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewRSVPAccepted">
@@ -4080,6 +4205,11 @@
 	</command>
 
 	<command name="SearchForOtherCalendars" priority="5">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -4138,7 +4268,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#changeCalendar">
-			<var name="calendarDefaultName" value="Liferay" />
+			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 1" />
 			<var name="eventType" value="${eventType}" />
@@ -4161,7 +4291,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#changeCalendar">
-			<var name="calendarDefaultName" value="Liferay" />
+			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 2" />
 			<var name="eventType" value="${eventType}" />
@@ -4572,6 +4702,11 @@
 	<command name="ViewCorrectCalendarOnEventSwitch" priority="3">
 		<description message="This is a use case for LPS-51222." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -4583,7 +4718,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />
@@ -4609,12 +4744,12 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Site Event" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -4635,12 +4770,12 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Site Event" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsResources">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -4719,6 +4854,11 @@
 	<command name="ViewDisplayedSiteCalendarEventsAsGuest" priority="3">
 		<description message="This is a use case for LPS-59251." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -4735,7 +4875,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />
@@ -4786,10 +4926,10 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewSiteCalendarEventWithDefaultPermissions">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="endDateTime" value="04:00 AM" />
 			<var name="eventTitle" value="Liferay Calendar Event Title" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="startDateTime" value="03:00 AM" />
 		</execute>
 
@@ -4814,7 +4954,7 @@
 
 		<execute macro="CalendarEvent#viewSiteCalendarEventNotPresent">
 			<var name="endDateTime" value="04:00 AM" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="startDateTime" value="03:00 AM" />
 		</execute>
 	</command>
@@ -4950,6 +5090,11 @@
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="UserBar#gotoMyAccount" />
 
 		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
@@ -4974,7 +5119,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetails">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Calendar Event All Day Title" />
 			<var name="eventType" value="All Day" />
 		</execute>
@@ -5050,11 +5195,16 @@
 	</command>
 
 	<command name="ViewInvitedResourceAvailability" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="eventNumber" value="2" />
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="Regular" />
-		<var name="siteScopeName" value="Liferay" />
+		<var name="siteScopeName" value="${siteName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -5081,7 +5231,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -5208,6 +5358,11 @@
 	</command>
 
 	<command name="ViewSiteCalendarRSSFeed" priority="5">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -5253,21 +5408,21 @@
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
-			<var name="siteCalendarName" value="Liferay" />
+			<var name="siteCalendarName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Past Day Event" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
-			<var name="calendarName" value="Liferay" />
+			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Future Day Event" />
 		</execute>
 

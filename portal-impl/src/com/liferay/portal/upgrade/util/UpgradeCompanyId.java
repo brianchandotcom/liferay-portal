@@ -101,9 +101,18 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 				_log.info("Adding column companyId to table " + getTableName());
 			}
 
-			runSQL("alter table " + getTableName() + " add companyId LONG");
+			try {
+				_con = DataAccess.getUpgradeOptimizedConnection();
 
-			update();
+				runSQL(
+					_con, "alter table " + getTableName() +
+						" add companyId LONG");
+
+				update();
+			}
+			finally {
+				DataAccess.cleanUp(_con);
+			}
 
 			return null;
 		}
@@ -113,17 +122,15 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		}
 
 		public void update() throws IOException, SQLException {
-			try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-				for (String[] foreignNames : _foreignNamesArray) {
-					runSQL(con, getUpdateSQL(foreignNames[0], foreignNames[1]));
-				}
+			for (String[] foreignNames : _foreignNamesArray) {
+				runSQL(_con, getUpdateSQL(foreignNames[0], foreignNames[1]));
 			}
 		}
 
 		protected List<Long> getCompanyIds() throws SQLException {
 			List<Long> companyIds = new ArrayList<>();
 
-			try (PreparedStatement ps = connection.prepareStatement(
+			try (PreparedStatement ps = _con.prepareStatement(
 					"select companyId from Company");
 				ResultSet rs = ps.executeQuery()) {
 
@@ -184,6 +191,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		}
 
 		private final String _columnName;
+		private Connection _con;
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 

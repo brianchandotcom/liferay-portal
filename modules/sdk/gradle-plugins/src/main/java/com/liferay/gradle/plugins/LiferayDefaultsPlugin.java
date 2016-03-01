@@ -153,10 +153,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected void addDependenciesPortalTest(Project project) {
 		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay",
+			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
 			"com.liferay.portal.test", "default");
 		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay",
+			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
 			"com.liferay.portal.test.internal", "default");
 	}
 
@@ -599,24 +599,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 							String group = moduleVersionSelector.getGroup();
 
-							if (group.equals("com.liferay.portal")) {
-								String name = moduleVersionSelector.getName();
-
-								if (name.equals("portal-service")) {
-									name = "portal-kernel";
-								}
-
-								name = name.replace('-', '.');
-
-								dependencyResolveDetails.useTarget(
-									"com.liferay:com.liferay." + name + ":" +
-										liferayExtension.getPortalVersion());
+							if (!group.equals("com.liferay.portal")) {
+								return;
 							}
-							else if (GradleUtil.isPortal(
-										moduleVersionSelector)) {
 
-								dependencyResolveDetails.useVersion(
-									liferayExtension.getPortalVersion());
+							String name = moduleVersionSelector.getName();
+
+							if (name.equals("portal-service")) {
+								name = "com.liferay.portal.kernel";
+							}
+							else if (!name.startsWith("com.liferay.")) {
+								name = "com.liferay." + name.replace('-', '.');
+							}
+
+							String version =
+								liferayExtension.getPortalVersion();
+
+							if (!name.equals(moduleVersionSelector.getName())) {
+								dependencyResolveDetails.useTarget(
+									group + ":" + name + ":" + version);
+							}
+							else {
+								dependencyResolveDetails.useVersion(version);
 							}
 						}
 

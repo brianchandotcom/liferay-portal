@@ -221,12 +221,3 @@ cobertura.ser
 !/.gradle/caches/modules-2/files-2.1
 /.gradle/caches/modules-2/files-2.1/**/*-sources.jar
 /.gradle/caches/modules-2/files-2.1/com.liferay.portal
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.impl
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.kernel
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.test
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.test.internal
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.web
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.util.bridges
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.util.java
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.util.slf4j
-/.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.util.taglib

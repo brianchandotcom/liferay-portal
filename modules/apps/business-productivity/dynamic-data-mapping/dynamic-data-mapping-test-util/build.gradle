@@ -1,8 +1,8 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.impl", version: liferay.portalVersion
-	provided group: "com.liferay", name: "com.liferay.portal.kernel", version: liferay.portalVersion
-	provided group: "com.liferay", name: "com.liferay.portal.test", version: liferay.portalVersion
-	provided group: "com.liferay", name: "com.liferay.portal.test.internal", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.test.internal", version: liferay.portalVersion
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")

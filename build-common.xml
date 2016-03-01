@@ -902,7 +902,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<artifact:pom
 				artifactId="com.liferay.${processed.artifact.name}"
-				groupId="com.liferay"
+				groupId="com.liferay.portal"
 				id="prepare-@{artifact.name}"
 				version="${lp.version}-SNAPSHOT"
 			/>

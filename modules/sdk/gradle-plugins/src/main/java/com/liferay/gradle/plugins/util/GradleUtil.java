@@ -17,39 +17,10 @@ package com.liferay.gradle.plugins.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.gradle.api.artifacts.ModuleVersionSelector;
-
 /**
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
-
-	public static boolean isPortal(
-		ModuleVersionSelector moduleVersionSelector) {
-
-		String group = moduleVersionSelector.getGroup();
-
-		if (!group.equals("com.liferay")) {
-			return false;
-		}
-
-		String name = moduleVersionSelector.getName();
-
-		if (name.equals("com.liferay.portal.impl") ||
-			name.equals("com.liferay.portal.kernel") ||
-			name.equals("com.liferay.portal.test") ||
-			name.equals("com.liferay.portal.test.internal") ||
-			name.equals("com.liferay.portal.web") ||
-			name.equals("com.liferay.util.bridges") ||
-			name.equals("com.liferay.util.java") ||
-			name.equals("com.liferay.util.slf4j") ||
-			name.equals("com.liferay.util.taglib")) {
-
-			return true;
-		}
-
-		return false;
-	}
 
 	public static Map<String, String> toStringMap(Map<String, ?> map) {
 		Map<String, String> stringMap = new HashMap<>();

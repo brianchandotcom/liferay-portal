@@ -358,6 +358,8 @@
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#INFO" />
+
 		<var name="key_wikiPageTitle" value="Wiki Page Title" />
 
 		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="Wiki Page Title" />

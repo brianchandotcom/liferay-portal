@@ -612,8 +612,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 								name = "com.liferay." + name.replace('-', '.');
 							}
 
-							String version =
-								liferayExtension.getPortalVersion();
+							String version = liferayExtension.getDefaultVersion(
+								group, name, "latest.integration");
 
 							if (!name.equals(moduleVersionSelector.getName())) {
 								dependencyResolveDetails.useTarget(

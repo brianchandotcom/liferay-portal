@@ -148,10 +148,6 @@ public class LiferayExtension {
 		return project.file(_liferayHome);
 	}
 
-	public String getPortalVersion() {
-		return _portalVersion;
-	}
-
 	public void setAppServerParentDir(Object appServerParentDir) {
 		_appServerParentDir = appServerParentDir;
 	}
@@ -172,10 +168,6 @@ public class LiferayExtension {
 		_liferayHome = liferayHome;
 	}
 
-	public void setPortalVersion(String portalVersion) {
-		_portalVersion = portalVersion;
-	}
-
 	protected String getDependencyNotation(String group, String name) {
 		return group + ":" + name;
 	}
@@ -189,6 +181,5 @@ public class LiferayExtension {
 	private Object _deployDir;
 	private Object _jmxRemotePort;
 	private Object _liferayHome;
-	private String _portalVersion;
 
 }

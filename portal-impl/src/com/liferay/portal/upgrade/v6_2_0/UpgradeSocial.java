@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +82,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateDLFileVersionActivities();
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
@@ -236,60 +233,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	protected void updateDLFileVersionActivities() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.documentlibrary.model.DLFolder");
-
-			runSQL(
-				"delete from SocialActivity where classNameId = " +
-					classNameId);
-
-			Set<String> keys = new HashSet<>();
-
-			try (PreparedStatement ps = connection.prepareStatement(
-					"select groupId, companyId, userId, modifiedDate, " +
-						"fileEntryId, title, version from DLFileVersion " +
-							"where status = ?")) {
-
-				ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
-
-				try (ResultSet rs = ps.executeQuery()) {
-					while (rs.next()) {
-						long groupId = rs.getLong("groupId");
-						long companyId = rs.getLong("companyId");
-						long userId = rs.getLong("userId");
-						Timestamp modifiedDate = rs.getTimestamp(
-							"modifiedDate");
-						long fileEntryId = rs.getLong("fileEntryId");
-						String title = rs.getString("title");
-						double version = rs.getDouble("version");
-
-						int type = DLActivityKeys.ADD_FILE_ENTRY;
-
-						if (version > 1.0) {
-							type = DLActivityKeys.UPDATE_FILE_ENTRY;
-						}
-
-						modifiedDate = getUniqueModifiedDate(
-							keys, groupId, userId, modifiedDate, classNameId,
-							fileEntryId, type);
-
-						JSONObject extraDataJSONObject =
-							JSONFactoryUtil.createJSONObject();
-
-						extraDataJSONObject.put("title", title);
-
-						addActivity(
-							increment(), groupId, companyId, userId,
-							modifiedDate, 0, classNameId, fileEntryId, type,
-							extraDataJSONObject.toString(), 0);
-					}
-				}
-			}
-		}
-	}
-
 	protected void updateJournalActivities() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = PortalUtil.getClassNameId(
@@ -413,10 +356,62 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	private void populateExtraDataGeneratorMap() {
+		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 	private static final List<ExtraDataGenerator> _extraDataGenerators =
 		new ArrayList<>();
+
+	private class DLFileEntryExtraDataGenerator implements ExtraDataGenerator {
+
+			@Override
+			public String getActivityClassName() {
+				return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
+			}
+
+			@Override
+			public String getActivityQueryWhereClause() {
+				return "classNameId = ?";
+			}
+
+			@Override
+			public String getEntityQuery() {
+				return "select title from DLFileEntry where companyId = ? " +
+					"and groupId = ? and fileEntryId = ?";
+			}
+
+			@Override
+			public JSONObject getExtraDataJSONObject(
+					ResultSet entityResultSet, String extraData)
+				throws SQLException {
+
+				JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put(
+					"title", entityResultSet.getString("title"));
+
+				return extraDataJSONObject;
+			}
+
+			@Override
+			public void setActivityQueryParameters(PreparedStatement ps)
+				throws SQLException {
+
+				ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			}
+
+			@Override
+			public void setEntityQueryParameters(
+					PreparedStatement ps, long companyId, long groupId, long userId,
+					long classNameId, long classPK, int type, String extraData)
+				throws SQLException {
+
+				ps.setLong(1, companyId);
+				ps.setLong(2, groupId);
+				ps.setLong(3, classPK);
+			}
+
+		};
 }

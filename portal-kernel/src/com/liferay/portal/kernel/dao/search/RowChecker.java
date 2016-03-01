@@ -180,8 +180,7 @@ public class RowChecker {
 	public void setRememberCheckBoxStateURLRegex(
 		String rememberCheckBoxStateURLRegex) {
 
-		_rememberCheckBoxStateURLRegex =
-			rememberCheckBoxStateURLRegex;
+		_rememberCheckBoxStateURLRegex = rememberCheckBoxStateURLRegex;
 	}
 
 	public void setRowIds(String rowIds) {

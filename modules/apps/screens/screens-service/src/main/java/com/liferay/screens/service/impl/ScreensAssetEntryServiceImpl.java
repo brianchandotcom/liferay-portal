@@ -169,9 +169,6 @@ public class ScreensAssetEntryServiceImpl
 	protected JSONObject getAssetObjectJSONObject(AssetEntry assetEntry)
 		throws PortalException {
 
-		AssetEntryPermission.check(
-			getPermissionChecker(), assetEntry, ActionKeys.VIEW);
-
 		String className = assetEntry.getClassName();
 
 		if (className.equals(

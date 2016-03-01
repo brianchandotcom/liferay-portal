@@ -835,7 +835,7 @@
 					if (!target.attr('data-prevent-selection')) {
 						var currentTarget = $(event.currentTarget);
 
-						var confirmSelection = currentTarget.attr('data-confirm-selection');
+						var confirmSelection = currentTarget.attr('data-confirm-selection') === 'true';
 						var confirmSelectionMessage = currentTarget.attr('data-confirm-selection-message');
 
 						if (!confirmSelection || confirm(confirmSelectionMessage)) {

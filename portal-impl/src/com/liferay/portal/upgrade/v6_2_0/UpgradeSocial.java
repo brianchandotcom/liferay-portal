@@ -243,6 +243,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(new BookmarksEntryExtraDataGenerator());
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 		_extraDataGenerators.add(new KBArticleExtraDataGenerator());
+		_extraDataGenerators.add(new KBTemplateExtraDataGenerator());
 		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
 
@@ -593,6 +594,60 @@ public class UpgradeSocial extends UpgradeProcess {
 		private static final int _MOVE_KB_ARTICLE = 7;
 
 		private static final int _UPDATE_KB_ARTICLE = 3;
+
+	};
+
+	private class KBTemplateExtraDataGenerator implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBTemplate";
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select title from KBTemplate where kbTemplateId = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_TEMPLATE);
+			ps.setInt(3, _UPDATE_KB_TEMPLATE);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			ps.setLong(1, classPK);
+		}
+
+		private static final int _ADD_KB_TEMPLATE = 2;
+
+		private static final int _UPDATE_KB_TEMPLATE = 4;
 
 	};
 

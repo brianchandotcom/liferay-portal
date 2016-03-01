@@ -275,7 +275,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')] | //li[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Delete')] | //div[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')] | //li[contains(@class,'open')]/ul[contains(@class,'dropdown')]//a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -345,7 +345,7 @@
 </tr>
 <tr>
 	<td>EXPORT</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Export') and not(contains(.,'Import'))]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Export') and not(contains(.,'Import'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -385,7 +385,7 @@
 </tr>
 <tr>
 	<td>IMPORT</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')] | //li[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Import')] | //li[contains(@class,'open')]//a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -430,7 +430,7 @@
 </tr>
 <tr>
 	<td>MANAGE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Manage')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -470,12 +470,12 @@
 </tr>
 <tr>
 	<td>MARK_AS_AN_ANSWER</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as an Answer')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Mark as an Answer')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MARK_AS_READ</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as Read')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Mark as Read')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -485,12 +485,12 @@
 </tr>
 <tr>
 	<td>SHOW</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Show')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Show')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIDE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Hide')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Hide')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -585,7 +585,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_LEXICON</td>
-	<td>//div[contains(@class,'dropdown') and contains(@class,'open')]//a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -890,7 +890,7 @@
 </tr>
 <tr>
 	<td>VIEW_PAGES</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -900,7 +900,7 @@
 </tr>
 <tr>
 	<td>VIEW_ENTRIES</td>
-	<td>//li[contains(.,'${key_formName}')]//a[@role='menuitem' and contains(.,'View Entries')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Entries')]</td>
 	<td></td>
 </tr>
 <tr>

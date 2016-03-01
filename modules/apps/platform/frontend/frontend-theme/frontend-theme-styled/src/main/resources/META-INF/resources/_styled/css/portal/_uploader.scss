@@ -63,11 +63,7 @@
 	}
 
 	.multiple-files .upload-error {
-		background-color: #FDD;
-		background-image: url(../images/messages/error.png);
-		background-position-x: 5px;
-		background-position-y: 5px;
-		background-repeat: no-repeat;
+		background: #FDD url(../images/messages/error.png) no-repeat 5px 5px;
 		border-color: #900;
 		color: #900;
 		font-weight: normal;

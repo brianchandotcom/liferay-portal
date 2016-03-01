@@ -56,6 +56,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 			var _this = _possibleConstructorReturn(this, _App.call(this));
 
 			_this.blacklist = {};
+			_this.validStatusCodes = [];
 
 			var exceptionsSelector = ':not([target="_blank"]):not([data-senna-off]):not([data-resource-href])';
 
@@ -74,6 +75,10 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 			_dom2.default.append(document.body, '<div class="lfr-surface-loading-bar"></div>');
 			return _this;
 		}
+
+		LiferayApp.prototype.getValidStatusCodes = function getValidStatusCodes() {
+			return this.validStatusCodes;
+		};
 
 		LiferayApp.prototype.onBeforeNavigate = function onBeforeNavigate(event) {
 			if (event.form) {
@@ -115,7 +120,15 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 				path: event.path
 			});
 
-			if (!event.error && Liferay.Layout && Liferay.Data.layoutConfig) {
+			if (event.error) {
+				if (event.error.invalidStatus || event.error.requestError) {
+					if (event.form) {
+						event.form.submit();
+					} else {
+						window.location.href = event.path;
+					}
+				}
+			} else if (Liferay.Layout && Liferay.Data.layoutConfig) {
 				Liferay.Layout.init();
 			}
 
@@ -135,6 +148,10 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 		LiferayApp.prototype.setBlacklist = function setBlacklist(blacklist) {
 			this.blacklist = blacklist;
+		};
+
+		LiferayApp.prototype.setValidStatusCodes = function setValidStatusCodes(validStatusCodes) {
+			this.validStatusCodes = validStatusCodes;
 		};
 
 		return LiferayApp;

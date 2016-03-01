@@ -70,9 +70,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
 
-		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE != 0) &&
-			(availableLocales.size() > 1)) {
-
+		if (availableLocales.size() > 1) {
 			Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 			for (Locale availableLocale : availableLocales) {

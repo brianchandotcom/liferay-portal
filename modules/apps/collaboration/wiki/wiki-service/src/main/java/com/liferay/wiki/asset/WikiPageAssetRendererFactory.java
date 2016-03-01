@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -87,7 +88,7 @@ public class WikiPageAssetRendererFactory
 		}
 
 		WikiPageAssetRenderer wikiPageAssetRenderer = new WikiPageAssetRenderer(
-			page);
+			page, _wikiEngineRenderer);
 
 		wikiPageAssetRenderer.setAssetRendererType(type);
 		wikiPageAssetRenderer.setServletContext(_servletContext);
@@ -145,6 +146,13 @@ public class WikiPageAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
@@ -159,6 +167,7 @@ public class WikiPageAssetRendererFactory
 	}
 
 	private ServletContext _servletContext;
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 

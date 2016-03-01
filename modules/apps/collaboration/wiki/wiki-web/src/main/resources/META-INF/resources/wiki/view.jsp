@@ -197,8 +197,10 @@ if (portletTitleBasedNavigation) {
 
 				String formattedContent = null;
 
+				WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
+
 				try {
-					formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+					formattedContent = wikiEngineRenderer.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 				}
 				catch (Exception e) {
 					formattedContent = wikiPage.getContent();

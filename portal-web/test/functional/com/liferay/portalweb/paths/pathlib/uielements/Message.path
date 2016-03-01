@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_INFO</td>
-	<td>//div[contains(@class,'tooltip-help-content') and contains(@class,'tooltip-content')]</td>
+	<td>//div[contains(@class,'tooltip-content')]</td>
 	<td></td>
 </tr>
 <tr>

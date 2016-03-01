@@ -19,6 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
@@ -231,7 +232,7 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							WikiUtil.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
 							%>
 
 						</div>
@@ -292,7 +293,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input label="Summary" name="summary" />
 
 						<%
-						Collection<String> formats = WikiUtil.getFormats();
+						Collection<String> formats = wikiEngineRenderer.getFormats();
 						%>
 
 						<c:choose>
@@ -303,7 +304,7 @@ if (portletTitleBasedNavigation) {
 									for (String format : formats) {
 									%>
 
-										<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+										<aui:option label="<%= wikiEngineRenderer.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 									<%
 									}

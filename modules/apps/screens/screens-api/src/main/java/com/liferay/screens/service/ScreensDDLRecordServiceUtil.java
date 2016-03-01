@@ -60,11 +60,13 @@ public class ScreensDDLRecordServiceUtil {
 				   .getDDLRecords(ddlRecordSetId, userId, locale, start, end);
 	}
 
-	public static int getDDLRecordsCount(long ddlRecordSetId) {
+	public static int getDDLRecordsCount(long ddlRecordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecordsCount(ddlRecordSetId);
 	}
 
-	public static int getDDLRecordsCount(long ddlRecordSetId, long userId) {
+	public static int getDDLRecordsCount(long ddlRecordSetId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecordsCount(ddlRecordSetId, userId);
 	}
 

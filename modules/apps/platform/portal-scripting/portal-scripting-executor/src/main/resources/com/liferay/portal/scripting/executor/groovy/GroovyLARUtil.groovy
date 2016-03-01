@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.groovy;
+package com.liferay.portal.scripting.executor.groovy
 
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -93,25 +98,47 @@ class GroovyLARUtil {
 		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 			groovyScriptingContext.getCompanyId())
 
-		LayoutLocalServiceUtil.importLayouts(
-			groovyUser.user.getUserId(), companyGroup.getGroupId(), true,
-			getParameterMap(), inputStream);
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					groovyUser.user, companyGroup.getGroupId(), true, null,
+					getParameterMap());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					groovyUser.user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
+
+		ExportImportLocalServiceUtil.importLayouts(
+			exportImportConfiguration, inputStream);
 	}
 
 	static void importLayouts(
 		GroovyUser groovyUser, GroovySite groovySite, boolean privateLayout,
-		InputStream inputStream,
-		GroovyScriptingContext groovyScriptingContext) {
+		InputStream inputStream) {
 
-		LayoutLocalServiceUtil.importLayouts(
-			groovyUser.user.getUserId(), groovySite.group.getGroupId(),
-			privateLayout, getParameterMap(), inputStream);
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					groovyUser.user, groovySite.group.getGroupId(),
+					privateLayout, null, getParameterMap());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					groovyUser.user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
+
+		ExportImportLocalServiceUtil.importLayouts(
+			exportImportConfiguration, inputStream);
 	}
 
 	static void importPortletInfo(
 		GroovyUser groovyUser, long groupId, String portletId,
-		InputStream inputStream,
-		GroovyScriptingContext groovyScriptingContext) {
+		InputStream inputStream) {
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, false);
@@ -122,9 +149,22 @@ class GroovyLARUtil {
 
 		Layout layout = layouts.get(0);
 
-		LayoutLocalServiceUtil.importPortletInfo(
-			groovyUser.user.getUserId(), layout.getPlid(),
-			groupId, portletId, getParameterMap(), inputStream);
+		Map<String, Serializable> importPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportPortletSettingsMap(
+					groovyUser.user, layout.getPlid(), groupId, portletId,
+					getParameterMap());
+
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					groovyUser.user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					importPortletSettingsMap);
+
+		ExportImportLocalServiceUtil.importPortletInfo(
+			exportImportConfiguration, inputStream);
 	}
 
 }

@@ -204,15 +204,10 @@ public class SyncWatchEventProcessor implements Runnable {
 							parentSyncFile.getRepositoryId(), _syncAccountId);
 					}
 					catch (Exception e) {
-						Throwable throwable = e.getCause();
+						if (SyncFileService.fetchSyncFile(
+								targetFilePath.toString()) == null) {
 
-						String message = throwable.getMessage();
-
-						if (!message.contains(
-								"Unique index or primary key violation") &&
-							_logger.isTraceEnabled()) {
-
-							_logger.trace(e.getMessage(), e);
+							_logger.error(e.getMessage(), e);
 						}
 					}
 				}
@@ -257,16 +252,10 @@ public class SyncWatchEventProcessor implements Runnable {
 				}
 			}
 			catch (Exception e) {
-				if (_logger.isTraceEnabled()) {
-					Throwable throwable = e.getCause();
+				if (SyncFileService.fetchSyncFile(
+						targetFilePath.toString()) == null) {
 
-					String message = throwable.getMessage();
-
-					if (!message.contains(
-							"Unique index or primary key violation")) {
-
-						_logger.trace(e.getMessage(), e);
-					}
+					_logger.error(e.getMessage(), e);
 				}
 			}
 

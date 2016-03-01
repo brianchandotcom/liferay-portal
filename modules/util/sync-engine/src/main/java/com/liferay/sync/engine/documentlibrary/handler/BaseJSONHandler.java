@@ -33,8 +33,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -64,6 +62,8 @@ public class BaseJSONHandler extends BaseHandler {
 
 		try {
 			response = StringEscapeUtils.unescapeJava(response);
+
+			response = response.replaceAll("\n", "\\n");
 
 			responseJsonNode = JSONUtil.readTree(response);
 		}
@@ -102,7 +102,7 @@ public class BaseJSONHandler extends BaseHandler {
 			exception = typeJsonNode.asText();
 		}
 
-		if (exception.endsWith("RuntimeException")) {
+		if (exception.equals("java.lang.RuntimeException")) {
 			JsonNode messageJsonNode = null;
 
 			if (errorJsonNode != null) {
@@ -188,6 +188,9 @@ public class BaseJSONHandler extends BaseHandler {
 
 			SyncFileService.update(syncFile);
 		}
+		else if (exception.equals("java.lang.OutOfMemoryError")) {
+			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
+		}
 		else if (exception.endsWith("NoSuchFileEntryException") ||
 				 exception.endsWith("NoSuchFolderException")) {
 
@@ -202,10 +205,7 @@ public class BaseJSONHandler extends BaseHandler {
 			if (Files.exists(filePath)) {
 				Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
-				List<String> deletedFilePathNames =
-					watcher.getDeletedFilePathNames();
-
-				deletedFilePathNames.add(syncFile.getFilePathName());
+				watcher.addDeletedFilePathName(syncFile.getFilePathName());
 
 				FileUtil.deleteFile(filePath);
 			}
@@ -248,6 +248,10 @@ public class BaseJSONHandler extends BaseHandler {
 
 			SyncFile syncFile = getLocalSyncFile();
 
+			if ((syncFile == null) || syncFile.isSystem()) {
+				return true;
+			}
+
 			syncFile.setState(SyncFile.STATE_ERROR);
 			syncFile.setUiEvent(SyncFile.UI_EVENT_EXCEEDED_SIZE_LIMIT);
 
@@ -259,6 +263,10 @@ public class BaseJSONHandler extends BaseHandler {
 			}
 
 			SyncFile syncFile = getLocalSyncFile();
+
+			if ((syncFile == null) || syncFile.isSystem()) {
+				return true;
+			}
 
 			syncFile.setState(SyncFile.STATE_ERROR);
 			syncFile.setUiEvent(SyncFile.UI_EVENT_NONE);

@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -43,8 +45,9 @@ public class PageInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		resourceRequest.setAttribute(
+			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+		resourceRequest.setAttribute(
 			WikiWebKeys.WIKI_NODE, ActionUtil.getNode(resourceRequest));
-
 		resourceRequest.setAttribute(
 			WikiWebKeys.WIKI_PAGES, ActionUtil.getPages(resourceRequest));
 
@@ -52,5 +55,14 @@ public class PageInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, resourceResponse,
 			"/wiki_admin/page_info_panel.jsp");
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

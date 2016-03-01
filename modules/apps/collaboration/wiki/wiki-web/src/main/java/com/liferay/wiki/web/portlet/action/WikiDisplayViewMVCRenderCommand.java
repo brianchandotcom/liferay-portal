@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
@@ -95,6 +96,8 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 					wikiGroupServiceConfiguration.frontPageName());
 			}
 
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
@@ -136,6 +139,13 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
 		_wikiNodeService = wikiNodeService;
 	}
@@ -145,6 +155,7 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 		_wikiPageService = wikiPageService;
 	}
 
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiNodeService _wikiNodeService;
 	private WikiPageService _wikiPageService;
 

@@ -176,6 +176,8 @@ if (filterManageableUserGroups) {
 		form.attr('method', 'post');
 		form.fm('deleteUserGroupIds').val(userGroupIds);
 
+		document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+
 		submitForm(form, '<portlet:actionURL name="deleteUserGroups" />');
 	}
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
+import com.liferay.wiki.importer.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.PortletException;
@@ -27,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -47,6 +49,9 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_IMPORTER_TRACKER, _wikiImporterTracker);
+
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
@@ -66,5 +71,14 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 
 		return "/wiki_admin/import_pages.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiImporterTracker(
+		WikiImporterTracker wikiImporterTracker) {
+
+		_wikiImporterTracker = wikiImporterTracker;
+	}
+
+	private WikiImporterTracker _wikiImporterTracker;
 
 }

@@ -38,6 +38,7 @@ import com.liferay.util.RSSUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -45,7 +46,6 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -367,7 +367,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
 			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		return WikiUtil.filterOrphans(pages);
+		return wikiEngineRenderer.filterOrphans(pages);
 	}
 
 	@Override
@@ -767,12 +767,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					String value = null;
 
 					if (latestPage == null) {
-						value = WikiUtil.convert(
+						value = wikiEngineRenderer.convert(
 							page, null, null, attachmentURLPrefix);
 					}
 					else {
 						try {
-							value = WikiUtil.diffHtml(
+							value = wikiEngineRenderer.diffHtml(
 								latestPage, page, null, null,
 								attachmentURLPrefix);
 						}
@@ -815,7 +815,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					value = StringPool.BLANK;
 				}
 				else {
-					value = WikiUtil.convert(
+					value = wikiEngineRenderer.convert(
 						page, null, null, attachmentURLPrefix);
 				}
 
@@ -874,5 +874,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = WikiEngineRenderer.class)
+	protected WikiEngineRenderer wikiEngineRenderer;
 
 }

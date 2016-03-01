@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_ACTIONS</td>
+	<td>//div[contains(@class,'card-row') and contains(.,'${key_entryComment}')]//div[contains(@class,'card-col-field')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_BODY</td>
 	<td>//div[(@class='lfr-discussion-message-body')]</td>
 	<td></td>

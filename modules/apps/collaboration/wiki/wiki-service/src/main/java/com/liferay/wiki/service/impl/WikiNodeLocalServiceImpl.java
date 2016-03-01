@@ -37,14 +37,14 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.importer.WikiImporter;
+import com.liferay.wiki.importer.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
-import com.liferay.wiki.util.WikiUtil;
 
 import java.io.InputStream;
 
@@ -245,7 +245,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		PortletFileRepositoryUtil.deletePortletRepository(
-			groupId, WikiPortletKeys.WIKI);
+			groupId, WikiConstants.SERVICE_NAME);
 	}
 
 	@Override
@@ -352,7 +352,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = getNode(nodeId);
 
-		WikiImporter wikiImporter = WikiUtil.getWikiImporter(importer);
+		WikiImporter wikiImporter = wikiImporterTracker.getWikiImporter(
+			importer);
+
+		if (wikiImporter == null) {
+			throw new SystemException(
+				"Unable to instantiate wiki importer with name " + importer);
+		}
 
 		wikiImporter.importPages(userId, node, inputStreams, options);
 	}
@@ -558,6 +564,9 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@ServiceReference(type = WikiGroupServiceConfiguration.class)
 	protected WikiGroupServiceConfiguration wikiGroupServiceConfiguration;
+
+	@ServiceReference(type = WikiImporterTracker.class)
+	protected WikiImporterTracker wikiImporterTracker;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);

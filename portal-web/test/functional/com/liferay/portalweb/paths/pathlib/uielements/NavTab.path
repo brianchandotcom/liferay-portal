@@ -169,8 +169,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_CONFIGURATION</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Portlet Configuration')]</td>
+	<td>LOOK_AND_FEEL_GENERAL</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>

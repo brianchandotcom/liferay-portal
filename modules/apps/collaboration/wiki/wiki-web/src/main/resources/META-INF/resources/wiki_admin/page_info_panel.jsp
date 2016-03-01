@@ -17,6 +17,8 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
+WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
+
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
 %>
 
@@ -90,7 +92,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					<h5><strong><liferay-ui:message key="format" /></strong></h5>
 
 					<p>
-						<liferay-ui:message key="<%= WikiUtil.getFormatLabel(wikiPage.getFormat(), locale) %>" />
+						<liferay-ui:message key="<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), locale) %>" />
 					</p>
 
 					<h5><strong><liferay-ui:message key="latest-version" /></strong></h5>

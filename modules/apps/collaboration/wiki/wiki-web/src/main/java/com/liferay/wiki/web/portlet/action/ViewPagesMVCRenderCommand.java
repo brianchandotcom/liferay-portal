@@ -17,6 +17,7 @@ package com.liferay.wiki.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor;
 
 import javax.portlet.PortletException;
@@ -45,10 +46,19 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
+			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+		renderRequest.setAttribute(
 			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_wikiPortletToolbarContributor);
 
 		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
 	}
 
 	@Reference(unbind = "-")
@@ -58,6 +68,7 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 		_wikiPortletToolbarContributor = wikiPortletToolbarContributor;
 	}
 
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPortletToolbarContributor _wikiPortletToolbarContributor;
 
 }

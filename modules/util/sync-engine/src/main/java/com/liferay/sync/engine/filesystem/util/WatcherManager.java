@@ -15,6 +15,7 @@
 package com.liferay.sync.engine.filesystem.util;
 
 import com.liferay.sync.engine.filesystem.BarbaryWatcher;
+import com.liferay.sync.engine.filesystem.DummyWatcher;
 import com.liferay.sync.engine.filesystem.JPathWatcher;
 import com.liferay.sync.engine.filesystem.Watcher;
 import com.liferay.sync.engine.filesystem.listener.SyncSiteWatchEventListener;
@@ -43,6 +44,10 @@ public class WatcherManager {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			syncAccountId);
 
+		if (syncAccount == null) {
+			return _dummyWatcher;
+		}
+
 		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
 			syncAccountId);
 
@@ -64,6 +69,7 @@ public class WatcherManager {
 		_watchers.remove(syncAccountId);
 	}
 
+	private static final Watcher _dummyWatcher = new DummyWatcher();
 	private static final Map<Long, Watcher> _watchers = new HashMap<>();
 
 }

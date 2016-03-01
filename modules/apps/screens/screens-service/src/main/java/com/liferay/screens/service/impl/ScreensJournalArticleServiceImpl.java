@@ -17,7 +17,9 @@ package com.liferay.screens.service.impl;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.screens.service.base.ScreensJournalArticleServiceBaseImpl;
 
@@ -36,6 +38,10 @@ public class ScreensJournalArticleServiceImpl
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
 
+		JournalArticlePermission.check(
+			getPermissionChecker(), journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), ActionKeys.VIEW);
+
 		return journalArticleLocalService.getArticleContent(
 			journalArticleResource.getGroupId(),
 			journalArticleResource.getArticleId(), null, null,
@@ -50,6 +56,10 @@ public class ScreensJournalArticleServiceImpl
 		JournalArticleResource journalArticleResource =
 			journalArticleResourceLocalService.getArticleResource(classPK);
 
+		JournalArticlePermission.check(
+			getPermissionChecker(), journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), ActionKeys.VIEW);
+
 		return journalArticleLocalService.getArticleContent(
 			journalArticleResource.getGroupId(),
 			journalArticleResource.getArticleId(), null,
@@ -61,6 +71,9 @@ public class ScreensJournalArticleServiceImpl
 	public String getJournalArticleContent(
 			long groupId, String articleId, long ddmTemplateId, Locale locale)
 		throws PortalException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
 			groupId, articleId, null, getDDMTemplateKey(ddmTemplateId),

@@ -31,11 +31,11 @@ import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -69,8 +69,12 @@ public class WikiPageAssetRenderer
 		}
 	}
 
-	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
+	public WikiPageAssetRenderer(
+			WikiPage page, WikiEngineRenderer wikiEngineRenderer)
+		throws PortalException {
+
 		_page = page;
+		_wikiEngineRenderer = wikiEngineRenderer;
 
 		_wikiGroupServiceOverriddenConfiguration =
 			ConfigurationProviderUtil.getConfiguration(
@@ -144,7 +148,7 @@ public class WikiPageAssetRenderer
 
 		try {
 			content = HtmlUtil.extractText(
-				WikiUtil.convert(_page, null, null, null));
+				_wikiEngineRenderer.convert(_page, null, null, null));
 		}
 		catch (Exception e) {
 		}
@@ -315,6 +319,7 @@ public class WikiPageAssetRenderer
 	}
 
 	private final WikiPage _page;
+	private final WikiEngineRenderer _wikiEngineRenderer;
 	private final WikiGroupServiceOverriddenConfiguration
 		_wikiGroupServiceOverriddenConfiguration;
 

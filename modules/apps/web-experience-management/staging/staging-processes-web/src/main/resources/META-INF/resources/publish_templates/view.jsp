@@ -76,7 +76,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 				modelVar="exportImportConfiguration"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="export-configuration-user-column"
+					cssClass="background-task-user-column"
 					name="user"
 				>
 					<liferay-ui:user-display
@@ -99,7 +99,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="name"
+					name="title"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 

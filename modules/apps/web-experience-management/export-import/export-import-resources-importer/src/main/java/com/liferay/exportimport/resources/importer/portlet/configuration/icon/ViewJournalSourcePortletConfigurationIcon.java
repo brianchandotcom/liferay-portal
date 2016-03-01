@@ -78,35 +78,9 @@ public class ViewJournalSourcePortletConfigurationIcon
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(18);
-
-		sb.append("var sourceModal = Liferay.Util.Window.getWindow({");
-		sb.append("bodyCssClass: 'dialog-with-footer', destroyOnHide: true,");
-		sb.append("id: '");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
-		sb.append("viewSource', namespace: '");
-		sb.append(portletDisplay.getNamespace());
-		sb.append("', portlet: '#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', portletId: '");
-		sb.append(portletDisplay.getId());
-		sb.append("', title: '");
-		sb.append(
-			HtmlUtil.escapeJS(article.getTitle(themeDisplay.getLocale())));
-		sb.append("', dialog: { bodyContent: '<pre>");
-		sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(article.getContent())));
-		sb.append("</pre>', modal: true, toolbars: {footer: [{label: ");
-		sb.append("Liferay.Language.get('close'), on: {click: function(event)");
-		sb.append("{ event.domEvent.preventDefault();");
-		sb.append("sourceModal.hide();}}}]}}}); return false;");
-
-		return sb.toString();
+		return
+			"var sourceModal = " + getWindowJS(portletRequest, article) +
+				" return false;";
 	}
 
 	@Override
@@ -188,6 +162,49 @@ public class ViewJournalSourcePortletConfigurationIcon
 			PortalUtil.getHttpServletRequest(request);
 
 		return getArticle(httpServletRequest);
+	}
+
+	protected String getDialogJS(JournalArticle article) {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{bodyContent: '<pre>");
+		sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(article.getContent())));
+		sb.append("</pre>', modal: true, toolbars: {footer: ");
+		sb.append("[{label:Liferay.Language.get('close'), on: {click: ");
+		sb.append("function(event) {event.domEvent.preventDefault(); ");
+		sb.append("sourceModal.hide();}}}]}}");
+
+		return sb.toString();
+	}
+
+	protected String getWindowJS(
+		PortletRequest portletRequest, JournalArticle article) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("Liferay.Util.Window.getWindow({bodyCssClass: ");
+		sb.append("'dialog-with-footer', destroyOnHide: true, dialog: ");
+		sb.append(getDialogJS(article));
+		sb.append(", id: '");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
+		sb.append("viewSource', namespace: '");
+		sb.append(portletDisplay.getNamespace());
+		sb.append("', portlet: '#p_p_id_");
+		sb.append(portletDisplay.getId());
+		sb.append("_', portletId: '");
+		sb.append(portletDisplay.getId());
+		sb.append("', title: '");
+		sb.append(
+			HtmlUtil.escapeJS(article.getTitle(themeDisplay.getLocale())));
+		sb.append("'});");
+
+		return sb.toString();
 	}
 
 	@Reference(unbind = "-")

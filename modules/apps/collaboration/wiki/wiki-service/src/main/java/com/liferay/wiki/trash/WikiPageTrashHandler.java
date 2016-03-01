@@ -40,6 +40,7 @@ import com.liferay.trash.kernel.model.TrashEntryConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -304,7 +305,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		WikiPage page = _wikiPageLocalService.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		return new WikiPageAssetRenderer(page);
+		return new WikiPageAssetRenderer(page, _wikiEngineRenderer);
 	}
 
 	@Override
@@ -495,6 +496,13 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
@@ -513,6 +521,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		_wikiPageService = wikiPageService;
 	}
 
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 	private WikiPageService _wikiPageService;

@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>CONFIRM</td>
-	<td>//button[contains(.,'Confirms')]</td>
+	<td>//button[contains(.,'Confirm')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -154,7 +154,8 @@ public class ScreensDDLRecordServiceHttp {
 	}
 
 	public static int getDDLRecordsCount(HttpPrincipal httpPrincipal,
-		long ddlRecordSetId) {
+		long ddlRecordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensDDLRecordServiceUtil.class,
 					"getDDLRecordsCount", _getDDLRecordsCountParameterTypes3);
@@ -168,6 +169,10 @@ public class ScreensDDLRecordServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -181,7 +186,8 @@ public class ScreensDDLRecordServiceHttp {
 	}
 
 	public static int getDDLRecordsCount(HttpPrincipal httpPrincipal,
-		long ddlRecordSetId, long userId) {
+		long ddlRecordSetId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensDDLRecordServiceUtil.class,
 					"getDDLRecordsCount", _getDDLRecordsCountParameterTypes4);
@@ -195,6 +201,10 @@ public class ScreensDDLRecordServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

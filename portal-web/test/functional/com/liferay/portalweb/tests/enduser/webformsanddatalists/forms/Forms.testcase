@@ -346,6 +346,8 @@
 
 		<execute macro="Form#clickPublishSwitcher" />
 
+		<execute macro="Button#clickConfirm" />
+
 		<execute macro="Form#viewFormPublish">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
@@ -362,6 +364,8 @@
 		<execute macro="FormsAdminNavigator#gotoPublish" />
 
 		<execute macro="Form#clickPublishSwitcher" />
+
+		<execute macro="Button#clickConfirm" />
 
 		<execute macro="Form#viewFormNotPublished" />
 	</command>

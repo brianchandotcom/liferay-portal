@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -63,6 +64,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
@@ -161,10 +165,18 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiEngineRenderer(
+		WikiEngineRenderer wikiEngineRenderer) {
+
+		_wikiEngineRenderer = wikiEngineRenderer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiPageService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}
 
+	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageService _wikiPageService;
 
 }

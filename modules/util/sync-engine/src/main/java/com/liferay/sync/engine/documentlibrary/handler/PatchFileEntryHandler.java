@@ -43,6 +43,8 @@ public class PatchFileEntryHandler extends BaseJSONHandler {
 		localSyncFile.setSize(remoteSyncFile.getSize());
 		localSyncFile.setState(SyncFile.STATE_SYNCED);
 		localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
+		localSyncFile.setUserId(remoteSyncFile.getUserId());
+		localSyncFile.setUserName(remoteSyncFile.getUserName());
 		localSyncFile.setVersion(remoteSyncFile.getVersion());
 		localSyncFile.setVersionId(remoteSyncFile.getVersionId());
 

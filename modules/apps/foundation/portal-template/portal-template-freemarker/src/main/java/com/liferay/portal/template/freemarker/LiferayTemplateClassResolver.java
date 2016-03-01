@@ -29,12 +29,23 @@ import freemarker.template.TemplateException;
 import freemarker.template.utility.Execute;
 import freemarker.template.utility.ObjectConstructor;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.wiring.BundleCapability;
+import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Raymond Augé
@@ -136,7 +147,118 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			FreeMarkerEngineConfiguration.class, properties);
 	}
 
+	private Set<ClassLoader> _findAllowedClassLoaders(
+		String allowedClass, BundleContext bundleContext) {
+
+		Bundle bundle = bundleContext.getBundle();
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		Set<ClassLoader> classLoaders = new HashSet<>();
+
+		List<BundleCapability> capabilities = bundleWiring.getCapabilities(
+			BundleRevision.PACKAGE_NAMESPACE);
+
+		for (BundleCapability capability : capabilities) {
+			Map<String, Object> attributes = capability.getAttributes();
+
+			String exportPackage = (String)attributes.get(
+				BundleRevision.PACKAGE_NAMESPACE);
+
+			if (allowedClass.equals(StringPool.STAR)) {
+				continue;
+			}
+			else if (allowedClass.endsWith(StringPool.STAR)) {
+				allowedClass = allowedClass.substring(
+					0, allowedClass.length() - 1);
+
+				if (exportPackage.startsWith(allowedClass)) {
+					BundleRevision provider = capability.getRevision();
+
+					Bundle providerBundle = provider.getBundle();
+
+					BundleWiring providerBundleWiring =
+						providerBundle.adapt(BundleWiring.class);
+
+					classLoaders.add(providerBundleWiring.getClassLoader());
+				}
+			}
+			else if (allowedClass.equals(exportPackage)) {
+				BundleRevision revision = capability.getRevision();
+
+				Bundle revisionBundle = revision.getBundle();
+
+				BundleWiring providerBundleWiring = revisionBundle.adapt(
+					BundleWiring.class);
+
+				classLoaders.add(providerBundleWiring.getClassLoader());
+			}
+			else {
+				String allowedClassPackage = allowedClass.substring(
+					0, allowedClass.lastIndexOf("."));
+
+				if (allowedClassPackage.equals(exportPackage)) {
+					BundleRevision revision = capability.getRevision();
+
+					Bundle revisionBundle = revision.getBundle();
+
+					BundleWiring providerBundleWiring = revisionBundle.adapt(
+						BundleWiring.class);
+
+					classLoaders.add(providerBundleWiring.getClassLoader());
+				}
+			}
+		}
+
+		return classLoaders;
+	}
+
+	private Set<ClassLoader> _findAllowedClassLoaders(
+		String[] allowedClasses, BundleContext bundleContext) {
+
+		Set<ClassLoader> classLoaders = new HashSet<>();
+
+		for (String allowedClass : allowedClasses) {
+			classLoaders.addAll(
+				_findAllowedClassLoaders(allowedClass, bundleContext));
+		}
+
+		return classLoaders;
+	}
+
+	private BundleTracker<ClassLoader> _classResolverBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+	private Set<ClassLoader> _whiteListedClassloaders = new HashSet<>();
+
+	private class ClassResolverBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<ClassLoader> {
+
+		@Override
+		public ClassLoader addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			Set<ClassLoader> allowedClassLoaders = _findAllowedClassLoaders(
+				_freemarkerEngineConfiguration.allowedClasses(),
+				bundle.getBundleContext());
+
+			_whiteListedClassloaders.addAll(allowedClassLoaders);
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			return bundleWiring.getClassLoader();
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
+		}
+
+	}
 
 }

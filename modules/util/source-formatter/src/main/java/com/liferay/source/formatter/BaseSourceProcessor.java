@@ -63,7 +63,7 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
-	public static final int PORTAL_MAX_DIR_LEVEL = 5;
+	public static final int PORTAL_MAX_DIR_LEVEL = 7;
 
 	@Override
 	public final void format() throws Exception {

@@ -14,13 +14,35 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 import com.liferay.portal.kernel.util.LoggingTimer;
+
+import java.io.IOException;
+
+import java.sql.SQLException;
 
 /**
  * @author Levente Hudák
  */
 public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
+
+	protected void addLastPublishDateColumn(String tableName)
+		throws IOException {
+
+		try {
+			runSQL(
+				"alter table " + tableName + " add lastPublishDate DATE null");
+		}
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Table " + tableName + " has been previously recreated, " +
+						"there is not need to add the column");
+			}
+		}
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -36,15 +58,15 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeAssetCategoriesAdmin() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table AssetCategory add lastPublishDate DATE null");
+			addLastPublishDateColumn("AssetCategory");
 
 			updateLastPublishDates("147", "AssetCategory");
 
-			runSQL("alter table AssetTag add lastPublishDate DATE null");
+			addLastPublishDateColumn("AssetTag");
 
 			updateLastPublishDates("147", "AssetTag");
 
-			runSQL("alter table AssetVocabulary add lastPublishDate DATE null");
+			addLastPublishDateColumn("AssetVocabulary");
 
 			updateLastPublishDates("147", "AssetVocabulary");
 		}
@@ -52,7 +74,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeBlogs() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table BlogsEntry add lastPublishDate DATE null");
+			addLastPublishDateColumn("BlogsEntry");
 
 			updateLastPublishDates("33", "BlogsEntry");
 		}
@@ -60,31 +82,31 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeDocumentLibrary() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table DLFileEntry add lastPublishDate DATE null");
+			addLastPublishDateColumn("DLFileEntry");
 
 			updateLastPublishDates("20", "DLFileEntry");
 
-			runSQL("alter table DLFileEntryType add lastPublishDate DATE null");
+			addLastPublishDateColumn("DLFileEntryType");
 
 			updateLastPublishDates("20", "DLFileEntryType");
 
-			runSQL("alter table DLFileShortcut add lastPublishDate DATE null");
+			addLastPublishDateColumn("DLFileShortcut");
 
 			updateLastPublishDates("20", "DLFileShortcut");
 
-			runSQL("alter table DLFileVersion add lastPublishDate DATE null");
+			addLastPublishDateColumn("DLFileVersion");
 
 			updateLastPublishDates("20", "DLFileVersion");
 
-			runSQL("alter table DLFolder add lastPublishDate DATE null");
+			addLastPublishDateColumn("DLFolder");
 
 			updateLastPublishDates("20", "DLFolder");
 
-			runSQL("alter table Repository add lastPublishDate DATE null");
+			addLastPublishDateColumn("Repository");
 
 			updateLastPublishDates("20", "Repository");
 
-			runSQL("alter table RepositoryEntry add lastPublishDate DATE null");
+			addLastPublishDateColumn("RepositoryEntry");
 
 			updateLastPublishDates("20", "RepositoryEntry");
 		}
@@ -92,12 +114,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeLayoutsAdmin() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table Layout add lastPublishDate DATE null");
+			addLastPublishDateColumn("Layout");
 
 			updateLastPublishDates("88", "Layout");
 
-			runSQL(
-				"alter table LayoutFriendlyURL add lastPublishDate DATE null");
+			addLastPublishDateColumn("LayoutFriendlyURL");
 
 			updateLastPublishDates("88", "LayoutFriendlyURL");
 		}
@@ -105,27 +126,27 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeMessageBoards() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table MBBan add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBBan");
 
 			updateLastPublishDates("19", "MBBan");
 
-			runSQL("alter table MBCategory add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBCategory");
 
 			updateLastPublishDates("19", "MBCategory");
 
-			runSQL("alter table MBDiscussion add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBDiscussion");
 
 			updateLastPublishDates("19", "MBDiscussion");
 
-			runSQL("alter table MBMessage add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBMessage");
 
 			updateLastPublishDates("19", "MBMessage");
 
-			runSQL("alter table MBThread add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBThread");
 
 			updateLastPublishDates("19", "MBThread");
 
-			runSQL("alter table MBThreadFlag add lastPublishDate DATE null");
+			addLastPublishDateColumn("MBThreadFlag");
 
 			updateLastPublishDates("19", "MBThreadFlag");
 		}
@@ -133,21 +154,19 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeMobileDeviceRules() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table MDRAction add lastPublishDate DATE null");
+			addLastPublishDateColumn("MDRAction");
 
 			updateLastPublishDates("178", "MDRAction");
 
-			runSQL("alter table MDRRule add lastPublishDate DATE null");
+			addLastPublishDateColumn("MDRRule");
 
 			updateLastPublishDates("178", "MDRRule");
 
-			runSQL("alter table MDRRuleGroup add lastPublishDate DATE null");
+			addLastPublishDateColumn("MDRRuleGroup");
 
 			updateLastPublishDates("178", "MDRRuleGroup");
 
-			runSQL(
-				"alter table MDRRuleGroupInstance add lastPublishDate " +
-					"DATE null");
+			addLastPublishDateColumn("MDRRuleGroupInstance");
 
 			updateLastPublishDates("178", "MDRRuleGroupInstance");
 		}
@@ -155,7 +174,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeSiteAdmin() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table Team add lastPublishDate DATE null");
+			addLastPublishDateColumn("Team");
 
 			updateLastPublishDates("134", "Team");
 		}
@@ -163,8 +182,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	protected void upgradeWebSite() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table Website add lastPublishDate DATE null");
+			addLastPublishDateColumn("Website");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeLastPublishDate.class);
 
 }

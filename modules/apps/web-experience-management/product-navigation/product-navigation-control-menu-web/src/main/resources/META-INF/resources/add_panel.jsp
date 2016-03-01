@@ -39,7 +39,7 @@
 
 					boolean hasAddContentPermission = hasAddApplicationsPermission && !group.isLayoutPrototype();
 
-					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", "content"));
+					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", hasAddContentPermission ? "content" : "applications"));
 					%>
 
 					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">
@@ -57,7 +57,7 @@
 									</div>
 								</div>
 
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="collapse panel-collapse <%= selectedTab.equals("applications") ? "in" : StringPool.BLANK %>" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="collapse panel-collapse <%= selectedTab.equals("applications") ? "in" : StringPool.BLANK %>" data-value="applications" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
 									<div class="panel-body">
 										<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
 									</div>
@@ -79,12 +79,23 @@
 									</div>
 								</div>
 
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="collapse panel-collapse <%= selectedTab.equals("content") ? "in" : StringPool.BLANK %>" id="<portlet:namespace />addContentCollapse" role="tabpanel">
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="collapse panel-collapse <%= selectedTab.equals("content") ? "in" : StringPool.BLANK %>" data-value="content" id="<portlet:namespace />addContentCollapse" role="tabpanel">
 									<div class="panel-body">
 										<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
 									</div>
 								</div>
 							</div>
+						</c:if>
+
+						<c:if test="<%= hasAddApplicationsPermission && hasAddContentPermission %>">
+							<aui:script use="liferay-store">
+								$('#<portlet:namespace />Accordion').on(
+									'show.bs.collapse',
+									function(event) {
+										Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelTab', event.target.getAttribute('data-value'));
+									}
+								);
+							</aui:script>
 						</c:if>
 					</div>
 

@@ -38,7 +38,7 @@ boolean smallImage = BeanParamUtil.getBoolean(template, request, "smallImage");
 DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 if ((structure == null) && (template != null)) {
-	structure = DDMTemplateHelperUtil.fetchStructure(template);
+	structure = ddmDisplayContext.fetchStructure(template);
 }
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);

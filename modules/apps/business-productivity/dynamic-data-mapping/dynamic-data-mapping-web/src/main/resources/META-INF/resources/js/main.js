@@ -762,7 +762,7 @@ AUI.add(
 					}
 				}
 
-				key = Liferay.Util.camelize(key, STR_SPACE);
+				key = Lang.String.camelize(key, STR_SPACE);
 
 				return key.replace(/\s+/ig, '');
 			},

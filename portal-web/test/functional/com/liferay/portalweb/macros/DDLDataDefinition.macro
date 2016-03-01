@@ -89,8 +89,6 @@
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
-		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
-
 		<execute macro="DDLDataDefinition#viewName">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 		</execute>

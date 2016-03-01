@@ -445,6 +445,8 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
+		XMLLoggerHandler.updateStatus(executeElement, "pending");
+
 		List<String> arguments = new ArrayList<>();
 		List<Element> executeArgElements = executeElement.elements("arg");
 
@@ -459,24 +461,33 @@ public class PoshiRunnerExecutor {
 				"args", arguments.toArray(new String[arguments.size()]));
 		}
 
-		String fileName = PoshiRunnerVariablesUtil.replaceCommandVars(
-			executeElement.attributeValue("groovy-script"));
+		try {
+			String fileName = PoshiRunnerVariablesUtil.replaceCommandVars(
+				executeElement.attributeValue("groovy-script"));
 
-		String fileSeparator = FileUtil.getSeparator();
+			String fileSeparator = FileUtil.getSeparator();
 
-		GroovyScriptEngine gse = new GroovyScriptEngine(
-			LiferaySeleniumHelper.getSourceDirFilePath(
-				fileSeparator + PropsValues.TEST_DEPENDENCIES_DIR_NAME +
-					fileSeparator + fileName));
+			GroovyScriptEngine gse = new GroovyScriptEngine(
+				LiferaySeleniumHelper.getSourceDirFilePath(
+					fileSeparator + PropsValues.TEST_DEPENDENCIES_DIR_NAME +
+						fileSeparator + fileName));
 
-		Object result = gse.run(fileName, binding);
+			Object result = gse.run(fileName, binding);
 
-		String returnVariable = executeElement.attributeValue("return");
+			String returnVariable = executeElement.attributeValue("return");
 
-		if (returnVariable != null) {
-			PoshiRunnerVariablesUtil.putIntoCommandMap(
-				returnVariable, result.toString());
+			if (returnVariable != null) {
+				PoshiRunnerVariablesUtil.putIntoCommandMap(
+					returnVariable, result.toString());
+			}
 		}
+		catch (Exception e) {
+			XMLLoggerHandler.updateStatus(executeElement, "fail");
+
+			throw e;
+		}
+
+		XMLLoggerHandler.updateStatus(executeElement, "pass");
 	}
 
 	public static void runIfElement(Element element) throws Exception {

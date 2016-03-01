@@ -174,15 +174,18 @@ public final class XMLLoggerHandler {
 		List<Element> childElements = element.elements();
 
 		if ((!childElements.isEmpty() && !_isExecutingFunction(element) &&
-			 !_isExecutingMethod(element)) ||
+			 !_isExecutingMethod(element) &&
+			 !_isExecutingGroovyScript(element)) ||
 			_isExecutingMacro(element) || _isExecutingTestCase(element)) {
 
 			sb.append(_getBtnItemText("btn-collapse"));
 		}
 
 		if (!childElements.isEmpty() &&
-			(_isExecutingFunction(element) || _isExecutingMacro(element) ||
-			 _isExecutingTestCase(element) || _isExecutingMethod(element))) {
+			(_isExecutingFunction(element) ||
+			 _isExecutingGroovyScript(element) ||
+			 _isExecutingMacro(element) || _isExecutingTestCase(element) ||
+			 _isExecutingMethod(element))) {
 
 			sb.append(_getBtnItemText("btn-var"));
 		}
@@ -261,6 +264,13 @@ public final class XMLLoggerHandler {
 					if (childElement.attributeValue("function") != null) {
 						loggerElement.addChildLoggerElement(
 							_getFunctionExecuteLoggerElement(childElement));
+					}
+					else if (
+								childElement.attributeValue("groovy-script") !=
+									null) {
+
+						loggerElement.addChildLoggerElement(
+							_getGroovyScriptLoggerElement(childElement));
 					}
 					else if (childElement.attributeValue("macro") != null) {
 						loggerElement.addChildLoggerElement(
@@ -393,6 +403,12 @@ public final class XMLLoggerHandler {
 		Element element) {
 
 		return _getLineGroupLoggerElement("function", element);
+	}
+
+	private static LoggerElement _getGroovyScriptLoggerElement(
+		Element element) {
+
+		return _getLineGroupLoggerElement("groovy-script", element);
 	}
 
 	private static LoggerElement _getIfChildContainerLoggerElement(
@@ -724,6 +740,14 @@ public final class XMLLoggerHandler {
 
 	private static boolean _isExecutingFunction(Element element) {
 		if (element.attributeValue("function") != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isExecutingGroovyScript(Element element) {
+		if (element.attributeValue("groovy-script") != null) {
 			return true;
 		}
 

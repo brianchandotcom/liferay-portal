@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Kevin Yen
  */
-public class BaseJob {
+public abstract class BaseJob {
 
 	public static String decodeURL(String url) {
 		url = url.replace("%28", "(");
@@ -138,6 +138,8 @@ public class BaseJob {
 			status = "running";
 		}
 	}
+
+	public abstract void update() throws Exception;
 
 	protected BaseJob() {
 		masterURL = "";

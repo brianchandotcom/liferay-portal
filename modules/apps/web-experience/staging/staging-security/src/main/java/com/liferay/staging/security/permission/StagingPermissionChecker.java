@@ -150,22 +150,6 @@ public class StagingPermissionChecker implements PermissionChecker {
 		return _permissionChecker.isCheckGuest();
 	}
 
-	@Deprecated
-	@Override
-	public boolean isCommunityAdmin(long groupId) {
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
-		return _permissionChecker.isCommunityAdmin(liveGroupId);
-	}
-
-	@Deprecated
-	@Override
-	public boolean isCommunityOwner(long groupId) {
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
-		return _permissionChecker.isCommunityOwner(liveGroupId);
-	}
-
 	@Override
 	public boolean isCompanyAdmin() {
 		return _permissionChecker.isCompanyAdmin();
@@ -222,18 +206,6 @@ public class StagingPermissionChecker implements PermissionChecker {
 	@Override
 	public boolean isSignedIn() {
 		return _permissionChecker.isSignedIn();
-	}
-
-	@Deprecated
-	@Override
-	public void resetValues() {
-		_permissionChecker.resetValues();
-	}
-
-	@Deprecated
-	@Override
-	public void setValues(PortletRequest portletRequest) {
-		_permissionChecker.setValues(portletRequest);
 	}
 
 	private final PermissionChecker _permissionChecker;

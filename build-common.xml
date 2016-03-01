@@ -1520,7 +1520,6 @@ rerun your task.
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}
-				liferay.portal.version=${lp.version}-SNAPSHOT
 				liferay.releng.app.title.suffix=${liferay.releng.app.title.suffix}
 				liferay.releng.public=${liferay.releng.public}
 				liferay.releng.supported=${liferay.releng.supported}

@@ -164,11 +164,13 @@ public class PortletPreferencesImpl
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				companyId, _portletId);
 
-			PreferencesValidator preferencesValidator =
-				PortalUtil.getPreferencesValidator(portlet);
+			if (portlet != null) {
+				PreferencesValidator preferencesValidator =
+					PortalUtil.getPreferencesValidator(portlet);
 
-			if (preferencesValidator != null) {
-				preferencesValidator.validate(this);
+				if (preferencesValidator != null) {
+					preferencesValidator.validate(this);
+				}
 			}
 
 			PortletPreferencesLocalServiceUtil.updatePreferences(

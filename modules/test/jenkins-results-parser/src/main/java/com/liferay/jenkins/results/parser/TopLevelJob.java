@@ -16,11 +16,25 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.tools.ant.Project;
 
 /**
  * @author Kevin Yen
  */
 public class TopLevelJob extends BaseJob {
+
+	public static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
+		"completed.build.urls";
+
+	public static final String MAX_STARTING_TIME_PROPERTY_NAME =
+		"max.starting.time";
+
+	public static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
+
+	public static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
 
 	public TopLevelJob(String buildURL) {
 		super(buildURL);
@@ -28,8 +42,8 @@ public class TopLevelJob extends BaseJob {
 		downstreamJobs = new ArrayList<>();
 	}
 
-	public void add(DownstreamJob downstreamJob) {
-		downstreamJobs.add(downstreamJob);
+	public void addDownstreamJob(String invocationURL) throws Exception {
+		downstreamJobs.add(new DownstreamJob(invocationURL, this));
 	}
 
 	public int getDownstreamJobCount() {
@@ -56,6 +70,101 @@ public class TopLevelJob extends BaseJob {
 		return downstreamJobWithStatus;
 	}
 
+	public void update() throws Exception {
+		for (DownstreamJob downstreamJob : downstreamJobs) {
+			downstreamJob.update();
+		}
+	}
+
+	public void waitForDownstreamJobs(
+			long updatePeriod, long maxStartingTime, long maxWaitTime)
+		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+
+		while (true) {
+			update();
+
+			System.out.print(getDownstreamJobCount("completed"));
+			System.out.print(" Completed / ");
+			System.out.print(getDownstreamJobCount("running"));
+			System.out.print(" Running / ");
+			System.out.print(getDownstreamJobCount("queued"));
+			System.out.print(" Queued / ");
+			System.out.print(getDownstreamJobCount("starting"));
+			System.out.print(" Starting / ");
+			System.out.print(getDownstreamJobCount());
+			System.out.println(" Total");
+
+			long elapsedTime = System.currentTimeMillis() - startTime;
+
+			if ((elapsedTime > maxStartingTime) &&
+				(getDownstreamJobCount("starting") > 0)) {
+
+				throw new TimeoutException("Unable to find downstream job");
+			}
+			else if ((elapsedTime > maxWaitTime) &&
+					 (getDownstreamJobCount("completed") <
+						 getDownstreamJobCount())) {
+
+				throw new TimeoutException("Downstream job timeout");
+			}
+			else if (getDownstreamJobCount("completed") ==
+						getDownstreamJobCount()) {
+
+				break;
+			}
+			else {
+				Thread.sleep(updatePeriod);
+			}
+		}
+	}
+
+	public void waitForDownstreamJobs(Project project) throws Exception {
+		long maxStartingTime = 900000;
+
+		if (project.getProperty(MAX_STARTING_TIME_PROPERTY_NAME) != null) {
+			maxStartingTime = Long.parseLong(
+				project.getProperty(MAX_STARTING_TIME_PROPERTY_NAME)) * 60000;
+		}
+
+		long maxWaitTime = 7200000;
+
+		if (project.getProperty(MAX_WAIT_TIME_PROPERTY_NAME) != null) {
+			maxWaitTime = Long.parseLong(
+				project.getProperty(MAX_WAIT_TIME_PROPERTY_NAME)) * 60000;
+		}
+
+		long updatePeriod = 30000;
+
+		if (project.getProperty(UPDATE_PERIOD_PROPERTY_NAME) != null) {
+			updatePeriod = Long.parseLong(
+				project.getProperty(UPDATE_PERIOD_PROPERTY_NAME)) * 1000;
+		}
+
+		waitForDownstreamJobs(updatePeriod, maxStartingTime, maxWaitTime);
+
+		List<DownstreamJob> completedJobs = getDownstreamJobs("completed");
+
+		String completedBuildURLs = StringUtils.join(
+			getBuildURLs(completedJobs), ",");
+
+		project.setProperty(
+			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedBuildURLs);
+	}
+
 	protected List<DownstreamJob> downstreamJobs;
+
+	private static List<String> getBuildURLs(List<DownstreamJob> downstreamJobs)
+		throws Exception {
+
+		List<String> buildURLs = new ArrayList<>();
+
+		for (DownstreamJob downstreamJob : downstreamJobs) {
+			buildURLs.add(downstreamJob.getBuildURL());
+		}
+
+		return buildURLs;
+	}
 
 }

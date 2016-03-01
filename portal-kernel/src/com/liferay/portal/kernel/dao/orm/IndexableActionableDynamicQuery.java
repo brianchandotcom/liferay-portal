@@ -53,8 +53,13 @@ public class IndexableActionableDynamicQuery
 			}
 		}
 
-		if (_documents.size() >= getInterval()) {
+		long size = _documents.size();
+
+		if (size >= getInterval()) {
 			indexInterval();
+		}
+		else if ((size % _STATUS_INTERVAL) == 0) {
+			sendStatusMessage(size);
 		}
 	}
 
@@ -83,8 +88,6 @@ public class IndexableActionableDynamicQuery
 		if (Validator.isNotNull(_searchEngineId)) {
 			IndexWriterHelperUtil.commit(_searchEngineId, getCompanyId());
 		}
-
-		sendStatusMessage();
 	}
 
 	@Override
@@ -120,9 +123,15 @@ public class IndexableActionableDynamicQuery
 		_count += _documents.size();
 
 		_documents.clear();
+
+		sendStatusMessage();
 	}
 
 	protected void sendStatusMessage() {
+		sendStatusMessage(0);
+	}
+
+	protected void sendStatusMessage(long documentIntervalCount) {
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
 		}
@@ -130,8 +139,10 @@ public class IndexableActionableDynamicQuery
 		Class<?> modelClass = getModelClass();
 
 		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			modelClass.getName(), _count, _total);
+			modelClass.getName(), _count + documentIntervalCount, _total);
 	}
+
+	private static final long _STATUS_INTERVAL = 1000;
 
 	private long _count;
 	private Collection<Document> _documents;

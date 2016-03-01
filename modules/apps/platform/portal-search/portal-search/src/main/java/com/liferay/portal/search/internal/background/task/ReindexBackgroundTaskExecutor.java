@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.search.internal.background.task.display.ReindexBackgroundTaskDisplay;
 
 import java.io.Serializable;
 
@@ -55,7 +56,7 @@ public abstract class ReindexBackgroundTaskExecutor
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask) {
 
-		return null;
+		return new ReindexBackgroundTaskDisplay(backgroundTask);
 	}
 
 	protected abstract void reindex(String className, long[] companyIds)

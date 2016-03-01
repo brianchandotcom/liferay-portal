@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -33,6 +34,11 @@ page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
 page import="com.liferay.portal.convert.ConvertProcessUtil" %><%@
 page import="com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.image.ImageMagickUtil" %><%@
@@ -73,12 +79,15 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ShutdownUtil" %><%@
 page import="com.liferay.util.log4j.Levels" %>
 
+<%@ page import="java.io.Serializable" %>
+
 <%@ page import="java.text.NumberFormat" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Enumeration" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.Iterator" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

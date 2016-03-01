@@ -110,19 +110,6 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	@Override
-	public String getStatusMessage(Locale locale) {
-		if (!backgroundTask.isInProgress()) {
-			return super.getStatusMessage(locale);
-		}
-
-		if (hasStagedModelMessage()) {
-			return getStagedModelMessage(locale);
-		}
-
-		return LanguageUtil.get(locale, getStatusMessageKey());
-	}
-
-	@Override
 	public boolean hasPercentage() {
 		if (!hasBackgroundTaskStatus()) {
 			return false;
@@ -136,6 +123,19 @@ public class ExportImportBackgroundTaskDisplay
 		}
 
 		return false;
+	}
+
+	@Override
+	public String renderDisplayTemplate(Locale locale) {
+		if (!backgroundTask.isInProgress()) {
+			return super.renderDisplayTemplate(locale);
+		}
+
+		if (hasStagedModelMessage()) {
+			return getStagedModelMessage(locale);
+		}
+
+		return LanguageUtil.get(locale, getStatusMessageKey());
 	}
 
 	protected String getStagedModelMessage(Locale locale) {
@@ -154,7 +154,6 @@ public class ExportImportBackgroundTaskDisplay
 		return sb.toString();
 	}
 
-	@Override
 	protected String getStatusMessageKey() {
 		if (Validator.isNotNull(_messageKey)) {
 			return _messageKey;

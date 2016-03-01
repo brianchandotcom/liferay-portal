@@ -35,6 +35,9 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.journal.verify.model.JournalArticleResourceVerifiableModel;
+import com.liferay.journal.verify.model.JournalArticleVerifiableModel;
+import com.liferay.journal.verify.model.JournalFeedVerifiableModel;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -69,6 +72,8 @@ import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyResourcePermissions;
+import com.liferay.portal.verify.VerifyUUID;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,8 +114,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissions();
+		verifyResourcedModels();
 		verifyTree();
 		verifyURLTitle();
+		verifyUUIDModels();
 
 		verifyArticleImages();
 	}
@@ -879,6 +886,14 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void verifyResourcedModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyResourcePermissions.verify(
+				new JournalArticleVerifiableModel());
+			_verifyResourcePermissions.verify(new JournalFeedVerifiableModel());
+		}
+	}
+
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
@@ -931,6 +946,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void verifyUUIDModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyUUID.verify(new JournalArticleResourceVerifiableModel());
+			VerifyUUID.verify(new JournalFeedVerifiableModel());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceVerifyProcess.class);
 
@@ -948,5 +970,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	private JournalConverter _journalConverter;
 	private JournalFolderLocalService _journalFolderLocalService;
 	private ResourceLocalService _resourceLocalService;
+	private final VerifyResourcePermissions _verifyResourcePermissions =
+		new VerifyResourcePermissions();
 
 }

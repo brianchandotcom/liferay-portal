@@ -68,7 +68,6 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
-		<execute function="SelectFrame" locator1="IFrame#COPY_STRUCTURE" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDataDefinitionCopyName}" />
 
 		<if>
@@ -88,7 +87,6 @@
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="DDLDataDefinition#viewName">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />

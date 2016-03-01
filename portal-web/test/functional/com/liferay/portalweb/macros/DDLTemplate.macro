@@ -61,6 +61,8 @@
 			</then>
 		</if>
 
+		<execute function="SelectFrameTop" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 

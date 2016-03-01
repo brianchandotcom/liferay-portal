@@ -16,6 +16,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided project(":apps:business-productivity:polls:polls-api")
 	provided project(":apps:platform:portal:portal-upgrade")
+	provided project(":apps:platform:xstream:xstream-configurator-api")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")
 }

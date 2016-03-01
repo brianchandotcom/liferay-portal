@@ -23,20 +23,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public class UserPermissionUtil {
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void check(
-			PermissionChecker permissionChecker, long userId,
-			long organizationId, long locationId, String actionId)
-		throws PrincipalException {
-
-		check(
-			permissionChecker, userId, new long[] {organizationId, locationId},
-			actionId);
-	}
-
 	public static void check(
 			PermissionChecker permissionChecker, long userId,
 			long[] organizationIds, String actionId)
@@ -51,19 +37,6 @@ public class UserPermissionUtil {
 		throws PrincipalException {
 
 		getUserPermission().check(permissionChecker, userId, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static boolean contains(
-		PermissionChecker permissionChecker, long userId, long organizationId,
-		long locationId, String actionId) {
-
-		return contains(
-			permissionChecker, userId, new long[] {organizationId, locationId},
-			actionId);
 	}
 
 	public static boolean contains(

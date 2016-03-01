@@ -228,11 +228,6 @@ AUI.add(
 
 				settingsModalBoundingBox.addClass(CSS_FIELD_SETTINGS_MODAL);
 
-				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
-
-				settingsModal.set('centered', portletNode);
-				settingsModal.set('zIndex', Liferay.zIndex.OVERLAY);
-
 				instance._bindModalUI(settingsModal);
 
 				instance._previousSettings = JSON.stringify(instance.getSettings());

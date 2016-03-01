@@ -99,6 +99,8 @@ AUI.add(
 						visitor.set('fieldHandler', instance.destroyField);
 
 						visitor.visit();
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
 					createField: function(fieldType) {
@@ -151,9 +153,16 @@ AUI.add(
 						var instance = this;
 
 						if (!instance._fieldSettingsModal) {
-							instance._fieldSettingsModal = new Liferay.DDL.FormBuilderFieldSettingsModal();
-							instance._fieldSettingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance));
-							instance._fieldSettingsModal.after('save', A.bind(instance._afterFieldSettingsModalSave, instance));
+							instance._fieldSettingsModal = new Liferay.DDL.FormBuilderFieldSettingsModal(
+								{
+									portletNamespace: instance.get('portletNamespace')
+								}
+							);
+
+							instance._eventHandlers.push(
+								instance._fieldSettingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance)),
+								instance._fieldSettingsModal.after('save', A.bind(instance._afterFieldSettingsModalSave, instance))
+							);
 						}
 
 						instance._fieldSettingsModal.show(field, typeName);
@@ -370,7 +379,6 @@ AUI.add(
 
 						var fieldTypesModal = new Liferay.DDL.FormBuilderFieldTypesModal(
 							{
-								centered: true,
 								draggable: false,
 								fieldTypes: instance.get('fieldTypes'),
 								modal: true,

@@ -13,7 +13,10 @@ AUI.add(
 
 		var FormBuilderFieldSettingsModal = A.Component.create(
 			{
-				ATTRS: {},
+				ATTRS: {
+					portletNamespace: {
+					}
+				},
 
 				EXTENDS: A.FormBuilderSettingsModal,
 
@@ -27,47 +30,47 @@ AUI.add(
 
 						FormBuilderFieldSettingsModal.superclass.show.apply(instance, arguments);
 
-						this._modal.syncHeight();
+						instance._modal.syncHeight();
 					},
 
 					_create: function() {
-						this._modal = new Liferay.DDL.FormBuilderModal(
+						var instance = this;
+
+						instance._modal = new Liferay.DDL.FormBuilderModal(
 							{
-								centered: true,
+								after: {
+									visibleChange: A.bind(instance._afterModalVisibleChange, instance)
+								},
 								cssClass: CSS_FIELD_SETTINGS,
 								draggable: false,
 								dynamicContentHeight: true,
-								headerContent: this.TPL_FIELD_SETTINGS_HEAD_CONTENT,
+								headerContent: instance.TPL_FIELD_SETTINGS_HEAD_CONTENT,
 								modal: true,
+								portletNamespace: instance.get('portletNamespace'),
 								resizable: false,
-								topFixed: true,
-								zIndex: 4
+								topFixed: true
 							}
 						).render();
 
-						this._modal.addToolbar(
+						instance._modal.addToolbar(
 							[
 								{
 									cssClass: [CSS_BTN_PRIMARY, CSS_FIELD_SETTINGS_SAVE].join(' '),
-									label: 'Save',
+									label: Liferay.Language.get('save'),
 									on: {
-										click: A.bind(this._save, this)
-									},
-									render: true
+										click: A.bind(instance._save, instance)
+									}
 								},
 								{
 									cssClass: CSS_FIELD_SETTINGS_CANCEL,
-									label: 'Cancel',
+									label: Liferay.Language.get('cancel'),
 									on: {
-										click: A.bind(this.hide, this)
-									},
-									render: true
+										click: A.bind(instance.hide, instance)
+									}
 								}
 							],
 							'footer'
 						);
-
-						this._modal.after('visibleChange', A.bind(this._afterModalVisibleChange, this));
 					}
 				}
 			}

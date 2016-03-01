@@ -1,23 +1,31 @@
 AUI.add(
 	'liferay-ddl-form-builder-modal-support',
 	function(A) {
-
-		var CSS_MODAL_BD = A.getClassName('modal-body');
+		var Lang = A.Lang;
 
 		var FormBuilderModalSupport = function() {
 		};
 
 		FormBuilderModalSupport.ATTRS = {
+			centered: {
+				valueFn: '_valueCentered'
+			},
+
 			dynamicContentHeight: {
 				value: false,
 				writeOnce: true
 			},
 
+			portletNamespace: {
+			},
+
 			topFixed: {
-				value: false,
-				validator: function() {
-					return (this.get('centered'));
-				}
+				validator: '_validateTopFixed',
+				value: false
+			},
+
+			zIndex: {
+				value: Liferay.zIndex.OVERLAY
 			}
 		};
 
@@ -25,25 +33,28 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				instance._eventHandles.push(instance.after(instance._bindModalUI, instance, 'bindUI'));
-				instance._eventHandles.push(instance.after(instance._afterModalRender, instance, '_afterRender'));
+				instance._eventHandles.push(
+					instance.after(instance._afterModalRender, instance, '_afterRender'),
+					instance.after(instance._bindModalUI, instance, 'bindUI')
+				);
 			},
 
 			syncHeight: function() {
 				var instance = this;
-				var modalBody = A.one('.' + CSS_MODAL_BD);
 
-				modalBody.setStyle('max-height', '100%');
+				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
 
-				modalBody.setStyle('max-height', A.DOM.winHeight(document) - instance._getModalOffset());
+				bodyNode.setStyle('max-height', '100%');
+				bodyNode.setStyle('max-height', A.DOM.winHeight(A.config.doc) - instance._getModalOffset());
 			},
 
 			_afterModalRender: function() {
 				var instance = this;
 
-				if (this.get('dynamicContentHeight')) {
-					this._configModalDynamicHeight();
-					this.syncHeight();
+				if (instance.get('dynamicContentHeight')) {
+					instance._configModalDynamicHeight();
+
+					instance.syncHeight();
 				}
 			},
 
@@ -56,7 +67,7 @@ AUI.add(
 			_afterWindowResize: function() {
 				var instance = this;
 
-				if (this.get('dynamicContentHeight')) {
+				if (instance.get('dynamicContentHeight')) {
 					instance.syncHeight();
 				}
 
@@ -68,8 +79,10 @@ AUI.add(
 			_bindModalUI: function() {
 				var instance = this;
 
-				instance._eventHandles.push(instance.after('topFixedChange', instance._afterTopFixedChange));
-				instance._eventHandles.push(instance.on('xyChange', instance._onModalXYChange));
+				instance._eventHandles.push(
+					instance.after('topFixedChange', instance._afterTopFixedChange),
+					instance.on('xyChange', instance._onModalXYChange)
+				);
 			},
 
 			_configModalDynamicHeight: function() {
@@ -81,30 +94,49 @@ AUI.add(
 			_fixAtTheTop: function(xy) {
 				var instance = this;
 
-				xy[1] = A.config.win.scrollY + window.parseInt(instance.get('boundingBox').getComputedStyle('margin-top'));
+				var boundingBox = instance.get('boundingBox');
+
+				xy[1] = A.config.win.scrollY + Lang.toInt(boundingBox.getComputedStyle('margin-top'));
 
 				return xy;
 			},
 
 			_getModalOffset: function() {
 				var instance = this;
-				var modalBodyHeight = A.one('.' + CSS_MODAL_BD).get('offsetHeight');
+
+				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
+
+				var bodyHeight = bodyNode.get('offsetHeight');
 
 				var boundingBox = instance.get('boundingBox');
 
-				var boundingOuterHeight = boundingBox.get('offsetHeight') +
-					window.parseInt(boundingBox.getComputedStyle('marginTop')) +
-					window.parseInt(boundingBox.getComputedStyle('marginBottom'));
+				var outterHeight = boundingBox.get('offsetHeight') +
+					Lang.toInt(boundingBox.getComputedStyle('marginTop')) +
+					Lang.toInt(boundingBox.getComputedStyle('marginBottom'));
 
-				return Math.max(modalBodyHeight, boundingOuterHeight) - Math.min(modalBodyHeight, boundingOuterHeight);
+				return Math.max(bodyHeight, outterHeight) - Math.min(bodyHeight, outterHeight);
 			},
 
 			_onModalXYChange: function(event) {
 				var instance = this;
 
-				if (instance.get('topFixed') && instance.get('centered')) {
+				if (instance.get('centered') && instance.get('topFixed')) {
 					event.newVal = instance._fixAtTheTop(event.newVal);
 				}
+			},
+
+			_validateTopFixed: function() {
+				var instance = this;
+
+				return instance.get('centered');
+			},
+
+			_valueCentered: function() {
+				var instance = this;
+
+				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
+
+				instance.set('centered', portletNode);
 			}
 		};
 

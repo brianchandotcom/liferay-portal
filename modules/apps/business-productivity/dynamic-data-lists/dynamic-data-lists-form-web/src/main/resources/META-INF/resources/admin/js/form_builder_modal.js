@@ -1,10 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-modal',
 	function(A) {
-
 		var FormBuilderModal = A.Component.create(
 			{
-
 				AUGMENTS: [Liferay.DDL.FormBuilderModalSupport],
 
 				EXTENDS: A.Modal,

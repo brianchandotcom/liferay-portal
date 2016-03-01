@@ -9,15 +9,6 @@ AUI.add(
 
 		var FormBuilderFieldTypesModal = A.Component.create(
 			{
-				ATTRS: {
-					portletNamespace: {
-					},
-
-					zIndex: {
-						value: Liferay.zIndex.OVERLAY
-					}
-				},
-
 				CSS_PREFIX: 'lfr-ddl-form-builder-field-types-modal',
 
 				AUGMENTS: [Liferay.DDL.FormBuilderModalSupport],

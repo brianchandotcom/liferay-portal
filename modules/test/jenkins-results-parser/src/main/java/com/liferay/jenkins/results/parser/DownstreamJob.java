@@ -71,7 +71,12 @@ public class DownstreamJob extends BaseJob {
 		return parameters;
 	}
 
-	public DownstreamJob(String invocationURL) throws Exception {
+	public DownstreamJob(String invocationURL, TopLevelJob topLevelJob)
+		throws Exception {
+
+		this.topLevelJob = topLevelJob;
+		this.topLevelJob.add(this);
+		
 		Matcher invocationURLMatcher = _invocationURLPattern.matcher(
 			invocationURL);
 
@@ -88,7 +93,7 @@ public class DownstreamJob extends BaseJob {
 		Map<String, String> invokedParameters = getParametersFromString(
 			parametersString);
 
-		Set<String> availableParameters = getAvailableParameters(getJobURL());
+		Set<String> availableParameters = getParameterNames(getJobURL());
 
 		parameters = new HashMap<>();
 
@@ -112,7 +117,11 @@ public class DownstreamJob extends BaseJob {
 	public Map<String, String> getParameters() {
 		return this.parameters;
 	}
-
+	
+	public TopLevelJob getTopLevelJob() {
+		return topLevelJob;
+	}
+	
 	public void update() throws Exception {
 		if (status.equals("completed") || status.equals("invalid")) {
 			return;
@@ -126,7 +135,7 @@ public class DownstreamJob extends BaseJob {
 
 				String queueItemName = queueItem.getJSONObject(
 					"task").getString("name");
-				Map<String, String> jobParameters = getJobParameters(queueItem);
+				Map<String, String> jobParameters = getParameters(queueItem);
 
 				if (queueItemName.equals(name) &&
 					jobParameters.equals(parameters)) {
@@ -142,7 +151,7 @@ public class DownstreamJob extends BaseJob {
 			for (int i = 0; i < builds.length(); i++) {
 				JSONObject build = builds.getJSONObject(i);
 
-				if (parameters.equals(getJobParameters(build))) {
+				if (parameters.equals(getParameters(build))) {
 					setNumber(build.getInt("number"));
 
 					System.out.println(getBuildMessage());
@@ -172,75 +181,66 @@ public class DownstreamJob extends BaseJob {
 
 	protected String invocationURL;
 	protected Map<String, String> parameters;
+	protected TopLevelJob topLevelJob;
 
-	private static Set<String> getAvailableParameters(String jobURL)
+	private static Set<String> getParameterNames(String jobURL)
 		throws Exception {
 
-		Set<String> availableParameters = new HashSet<>();
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(jobURL);
-		sb.append("/api/json");
-		sb.append("?tree=actions[parameterDefinitions[name,type,value]]");
+		Set<String> parameterNames = new HashSet<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString());
+			jobURL + "/api/json?tree=actions[parameterDefinitions" +
+				"[name,type,value]]");
 
 		JSONArray parameterDefinitions = jsonObject.getJSONArray(
 			"actions").getJSONObject(0).getJSONArray("parameterDefinitions");
 
 		for (int i = 0; i < parameterDefinitions.length(); i++) {
-			JSONObject parameterDefinition = parameterDefinitions.getJSONObject(
-				i);
+			JSONObject parameterDefinition =
+				parameterDefinitions.getJSONObject(i);
 
 			if (parameterDefinition.getString(
 					"type").equals("StringParameterDefinition")) {
 
-				availableParameters.add(parameterDefinition.getString("name"));
+				parameterNames.add(parameterDefinition.getString("name"));
 			}
 		}
 
-		return availableParameters;
+		return parameterNames;
 	}
 
 	private static JSONArray getBuildsJSONArray(String jobURL)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(jobURL);
-		sb.append("/api/json");
-		sb.append("?tree=builds[actions[parameters[name,type,value]]");
-		sb.append(",building,duration,number,result,url]");
-
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString(), false);
+			jobURL + "/api/json?tree=builds[actions[parameters" +
+				"[name,type,value]],building,duration,number,result,url]",
+			false);
 
 		return jsonObject.getJSONArray("builds");
 	}
 
-	private static Map<String, String> getJobParameters(
-			JSONArray jobParametersJSONArray)
+	private static Map<String, String> getParameters(
+			JSONArray parametersJSONArray)
 		throws Exception {
 
-		Map<String, String> jobParameters = new HashMap<>();
+		Map<String, String> parameters = new HashMap<>();
 
-		for (int i = 0; i < jobParametersJSONArray.length(); i++) {
-			JSONObject jobParameter = jobParametersJSONArray.getJSONObject(i);
+		for (int i = 0; i < parametersJSONArray.length(); i++) {
+			JSONObject parameter = parametersJSONArray.getJSONObject(i);
 
-			if (jobParameter.has("value")) {
-				String name = jobParameter.getString("name");
-				String value = jobParameter.getString("value");
+			if (parameter.has("value")) {
+				String name = parameter.getString("name");
+				String value = parameter.getString("value");
 
-				jobParameters.put(name, value);
+				parameters.put(name, value);
 			}
 		}
 
-		return jobParameters;
+		return parameters;
 	}
 
-	private static Map<String, String> getJobParameters(
+	private static Map<String, String> getParameters(
 			JSONObject buildJSONObject)
 		throws Exception {
 
@@ -252,25 +252,18 @@ public class DownstreamJob extends BaseJob {
 			JSONArray parametersJSONArray = actionsJSONArray.getJSONObject(
 				0).getJSONArray("parameters");
 
-			return getJobParameters(parametersJSONArray);
+			return getParameters(parametersJSONArray);
 		}
-		else {
-			return new HashMap<>();
-		}
+
+		return new HashMap<>();
 	}
 
 	private static JSONArray getQueueItemsJSONArray(String masterURL)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(masterURL);
-		sb.append("/queue/api/json");
-		sb.append("?tree=items[actions[parameters[name,value]],");
-		sb.append("task[name,url]]");
-
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString(), false);
+			masterURL + "/queue/api/json?tree=items[actions[parameters" +
+				"[name,value]],task[name,url]]", false);
 
 		return jsonObject.getJSONArray("items");
 	}
@@ -287,29 +280,38 @@ public class DownstreamJob extends BaseJob {
 			sb.append(getBuildURL());
 			sb.append(". ");
 			sb.append(getResult());
+			return sb.toString();
 		}
-		else if (status.equals("queued")) {
+
+		if (status.equals("queued")) {
 			sb.append(" is queued ");
 			sb.append(getJobURL());
 			sb.append(".");
+			return sb.toString();
 		}
-		else if (status.equals("running")) {
+
+		if (status.equals("running")) {
 			sb.append(" started at ");
 			sb.append(getBuildURL());
 			sb.append(".");
+			return sb.toString();
 		}
-		else if (status.equals("starting")) {
+
+		if (status.equals("starting")) {
 			sb.append(" invoked at ");
 			sb.append(getJobURL());
 			sb.append(".");
+			return sb.toString();
 		}
-		else if (status.equals("invalid")) {
+
+		if (status.equals("invalid")) {
 			sb.append(" is invalid ");
 			sb.append(getJobURL());
 			sb.append(".");
+			return sb.toString();
 		}
 
-		return sb.toString();
+		throw new RuntimeException("Unknown status: " + status + ".");
 	}
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(

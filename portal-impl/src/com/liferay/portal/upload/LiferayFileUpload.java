@@ -58,27 +58,6 @@ public class LiferayFileUpload extends ServletFileUpload {
 		return super.parseRequest(request);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("rawtypes")
-	protected FileItem createItem(Map headers, boolean formField)
-		throws FileUploadException {
-
-		LiferayFileItem item = (LiferayFileItem)super.createItem(
-			headers, formField);
-
-		String fileName = item.getFileName();
-
-		if (Validator.isNotNull(fileName)) {
-			_session.setAttribute(LiferayFileUpload.FILE_NAME, fileName);
-		}
-
-		return item;
-	}
-
 	private final HttpSession _session;
 
 }

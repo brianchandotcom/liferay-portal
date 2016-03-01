@@ -18,9 +18,15 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Map;
 
@@ -99,7 +105,8 @@ public class DBBuilder {
 		_buildSQLFile(sqlDir, "update-6.0.6-6.1.0");
 		_buildSQLFile(sqlDir, "update-6.0.12-6.1.0");
 		_buildSQLFile(sqlDir, "update-6.1.0-6.1.1");
-		_buildSQLFile(sqlDir, "update-6.1.1-6.2.0");
+		_buildSQLFile(sqlDir, new SQLFileGlob("update-6.1.1-6.2.0*"));
+		_buildSQLFile(sqlDir, new SQLFileGlob("update-6.2.0-7.0.0*"));
 
 		_buildCreateFile(sqlDir);
 	}
@@ -123,12 +130,35 @@ public class DBBuilder {
 		}
 	}
 
+	private void _buildSQLFile(String sqlDir, SQLFileGlob sqlFileGlob)
+		throws IOException {
+
+		try (DirectoryStream<Path> sqlFiles = Files.newDirectoryStream(
+				Paths.get(sqlDir), sqlFileGlob.getPattern())) {
+
+			for (Path sqlFile : sqlFiles) {
+				Path path = sqlFile.getFileName();
+
+				String fileName = path.toString();
+
+				_generateSQLFile(
+					sqlDir, fileName.replace(".sql", StringPool.BLANK));
+			}
+		}
+	}
+
 	private void _buildSQLFile(String sqlDir, String fileName)
 		throws IOException {
 
 		if (!FileUtil.exists(sqlDir + "/" + fileName + ".sql")) {
 			return;
 		}
+
+		_generateSQLFile(sqlDir, fileName);
+	}
+
+	private void _generateSQLFile(String sqlDir, String fileName)
+		throws IOException {
 
 		for (DBType dbType : _dbTypes) {
 			DB db = DBManagerUtil.getDB(dbType, null);
@@ -141,5 +171,25 @@ public class DBBuilder {
 
 	private final String _databaseName;
 	private final DBType[] _dbTypes;
+
+	private static class SQLFileGlob {
+
+		public SQLFileGlob(String sqlFile) {
+			if (!sqlFile.endsWith("*")) {
+				throw new IllegalArgumentException(
+					"Expected a glob pattern: " + sqlFile +
+						" is not a valid glob");
+			}
+
+			_sqlFile = sqlFile;
+		}
+
+		public String getPattern() {
+			return _sqlFile;
+		}
+
+		private final String _sqlFile;
+
+	}
 
 }

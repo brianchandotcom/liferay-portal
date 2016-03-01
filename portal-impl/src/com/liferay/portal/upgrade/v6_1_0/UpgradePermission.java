@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.service.impl.ResourcePermissionClassThreadLocal;
 import com.liferay.portal.service.impl.RoleClassNameThreadLocal;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -137,6 +134,13 @@ public class UpgradePermission extends UpgradeProcess {
 
 		RoleClassNameThreadLocal.setRoleClassName(
 			"com.liferay.portal.model.Role");
+
+		Class<? extends UpgradePermission> upgradePermissionClass =
+			this.getClass();
+
+		ResourceActionsUtil.read(
+			null, upgradePermissionClass.getClassLoader(),
+			"resource-actions/old-portal.xml");
 
 		// LPS-46141
 

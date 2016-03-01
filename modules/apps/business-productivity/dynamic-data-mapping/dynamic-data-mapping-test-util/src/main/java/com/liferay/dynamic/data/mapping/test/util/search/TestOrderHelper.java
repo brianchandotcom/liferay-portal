@@ -318,7 +318,7 @@ public abstract class TestOrderHelper {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		for (String option : _unsortedValues) {
+		for (String option : _optionValues) {
 			ddmFormFieldOptions.addOptionLabel(option, LocaleUtil.US, option);
 		}
 
@@ -389,9 +389,26 @@ public abstract class TestOrderHelper {
 	}
 
 	protected void testOrderByDDMRadioField(String indexType) throws Exception {
-		testOrderByDDMField(
-			toJsonArrays("a", "D", "c", "B"), toJsonArrays("a", "B", "c", "D"),
-			FieldConstants.STRING, indexType, DDMFormFieldType.RADIO);
+		testOrderByDDMRadioField(
+			new String[] {"a", "D", "c", "B"},
+			new String[] {"a", "B", "c", "D"}, FieldConstants.STRING, indexType,
+			DDMFormFieldType.RADIO);
+	}
+
+	protected void testOrderByDDMRadioField(
+			String[] unsortedValues, String[] sortedValues, String dataType,
+			String indexType, String type)
+		throws Exception {
+
+		_optionValues = unsortedValues;
+		_unsortedValues = toJsonArrays(unsortedValues);
+		_sortedValues = toJsonArrays(sortedValues);
+		_dataType = dataType;
+		_indexType = indexType;
+		_type = type;
+		_repeatable = false;
+
+		testOrderByDDMField();
 	}
 
 	protected void testOrderByDDMTextField(String indexType) throws Exception {
@@ -404,6 +421,7 @@ public abstract class TestOrderHelper {
 	private String _dataType;
 	private final Group _group;
 	private String _indexType;
+	private String[] _optionValues;
 	private boolean _repeatable;
 	private final ServiceContext _serviceContext;
 	private String[] _sortedValues;

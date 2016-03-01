@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -33,6 +34,9 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -70,6 +74,17 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		traverseDDMFormFieldValues(
 			ddmFormValues.getDDMFormFieldValues(),
 			ddmForm.getDDMFormFieldsMap(false));
+	}
+
+	protected JSONArray createJSONArray(String fieldName, String json)
+		throws DDMFormValuesValidationException {
+
+		try {
+			return _jsonFactory.createJSONArray(json);
+		}
+		catch (JSONException jsone) {
+			throw new MustSetValidValue(fieldName);
+		}
 	}
 
 	protected void evaluateDDMFormFieldValidationExpressions(
@@ -145,6 +160,11 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	protected void traverseDDMFormFields(
 			List<DDMFormField> ddmFormFields,
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap)
@@ -182,6 +202,37 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				traverseDDMFormFieldValues(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
 					ddmFormField.getNestedDDMFormFieldsMap());
+			}
+		}
+	}
+
+	protected void validateDDMFormFieldOptions(
+			DDMFormField ddmFormField, Value value)
+		throws DDMFormValuesValidationException {
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		if (ddmFormFieldOptions == null) {
+			return;
+		}
+
+		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+
+		if (optionValues.isEmpty()) {
+			return;
+		}
+
+		Map<Locale, String> selectedValues = value.getValues();
+
+		for (String selectedValue : selectedValues.values()) {
+			JSONArray jsonArray = createJSONArray(
+				ddmFormField.getName(), selectedValue);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				if (!optionValues.contains(jsonArray.getString(i))) {
+					throw new MustSetValidValue(ddmFormField.getName());
+				}
 			}
 		}
 	}
@@ -230,6 +281,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 			validateDDMFormFieldValueLocales(
 				ddmFormField, availableLocales, defaultLocale, value);
+
+			validateDDMFormFieldOptions(ddmFormField, value);
 		}
 	}
 
@@ -266,5 +319,6 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	private DDMFormEvaluator _ddmFormEvaluator;
+	private JSONFactory _jsonFactory;
 
 }

@@ -2661,7 +2661,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
-			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="240" ]]></replacevalue>
+			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">

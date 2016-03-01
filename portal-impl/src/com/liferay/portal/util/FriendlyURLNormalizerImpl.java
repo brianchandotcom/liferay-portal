@@ -40,69 +40,6 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		return normalize(friendlyURL, _friendlyURLPattern);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #normalize(String, Pattern)}
-	 */
-	@Deprecated
-	@Override
-	public String normalize(String friendlyURL, char[] replaceChars) {
-		if (Validator.isNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
-		friendlyURL = GetterUtil.getString(friendlyURL);
-		friendlyURL = StringUtil.toLowerCase(friendlyURL);
-		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
-
-		StringBuilder sb = null;
-
-		int index = 0;
-
-		for (int i = 0; i < friendlyURL.length(); i++) {
-			char c = friendlyURL.charAt(i);
-
-			if ((Arrays.binarySearch(_REPLACE_CHARS, c) >= 0) ||
-				((replaceChars != null) &&
-				 ArrayUtil.contains(replaceChars, c))) {
-
-				if (sb == null) {
-					sb = new StringBuilder();
-				}
-
-				if (i > index) {
-					sb.append(friendlyURL.substring(index, i));
-				}
-
-				sb.append(CharPool.DASH);
-
-				index = i + 1;
-			}
-		}
-
-		if (sb != null) {
-			if (index < friendlyURL.length()) {
-				sb.append(friendlyURL.substring(index));
-			}
-
-			friendlyURL = sb.toString();
-		}
-
-		while (friendlyURL.contains(StringPool.DOUBLE_DASH)) {
-			friendlyURL = StringUtil.replace(
-				friendlyURL, StringPool.DOUBLE_DASH, StringPool.DASH);
-		}
-
-		/*if (friendlyURL.startsWith(StringPool.DASH)) {
-			friendlyURL = friendlyURL.substring(1);
-		}
-
-		if (friendlyURL.endsWith(StringPool.DASH)) {
-			friendlyURL = friendlyURL.substring(0, friendlyURL.length() - 1);
-		}*/
-
-		return friendlyURL;
-	}
-
 	@Override
 	public String normalize(String friendlyURL, Pattern friendlyURLPattern) {
 		if (Validator.isNull(friendlyURL)) {

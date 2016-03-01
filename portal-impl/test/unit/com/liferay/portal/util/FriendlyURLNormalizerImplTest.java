@@ -87,15 +87,6 @@ public class FriendlyURLNormalizerImplTest {
 			_friendlyURLNormalizerImpl.normalize(StringPool.SPACE));
 	}
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testNormalizeWordReplacingChars() {
-		Assert.assertEquals(
-			"s-nt-nc-ith-r-plac-chars",
-			_friendlyURLNormalizerImpl.normalize(
-				"sentence with replace chars", new char[] {'e', 'w'}));
-	}
-
 	@Test
 	public void testNormalizeWordWithNonASCIICharacters() {
 		Assert.assertEquals(

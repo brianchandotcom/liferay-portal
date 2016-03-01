@@ -28,12 +28,6 @@ public interface DestinationNames {
 	public static final String BACKGROUND_TASK_STATUS =
 		"liferay/background_task_status";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
-	 */
-	@Deprecated
-	public static final String BLOGS = "liferay/blogs";
-
 	public static final String CONVERT_PROCESS = "liferay/convert_process";
 
 	public static final String DEVICE_RECOGNITION_PROVIDER =
@@ -75,12 +69,6 @@ public interface DestinationNames {
 	public static final String IP_GEOCODER_RESPONSE =
 		"liferay/ip_geocoder/response";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
-	 */
-	@Deprecated
-	public static final String JOURNAL = "liferay/journal";
-
 	public static final String LAYOUTS_LOCAL_PUBLISHER =
 		"liferay/layouts_local_publisher";
 
@@ -93,11 +81,7 @@ public interface DestinationNames {
 
 	public static final String MAIL_SYNCHRONIZER = "liferay/mail_synchronizer";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
-	 */
-	@Deprecated
-	public static final String MESSAGE_BOARDS = "liferay/message_boards";
+	public static final String MARKETPLACE = "liferay/marketplace";
 
 	public static final String MESSAGE_BOARDS_MAILING_LIST =
 		"liferay/message_boards_mailing_list";

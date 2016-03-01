@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Michael C. Han
@@ -33,28 +33,13 @@ public abstract class ThrowableAwareRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		long start = System.currentTimeMillis();
-
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Processing runnable " + ClassUtil.getClassName(this));
-			}
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			doRun();
 		}
 		catch (Exception e) {
 			_log.error("Unable to process runnable: " + e.getMessage());
 
 			_throwable = e;
-		}
-		finally {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Completed processing runnable " +
-						ClassUtil.getClassName(this) + " in " +
-							(System.currentTimeMillis() - start) + "ms");
-			}
 		}
 	}
 

@@ -75,7 +75,6 @@ public class DownstreamJob extends BaseJob {
 		throws Exception {
 
 		this.topLevelJob = topLevelJob;
-		this.topLevelJob.add(this);
 
 		Matcher invocationURLMatcher = _invocationURLPattern.matcher(
 			invocationURL);

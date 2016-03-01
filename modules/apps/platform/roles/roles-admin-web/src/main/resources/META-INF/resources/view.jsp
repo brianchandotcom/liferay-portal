@@ -247,6 +247,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 
 		form.fm('deleteRoleIds').val(deleteRoleIds);
 
+		document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			submitForm(form, '<portlet:actionURL name="deleteRoles"><portlet:param name="redirect" value="<%= portletURL.toString() %>" /></portlet:actionURL>');
 		}

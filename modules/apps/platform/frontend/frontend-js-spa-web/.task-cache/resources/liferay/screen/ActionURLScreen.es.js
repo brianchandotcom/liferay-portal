@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es", ['exports', './EventScreen.es'], function (exports, _EventScreen2) {
+define("frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es", ['exports', './EventScreen.es', 'metal-uri/src/Uri', 'senna/src/utils/utils'], function (exports, _EventScreen2, _Uri, _utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -6,6 +6,10 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es", ['exports'
 	});
 
 	var _EventScreen3 = _interopRequireDefault(_EventScreen2);
+
+	var _Uri2 = _interopRequireDefault(_Uri);
+
+	var _utils2 = _interopRequireDefault(_utils);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -54,6 +58,22 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es", ['exports'
 			_this.httpMethod = 'POST';
 			return _this;
 		}
+
+		ActionURLScreen.prototype.getRequestPath = function getRequestPath() {
+			var request = this.getRequest();
+
+			if (request) {
+				var uri = new _Uri2.default(request.responseURL);
+
+				if (uri.getParameterValue('p_p_lifecycle') === '1') {
+					uri.setParameterValue('p_p_lifecycle', '0');
+				}
+
+				return _utils2.default.getUrlPath(uri.toString());
+			}
+
+			return null;
+		};
 
 		return ActionURLScreen;
 	}(_EventScreen3.default);

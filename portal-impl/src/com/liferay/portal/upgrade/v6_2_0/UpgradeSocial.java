@@ -238,6 +238,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private void populateExtraDataGeneratorMap() {
 		_extraDataGenerators.add(new AddAssetCommentExtraDataGenerator());
+		_extraDataGenerators.add(new AddMessageExtraDataGenerator());
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
@@ -319,6 +320,60 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		private static final int _TYPE_ADD_COMMENT = 10005;
+
+	};
+
+	private class AddMessageExtraDataGenerator implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.messageboards.model.MBMessage";
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select subject from MBMessage where messageId = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("subject"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_MESSAGE);
+			ps.setInt(3, _REPLY_MESSAGE);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			ps.setLong(1, classPK);
+		}
+
+		private static final int _ADD_MESSAGE = 1;
+
+		private static final int _REPLY_MESSAGE = 2;
 
 	};
 

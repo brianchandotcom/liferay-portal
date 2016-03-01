@@ -48,7 +48,7 @@
 			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
-				value="select-page"
+				value="select-layout"
 			/>
 
 			<@liferay_aui.button

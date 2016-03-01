@@ -50,66 +50,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortletResponseUtil {
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, byte[] bytes)
-		throws IOException {
-
-		sendFile(null, mimeResponse, fileName, bytes);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, byte[] bytes,
-			String contentType)
-		throws IOException {
-
-		sendFile(null, mimeResponse, fileName, bytes, contentType);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream inputStream)
-		throws IOException {
-
-		sendFile(null, mimeResponse, fileName, inputStream);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream inputStream,
-			int contentLength, String contentType)
-		throws IOException {
-
-		sendFile(
-			null, mimeResponse, fileName, inputStream, contentLength,
-			contentType);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream inputStream,
-			String contentType)
-		throws IOException {
-
-		sendFile(null, mimeResponse, fileName, inputStream, contentType);
-	}
-
 	public static void sendFile(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
 			String fileName, byte[] bytes)

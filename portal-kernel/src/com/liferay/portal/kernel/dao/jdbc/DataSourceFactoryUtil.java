@@ -45,20 +45,6 @@ public class DataSourceFactoryUtil {
 		return getDataSourceFactory().initDataSource(properties);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #initDataSource(String,
-	 *             String, String, String, String)}
-	 */
-	@Deprecated
-	public static DataSource initDataSource(
-			String driverClassName, String url, String userName,
-			String password)
-		throws Exception {
-
-		return initDataSource(
-			driverClassName, url, userName, password, StringPool.BLANK);
-	}
-
 	public static DataSource initDataSource(
 			String driverClassName, String url, String userName,
 			String password, String jndiName)

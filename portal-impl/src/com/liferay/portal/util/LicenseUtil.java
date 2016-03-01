@@ -153,14 +153,6 @@ public class LicenseUtil {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link PortalUtil#getComputerName()}
-	 */
-	@Deprecated
-	public static String getHostName() {
-		return PortalUtil.getComputerName();
-	}
-
 	public static Set<String> getIpAddresses() {
 		if (_ipAddresses != null) {
 			return new HashSet<>(_ipAddresses);

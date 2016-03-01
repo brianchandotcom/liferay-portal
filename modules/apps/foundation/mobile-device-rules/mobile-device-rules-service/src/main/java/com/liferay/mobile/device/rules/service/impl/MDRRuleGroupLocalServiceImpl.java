@@ -206,23 +206,6 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupPersistence.countByGroupId(groupIds);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long, String,
-	 *             LinkedHashMap, boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MDRRuleGroup> search(
-		long groupId, String name, boolean andOperator, int start, int end) {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.findByG_N(
-			groupId, name, params, andOperator, start, end);
-	}
-
 	@Override
 	public List<MDRRuleGroup> search(
 		long groupId, String name, LinkedHashMap<String, Object> params,

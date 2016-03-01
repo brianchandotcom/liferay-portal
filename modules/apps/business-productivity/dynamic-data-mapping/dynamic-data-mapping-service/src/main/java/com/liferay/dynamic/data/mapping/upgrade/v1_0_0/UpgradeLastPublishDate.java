@@ -24,13 +24,12 @@ public class UpgradeLastPublishDate
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table DDMStructure add lastPublishDate DATE null");
+		addLastPublishDateColumn("DDMStructure");
 
 		updateLastPublishDates(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructure");
 
-		runSQL("alter table DDMTemplate add lastPublishDate DATE null");
-
+		addLastPublishDateColumn("DDMTemplate");
 		updateLastPublishDates(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
 	}

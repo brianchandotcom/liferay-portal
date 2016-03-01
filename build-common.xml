@@ -1401,6 +1401,37 @@ rerun your task.
 				</sequential>
 			</for>
 
+			<for list="portal-impl,portal-kernel,portal-test,portal-test-internal,util-bridges,util-java,util-taglib" param="artifact.name">
+				<sequential>
+					<propertyregex
+						global="true"
+						input="@{artifact.name}"
+						override="true"
+						property="processed.artifact.name"
+						regexp="-"
+						replace="."
+					/>
+
+					<loadproperties srcFile="${basedir}/@{artifact.name}/bnd.bnd">
+						<filterchain>
+							<linecontains>
+								<contains value="Bundle-Version" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>
+
+					<echo
+						append="true"
+						file="${basedir}/.gradle/gradle.properties"
+					>
+						com.liferay.${processed.artifact.name}.version=${Bundle-Version}-SNAPSHOT
+					</echo>
+
+					<var name="Bundle-Version" unset="true" />
+					<var name="processed.artifact.name" unset="true" />
+				</sequential>
+			</for>
+
 			<propertyselector
 				casesensitive="false"
 				delimiter="," match="ivy.pom.(.+)"

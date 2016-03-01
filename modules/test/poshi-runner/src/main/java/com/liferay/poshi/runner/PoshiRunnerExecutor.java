@@ -20,14 +20,20 @@ import com.liferay.poshi.runner.logger.LoggerUtil;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.logger.XMLLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.ExternalMethod;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
+
+import groovy.lang.Binding;
+
+import groovy.util.GroovyScriptEngine;
 
 import java.lang.reflect.Method;
 
@@ -176,6 +182,9 @@ public class PoshiRunnerExecutor {
 						 PropsValues.MOBILE_BROWSER) {
 
 					runMacroExecuteElement(childElement, "macro-mobile");
+				}
+				else if (childElement.attributeValue("groovy-script") != null) {
+					runGroovyScriptElement(childElement);
 				}
 				else if (childElement.attributeValue("selenium") != null) {
 					runSeleniumElement(childElement);
@@ -428,6 +437,45 @@ public class PoshiRunnerExecutor {
 
 			_functionExecuteElement = null;
 			_functionWarningMessage = null;
+		}
+	}
+
+	public static void runGroovyScriptElement(Element executeElement)
+		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+
+		List<String> arguments = new ArrayList<>();
+		List<Element> executeArgElements = executeElement.elements("arg");
+
+		Binding binding = new Binding();
+
+		if (!executeArgElements.isEmpty()) {
+			for (Element executeArgElement : executeArgElements) {
+				arguments.add(executeArgElement.attributeValue("value"));
+			}
+
+			binding.setVariable(
+				"args", arguments.toArray(new String[arguments.size()]));
+		}
+
+		String fileName = PoshiRunnerVariablesUtil.replaceCommandVars(
+			executeElement.attributeValue("groovy-script"));
+
+		String fileSeparator = FileUtil.getSeparator();
+
+		GroovyScriptEngine gse = new GroovyScriptEngine(
+			LiferaySeleniumHelper.getSourceDirFilePath(
+				fileSeparator + PropsValues.TEST_DEPENDENCIES_DIR_NAME +
+					fileSeparator + fileName));
+
+		Object result = gse.run(fileName, binding);
+
+		String returnVariable = executeElement.attributeValue("return");
+
+		if (returnVariable != null) {
+			PoshiRunnerVariablesUtil.putIntoCommandMap(
+				returnVariable, result.toString());
 		}
 	}
 

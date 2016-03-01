@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.deploy.hot;
+package com.liferay.marketplace.deployer.handler;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.marketplace.deployer.connection.LiferayPackageConnection;
+
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.osgi.service.url.AbstractURLStreamHandlerService;
 
 /**
- * @author Amos Fong
+ * @author Miguel Pastor
  */
-public class LiferayPackageHotDeployException extends PortalException {
+public class LiferayPackageStreamHandlerService
+	extends AbstractURLStreamHandlerService {
 
-	public LiferayPackageHotDeployException() {
-	}
-
-	public LiferayPackageHotDeployException(String msg) {
-		super(msg);
-	}
-
-	public LiferayPackageHotDeployException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public LiferayPackageHotDeployException(Throwable cause) {
-		super(cause);
+	@Override
+	public URLConnection openConnection(URL url) {
+		return new LiferayPackageConnection(url);
 	}
 
 }

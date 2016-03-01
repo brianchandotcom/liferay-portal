@@ -105,12 +105,6 @@
 					</constructor-arg>
 				</bean>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/marketplace" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SERIAL" />
-					</constructor-arg>
-				</bean>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
 					<constructor-arg name="destinationName" value="liferay/message_boards_mailing_list" />
 					<constructor-arg name="destinationType">
 						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.messaging;
+package com.liferay.marketplace.deployer.messaging;
 
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

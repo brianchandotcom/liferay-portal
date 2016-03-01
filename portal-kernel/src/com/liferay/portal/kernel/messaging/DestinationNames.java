@@ -93,8 +93,6 @@ public interface DestinationNames {
 
 	public static final String MAIL_SYNCHRONIZER = "liferay/mail_synchronizer";
 
-	public static final String MARKETPLACE = "liferay/marketplace";
-
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */

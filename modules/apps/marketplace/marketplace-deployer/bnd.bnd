@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Marketplace Deployer
+Bundle-SymbolicName: com.liferay.marketplace.deployer
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/marketplace/bnd.bnd

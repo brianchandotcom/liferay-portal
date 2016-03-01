@@ -81,10 +81,10 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 searchContainer.setRowChecker(entriesChecker);
 
 if (categoryId == 0) {
-	entriesChecker.setRememberCheckBoxStateURLRegexPattern("mvcRenderCommandName=/message_boards/view(&.|$)");
+	entriesChecker.setRememberCheckBoxStateURLRegex("mvcRenderCommandName=/message_boards/view(&.|$)");
 }
 else {
-	entriesChecker.setRememberCheckBoxStateURLRegexPattern("mbCategoryId=" + categoryId);
+	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
 
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);

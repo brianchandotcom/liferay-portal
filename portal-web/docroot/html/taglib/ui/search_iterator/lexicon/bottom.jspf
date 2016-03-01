@@ -53,8 +53,8 @@
 		<c:if test="<%= rowChecker != null %>">
 			var rememberCheckBoxState = <%= rowChecker.isRememberCheckBoxState() %>;
 
-			<c:if test="<%= rowChecker.isRememberCheckBoxState() && Validator.isNotNull(rowChecker.getRememberCheckBoxStateURLRegexPattern()) %>">
-				rememberCheckBoxState = '<%= rowChecker.getRememberCheckBoxStateURLRegexPattern() %>';
+			<c:if test="<%= rowChecker.isRememberCheckBoxState() && Validator.isNotNull(rowChecker.getRememberCheckBoxStateURLRegex()) %>">
+				rememberCheckBoxState = '<%= rowChecker.getRememberCheckBoxStateURLRegex() %>';
 			</c:if>
 
 			plugins.push(

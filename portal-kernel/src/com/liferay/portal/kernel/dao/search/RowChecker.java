@@ -95,8 +95,8 @@ public class RowChecker {
 		return _formName;
 	}
 
-	public String getRememberCheckBoxStateURLRegexPattern() {
-		return _rememberCheckBoxStateURLRegexPattern;
+	public String getRememberCheckBoxStateURLRegex() {
+		return _rememberCheckBoxStateURLRegex;
 	}
 
 	/**
@@ -177,11 +177,11 @@ public class RowChecker {
 		_rememberCheckBoxState = rememberCheckBoxState;
 	}
 
-	public void setRememberCheckBoxStateURLRegexPattern(
-		String rememberCheckBoxStateURLRegexPattern) {
+	public void setRememberCheckBoxStateURLRegex(
+		String rememberCheckBoxStateURLRegex) {
 
-		_rememberCheckBoxStateURLRegexPattern =
-			rememberCheckBoxStateURLRegexPattern;
+		_rememberCheckBoxStateURLRegex =
+			rememberCheckBoxStateURLRegex;
 	}
 
 	public void setRowIds(String rowIds) {
@@ -320,7 +320,7 @@ public class RowChecker {
 	private String _formName;
 	private final PortletResponse _portletResponse;
 	private boolean _rememberCheckBoxState = true;
-	private String _rememberCheckBoxStateURLRegexPattern;
+	private String _rememberCheckBoxStateURLRegex;
 	private String _rowIds;
 	private String _rowSelector;
 	private String _valign = VALIGN;

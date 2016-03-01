@@ -35,10 +35,6 @@
 				_mbMessageModel = mbMessageModel
 			/>
 
-			<@insertResourcePermissions
-				_entry = mbMessageModel
-			/>
-
 			<@insertSocialActivity
 				_entry = mbMessageModel
 			/>

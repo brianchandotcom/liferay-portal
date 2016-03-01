@@ -135,6 +135,10 @@
 >
 	insert into Group_ values (${_groupModel.mvccVersion}, '${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.groupKey}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', ${_groupModel.manualMembership?string}, ${_groupModel.membershipRestriction}, '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.remoteStagingGroupCount}, ${_groupModel.inheritContent?string}, ${_groupModel.active?string});
 
+	<@insertResourcePermissions
+		_entry = _groupModel
+	/>
+
 	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
@@ -195,6 +199,10 @@
 	_mbMessageModel
 >
 	insert into MBMessage values ('${_mbMessageModel.uuid}', ${_mbMessageModel.messageId}, ${_mbMessageModel.groupId}, ${_mbMessageModel.companyId}, ${_mbMessageModel.userId}, '${_mbMessageModel.userName}', '${dataFactory.getDateString(_mbMessageModel.createDate)}', '${dataFactory.getDateString(_mbMessageModel.modifiedDate)}', ${_mbMessageModel.classNameId}, ${_mbMessageModel.classPK}, ${_mbMessageModel.categoryId}, ${_mbMessageModel.threadId}, ${_mbMessageModel.rootMessageId}, ${_mbMessageModel.parentMessageId}, '${_mbMessageModel.subject}', '${_mbMessageModel.body}', '${_mbMessageModel.format}', ${_mbMessageModel.anonymous?string}, ${_mbMessageModel.priority}, ${_mbMessageModel.allowPingbacks?string}, ${_mbMessageModel.answer?string}, '${dataFactory.getDateString(_mbMessageModel.lastPublishDate)}', ${_mbMessageModel.status}, ${_mbMessageModel.statusByUserId}, '${_mbMessageModel.statusByUserName}', '${dataFactory.getDateString(_mbMessageModel.statusDate)}');
+
+	<@insertResourcePermissions
+		_entry = _mbMessageModel
+	/>
 
 	<@insertAssetEntry
 		_entry = _mbMessageModel

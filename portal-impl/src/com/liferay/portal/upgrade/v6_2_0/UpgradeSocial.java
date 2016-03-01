@@ -31,7 +31,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -86,6 +90,83 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateWikiPageActivities();
 	}
 
+	protected String generateExtraDataForActivity(
+			ExtraDataGenerator extraDataGenerator, long companyId, long groupId,
+			long userId, long classNameId, long classPK, int type,
+			String extraData)
+		throws Exception {
+
+		String result = null;
+
+		if (extraDataGenerator != null) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					extraDataGenerator.getEntityQuery())) {
+
+				extraDataGenerator.setEntityQueryParameters(
+					ps, groupId, companyId, userId, classNameId, classPK, type,
+					extraData);
+
+				try (ResultSet rs = ps.executeQuery()) {
+
+					JSONObject extraDataJSONObject = null;
+
+					while (rs.next()) {
+						extraDataJSONObject =
+							extraDataGenerator.getExtraDataJSONObject(
+								rs, extraData);
+					}
+
+					result = extraDataJSONObject.toString();
+				}
+			}
+		}
+
+		return result;
+	}
+
+	protected Map<Long, String> getExtraDataMap(
+			ExtraDataGenerator extraDataGenerator)
+		throws Exception {
+
+		Map<Long, String> extraDataMap = new HashMap<>();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("select activityId, groupId, companyId, userId, ");
+		sb.append("classNameId, classPK, type_, extraData ");
+		sb.append("from SocialActivity where ");
+		sb.append(extraDataGenerator.getActivityQueryWhereClause());
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+			extraDataGenerator.setActivityQueryParameters(ps);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long activityId = rs.getLong("activityId");
+					long classNameId = rs.getLong("classNameId");
+					long classPK = rs.getLong("classPK");
+					long companyId = rs.getLong("companyId");
+					String extraData = rs.getString("extraData");
+					long groupId = rs.getLong("groupId");
+					int type = rs.getInt("type_");
+					long userId = rs.getLong("userId");
+
+					String newExtraData = generateExtraDataForActivity(
+						extraDataGenerator, groupId, companyId, userId,
+						classNameId, classPK, type, extraData);
+
+					if (newExtraData != null) {
+						extraDataMap.put(activityId, newExtraData);
+					}
+				}
+			}
+		}
+
+		return extraDataMap;
+	}
+
 	protected Timestamp getUniqueModifiedDate(
 		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
 		long classNameId, long resourcePrimKey, double type) {
@@ -113,6 +194,34 @@ public class UpgradeSocial extends UpgradeProcess {
 				keys.add(key);
 
 				return modifiedDate;
+			}
+		}
+	}
+
+	protected void updateActivities(ExtraDataGenerator extraDataGenerator)
+		throws Exception {
+
+		Map<Long, String> extraDataMap = getExtraDataMap(extraDataGenerator);
+
+		String updateActivityQuery =
+			"update SocialActivity set extraData = ? where activityId = ?";
+
+		for (Map.Entry<Long, String> entry : extraDataMap.entrySet()) {
+			long activityId = entry.getKey();
+			String extraData = entry.getValue();
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					updateActivityQuery)) {
+
+				ps.setString(1, extraData);
+				ps.setLong(2, activityId);
+
+				ps.executeUpdate();
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to update activity " + activityId, e);
+				}
 			}
 		}
 	}
@@ -293,6 +402,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	}
 
+	private void populateExtraDataGeneratorMap() {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
+	private static final List<ExtraDataGenerator> _extraDataGenerators =
+		new ArrayList<>();
 }

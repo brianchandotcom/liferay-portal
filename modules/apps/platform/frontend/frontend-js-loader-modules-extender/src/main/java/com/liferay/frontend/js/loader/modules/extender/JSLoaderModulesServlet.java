@@ -16,6 +16,8 @@ package com.liferay.frontend.js.loader.modules.extender;
 
 import aQute.lib.converter.Converter;
 
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -95,6 +97,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			printWriter.write('@');
 			printWriter.write(jsLoaderModule.getVersion());
 			printWriter.write("': '");
+			printWriter.write(PortalUtil.getPathContext());
 			printWriter.write(jsLoaderModule.getContextPath());
 			printWriter.write("'");
 
@@ -105,6 +108,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				printWriter.write("'");
 				printWriter.write(jsLoaderModule.getName());
 				printWriter.write("': '");
+				printWriter.write(PortalUtil.getPathContext());
 				printWriter.write(jsLoaderModule.getContextPath());
 				printWriter.write("'");
 			}

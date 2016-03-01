@@ -142,14 +142,17 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		String servletContextName = getServletContextName();
 
+		String portalPathContext = PortalUtil.getPathContext();
+
 		if (ServletContextPool.containsKey(servletContextName)) {
 			ServletContext servletContext = ServletContextPool.get(
 				servletContextName);
 
-			return servletContext.getContextPath();
+			return portalPathContext.concat(servletContext.getContextPath());
 		}
 
-		return StringPool.SLASH.concat(servletContextName);
+		return portalPathContext.concat(
+			StringPool.SLASH.concat(servletContextName));
 	}
 
 	@Override
@@ -322,11 +325,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		String contextPath = null;
 
 		if (_themeId.equals("admin")) {
-			contextPath = PortalWebResourcesUtil.getContextPath(
+			contextPath = PortalWebResourcesUtil.getModuleContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_ADMIN);
 		}
 		else if (_themeId.equals("classic")) {
-			contextPath = PortalWebResourcesUtil.getContextPath(
+			contextPath = PortalWebResourcesUtil.getModuleContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
 		}
 

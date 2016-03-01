@@ -49,7 +49,7 @@ AUI.add(
 									{
 										cssClass: 'close',
 										discardDefaultButtonCssClasses: true,
-										labelHTML: '<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>',
+										labelHTML: '<svg class="lexicon-icon"><use xlink:href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /></svg>',
 										on: {
 											click: function(event) {
 												instance.hide();

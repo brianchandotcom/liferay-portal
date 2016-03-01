@@ -18,6 +18,11 @@ import aQute.bnd.osgi.Constants;
 
 import aQute.lib.converter.Converter;
 
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalImpl;
+
 import java.net.URL;
 
 import java.util.Arrays;
@@ -32,7 +37,9 @@ import javax.servlet.ServletContext;
 
 import org.json.JSONException;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,6 +63,26 @@ import org.springframework.mock.web.MockServletContext;
  */
 @RunWith(PowerMockRunner.class)
 public class JSLoaderModulesServletTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		_portal = PortalUtil.getPortal();
+
+		_portalUtil.setPortal(
+			new PortalImpl() {
+
+				@Override
+				public String getPathContext() {
+					return StringPool.BLANK;
+				}
+
+			});
+	}
+
+	@After
+	public void tearDown() {
+		_portalUtil.setPortal(_portal);
+	}
 
 	@Test
 	public void testBasicOutput() throws Exception {
@@ -575,6 +602,8 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 	}
 
 	private final AtomicInteger _counter = new AtomicInteger(0);
+	private Portal _portal;
+	private final PortalUtil _portalUtil = new PortalUtil();
 
 	private static class TestServiceReference
 		implements ServiceReference<ServletContext> {

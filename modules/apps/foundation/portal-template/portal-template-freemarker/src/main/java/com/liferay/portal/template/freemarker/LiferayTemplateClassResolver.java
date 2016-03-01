@@ -142,9 +142,17 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_freemarkerEngineConfiguration = Configurable.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
+
+		_classResolverBundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE,
+			new ClassResolverBundleTrackerCustomizer());
+
+		_classResolverBundleTracker.open();
 	}
 
 	private Set<ClassLoader> _findAllowedClassLoaders(

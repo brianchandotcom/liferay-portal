@@ -14,6 +14,7 @@ dependencies {
 	provided project(":apps:platform:portal-background-task:portal-background-task-api")
 	provided project(":apps:platform:portal-background-task:portal-background-task-service")
 	provided project(":apps:platform:portal:portal-upgrade")
+	provided project(":apps:platform:xstream:xstream-configurator-api")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 }
 

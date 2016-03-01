@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.layout.prototype.instance.lifecycle;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -86,6 +88,28 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 
 		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, WikiPortletKeys.WIKI, "column-1");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout,
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
+			"column-2");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
+			"column-2");
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")",
+		unbind = "-"
+	)
+	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")",
+		unbind = "-"
+	)
+	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

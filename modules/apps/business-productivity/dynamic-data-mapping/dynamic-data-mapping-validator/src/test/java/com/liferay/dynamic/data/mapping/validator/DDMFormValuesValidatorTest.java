@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -38,6 +39,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValuesValidatorImpl;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -64,7 +66,7 @@ public class DDMFormValuesValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormEvaluator();
+		setUpDDMFormValuesValidator();
 	}
 
 	@Test
@@ -510,6 +512,33 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
+	@Test(expected = MustSetValidValue.class)
+	public void testValidationWithWrongValueSetForSelect() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"option", new UnlocalizedValue("[\"Invalid\"]")));
+
+		_ddmFormValuesValidator.validate(ddmFormValues);
+	}
+
 	@Test(expected = MustSetValidValuesSize.class)
 	public void testValidationWithWrongValuesForNonRepeatableField()
 		throws Exception {
@@ -549,7 +578,10 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	private void setUpDDMFormEvaluator() throws Exception {
+	protected void setUpDDMFormValuesValidator() throws Exception {
+
+		// DDM Form Evaluator
+
 		DDMFormEvaluator _ddFormEvaluator = mock(DDMFormEvaluator.class);
 
 		field(
@@ -576,6 +608,14 @@ public class DDMFormValuesValidatorTest {
 			Mockito.any(Locale.class)
 		).thenReturn(
 			ddmFormEvaluationResult
+		);
+
+		// JSON Factory
+
+		field(
+			DDMFormValuesValidatorImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesValidator, new JSONFactoryImpl()
 		);
 	}
 

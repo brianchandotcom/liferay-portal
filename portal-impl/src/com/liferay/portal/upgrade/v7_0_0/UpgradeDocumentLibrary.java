@@ -419,16 +419,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	protected void updateFileVersionFileName(
 			long fileVersionId, String fileName)
 		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update DLFileVersion set fileName = ? where " +
-					"fileVersionId = ?")) {
-
-			ps.setString(1, fileName);
-			ps.setLong(2, fileVersionId);
-
-			ps.executeUpdate();
-		}
 	}
 
 	protected void updateFileVersionFileNames() throws Exception {
@@ -438,6 +428,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			try (PreparedStatement ps = connection.prepareStatement(
 					"select fileVersionId, extension, title from " +
 						"DLFileVersion");
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update DLFileVersion set fileName = ? where " +
+								"fileVersionId = ?"));
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
@@ -449,8 +444,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					String fileName = DLUtil.getSanitizedFileName(
 						title, extension);
 
-					updateFileVersionFileName(fileVersionId, fileName);
+					ps2.setString(1, fileName);
+					ps2.setLong(2, fileVersionId);
+
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
 		}
 	}

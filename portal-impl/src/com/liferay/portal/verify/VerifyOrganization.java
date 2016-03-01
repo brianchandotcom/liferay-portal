@@ -14,6 +14,8 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnablesExecutorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -26,6 +28,7 @@ import com.liferay.portal.util.PortalInstances;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,11 +39,40 @@ public class VerifyOrganization extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		rebuildTree();
+		List<ThrowableAwareRunnable> throwableAwareRunnables =
+			new ArrayList<>();
 
-		updateOrganizationAssets();
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
 
-		updateOrganizationAssetEntries();
+				@Override
+				protected void doRun() throws Exception {
+					rebuildTree();
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					updateOrganizationAssets();
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					updateOrganizationAssetEntries();
+				}
+
+			});
+
+		ThrowableAwareRunnablesExecutorUtil.execute(throwableAwareRunnables);
 	}
 
 	protected void rebuildTree() throws Exception {

@@ -25,9 +25,9 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			GroupTable.class, new String[] {"typeSettings", "TEXT null"},
-			new String[] {"friendlyURL", "VARCHAR(255) null"});
+		alter(
+			GroupTable.class, new AlterColumnType("typeSettings", "TEXT null"),
+			new AlterColumnType("friendlyURL", "VARCHAR(255) null"));
 
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.portal.model.Company");

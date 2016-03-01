@@ -24,8 +24,9 @@ public class UpgradePortletItem extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			PortletItemTable.class, "portletId", "VARCHAR(200) null");
+		alter(
+			PortletItemTable.class,
+			new AlterColumnType("portletId", "VARCHAR(200) null"));
 	}
 
 }

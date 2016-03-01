@@ -33,7 +33,6 @@ import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
@@ -198,17 +197,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_name JournalFeed feedType feedFormat " +
-					"VARCHAR(75) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS,
-				JournalFeedTable.TABLE_SQL_CREATE,
-				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			JournalFeedTable.class,
+			new AlterColumnName("feedType", "feedFormat VARCHAR(75) null"));
 
 		updateStructures();
 		updateTemplates();

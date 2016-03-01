@@ -24,7 +24,9 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(BlogsEntryTable.class, "smallImageURL", "STRING null");
+		alter(
+			BlogsEntryTable.class,
+			new AlterColumnType("smallImageURL", "STRING null"));
 	}
 
 }

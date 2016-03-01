@@ -26,11 +26,17 @@ public class UpgradeShopping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(ShoppingCartTable.class, "itemIds", "TEXT null");
+		alter(
+			ShoppingCartTable.class,
+			new AlterColumnType("itemIds", "TEXT null"));
 
-		alterColumnType(ShoppingOrderTable.class, "comments", "TEXT null");
+		alter(
+			ShoppingOrderTable.class,
+			new AlterColumnType("comments", "TEXT null"));
 
-		alterColumnType(ShoppingOrderItemTable.class, "itemId", "TEXT null");
+		alter(
+			ShoppingOrderItemTable.class,
+			new AlterColumnType("itemId", "TEXT null"));
 	}
 
 }

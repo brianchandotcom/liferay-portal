@@ -24,8 +24,9 @@ public class UpgradeRepository extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			RepositoryTable.class, "portletId", "VARCHAR(200) null");
+		alter(
+			RepositoryTable.class,
+			new AlterColumnType("portletId", "VARCHAR(200) null"));
 	}
 
 }

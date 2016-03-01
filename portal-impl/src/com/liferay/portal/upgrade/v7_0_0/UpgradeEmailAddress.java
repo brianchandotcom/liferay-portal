@@ -24,7 +24,7 @@ public class UpgradeEmailAddress extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(EmailAddressTable.class, "typeId", "LONG");
+		alter(EmailAddressTable.class, new AlterColumnType("typeId", "LONG"));
 	}
 
 }

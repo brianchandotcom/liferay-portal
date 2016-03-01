@@ -26,15 +26,18 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			JournalArticleTable.class, "smallImageURL", "STRING null");
+		alter(
+			JournalArticleTable.class,
+			new AlterColumnType("smallImageURL", "STRING null"));
 
-		alterColumnType(
-			JournalFeedTable.class, "targetLayoutFriendlyUrl",
-			"VARCHAR(255) null");
+		alter(
+			JournalFeedTable.class,
+			new AlterColumnType(
+				"targetLayoutFriendlyUrl", "VARCHAR(255) null"));
 
-		alterColumnType(
-			JournalTemplateTable.class, "smallImageURL", "STRING null");
+		alter(
+			JournalTemplateTable.class,
+			new AlterColumnType("smallImageURL", "STRING null"));
 	}
 
 }

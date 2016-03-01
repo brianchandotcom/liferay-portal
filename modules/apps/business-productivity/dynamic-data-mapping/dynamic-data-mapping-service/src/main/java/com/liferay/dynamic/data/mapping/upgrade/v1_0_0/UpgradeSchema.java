@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.SQLException;
-
 /**
  * @author Marcellus Tavares
  */
@@ -40,31 +38,18 @@ public class UpgradeSchema extends UpgradeProcess {
 			runSQLTemplateString(template, false, false);
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer("alterColumnName")) {
-			runSQL("alter_column_name DDMContent xml data_ TEXT null");
-
-			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
+		try (LoggingTimer loggingTimer = new LoggingTimer("alterColumn")) {
+			alter(
+				DDMContentTable.class,
+				new AlterColumnName("xml", "data_ TEXT null"));
+			alter(
+				DDMStructureTable.class,
+				new AlterColumnName("xsd", "definition TEXT null"),
+				new AlterColumnType("description", "TEXT null"));
+			alter(
+				DDMTemplateTable.class,
+				new AlterColumnType("description", "TEXT null"));
 		}
-		catch (SQLException sqle) {
-
-			// DDMContent
-
-			upgradeTable(
-				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
-				DDMContentTable.TABLE_SQL_CREATE,
-				DDMContentTable.TABLE_SQL_ADD_INDEXES);
-
-			// DDMStructure
-
-			upgradeTable(
-				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
-				DDMStructureTable.TABLE_SQL_CREATE,
-				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		alterColumnType(DDMStructureTable.class, "description", "TEXT null");
-
-		alterColumnType(DDMTemplateTable.class, "description", "TEXT null");
 	}
 
 }

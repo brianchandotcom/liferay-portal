@@ -32,15 +32,19 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(JournalArticleTable.class, "title", "STRING null");
+		alter(
+			JournalArticleTable.class,
+			new AlterColumnType("title", "STRING null"));
 
-		alterColumnType(
-			JournalStructureTable.class, new String[] {"name", "STRING null"},
-			new String[] {"description", "STRING null"});
+		alter(
+			JournalStructureTable.class,
+			new AlterColumnType("name", "STRING null"),
+			new AlterColumnType("description", "STRING null"));
 
-		alterColumnType(
-			JournalTemplateTable.class, new String[] {"name", "STRING null"},
-			new String[] {"description", "STRING null"});
+		alter(
+			JournalTemplateTable.class,
+			new AlterColumnType("name", "STRING null"),
+			new AlterColumnType("description", "STRING null"));
 
 		updateStructureXsd();
 	}

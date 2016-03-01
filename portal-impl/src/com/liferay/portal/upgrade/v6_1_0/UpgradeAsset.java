@@ -35,7 +35,8 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(AssetEntryTable.class, "title", "STRING null");
+		alter(
+			AssetEntryTable.class, new AlterColumnType("title", "STRING null"));
 
 		updateAssetClassTypeId();
 		updateIGImageClassName();

@@ -33,11 +33,11 @@ public class UpgradeShopping extends UpgradeProcess {
 
 		runSQL(sb.toString());
 
-		alterColumnType(
+		alter(
 			ShoppingItemTable.class,
-			new String[] {"smallImageURL", "STRING null"},
-			new String[] {"mediumImageURL", "STRING null"},
-			new String[] {"largeImageURL", "STRING null"});
+			new AlterColumnType("smallImageURL", "STRING null"),
+			new AlterColumnType("mediumImageURL", "STRING null"),
+			new AlterColumnType("largeImageURL", "STRING null"));
 	}
 
 }

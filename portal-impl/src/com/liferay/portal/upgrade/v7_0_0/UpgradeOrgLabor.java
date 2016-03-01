@@ -24,7 +24,7 @@ public class UpgradeOrgLabor extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(OrgLaborTable.class, "typeId", "LONG");
+		alter(OrgLaborTable.class, new AlterColumnType("typeId", "LONG"));
 	}
 
 }

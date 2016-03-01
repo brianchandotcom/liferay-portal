@@ -24,7 +24,9 @@ public class UpgradeAnnouncements extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(AnnouncementsEntryTable.class, "content", "TEXT null");
+		alter(
+			AnnouncementsEntryTable.class,
+			new AlterColumnType("content", "TEXT null"));
 	}
 
 }

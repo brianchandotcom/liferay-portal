@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.util.UpgradeMVCCVersion;
 
-import java.sql.SQLException;
-
 /**
  * @author Eduardo Garcia
  */
@@ -36,45 +34,21 @@ public class UpgradeSchema extends UpgradeProcess {
 
 		upgrade(UpgradeMVCCVersion.class);
 
-		try {
-			runSQL(
-				"alter_column_name JournalArticle structureId " +
-					"DDMStructureKey VARCHAR(75) null");
-			runSQL(
-				"alter_column_name JournalArticle templateId DDMTemplateKey " +
-					"VARCHAR(75) null");
-			runSQL("alter_column_type JournalArticle description TEXT null");
+		alter(
+			JournalArticleTable.class,
+			new AlterColumnName(
+				"structureId", "DDMStructureKey VARCHAR(75) null"),
+			new AlterColumnName(
+				"templateId", "DDMTemplateKey VARCHAR(75) null"),
+			new AlterColumnType("description", "TEXT null"));
 
-			runSQL(
-				"alter_column_name JournalFeed structureId DDMStructureKey " +
-					"TEXT null");
-			runSQL(
-				"alter_column_name JournalFeed templateId DDMTemplateKey " +
-					"TEXT null");
-			runSQL(
-				"alter_column_name JournalFeed rendererTemplateId " +
-					"DDMRendererTemplateKey TEXT null");
-			runSQL(
-				"alter_column_type JournalFeed targetPortletId VARCHAR(200) " +
-					"null");
-		}
-		catch (SQLException sqle) {
-
-			// JournalArticle
-
-			upgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS,
-				JournalArticleTable.TABLE_SQL_CREATE,
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-
-			// JournalFeed
-
-			upgradeTable(
-				JournalFeedTable.TABLE_NAME, JournalFeedTable.TABLE_COLUMNS,
-				JournalFeedTable.TABLE_SQL_CREATE,
-				JournalFeedTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			JournalFeedTable.class,
+			new AlterColumnName("structureId", "DDMStructureKey TEXT null"),
+			new AlterColumnName("templateId", "DDMTemplateKey TEXT null"),
+			new AlterColumnName(
+				"rendererTemplateId", "DDMRendererTemplateKey TEXT null"),
+			new AlterColumnType("targetPortletId", "VARCHAR(200) null"));
 	}
 
 }

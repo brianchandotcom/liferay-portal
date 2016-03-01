@@ -24,7 +24,7 @@ public class UpgradeOrganization extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(OrganizationTable.class, "statusId", "LONG");
+		alter(OrganizationTable.class, new AlterColumnType("statusId", "LONG"));
 	}
 
 }

@@ -24,7 +24,7 @@ public class UpgradeListType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(ListTypeTable.class, "listTypeId", "LONG");
+		alter(ListTypeTable.class, new AlterColumnType("listTypeId", "LONG"));
 	}
 
 }

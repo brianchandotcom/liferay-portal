@@ -24,8 +24,9 @@ public class UpgradeRepositoryEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			RepositoryEntryTable.class, "mappedId", "VARCHAR(255) null");
+		alter(
+			RepositoryEntryTable.class,
+			new AlterColumnType("mappedId", "VARCHAR(255) null"));
 	}
 
 }

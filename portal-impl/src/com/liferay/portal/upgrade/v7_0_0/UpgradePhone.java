@@ -24,7 +24,7 @@ public class UpgradePhone extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(PhoneTable.class, "typeId", "LONG");
+		alter(PhoneTable.class, new AlterColumnType("typeId", "LONG"));
 	}
 
 }

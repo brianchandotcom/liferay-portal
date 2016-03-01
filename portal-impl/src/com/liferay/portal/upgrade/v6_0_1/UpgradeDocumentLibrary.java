@@ -25,9 +25,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(DLFileEntryTable.class, "size_", "LONG");
+		alter(DLFileEntryTable.class, new AlterColumnType("size_", "LONG"));
 
-		alterColumnType(DLFileVersionTable.class, "size_", "LONG");
+		alter(DLFileVersionTable.class, new AlterColumnType("size_", "LONG"));
 	}
 
 }

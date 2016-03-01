@@ -24,7 +24,9 @@ public class UpgradeMembershipRequest extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(MembershipRequestTable.class, "statusId", "LONG");
+		alter(
+			MembershipRequestTable.class,
+			new AlterColumnType("statusId", "LONG"));
 	}
 
 }

@@ -107,7 +107,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFolder
 
-		alterColumnType(DLFolderTable.class, "name", "VARCHAR(255) null");
+		alter(
+			DLFolderTable.class,
+			new AlterColumnType("name", "VARCHAR(255) null"));
 
 		updateRepositoryClassNameIds();
 	}

@@ -24,7 +24,9 @@ public class UpgradeCalendarBooking extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(CalendarBookingTable.class, "description", "TEXT null");
+		alter(
+			CalendarBookingTable.class,
+			new AlterColumnType("description", "TEXT null"));
 	}
 
 }

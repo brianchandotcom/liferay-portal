@@ -41,9 +41,10 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType(
-			AssetEntryTable.class, new String[] {"description", "TEXT null"},
-			new String[] {"summary", "TEXT null"});
+		alter(
+			AssetEntryTable.class,
+			new AlterColumnType("description", "TEXT null"),
+			new AlterColumnType("summary", "TEXT null"));
 
 		updateAssetEntries();
 		updateAssetVocabularies();

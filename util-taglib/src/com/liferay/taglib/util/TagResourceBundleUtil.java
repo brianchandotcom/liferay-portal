@@ -114,7 +114,7 @@ public class TagResourceBundleUtil {
 		}
 
 		if (resourceBundleLoader == null) {
-			return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			return null;
 		}
 		else {
 			return new AggregateResourceBundleLoader(

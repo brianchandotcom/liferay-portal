@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.journal.configuration.JournalGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "%journal.group.service.configuration.name"
+	name = "journal.group.service.configuration.name"
 )
 public interface JournalGroupServiceConfiguration {
 

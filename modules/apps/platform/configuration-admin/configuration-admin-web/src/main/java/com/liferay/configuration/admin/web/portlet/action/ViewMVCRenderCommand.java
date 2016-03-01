@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -89,10 +90,17 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 			new ConfigurationModelIterator(categoryConfigurationModels));
 
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
+			_resourceBundleLoaderProvider);
+
 		return "/view.jsp";
 	}
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

@@ -22,6 +22,7 @@ String redirect = renderRequest.getParameter("redirect");
 List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
 String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
+ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -103,12 +104,20 @@ if (Validator.isNotNull(keywords)) {
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text name="name">
+
+				<%
+				ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
+				ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(LanguageUtil.getLanguageId(request));
+
+				String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
+				%>
+
 				<c:choose>
 					<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
-						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
+						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModelName %></strong></aui:a>
 					</c:when>
 					<c:otherwise>
-						<aui:a href="<%= editURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
+						<aui:a href="<%= editURL %>"><strong><%= configurationModelName %></strong></aui:a>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>

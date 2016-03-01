@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "%journal.content.portlet.instance.configuration.name"
+	name = "journal.content.portlet.instance.configuration.name"
 )
 public interface JournalContentPortletInstanceConfiguration {
 

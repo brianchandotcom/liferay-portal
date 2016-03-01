@@ -16,15 +16,15 @@ package com.liferay.portal.language.servlet.filter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.DispatcherType;
@@ -34,7 +34,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -63,7 +62,7 @@ public class LanguageFilterTracker {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker<ServletContextHelper, TrackedServletContextHelper>
+	private ServiceTracker<ServletContextHelper, ServiceTracker<?, ?>>
 		_serviceTracker;
 
 	private static class ServiceTrackerResourceBundleLoader
@@ -105,8 +104,9 @@ public class LanguageFilterTracker {
 	}
 
 	private class ServletContextHelperServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ServletContextHelper, TrackedServletContextHelper> {
+		implements
+			ServiceTrackerCustomizer
+				<ServletContextHelper, ServiceTracker<?, ?>> {
 
 		public ServletContextHelperServiceTrackerCustomizer(
 			BundleContext bundleContext) {
@@ -115,85 +115,36 @@ public class LanguageFilterTracker {
 		}
 
 		@Override
-		public TrackedServletContextHelper addingService(
+		public ServiceTracker<?, ?> addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			List<ServiceRegistration<?>> serviceRegistrations =
-				new ArrayList<>();
+			String filterString =
+				"(&(bundle.symbolic.name=" + bundle.getSymbolicName() +
+					")(objectClass=" + ResourceBundleLoader.class.getName() +
+						")(baseName=*))";
 
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			ResourceBundleLoader resourceBundleLoader =
-				new CacheResourceBundleLoader(
-					ResourceBundleUtil.getResourceBundleLoader(
-						"content.Language", classLoader));
-
-			Dictionary<String, Object> properties = new Hashtable<>();
-
-			properties.put("bundle.symbolic.name", bundle.getSymbolicName());
+			Map<String, Object> properties = new HashMap<>();
 
 			Object contextName = serviceReference.getProperty(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
 
+			properties.put("service.ranking", Integer.MIN_VALUE);
 			properties.put("servlet.context.name", contextName);
 
-			properties.put("service.ranking", Integer.MIN_VALUE);
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					ResourceBundleLoader.class, resourceBundleLoader,
-					properties));
-
-			String filterString =
-				"(&(bundle.symbolic.name=" + bundle.getSymbolicName() +
-					")(objectClass=" +
-						ResourceBundleLoader.class.getName() + "))";
-
-			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTracker = ServiceTrackerFactory.open(
-					_bundleContext, filterString);
-
-			Filter filter = new LanguageFilter(
-				new ServiceTrackerResourceBundleLoader(serviceTracker));
-
-			properties = new Hashtable<>();
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				contextName);
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
-				new String[] {
-					DispatcherType.ASYNC.toString(),
-					DispatcherType.FORWARD.toString(),
-					DispatcherType.INCLUDE.toString(),
-					DispatcherType.REQUEST.toString()
-				});
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-				"Language Filter");
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
-				new String[] {"*.css", "*.js"});
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					Filter.class, filter, properties));
-
-			return new TrackedServletContextHelper(
-				serviceTracker, serviceRegistrations);
+			return ServiceTrackerFactory.open(
+				bundle.getBundleContext(), filterString,
+				new ResourceBundleLoaderServiceTrackerCustomizer(
+					properties, filterString, contextName));
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			TrackedServletContextHelper serviceRegistration) {
+			ServiceTracker<?, ?> serviceTracker) {
 
-			removedService(serviceReference, serviceRegistration);
+			removedService(serviceReference, serviceTracker);
 
 			addingService(serviceReference);
 		}
@@ -201,14 +152,107 @@ public class LanguageFilterTracker {
 		@Override
 		public void removedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			TrackedServletContextHelper trackedServletContextHelper) {
+			ServiceTracker<?, ?> serviceTracker) {
 
-			trackedServletContextHelper.clean();
-
-			_bundleContext.ungetService(serviceReference);
+			serviceTracker.close();
 		}
 
 		private final BundleContext _bundleContext;
+
+		private class ResourceBundleLoaderServiceTrackerCustomizer
+			implements
+				ServiceTrackerCustomizer
+					<ResourceBundleLoader, TrackedServletContextHelper> {
+
+			public ResourceBundleLoaderServiceTrackerCustomizer(
+				Map<String, Object> properties, String filterString,
+				Object contextName) {
+
+				_properties = properties;
+				_filterString = filterString;
+				_contextName = contextName;
+			}
+
+			@Override
+			public TrackedServletContextHelper addingService(
+				ServiceReference<ResourceBundleLoader> serviceReference) {
+
+				List<ServiceRegistration<?>> serviceRegistrations =
+					new ArrayList<>();
+
+				Hashtable<String, Object> properties = new Hashtable<>(
+					_properties);
+
+				properties.put(
+					"baseName", serviceReference.getProperty("baseName"));
+
+				ResourceBundleLoader resourceBundleLoader =
+					_bundleContext.getService(serviceReference);
+				serviceRegistrations.add(
+					_bundleContext.registerService(
+						ResourceBundleLoader.class, resourceBundleLoader,
+						properties));
+
+				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
+					serviceTracker = ServiceTrackerFactory.open(
+						_bundleContext, _filterString);
+
+				Filter filter = new LanguageFilter(
+					new ServiceTrackerResourceBundleLoader(serviceTracker));
+
+				Dictionary<String, Object> filterProperties = new Hashtable<>();
+
+				filterProperties.put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+					_contextName);
+				filterProperties.put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
+					new String[] {
+						DispatcherType.ASYNC.toString(),
+						DispatcherType.FORWARD.toString(),
+						DispatcherType.INCLUDE.toString(),
+						DispatcherType.REQUEST.toString()
+					});
+				filterProperties.put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
+					"Language Filter");
+				filterProperties.put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
+					new String[] {"*.css", "*.js"});
+
+				serviceRegistrations.add(
+					_bundleContext.registerService(
+						Filter.class, filter, filterProperties));
+
+				return new TrackedServletContextHelper(
+					serviceTracker, serviceRegistrations);
+			}
+
+			@Override
+			public void modifiedService(
+				ServiceReference<ResourceBundleLoader> serviceReference,
+				TrackedServletContextHelper service) {
+
+				removedService(serviceReference, service);
+
+				addingService(serviceReference);
+			}
+
+			@Override
+			public void removedService(
+				ServiceReference<ResourceBundleLoader> serviceReference,
+				TrackedServletContextHelper trackedServletContextHelper) {
+
+				_bundleContext.ungetService(serviceReference);
+
+				trackedServletContextHelper.clean();
+			}
+
+			private final Object _contextName;
+			private final String _filterString;
+			private final Map<String, Object> _properties;
+
+		}
 
 	}
 

@@ -155,6 +155,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_LINK</td>
+	<td>//div[contains(@class,'ddm-container')]//a[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_NAV_ITEM</td>
 	<td>//nav[contains(@class,'navbar-default')]//a[contains(.,'${key_navItem}')]</td>
 	<td></td>

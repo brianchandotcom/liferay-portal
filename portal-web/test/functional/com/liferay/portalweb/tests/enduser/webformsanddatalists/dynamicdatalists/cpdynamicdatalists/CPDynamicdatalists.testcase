@@ -1555,6 +1555,10 @@
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
+
+		<execute macro="DDLRecord#viewLinkToPageLink">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		</execute>
 	</command>
 
 	<command name="AddListRecordWithNumberField" priority="4">

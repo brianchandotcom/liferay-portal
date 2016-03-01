@@ -1635,7 +1635,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
 		</execute>
 
@@ -4338,9 +4338,8 @@
 			<var name="lastHour" value="23:00" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
@@ -4392,9 +4391,8 @@
 			<var name="lastHour" value="11pm" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">

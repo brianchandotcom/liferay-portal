@@ -153,6 +153,10 @@
 	}
 }
 
+.staging-bar-workflow-text span span span.status {
+	color: #869CAD;
+}
+
 .staging-layout-revision-details {
 	@include sm() {
 		@include align-items(center);

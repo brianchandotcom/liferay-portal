@@ -120,55 +120,64 @@ else {
 </c:if>
 
 <c:if test="<%= !layoutRevision.isIncomplete() %>">
-	<c:if test="<%= layoutRevision.isHead() %>">
-		<li class="control-menu-nav-item">
+	<li class="control-menu-nav-item">
+		<c:choose>
+			<c:when test="<%= layoutRevision.isHead() %>">
+				<span class="staging-bar-control-toggle">
+					<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publication" name="readyToggle" type="toggle-switch" value="<%= true %>" />
+				</span>
+			</c:when>
+			<c:otherwise>
+				<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-		<span class="staging-bar-control-toggle">
-			<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publication" name="readyToggle" type="toggle-switch" value="<%= true %>" />
-		</span>
+				<span class="staging-bar-workflow-text">
+					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+				</span>
 
-		<c:if test="<%= !hasWorkflowTask %>">
-			</li>
+				<aui:script>
+					AUI.$('.layout-revision-info .taglib-workflow-status').on(
+						'mouseenter',
+						function(event) {
+							Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= taglibHelpMessage %>" />');
+						}
+					);
+				</aui:script>
+			</c:otherwise>
+		</c:choose>
+
+		<c:if test="<%= hasWorkflowTask %>">
+
+			<%
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
+
+			WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
+
+			portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
+
+			portletURL.setPortletMode(PortletMode.VIEW);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+
+			layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
+			layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
+
+			portletURL.setParameter("closeRedirect", layoutURL);
+			%>
+
+			<liferay-ui:icon
+				cssClass="submit-link"
+				icon="workflow"
+				id="reviewTaskIcon"
+				message="workflow"
+				method="get"
+				url="<%= portletURL.toString() %>"
+				useDialog="<%= true %>"
+			/>
 		</c:if>
-	</c:if>
-
-	<c:if test="<%= hasWorkflowTask %>">
-		<c:if test="<%= !layoutRevision.isHead() %>">
-			<li class="control-menu-nav-item">
-		</c:if>
-
-		<%
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
-
-		WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
-
-		portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
-
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
-
-		layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
-		layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
-
-		portletURL.setParameter("closeRedirect", layoutURL);
-		%>
-
-		<liferay-ui:icon
-			cssClass="submit-link"
-			icon="workflow"
-			id="reviewTaskIcon"
-			message="workflow"
-			method="get"
-			url="<%= portletURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-
-		</li>
-	</c:if>
+	</li>
 </c:if>
 
 <%

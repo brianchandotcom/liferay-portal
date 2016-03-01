@@ -46,7 +46,7 @@ public class MBMailMessage {
 				body = GetterUtil.getString(_plainBody);
 			}
 		}
-		else if (MBMessageConstants.DEFAULT_FORMAT.equals("text")) {
+		else if (MBMessageConstants.DEFAULT_FORMAT.equals("bbcode")) {
 			if (Validator.isNotNull(_plainBody)) {
 				body = GetterUtil.getString(_plainBody);
 			}

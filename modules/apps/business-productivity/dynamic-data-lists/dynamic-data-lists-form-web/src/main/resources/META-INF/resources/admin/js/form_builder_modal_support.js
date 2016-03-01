@@ -44,7 +44,6 @@ AUI.add(
 
 				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
 
-				bodyNode.setStyle('max-height', '100%');
 				bodyNode.setStyle('max-height', A.DOM.winHeight(A.config.doc) - instance._getModalOffset());
 			},
 

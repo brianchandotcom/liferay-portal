@@ -27,22 +27,6 @@ boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-men
 	</c:if>
 </div>
 
-<aui:script require="metal-dropdown/src/Dropdown">
-	var Dropdown = metalDropdownSrcDropdown.default;
-
-	var iconMenuDropdown = new Dropdown(
-		{
-			alignElementSelector: '#<%= id %> .dropdown-toggle',
-			element: '#<%= id %>',
-			events: {
-				click: {
-					fn: function(event) {
-						iconMenuDropdown.expanded = false;
-					},
-					selector: 'li'
-				}
-			},
-			position: '<%= direction %>'
-		}
-	).render();
+<aui:script use="liferay-menu">
+	Liferay.Menu.handleFocus('#<%= id %>menu');
 </aui:script>

@@ -321,7 +321,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_DEFINE_PERMISSIONS" value1="Define Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#DEFINE_PERMISSIONS" value1="Define Permissions" />
 
 		<if>
 			<and>

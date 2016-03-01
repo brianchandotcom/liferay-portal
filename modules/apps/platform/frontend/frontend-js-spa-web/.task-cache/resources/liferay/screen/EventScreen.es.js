@@ -102,6 +102,12 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es", ['exports', 'm
 			});
 		};
 
+		EventScreen.prototype.isValidResponseStatusCode = function isValidResponseStatusCode(statusCode) {
+			var validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
+
+			return _HtmlScreen.prototype.isValidResponseStatusCode.call(this, statusCode) || validStatusCodes.indexOf(statusCode) > -1;
+		};
+
 		EventScreen.prototype.load = function load(path) {
 			var _this3 = this;
 

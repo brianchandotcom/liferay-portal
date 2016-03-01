@@ -36,7 +36,7 @@ AUI.add(
 					_create: function() {
 						var instance = this;
 
-						instance._modal = new Liferay.DDL.FormBuilderModal(
+						var modal = new Liferay.DDL.FormBuilderModal(
 							{
 								after: {
 									visibleChange: A.bind(instance._afterModalVisibleChange, instance)
@@ -52,7 +52,7 @@ AUI.add(
 							}
 						).render();
 
-						instance._modal.addToolbar(
+						modal.addToolbar(
 							[
 								{
 									cssClass: [CSS_BTN_PRIMARY, CSS_FIELD_SETTINGS_SAVE].join(' '),
@@ -71,6 +71,8 @@ AUI.add(
 							],
 							'footer'
 						);
+
+						instance._modal = modal;
 					}
 				}
 			}

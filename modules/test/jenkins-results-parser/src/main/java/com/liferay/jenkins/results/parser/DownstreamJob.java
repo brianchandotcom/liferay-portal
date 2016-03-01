@@ -92,11 +92,11 @@ public class DownstreamJob extends BaseJob {
 		Map<String, String> invokedParameters = getParametersFromString(
 			parametersString);
 
-		Set<String> availableParameters = getParameterNames(getJobURL());
+		Set<String> parameterNames = getParameterNames(getJobURL());
 
 		parameters = new HashMap<>();
 
-		for (String parameterName : availableParameters) {
+		for (String parameterName : parameterNames) {
 			if (invokedParameters.keySet().contains(parameterName)) {
 				parameters.put(
 					parameterName, invokedParameters.get(parameterName));

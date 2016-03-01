@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT</td>
-	<td>//span[contains(.,'Asset Entries')]/../..//a[@title='Select']/span</td>
+	<td>//div[contains(@class,'edit-controls')]//a[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>

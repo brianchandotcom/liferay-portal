@@ -77,7 +77,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -345,6 +344,14 @@
 	<command name="ChangeTemplate" priority="4">
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Page#add">
+			<var name="pageName" value="Web Content Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Page" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -364,7 +371,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="Content#addNewPG">
@@ -377,7 +384,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -390,7 +397,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

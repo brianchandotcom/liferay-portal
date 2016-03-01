@@ -113,10 +113,6 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPrivateSite">
-			<var name="site" value="Organization Name" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Site Settings" />
 		</execute>
@@ -128,10 +124,6 @@
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPrivateSite">
-			<var name="site" value="Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -297,23 +289,15 @@
 			<var name="dmDocumentTypeName" value="Local Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureManualAssetSelectionPG" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertClick" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
-
-		<for list="Global Document Type Name,Local Document Type Name" param="assetEntryType">
-			<var name="key_assetEntryType" value="${assetEntryType}" />
-
-			<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${assetEntryType}" />
-		</for>
-
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="AssetPublisherPortlet#viewManualAssetTypesPG">
+			<var name="assetEntryTypes" value="Global Document Type Name,Local Document Type Name" />
+		</execute>
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
@@ -1318,223 +1302,6 @@
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
 			<var name="assetContent" value="Liferay WC Content" />
 			<var name="assetTitle" value="Liferay WC Title" />
-		</execute>
-	</command>
-
-	<command name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document1 Image Description" />
-			<var name="dmDocumentFile" value="Document_1.jpeg" />
-			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document2 Image Description" />
-			<var name="dmDocumentFile" value="Document_2.jpeg" />
-			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document3 Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="RelatedAssets#gotoWebContentSelectionCP">
-			<var name="assetType" value="Basic Document" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewViaSelectCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="Image" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="DM" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="Document1" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document1 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="Document2" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="Document3" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchTitle" value="Document" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchUserName" value="Test" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchUserName" value="Test1" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewNoSearchResultsCP" />
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchSite" value="Global" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewNoSearchResultsCP" />
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchDescription" value="Document2" />
-			<var name="searchSite" value="Liferay" />
-			<var name="searchTitle" value="Document1" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewNoSearchResultsCP" />
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document2 Image Title,DM Document3 Document Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#searchAdvancedRelatedAssetsCP">
-			<var name="searchDescription" value="Document2" />
-			<var name="searchOperator" value="Any" />
-			<var name="searchSite" value="Liferay" />
-			<var name="searchTitle" value="Document2" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchResultTitleCP">
-			<var name="forList" value="DM Document2 Image Title" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewAdvancedSearchNoResultCP">
-			<var name="forList" value="DM Document1 Image Title,DM Document3 Document Title" />
 		</execute>
 	</command>
 

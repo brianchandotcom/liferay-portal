@@ -171,8 +171,6 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Refresh" />
-
 		<execute function="AssertTextEquals" locator1="RolesAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 

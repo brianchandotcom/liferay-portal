@@ -148,16 +148,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoPrivateSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">
-		<execute macro="ProductMenuHelper#expandPanelSites" />
-
-		<execute macro="ProductMenuHelper#openSitesPopup" />
-
-		<var name="key_site" value="${site}" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="${site}" />
-	</command>
-
 	<command name="gotoPublicPages" summary="Navigate to Product Menu > Sites > Navigation > Public Pages > ${page}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 

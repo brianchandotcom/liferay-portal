@@ -68,8 +68,8 @@
 			<var name="siteName" value="test" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPrivateSite">
-			<var name="site" value="test" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="test" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

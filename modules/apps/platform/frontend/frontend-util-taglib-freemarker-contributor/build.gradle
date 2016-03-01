@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 }
 
 liferay {

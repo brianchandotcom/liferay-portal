@@ -5,6 +5,8 @@ dependencies {
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:collaboration:wiki:wiki-web")
 	provided project(":apps:platform:portal:portal-instance-lifecycle")
+	provided project(":apps:web-experience-management:asset:asset-categories-navigation-web")
+	provided project(":apps:web-experience-management:asset:asset-tags-navigation-web")
 }
 
 liferay {

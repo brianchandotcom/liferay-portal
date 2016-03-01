@@ -7,7 +7,7 @@
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util SLF4J" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.slf4j" />
-	<property name="release.info.version" value="6.2.0" />
+	<property name="release.info.version" value="1.0.0" />
 
 	<macrodef name="jar-macro">
 		<sequential>

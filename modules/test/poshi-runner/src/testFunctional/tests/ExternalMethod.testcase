@@ -2,6 +2,10 @@
 	<property name="poshi.runner.acceptance" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
+	<command name="ExecuteMethodInMacro" priority="5">
+		<execute macro="ExternalMethod#executeMethodInMacro" />
+	</command>
+
 	<command name="ExecuteMethodStringArguments" priority="5">
 		<var name="expected" value="test,string," />
 
@@ -11,21 +15,10 @@
 			<return name="actual" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 
 		<var name="expected" value="TestString" />
 
@@ -34,21 +27,10 @@
 			<return name="actual" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 	</command>
 
 	<command name="ExecuteMethodVariableArguments" priority="5">
@@ -62,21 +44,10 @@
 			<return name="actual" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 
 		<var name="argument" value="Test String" />
 		<var name="expected" value="TestString" />
@@ -86,21 +57,10 @@
 			<return name="actual" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 	</command>
 
 	<command name="ExecuteMethodVariableReturn" priority="5">
@@ -114,21 +74,10 @@
 			<return name="${returnVariable}" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 
 		<var name="expected" value="TestString" />
 		<var name="returnVariable" value="actual" />
@@ -138,20 +87,9 @@
 			<return name="${returnVariable}" />
 		</execute>
 
-		<if>
-			<equals arg1="${actual}" arg2="${expected}" />
-			<then>
-				<echo message="The actual value matched the expected value." />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-			</then>
-			<else>
-				<echo message="The actual value did NOT match the expected value!" />
-				<echo message="action: '${actual}'" />
-				<echo message="expected: '${expected}'" />
-
-				<fail message="Execute method failed!" />
-			</else>
-		</if>
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${actual}" />
+			<var name="expected" value="${expected}" />
+		</execute>
 	</command>
 </definition>

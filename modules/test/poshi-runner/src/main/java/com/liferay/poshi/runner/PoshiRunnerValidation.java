@@ -264,6 +264,12 @@ public class PoshiRunnerValidation {
 					continue;
 				}
 
+				Element parentElement = returnElement.getParent();
+
+				if (Validator.equals(parentElement.getName(), "execute")) {
+					continue;
+				}
+
 				_exceptions.add(
 					new Exception(
 						returnVariable + " not listed as a return variable\n" +
@@ -494,7 +500,7 @@ public class PoshiRunnerValidation {
 				"macro-desktop", "macro-mobile");
 
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "macro-desktop", "macro-mobile");
+				"function", "macro", "macro-desktop", "macro-mobile", "method");
 		}
 		else if (filePath.endsWith(".testcase")) {
 			multiplePrimaryAttributeNames = Arrays.asList(

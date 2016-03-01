@@ -1687,15 +1687,10 @@ public class DataFactory {
 	public List<PortletPreferencesModel>
 		newJournalPortletPreferencesModels(long plid) {
 
-		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(1);
-
-		portletPreferencesModels.add(
+		return Collections.singletonList(
 			newPortletPreferencesModel(
 				plid, JournalPortletKeys.JOURNAL,
 				PortletConstants.DEFAULT_PREFERENCES));
-
-		return portletPreferencesModels;
 	}
 
 	public LayoutFriendlyURLModel newLayoutFriendlyURLModel(
@@ -2105,16 +2100,11 @@ public class DataFactory {
 		AssetVocabularyModel assetVocabularyModel) {
 
 		if (assetVocabularyModel.getUserId() == _defaultUserId) {
-			List<ResourcePermissionModel> resourcePermissionModels =
-				new ArrayList<>(1);
-
-			resourcePermissionModels.add(
+			return Collections.singletonList(
 				newResourcePermissionModel(
 					AssetVocabulary.class.getName(),
 					String.valueOf(assetVocabularyModel.getVocabularyId()),
 					_ownerRoleModel.getRoleId(), _defaultUserId));
-
-			return resourcePermissionModels;
 		}
 
 		return newResourcePermissionModels(
@@ -2134,31 +2124,21 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDLRecordSetModel ddlRecordSetModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				DDLRecordSet.class.getName(),
 				String.valueOf(ddlRecordSetModel.getRecordSetId()),
 				_ownerRoleModel.getRoleId(), _defaultUserId));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDMStructureModel ddmStructureModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				DDMStructure.class.getName(),
 				String.valueOf(ddmStructureModel.getStructureId()),
 				_ownerRoleModel.getRoleId(), _defaultUserId));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -2180,15 +2160,10 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		GroupModel groupModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				Group.class.getName(), String.valueOf(groupModel.getGroupId()),
 				_ownerRoleModel.getRoleId(), _sampleUserId));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -2218,16 +2193,11 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		MBMessageModel mbMessageModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				MBMessage.class.getName(),
 				String.valueOf(mbMessageModel.getMessageId()),
 				_ownerRoleModel.getRoleId(), _sampleUserId));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -2252,15 +2222,10 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		RoleModel roleModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				Role.class.getName(), String.valueOf(roleModel.getRoleId()),
 				_ownerRoleModel.getRoleId(), _sampleUserId));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -2273,15 +2238,10 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		UserModel userModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(1);
-
-		resourcePermissionModels.add(
+		return Collections.singletonList(
 			newResourcePermissionModel(
 				User.class.getName(), String.valueOf(userModel.getUserId()),
 				_ownerRoleModel.getRoleId(), userModel.getUserId()));
-
-		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

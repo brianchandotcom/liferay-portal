@@ -209,18 +209,6 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		_baseRepository.checkInFileEntry(fileEntryId, lockUuid);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             String, ServiceContext)}
 	 */

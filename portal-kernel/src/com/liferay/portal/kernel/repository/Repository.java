@@ -94,14 +94,6 @@ public interface Repository extends DocumentRepository {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException;
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             String, ServiceContext)}
 	 */

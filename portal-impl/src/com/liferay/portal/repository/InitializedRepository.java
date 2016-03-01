@@ -104,16 +104,6 @@ public class InitializedRepository
 
 	@Deprecated
 	@Override
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		documentRepository.checkInFileEntry(fileEntryId, lockUuid);
-	}
-
-	@Deprecated
-	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {

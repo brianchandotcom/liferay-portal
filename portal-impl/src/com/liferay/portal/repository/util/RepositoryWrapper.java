@@ -186,17 +186,6 @@ public class RepositoryWrapper implements Repository {
 			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		_repository.checkInFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, lockUuid, new ServiceContext());
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             String, ServiceContext)}

@@ -43,6 +43,12 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class DDMUtil {
 
+	public static DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
+
+		return getDDM().deserialize(serializedDDMForm);
+	}
+
 	public static DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 

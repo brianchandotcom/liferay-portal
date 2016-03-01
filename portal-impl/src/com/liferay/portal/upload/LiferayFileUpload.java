@@ -15,10 +15,8 @@
 package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

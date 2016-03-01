@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
-import javax.portlet.PortletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */

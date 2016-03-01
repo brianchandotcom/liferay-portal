@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 
 import java.util.List;
 
-import javax.portlet.PortletRequest;
-
 /**
  * @author Tomas Polesovsky
  */

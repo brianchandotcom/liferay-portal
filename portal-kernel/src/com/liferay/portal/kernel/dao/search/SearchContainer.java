@@ -547,7 +547,6 @@ public class SearchContainer<R> {
 	private boolean _hover = true;
 	private String _id;
 	private PortletURL _iteratorURL;
-
 	private List<String> _normalizedHeaderNames;
 	private Map<String, String> _orderableHeaders;
 	private String _orderByCol;

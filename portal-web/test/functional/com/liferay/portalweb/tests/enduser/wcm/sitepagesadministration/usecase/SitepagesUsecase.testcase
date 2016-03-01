@@ -1239,6 +1239,11 @@
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blank Page" />
+			<var name="siteName" value="Page Type Test Site Name" />
+		</execute>
+
 		<execute macro="Page#firstPageCanNotBeOfTypeLinkToURL">
 			<var name="sitePageName" value="Blank Page" />
 		</execute>
@@ -1271,18 +1276,19 @@
 			<var name="sitePageName" value="Panel Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Link to URL Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Page Type Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
+
+		<var name="key_pageName" value="Link to URL Page" />
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Link to URL Page" />
 
 		<execute function="AssertLocation" value1="https://www.google.com/" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Embedded Page" />
 			<var name="siteName" value="Page Type Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
@@ -1292,10 +1298,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_SITE_TEXT" value1="updated" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Panel Page" />
 			<var name="siteName" value="Page Type Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewPanelPortletListPG">

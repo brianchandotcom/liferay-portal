@@ -97,6 +97,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
 		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />

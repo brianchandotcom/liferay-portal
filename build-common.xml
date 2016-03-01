@@ -924,6 +924,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</if>
 
 			<delete file="@{artifact.dir}/pom.xml" />
+
+			<propertyfile file="@{artifact.dir}/../.gradle/gradle.properties">
+				<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+			</propertyfile>
 		</sequential>
 	</macrodef>
 

@@ -105,15 +105,13 @@ AUI.add(
 
 				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
 
-				var bodyHeight = bodyNode.get('offsetHeight');
+				var bodyHeight = bodyNode.height();
 
 				var boundingBox = instance.get('boundingBox');
 
-				var outterHeight = boundingBox.get('offsetHeight') +
-					Lang.toInt(boundingBox.getComputedStyle('marginTop')) +
-					Lang.toInt(boundingBox.getComputedStyle('marginBottom'));
+				var outerHeight = boundingBox.outerHeight(true);
 
-				return Math.max(bodyHeight, outterHeight) - Math.min(bodyHeight, outterHeight);
+				return Math.max(bodyHeight, outerHeight) - Math.min(bodyHeight, outerHeight);
 			},
 
 			_onModalXYChange: function(event) {

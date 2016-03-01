@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', '../util/Utils.es'], function (exports, _App2, _dom, _Utils) {
+define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', '../util/Utils.es', '../surface/Surface.es'], function (exports, _App2, _dom, _Utils, _Surface) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -10,6 +10,8 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 	var _dom2 = _interopRequireDefault(_dom);
 
 	var _Utils2 = _interopRequireDefault(_Utils);
+
+	var _Surface2 = _interopRequireDefault(_Surface);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -70,7 +72,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 			Liferay.on('io:complete', _this.onLiferayIOComplete, _this);
 
-			_this.addSurfaces(document.body.id);
+			_this.addSurfaces(new _Surface2.default(document.body.id));
 
 			_dom2.default.append(document.body, '<div class="lfr-surface-loading-bar"></div>');
 			return _this;
@@ -133,6 +135,8 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 			}
 
 			AUI().Get._insertCache = {};
+
+			Liferay.DOMTaskRunner.reset();
 		};
 
 		LiferayApp.prototype.onLiferayIOComplete = function onLiferayIOComplete() {

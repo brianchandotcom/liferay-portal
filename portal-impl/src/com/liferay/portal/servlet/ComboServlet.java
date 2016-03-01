@@ -143,6 +143,12 @@ public class ComboServlet extends HttpServlet {
 				name = name.replaceFirst(contextPath, StringPool.BLANK);
 			}
 
+			String pathProxy = PortalUtil.getPathProxy();
+
+			if (name.startsWith(pathProxy)) {
+                name = name.replaceFirst(pathProxy, StringPool.BLANK);
+            }
+
 			modulePathsSet.add(name);
 		}
 

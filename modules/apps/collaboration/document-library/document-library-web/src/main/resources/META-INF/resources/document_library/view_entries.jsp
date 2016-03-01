@@ -58,7 +58,7 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, n
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
-entriesChecker.setRememberCheckBoxStateURLRegexPattern(
+entriesChecker.setRememberCheckBoxStateURLRegex(
 	"^(?!.*" + liferayPortletResponse.getNamespace() +
 	"redirect).*(folderId=" + String.valueOf(folderId) + ")");
 

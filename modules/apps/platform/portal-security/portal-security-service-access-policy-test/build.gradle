@@ -1,5 +1,5 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile project(":apps:platform:portal-security:portal-security-service-access-policy-api")
 	testCompile project(":apps:platform:portal-security:portal-security-service-access-policy-service")
 

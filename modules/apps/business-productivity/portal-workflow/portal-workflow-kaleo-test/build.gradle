@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
 	testCompile project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-api")
 	testCompile project(":apps:business-productivity:portal-workflow:portal-workflow-kaleo-definition-api")

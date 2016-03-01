@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -67,23 +66,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormFields(
 			ddmForm.getDDMFormFields(), new HashSet<String>(),
 			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
-	}
-
-	protected boolean isValidBooleanExpression(String expressionString) {
-		if (Validator.isNotNull(expressionString)) {
-			try {
-				DDMExpression<Boolean> ddmExpression =
-					_ddmExpressionFactory.createBooleanDDMExpression(
-						expressionString);
-
-				ddmExpression.evaluate();
-			}
-			catch (DDMExpressionException ddmee) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	@Reference(unbind = "-")
@@ -255,7 +237,14 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		String expressionString = ddmFormField.getVisibilityExpression();
 
-		if (!isValidBooleanExpression(expressionString)) {
+		if (Validator.isNull(expressionString)) {
+			return;
+		}
+
+		try {
+			_ddmExpressionFactory.createBooleanDDMExpression(expressionString);
+		}
+		catch (DDMExpressionException ddmee) {
 			throw new MustSetValidVisibilityExpression(
 				ddmFormField.getName(), expressionString);
 		}

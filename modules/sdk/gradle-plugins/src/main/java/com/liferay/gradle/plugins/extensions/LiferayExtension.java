@@ -105,18 +105,6 @@ public class LiferayExtension {
 		return _portalVersion;
 	}
 
-	public String getVersionPrefix() {
-		String version = getPortalVersion();
-
-		int index = version.indexOf("-");
-
-		if (index != -1) {
-			version = version.substring(0, index);
-		}
-
-		return version;
-	}
-
 	public void setAppServerParentDir(Object appServerParentDir) {
 		_appServerParentDir = appServerParentDir;
 	}

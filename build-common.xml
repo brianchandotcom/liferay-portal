@@ -891,6 +891,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="artifact.name" />
 
 		<sequential>
+			<property file="@{artifact.dir}/bnd.bnd" />
+
 			<propertyregex
 				global="true"
 				input="@{artifact.name}"
@@ -904,7 +906,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				artifactId="com.liferay.${processed.artifact.name}"
 				groupId="com.liferay.portal"
 				id="prepare-@{artifact.name}"
-				version="${lp.version}-SNAPSHOT"
+				version="${Bundle-Version}-SNAPSHOT"
 			/>
 
 			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.dir}/pom.xml" />

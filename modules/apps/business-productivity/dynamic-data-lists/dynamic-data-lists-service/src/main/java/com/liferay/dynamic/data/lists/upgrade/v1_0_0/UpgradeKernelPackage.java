@@ -33,7 +33,7 @@ public class UpgradeKernelPackage
 	private static final String[][] _CLASS_NAMES = new String[][] {
 		{
 			"com.liferay.portlet.dynamicdatalists.model.",
-			"com.liferay.dynamic.data.list.model."
+			"com.liferay.dynamic.data.lists.model."
 		}
 	};
 

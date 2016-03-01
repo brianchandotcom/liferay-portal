@@ -108,7 +108,7 @@ data.put("qa-id", "customizations");
 				<c:if test="<%= hasUpdateLayoutPermission %>">
 					<li class="control-menu-nav-item">
 						<aui:input
-							id="manageCustomization"
+							id='<%= portletNamespace + "manageCustomization" %>'
 							inlineField="<%= true %>"
 							label="<%= StringPool.BLANK %>"
 							labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>'

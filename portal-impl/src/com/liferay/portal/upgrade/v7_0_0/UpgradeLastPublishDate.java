@@ -14,35 +14,13 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 import com.liferay.portal.kernel.util.LoggingTimer;
-
-import java.io.IOException;
-
-import java.sql.SQLException;
 
 /**
  * @author Levente Hudák
  */
 public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
-
-	protected void addLastPublishDateColumn(String tableName)
-		throws IOException {
-
-		try {
-			runSQL(
-				"alter table " + tableName + " add lastPublishDate DATE null");
-		}
-		catch (SQLException sqle) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Table " + tableName + " has been previously recreated, " +
-						"there is not need to add the column");
-			}
-		}
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -185,8 +163,5 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 			addLastPublishDateColumn("Website");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeLastPublishDate.class);
 
 }

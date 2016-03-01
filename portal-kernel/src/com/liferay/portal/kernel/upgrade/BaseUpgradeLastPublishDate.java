@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -21,8 +23,11 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +37,22 @@ import java.util.List;
  * @author Mate Thurzo
  */
 public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
+
+	protected void addLastPublishDateColumn(String tableName)
+		throws IOException {
+
+		try {
+			runSQL(
+				"alter table " + tableName + " add lastPublishDate DATE null");
+		}
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Table " + tableName + " has been previously recreated, " +
+						"there is not need to add the column");
+			}
+		}
+	}
 
 	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -158,5 +179,8 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseUpgradeLastPublishDate.class);
 
 }

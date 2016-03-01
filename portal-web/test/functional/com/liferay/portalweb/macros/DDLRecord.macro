@@ -666,14 +666,6 @@
 		</if>
 	</command>
 
-	<command name="viewLinkToPageLink">
-		<var name="key_pageName" value="${ddlRecordFieldData}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_LINK" value1="${ddlRecordFieldData}" />
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" value1="${ddlRecordFieldData}" />
-	</command>
-
 	<command name="viewFirstRecordSearchResult">
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Data Definition Name for List: ${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${field} ${ddlRecordFieldData}" />
@@ -698,6 +690,14 @@
 
 	<command name="viewInvalidHTMLfield">
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
+	</command>
+
+	<command name="viewLinkToPageLink">
+		<var name="key_pageName" value="${ddlRecordFieldData}" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_LINK" value1="${ddlRecordFieldData}" />
+
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewNestedFieldsVisualGroupingViaDDLDisplay">

@@ -67,8 +67,8 @@ public class ParallelSchemaUpgraderExecutor {
 		public Void call() throws Exception {
 			DB db = DBManagerUtil.getDB();
 
-			try(LoggingTimer loggingTimer = new LoggingTimer(
-				"runSQLTemplate(" + _sqlFile + ")")) {
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					"runSQLTemplate(" + _sqlFile + ")")) {
 
 				db.runSQLTemplate(_sqlFile, false);
 			}

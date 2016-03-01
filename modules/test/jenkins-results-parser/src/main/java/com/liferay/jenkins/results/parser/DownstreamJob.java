@@ -76,7 +76,7 @@ public class DownstreamJob extends BaseJob {
 
 		this.topLevelJob = topLevelJob;
 		this.topLevelJob.add(this);
-		
+
 		Matcher invocationURLMatcher = _invocationURLPattern.matcher(
 			invocationURL);
 
@@ -117,11 +117,11 @@ public class DownstreamJob extends BaseJob {
 	public Map<String, String> getParameters() {
 		return this.parameters;
 	}
-	
+
 	public TopLevelJob getTopLevelJob() {
 		return topLevelJob;
 	}
-	
+
 	public void update() throws Exception {
 		if (status.equals("completed") || status.equals("invalid")) {
 			return;
@@ -183,6 +183,17 @@ public class DownstreamJob extends BaseJob {
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
 
+	private static JSONArray getBuildsJSONArray(String jobURL)
+		throws Exception {
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			jobURL + "/api/json?tree=builds[actions[parameters" +
+				"[name,type,value]],building,duration,number,result,url]",
+			false);
+
+		return jsonObject.getJSONArray("builds");
+	}
+
 	private static Set<String> getParameterNames(String jobURL)
 		throws Exception {
 
@@ -196,8 +207,8 @@ public class DownstreamJob extends BaseJob {
 			"actions").getJSONObject(0).getJSONArray("parameterDefinitions");
 
 		for (int i = 0; i < parameterDefinitions.length(); i++) {
-			JSONObject parameterDefinition =
-				parameterDefinitions.getJSONObject(i);
+			JSONObject parameterDefinition = parameterDefinitions.getJSONObject(
+				i);
 
 			if (parameterDefinition.getString(
 					"type").equals("StringParameterDefinition")) {
@@ -207,17 +218,6 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		return parameterNames;
-	}
-
-	private static JSONArray getBuildsJSONArray(String jobURL)
-		throws Exception {
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			jobURL + "/api/json?tree=builds[actions[parameters" +
-				"[name,type,value]],building,duration,number,result,url]",
-			false);
-
-		return jsonObject.getJSONArray("builds");
 	}
 
 	private static Map<String, String> getParameters(
@@ -240,8 +240,7 @@ public class DownstreamJob extends BaseJob {
 		return parameters;
 	}
 
-	private static Map<String, String> getParameters(
-			JSONObject buildJSONObject)
+	private static Map<String, String> getParameters(JSONObject buildJSONObject)
 		throws Exception {
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
@@ -263,7 +262,8 @@ public class DownstreamJob extends BaseJob {
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			masterURL + "/queue/api/json?tree=items[actions[parameters" +
-				"[name,value]],task[name,url]]", false);
+				"[name,value]],task[name,url]]",
+			false);
 
 		return jsonObject.getJSONArray("items");
 	}

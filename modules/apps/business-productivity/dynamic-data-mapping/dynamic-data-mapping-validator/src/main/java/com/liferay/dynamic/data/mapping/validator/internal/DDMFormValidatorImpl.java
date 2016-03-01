@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -31,6 +33,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -48,6 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -62,6 +66,13 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormFields(
 			ddmForm.getDDMFormFields(), new HashSet<String>(),
 			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMExpressionFactory(
+		DDMExpressionFactory ddmExpressionFactory) {
+
+		_ddmExpressionFactory = ddmExpressionFactory;
 	}
 
 	protected void validateDDMFormAvailableLocales(
@@ -196,6 +207,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				ddmFormField, "tip", ddmFormAvailableLocales,
 				ddmFormDefaultLocale);
 
+			validateDDMFormFieldVisibilityExpression(ddmFormField);
+
 			validateDDMFormFields(
 				ddmFormField.getNestedDDMFormFields(), ddmFormFieldNames,
 				ddmFormAvailableLocales, ddmFormDefaultLocale);
@@ -215,6 +228,25 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		if (!matcher.matches()) {
 			throw new MustSetValidCharactersForFieldType(
 				ddmFormField.getType());
+		}
+	}
+
+	protected void validateDDMFormFieldVisibilityExpression(
+			DDMFormField ddmFormField)
+		throws DDMFormValidationException {
+
+		String expressionString = ddmFormField.getVisibilityExpression();
+
+		if (Validator.isNull(expressionString)) {
+			return;
+		}
+
+		try {
+			_ddmExpressionFactory.createBooleanDDMExpression(expressionString);
+		}
+		catch (DDMExpressionException ddmee) {
+			throw new MustSetValidVisibilityExpression(
+				ddmFormField.getName(), expressionString);
 		}
 	}
 
@@ -249,6 +281,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			ddmFormAvailableLocales, ddmFormDefaultLocale);
 	}
 
+	private DDMExpressionFactory _ddmExpressionFactory;
 	private final String[] _ddmFormFieldIndexTypes = new String[] {
 		StringPool.BLANK, "keyword", "text"
 	};

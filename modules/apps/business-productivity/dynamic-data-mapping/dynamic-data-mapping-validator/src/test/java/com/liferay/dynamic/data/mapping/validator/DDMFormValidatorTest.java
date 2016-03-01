@@ -14,8 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import static org.mockito.Mockito.when;
-
+import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -33,6 +32,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValidatorImpl;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -60,12 +60,13 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @SuppressStaticInitializationFor(
 	"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil"
 )
-public class DDMFormValidatorTest {
+public class DDMFormValidatorTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		setUpBeanPropertiesUtil();
 		setUpDDMFormFieldTypeServicesTrackerUtil();
+		setUpDDMFormValidator();
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldType.class)
@@ -190,6 +191,21 @@ public class DDMFormValidatorTest {
 		_ddmFormValidator.validate(ddmForm);
 	}
 
+	@Test(expected = MustSetValidVisibilityExpression.class)
+	public void testInvalidFieldVisibilityExpression() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Name", DDMFormFieldType.TEXT);
+
+		ddmFormField.setVisibilityExpression("1 -< 2");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
 	@Test(expected = MustSetOptionsForField.class)
 	public void testNoOptionsSetForFieldOptions() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -263,6 +279,21 @@ public class DDMFormValidatorTest {
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_1");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test
+	public void testValidFieldVisibilityExpression() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Name", DDMFormFieldType.TEXT);
+
+		ddmFormField.setVisibilityExpression("1 < 2");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -373,7 +404,16 @@ public class DDMFormValidatorTest {
 		);
 	}
 
-	private final DDMFormValidator _ddmFormValidator =
-		new DDMFormValidatorImpl();
+	protected void setUpDDMFormValidator() throws Exception {
+		_ddmFormValidator = new DDMFormValidatorImpl();
+
+		field(
+			DDMFormValidatorImpl.class, "_ddmExpressionFactory"
+		).set(
+			_ddmFormValidator, new DDMExpressionFactoryImpl()
+		);
+	}
+
+	private DDMFormValidator _ddmFormValidator;
 
 }

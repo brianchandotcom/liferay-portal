@@ -47,32 +47,6 @@ public abstract class BaseJob {
 		return getBuildURL(masterURL, name, number);
 	}
 
-	public BaseJob(String buildURL) {
-		buildURL = formatBuildURL(buildURL);
-
-		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
-
-		buildURLMatcher.find();
-
-		this.masterURL = buildURLMatcher.group("masterURL");
-		this.name = buildURLMatcher.group("name");
-		this.number = Integer.parseInt(buildURLMatcher.group("number"));
-		this.status = "running";
-	}
-
-	public BaseJob(String name, String masterURL) {
-		this.masterURL = masterURL;
-		this.name = name;
-		this.status = "starting";
-	}
-
-	public BaseJob(String name, String masterURL, int number) {
-		this.masterURL = masterURL;
-		this.name = name;
-		this.number = number;
-		this.status = "running";
-	}
-
 	public String getBuildURL() {
 		if (!status.equals("running") && !status.equals("completed")) {
 			throw new IllegalStateException(
@@ -145,6 +119,19 @@ public abstract class BaseJob {
 		masterURL = "";
 		name = "";
 		status = "starting";
+	}
+
+	protected BaseJob(String buildURL) {
+		buildURL = formatBuildURL(buildURL);
+
+		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
+
+		buildURLMatcher.find();
+
+		this.masterURL = buildURLMatcher.group("masterURL");
+		this.name = buildURLMatcher.group("name");
+		this.number = Integer.parseInt(buildURLMatcher.group("number"));
+		this.status = "running";
 	}
 
 	protected String masterURL;

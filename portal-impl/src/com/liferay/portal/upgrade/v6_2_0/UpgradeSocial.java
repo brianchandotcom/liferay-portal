@@ -27,14 +27,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Sergio Sanchez
@@ -42,49 +39,10 @@ import java.util.Set;
  */
 public class UpgradeSocial extends UpgradeProcess {
 
-	protected void addActivity(
-			long activityId, long groupId, long companyId, long userId,
-			Timestamp createDate, long mirrorActivityId, long classNameId,
-			long classPK, int type, String extraData, long receiverUserId)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("insert into SocialActivity (activityId, groupId, ");
-		sb.append("companyId, userId, createDate, mirrorActivityId, ");
-		sb.append("classNameId, classPK, type_, extraData, ");
-		sb.append("receiverUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?)");
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
-			ps.setLong(1, activityId);
-			ps.setLong(2, groupId);
-			ps.setLong(3, companyId);
-			ps.setLong(4, userId);
-			ps.setLong(5, createDate.getTime());
-			ps.setLong(6, mirrorActivityId);
-			ps.setLong(7, classNameId);
-			ps.setLong(8, classPK);
-			ps.setInt(9, type);
-			ps.setString(10, extraData);
-			ps.setLong(11, receiverUserId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add activity " + activityId, e);
-			}
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateJournalActivities();
 		updateSOSocialActivities();
-		updateWikiPageActivities();
 
 		updateActivities();
 	}
@@ -164,37 +122,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 
 		return extraDataMap;
-	}
-
-	protected Timestamp getUniqueModifiedDate(
-		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
-		long classNameId, long resourcePrimKey, double type) {
-
-		while (true) {
-			StringBundler sb = new StringBundler(11);
-
-			sb.append(groupId);
-			sb.append(StringPool.DASH);
-			sb.append(userId);
-			sb.append(StringPool.DASH);
-			sb.append(modifiedDate);
-			sb.append(StringPool.DASH);
-			sb.append(classNameId);
-			sb.append(StringPool.DASH);
-			sb.append(resourcePrimKey);
-			sb.append(StringPool.DASH);
-			sb.append(type);
-
-			String key = sb.toString();
-
-			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
-
-			if (!keys.contains(key)) {
-				keys.add(key);
-
-				return modifiedDate;
-			}
-		}
 	}
 
 	protected void updateActivities() throws Exception {
@@ -285,54 +212,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	protected void updateWikiPageActivities() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.wiki.model.WikiPage");
-
-			runSQL(
-				"delete from SocialActivity where classNameId = " +
-					classNameId);
-
-			try (PreparedStatement ps = connection.prepareStatement(
-					"select groupId, companyId, userId, modifiedDate, " +
-						"resourcePrimKey, version from WikiPage");
-				ResultSet rs = ps.executeQuery()) {
-
-				Set<String> keys = new HashSet<>();
-
-				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
-					long companyId = rs.getLong("companyId");
-					long userId = rs.getLong("userId");
-					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-					long resourcePrimKey = rs.getLong("resourcePrimKey");
-					double version = rs.getDouble("version");
-
-					int type = 1;
-
-					if (version > 1.0) {
-						type = 2;
-					}
-
-					modifiedDate = getUniqueModifiedDate(
-						keys, groupId, userId, modifiedDate, classNameId,
-						resourcePrimKey, type);
-
-					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					extraDataJSONObject.put("version", version);
-
-					addActivity(
-						increment(), groupId, companyId, userId, modifiedDate,
-						0, classNameId, resourcePrimKey, type,
-						extraDataJSONObject.toString(), 0);
-				}
-			}
-		}
-	}
-
 	protected interface ExtraDataGenerator {
 
 		public String getActivityClassName();
@@ -357,6 +236,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private void populateExtraDataGeneratorMap() {
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
+		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
@@ -414,4 +294,65 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 		};
+
+	private class WikiPageExtraDataGenerator implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.wiki.model.WikiPage";
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select title, version from WikiPage where " +
+				"companyId = ? and groupId = ? and resourcePrimKey = ? " +
+					"and head = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
+			extraDataJSONObject.put(
+				"version", entityResultSet.getDouble("version"));
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_PAGE);
+			ps.setInt(3, _UPDATE_PAGE);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, classPK);
+			ps.setBoolean(4, true);
+		}
+
+		private static final int _ADD_PAGE = 1;
+
+		private static final int _UPDATE_PAGE = 2;
+
+	};
 }

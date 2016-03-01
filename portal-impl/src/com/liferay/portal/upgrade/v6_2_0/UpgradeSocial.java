@@ -88,6 +88,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
+
+		updateActivities();
 	}
 
 	protected String generateExtraDataForActivity(
@@ -195,6 +197,14 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				return modifiedDate;
 			}
+		}
+	}
+
+	protected void updateActivities() throws Exception {
+		populateExtraDataGeneratorMap();
+
+		for (ExtraDataGenerator extraDataGenerator : _extraDataGenerators) {
+			updateActivities(extraDataGenerator);
 		}
 	}
 

@@ -172,7 +172,16 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 
 DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmDisplayContext.getDDMGroupServiceConfiguration();
+DDMGroupServiceConfiguration ddmGroupServiceConfiguration = null;
+
+boolean changeableDefaultLanguage = false;
+
+if (ddmDisplayContext != null) {
+	ddmGroupServiceConfiguration = ddmDisplayContext.getDDMGroupServiceConfiguration();
+	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
+}
+
+DDMForm ddmForm = null;
 %>
 
 <%@ include file="/init-ext.jsp" %>

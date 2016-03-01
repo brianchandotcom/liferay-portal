@@ -20,6 +20,14 @@
 String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
 String script = ParamUtil.getString(request, "script");
 String fieldsJSONArrayString = ParamUtil.getString(request, "fieldsJSONArrayString");
+
+if (Validator.isNotNull(script)) {
+	try {
+		ddmForm = DDMUtil.deserialize(script);
+	}
+	catch (Exception e) {
+	}
+}
 %>
 
 <%@ include file="/form_builder.jspf" %>

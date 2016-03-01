@@ -209,17 +209,6 @@ public class PortletPreferencesFactoryImpl
 			preferencesMap);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
-	 */
-	@Deprecated
-	@Override
-	public PortalPreferences fromXML(
-		long companyId, long ownerId, int ownerType, String xml) {
-
-		return fromXML(ownerId, ownerType, xml);
-	}
-
 	@Override
 	public PortletPreferences getExistingPortletSetup(
 			Layout layout, String portletId)
@@ -365,35 +354,11 @@ public class PortletPreferencesFactoryImpl
 		return portalPreferences;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getPortalPreferences(HttpSession, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public PortalPreferences getPortalPreferences(
-		HttpSession session, long companyId, long userId, boolean signedIn) {
-
-		return getPortalPreferences(session, userId, signedIn);
-	}
-
 	@Override
 	public PortalPreferences getPortalPreferences(
 		long userId, boolean signedIn) {
 
 		return getPortalPreferences(null, userId, signedIn);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPortalPreferences(long,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public PortalPreferences getPortalPreferences(
-		long companyId, long userId, boolean signedIn) {
-
-		return getPortalPreferences(userId, signedIn);
 	}
 
 	@Override

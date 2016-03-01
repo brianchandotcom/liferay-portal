@@ -27,8 +27,8 @@ public class UpgradeSchema extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		ParallelSchemaUpgraderExecutor parallelSchemaUpgraderExecutor =
 			new ParallelSchemaUpgraderExecutor(
-				"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0_asset.sql",
-				"update-6.2.0-7.0.0_group.sql");
+				"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0-asset.sql",
+				"update-6.2.0-7.0.0-group.sql");
 
 		parallelSchemaUpgraderExecutor.execute();
 

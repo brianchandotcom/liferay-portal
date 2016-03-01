@@ -249,6 +249,8 @@
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_BUTTON" value1="Select" />
 	</command>
 
 	<command name="populateFieldNumber">

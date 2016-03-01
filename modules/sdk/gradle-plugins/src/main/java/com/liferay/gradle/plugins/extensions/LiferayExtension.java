@@ -96,6 +96,40 @@ public class LiferayExtension {
 		return _appServerType;
 	}
 
+	public String getDefaultVersion(
+		ModuleVersionSelector moduleVersionSelector) {
+
+		return getDefaultVersion(
+			moduleVersionSelector.getGroup(), moduleVersionSelector.getName());
+	}
+
+	public String getDefaultVersion(String group, String name) {
+		return getDefaultVersion(group, name, "latest.release");
+	}
+
+	public String getDefaultVersion(
+		String group, String name, String defaultVersion) {
+
+		String dependencyNotation = getDependencyNotation(group, name);
+
+		String version = GradleUtil.toString(
+			_defaultVersions.get(dependencyNotation));
+
+		if (Validator.isNull(version)) {
+			version = GradleUtil.getProperty(
+				project, group + "." + name + ".version", (String)null);
+
+			if (Validator.isNull(version)) {
+				version = GradleUtil.getProperty(
+					project, name + ".version", defaultVersion);
+			}
+
+			_defaultVersions.put(dependencyNotation, version);
+		}
+
+		return version;
+	}
+
 	public File getDeployDir() {
 		return project.file(_deployDir);
 	}
@@ -132,6 +166,10 @@ public class LiferayExtension {
 
 	public void setLiferayHome(Object liferayHome) {
 		_liferayHome = liferayHome;
+	}
+
+	protected String getDependencyNotation(String group, String name) {
+		return group + ":" + name;
 	}
 
 	protected String getDependencyNotation(String group, String name) {

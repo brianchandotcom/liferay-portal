@@ -30,7 +30,7 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 				for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
 				%>
 
-					<li class="control-menu-nav-item <%= productNavigationControlMenuCategory.getKey() %>-controls-group">
+					<li class="control-menu-nav-item <%= productNavigationControlMenuCategory.getKey() %>-control-group">
 						<ul class="control-menu-nav">
 
 							<%

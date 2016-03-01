@@ -399,7 +399,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 					},
 					function(event) {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
+						if (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid) {
 							document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 
 							Liferay.fire('<portlet:namespace />refreshEditor');

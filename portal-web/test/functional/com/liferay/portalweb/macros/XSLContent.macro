@@ -29,8 +29,21 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
+	<command name="gotoDocumentURL">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="ClickNoError" locator1="Link#URL" />
+
+		<execute function="Pause" locator1="5000" />
+	</command>
+
 	<command name="viewConfigurationXSLContent">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XML_URL" value1="@portlet_context_url@/example.xml" />
 		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XSL_URL" value1="@portlet_context_url@/example.xsl" />
 

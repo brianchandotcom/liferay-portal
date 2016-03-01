@@ -886,51 +886,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
-	<macrodef name="install-portal-snapshot">
-		<attribute name="artifact.dir" default="${basedir}" />
-		<attribute name="artifact.name" />
-
-		<sequential>
-			<property file="@{artifact.dir}/bnd.bnd" />
-
-			<propertyregex
-				global="true"
-				input="@{artifact.name}"
-				override="true"
-				property="processed.artifact.name"
-				regexp="-"
-				replace="."
-			/>
-
-			<artifact:pom
-				artifactId="com.liferay.${processed.artifact.name}"
-				groupId="com.liferay.portal"
-				id="prepare-@{artifact.name}"
-				version="${Bundle-Version}-SNAPSHOT"
-			/>
-
-			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.dir}/pom.xml" />
-
-			<artifact:pom file="@{artifact.dir}/pom.xml" id="@{artifact.name}" />
-
-			<if>
-				<equals arg1="@{artifact.name}" arg2="portal-web" />
-				<then>
-					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.war" />
-				</then>
-				<else>
-					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.jar" />
-				</else>
-			</if>
-
-			<delete file="@{artifact.dir}/pom.xml" />
-
-			<propertyfile file="@{artifact.dir}/../.gradle/gradle.properties">
-				<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
-			</propertyfile>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute name="test.type" />
@@ -1781,7 +1736,45 @@ rerun your task.
 	</target>
 
 	<target name="install-portal-snapshot">
-		<install-portal-snapshot artifact.name="${ant.project.name}" />
+		<property file="bnd.bnd" />
+
+		<property name="artifact.name" value="${ant.project.name}" />
+
+		<condition property="artifact.version" value="${Bundle-Version}" else="${release.info.version}">
+			<isset property="Bundle-Version" />
+		</condition>
+
+		<condition property="artifact.packaging" value="war" else="jar">
+			<equals arg1="${artifact.name}" arg2="portal-web" />
+		</condition>
+
+		<propertyregex
+			global="true"
+			input="${artifact.name}"
+			override="true"
+			property="processed.artifact.name"
+			regexp="-"
+			replace="."
+		/>
+
+		<artifact:pom
+			artifactId="com.liferay.${processed.artifact.name}"
+			groupId="com.liferay.portal"
+			id="prepare-${artifact.name}"
+			version="${artifact.version}-SNAPSHOT"
+		/>
+
+		<artifact:writepom pomRefId="prepare-${artifact.name}" file="pom.xml" />
+
+		<artifact:pom file="pom.xml" id="${artifact.name}" />
+
+		<artifact:install pomRefId="${artifact.name}" file="${artifact.name}.${artifact.packaging}" />
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
 	</target>
 
 	<target name="print-properties">

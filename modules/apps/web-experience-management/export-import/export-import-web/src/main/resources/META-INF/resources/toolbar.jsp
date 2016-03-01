@@ -21,7 +21,7 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 String navigation = ParamUtil.getString(request, "navigation", "all");

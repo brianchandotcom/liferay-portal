@@ -603,13 +603,13 @@
 	<command name="publishToLive">
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="There is currently 1 process in progress" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Refresh" />
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="publishToLiveNowViaPortletCP">
@@ -639,9 +639,11 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There is currently 1 process in progress." />
+		<execute function="Pause" locator1="5000" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<var name="key_siteName" value="${siteName}" />
 

@@ -78,10 +78,10 @@ public interface Staging {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void copyFromLive(PortletRequest PortletRequest)
+	public long copyFromLive(PortletRequest PortletRequest)
 		throws PortalException;
 
-	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet)
+	public long copyFromLive(PortletRequest PortletRequest, Portlet portlet)
 		throws PortalException;
 
 	/**
@@ -89,20 +89,20 @@ public interface Staging {
 	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
-	public void copyPortlet(
+	public long copyPortlet(
 			PortletRequest PortletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
 			String portletId)
 		throws PortalException;
 
-	public void copyRemoteLayouts(
+	public long copyRemoteLayouts(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public void copyRemoteLayouts(long exportImportConfigurationId)
+	public long copyRemoteLayouts(long exportImportConfigurationId)
 		throws PortalException;
 
-	public void copyRemoteLayouts(
+	public long copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			String remoteAddress, int remotePort, String remotePathContext,
@@ -116,7 +116,7 @@ public interface Staging {
 	 *             boolean)}
 	 */
 	@Deprecated
-	public void copyRemoteLayouts(
+	public long copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			String remoteAddress, int remotePort, String remotePathContext,
@@ -124,7 +124,7 @@ public interface Staging {
 			boolean remotePrivateLayout, Date startDate, Date endDate)
 		throws PortalException;
 
-	public void copyRemoteLayouts(
+	public long copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, String name,
 			Map<String, String[]> parameterMap, String remoteAddress,
@@ -265,18 +265,18 @@ public interface Staging {
 	@Deprecated
 	public void lockGroup(long userId, long groupId) throws PortalException;
 
-	public void publishLayout(
+	public long publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws PortalException;
 
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public void publishLayouts(long userId, long exportImportConfigurationId)
+	public long publishLayouts(long userId, long exportImportConfigurationId)
 		throws PortalException;
 
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap)
@@ -287,13 +287,13 @@ public interface Staging {
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException;
 
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds, String name,
 			Map<String, String[]> parameterMap)
@@ -304,13 +304,13 @@ public interface Staging {
 	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<Long, Boolean> layoutIdMap,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException;
 
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException;
@@ -320,32 +320,32 @@ public interface Staging {
 	 *             long, boolean, Map)}
 	 */
 	@Deprecated
-	public void publishLayouts(
+	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate)
 		throws PortalException;
 
-	public void publishPortlet(
+	public long publishPortlet(
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public void publishPortlet(long userId, long exportImportConfigurationId)
+	public long publishPortlet(long userId, long exportImportConfigurationId)
 		throws PortalException;
 
-	public void publishPortlet(
+	public long publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
 			Map<String, String[]> parameterMap)
 		throws PortalException;
 
-	public void publishToLive(PortletRequest PortletRequest)
+	public long publishToLive(PortletRequest PortletRequest)
 		throws PortalException;
 
-	public void publishToLive(PortletRequest PortletRequest, Portlet portlet)
+	public long publishToLive(PortletRequest PortletRequest, Portlet portlet)
 		throws PortalException;
 
-	public void publishToRemote(PortletRequest PortletRequest)
+	public long publishToRemote(PortletRequest PortletRequest)
 		throws PortalException;
 
 	public void scheduleCopyFromLive(PortletRequest PortletRequest)

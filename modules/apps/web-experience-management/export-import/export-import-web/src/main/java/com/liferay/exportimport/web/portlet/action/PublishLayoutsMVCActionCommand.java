@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.AuthException;
@@ -33,10 +34,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,14 +87,18 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.publishToLive(actionRequest);
+				setRedirect(
+					actionRequest, actionResponse,
+					StagingUtil.publishToLive(actionRequest));
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 				hideDefaultSuccessMessage(actionRequest);
 
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.publishToRemote(actionRequest);
+				setRedirect(
+					actionRequest, actionResponse,
+					StagingUtil.publishToRemote(actionRequest));
 			}
 			else if (cmd.equals("schedule_copy_from_live")) {
 				setLayoutIdMap(actionRequest);
@@ -167,6 +174,22 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, openNodes);
 
 		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
+	}
+
+	protected void setRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		long backgroundTaskId) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
+
+		PortletURL renderURL = liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter("mvcPath", "/view_export_import.jsp");
+		renderURL.setParameter(
+			"backgroundTaskId", String.valueOf(backgroundTaskId));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 	}
 
 }

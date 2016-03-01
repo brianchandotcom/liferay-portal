@@ -19,7 +19,7 @@
 <%
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

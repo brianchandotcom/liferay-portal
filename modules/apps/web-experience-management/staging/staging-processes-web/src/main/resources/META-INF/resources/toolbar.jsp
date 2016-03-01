@@ -21,7 +21,7 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String tabs1 = ParamUtil.getString(request, "tabs1");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

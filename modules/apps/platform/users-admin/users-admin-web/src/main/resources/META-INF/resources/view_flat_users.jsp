@@ -39,7 +39,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 }
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String navigation = ParamUtil.getString(request, "navigation");
+String navigation = ParamUtil.getString(request, "navigation", "active");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
 if (navigation.equals("active")) {

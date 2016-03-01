@@ -61,6 +61,8 @@
 			</then>
 		</if>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="SelectFrameTop" />
 
 		<execute macro="PortletEntry#save" />

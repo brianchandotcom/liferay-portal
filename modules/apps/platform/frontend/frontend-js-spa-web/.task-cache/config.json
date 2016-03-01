@@ -125,6 +125,9 @@
     "frontend-js-spa-web@1.0.0/liferay/util/Utils.es": {
         "dependencies": ["exports"]
     },
+    "frontend-js-spa-web@1.0.0/liferay/surface/Surface.es": {
+        "dependencies": ["exports", "metal/src/core", "metal-dom/src/dom", "senna/src/surface/Surface"]
+    },
     "frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es": {
         "dependencies": ["exports", "./EventScreen.es", "metal-uri/src/Uri", "senna/src/utils/utils"]
     },
@@ -135,6 +138,6 @@
         "dependencies": ["exports", "./EventScreen.es"]
     },
     "frontend-js-spa-web@1.0.0/liferay/app/App.es": {
-        "dependencies": ["exports", "senna/src/app/App", "metal-dom/src/dom", "../util/Utils.es"]
+        "dependencies": ["exports", "senna/src/app/App", "metal-dom/src/dom", "../util/Utils.es", "../surface/Surface.es"]
     }
 }

@@ -321,7 +321,7 @@ public class ${entity.name}PersistenceTest {
 					(${finderCol.type})null
 				</#if>
 
-				<#if finderCol_has_next >
+				<#if finderCol_has_next>
 					,
 				</#if>
 			</#list>
@@ -348,7 +348,7 @@ public class ${entity.name}PersistenceTest {
 							(${finderCol.type})null
 						</#if>
 
-						<#if finderCol_has_next >
+						<#if finderCol_has_next>
 							,
 						</#if>
 					</#list>
@@ -373,7 +373,7 @@ public class ${entity.name}PersistenceTest {
 						(${finderCol.type})null
 					</#if>
 
-					<#if finderCol_has_next >
+					<#if finderCol_has_next>
 						,
 					</#if>
 				</#list>

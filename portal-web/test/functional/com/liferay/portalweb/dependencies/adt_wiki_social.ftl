@@ -82,7 +82,7 @@
 
 <#assign childPages = entry.getChildPages() />
 
-<#if (childPages?has_content)>
+<#if childPages?has_content>
 	<div class="child-pages">
 		<h2><@liferay.language key="children-pages" /></h2>
 

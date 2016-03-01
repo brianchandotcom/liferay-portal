@@ -21,7 +21,7 @@
 <#if !finderCol.isPrimitiveType()>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1${finderFieldSuffix} =
 
-	<#if finderCol.comparator == "<>" || finderCol.comparator == "!=">
+	<#if (finderCol.comparator == "<>") || (finderCol.comparator == "!=")>
 		"${finderFieldName} IS NOT NULL${finderColConjunction}"
 	<#else>
 		"${finderFieldName} IS NULL${finderColConjunction}"
@@ -30,7 +30,7 @@
 	;
 </#if>
 
-<#if finderCol.type == "String" && !finderCol.isCaseSensitive()>
+<#if (finderCol.type == "String") && !finderCol.isCaseSensitive()>
 	<#assign finderColExpression = "lower(" + textFinderFieldName + ") " + finderCol.comparator + " ?">
 <#else>
 	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ?">

@@ -255,7 +255,7 @@
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 
-<#if the_title ?has_content && company_name != site_name && !page_group.isLayoutPrototype()>
+<#if the_title ?has_content && (company_name != site_name) && !page_group.isLayoutPrototype()>
 	<#assign the_title = the_title + " - " + site_name />
 </#if>
 
@@ -270,7 +270,7 @@
 <#assign site_logo_height = company_logo_height />
 <#assign site_logo_width = company_logo_width />
 
-<#if company.getLogoId() == 0 && use_company_logo>
+<#if (company.getLogoId() == 0) && use_company_logo>
 	<#assign logo_css_class = logo_css_class + " default-logo" />
 <#else>
 	<#assign logo_css_class = logo_css_class + " custom-logo" />

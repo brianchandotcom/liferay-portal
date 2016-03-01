@@ -15,7 +15,7 @@
 
 		<#assign portlet_title_menus = portlet_toolbar.getPortletTitleMenus(portlet_display_root_portlet_id, renderRequest, renderResponse)>
 
-		<#if (portlet_configuration_icons?has_content || portlet_title_menus?has_content)>
+		<#if portlet_configuration_icons?has_content || portlet_title_menus?has_content>
 			<header class="portlet-topper">
 				<div class="portlet-title-default">
 					<span class="portlet-name-text">${portlet_display_name}</span>

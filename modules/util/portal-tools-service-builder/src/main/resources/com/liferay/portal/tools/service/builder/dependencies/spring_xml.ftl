@@ -18,7 +18,7 @@
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
 
-				<#if entity.sessionFactory != "liferaySessionFactory" >
+				<#if entity.sessionFactory != "liferaySessionFactory">
 					<property name="sessionFactory" ref="${entity.getSessionFactory()}" />
 				</#if>
 			</bean>
@@ -34,7 +34,7 @@
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
 
-				<#if entity.sessionFactory != "liferaySessionFactory" >
+				<#if entity.sessionFactory != "liferaySessionFactory">
 					<property name="sessionFactory" ref="${entity.getSessionFactory()}" />
 				</#if>
 			</bean>

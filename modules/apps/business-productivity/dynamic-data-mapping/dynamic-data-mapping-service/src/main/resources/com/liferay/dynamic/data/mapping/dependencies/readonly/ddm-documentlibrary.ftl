@@ -20,7 +20,7 @@
 
 		<#assign fileEntry = getFileEntry(fileJSONObject)>
 
-		<#if (fileEntry != "")>
+		<#if fileEntry != "">
 			<a href="${getFileEntryURL(fileEntry)}">${escape(fileEntry.getTitle())}</a>
 		</#if>
 	</#if>

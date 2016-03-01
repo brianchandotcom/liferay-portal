@@ -20,7 +20,7 @@
 
 		<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")>
 
-		<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
+		<#if fieldLayoutJSONObject.getLong("groupId") > 0>
 			<#assign fieldLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
 		<#else>
 			<#assign fieldLayoutGroupId = scopeGroupId>
@@ -28,7 +28,7 @@
 
 		<#assign fieldLayout = layoutLocalService.fetchLayout(fieldLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
 
-		<#if (fieldLayout?? && fieldLayout != "")>
+		<#if fieldLayout?? && (fieldLayout != "")>
 			<a href="${fieldLayout.getRegularURL(request)}">${escape(fieldLayout.getName(requestedLocale))}</a>
 		</#if>
 	</#if>

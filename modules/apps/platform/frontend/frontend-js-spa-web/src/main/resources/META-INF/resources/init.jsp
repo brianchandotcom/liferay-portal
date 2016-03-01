@@ -17,32 +17,11 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
-page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
-
-<%@ page import="java.util.List" %>
+<%@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %>
 
 <liferay-theme:defineObjects />
 
 <aui:script position="inline" require="frontend-js-spa-web@1.0.0/liferay/init.es">
-	Liferay.SPA.app.setBlacklist(<%= getPortletsBlacklist(themeDisplay) %>);
+	Liferay.SPA.app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
+	Liferay.SPA.app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
 </aui:script>
-
-<%!
-protected String getPortletsBlacklist(ThemeDisplay themeDisplay) {
-	JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-	List<Portlet> companyPortlets = PortletLocalServiceUtil.getPortlets(themeDisplay.getCompanyId());
-
-	for (Portlet portlet : companyPortlets) {
-		if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet() && !portlet.isSinglePageApplication()) {
-			jsonObject.put(portlet.getPortletId(), true);
-		}
-	}
-
-	return jsonObject.toString();
-}
-%>

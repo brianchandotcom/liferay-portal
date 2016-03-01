@@ -20,7 +20,7 @@
 				<#assign nav_item_css_class = "" />
 				<#assign nav_item_href_link = "" />
 
-				<#if navItem.isSelected() >
+				<#if navItem.isSelected()>
 					<#assign nav_item_css_class = "active" />
 				</#if>
 
@@ -32,7 +32,7 @@
 					<#assign nav_item_caret = "<button aria-expanded='false' aria-haspopup='true' class='${nav_item_css_class} btn btn-default dropdown-toggle' data-toggle='dropdown' type='button'><span class='caret'></span><span class='sr-only'>${toggle_text}</span></button>" />
 				</#if>
 
-				<#if navItem.isBrowsable() >
+				<#if navItem.isBrowsable()>
 					<#assign nav_item_href_link = "href='${navItem.getURL()}' ${navItem.getTarget()}" />
 				</#if>
 
@@ -45,7 +45,7 @@
 								<#assign nav_child_attr_selected = "" />
 								<#assign nav_child_css_class = "" />
 
-								<#if childNavigationItem.isSelected() >
+								<#if childNavigationItem.isSelected()>
 									<#assign nav_child_attr_selected = "aria-selected='true'" />
 									<#assign nav_child_css_class = "active" />
 								</#if>

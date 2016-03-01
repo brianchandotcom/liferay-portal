@@ -277,6 +277,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			processErrorMessage(
 				fileName,
 				"redundant parentheses: " + fileName + " " + lineCount);
+
+			return;
 		}
 
 		ifClause = stripRedundantParentheses(ifClause);
@@ -302,6 +304,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							fileName,
 							"missing parentheses: " + fileName + " " +
 								lineCount);
+
+						return;
 					}
 				}
 
@@ -332,6 +336,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 									fileName,
 									"redundant parentheses: " + fileName + " " +
 										lineCount);
+
+								return;
 							}
 						}
 
@@ -342,6 +348,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								fileName,
 								"redundant parentheses: " + fileName + " " +
 									lineCount);
+
+							return;
 						}
 					}
 
@@ -1748,6 +1756,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected boolean hasRedundantParentheses(
 		String s, String operator1, String operator2) {
 
+		while (true) {
+			int x = s.indexOf("!(");
+
+			if (x == -1) {
+				break;
+			}
+
+			int y = x;
+
+			while (true) {
+				y = s.indexOf(")", y + 1);
+
+				String linePart = s.substring(x, y + 1);
+
+				int closeParenthesesCount = StringUtil.count(
+					linePart, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesesCount = StringUtil.count(
+					linePart, StringPool.OPEN_PARENTHESIS);
+
+				if (closeParenthesesCount == openParenthesesCount) {
+					break;
+				}
+			}
+
+			s = StringUtil.replaceFirst(s, ")", StringPool.BLANK, y);
+			s = StringUtil.replaceFirst(s, "!(", StringPool.BLANK, x);
+		}
+
 		String[] parts = StringUtil.split(s, operator1);
 
 		if (parts.length < 3) {
@@ -1757,7 +1793,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		for (int i = 1; i < (parts.length - 1); i++) {
 			String part = parts[i];
 
-			if (part.contains(operator2) || part.contains("!(")) {
+			if (part.contains(operator2)) {
 				continue;
 			}
 

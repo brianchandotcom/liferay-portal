@@ -40,7 +40,7 @@
 
 	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId)>
 
-	<#list publicLayoutModels as publicLayoutModel >
+	<#list publicLayoutModels as publicLayoutModel>
 		<@insertLayout
 			_layoutModel = publicLayoutModel
 		/>

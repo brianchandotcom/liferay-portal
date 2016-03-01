@@ -117,6 +117,10 @@ public class FileUtil {
 	public static void deleteFile(final Path filePath, boolean retry)
 		throws IOException {
 
+		if ((filePath == null) || Files.notExists(filePath)) {
+			return;
+		}
+
 		try {
 			Files.deleteIfExists(filePath);
 		}

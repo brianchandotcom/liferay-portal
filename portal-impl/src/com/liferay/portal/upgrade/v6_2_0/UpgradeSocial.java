@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +37,7 @@ import java.util.Map;
 /**
  * @author Sergio Sanchez
  * @author Zsolt Berentey
+ * @author Daniel Sanz
  */
 public class UpgradeSocial extends UpgradeProcess {
 
@@ -235,6 +237,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	private void populateExtraDataGeneratorMap() {
+		_extraDataGenerators.add(new AddAssetCommentExtraDataGenerator());
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
@@ -243,6 +246,81 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final List<ExtraDataGenerator> _extraDataGenerators =
 		new ArrayList<>();
+
+	private class AddAssetCommentExtraDataGenerator
+		implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "type_ = ?";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select subject from MBMessage where messageId = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			long messageId = 0;
+
+			try {
+				JSONObject extraDataJsonObject =
+					JSONFactoryUtil.createJSONObject(extraData);
+
+				messageId = extraDataJsonObject.getLong("messageId");
+			}
+			catch (JSONException jsone) {
+			}
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("subject"));
+
+			extraDataJSONObject.put("messageId", messageId);
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setInt(1, _TYPE_ADD_COMMENT);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			long messageId = 0;
+
+			try {
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject(extraData);
+
+				messageId = extraDataJSONObject.getLong("messageId");
+			}
+			catch (JSONException jsone) {
+			}
+
+			ps.setLong(1, messageId);
+		}
+
+		private static final int _TYPE_ADD_COMMENT = 10005;
+
+	};
 
 	private class DLFileEntryExtraDataGenerator implements ExtraDataGenerator {
 

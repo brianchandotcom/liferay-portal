@@ -243,6 +243,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		_extraDataGenerators.add(new BookmarksEntryExtraDataGenerator());
 		_extraDataGenerators.add(new DLFileEntryExtraDataGenerator());
 		_extraDataGenerators.add(new KBArticleExtraDataGenerator());
+		_extraDataGenerators.add(new KBCommentExtraDataGenerator());
 		_extraDataGenerators.add(new KBTemplateExtraDataGenerator());
 		_extraDataGenerators.add(new WikiPageExtraDataGenerator());
 	}
@@ -594,6 +595,97 @@ public class UpgradeSocial extends UpgradeProcess {
 		private static final int _MOVE_KB_ARTICLE = 7;
 
 		private static final int _UPDATE_KB_ARTICLE = 3;
+
+	};
+
+	private class KBCommentExtraDataGenerator implements ExtraDataGenerator {
+
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.knowledgebase.model.KBComment";
+		}
+
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ? and (type_ = ? or type_ = ?)";
+		}
+
+		@Override
+		public String getEntityQuery() {
+			return "select classNameId, classPK from KBComment where " +
+				"kbCommentId = ?";
+		}
+
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
+
+			JSONObject extraDataJSONObject = null;
+
+			long classnameId = entityResultSet.getLong("classNameId");
+			long classpk = entityResultSet.getLong("classPK");
+
+			ExtraDataGenerator extraDataGenerator = null;
+
+			if (classnameId == PortalUtil.getClassNameId(
+					_kbArticleExtraDataGenerator.getActivityClassName())) {
+
+				extraDataGenerator = _kbArticleExtraDataGenerator;
+			}
+			else if (classnameId == PortalUtil.getClassNameId(
+					_kbTemplateExtraDataGenerator.getActivityClassName(
+					))) {
+
+				extraDataGenerator = _kbTemplateExtraDataGenerator;
+			}
+
+			if (extraDataGenerator != null) {
+				try (PreparedStatement ps = connection.prepareStatement(
+						extraDataGenerator.getEntityQuery())) {
+
+					ps.setLong(1, classpk);
+
+					try (ResultSet rs = ps.executeQuery()) {
+
+						while (rs.next()) {
+							extraDataJSONObject =
+									extraDataGenerator.getExtraDataJSONObject(
+											rs, StringPool.BLANK);
+						}
+					}
+				}
+			}
+
+			return extraDataJSONObject;
+		}
+
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
+
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+			ps.setInt(2, _ADD_KB_COMMENT);
+			ps.setInt(3, _UPDATE_KB_COMMENT);
+		}
+
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
+
+			ps.setLong(1, classPK);
+		}
+
+		private static final int _ADD_KB_COMMENT = 5;
+
+		private static final int _UPDATE_KB_COMMENT = 6;
+
+		private final KBArticleExtraDataGenerator
+			_kbArticleExtraDataGenerator = new KBArticleExtraDataGenerator();
+		private final KBTemplateExtraDataGenerator
+			_kbTemplateExtraDataGenerator = new KBTemplateExtraDataGenerator();
 
 	};
 

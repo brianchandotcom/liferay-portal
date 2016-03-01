@@ -28,6 +28,7 @@ import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.HashSet;
@@ -268,6 +269,28 @@ public class UpgradeSocial extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	protected interface ExtraDataGenerator {
+
+		public String getActivityClassName();
+
+		public String getActivityQueryWhereClause();
+
+		public String getEntityQuery();
+
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException;
+
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException;
+
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException;
+
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);

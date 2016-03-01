@@ -16,6 +16,8 @@ package com.liferay.portal.search.elasticsearch.internal.index;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 
@@ -23,6 +25,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael C. Han
@@ -35,15 +38,29 @@ public class CompanyIdIndexNameBuilder implements IndexNameBuilder {
 
 	@Override
 	public String getIndexName(long companyId) {
-		return _elasticsearchConfiguration.indexNamePrefix() + companyId;
+		return _indexNamePrefix + companyId;
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = Configurable.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
+		ElasticsearchConfiguration elasticsearchConfiguration =
+			Configurable.createConfigurable(
+				ElasticsearchConfiguration.class, properties);
+
+		setIndexNamePrefix(elasticsearchConfiguration.indexNamePrefix());
 	}
 
-	private ElasticsearchConfiguration _elasticsearchConfiguration;
+	protected void setIndexNamePrefix(String indexNamePrefix) {
+		if (indexNamePrefix == null) {
+			_indexNamePrefix = StringPool.BLANK;
+		}
+		else {
+			_indexNamePrefix = StringUtil.toLowerCase(
+				StringUtil.trim(indexNamePrefix));
+		}
+	}
+
+	private String _indexNamePrefix;
 
 }

@@ -17,9 +17,9 @@ package com.liferay.layout.prototype.internal.exportimport.xstream.configurator;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.impl.LayoutPrototypeImpl;
+import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;
 

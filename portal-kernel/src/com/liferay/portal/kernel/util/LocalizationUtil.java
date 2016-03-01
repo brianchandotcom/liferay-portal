@@ -55,15 +55,6 @@ public class LocalizationUtil {
 		return getLocalization().getAvailableLanguageIds(xml);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getAvailableLanguageIds(String)}
-	 */
-	@Deprecated
-	public static String[] getAvailableLocales(String xml) {
-		return getAvailableLanguageIds(xml);
-	}
-
 	public static Locale getDefaultImportLocale(
 		String className, long classPK, Locale contentDefaultLocale,
 		Locale[] contentAvailableLocales) {
@@ -90,15 +81,6 @@ public class LocalizationUtil {
 		String xml, Locale defaultLocale) {
 
 		return getLocalization().getDefaultLanguageId(xml, defaultLocale);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getDefaultLanguageId(String)}
-	 */
-	@Deprecated
-	public static String getDefaultLocale(String xml) {
-		return getDefaultLanguageId(xml);
 	}
 
 	public static Localization getLocalization() {
@@ -230,17 +212,6 @@ public class LocalizationUtil {
 
 	public static String getLocalizedName(String name, String languageId) {
 		return getLocalization().getLocalizedName(name, languageId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap}
-	 */
-	@Deprecated
-	public static Map<Locale, String> getLocalizedParameter(
-		PortletRequest portletRequest, String parameter) {
-
-		return getLocalization().getLocalizedParameter(
-			portletRequest, parameter);
 	}
 
 	public static Map<Locale, String> getMap(

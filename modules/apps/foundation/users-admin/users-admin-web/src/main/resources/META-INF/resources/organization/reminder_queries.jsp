@@ -33,7 +33,7 @@ if ((organization != null) && Validator.isNull(reminderQueries)) {
 	reminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(defaultLocale), StringPool.NEW_LINE);
 }
 
-Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(renderRequest, "reminderQueries");
+Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizationMap(renderRequest, "reminderQueries");
 %>
 
 <div class="alert alert-info">

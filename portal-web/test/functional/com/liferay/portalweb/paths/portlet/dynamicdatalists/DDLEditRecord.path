@@ -155,6 +155,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_NAV_ITEM</td>
+	<td>//nav[contains(@class,'navbar-default')]//a[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
 	<td>//button[contains(.,'Select Page')]</td>
 	<td></td>

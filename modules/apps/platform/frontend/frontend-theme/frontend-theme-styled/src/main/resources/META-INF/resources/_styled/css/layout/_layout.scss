@@ -11,11 +11,3 @@
 	padding-top: $wrapper-padding-top;
 	position: relative;
 }
-
-.signed-in #wrapper {
-	margin-top: $wrapper-signed-in-margin-top-mobile;
-
-	@include sm() {
-		margin-top: $wrapper-signed-in-margin-top-desktop;
-	}
-}

@@ -17,7 +17,7 @@ package com.liferay.contacts.constants;
 /**
  * @author Ryan Park
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class ContactsWebKeys {
 
 	public static final String CONTACTS_URL = "CONTACTS_URL";
 

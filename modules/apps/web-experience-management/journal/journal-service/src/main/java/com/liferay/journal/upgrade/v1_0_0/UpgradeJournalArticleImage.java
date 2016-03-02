@@ -50,11 +50,11 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 								"where articleId = ? and elName = ?"))) {
 
 				while (rs.next()) {
-					long articleId = rs.getLong(1);
-					String elName = rs.getString(3);
+					String articleId = rs.getString(1);
+					String elName = rs.getString(2);
 
 					ps2.setString(1, StringUtil.randomString(4));
-					ps2.setLong(2, articleId);
+					ps2.setString(2, articleId);
 					ps2.setString(3, elName);
 
 					ps2.addBatch();

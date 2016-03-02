@@ -1735,7 +1735,7 @@ rerun your task.
 		</java>
 	</target>
 
-	<target name="install-portal-snapshot">
+	<target name="prepare-artifact-pom">
 		<fail message="Unable to run install-portal-snapshot from the root directory.">
 			<condition>
 				<not>
@@ -1776,7 +1776,9 @@ rerun your task.
 				<filter token="version" value="${artifact.version}" />
 			</filterset>
 		</copy>
+	</target>
 
+	<target name="install-portal-snapshot" depends="jar,prepare-artifact-pom">
 		<artifact:install file="${artifact.name}.${artifact.packaging}">
 			<pom file="pom.xml" />
 		</artifact:install>
@@ -1785,6 +1787,23 @@ rerun your task.
 
 		<propertyfile file="../.gradle/gradle.properties">
 			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}" />
+		</propertyfile>
+	</target>
+
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,prepare-artifact-pom">
+		<artifact:deploy file="${artifact.name}.${artifact.packaging}">
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.${artifact.packaging}" />
+			<attach classifier="sources" file="${artifact.name}-sources.${artifact.packaging}" />
+			<pom file="pom.xml" />
+			<remoteRepository url="${sonatype.snapshot.url}">
+				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
 		</propertyfile>
 	</target>
 

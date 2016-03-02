@@ -73,7 +73,7 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template>Your submission has been reviewed and the reviewer has applied the following ${taskComments}.</template>
+				<template>Your submission has been reviewed &lt;#if taskComments?has_content &gt; and the reviewer has applied the following ${taskComments} &lt;/#if&gt;.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>

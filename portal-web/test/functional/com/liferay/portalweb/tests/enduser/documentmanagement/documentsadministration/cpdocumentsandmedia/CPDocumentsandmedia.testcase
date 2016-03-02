@@ -275,6 +275,10 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMDocument#moveToRecycleBinCP">
 			<var name="assetType" value="${assetType}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />

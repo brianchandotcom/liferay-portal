@@ -980,6 +980,10 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#deletePG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>

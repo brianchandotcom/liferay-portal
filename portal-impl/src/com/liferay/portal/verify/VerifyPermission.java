@@ -220,12 +220,10 @@ public class VerifyPermission extends VerifyProcess {
 				Role userRole = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.USER);
 
-				StringBundler joinSB = new StringBundler(6);
+				StringBundler joinSB = new StringBundler(5);
 
 				joinSB.append("ResourcePermission inner join Layout on ");
-				joinSB.append(
-					"ResourcePermission.companyId = Layout.companyId ");
-				joinSB.append("and ResourcePermission.primKey like ");
+				joinSB.append("ResourcePermission.primKey like ");
 				joinSB.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
 				joinSB.append("cast_text(Layout.plid)) inner join Group_ on ");
 				joinSB.append("Layout.groupId = Group_.groupId");

@@ -99,14 +99,6 @@
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
 	</command>
 
-	<command name="gotoAddPage">
-		<var name="key_page" value="${page}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PAGES" value1="${page}" />
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-	</command>
-
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
 		<var name="key_portletLocalization" value="${portletLocalization}" />

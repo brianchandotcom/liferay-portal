@@ -422,7 +422,7 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoSitesPages" >
+		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
 			<var name="site" value="Site Name" />
 		</execute>
@@ -435,7 +435,7 @@
 	<command name="EditSitePage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="ProductMenu#gotoSitesPages" >
+		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
 		</execute>
 
@@ -452,7 +452,7 @@
 			<var name="pageNameEdit" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages" >
+		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
 		</execute>
 

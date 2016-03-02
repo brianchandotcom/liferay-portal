@@ -38,7 +38,7 @@
 	</command>
 
 	<command name="gotoPages">
-		<execute macro="ProrductMenuHelper#expandPanelSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Navigation" />

@@ -239,18 +239,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Navigation > ${page}">
-		<execute macro="ProductMenuHelper#expandPanelSites" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoAddPage">
-			<var name="page" value="${page}" />
-		</execute>
-	</command>
-
 	<command name="gotoSitesPublishing" summary="Navigate to Product Menu > Sites > Publishing > ${portlet}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 

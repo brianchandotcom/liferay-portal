@@ -405,7 +405,7 @@
 	<td></td>
 	<td></td>
 </tr>
-!--SCHEDULER_VIEW_DAY-->
+<!--SCHEDULER_VIEW_DAY-->
 <tr>
 	<td>SCHEDULER_VIEW_DAY</td>
 	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]</td>
@@ -678,6 +678,47 @@
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON</td>
 	<td>//form[@id='schedulerEventRecorderForm']//button[@id='deleteBtn']</td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW-->
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_FIRST_EVENT_AGENDA_VIEW</td>
+	<td>//div[@class='scheduler-view-agenda-events']/div[contains(@class,'header-first')]/following-sibling::div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_LAST_EVENT_AGENDA_VIEW</td>
+	<td>//div[@class='scheduler-view-agenda-events']/div[contains(@class,'header-last')]/following-sibling::div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW</td>
+	<td>//td[contains(@class,'scheduler-today') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_MONTH_VIEW</td>
+	<td>//table[contains(@class,'scheduler-view-table-data')]//td[contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_REPEATING_DAILY_REPEATED_EVENT_WEEK_AND_MONTH_VIEW</td>
+	<td>//div[contains(@class,'scheduler-event-repeated') and (@title='${key_eventTitle}')]/../../following-sibling::td//div[@title='${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_REPEATING_WEEKLY_REPEATED_EVENT_WEEK_AND_MONTH_VIEW</td>
+	<td>//div[@class='scheduler-view-table-row' and contains(.,'${key_eventTitle}')]/following-sibling::div//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW</td>
+	<td>//table[contains(@class,'view-table-data')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW</td>
+	<td>//td[contains(@class,'scheduler-view-day') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
 	<td></td>
 </tr>
 </tbody>

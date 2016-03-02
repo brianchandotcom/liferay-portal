@@ -169,7 +169,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -259,7 +259,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -290,7 +290,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -418,7 +418,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -1102,6 +1102,7 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="numberOfOccurrences" value="2" />
 		</execute>
 	</command>
 
@@ -1138,6 +1139,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 
@@ -1165,6 +1168,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="Weekly" />
+			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoEventDetails">
@@ -1236,6 +1241,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 
@@ -1372,6 +1379,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 
@@ -1420,7 +1429,7 @@
 			<var name="dateNumber" value="2" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewYearly">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
@@ -2504,6 +2513,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
@@ -2731,7 +2742,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>
@@ -2778,7 +2789,7 @@
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>
@@ -2817,7 +2828,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>
@@ -3142,6 +3153,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 
@@ -3297,6 +3310,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 
@@ -3338,6 +3353,8 @@
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
 		</execute>
 	</command>
 

@@ -1502,18 +1502,39 @@
 
 		<execute macro="CalendarScheduler#viewWeek">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewMonth">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewAgenda">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
+		</execute>
+	</command>
+
+	<command name="viewAllDay">
+		<for list="${viewType}" param="Day,Week,Month">
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="${viewType}" />
+			</execute>
+
+			<var name="key_eventTitle" value="${eventTitle}" />
+
+			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_ALL_DAY_EVENT_DAY_WEEK_AND_MONTH_VIEW" value1="${eventTitle}" />
+		</for>
+
+		<execute macro="CalendarScheduler#viewAgenda">
+			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
 
@@ -1995,5 +2016,21 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Resources:" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="Start Date:" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="End Date:" />
+	</command>
+
+	<command name="viewYearly">
+		<for list="${viewType}" param="Day,Week,Month">
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="${viewType}" />
+			</execute>
+
+			<var name="key_eventTitle" value="${eventTitle}" />
+
+			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW" value1="${eventTitle}" />
+		</for>
+
+		<execute macro="CalendarScheduler#viewAgenda">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 </definition>

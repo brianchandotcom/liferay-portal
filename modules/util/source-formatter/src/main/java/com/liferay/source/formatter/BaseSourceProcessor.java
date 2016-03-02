@@ -1533,7 +1533,27 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _mainReleaseVersion;
 	}
 
-	protected String getModuleLangDirName(String moduleLocation) {
+	protected List<String> getModuleLangDirNames(
+		String moduleLocation, String buildGradleContent) {
+
+		List<String> moduleLangDirNames = new ArrayList<>();
+
+		Matcher matcher = mergeLangPattern.matcher(buildGradleContent);
+
+		if (matcher.find()) {
+			String[] sourceDirs = StringUtil.split(matcher.group(1));
+
+			for (String sourceDir : sourceDirs) {
+				sourceDir = StringUtil.trim(sourceDir);
+
+				moduleLangDirNames.add(
+					moduleLocation + StringPool.SLASH +
+						sourceDir.substring(1, sourceDir.length() - 1));
+			}
+
+			return moduleLangDirNames;
+		}
+
 		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
 
 		String baseModuleName = moduleLocation.substring(0, x);
@@ -1544,7 +1564,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			y + 1, baseModuleName.length());
 
 		String moduleLangDirName =
-			moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
+			moduleLocation.substring(0, x + 1) + baseModuleName +
+				"-lang/src/main/resources/content";
 
 		File moduleLangDir = new File(moduleLangDirName);
 
@@ -1555,7 +1576,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				moduleLangDirName, "/modules/ee/", "/modules/");
 		}
 
-		return moduleLangDirName;
+		moduleLangDirNames.add(moduleLangDirName);
+
+		return moduleLangDirNames;
 	}
 
 	protected Properties getModuleLangLanguageProperties(String absolutePath)
@@ -1602,23 +1625,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String moduleLocation = StringUtil.replaceLast(
 			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 
-		String moduleLangDirName = getModuleLangDirName(moduleLocation);
-
-		String moduleLangLanguagePropertiesFileName =
-			moduleLangDirName +
-				"/src/main/resources/content/Language.properties";
-
-		File file = new File(moduleLangLanguagePropertiesFileName);
-
-		if (!file.exists()) {
-			return null;
-		}
+		List<String> moduleLangDirNames = getModuleLangDirNames(
+			moduleLocation, buildGradleContent);
 
 		properties = new Properties();
 
-		InputStream inputStream = new FileInputStream(file);
+		for (String moduleLangDirName : moduleLangDirNames) {
+			String moduleLangLanguagePropertiesFileName =
+				moduleLangDirName + "/Language.properties";
 
-		properties.load(inputStream);
+			File file = new File(moduleLangLanguagePropertiesFileName);
+
+			if (!file.exists()) {
+				continue;
+			}
+
+			InputStream inputStream = new FileInputStream(file);
+
+			properties.load(inputStream);
+		}
 
 		_moduleLangLanguageProperties.put(absolutePath, properties);
 
@@ -2176,6 +2201,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"<%=(.+?)%>");
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
+	protected static Pattern mergeLangPattern = Pattern.compile(
+		"mergeLang \\{\\s*sourceDirs = \\[(.*)\\]");
 	protected static boolean portalSource;
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +

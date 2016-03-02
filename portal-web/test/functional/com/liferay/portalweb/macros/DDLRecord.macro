@@ -227,7 +227,7 @@
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type#typeAlloyEditor" locator1="DDLEditRecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type#typeEditor" locator1="DDLEditRecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldInteger">

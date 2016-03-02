@@ -224,11 +224,11 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<span class="staging-layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
+										<li class="staging-layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
-										</span>
+										</li>
 									</c:when>
 									<c:otherwise>
 										<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">

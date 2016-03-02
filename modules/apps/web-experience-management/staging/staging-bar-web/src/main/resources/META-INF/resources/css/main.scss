@@ -107,6 +107,17 @@
 		@include flex(0 1 50%);
 		@include justify-content(space-between);
 	}
+
+	.staging-layout-revision-details-list {
+		display: block;
+		width: 100%;
+
+		@include sm() {
+			@include display(flex);
+			@include flex(1);
+			@include justify-content(space-between);
+		}
+	}
 }
 
 .staging-ready {

@@ -498,8 +498,8 @@ public class ImageToolImpl implements ImageTool {
 					int height = imageReader.getHeight(0);
 					int width = imageReader.getWidth(0);
 
-					if ((height > PropsValues.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_HEIGHT) ||
-						(width > PropsValues.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_WIDTH)) {
+					if ((height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT) ||
+						(width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
 
 						throw new ImageResolutionException(
 							"Image resolution is too high and could not be " +

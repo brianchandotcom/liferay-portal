@@ -498,11 +498,7 @@ public class PropsValues {
 
 	public static final int DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH));
 
-	public static final long DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_HEIGHT = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_HEIGHT));
-
 	public static final long DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE));
-
-	public static final long DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_WIDTH = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_WIDTH));
 
 	public static final String[] DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES);
 
@@ -625,6 +621,10 @@ public class PropsValues {
 	public static String IMAGE_HOOK_IMPL = GetterUtil.getString(PropsUtil.get(PropsKeys.IMAGE_HOOK_IMPL));
 
 	public static final boolean IMAGE_IO_USE_DISK_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_IO_USE_DISK_CACHE));
+
+	public static final long IMAGE_TOOL_IMAGE_MAX_HEIGHT = GetterUtil.getLong(PropsUtil.get(PropsKeys.IMAGE_TOOL_IMAGE_MAX_HEIGHT));
+
+	public static final long IMAGE_TOOL_IMAGE_MAX_WIDTH = GetterUtil.getLong(PropsUtil.get(PropsKeys.IMAGE_TOOL_IMAGE_MAX_WIDTH));
 
 	public static final boolean IMAGEMAGICK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGEMAGICK_ENABLED));
 

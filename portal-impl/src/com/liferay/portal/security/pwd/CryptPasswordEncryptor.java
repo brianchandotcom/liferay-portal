@@ -38,7 +38,7 @@ public class CryptPasswordEncryptor
 	@SuppressWarnings("deprecation")
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {
-			PasswordEncryptorUtil.TYPE_CRYPT,
+			PasswordEncryptorUtil.TYPE_UFC_CRYPT,
 			PasswordEncryptorUtil.TYPE_UFC_CRYPT
 		};
 	}

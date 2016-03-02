@@ -36,12 +36,6 @@ public class PasswordEncryptorUtil {
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #TYPE_UFC_CRYPT}
-	 */
-	@Deprecated
-	public static final String TYPE_CRYPT = "CRYPT";
-
 	public static final String TYPE_MD2 = "MD2";
 
 	public static final String TYPE_MD5 = "MD5";

@@ -30,16 +30,6 @@ public class PermissionCheckerFactoryUtil {
 		return getPermissionCheckerFactory().create(user);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #create(User)}
-	 */
-	@Deprecated
-	public static PermissionChecker create(User user, boolean checkGuest)
-		throws Exception {
-
-		return getPermissionCheckerFactory().create(user);
-	}
-
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PermissionCheckerFactoryUtil.class);

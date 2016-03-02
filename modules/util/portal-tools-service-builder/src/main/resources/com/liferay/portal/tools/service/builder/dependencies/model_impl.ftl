@@ -226,7 +226,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if entity.finderColumnsList?size &gt; 64>
 			public static final boolean COLUMN_BITMASK_ENABLED = false;
 
-			<#assign columnBitmaskEnabled = false >
+			<#assign columnBitmaskEnabled = false>
 		</#if>
 
 		<#if columnBitmaskEnabled>

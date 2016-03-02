@@ -33,11 +33,11 @@
 						<#assign nav_item_link_css_class = "dropdown-toggle" />
 					</#if>
 
-					<#if navItem.isBrowsable() >
+					<#if navItem.isBrowsable()>
 						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
 					</#if>
 
-					<#if navItem.isSelected() >
+					<#if navItem.isSelected()>
 						<#assign nav_item_attr_selected = "aria-selected='true'" />
 						<#assign nav_item_css_class = "${nav_item_css_class} selected active" />
 					</#if>
@@ -53,7 +53,7 @@
 									<#assign nav_child_attr_selected = "" />
 									<#assign nav_child_css_class = "" />
 
-									<#if childNavigationItem.isSelected() >
+									<#if childNavigationItem.isSelected()>
 										<#assign nav_child_attr_selected = "aria-selected='true'" />
 										<#assign nav_child_css_class = "active selected" />
 									</#if>

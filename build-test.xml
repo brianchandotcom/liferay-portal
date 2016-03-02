@@ -40,7 +40,7 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<macrodef name="apply-portal-ext">
+	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>
 				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
@@ -4991,7 +4991,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
-		<apply-portal-ext />
+		<apply-portal-ext-properties />
 	</target>
 
 	<target name="prepare-portal-properties">

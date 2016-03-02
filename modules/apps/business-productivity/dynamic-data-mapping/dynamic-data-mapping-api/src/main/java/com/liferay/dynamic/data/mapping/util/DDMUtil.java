@@ -72,10 +72,10 @@ public class DDMUtil {
 	}
 
 	public static DDMFormValues getDDMFormValues(
-			DDMForm ddmForm, String serializedDDMFormValues)
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
 		throws PortalException {
 
-		return getDDM().getDDMFormValues(ddmForm, serializedDDMFormValues);
+		return getDDM().getDDMFormValues(ddmForm, serializedJSONDDMFormValues);
 	}
 
 	public static DDMFormValues getDDMFormValues(

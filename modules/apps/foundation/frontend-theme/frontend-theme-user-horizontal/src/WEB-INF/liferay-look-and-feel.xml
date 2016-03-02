@@ -8,7 +8,7 @@
 	<theme id="user-horizontal" name="User Horizontal">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="false" key="show-maximize-minimize-links" value="true" />
+			<setting configurable="false" key="show-maximize-minimize-application-links" value="true" />
 			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">

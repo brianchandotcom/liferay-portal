@@ -2,39 +2,23 @@
 
 /**
  * This renders the main element
+ * @param body
+ * @param dismissible
  * @param id
  * @param? elementClasses
  * @skipUpdates elementClasses
  */
 {template .render}
 	<div id="{$id}" class="alert alert-dismissible component{$elementClasses ? ' ' + $elementClasses : ''}" role="alert">
-		{call .dismiss data="all" /}
-		{call .body data="all" /}
-	</div>
-{/template}
-
-/**
- * @param body
- * @param id
- */
-{template .body}
-	<div id="{$id}-body">
-		{if $body}
-			{$body}
-		{/if}
-	</div>
-{/template}
-
-/**
- * @param dismissible
- * @param id
- */
-{template .dismiss}
-	<div id="{$id}-dismiss">
+		<span class="alert-body">
+			{if $body}
+				{$body}
+			{/if}
+		</span>
 		{if $dismissible}
-		<button type="button" class="close" aria-label="Close" data-onclick="toggle">
-			<span aria-hidden="true">×</span>
-		</button>
+			<button type="button" class="close" aria-label="Close" data-onclick="toggle">
+				<span aria-hidden="true">×</span>
+			</button>
 		{/if}
 	</div>
 {/template}

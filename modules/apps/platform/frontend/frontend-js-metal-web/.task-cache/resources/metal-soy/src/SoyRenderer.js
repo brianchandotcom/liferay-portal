@@ -51,32 +51,32 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 	var ijData = {};
 
 	/**
-  * A `ComponentRenderer` that enables components to be rendered via soy templates. It
+  * A `SurfaceRenderer` that enables components to be rendered via soy templates. It
   * automatically creates surfaces named after each template and uses template params
   * as render attributes. That means that when an attribute value changes, the templates
   * that have a parameter with the same name will be automatically rendered again.
-  * @extends {ComponentRenderer}
+  * @extends {SurfaceRenderer}
   */
 
-	var SoyRenderer = function (_ComponentRenderer) {
-		_inherits(SoyRenderer, _ComponentRenderer);
+	var SoyRenderer = function (_SurfaceRenderer) {
+		_inherits(SoyRenderer, _SurfaceRenderer);
 
 		function SoyRenderer() {
 			_classCallCheck(this, SoyRenderer);
 
-			return _possibleConstructorReturn(this, _ComponentRenderer.apply(this, arguments));
+			return _possibleConstructorReturn(this, _SurfaceRenderer.apply(this, arguments));
 		}
 
-		SoyRenderer.addSurfacesFromTemplates_ = function addSurfacesFromTemplates_(component) {
-			var name = component.getName();
+		SoyRenderer.prototype.addSurfacesFromTemplates_ = function addSurfacesFromTemplates_() {
+			var name = this.component_.getName();
 			var templates = _SoyTemplates2.default.get(name);
 			var templateNames = Object.keys(templates);
 			for (var i = 0; i < templateNames.length; i++) {
 				var templateName = templateNames[i];
 				var templateFn = _SoyAop2.default.getOriginalFn(templates[templateName]);
 				if (SoyRenderer.isSurfaceTemplate_(templateName, templateFn)) {
-					var surfaceId = templateName === 'render' ? component.id : templateName;
-					component.addSurface(surfaceId, {
+					var surfaceId = templateName === 'render' ? this.component_.id : templateName;
+					this.addSurface(surfaceId, {
 						renderAttrs: templateFn.params,
 						templateComponentName: name,
 						templateName: templateName
@@ -95,13 +95,14 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 			return config;
 		};
 
-		SoyRenderer.buildTemplateData_ = function buildTemplateData_(component) {
+		SoyRenderer.prototype.buildTemplateData_ = function buildTemplateData_() {
+			var component = this.component_;
 			var names = component.getAttrNames().filter(function (name) {
 				// Get all attribute values except for "element", since it helps performance and this
 				// attribute shouldn't be referenced inside a soy template anyway.
 				return name !== 'element';
 			});
-			var surface = component.getSurface(component.id);
+			var surface = this.getSurface(component.id);
 			var data = surface && surface.componentData ? surface.componentData : {};
 			var attrs = _metal.object.map(component.getAttrs(names), function (key, value) {
 				if (component.getAttrConfig(key).isHtml && _metal.core.isString(value)) {
@@ -152,58 +153,58 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 			return SoyRenderer.createComponentFromTemplate(templateFn, opt_element, opt_data).decorate();
 		};
 
-		SoyRenderer.generateSurfaceElementId = function generateSurfaceElementId(component, parentSurfaceId, data) {
-			if (data.templateName && parentSurfaceId === component.id && !SoyRenderer.firstSurfaceFound_[data.templateName]) {
-				SoyRenderer.firstSurfaceFound_[data.templateName] = true;
-				return component.prefixSurfaceId(data.templateName);
+		SoyRenderer.prototype.generateSurfaceElementId = function generateSurfaceElementId(parentSurfaceId, data) {
+			if (data.templateName && parentSurfaceId === this.component_.id && !this.firstSurfaceFound_[data.templateName]) {
+				this.firstSurfaceFound_[data.templateName] = true;
+				return this.prefixSurfaceId(data.templateName);
 			} else {
-				return component.generateSurfaceElementId(parentSurfaceId);
+				return _SurfaceRenderer.prototype.generateSurfaceElementId.call(this, parentSurfaceId);
 			}
 		};
 
-		SoyRenderer.getSurfaceContent = function getSurfaceContent(surface, component, opt_skipContents) {
-			if (surface.surfaceElementId === component.id) {
+		SoyRenderer.prototype.getSurfaceContent = function getSurfaceContent(surface, opt_skipContents) {
+			if (surface.surfaceElementId === this.component_.id) {
 				if (!surface.renderAttrs) {
-					this.addSurfacesFromTemplates_(component);
+					this.addSurfacesFromTemplates_();
 				}
-				SoyRenderer.firstSurfaceFound_ = {};
+				this.firstSurfaceFound_ = {};
 			}
 
-			SoyRenderer.surfaceBeingRendered_ = surface.surfaceElementId;
-			SoyRenderer.skipInnerCalls_ = SoyRenderer.skipInnerCalls_ || opt_skipContents;
+			this.surfaceBeingRendered_ = surface.surfaceElementId;
+			this.skipInnerCalls_ = this.skipInnerCalls_ || opt_skipContents;
 
 			var data = surface.templateData;
 			surface.templateData = null;
-			var content = SoyRenderer.renderTemplateByName_(component, surface.templateComponentName, surface.templateName, data);
+			var content = this.renderTemplateByName_(surface.templateComponentName, surface.templateName, data);
 
-			SoyRenderer.surfaceBeingRendered_ = null;
-			SoyRenderer.skipInnerCalls_ = false;
+			this.surfaceBeingRendered_ = null;
+			this.skipInnerCalls_ = false;
 			return content;
 		};
 
-		SoyRenderer.handleComponentCall_ = function handleComponentCall_(component, componentName, data) {
+		SoyRenderer.prototype.handleComponentCall_ = function handleComponentCall_(componentName, data) {
 			var surfaceData = {
 				componentName: componentName
 			};
 			var id = (data || {}).id;
 			if (!id) {
-				id = SoyRenderer.generateSurfaceElementId(component, SoyRenderer.surfaceBeingRendered_, surfaceData);
+				id = this.generateSurfaceElementId(this.surfaceBeingRendered_, surfaceData);
 			}
 			surfaceData.componentData = SoyRenderer.buildComponentConfigData_(id, data);
-			return component.buildPlaceholder(id, surfaceData);
+			return this.buildPlaceholder(id, surfaceData);
 		};
 
-		SoyRenderer.handleInterceptedCall_ = function handleInterceptedCall_(component, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData) {
-			if (SoyRenderer.skipInnerCalls_) {
+		SoyRenderer.prototype.handleInterceptedCall_ = function handleInterceptedCall_(templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData) {
+			if (this.skipInnerCalls_) {
 				return '';
 			} else if (templateName === 'render') {
-				return this.handleComponentCall_.call(this, component, templateComponentName, data);
+				return this.handleComponentCall_.call(this, templateComponentName, data);
 			} else {
-				return this.handleSurfaceCall_.call(this, component, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData);
+				return this.handleSurfaceCall_.call(this, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData);
 			}
 		};
 
-		SoyRenderer.handleSurfaceCall_ = function handleSurfaceCall_(component, templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData) {
+		SoyRenderer.prototype.handleSurfaceCall_ = function handleSurfaceCall_(templateComponentName, templateName, originalFn, data, opt_ignored, opt_ijData) {
 			var surfaceData = {
 				static: originalFn.static,
 				templateComponentName: templateComponentName,
@@ -214,14 +215,14 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 			if (_metal.core.isDefAndNotNull(data.surfaceElementId)) {
 				surfaceElementId = data.surfaceElementId;
 			} else if (_metal.core.isDefAndNotNull(data.surfaceId)) {
-				surfaceElementId = component.getSurfaceElementId(data.surfaceId.toString());
+				surfaceElementId = this.getSurfaceElementId(data.surfaceId.toString());
 			} else {
 				if (originalFn.private) {
 					return originalFn.call(null, data, opt_ignored, opt_ijData);
 				}
-				surfaceElementId = SoyRenderer.generateSurfaceElementId(component, SoyRenderer.surfaceBeingRendered_, surfaceData);
+				surfaceElementId = this.generateSurfaceElementId(this.surfaceBeingRendered_, surfaceData);
 			}
-			return component.buildPlaceholder(surfaceElementId, surfaceData);
+			return this.buildPlaceholder(surfaceElementId, surfaceData);
 		};
 
 		SoyRenderer.isSurfaceTemplate_ = function isSurfaceTemplate_(templateName, templateFn) {
@@ -232,18 +233,18 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 			return SoyRenderer.createComponentFromTemplate(templateFn, opt_element, opt_data).render();
 		};
 
-		SoyRenderer.renderTemplate_ = function renderTemplate_(component, templateFn, opt_data) {
-			_SoyAop2.default.startInterception(SoyRenderer.handleInterceptedCall_.bind(SoyRenderer, component));
+		SoyRenderer.prototype.renderTemplate_ = function renderTemplate_(templateFn, opt_data) {
+			_SoyAop2.default.startInterception(this.handleInterceptedCall_.bind(this));
 			templateFn = _SoyAop2.default.getOriginalFn(templateFn);
-			var content = templateFn(opt_data || SoyRenderer.buildTemplateData_(component), null, ijData).content;
+			var content = templateFn(opt_data || this.buildTemplateData_(), null, ijData).content;
 			_SoyAop2.default.stopInterception();
 			return content;
 		};
 
-		SoyRenderer.renderTemplateByName_ = function renderTemplateByName_(component, templateComponentName, templateName, opt_data) {
+		SoyRenderer.prototype.renderTemplateByName_ = function renderTemplateByName_(templateComponentName, templateName, opt_data) {
 			var elementTemplate = _SoyTemplates2.default.get(templateComponentName, templateName);
 			if (_metal.core.isFunction(elementTemplate)) {
-				return SoyRenderer.renderTemplate_(component, elementTemplate, opt_data);
+				return this.renderTemplate_(elementTemplate, opt_data);
 			}
 		};
 
@@ -256,7 +257,7 @@ define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyRenderer", ['exports', 'soy
 		};
 
 		return SoyRenderer;
-	}(_component.ComponentRenderer);
+	}(_component.SurfaceRenderer);
 
 	SoyRenderer.prototype.registerMetalComponent && SoyRenderer.prototype.registerMetalComponent(SoyRenderer, 'SoyRenderer')
 

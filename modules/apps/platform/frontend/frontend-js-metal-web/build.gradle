@@ -11,7 +11,7 @@ task buildMetalComponents(type: Copy)
 String defineRegex = "define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './SoyAop', './SoyTemplates'], function (exports, _metal, _dom, _component, _SoyAop, _SoyTemplates) {";
 String defineReplace = "define(['exports', 'soyutils', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './SoyAop', './SoyTemplates'], function (exports, soyutils, _metal, _dom, _component, _SoyAop, _SoyTemplates) {";
 
-String metalComponentsVersion = "1.0.0-rc.8.3"
+String metalComponentsVersion = "1.0.0-rc.9"
 
 buildMetalComponents {
 	eachFile new StripPathSegmentsAction(7)
@@ -62,7 +62,7 @@ configJSModules {
 }
 
 dependencies {
-	metalComponents group: "com.liferay.webjars", name: "metal-components", transitive: false, version: metalComponentsVersion
+	metalComponents group: "com.liferay.webjars", name: "com.liferay.webjars.metal-components", transitive: false, version: metalComponentsVersion
 }
 
 liferay {

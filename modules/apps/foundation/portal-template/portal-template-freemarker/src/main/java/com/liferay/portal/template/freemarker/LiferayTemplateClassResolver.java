@@ -16,6 +16,8 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -215,6 +217,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			}
 		}
 
+		if (classLoaders.isEmpty() && _log.isWarnEnabled()) {
+			_log.warn("No bundle exports " + allowedClass);
+		}
+
 		return classLoaders;
 	}
 
@@ -258,6 +264,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayTemplateClassResolver.class);
 
 	private BundleTracker<ClassLoader> _classResolverBundleTracker;
 	private volatile FreeMarkerEngineConfiguration

@@ -43,7 +43,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		String line, String fileName, int lineCount) {
 
 		if ((!line.startsWith("<#elseif ") && !line.startsWith("<#if ")) ||
-			!line.endsWith(">")) {
+			!line.endsWith(">") || line.contains("?")) {
 
 			return;
 		}

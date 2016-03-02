@@ -6,7 +6,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	provided group: "jfree", name: "jcommon", version: "1.0.16"
 	provided group: "jfree", name: "jfreechart", version: "1.0.13"
 	provided group: "log4j", name: "log4j", version: "1.2.17"

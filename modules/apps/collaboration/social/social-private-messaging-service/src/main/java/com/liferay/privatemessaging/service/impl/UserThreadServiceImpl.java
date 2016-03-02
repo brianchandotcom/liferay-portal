@@ -15,7 +15,6 @@
 package com.liferay.privatemessaging.service.impl;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,13 +50,12 @@ public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 		UserThread userThread = userThreadLocalService.getUserThread(
 			getUserId(), mbThreadId);
 
-		MBMessage topMBMessage = MBMessageLocalServiceUtil.getMBMessage(
+		MBMessage topMBMessage = mbMessageLocalService.getMBMessage(
 			userThread.getTopMBMessageId());
 
-		List<MBMessage> mbMessages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				mbThreadId, WorkflowConstants.STATUS_ANY,
-				new MessageCreateDateComparator(ascending));
+		List<MBMessage> mbMessages = mbMessageLocalService.getThreadMessages(
+			mbThreadId, WorkflowConstants.STATUS_ANY,
+			new MessageCreateDateComparator(ascending));
 
 		List<MBMessage> filteredMBMessages = new ArrayList<>();
 

@@ -15,10 +15,10 @@
 package com.liferay.privatemessaging.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,12 +34,7 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
@@ -53,7 +48,6 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
 import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
 import com.liferay.privatemessaging.util.PortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingConstants;
@@ -89,7 +83,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 		if (mbThreadId != 0) {
 			List<MBMessage> mbMessages =
-				MBMessageLocalServiceUtil.getThreadMessages(
+				mbMessageLocalService.getThreadMessages(
 					mbThreadId, WorkflowConstants.STATUS_ANY);
 
 			MBMessage lastMBMessage = mbMessages.get(mbMessages.size() - 1);
@@ -118,12 +112,12 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 		long mbThreadId = 0;
 
-		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
+		MBMessage parentMessage = mbMessageLocalService.getMBMessage(
 			parentMBMessageId);
 
 		List<User> recipients = new ArrayList<>();
 
-		recipients.add(UserLocalServiceUtil.getUser(parentMessage.getUserId()));
+		recipients.add(userLocalService.getUser(parentMessage.getUserId()));
 
 		return addPrivateMessage(
 			userId, mbThreadId, parentMBMessageId, recipients,
@@ -137,7 +131,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 		long userThreadId = counterLocalService.increment();
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		UserThread userThread = userThreadPersistence.create(userThreadId);
 
@@ -260,9 +254,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
-			user.getCompanyId());
+		User user = userLocalService.getUser(userId);
+		Group group = groupLocalService.getCompanyGroup(user.getCompanyId());
 		long categoryId =
 			PrivateMessagingConstants.PRIVATE_MESSAGING_CATEGORY_ID;
 
@@ -278,7 +271,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+		MBMessage mbMessage = mbMessageLocalService.addMessage(
 			userId, user.getScreenName(), group.getGroupId(), categoryId,
 			mbThreadId, parentMBMessageId, subject, body,
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, anonymous,
@@ -367,7 +360,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		long plid = PortalUtil.getPlidFromPortletId(
 			group.getGroupId(), true, PortletKeys.PRIVATE_MESSAGING);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = layoutLocalService.getLayout(plid);
 
 		String privateMessageURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay, false);
@@ -378,7 +371,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 	protected List<User> parseRecipients(long userId, String to)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		String[] recipients = StringUtil.split(to);
 
@@ -395,7 +388,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 					screenName = recipient.substring(x + 1, y);
 				}
 
-				User recipientUser = UserLocalServiceUtil.getUserByScreenName(
+				User recipientUser = userLocalService.getUserByScreenName(
 					user.getCompanyId(), screenName);
 
 				if (!users.contains(recipientUser)) {
@@ -412,13 +405,11 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 	protected void sendEmail(long mbMessageId, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		MBMessage mbMessage = MBMessageLocalServiceUtil.getMBMessage(
-			mbMessageId);
+		MBMessage mbMessage = mbMessageLocalService.getMBMessage(mbMessageId);
 
-		User sender = UserLocalServiceUtil.getUser(mbMessage.getUserId());
+		User sender = userLocalService.getUser(mbMessage.getUserId());
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			sender.getCompanyId());
+		Company company = companyLocalService.getCompany(sender.getCompanyId());
 
 		InternetAddress from = new InternetAddress(company.getEmailAddress());
 
@@ -458,7 +449,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			});
 
 		List<UserThread> userThreads =
-			UserThreadLocalServiceUtil.getMBThreadUserThreads(
+			userThreadLocalService.getMBThreadUserThreads(
 				mbMessage.getThreadId());
 
 		for (UserThread userThread : userThreads) {
@@ -471,8 +462,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			User recipient = UserLocalServiceUtil.getUser(
-				userThread.getUserId());
+			User recipient = userLocalService.getUser(userThread.getUserId());
 
 			String threadURL = getThreadURL(
 				recipient, mbMessage.getThreadId(), themeDisplay);
@@ -499,7 +489,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			MailMessage mailMessage = new MailMessage(
 				from, to, subject, userThreadBody, true);
 
-			MailServiceUtil.sendEmail(mailMessage);
+			mailService.sendEmail(mailMessage);
 		}
 	}
 
@@ -513,7 +503,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		notificationEventJSONObject.put("userId", mbMessage.getUserId());
 
 		List<UserThread> userThreads =
-			UserThreadLocalServiceUtil.getMBThreadUserThreads(
+			userThreadLocalService.getMBThreadUserThreads(
 				mbMessage.getThreadId());
 
 		for (UserThread userThread : userThreads) {
@@ -527,12 +517,15 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
+			userNotificationEventLocalService.sendUserNotificationEvents(
 				userThread.getUserId(), PortletKeys.PRIVATE_MESSAGING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				notificationEventJSONObject);
 		}
 	}
+
+	@BeanReference(type = MailService.class)
+	protected MailService mailService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserThreadLocalServiceImpl.class);

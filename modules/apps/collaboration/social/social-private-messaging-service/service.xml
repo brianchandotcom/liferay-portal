@@ -51,5 +51,15 @@
 			<finder-column name="read" />
 			<finder-column name="deleted" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.mail" entity="Mail" />
+		<reference package-path="com.liferay.portal" entity="Company" />
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="UserNotificationEvent" />
+		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
+
 	</entity>
 </service-builder>

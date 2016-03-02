@@ -6,6 +6,24 @@
 	<artifactId>com.liferay.portal.test.internal</artifactId>
 	<name>Liferay Portal Test Internal</name>
 	<version>@version@</version>
+	<licenses>
+		<license>
+			<name>${ivy.pom.license.name}</name>
+			<url>${ivy.pom.license.url}</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>${ivy.pom.developer.name}</name>
+			<organization>${ivy.pom.developer.organization}</organization>
+			<organizationUrl>${ivy.pom.developer.organizationUrl}</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>${ivy.pom.scm.connection}</connection>
+		<developerConnection>${ivy.pom.scm.developerConnection}</developerConnection>
+		<url>${ivy.pom.scm.url}</url>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>

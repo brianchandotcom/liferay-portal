@@ -1769,6 +1769,9 @@ rerun your task.
 		/>
 
 		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
 			<filterset>
 				<filter token="version" value="${artifact.version}" />
 			</filterset>

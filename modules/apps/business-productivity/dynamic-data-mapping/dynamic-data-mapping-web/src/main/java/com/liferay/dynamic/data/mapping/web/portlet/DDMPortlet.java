@@ -172,15 +172,15 @@ public class DDMPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setDDMTemplateRequestAttribute(request);
-
-			setDDMStructureRequestAttribute(request);
-
 			DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
 				request, _ddmFormJSONDeserializer, ddmWebConfiguration);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
+
+			setDDMTemplateRequestAttribute(request);
+
+			setDDMStructureRequestAttribute(request);
 		}
 		catch (NoSuchStructureException nsse) {
 

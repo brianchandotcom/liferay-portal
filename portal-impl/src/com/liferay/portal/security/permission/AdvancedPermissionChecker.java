@@ -748,17 +748,18 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		String newIndividualResourcePrimKey = null;
 
-		if ((groupId > 0) && ResourceActionsUtil.isRootModelResource(name)) {
+		if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
-			// There are no custom permissions defined for root model-resource,
-			// use defaults
+			// There are no custom permissions defined for portlet, use defaults
 
 			newIndividualResourcePrimKey = name;
 		}
 
-		else if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+		else if ((groupId > 0) &&
+				 ResourceActionsUtil.isRootModelResource(name)) {
 
-			// There are no custom permissions defined for portlet, use defaults
+			// There are no custom permissions defined for root model-resource,
+			// use defaults
 
 			newIndividualResourcePrimKey = name;
 		}

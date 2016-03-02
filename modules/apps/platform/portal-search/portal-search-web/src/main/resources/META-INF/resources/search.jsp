@@ -28,11 +28,6 @@ long groupId = ParamUtil.getLong(request, SearchPortletParameterNames.GROUP_ID);
 String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="search"
-/>
-
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
 </liferay-portlet:renderURL>

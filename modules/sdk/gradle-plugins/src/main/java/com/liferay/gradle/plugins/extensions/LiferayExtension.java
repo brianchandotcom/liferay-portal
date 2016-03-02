@@ -172,6 +172,10 @@ public class LiferayExtension {
 		return group + ":" + name;
 	}
 
+	protected String getDependencyNotation(String group, String name) {
+		return group + ":" + name;
+	}
+
 	protected final Project project;
 
 	private Object _appServerParentDir;

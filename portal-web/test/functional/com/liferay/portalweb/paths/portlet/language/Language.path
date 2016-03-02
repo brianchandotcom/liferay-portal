@@ -16,47 +16,47 @@
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_CHINESE</td>
-	<td>//a/*[name()='svg'][@message='中文']</td>
+	<td>//*[name()='svg'][@message='中文']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_ENGLISH</td>
-	<td>//a/*[name()='svg'][@message='English']</td>
+	<td>//*[name()='svg'][@message='English']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FINNISH</td>
-	<td>//a/*[name()='svg'][@message='suomi']</td>
+	<td>//*[name()='svg'][@message='suomi']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FRENCH</td>
-	<td>//a/*[name()='svg'][@message='français']</td>
+	<td>//*[name()='svg'][@message='français']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_GERMAN</td>
-	<td>//a/*[name()='svg'][@message='Deutsch']</td>
+	<td>//*[name()='svg'][@message='Deutsch']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_HUNGARIAN</td>
-	<td>//a/*[name()='svg'][@message='magyar']</td>
+	<td>//*[name()='svg'][@message='magyar']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_JAPANESE</td>
-	<td>//a/*[name()='svg'][@message='日本語']</td>
+	<td>//*[name()='svg'][@message='日本語']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_PORTUGUESE</td>
-	<td>//a/*[name()='svg'][@message='português']</td>
+	<td>//*[name()='svg'][@message='português']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_SPANISH</td>
-	<td>//a/*[name()='svg'][@message='español']</td>
+	<td>//*[name()='svg'][@message='español']</td>
 	<td></td>
 </tr>
 <tr>

@@ -1108,15 +1108,6 @@ public class ThemeDisplay
 		return _showLayoutTemplatesIcon;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #isShowSiteAdministrationIcon()}
-	 */
-	@Deprecated
-	public boolean isShowManageSiteMembershipsIcon() {
-		return _showManageSiteMembershipsIcon;
-	}
-
 	public boolean isShowMyAccountIcon() {
 		return _showMyAccountIcon;
 	}
@@ -1143,33 +1134,6 @@ public class ThemeDisplay
 
 	public boolean isShowSiteAdministrationIcon() {
 		return _showSiteAdministrationIcon;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #isShowSiteAdministrationIcon()}
-	 */
-	@Deprecated
-	public boolean isShowSiteContentIcon() {
-		return isShowSiteAdministrationIcon();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #isShowSiteAdministrationIcon()}
-	 */
-	@Deprecated
-	public boolean isShowSiteMapSettingsIcon() {
-		return _showSiteMapSettingsIcon;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #isShowSiteAdministrationIcon()}
-	 */
-	@Deprecated
-	public boolean isShowSiteSettingsIcon() {
-		return _showSiteSettingsIcon;
 	}
 
 	public boolean isShowStagingIcon() {

@@ -204,66 +204,6 @@ public class ServletResponseUtil {
 		sendFile(request, response, fileName, inputStream, 0, contentType);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			HttpServletResponse response, String fileName, byte[] bytes)
-		throws IOException {
-
-		sendFile(null, response, fileName, bytes);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			HttpServletResponse response, String fileName, byte[] bytes,
-			String contentType)
-		throws IOException {
-
-		sendFile(null, response, fileName, bytes, contentType);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			HttpServletResponse response, String fileName,
-			InputStream inputStream)
-		throws IOException {
-
-		sendFile(null, response, fileName, inputStream);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			HttpServletResponse response, String fileName,
-			InputStream inputStream, int contentLength, String contentType)
-		throws IOException {
-
-		sendFile(
-			null, response, fileName, inputStream, contentLength, contentType);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static void sendFile(
-			HttpServletResponse response, String fileName,
-			InputStream inputStream, String contentType)
-		throws IOException {
-
-		sendFile(null, response, fileName, inputStream, contentType);
-	}
-
 	public static void sendFileWithRangeHeader(
 			HttpServletRequest request, HttpServletResponse response,
 			String fileName, InputStream inputStream, long contentLength,

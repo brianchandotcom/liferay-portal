@@ -39,12 +39,13 @@ import javax.portlet.PortletRequest;
  */
 public interface DDM {
 
-	public DDMForm deserialize(String serializedDDMForm) throws PortalException;
-
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException;
 
 	public DDMForm getDDMForm(PortletRequest portletRequest)
+		throws PortalException;
+
+	public DDMForm getDDMForm(String serializedJSONDDMForm)
 		throws PortalException;
 
 	public JSONArray getDDMFormFieldsJSONArray(

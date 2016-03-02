@@ -43,12 +43,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class DDMUtil {
 
-	public static DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return getDDM().deserialize(serializedDDMForm);
-	}
-
 	public static DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 
@@ -59,6 +53,12 @@ public class DDMUtil {
 		throws PortalException {
 
 		return getDDM().getDDMForm(portletRequest);
+	}
+
+	public static DDMForm getDDMForm(String serializedJSONDDMForm)
+		throws PortalException {
+
+		return getDDM().getDDMForm(serializedJSONDDMForm);
 	}
 
 	public static JSONArray getDDMFormFieldsJSONArray(
@@ -78,10 +78,10 @@ public class DDMUtil {
 	}
 
 	public static DDMFormValues getDDMFormValues(
-			DDMForm ddmForm, String serializedDDMFormValues)
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
 		throws PortalException {
 
-		return getDDM().getDDMFormValues(ddmForm, serializedDDMFormValues);
+		return getDDM().getDDMFormValues(ddmForm, serializedJSONDDMFormValues);
 	}
 
 	public static DDMFormValues getDDMFormValues(

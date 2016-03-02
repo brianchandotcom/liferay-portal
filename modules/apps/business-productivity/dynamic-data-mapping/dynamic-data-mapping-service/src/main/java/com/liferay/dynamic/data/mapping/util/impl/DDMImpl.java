@@ -130,13 +130,6 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_SELECT = "select";
 
 	@Override
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return _ddmFormJSONDeserializer.deserialize(serializedDDMForm);
-	}
-
-	@Override
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 
@@ -180,6 +173,13 @@ public class DDMImpl implements DDM {
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
 		}
+	}
+
+	@Override
+	public DDMForm getDDMForm(String serializedJSONDDMForm)
+		throws PortalException {
+
+		return _ddmFormJSONDeserializer.deserialize(serializedJSONDDMForm);
 	}
 
 	@Override

@@ -227,6 +227,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	private Set<ClassLoader> _findAllowedClassLoaders(
 		String[] allowedClasses, BundleContext bundleContext) {
 
+		if (allowedClasses == null) {
+			allowedClasses = new String[] {};
+		}
+
 		Set<ClassLoader> classLoaders = new HashSet<>();
 
 		for (String allowedClass : allowedClasses) {

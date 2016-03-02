@@ -15,6 +15,7 @@
 package com.liferay.staging.bar.web.theme.contributor;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -46,6 +47,9 @@ public class StagingBarTemplateContextContributor
 	public void prepare(
 		Map<String, Object> contextObjects, HttpServletRequest request) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			if (_stagingProductNavigationControlMenuEntry.isShow(request)) {
 				StringBuilder sb = new StringBuilder();
@@ -54,9 +58,6 @@ public class StagingBarTemplateContextContributor
 					GetterUtil.getString(contextObjects.get("bodyCssClass")));
 				sb.append(StringPool.SPACE);
 				sb.append("has-staging-bar");
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 				Group group = themeDisplay.getScopeGroup();
 
@@ -82,6 +83,14 @@ public class StagingBarTemplateContextContributor
 		}
 		catch (PortalException pe) {
 			pe.printStackTrace();
+		}
+
+		contextObjects.put("show_staging", themeDisplay.isShowStagingIcon());
+
+		if (themeDisplay.isShowStagingIcon()) {
+			contextObjects.put(
+				"staging_text", LanguageUtil.get(request, "staging"));
+
 		}
 	}
 

@@ -294,14 +294,6 @@
 	#set ($nav_css_class = $nav_css_class + " hide")
 #end
 
-## ---------- Staging ---------- ##
-
-#set ($show_staging = $theme_display.isShowStagingIcon())
-
-#if ($show_staging)
-	#set ($staging_text = $languageUtil.get($locale, "staging"))
-#end
-
 ## ---------- My sites ---------- ##
 
 #set ($show_my_sites = $user.hasMySites())

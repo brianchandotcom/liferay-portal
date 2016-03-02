@@ -91,6 +91,7 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 					</portlet:renderURL>
 
 					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
 						href="<%= rowURL %>"
 						name="session-id"
 						property="sessionId"

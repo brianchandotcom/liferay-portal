@@ -100,14 +100,14 @@ if (resizable) {
 			return document.getElementById('<%= name %>').focus();
 		},
 
-		getEditor: function () {
+		getEditor: function() {
 			var editorEl = document.getElementById('<%= name %>');
 
 			if (editorEl) {
 				return editorEl;
 			}
 
-			return;
+			return null;
 		},
 
 		getHTML: function() {

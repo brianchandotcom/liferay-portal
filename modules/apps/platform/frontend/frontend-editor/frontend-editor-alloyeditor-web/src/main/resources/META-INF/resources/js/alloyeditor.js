@@ -135,7 +135,7 @@ AUI.add(
 						return data;
 					},
 
-					getEditor: function () {
+					getEditor: function() {
 						var instance = this;
 
 						return instance._alloyEditor;

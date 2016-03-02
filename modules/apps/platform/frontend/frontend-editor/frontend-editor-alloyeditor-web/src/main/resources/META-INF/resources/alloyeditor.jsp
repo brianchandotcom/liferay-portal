@@ -320,12 +320,12 @@ if (showSource) {
 			}
 		},
 
-		getEditor: function () {
+		getEditor: function() {
 			if (alloyEditor) {
 				return alloyEditor.getEditor();
 			}
 
-			return;
+			return null;
 		},
 
 		getHTML: function() {
@@ -364,7 +364,7 @@ if (showSource) {
 			if (alloyEditor) {
 				alloyEditor.setHTML(value);
 			}
-		},
+		}
 
 	};
 

@@ -153,7 +153,7 @@ AUI.add(
 						instance._eventHandles = eventHandles;
 					},
 
-					_checkEmptyData: function () {
+					_checkEmptyData: function() {
 						var instance = this;
 
 						var editor = window[instance.ns('descriptionEditor')].getEditor();
@@ -167,7 +167,6 @@ AUI.add(
 
 							editor.plugins.ae_placeholder._checkEmptyData(objEditor);
 						}
-
 
 					},
 
@@ -406,6 +405,7 @@ AUI.add(
 						var instance = this;
 
 						var descriptionEditorNode = instance.one('#descriptionEditor');
+
 						descriptionEditorNode.attr('contenteditable', !readOnly);
 						descriptionEditorNode.toggleClass('readonly', readOnly);
 					},

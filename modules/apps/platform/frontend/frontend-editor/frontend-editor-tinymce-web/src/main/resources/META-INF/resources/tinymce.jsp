@@ -143,14 +143,14 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			tinyMCE.editors['<%= name %>'].focus();
 		},
 
-		getEditor: function () {
+		getEditor: function() {
 			var editor = tinyMCE.editors['<%= name %>'];
 
 			if (editor) {
 				return editor;
 			}
 
-			return;
+			return null;
 		},
 
 		getHTML: function() {

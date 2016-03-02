@@ -142,14 +142,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			tinyMCE.editors['<%= name %>'].focus();
 		},
 
-		getEditor: function () {
+		getEditor: function() {
 			var editor = tinyMCE.editors['<%= name %>'];
 
 			if (editor) {
 				return editor;
 			}
 
-			return;
+			return null;
 		},
 
 		getHTML: function() {

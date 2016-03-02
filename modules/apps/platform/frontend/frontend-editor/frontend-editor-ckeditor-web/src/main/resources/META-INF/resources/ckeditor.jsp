@@ -86,9 +86,8 @@ if (editorOptions != null) {
 				position: absolute !important;
 			}
 		</style>
-
 		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
+			long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
@@ -206,16 +205,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			CKEDITOR.instances['<%= name %>'].focus();
 		},
 
-		getEditor: function () {
-			var editor = CKEDITOR.instances['<%= name %>'];
-
-			if (editor) {
-				return editor;
-			}
-
-			return;
-		},
-
 		getCkData: function() {
 			var data;
 
@@ -231,6 +220,16 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			}
 
 			return data;
+		},
+
+		getEditor: function() {
+			var editor = CKEDITOR.instances['<%= name %>'];
+
+			if (editor) {
+				return editor;
+			}
+
+			return null;
 		},
 
 		getHTML: function() {

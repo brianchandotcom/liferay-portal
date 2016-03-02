@@ -1973,7 +1973,7 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectSpecificEvent">
+		<execute macro="CalendarScheduler#_selectSpecificEventCurrentDay">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 

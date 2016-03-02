@@ -433,6 +433,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, "Do not use Registry in modules: " + fileName);
 		}
 
+		// LPS-62786
+
+		checkPropertyUtils(fileName, newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {

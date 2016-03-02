@@ -899,6 +899,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"DatabaseMetaData.supportsBatchUpdates: " + fileName);
 		}
 
+		// LPS-62786
+
+		checkPropertyUtils(fileName, newContent);
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
